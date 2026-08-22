@@ -1,0 +1,1213 @@
+<a class="skip-link" href="#mainContent">
+   Skip to guide content
+  </a>
+  <header class="guide-site-header">
+   <a aria-label="Crystal Guild Adventurer Portal" class="guide-site-brand" href="/players">
+    <span aria-hidden="true" class="guide-brand-mark"><img class="guide-brand-mark-image" src="/crystal-guild-portal-roundel.png" alt="" width="256" height="256" decoding="async"></span>
+    <span class="guide-site-brand-copy">
+     <small>Crystal Guild</small>
+     <strong>Player Guide</strong>
+    </span>
+   </a>
+   <div class="guide-site-header-actions">
+    <nav aria-label="Crystal Guild website" class="guide-site-nav">
+     <a href="/players">Heroes</a>
+     <a href="/fellowship">Fellowship</a>
+     <a aria-current="page" class="active" href="/guide">Player Guide</a>
+    </nav>
+    <div class="guide-build-badge" title="Current Crystal Guild Web build">
+     <span id="versionTop">v1.1.14</span>
+     <strong>Cloud Continuity</strong>
+    </div>
+   </div>
+  </header>
+  <div aria-label="Mobile guide controls" class="mobile-top">
+   <button aria-controls="guideNav" aria-expanded="false" aria-label="Open guide section navigation" class="mobile-menu" id="navOpen" type="button">
+    ☰
+   </button>
+   <div class="mobile-title">
+    <b>Guide Sections</b>
+    <span>Commands, Fellowship, Jobs, Hunts, gear, raids and more</span>
+   </div>
+  </div>
+  <div class="layout">
+   <aside aria-label="Guide navigation" class="side" id="guideNav">
+    <button aria-label="Close guide navigation" class="nav-close" id="navClose" type="button">
+     &times;
+    </button>
+    <div class="guide-brand">
+     <div class="kicker">
+      Crystal Guild
+     </div>
+     <h1>
+      Player Guide
+     </h1>
+     <p>Everything you need to play Crystal Guild in Twitch chat. Current build: <span id="versionSide"></span>.</p>
+    </div>
+    <small>
+     Begin
+    </small>
+    <nav class="nav">
+     <a href="#quickstart">
+      Quick Start
+     </a>
+     <a href="#commands">
+      Commands by Use
+     </a>
+     <a href="#progression">
+      Progression
+     </a>
+     <a href="#fellowship-guide">
+      Fellowship
+     </a>
+     <a href="#chocobos">
+      Chocobo Companions
+     </a>
+     <a href="#combat">
+      Combat &amp; Stances
+     </a>
+     <a href="#party">
+      Party Encounters
+     </a>
+     <a href="#recovery">
+      Camp &amp; Recovery
+     </a>
+    </nav>
+    <small>
+     Build Your Hero
+    </small>
+    <nav class="nav">
+     <a href="#jobs">
+      Jobs &amp; Masteries
+     </a>
+     <a href="#regions">
+      Regions
+     </a>
+     <a href="#bestiary">
+      Bestiary
+     </a>
+     <a href="#hunts">
+      Hunts
+     </a>
+     <a href="#quests">
+      Job Quests
+     </a>
+    </nav>
+    <small>
+     Gear &amp; Endgame
+    </small>
+    <nav class="nav">
+     <a href="#items">
+      Items &amp; Equipment
+     </a>
+     <a href="#crafting">
+      Crafting
+     </a>
+     <a href="#forge">
+      Forge
+     </a>
+     <a href="#quartermaster">
+      Quartermaster
+     </a>
+     <a href="#relics">
+      Relic Weapons
+     </a>
+     <a href="#raids">
+      Raids
+     </a>
+     <a href="#bosses">
+      Boss Catalog
+     </a>
+    </nav>
+    <small>
+     Completion
+    </small>
+    <nav class="nav">
+     <a href="#completion">
+      Achievements &amp; Titles
+     </a>
+     <a href="#faq">
+      FAQ &amp; Glossary
+     </a>
+    </nav>
+   </aside>
+   <div aria-hidden="true" class="nav-backdrop" id="navBackdrop">
+   </div>
+   <main class="main" id="mainContent">
+    <header class="hero">
+     <div class="eyebrow">
+      Unofficial Final Fantasy-inspired Twitch RPG
+     </div>
+     <h2>
+      Become a hero.
+      <br/>
+      <span>
+       Probably get stabbed.
+      </span>
+     </h2>
+     <p>
+      Recruit a persistent hero in Twitch chat or directly from the Adventurer Portal, master Jobs, join random battles, hunt notorious marks, craft and forge equipment, awaken Relic weapons, and throw the entire Guild at raid bosses
+      that were clearly somebody else's problem.
+     </p>
+     <div class="chips" id="heroChips">
+     </div>
+    </header>
+    <div class="topsearch">
+     <input aria-label="Search the entire Player Guide" class="search" id="globalSearch" placeholder="Search the entire guide: command, Job, monster, boss, item, Relic&hellip;"/>
+     <span class="resultcount" id="searchCount">
+     </span>
+    </div>
+    <div class="content">
+     <section class="section searchable" id="quickstart">
+      <h2>
+       Quick Start
+      </h2>
+      <p class="lead">
+       Your first useful ten minutes in the Guild.
+      </p>
+      <div class="step">
+       <b>
+        Recruit.
+       </b>
+       Use the Adventurer Portal&apos;s <b>Recruit Adventurer</b> option after signing in with Twitch, or type
+       <code>
+        !recruit
+       </code> in chat. Both create the same persistent hero and announce the new recruit in Twitch chat.
+      </div>
+      <div class="step">
+       <b>
+        Pick a starter Job.
+       </b>
+       Use
+       <code>
+        !job
+       </code>, then choose Warrior, Monk, Thief, Black Mage, White Mage or Red Mage.
+      </div>
+      <div class="step">
+       <b>
+        Adventure.
+       </b>
+       Use
+       <code>
+        !venture
+       </code>. A Venture can produce an <b>ENCOUNTER</b> or a <b>TREASURE CHEST</b>. Encounter Ventures open a rally window so others can use <code>!join</code>; treasure Ventures immediately award a level-appropriate item. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only mode with its own 7-minute cooldown, 50% ENCOUNTER / 50% TREASURE split, +3 enemy cap, no rally, 50% of normal Venture Fellowship Renown, <b>instant encounter resolution</b>, and <b>no Twitch chat announcements</b>.
+      </div>
+      <div class="step">
+       <b>
+        Grow.
+       </b>
+       Victories award Character XP, Job JP, gil, drops and Bestiary credit.
+      </div>
+      <div class="step">
+       <b>
+        Build the Fellowship.
+       </b>
+       Normal play also earns shared Fellowship Renown and can advance community Orders, Deeds and project requirements. Use <code>!fellowship</code> to see the Guild's current LVL and your personal Guild Rank.
+      </div>
+      <div class="step">
+       <b>
+        Gear up.
+       </b>
+       Check the randomized Job-tailored
+       <code>
+        !shop
+       </code>, buy by offer number with
+       <code>
+        !buy 3
+       </code>, then use
+       <code>
+        !inventory
+       </code>,
+       <code>
+        !gear
+       </code>
+       and
+       <code>
+        !equip &lt;item&gt;
+       </code>.
+      </div>
+      <div class="step">
+       <b>
+        Recover.
+       </b>
+       Damage persists. Use
+       <code>
+        !rest
+       </code>
+       for a free 30-minute full heal or
+       <code>
+        !use tent
+       </code>
+       to recover immediately.
+      </div>
+      <div class="step">
+       <b>
+        Branch out.
+       </b>
+       Unlock regions, Hunts, advanced Jobs, crafting, Masteries and eventually Relic weapons.
+       If you are unsure what comes next, use <code>!guild</code> for the command list or <code>!next</code> for your hero’s next objective. Aliases <code>!cghelp</code> and <code>!cgcommands</code> work too.
+      </div>
+      <div class="callout warn">
+       <b>
+        Golden rule:
+       </b>
+       Crystal Guild has no permanent death, XP loss, equipment durability or random forge failures. Getting flattened is embarrassing, not character-ending.
+      </div>
+     </section>
+     <section class="section searchable" id="commands">
+      <h2>
+       Chat Command Reference
+      </h2>
+      <p class="lead">Commands are grouped by what you want to do. Search the list or choose a category.</p>
+      <div class="command-toolbar">
+       <input aria-label="Search commands" class="search" id="commandSearch" placeholder="Search commands, aliases, or descriptions"/>
+       <div aria-label="Command usage groups" class="command-group-nav" id="commandGroupNav">
+       </div>
+      </div>
+      <div class="callout">
+       <b>
+        Reading the syntax:
+       </b>
+       <code>
+        &lt;name&gt;
+       </code>
+       means a required value.
+       <code>
+        [name]
+       </code>
+       means optional. Aliases do exactly the same thing as the primary command.
+      </div>
+      <div class="command-groups" id="commandGroups">
+      </div>
+      <div class="callout">
+       <b>Portal shortcut:</b> Signed-in adventurers can claim their Daily Guild Provisions directly from their own Overview. It uses the same 24-hour reward and cooldown as <code>!daily</code>.
+      </div>
+     </section>
+     <section class="section searchable" id="progression">
+      <h2>
+       Character Progression
+      </h2>
+      <p class="lead">
+       Character Level is your permanent overall progression; Job Levels are independent tracks for each Job.
+      </p>
+      <div class="grid">
+       <div class="card">
+        <h3>
+         Character Level
+        </h3>
+        <p>Levels <b>1&ndash;99</b>. XP requirements rise as you level. Character Level unlocks regions, Hunts, recipes, equipment and Relic stages.</p>
+       </div>
+       <div class="card">
+        <h3>
+         Job Level
+        </h3>
+        <p>Each Job levels independently from <b>1&ndash;50</b> using JP. JP requirements rise with Job Level, and changing Jobs never erases progress.</p>
+       </div>
+       <div class="card">
+        <h3>
+         Ability Milestones
+        </h3>
+        <p>
+         Abilities unlock at JLv.
+         <b>
+          5, 10, 20, 30 and 40
+         </b>. JLv.50 unlocks that Job's cross-Job Mastery.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Mastery
+        </h3>
+        <p>
+         You have
+         <b>
+          two Mastery slots
+         </b>. A mastered Job can lend its Mastery bonus while you play another Job.
+        </p>
+        <code>
+         !mastery warrior 1
+        </code>
+       </div>
+      </div>
+     </section>
+     <section class="section searchable" id="fellowship-guide">
+      <h2>
+       Fellowship — Guild Progression &amp; Commands
+      </h2>
+      <p class="lead">
+       Fellowship is Crystal Guild's shared community progression layer. Your hero keeps all normal character progression while everyday play also helps the channel-wide Guild grow.
+      </p>
+      <div class="callout">
+       <b>Two different progress tracks:</b> the shared Fellowship is labeled <b>LVL 1&ndash;10</b>, while each player separately earns a personal <b>Guild Rank</b>. They are related, but they are not the same thing.
+      </div>
+      <div class="grid">
+       <div class="card">
+        <h3>Shared Fellowship LVL</h3>
+        <p>The whole channel shares one Fellowship LVL. Resolved Ventures, Hunts, raids, crafting, forging, achievements and other meaningful play can earn shared Renown or advance Guild objectives.</p>
+       </div>
+       <div class="card">
+        <h3>Your Guild Rank</h3>
+        <p>Your personal Fellowship Renown raises your individual standing from <b>Recruit</b> through Private, Corporal, Sergeant and Lieutenant tiers to <b>Captain</b>. Use <code>!rank</code> to see your next promotion.</p>
+       </div>
+       <div class="card">
+        <h3>Projects &amp; Contributions</h3>
+        <p>The streamer selects an unlocked Fellowship project. Projects can require gameplay, Gil and materials. Gameplay requirements advance automatically; donations are always voluntary and only consume resources when the contribution succeeds.</p>
+       </div>
+       <div class="card">
+        <h3>Facilities</h3>
+        <p>Completed projects can improve the <b>Guild Hall, Infirmary, Workshop, Training Hall, Archives</b> and <b>Quartermaster</b>. Benefits are intentionally modest and support existing systems instead of replacing them.</p>
+       </div>
+       <div class="card">
+        <h3>Orders &amp; Deeds</h3>
+        <p><b>Orders</b> are rotating weekly community objectives. <b>Deeds</b> are permanent Guild-wide milestones. Both advance from normal play; you do not need to activate them first.</p>
+       </div>
+       <div class="card">
+        <h3>Founding Members</h3>
+        <p>Heroes carried forward from the pre-Fellowship Guild are recognized as <b>Founding Members</b>. This recognition does not replace or reset any existing character progress.</p>
+       </div>
+      </div>
+      <h3>Fellowship commands</h3>
+      <div class="grid">
+       <div class="card">
+        <h3>Overview &amp; Rank</h3>
+        <p><code>!fellowship</code> (<code>!guildinfo</code>) shows the shared Guild LVL, your Guild Rank, current project and weekly progress.</p>
+        <p><code>!rank</code> (<code>!guildrank</code>) shows your personal Guild Rank and Renown needed for the next promotion.</p>
+       </div>
+       <div class="card">
+        <h3>Projects &amp; Donations</h3>
+        <p><code>!project</code> shows the active project and remaining requirements.</p>
+        <p><code>!contribute gil &lt;amount&gt;</code> donates Gil when the project requests it.</p>
+        <p><code>!contribute &lt;amount&gt; &lt;item&gt;</code> donates requested materials or items.</p>
+       </div>
+       <div class="card">
+        <h3>Community Progress</h3>
+        <p><code>!orders</code> shows this week's rotating Fellowship objectives.</p>
+        <p><code>!deeds</code> shows permanent Fellowship milestone progress.</p>
+        <p><code>!facilities</code> shows current Guild facility tiers and shared benefits.</p>
+       </div>
+       <div class="card">
+        <h3>Your Fellowship Record</h3>
+        <p><code>!contributions</code> (<code>!guildrecord</code>) shows your personal Renown, projects supported, donations, Orders and Deeds participation.</p>
+        <p>Your Adventurer Portal profile also has a dedicated <b>Fellowship</b> tab. When you sign in with Twitch on your own profile, it can load the live active project and let you contribute required Gil or materials directly; gameplay and Fellowship-LVL requirements continue to advance through normal play.</p>
+       </div>
+      </div>
+      <div class="callout">
+       <b>Full Guild page:</b> visit <a href="/fellowship">Fellowship</a> on the website for the shared LVL, active project, facilities, Orders, Deeds and rank reference without crowding your personal hero profile.
+      </div>
+     </section>
+     <section class="section searchable" id="stats">
+      <h2>
+       Stats, Combat Values &amp; Status Effects — Quick Guide
+      </h2>
+      <p class="lead">
+       New to RPG stats? These are the numbers Crystal Guild uses to decide how hard you hit, how much punishment you can take, and how your Job performs in battle. Different Jobs favor different stats, so there is no single best stat for every hero.
+      </p>
+      <div class="callout"><b>Quick mental model:</b> STR hits harder · VIT keeps you standing · MAG strengthens spells · SPR resists magic · DEX acts sooner · LCK improves critical hits.</div>
+      <div class="grid">
+       <div class="card"><h3>STR — Strength</h3><p>Raises <b>physical damage</b>. STR also contributes to the maximum <b>AP</b> pool for Jobs that use martial techniques.</p></div>
+       <div class="card"><h3>VIT — Vitality</h3><p>Represents physical toughness. Higher VIT reduces damage from physical enemy attacks; Jobs with stronger VIT growth also tend to develop larger <b>HP</b> pools.</p></div>
+       <div class="card"><h3>MAG — Magic</h3><p>Raises <b>magical damage</b> and the strength of many healing effects. MAG also contributes to the maximum <b>MP</b> pool.</p></div>
+       <div class="card"><h3>SPR — Spirit</h3><p>Represents magical resilience. Higher SPR reduces incoming <b>magical damage</b> and also contributes to maximum <b>MP</b>.</p></div>
+       <div class="card"><h3>DEX — Dexterity</h3><p>Helps determine <b>turn order</b> when heroes queue the same kind of action. DEX also contributes to the maximum <b>AP</b> pool.</p></div>
+       <div class="card"><h3>LCK — Luck</h3><p>Raises your chance to land a <b>physical critical hit</b>. Some Jobs, equipment and effects can add further critical-hit bonuses.</p></div>
+      </div>
+      <h3>Derived Combat Values</h3>
+      <div class="grid">
+       <div class="card"><h3>ATK — Attack</h3><p>Flat physical power supplied mainly by weapons and equipment. ATK is combined with STR when calculating physical damage.</p></div>
+       <div class="card"><h3>M.PWR — Magic Power</h3><p>Flat magical power supplied mainly by caster equipment. Magic Power is combined with MAG when calculating magical damage.</p></div>
+       <div class="card"><h3>HP — Hit Points</h3><p>Your health. Damage lowers HP; reaching <b>0 HP</b> knocks the hero out until they are revived or properly recovered.</p></div>
+       <div class="card"><h3>MP — Magic Points</h3><p>A persistent resource spent on magical abilities. MP <b>does not refill automatically after battle</b>; recover it through camp, recovery items or applicable battle recovery.</p></div>
+       <div class="card"><h3>AP — Action Points</h3><p>A persistent resource spent on martial and physical techniques. AP <b>does not refill automatically after battle</b>; recover it through camp, AP items or applicable battle recovery.</p></div>
+      </div>
+      <div class="callout"><b>Not every Job uses every value equally.</b> A Black Mage cares far more about MAG, Magic Power and MP than STR, while a Warrior generally benefits more from STR, ATK, VIT and AP. Hybrid Jobs may use both sides of the system.</div>
+      <h3>Buffs &amp; Tactical Status Effects</h3>
+      <p>Buffs are temporary combat effects applied by abilities, items, equipment effects, or enemy behavior. Their exact strength and duration depend on the source; the descriptions below explain what each status changes in Crystal Guild.</p>
+      <div class="grid">
+       <div class="card"><h3>Protect</h3><p>Reduces <b>incoming damage</b> while active. Stronger Protect effects reduce a larger share of the hit. Defend can provide an even stronger temporary reduction for that round.</p></div>
+       <div class="card"><h3>Taunt</h3><p>Makes that hero <b>more likely to be selected</b> by single-target enemy attacks and skills. It raises target-selection weight rather than guaranteeing every attack.</p></div>
+       <div class="card"><h3>Evasion</h3><p>Adds a chance to <b>avoid incoming attacks entirely</b>. Evasion from temporary status and applicable equipment effects combine, with a safety cap so a hero cannot become permanently unhittable.</p></div>
+       <div class="card"><h3>Power Up</h3><p>Raises <b>outgoing damage</b>. On enemies it increases their offensive pressure; on heroes it strengthens damage dealt while the effect lasts.</p></div>
+       <div class="card"><h3>Focus</h3><p>Improves <b>physical critical-hit chance</b> for heroes. Enemies do not make normal critical rolls, so enemy Focus instead increases their outgoing damage pressure.</p></div>
+       <div class="card"><h3>Haste</h3><p>Moves actions <b>earlier in the round</b> and increases outgoing damage pressure. Haste does not grant an extra action; enemies still take one normal action under the soft-targeting system.</p></div>
+       <div class="card"><h3>Regen</h3><p>Restores <b>HP at the end of each round</b> while the status remains active. The amount depends on the strength of the Regen effect.</p></div>
+      </div>
+      <h3>Ailments &amp; Harmful Status Effects</h3>
+      <p>Ailments can be inflicted by enemy skills, player abilities, and certain equipment effects. Gear may provide resistance or immunity to specific ailments, and cleansing items can remove them during battle.</p>
+      <div class="grid">
+       <div class="card"><h3>Vulnerable</h3><p>Causes the target to <b>take increased incoming damage</b>. The bonus damage is bounded so Vulnerable cannot scale without limit.</p></div>
+       <div class="card"><h3>Weaken</h3><p>Reduces the target's <b>outgoing damage</b>. It affects both heroes and enemies, making their attacks and damaging abilities less threatening.</p></div>
+       <div class="card"><h3>Slow</h3><p>Moves actions <b>later in the round</b> and reduces outgoing damage pressure. Slow does not remove a turn; it makes that turn later and weaker.</p></div>
+       <div class="card"><h3>Stun</h3><p>The affected hero or enemy <b>loses their action</b> for the round while Stun is active. <b>Smelling Salts</b> can remove Stun from a hero.</p></div>
+       <div class="card"><h3>Poison</h3><p>Deals damage at the <b>end of each round</b> based on the target's maximum HP and the strength of the Poison effect. <b>Antidote</b> removes Poison.</p></div>
+       <div class="card"><h3>Silence</h3><p>Prevents a hero from using <b>MP-based abilities</b>. AP techniques, Attack, Defend, and applicable items remain available. <b>Echo Herbs</b> remove Silence.</p></div>
+       <div class="card"><h3>Blind</h3><p>Gives <b>physical attacks and physical abilities a chance to miss</b>. Magical damage is not affected by Blind. <b>Eye Drops</b> remove it.</p></div>
+      </div>
+      <div class="callout"><b>Status duration:</b> Battle status displays use entries such as <b>Protect:2</b> or <b>Poison:3</b>; the number is the remaining rounds. Reapplying a status refreshes it using the stronger magnitude and longer remaining duration. <b>Chronos Tear</b> removes Slow, while <b>Remedy</b> and <b>Panacea</b> broadly clear harmful statuses.</div>
+     </section>
+
+     <section class="section searchable" id="chocobos">
+      <h2>Chocobo Companions</h2>
+      <p class="lead">Prepare a persistent companion before the Expedition era begins.</p>
+      <div class="callout"><b>Acquisition path:</b> the Fellowship must construct the Chocobo Stable, then you complete <b>A Chocobo of Your Own</b>, purchase a 500 Gil Chocobo Registration Writ, and wait one hour for the Writ to activate before naming and registering your bird.</div>
+      <div class="grid two">
+       <div class="card"><h3>Shared Stable</h3><p>The Chocobo Stable is a modest Fellowship LVL 2 project requiring 5,000 Gil and 10 completed Ventures. Once built, it is available Guild-wide.</p></div>
+       <div class="card"><h3>Personal Quest</h3><p>Reach Character Lv.10, complete 10 Ventures, and record at least one C-Rank Hunt clear. Completing the quest awards 250 Gil.</p></div>
+       <div class="card"><h3>Registration Writ</h3><p>The Writ costs 500 Gil and takes exactly one hour to validate. The timer is authoritative and survives restarts; the Portal shows a local countdown from that timestamp.</p></div>
+       <div class="card"><h3>Bond &amp; Traits</h3><p>Registered Chocobos gain Bond XP from successful Ventures, Venture treasure, and Hunts. v1.1.10 caps Chocobo Level at 20 and assigns one persistent starter trait. Traits do not change combat in this release.</p></div>
+      </div>
+      <p><b>Expedition readiness:</b> future Expeditions require both a registered Chocobo and the completed Fellowship Expedition Board. v1.1.10 prepares those prerequisites but does not enable Expedition gameplay early.</p>
+      <div class="callout"><b>Coming Soon — Expeditions:</b> the Fellowship Guild Board and your Chocobo Stable now show the preparation path ahead of v1.2. Complete the shared Expedition Board when it unlocks and register your own Chocobo. Expedition destinations, contracts, and launch actions remain intentionally unavailable until the Expedition release.</div>
+      <p>Use <code>!chocobo</code>, <code>!chocoboquest</code>, <code>!chocobowrit</code>, <code>!registerchocobo &lt;name&gt;</code>, and <code>!chocoboname &lt;name&gt;</code>, or manage the same steps from your authenticated Adventurer Portal Chocobo Stable tab.</p>
+     </section>
+     <section class="section searchable" id="combat">
+      <h2>Combat &amp; Stances</h2>
+      <p class="lead">When a normal Venture rolls an ENCOUNTER and its rally closes, the party enters timed combat rounds. A Portal Solo Venture ENCOUNTER skips the rally and resolves the full one-hero fight immediately using the same combat math and the normal no-input default action. The website then shows a compact result summary; no Solo Venture combat output is posted to Twitch chat. Rally Ventures and Hunts still use the normal timed Active Battle flow. Every living hero in those battles chooses one action, then all actions resolve and the monster takes its turn. Ordinary enemy attacks choose one hero; only designated multi-target skills can strike more than one party member.</p>
+      <div class="grid">
+       <div class="card"><h3>Attack</h3><p><code>!attack</code> queues your Job's basic attack, including your stance, critical chance, signature attack chance and any double-strike effects.</p></div>
+       <div class="card"><h3>Ability</h3><p><code>!ability &lt;name&gt; [target]</code> spends MP for magical techniques or AP for physical techniques. Current resources carry between battles. <code>!skill</code> and <code>!cast</code> are aliases.</p></div>
+       <div class="card"><h3>Defend</h3><p><code>!defend</code> reduces incoming damage for the round and restores battle resources: 6% MP for magic users and 8% AP for physical users. Dual-resource Jobs recover both. <code>!guard</code> works too.</p></div>
+       <div class="card"><h3>Item</h3><p><code>!use &lt;item&gt; [target]</code> can queue supported healing, MP/AP recovery, cleanse, damage, or revival items. Ether-family and AP recovery supplies can also be used outside battle. The item is consumed only when its effect resolves.</p></div>
+      </div>
+      <div class="callout"><b>Round timer:</b> 20 seconds by default. You may replace your queued action before resolution. If you submit nothing, your hero automatically uses <b>Attack</b> so one AFK player cannot stall the fight.</div>
+      <div class="grid">
+       <div class="card"><h3>Battle Status</h3><p><code>!encounter</code> shows enemy HP, combat style and statuses, the round timer, queued actions, and party HP/MP/AP.</p></div>
+       <div class="card"><h3>Recent Round Log</h3><p><code>!battlelog</code> (aliases <code>!roundlog</code> and <code>!combatlog</code>) shows the latest resolved rounds on demand. Automatic round announcements stay short instead of flooding chat.</p></div>
+       <div class="card"><h3>MP &amp; AP</h3><p><strong>MP</strong> powers magical abilities while <strong>AP</strong> powers physical Job techniques. Normal <code>!attack</code> costs nothing. Current MP/AP persist between battles; camp, recovery items, and Defend restore them.</p></div>
+       <div class="card"><h3>Status Effects</h3><p>Protect, Taunt, Evasion, Power Up, Focus, Haste, Regen, Vulnerable, Weaken, Slow, Stun, Poison, Silence and Blind all have distinct combat effects. See <a href="#stats">Stats, Combat Values &amp; Status Effects</a> for the full quick guide.</p></div>
+       <div class="card"><h3>KO &amp; Revival</h3><p>KO heroes stop submitting normal actions. Allies can use Raise-capable abilities or Phoenix Down to return them to the fight.</p></div>
+       <div class="card"><h3>Job Abilities</h3><p>Every Job has battle abilities at JLv.1, 15 and 30. Use <code>!abilities</code> or open a Job below to see them.</p></div>
+      </div>
+      <h3>Enemies now fight with a plan</h3>
+      <div class="grid">
+       <div class="card"><h3>Combat Styles</h3><p>Enemies may fight as Balanced, Aggressive, Defensive, Caster, Controller, Skirmisher or Berserker. Their style changes how often they use skills and how they react when wounded.</p></div>
+       <div class="card"><h3>Named Skills</h3><p>Bestiary special attacks can be used during battle and may have cooldowns. Single-target skills choose one living hero using tank/Taunt pressure, while designated party attacks such as Meteor-style skills can hit more than one hero.</p></div>
+       <div class="card"><h3>Status Recovery</h3><p>Antidote removes Poison, Echo Herbs remove Silence, Eye Drops remove Blind, Chronos Tear removes Slow, and Smelling Salts remove Stun. Remedy and Panacea broadly clear harmful statuses.</p></div>
+       <div class="card"><h3>Enemy Info</h3><p><code>!encounter</code> shows the enemy combat style and current statuses. The Bestiary also records each discovered monster's battle skill.</p></div>
+      </div>
+      <h3>Stances still matter</h3>
+      <div class="grid">
+       <div class="card"><h3>Balanced</h3><p>Neutral baseline. The safe default.</p></div>
+       <div class="card"><h3>Aggressive</h3><p>Higher physical pressure at the cost of defense.</p></div>
+       <div class="card"><h3>Defensive</h3><p>Lower offense, better survival.</p></div>
+       <div class="card"><h3>Magical</h3><p>Favors magical damage.</p></div>
+       <div class="card"><h3>Cautious</h3><p>Conservative offense with improved defense.</p></div>
+      </div>
+      <div class="callout"><b>Change stance:</b> <code>!stance aggressive</code>. Use <code>!stance</code> without a name to inspect choices.</div>
+     </section>
+     <section class="section searchable" id="party">
+      <h2>Joinable Active Encounters</h2>
+      <p class="lead">Venture ENCOUNTERS are shared mini-events. A Venture may instead uncover a TREASURE CHEST, which awards the initiating hero an item immediately and does not open a rally.</p>
+      <div class="grid">
+       <div class="card"><h3>Rally Venture Roll</h3><p><code>!venture</code> is a Twitch-chat activity and currently resolves as <b>70% ENCOUNTER</b> or <b>30% TREASURE CHEST</b>.</p></div>
+       <div class="card"><h3>Treasure Chest</h3><p>Chest loot is selected from roughly <b>5 levels below through 2 levels above</b> the venturing hero. Consumables, weapons, armor and accessories are eligible; Relic-progression weapons are not.</p></div>
+      </div>
+      <div class="callout"><b>Portal-only Solo Venture:</b> the Adventure Board also has a private field run on a separate <b>7-minute</b> cooldown. It rolls <b>50% ENCOUNTER / 50% TREASURE</b>, caps enemies at <b>three levels above</b> the hero, never opens a rally, <b>resolves encounter combat immediately</b>, posts <b>no automatic Twitch chat messages</b>, and awards <b>4 Fellowship Renown</b> on a completed Solo Venture instead of the normal 8. The result card shows the encounter or treasure outcome, rewards, remaining HP, and cooldown at a glance.</div>
+      <div class="callout"><b>Rally reward bonus:</b> Rally Venture encounter victories reward each participant with <b>+5% XP, JP, and Gil per enemy level above that hero</b>, capped at <b>+50%</b>. The bonus is personal to each hero's risk. Equal- or lower-level enemies give no Rally bonus, and treasure rewards are unchanged.</div>
+      <div class="grid">
+       <div class="card"><h3>1. Rally</h3><p>If <code>!venture</code> rolls an ENCOUNTER, it selects a monster and opens a <b>45-second</b> rally in Twitch chat. The initiator joins automatically, and the rolled monster can be no more than <b>ten levels above</b> that initiating hero.</p></div>
+       <div class="card"><h3>2. Join</h3><p>Other eligible viewers use <code>!join</code> or <code>!venture</code> in Twitch chat. Joining consumes that hero's normal Venture cooldown.</p></div>
+       <div class="card"><h3>3. Choose</h3><p>Once combat starts, each living hero queues Attack, Ability, Defend, or Item. Every round resolves on its scheduled timer; queued actions never shorten the deadline.</p></div>
+       <div class="card"><h3>4. Resolve &amp; Reward</h3><p>The party and monster act, HP/statuses persist to the next round, and victory awards each participant their own XP, JP, gil, Bestiary credit and loot roll.</p></div>
+      </div>
+      <p><b>Party roles:</b> an ordinary enemy response chooses one living hero, with tank Jobs and Taunt drawing more target pressure. Multi-target damage only comes from enemy abilities explicitly built to hit multiple party members. Healers and support Jobs actively choose their recovery/control actions, so mitigation, healing, buffs and debuffs still make party composition matter.</p>
+     </section>
+     <section class="section searchable" id="recovery">
+      <h2>
+       Persistent HP, Camp &amp; Recovery
+      </h2>
+      <p class="lead">
+       Wounds persist between Ventures, Hunts and raids. KO is temporary, but you must recover before entering combat again.
+      </p>
+      <div class="grid">
+       <div class="card">
+        <h3>
+         Camp &mdash; Free
+        </h3>
+        <p>
+         <code>
+          !rest
+         </code>
+         or
+         <code>
+          !camp
+         </code>
+         starts a
+         <b>
+          30-minute
+         </b>
+         rest. You cannot Venture, Hunt, join encounters or raid while resting. When complete, you return at full current maximum HP.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Tent &mdash; Immediate
+        </h3>
+        <p>
+         <code>
+          !use tent
+         </code>
+         consumes a Tent, clears an active camp timer and fully restores the HP, MP and AP used by your current Job, even from KO.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Other Recovery
+        </h3>
+        <p>
+         Potion heals modest HP; Hi-Potion heals more; X-Potion restores full HP; Phoenix Down revives a KO'd hero at 30% HP.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Check Status
+        </h3>
+        <p>
+         <code>
+          !hero
+         </code>
+         shows your current/max HP and READY, RESTING or KO status.
+        </p>
+       </div>
+      </div>
+      <div class="callout">
+       <b>Adventurer Portal:</b> Sign in with Twitch on your own profile and open <b>Equipment &amp; Inventory</b> to use eligible field recovery items or start Camp. The Portal shows a live recovery countdown without needing a page refresh. Active Battle status cures remain battle actions through <code>!use &lt;item&gt;</code>.
+      </div>
+     </section>
+     <section class="section searchable" id="jobs">
+      <h2>
+       Jobs &amp; Masteries
+      </h2>
+      <p class="lead">
+       Browse Jobs and Masteries. Select any card to see its unlock requirements, stats, abilities and Mastery details.
+      </p>
+      <div class="callout">
+       <b>Adventurer Portal:</b> Sign in with Twitch on your own profile and open <b>Jobs</b> to switch unlocked Jobs, choose a battle stance, and equip or clear your two Mastery slots. Locked Jobs show the requirements you still need to complete.
+      </div>
+      <div aria-label="Jobs and Masteries views" class="job-view-tabs" role="tablist">
+       <button aria-selected="true" class="job-view-tab active" data-job-view="jobs" id="jobsTab" role="tab" type="button">
+        Jobs
+        <span class="tab-count">
+         18
+        </span>
+       </button>
+       <button aria-selected="false" class="job-view-tab" data-job-view="masteries" id="masteriesTab" role="tab" type="button">
+        Masteries
+        <span class="tab-count">
+         18
+        </span>
+       </button>
+      </div>
+      <div class="toolbar job-toolbar">
+       <input class="search" id="jobSearch" placeholder="Filter Jobs"/>
+       <select class="select" id="jobTier">
+        <option value="">
+         All tiers
+        </option>
+        <option value="starter">
+         Starter
+        </option>
+        <option value="advanced">
+         Advanced / Elite
+        </option>
+       </select>
+      </div>
+      <div aria-labelledby="jobsTab" class="grid job-card-grid" id="jobGrid" role="tabpanel">
+      </div>
+      <div aria-labelledby="masteriesTab" class="grid job-card-grid hidden" id="masteryGrid" role="tabpanel">
+      </div>
+     </section>
+     <section class="section searchable" id="regions">
+      <h2>
+       Regions
+      </h2>
+      <p class="lead">
+       Travel changes which monsters you can meet on future Ventures. Higher-level regions also contain materials needed for advanced forging and Relics.
+      </p>
+      <div class="grid" id="regionGrid">
+      </div>
+     </section>
+     <section class="section searchable catalog-gate" id="bestiary">
+      <details class="catalog-disclosure"><summary class="catalog-launch">
+       <span aria-hidden="true" class="catalog-launch-glyph">
+        ✦
+       </span>
+       <span class="catalog-launch-kicker">
+        Monster Archive
+       </span>
+       <span class="catalog-launch-title">
+        Bestiary
+       </span>
+       <span class="catalog-launch-meta">
+        103 entries
+       </span>
+       <span class="catalog-launch-action">
+        Open Catalog
+       </span>
+      </summary><div class="catalog-panel" id="bestiaryCatalog">
+       <div class="catalog-panel-top">
+        <button class="catalog-close" data-catalog-close="bestiary" type="button">
+         &larr; Close Catalog
+        </button>
+       </div>
+       <h2>
+        Bestiary
+       </h2>
+       <p class="lead">
+        Search monsters by name, weakness, combat style, battle skill, drop or region.
+       </p>
+       <div class="toolbar">
+        <input class="search" id="monsterSearch" placeholder="Search 103 monsters"/>
+        <select class="select" id="monsterRegion">
+         <option value="">
+          All regions
+         </option>
+        </select>
+       </div>
+       <div class="tablewrap">
+        <table class="datatable">
+         <thead>
+          <tr>
+           <th>
+            Monster
+           </th>
+           <th>
+            Lv
+           </th>
+           <th>
+            HP
+           </th>
+           <th>
+            Weak
+           </th>
+           <th>
+            Battle Skill
+           </th>
+           <th>
+            Regions
+           </th>
+           <th>
+            Drops
+           </th>
+          </tr>
+         </thead>
+         <tbody id="monsterRows">
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </details></section>
+     <section class="section searchable" id="hunts">
+      <h2>
+       Hunt Board
+      </h2>
+      <p class="lead">
+       Hunts are solo battles against named C/B/A/S marks. They award XP, JP, gil and Hunt Seals, and first clears may grant unique gear or titles.
+      </p>
+      <div class="grid">
+       <div class="card"><h3>1. Accept</h3><p>Use <code>!hunt &lt;name&gt;</code>. An eligible mark opens directly into Round 1; Hunts have no rally phase.</p></div>
+       <div class="card"><h3>2. Act</h3><p>Use the same <code>!attack</code>, <code>!ability</code>, <code>!defend</code> and battle-item commands used in Venture battles.</p></div>
+       <div class="card"><h3>3. Survive</h3><p>Each Hunt mark has its own combat style and battle skill. Higher ranks are tougher and may give you a little more time to choose each round.</p></div>
+       <div class="card"><h3>4. Claim</h3><p>Win the battle to receive the Hunt clear, rewards and any first-clear prize.</p></div>
+      </div>
+      <div class="callout"><b>Repeat rewards:</b> first clears give full rewards. Later clears award 85% XP, 85% JP, 80% gil and full Hunt Seals. Normal loot and bad-luck protection still apply.</div>
+      <div class="callout"><b>Round timer:</b> choose your action before the timer ends. The round resolves automatically even if nobody sends another chat message.</div>
+      <div class="tabs" id="huntTabs">
+      </div>
+      <div class="grid" id="huntGrid">
+      </div>
+     </section>
+     <section class="section searchable" id="quests">
+      <h2>
+       Job-Unlock Quests
+      </h2>
+      <p class="lead">
+       Career development, Crystal Guild style.
+      </p>
+      <div class="grid" id="questGrid">
+      </div>
+     </section>
+     <section class="section searchable catalog-gate" id="items">
+      <details class="catalog-disclosure"><summary class="catalog-launch">
+       <span aria-hidden="true" class="catalog-launch-glyph">
+        ◆
+       </span>
+       <span class="catalog-launch-kicker">
+        Guild Inventory
+       </span>
+       <span class="catalog-launch-title">
+        Items &amp; Equipment
+       </span>
+       <span class="catalog-launch-meta">
+        404 entries
+       </span>
+       <span class="catalog-launch-action">
+        Open Catalog
+       </span>
+      </summary><div class="catalog-panel" id="itemsCatalog">
+       <div class="catalog-panel-top">
+        <button class="catalog-close" data-catalog-close="items" type="button">
+         &larr; Close Catalog
+        </button>
+       </div>
+       <h2>
+        Items &amp; Equipment
+       </h2>
+       <p class="lead">
+        The complete item catalog, organized by level band and class/job: consumables, materials, weapons, armor, accessories and raid trophies.
+       </p>
+       <div class="callout">
+        <b>Portal character controls:</b> If you sign in with Twitch and open your own Adventurer profile, you can manage Jobs and Masteries, equipment and recovery, shop through the Moogle Emporium, contribute to Fellowship projects, craft and forge at the Guild Blacksmith, claim Daily Guild Provisions, and use the <b>Adventure Board</b> for Solo Ventures, travel, and Hunts. Rally Ventures are started and joined in Twitch chat. Crystal Guild checks identity, cooldowns, requirements, resources, and availability before applying any change. Active Battle turn commands and raids remain Twitch-first.
+       </div>
+       <div class="toolbar item-catalog-toolbar">
+        <input class="search" id="itemSearch" placeholder="Search items"/>
+        <select class="select" id="itemType">
+         <option value="">
+          All item types
+         </option>
+        </select>
+        <select class="select" id="itemLevel">
+         <option value="">
+          All levels
+         </option>
+         <option value="1-5">Lv. 1–5</option>
+         <option value="6-10">Lv. 6–10</option>
+         <option value="11-15">Lv. 11–15</option>
+         <option value="16-20">Lv. 16–20</option>
+         <option value="21-25">Lv. 21–25</option>
+         <option value="26-30">Lv. 26–30</option>
+         <option value="31-40">Lv. 31–40</option>
+         <option value="41-50">Lv. 41–50</option>
+         <option value="51-65">Lv. 51–65</option>
+         <option value="66+">Lv. 66+</option>
+         <option value="none">No level requirement</option>
+        </select>
+        <select class="select" id="itemJob">
+         <option value="">
+          All classes / jobs
+         </option>
+        </select>
+        <select class="select" id="itemRarity">
+         <option value="">
+          All rarities
+         </option>
+        </select>
+       </div>
+       <div class="tablewrap">
+        <table class="datatable">
+         <thead>
+          <tr>
+           <th>
+            Item
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Class / Jobs
+           </th>
+           <th>
+            Rarity
+           </th>
+           <th>
+            Lv
+           </th>
+           <th>
+            Price
+           </th>
+           <th>
+            Stats / Notes
+           </th>
+          </tr>
+         </thead>
+         <tbody id="itemRows">
+          <tr>
+           <td colspan="7">
+            <span class="muted">Loading item catalog…</span>
+           </td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </details></section>
+     <section class="section searchable" id="crafting">
+      <h2>
+       Crafting
+      </h2>
+      <p class="lead">
+       Recipes turn monster drops into useful items and equipment. Some recipes are known from the start; others must be discovered. Rare drops use bad-luck protection. Selling returns 70% of material value, 50% of gear value and 40% of consumable value.
+      </p>
+      <div class="callout">
+       <b>Adventurer Portal:</b> Open the <b>Blacksmith</b> tab on your own signed-in profile to compare known recipes against your live material, Gil and Hunt Seal totals, then craft directly without retyping recipe names in chat.
+      </div>
+      <div class="grid" id="recipeGrid">
+      </div>
+     </section>
+     <section class="section searchable" id="forge">
+      <h2>
+       Blacksmith Forge
+      </h2>
+      <p class="lead">
+       Weapons, armor and accessories can be upgraded from +0 to +5. Upgrades never fail and do not add durability.
+      </p>
+      <div class="tablewrap">
+       <table class="datatable">
+        <thead>
+         <tr>
+          <th>
+           Upgrade
+          </th>
+          <th>
+           Gil
+          </th>
+          <th>
+           Materials
+          </th>
+          <th>
+           Total Stat Bonus
+          </th>
+         </tr>
+        </thead>
+        <tbody id="forgeRows">
+        </tbody>
+       </table>
+      </div>
+      <div class="callout">
+       <code>
+        !upgrade &lt;item&gt;
+       </code>
+       upgrades an eligible owned item one step at a time.
+      </div>
+      <div class="callout">
+       The Portal <b>Blacksmith</b> tab also shows each owned gear piece's current forge level, next material/Gil cost, and any Fellowship Workshop discount before you commit the upgrade.
+      </div>
+     </section>
+     <section class="section searchable" id="quartermaster">
+      <h2>
+       Guild Quartermaster
+      </h2>
+      <p class="lead">
+       Spend Hunt Seals on materials when the drops you need refuse to cooperate.
+      </p>
+      <div class="tablewrap">
+       <table class="datatable">
+        <thead>
+         <tr>
+          <th>
+           Offer
+          </th>
+          <th>
+           Receive
+          </th>
+          <th>
+           Seal Cost
+          </th>
+          <th>
+           Min Lv
+          </th>
+         </tr>
+        </thead>
+        <tbody id="sealRows">
+        </tbody>
+       </table>
+      </div>
+     </section>
+     <section class="section searchable" id="relics">
+      <h2>
+       Relic Weapons
+      </h2>
+      <p class="lead">
+       Eight three-stage endgame weapon questlines. Select any Relic to see its requirements, costs and rewards from Dormant &rarr; Awakened
+       &rarr; Zenith.
+      </p>
+      <div class="toolbar">
+       <input class="search" id="relicSearch" placeholder="Search Relics, Jobs or requirements"/>
+       <select class="select" id="relicJob">
+        <option value="">
+         All Relic Jobs
+        </option>
+       </select>
+      </div>
+      <div class="grid relic-card-grid" id="relicGrid">
+      </div>
+     </section>
+     <section class="section searchable" id="raids">
+      <h2>
+       Live Community Raids
+      </h2>
+      <p class="lead">
+       Community boss fights use a join period, timed rounds, boss phases, enrage mechanics, persistent HP and contribution tracking.
+      </p>
+      <div class="callout"><b>Raid timers:</b> the join period and combat rounds advance automatically, even if nobody sends another chat message.</div>
+      <div class="grid">
+       <div class="card">
+        <h3>
+         Join
+        </h3>
+        <p>
+         The streamer spawns a boss; the raid rally lasts
+         <b>
+          60 seconds
+         </b>. Type
+         <code>
+          !raid
+         </code>
+         to enter.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Rounds
+        </h3>
+        <p>
+         A new round begins every
+         <b>
+          15 seconds
+         </b>. Bosses have multiple phases, special attacks and an enrage round.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Limit Break
+        </h3>
+        <p>
+         Your personal Limit Gauge fills through actions and damage. At 100%, use
+         <code>
+          !limit
+         </code>
+         to arm a large Job-specific burst for the next round.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Guild Summon
+        </h3>
+        <p>
+         The raid shares one Summon Gauge. At 100%, use Ifrit, Shiva, Ramuh, Titan, Garuda or Leviathan. Summoner/Sage may also call Bahamut.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Revive
+        </h3>
+        <p>
+         A surviving raider can use
+         <code>
+          !revive &lt;hero&gt;
+         </code>, spending their own Phoenix Down to return the target at 30% max HP.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Contribution
+        </h3>
+        <p>
+         Damage, healing and mitigation are tracked. Use
+         <code>
+          !raidstats
+         </code>
+         during the encounter.
+        </p>
+       </div>
+      </div>
+     </section>
+     <section class="section searchable" id="bosses">
+      <h2>
+       Raid Boss &amp; Superboss Catalog
+      </h2>
+      <p class="lead">
+       Browse all current raid bosses and Superbosses. Select a boss to see its phases, attacks, enrage round and loot.
+      </p>
+      <div class="toolbar">
+       <input class="search" id="bossSearch" placeholder="Search bosses, signatures or loot"/>
+       <select class="select" id="bossTier">
+        <option value="">
+         All tiers
+        </option>
+       </select>
+      </div>
+      <div class="grid boss-card-grid" id="bossGrid">
+      </div>
+     </section>
+     <section class="section searchable completion-catalog-section" id="completion">
+      <h2>
+       Achievements &amp; Titles
+      </h2>
+      <p class="lead">
+       Browse long-term accomplishments and cosmetic titles. Each collection stays tucked away until you need it.
+      </p>
+      <div class="callout">
+       <b>Trophy Hall:</b> Adventurer profiles showcase boss victories, completed Relics, mastered Jobs, rare achievements, equipped titles and major milestones.
+      </div>
+      <div class="completion-catalog-stack">
+       <details class="catalog-disclosure completion-catalog" data-completion-catalog="achievements" id="achievements">
+        <summary class="catalog-launch">
+         <span aria-hidden="true" class="catalog-launch-glyph">★</span>
+         <span class="catalog-launch-kicker">Milestones</span>
+         <span class="catalog-launch-title">Achievements</span>
+         <span class="catalog-launch-meta">66 milestones</span>
+         <span class="catalog-launch-action">Open Catalog</span>
+        </summary>
+        <div class="catalog-panel" id="achievementCatalog">
+         <div class="catalog-panel-top">
+          <button class="catalog-close" data-catalog-close="completion" type="button">Close Catalog</button>
+         </div>
+         <div class="card completion-catalog-card">
+          <h3>Achievement Catalog</h3>
+          <div id="achievementList"></div>
+         </div>
+        </div>
+       </details>
+       <details class="catalog-disclosure completion-catalog" data-completion-catalog="titles" id="titles">
+        <summary class="catalog-launch">
+         <span aria-hidden="true" class="catalog-launch-glyph">✦</span>
+         <span class="catalog-launch-kicker">Cosmetic Titles</span>
+         <span class="catalog-launch-title">Titles</span>
+         <span class="catalog-launch-meta">81 titles</span>
+         <span class="catalog-launch-action">Open Catalog</span>
+        </summary>
+        <div class="catalog-panel" id="titleCatalog">
+         <div class="catalog-panel-top">
+          <button class="catalog-close" data-catalog-close="completion" type="button">Close Catalog</button>
+         </div>
+         <div class="card completion-catalog-card">
+          <h3>Title Catalog</h3>
+          <div id="titleList"></div>
+         </div>
+        </div>
+       </details>
+      </div>
+     </section>
+     <section class="section searchable" id="faq">
+      <h2>
+       FAQ &amp; Glossary
+      </h2>
+      <p class="lead">
+       The short answers to the questions somebody will absolutely ask five minutes after you explain them.
+      </p>
+      <details>
+       <summary>
+        Do I lose XP or gear when I get KO'd?
+       </summary>
+       <div>
+        No. KO blocks combat until recovery, but there is no permanent death, XP loss, gear loss or durability system.
+       </div>
+      </details>
+      <details>
+       <summary>
+        Why can't I Venture?
+       </summary>
+       <div>
+        Common reasons: the relevant normal or Solo Venture cooldown is active, you're resting, you're KO'd, or you're already involved in the active channel encounter. Solo Venture uses its own 7-minute timer and does not consume the normal Venture cooldown.
+       </div>
+      </details>
+      <details>
+       <summary>
+        Does changing Jobs reset anything?
+       </summary>
+       <div>
+        No. Character Level persists and every Job keeps its own JP/Job Level. Your current HP is clamped to the new Job's valid maximum.
+       </div>
+      </details>
+      <details>
+       <summary>
+        What is JP?
+       </summary>
+       <div>
+        <b>
+         Job Points
+        </b>. JP levels the Job you are currently using. Job Levels unlock passive abilities and a Mastery at JLv.50.
+       </div>
+      </details>
+      <details>
+       <summary>
+        What are Hunt Seals?
+       </summary>
+       <div>
+        A Hunt currency earned primarily from named marks. Spend them at
+        <code>
+         !sealshop
+        </code>
+        and on some crafting/Relic costs.
+       </div>
+      </details>
+      <details>
+       <summary>
+        How does bad-luck protection work?
+       </summary>
+       <div>
+        Some rare drops become guaranteed after enough unsuccessful attempts. When the item finally drops, that protection resets.
+       </div>
+      </details>
+      <details>
+       <summary>
+        What is the difference between Character Level and Job Level?
+       </summary>
+       <div>
+        Character Level (1&ndash;99) is permanent overall power and unlock progression. Job Levels (1&ndash;50 each) are independent training tracks for specific Jobs.
+       </div>
+      </details>
+      <details>
+       <summary>
+        Can I join an encounter if I didn't start it?
+       </summary>
+       <div>
+        Yes. During the encounter rally use
+        <code>
+         !join
+        </code>
+        or
+        <code>
+         !venture
+        </code>. Joining consumes your own Venture cooldown.
+       </div>
+      </details>
+      <details>
+       <summary>
+        Can I instantly heal instead of camping?
+       </summary>
+       <div>
+        Yes. A Tent restores full HP and ends camp immediately. X-Potion also fully heals; Phoenix Down revives from KO.
+       </div>
+      </details>
+      <details>
+       <summary>
+        What do boss tiers mean?
+       </summary>
+       <div>
+        Primal Boss &rarr; World Boss &rarr; High Boss &rarr; Superboss &rarr; Ultimate Superboss. Higher tiers generally expect stronger guilds, larger HP pools and harsher raid tuning.
+       </div>
+      </details>
+     </section>
+    </div>
+    <footer class="footer">
+     Crystal Guild Player Guide · <a href="/privacy">Privacy Policy</a>
+    </footer>
+   </main>
+  </div>
+  <div aria-hidden="true" class="info-overlay" id="infoOverlay">
+   <div class="info-backdrop" data-info-close="">
+   </div>
+   <article aria-labelledby="infoTitle" aria-modal="true" class="info-panel" id="infoPanel" role="dialog" tabindex="-1">
+    <div aria-hidden="true" class="info-card-glow">
+    </div>
+    <header class="info-header">
+     <div>
+      <div class="info-kicker" id="infoKicker">
+       Crystal Guild
+      </div>
+      <h2 id="infoTitle">
+       Details
+      </h2>
+      <div class="statline info-badges" id="infoBadges">
+      </div>
+     </div>
+     <button aria-label="Close details" class="info-close" id="infoClose" type="button">
+      &times;
+     </button>
+    </header>
+    <div class="info-body" id="infoBody">
+    </div>
+   </article>
+  </div>
+  

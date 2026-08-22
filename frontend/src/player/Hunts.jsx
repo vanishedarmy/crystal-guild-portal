@@ -1,0 +1,503 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  submitAdventureState,
+  submitChallengeHunt,
+  submitTravelRegion,
+  submitSoloVenture,
+  waitForPortalAction,
+} from "../api/auth.js";
+import ProgressBar from "../components/ProgressBar.jsx";
+import StatCard from "../components/StatCard.jsx";
+import { usePortalAuth } from "../hooks/usePortalAuth.js";
+import { duration, number, pct } from "../utils/formatters.js";
+
+function actionKey(kind, target = "adventure") {
+  const suffix = globalThis.crypto?.randomUUID
+    ? globalThis.crypto.randomUUID()
+    : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
+  return `${kind}:${target}:${suffix}`;
+}
+
+async function finishedAction(response) {
+  const action = response?.action;
+  if (!action?.id) throw new Error("Crystal Guild did not return a request ID.");
+  if (action.status === "completed" || action.status === "failed") return action;
+  return waitForPortalAction(action.id, { attempts: 30, delayMs: 650 });
+}
+
+function remainingUntil(timestamp, nowMs) {
+  const seconds = Number(timestamp || 0) - Math.floor(nowMs / 1000);
+  return Math.max(0, seconds);
+}
+
+function levelValue(entry) {
+  const value = Number(entry?.monster?.level ?? entry?.min_level ?? 1);
+  return Number.isFinite(value) ? value : Number.POSITIVE_INFINITY;
+}
+
+function compareByLevel(left, right) {
+  return levelValue(left) - levelValue(right) || String(left?.name || "").localeCompare(String(right?.name || ""));
+}
+
+function soloVentureSummary(summary) {
+  if (!summary) return "";
+  const treasure = summary.type === "treasure";
+  const rewards = summary.rewards || {};
+  const enemy = summary.enemy || {};
+  const item = summary.item || {};
+  const loot = Array.isArray(rewards.loot) ? rewards.loot.filter(Boolean) : [];
+  if (treasure) {
+    return `Solo Venture: Found ${item.name || loot[0] || "treasure"}.`;
+  }
+  const enemyLabel = `${enemy.name || "an enemy"}${enemy.level ? ` Lv.${number(enemy.level)}` : ""}`;
+  if (summary.outcome === "victory") {
+    return `Solo Venture: Victory over ${enemyLabel} — +${number(rewards.xp)} XP · +${number(rewards.jp)} JP · +${number(rewards.gil)} Gil.`;
+  }
+  return `Solo Venture: Defeated by ${enemyLabel}.`;
+}
+
+function SoloVentureResult({ summary, cooldownRemaining }) {
+  if (!summary) return null;
+  const treasure = summary.type === "treasure";
+  const victory = summary.outcome === "victory";
+  const rewards = summary.rewards || {};
+  const player = summary.player || {};
+  const combat = summary.combat || {};
+  const enemy = summary.enemy || {};
+  const item = summary.item || {};
+  const loot = Array.isArray(rewards.loot) ? rewards.loot.filter(Boolean) : [];
+  const resultClass = treasure || victory ? "won" : "lost";
+  const resultLabel = treasure ? "Treasure" : victory ? "Victory" : "Defeat";
+
+  return (
+    <div className={`solo-result-panel solo-result-inline ${resultClass}`}>
+      <div className="panel-title-row">
+        <div>
+          <p className="eyebrow">Last Solo Venture</p>
+          <h3>{treasure ? "Treasure found" : `${resultLabel} · ${enemy.name || "Encounter"}`}</h3>
+          <p className="muted">{summary.region_name}{!treasure && enemy.level ? ` · Enemy Lv.${number(enemy.level)}` : ""}</p>
+        </div>
+        <span className={`small-badge ${treasure || victory ? "success" : ""}`}>{resultLabel}</span>
+      </div>
+
+      {treasure ? (
+        <div className="solo-result-highlight">
+          <span>Chest reward</span>
+          <strong>{item.name || loot[0] || "Treasure"}</strong>
+          <small>{[item.category, item.level ? `Lv.${number(item.level)}` : "", item.rarity].filter(Boolean).join(" · ")}</small>
+        </div>
+      ) : (
+        <div className="solo-result-grid">
+          <div><span>Battle</span><strong>{victory ? `Won in ${number(summary.rounds)} round${Number(summary.rounds) === 1 ? "" : "s"}` : `Ended after ${number(summary.rounds)} rounds`}</strong></div>
+          <div><span>Rewards</span><strong>{victory ? `+${number(rewards.xp)} XP · +${number(rewards.jp)} JP · +${number(rewards.gil)} Gil` : "No battle rewards"}</strong></div>
+          <div><span>Fellowship</span><strong>+{number(rewards.fellowship_renown)} Renown</strong></div>
+          <div><span>Condition</span><strong>HP {number(player.hp)} / {number(player.max_hp)}</strong></div>
+        </div>
+      )}
+
+      {!treasure ? (
+        <>
+          {Number(player.max_hp || 0) > 0 ? <ProgressBar value={pct(player.hp, player.max_hp)} className="hp" /> : null}
+          <div className="solo-result-combat-line">
+            <span>Damage dealt <strong>{number(combat.damage_dealt)}</strong></span>
+            <span>Damage taken <strong>{number(combat.damage_taken)}</strong></span>
+            <span>Best hit <strong>{number(combat.best_hit)}</strong></span>
+          </div>
+        </>
+      ) : (
+        <div className="solo-result-grid treasure-summary-grid">
+          <div><span>Fellowship</span><strong>+{number(rewards.fellowship_renown)} Renown</strong></div>
+          <div><span>Condition</span><strong>HP {number(player.hp)} / {number(player.max_hp)}</strong></div>
+        </div>
+      )}
+
+      {loot.length > 0 && !treasure ? <p className="solo-result-loot"><strong>Loot:</strong> {loot.join(" · ")}</p> : null}
+      {Array.isArray(rewards.levelups) && rewards.levelups.length ? <p className="solo-result-loot"><strong>Level up:</strong> {rewards.levelups.join(" · ")}</p> : null}
+      {Array.isArray(rewards.achievements) && rewards.achievements.length ? <p className="solo-result-loot"><strong>Achievement:</strong> {rewards.achievements.join(" · ")}</p> : null}
+      {Array.isArray(summary.notes) && summary.notes.length ? <p className="solo-result-loot"><strong>Companion:</strong> {summary.notes.join(" · ")}</p> : null}
+      <div className="adventure-combat-note">
+        <strong>{cooldownRemaining > 0 ? `Next Solo Venture in ${duration(cooldownRemaining)}` : "Solo Venture ready again"}</strong>
+        <span>{soloVentureSummary(summary)}</span>
+      </div>
+    </div>
+  );
+}
+
+function HuntRecord({ data }) {
+  return (
+    <section className="panel">
+      <div className="panel-title-row"><h2>Hunt Record</h2><span className="small-badge">View only</span></div>
+      <div className="stat-grid">
+        {Object.entries(data?.summary || {}).map(([rank, value]) => (
+          <StatCard key={rank} current={value.cleared} max={value.total} label={`${rank}-Rank`} />
+        ))}
+      </div>
+      <div className="content-grid adventure-record-grid">
+        {[...(data?.hunts || [])].sort(compareByLevel).map((hunt) => (
+          <article className="hunt-card" key={hunt.id || hunt.name}>
+            <div className="slot-label">{hunt.rank}-Rank · Lv.{number(hunt.min_level)}</div>
+            <div className="job-name">{hunt.name}</div>
+            <div className="card-meta">{hunt.monster}</div>
+            <div className="card-actions"><span className="small-badge">{number(hunt.clears)} clears</span></div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default function Hunts({ data, overview, onRefresh }) {
+  const { auth } = usePortalAuth();
+  const [state, setState] = useState(null);
+  const [message, setMessage] = useState("");
+  const [busy, setBusy] = useState("");
+  const [rank, setRank] = useState("ALL");
+  const [clock, setClock] = useState(() => Date.now());
+  const completionRefresh = useRef(0);
+
+  const username = String(overview?.identity?.username || data?.player?.username || "").toLowerCase();
+  const isOwnProfile = Boolean(
+    auth.authenticated
+    && auth.player?.username
+    && String(auth.player.username).toLowerCase() === username
+  );
+  const capabilities = useMemo(
+    () => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []),
+    [auth.action_capabilities],
+  );
+  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "CHALLENGE_HUNT"];
+  const actionsAvailable = Boolean(
+    isOwnProfile
+    && auth.actions_enabled
+    && requiredCapabilities.every((kind) => capabilities.has(kind))
+  );
+  const csrfToken = auth.csrf_token || "";
+
+  const loadState = useCallback(async ({ quiet = false } = {}) => {
+    if (!actionsAvailable || (busy && !quiet)) return null;
+    if (!quiet) {
+      setBusy("state");
+      setMessage("Checking the Adventure Board…");
+    }
+    try {
+      const response = await submitAdventureState(csrfToken, actionKey("adventure-state"));
+      const finished = await finishedAction(response);
+      if (!finished) {
+        if (!quiet) setMessage("The Adventure Board is still updating. Try again in a moment.");
+        return null;
+      }
+      if (finished.status !== "completed" || finished.result?.ok === false) {
+        if (!quiet) setMessage(finished.result?.message || "Adventure state could not be loaded.");
+        return null;
+      }
+      const next = finished.result?.data?.adventure_state || null;
+      if (next) {
+        setState(next);
+        setClock(Date.now());
+      }
+      if (!quiet) setMessage("Adventure Board refreshed.");
+      return next;
+    } catch (error) {
+      if (!quiet) setMessage(error.message);
+      return null;
+    } finally {
+      if (!quiet) setBusy("");
+    }
+  }, [actionsAvailable, busy, csrfToken]);
+
+  useEffect(() => {
+    if (!actionsAvailable || state) return;
+    void loadState({ quiet: true });
+  }, [actionsAvailable, state, loadState]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setClock(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!actionsAvailable || !state?.encounter) return undefined;
+    const refreshActive = () => {
+      if (document.visibilityState === "visible") void loadState({ quiet: true });
+    };
+    const timer = window.setInterval(refreshActive, 4000);
+    return () => window.clearInterval(timer);
+  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, loadState]);
+
+  useEffect(() => {
+    if (!actionsAvailable || !state) return undefined;
+    const deadlines = [
+      Number(state.venture?.available_at || 0),
+      Number(state.solo_venture?.available_at || 0),
+      ...((state.hunts || []).map((hunt) => Number(hunt.cooldown_available_at || 0))),
+      Number(state.encounter?.rally_closes_at || 0),
+    ].filter((value) => value > Math.floor(Date.now() / 1000));
+    if (!deadlines.length) return undefined;
+    const nearest = Math.min(...deadlines);
+    const waitMs = Math.max(250, nearest * 1000 - Date.now() + 250);
+    const timer = window.setTimeout(() => void loadState({ quiet: true }), waitMs);
+    return () => window.clearTimeout(timer);
+  }, [actionsAvailable, state, loadState]);
+
+  useEffect(() => {
+    if (!actionsAvailable) return undefined;
+    const refreshVisible = () => {
+      if (document.visibilityState === "visible") void loadState({ quiet: true });
+    };
+    window.addEventListener("focus", refreshVisible);
+    window.addEventListener("pageshow", refreshVisible);
+    document.addEventListener("visibilitychange", refreshVisible);
+    return () => {
+      window.removeEventListener("focus", refreshVisible);
+      window.removeEventListener("pageshow", refreshVisible);
+      document.removeEventListener("visibilitychange", refreshVisible);
+    };
+  }, [actionsAvailable, loadState]);
+
+  const runRequest = async (key, submit, fallback) => {
+    if (!actionsAvailable || busy) return;
+    setBusy(key);
+    setMessage("Crystal Guild is handling that request…");
+    try {
+      const response = await submit();
+      const finished = await finishedAction(response);
+      if (!finished) {
+        setMessage("Your request is still being processed. Please wait a moment before trying again.");
+        return;
+      }
+      const soloResult = finished.result?.data?.solo_result;
+      setMessage(soloResult ? soloVentureSummary(soloResult) : (finished.result?.message || fallback));
+      const next = finished.result?.data?.adventure_state;
+      if (next) {
+        setState(next);
+        setClock(Date.now());
+      } else if (finished.status === "completed" && finished.result?.ok !== false) {
+        await loadState({ quiet: true });
+      }
+      if (finished.status === "completed" && finished.result?.ok !== false) {
+        onRefresh?.();
+        window.clearTimeout(completionRefresh.current);
+        completionRefresh.current = window.setTimeout(() => onRefresh?.(), 3200);
+      }
+    } catch (error) {
+      setMessage(error.message);
+    } finally {
+      setBusy("");
+    }
+  };
+
+  if (!isOwnProfile) return <HuntRecord data={data} />;
+
+  const ventureRemaining = remainingUntil(state?.venture?.available_at, clock);
+  const soloRemaining = remainingUntil(state?.solo_venture?.available_at, clock);
+  const soloReason = soloRemaining > 0
+    ? `Solo Venture ready in ${duration(soloRemaining)}.`
+    : String(state?.solo_venture?.reason || "");
+  const encounter = state?.encounter || null;
+  const rallyRemaining = remainingUntil(encounter?.rally_closes_at, clock);
+  const roundRemaining = remainingUntil(encounter?.next_round_at, clock);
+  const currentRegion = state?.current_region || { name: overview?.region?.name || "Unknown Region" };
+  const regions = [...(state?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
+  const hunts = (state?.hunts || []).filter((hunt) => rank === "ALL" || hunt.rank === rank).sort(compareByLevel);
+  const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
+  const recentSoloSummary = soloVentureSummary(recentSoloResult);
+
+  return (
+    <section className="adventure-board-stack">
+      <section className="panel adventure-hero-panel">
+        <div className="panel-title-row adventure-title-row">
+          <div>
+            <p className="eyebrow">Adventure Board</p>
+            <h2>Choose Your Next Adventure</h2>
+            <p className="muted">Take a Solo Venture, travel between regions, or challenge Hunt marks here. Rally Ventures remain a Twitch chat activity.</p>
+          </div>
+          <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
+            {busy === "state" ? "Refreshing…" : "Refresh Board"}
+          </button>
+        </div>
+        <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>
+          <strong>{actionsAvailable ? "Adventure Board online" : "Adventure Board offline"}</strong>
+          <span>{actionsAvailable ? "Solo Venture, travel, and Hunts are ready to use." : "Adventure actions return when Crystal Guild reconnects."}</span>
+          {message ? <small aria-live="polite">{message}</small> : null}
+        </div>
+      </section>
+
+      <section className="panel venture-panel solo-venture-panel">
+        <div className="panel-title-row">
+          <div><p className="eyebrow">Solo Venture · Portal Only</p><h2>{soloRemaining > 0 ? `Ready in ${duration(soloRemaining)}` : "Take the road alone"}</h2></div>
+          <span className={`small-badge ${state?.solo_venture?.ready && soloRemaining <= 0 ? "success" : ""}`}>{soloRemaining > 0 ? "Recovering" : "Ready"}</span>
+        </div>
+        <p className="muted">A private one-click adventure that stays on the website. Encounter fights resolve immediately, with even Encounter/Treasure odds, a {duration(state?.solo_venture?.cooldown_seconds || 420)} cooldown, and enemies no more than {number(state?.solo_venture?.max_enemy_levels_above_player || 3)} levels above you.</p>
+        <div className="solo-venture-rules" aria-label="Solo Venture rules">
+          <span><strong>50 / 50</strong>Encounter / Treasure</span>
+          <span><strong>Instant</strong>Encounter resolution</span>
+          <span><strong>+3</strong>Enemy level cap</span>
+          <span><strong>7m</strong>Separate cooldown</span>
+        </div>
+        <div className="venture-action-row">
+          <button
+            type="button"
+            className="equipment-action-button"
+            disabled={!actionsAvailable || !state?.solo_venture?.ready || soloRemaining > 0 || Boolean(busy)}
+            onClick={() => runRequest("solo-venture", () => submitSoloVenture(csrfToken, actionKey("solo-venture")), "Solo Venture complete.")}
+          >
+            {busy === "solo-venture" ? "Resolving…" : "Solo Venture"}
+          </button>
+          {soloReason ? <span className="adventure-disabled-reason">{soloReason}</span> : null}
+        </div>
+        {recentSoloResult ? (
+          <div className="solo-result-wrap">
+            <p className="solo-result-summary" aria-live="polite"><strong>Last result:</strong> {recentSoloSummary.replace(/^Solo Venture:\s*/, "")}</p>
+            <SoloVentureResult summary={recentSoloResult} cooldownRemaining={soloRemaining} />
+          </div>
+        ) : null}
+      </section>
+
+      <section className="panel rally-venture-notice">
+        <div className="panel-title-row">
+          <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
+          <span className="small-badge">Live Stream</span>
+        </div>
+        <p className="muted">Rally Ventures are started and joined in Twitch chat. Use <code>!venture</code> to start one and <code>!join</code> to enter an open rally.</p>
+        <div className="solo-venture-rules rally-venture-rules" aria-label="Rally Venture rules">
+          <span><strong>70 / 30</strong>Encounter / Treasure</span>
+          <span><strong>+10</strong>Enemy level cap</span>
+          <span><strong>+5% / level</strong>XP / JP / Gil reward bonus</span>
+          <span><strong>+50%</strong>Maximum reward bonus</span>
+        </div>
+        <div className="adventure-combat-note rally-venture-chat-note">
+          <strong>{ventureRemaining > 0 ? `Rally Venture ready in ${duration(ventureRemaining)}` : "Rally Venture ready in Twitch chat"}</strong>
+          <span>Each enemy level above your hero adds 5% XP, JP, and Gil, up to 50%. Treasure chests keep their normal rewards.</span>
+        </div>
+      </section>
+
+      <section className="panel adventure-region-panel">
+        <div className="panel-title-row">
+          <div><p className="eyebrow">Current Region</p><h2>{currentRegion.name}</h2></div>
+          <span className="small-badge">Lv.{number(currentRegion.min_level || 1)}+</span>
+        </div>
+        <p className="muted">{currentRegion.description}</p>
+        <div className="adventure-region-grid">
+          {regions.map((region) => (
+            <article className={`adventure-region-card ${region.current ? "current" : ""} ${!region.unlocked ? "locked" : ""}`} key={region.id}>
+              <div className="card-status-row adventure-region-head">
+                <div className="slot-label">Lv.{number(region.min_level)}+</div>
+                <span className={`small-badge ${region.current ? "success" : !region.unlocked ? "locked" : ""}`}>{region.current ? "Current" : region.unlocked ? "Unlocked" : "Locked"}</span>
+              </div>
+              <h3>{region.name}</h3>
+              <p>{region.description}</p>
+              {!region.current ? (
+                <div className="adventure-card-footer">
+                  <button
+                    type="button"
+                    className="equipment-action-button secondary"
+                    disabled={!actionsAvailable || !region.can_travel || Boolean(busy)}
+                    title={region.reason || "Travel to this region"}
+                    onClick={() => runRequest(`travel:${region.id}`, () => submitTravelRegion(region.id, csrfToken, actionKey("travel", region.id)), "Travel complete.")}
+                  >
+                    {busy === `travel:${region.id}` ? "Traveling…" : "Travel"}
+                  </button>
+                </div>
+              ) : null}
+              {region.reason && !region.current ? <small className="adventure-disabled-reason">{region.reason}</small> : null}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {encounter ? (
+        <section className={`panel active-adventure-panel ${encounter.kind}`}>
+          <div className="panel-title-row">
+            <div>
+              <p className="eyebrow">{encounter.kind === "hunt" ? `${encounter.hunt?.rank || ""}-Rank Active Hunt` : encounter.kind === "solo_venture" ? "Solo Venture Encounter" : "Active Encounter"}</p>
+              <h2>{encounter.hunt?.name || encounter.monster?.name}</h2>
+              <p className="muted">{encounter.monster?.name} · Lv.{number(encounter.monster?.level)} · {encounter.region?.name}</p>
+            </div>
+            <span className="small-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
+          </div>
+          {encounter.state === "combat" && Number(encounter.enemy_max_hp || 0) > 0 ? (
+            <div className="adventure-enemy-vitals">
+              <div><span>Enemy HP</span><strong>{number(encounter.enemy_hp)} / {number(encounter.enemy_max_hp)}</strong></div>
+              <ProgressBar value={pct(encounter.enemy_hp, encounter.enemy_max_hp)} className="hp" />
+              <small>{roundRemaining > 0 ? `Next round in ${duration(roundRemaining)}` : "Round resolving…"}</small>
+            </div>
+          ) : null}
+          <div className="adventure-party-grid">
+            {(encounter.party || []).map((member) => (
+              <div className="adventure-party-member" key={`${member.username}:${member.display_name}`}>
+                <strong>{member.display_name}</strong><span>{member.job_name}</span>
+                {encounter.state === "combat" && Number(member.max_hp || 0) > 0 ? <small>HP {number(member.hp)} / {number(member.max_hp)}</small> : null}
+              </div>
+            ))}
+          </div>
+          {encounter.state === "rally" && encounter.kind === "venture" ? (
+            <div className="adventure-combat-note rally-venture-chat-note">
+              <strong>Rally entry is in Twitch chat.</strong>
+              <span>{encounter.you_joined ? "You are already in this rally. Watch chat for the battle start." : "Type !join in Twitch chat before the rally closes to take part."}</span>
+            </div>
+          ) : null}
+          {encounter.state === "combat" ? (
+            <div className="adventure-combat-note">
+              <strong>Battle is underway.</strong>
+              <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : encounter.kind === "venture" ? "Rally battles use Twitch chat for combat. If you do not choose an action, your hero uses the default action." : "Hunt combat uses Twitch chat. If you do not choose an action, your hero uses the default action."}</span>
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
+      {state?.recent_result && state.recent_result.kind !== "solo_venture" ? (
+        <section className={`panel adventure-result-panel ${state.recent_result.won ? "won" : "lost"}`}>
+          <div className="panel-title-row"><h2>{state.recent_result.won ? "Adventure Complete" : "Adventure Ended"}</h2><span className="small-badge">Recent result</span></div>
+          <strong>{state.recent_result.hunt_name || state.recent_result.monster_name}</strong>
+          {(state.recent_result.messages || []).map((line, index) => <p key={`${index}:${line}`}>{line}</p>)}
+        </section>
+      ) : null}
+
+      <section className="panel hunt-board-panel">
+        <div className="panel-title-row hunt-board-title-row">
+          <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
+          <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
+        </div>
+        <div className="hunt-rank-filters" role="group" aria-label="Filter Hunts by rank">
+          {["ALL", "C", "B", "A", "S"].map((value) => <button key={value} type="button" className={rank === value ? "active" : ""} onClick={() => setRank(value)}>{value === "ALL" ? "All" : `${value}-Rank`}</button>)}
+        </div>
+        <div className="hunt-board-grid">
+          {hunts.map((hunt) => {
+            const cooldown = remainingUntil(hunt.cooldown_available_at, clock);
+            const available = Boolean(hunt.challengeable && cooldown <= 0);
+            return (
+              <article className={`adventure-hunt-card rank-${String(hunt.rank || "c").toLowerCase()} ${available ? "available" : ""}`} key={hunt.id}>
+                <div className="adventure-hunt-head">
+                  <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv.{number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
+                  <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : "Locked"}</span>
+                </div>
+                <div className="hunt-reward-grid">
+                  <span><strong>{number(hunt.rewards?.xp)}</strong> XP</span>
+                  <span><strong>{number(hunt.rewards?.jp)}</strong> JP</span>
+                  <span><strong>{number(hunt.rewards?.gil)}</strong> Gil</span>
+                  <span><strong>{number(hunt.rewards?.seals)}</strong> Seals</span>
+                </div>
+                <div className="hunt-traits">
+                  {hunt.monster?.weakness ? <span>Weak: <strong>{String(hunt.monster.weakness)}</strong></span> : null}
+                  {hunt.monster?.resistance ? <span>Resists: <strong>{String(hunt.monster.resistance)}</strong></span> : null}
+                  {hunt.first_clear_rewards?.length ? <span>First clear: <strong>{hunt.first_clear_rewards.join(" · ")}</strong></span> : null}
+                </div>
+                <div className="adventure-card-footer">
+                  <span className="adventure-disabled-reason">{cooldown > 0 ? `Available in ${duration(cooldown)}` : hunt.reason}</span>
+                  <button
+                    type="button"
+                    className="equipment-action-button"
+                    disabled={!actionsAvailable || !available || Boolean(busy)}
+                    onClick={() => runRequest(`hunt:${hunt.id}`, () => submitChallengeHunt(hunt.id, csrfToken, actionKey("hunt", hunt.id)), "Hunt accepted.")}
+                  >
+                    {busy === `hunt:${hunt.id}` ? "Accepting…" : "Challenge Hunt"}
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </section>
+  );
+}

@@ -1,0 +1,6 @@
+Crystal Guild Web v1.1.14 — Cloud Continuity
+Runtime: 1.1.14-cloud-continuity
+Frontend asset revision: 1.1.14-continuity1
+Hosted sync schema 1 | Portal Action protocol 12
+
+Includes hosted Python service, React/Vite frontend, Player Guide assets, Streamer Dashboard, Fellowship, Privacy Policy, hosted OBS overlay, tests and Render/Docker deployment files.

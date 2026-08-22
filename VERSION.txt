@@ -1,0 +1,6 @@
+Crystal Guild Web v1.1.14 — Cloud Continuity
+Runtime: 1.1.14-cloud-continuity
+Frontend asset revision: 1.1.14-continuity1
+Local DB schema peer: 4
+Hosted sync schema: 1
+Portal Action protocol: 12

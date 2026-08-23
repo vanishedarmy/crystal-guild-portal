@@ -4688,6 +4688,39 @@ button.featured-trophy {
   font-size: 0.76rem;
   line-height: 1.42;
 }
+.moogle-stat-summary {
+  min-width: 0;
+  margin-top: 0.08rem;
+  padding: 0.58rem 0.64rem;
+  display: grid;
+  gap: 0.22rem;
+  border: 1px solid rgba(211, 177, 91, 0.2);
+  border-radius: 8px;
+  background: rgba(211, 177, 91, 0.055);
+}
+.moogle-stat-label {
+  color: var(--gold-bright);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.moogle-stat-summary strong {
+  min-width: 0;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  line-height: 1.38;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.moogle-stat-summary small {
+  min-width: 0;
+  color: var(--crystal-soft);
+  font-size: 0.69rem;
+  line-height: 1.34;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 .moogle-requirement {
   color: var(--crystal-soft);
   font-size: 0.72rem;
@@ -6095,130 +6128,12 @@ body { font-size: 15px; line-height: 1.54; }
   .hunt-rank-filters button { flex: 1 1 calc(50% - .4rem); }
 }
 
-/* v1.1.14 Cloud Continuity Hotfix 3a — Jobs ability quick reference. */
-.job-reference-block {
-  display: grid;
-  gap: .85rem;
-  margin-top: .35rem;
-  padding-top: .85rem;
-  border-top: 1px solid var(--line);
-  min-width: 0;
+/* v1.1.14 Cloud Continuity Hotfix 3b — compact Job cards + detailed pop-out reference. */
+.public-job-actions {
+  margin-top: auto;
+  padding-top: .45rem;
 }
-.job-combat-identity {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem;
-}
-.job-combat-identity > div {
-  min-width: 0;
-  padding: .55rem .6rem;
-  border: 1px solid rgba(143, 219, 255, .12);
-  border-radius: 10px;
-  background: rgba(255,255,255,.025);
-}
-.job-combat-identity span,
-.job-detail-stat-grid span,
-.job-detail-growth-grid span {
-  display: block;
-  color: var(--muted);
-  font-size: .62rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.job-combat-identity strong,
-.job-detail-stat-grid strong,
-.job-detail-growth-grid strong {
-  display: block;
-  margin-top: .2rem;
-  color: var(--text);
-  font-size: .82rem;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-.job-reference-section { display: grid; gap: .5rem; min-width: 0; }
-.job-reference-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .6rem;
-  flex-wrap: wrap;
-}
-.job-command-hint {
-  color: var(--muted);
-  font-size: .7rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  overflow-wrap: anywhere;
-}
-.job-active-ability-list,
-.job-passive-list,
-.job-detail-ability-list { display: grid; gap: .45rem; min-width: 0; }
-.job-active-ability,
-.job-passive-row,
-.job-detail-ability {
-  min-width: 0;
-  padding: .62rem .68rem;
-  border: 1px solid rgba(143, 219, 255, .13);
-  border-radius: 11px;
-  background: rgba(2, 13, 22, .34);
-}
-.job-active-ability.ready,
-.job-passive-row.ready,
-.job-detail-ability.ready { border-color: rgba(93, 213, 158, .22); }
-.job-active-ability.locked,
-.job-passive-row.locked,
-.job-detail-ability.locked { background: rgba(5, 16, 27, .46); }
-.job-ability-heading,
-.job-detail-ability-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: .55rem;
-  min-width: 0;
-}
-.job-ability-heading > strong,
-.job-detail-ability-head > strong { min-width: 0; overflow-wrap: anywhere; }
-.job-ability-badges { display: flex; justify-content: flex-end; gap: .25rem; flex-wrap: wrap; }
-.job-ability-badges .small-badge { font-size: .58rem; padding: .2rem .35rem; }
-.job-active-ability p,
-.job-passive-row p,
-.job-mastery-reference p,
-.job-detail-ability p {
-  margin: .32rem 0 0;
-  color: var(--muted);
-  font-size: .78rem;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-.job-passive-row {
-  display: grid;
-  grid-template-columns: auto minmax(0,1fr) auto;
-  gap: .55rem;
-  align-items: start;
-}
-.job-passive-level {
-  color: var(--gold);
-  font-size: .68rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-.job-passive-row > div { min-width: 0; }
-.job-passive-row > div strong { font-size: .8rem; overflow-wrap: anywhere; }
-.job-passive-row .small-badge { align-self: start; font-size: .58rem; }
-.job-mastery-reference {
-  display: grid;
-  gap: .2rem;
-  padding: .7rem;
-  border: 1px solid rgba(230, 203, 136, .24);
-  border-radius: 11px;
-  background: rgba(230, 203, 136, .045);
-}
-.job-mastery-reference > strong { color: var(--text); overflow-wrap: anywhere; }
-.job-reference-empty { color: var(--muted); font-size: .78rem; padding: .55rem 0; }
-
-/* Wider cards keep the richer reference readable without turning descriptions into narrow columns. */
-.management-job-grid,
-.character-management-panel > .job-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.public-job-actions .equipment-action-button { width: 100%; }
 
 .job-detail-body code { color: var(--crystal-soft); }
 .job-detail-stat-grid {
@@ -6235,29 +6150,65 @@ body { font-size: 15px; line-height: 1.54; }
   border-radius: 10px;
   background: rgba(255,255,255,.025);
 }
+.job-detail-stat-grid span,
+.job-detail-growth-grid span {
+  display: block;
+  color: var(--muted);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.job-detail-stat-grid strong,
+.job-detail-growth-grid strong {
+  display: block;
+  margin-top: .2rem;
+  color: var(--text);
+  font-size: .82rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
 .job-detail-growth-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0,1fr));
   gap: .45rem;
   margin-top: .6rem;
 }
+.job-detail-ability-list { display: grid; gap: .45rem; min-width: 0; }
+.job-detail-ability {
+  min-width: 0;
+  padding: .62rem .68rem;
+  border: 1px solid rgba(143, 219, 255, .13);
+  border-radius: 11px;
+  background: rgba(2, 13, 22, .34);
+}
+.job-detail-ability.ready { border-color: rgba(93, 213, 158, .22); }
+.job-detail-ability.locked { background: rgba(5, 16, 27, .46); }
+.job-detail-ability-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .55rem;
+  min-width: 0;
+}
+.job-detail-ability-head > strong { min-width: 0; overflow-wrap: anywhere; }
 .job-detail-ability-head > span { color: var(--muted); font-size: .72rem; text-align: right; }
+.job-detail-ability p {
+  margin: .32rem 0 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
 .job-detail-ability .small-badge { display: inline-flex; margin-top: .45rem; }
 
 @media (max-width: 820px) {
-  .management-job-grid,
-  .character-management-panel > .job-grid { grid-template-columns: 1fr; }
   .job-detail-growth-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
 }
 @media (max-width: 560px) {
-  .job-combat-identity,
   .job-detail-stat-grid { grid-template-columns: 1fr; }
-  .job-ability-heading,
   .job-detail-ability-head { flex-direction: column; }
-  .job-ability-badges { justify-content: flex-start; }
   .job-detail-ability-head > span { text-align: left; }
-  .job-passive-row { grid-template-columns: auto minmax(0,1fr); }
-  .job-passive-row .small-badge { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 390px) {
   .job-detail-growth-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }

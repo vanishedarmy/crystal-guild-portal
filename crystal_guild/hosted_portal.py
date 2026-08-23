@@ -23,17 +23,17 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.14-cloud-continuity-h3c"
-FRONTEND_ASSET_REVISION = "1.1.14-continuity3c"
+HOSTED_PORTAL_VERSION = "1.1.15-wayfarer"
+FRONTEND_ASSET_REVISION = "1.1.15-wayfarer1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 12
+ACTION_PROTOCOL_VERSION = 13
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
-    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "CHALLENGE_HUNT",
+    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO",
 }
 MAX_ACTION_BYTES = 16 * 1024
@@ -655,9 +655,16 @@ class HostedPortalStore:
             if not 2 <= len(name) <= 20 or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 '\-]{1,19}", name):
                 raise ValueError("Invalid Chocobo name. Use 2–20 letters, numbers, spaces, apostrophes, or hyphens.")
             payload = {"name": name}
-        elif kind in {"ADVENTURE_STATE", "SOLO_VENTURE"}:
+        elif kind in {"ADVENTURE_STATE", "SOLO_VENTURE", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "SOLO_EXPEDITION_ACTION":
+            if set(payload) != {"action"}:
+                raise ValueError("SOLO_EXPEDITION_ACTION requires only action.")
+            action = str(payload.get("action") or "").strip().lower()
+            if not re.fullmatch(r"(?:attack|defend|ability:[a-z0-9_.-]+|item:[a-z0-9_.-]+)", action):
+                raise ValueError("Invalid Solo Venture battle action.")
+            payload = {"action": action}
         elif kind == "TRAVEL_REGION":
             if set(payload) != {"region_id"}:
                 raise ValueError("TRAVEL_REGION requires only region_id.")

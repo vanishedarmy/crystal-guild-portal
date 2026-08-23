@@ -1,3 +1,34 @@
+# Crystal Guild v1.1.15 — Wayfarer — Hotfix 1
+
+Hotfix 1 adds a reusable, player-facing **What's New** section to the Adventurer Portal Overview. The latest major update is shown near the top of the character home so players can quickly understand what changed without reading developer release notes.
+
+## What's New — Wayfarer
+
+The first featured entry explains the interactive Solo Venture in plain player language:
+
+- choose each encounter turn with **Attack / Ability / Use Item / Defend**;
+- **Return to Guild** to bank spoils or **Press On** through up to three stages;
+- HP, MP/AP, statuses, and consumed items carry forward while pressing deeper;
+- every stage uses the new **60% Encounter / 40% Treasure** split;
+- Solo Venture has no battle timer and waits for the player even after leaving or refreshing the Portal.
+
+The panel includes a direct **Go to Adventure Board** action. The content is driven by a reusable major-update list so future major releases can be added to the same section, with the newest entry featured automatically and older entries available as update history.
+
+The layout collapses cleanly on mobile and preserves keyboard/focus accessibility.
+
+## Compatibility
+
+- Bot/Web runtime: `1.1.15-wayfarer`
+- Frontend asset revision: `1.1.15-wayfarer1h1`
+- Local DB schema: **5**
+- Hosted sync schema: **1**
+- Portal Action protocol: **13**
+- Twitch prefix: `!`
+
+This is a **Web presentation hotfix only**. No database migration, player reset, Bot replacement, new Render secret, hosted sync change, Portal protocol change, or Twitch OAuth change is required.
+
+---
+
 # Crystal Guild v1.1.15 — Wayfarer
 
 Wayfarer turns the Portal-only **Solo Venture** into a compact, interactive RPG run while preserving Rally Venture as Crystal Guild's higher-risk live-stream cooperative mode. It also reorganizes the Adventurer Portal so the most frequently used character actions appear first.
@@ -58,7 +89,7 @@ Profile tabs now prioritize the normal player journey:
 ## Compatibility and migration
 
 - Bot/Web runtime: `1.1.15-wayfarer`
-- Frontend asset revision: `1.1.15-wayfarer1`
+- Frontend asset revision: `1.1.15-wayfarer1h1`
 - Local DB schema: **5** (from 4)
 - Hosted sync schema: **1**
 - Portal Action protocol: **13** (from 12)

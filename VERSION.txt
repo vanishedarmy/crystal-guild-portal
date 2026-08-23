@@ -3,5 +3,5 @@ Runtime: 1.1.15-wayfarer
 Hosted sync schema: 1
 Hosted sync runtime compatibility: 1.1.15-wayfarer
 Portal Action protocol: 13
-Frontend asset revision: 1.1.15-wayfarer1
+Frontend asset revision: 1.1.15-wayfarer1h1
 Matching Bot runtime: 1.1.15-wayfarer

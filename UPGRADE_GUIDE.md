@@ -1,3 +1,20 @@
+# Crystal Guild v1.1.15 — Wayfarer Hotfix 1 Upgrade Guide
+
+## Upgrade from v1.1.15 Wayfarer
+
+Hotfix 1 is Web-only. If v1.1.15 Wayfarer is already running successfully, the schema-5 migration is already complete and **does not run again for this hotfix**.
+
+1. Keep the existing `1.1.15-wayfarer` Bot running; no Bot files or database changes are required.
+2. Apply the **Wayfarer → Wayfarer Hotfix 1 Web patch**, or replace the hosted Web files with the full Hotfix 1 Web package.
+3. Commit/push the Web files to GitHub and redeploy the hosted Render Web service as usual.
+4. Verify Web `/api/health` reports frontend revision `1.1.15-wayfarer1h1`, runtime `1.1.15-wayfarer`, and Portal Action protocol **13**.
+5. Open an Adventurer Portal profile on **Overview** and confirm the **What's New** panel appears after the Adventurer Home quick summary.
+6. Confirm **Go to Adventure Board** opens Adventure Board and the notice stacks cleanly on mobile.
+
+No database migration command, backup cycle, player reset, OAuth reauthorization, Render secret change, or Bot restart is introduced by Hotfix 1.
+
+---
+
 # Crystal Guild v1.1.15 — Wayfarer Upgrade Guide
 
 Wayfarer upgrades the certified **v1.1.14 Cloud Continuity Hotfix 3c** baseline in place. Player progression is preserved.
@@ -12,7 +29,7 @@ Wayfarer upgrades the certified **v1.1.14 Cloud Continuity Hotfix 3c** baseline 
 6. Start the Bot. On first database open, schema 4 automatically migrates to schema 5.
 7. Confirm a verified `backups/pre_schema_5_<timestamp>.db` was created for an existing Guild before migration.
 8. Verify `!cgversion` / `!health` reports `1.1.15-wayfarer`.
-9. Verify Web `/api/health` reports frontend revision `1.1.15-wayfarer1` and Portal Action protocol **13**.
+9. Verify Web `/api/health` reports frontend revision `1.1.15-wayfarer1h1` and Portal Action protocol **13**.
 10. Open Adventure Board and start a Solo Venture. Confirm the card either shows a Treasure result/Return choice or an interactive Encounter with **Attack / Ability / Use Item / Defend** and **Enemy intent**.
 11. Clear a stage and confirm **Return to Guild** and **Press On** appear before Stage III.
 12. Confirm the profile tab order begins **Overview → Adventure Board → Jobs → Equipment & Inventory**.

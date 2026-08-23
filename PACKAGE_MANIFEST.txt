@@ -1,6 +1,6 @@
 Crystal Guild Web v1.1.15 — Wayfarer
 Hosted runtime: 1.1.15-wayfarer
-Frontend asset revision: 1.1.15-wayfarer1
+Frontend asset revision: 1.1.15-wayfarer1h1
 Hosted sync schema: 1
 Portal Action protocol: 13
 Matching Bot DB schema: 5

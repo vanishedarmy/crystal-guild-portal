@@ -6303,3 +6303,198 @@ body { font-size: 15px; line-height: 1.54; }
 @media (prefers-reduced-motion: reduce) {
   .site-header { transition: none; }
 }
+
+/* v1.1.15 — Wayfarer interactive Solo Expedition */
+.solo-expedition-shell {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.solo-expedition-ledger {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .65rem;
+}
+
+.solo-expedition-ledger > div,
+.solo-combatant,
+.solo-round-log,
+.solo-action-picker,
+.solo-stage-cleared {
+  border: 1px solid var(--line, rgba(130, 184, 214, .25));
+  border-radius: 14px;
+  background: rgba(4, 18, 29, .58);
+}
+
+.solo-expedition-ledger > div {
+  display: grid;
+  gap: .2rem;
+  padding: .75rem .85rem;
+}
+
+.solo-expedition-ledger span,
+.solo-combatant > small,
+.solo-action-option small {
+  color: var(--muted, #a6bccb);
+}
+
+.solo-combat-board {
+  display: grid;
+  gap: .85rem;
+}
+
+.solo-combatant {
+  display: grid;
+  gap: .55rem;
+  padding: .9rem;
+}
+
+.solo-combatant.enemy {
+  border-color: rgba(224, 118, 118, .34);
+}
+
+.solo-combatant.hero {
+  border-color: rgba(111, 192, 224, .34);
+}
+
+.solo-combat-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .8rem;
+}
+
+.solo-combat-head h3 {
+  margin: .12rem 0 0;
+}
+
+.solo-enemy-intent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .6rem .7rem;
+  border-radius: 10px;
+  background: rgba(154, 65, 65, .12);
+}
+
+.solo-enemy-intent span {
+  color: var(--muted, #a6bccb);
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.solo-round-log {
+  display: grid;
+  gap: .35rem;
+  padding: .8rem .9rem;
+}
+
+.solo-round-log span {
+  line-height: 1.45;
+}
+
+.solo-command-bar,
+.solo-choice-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .6rem;
+}
+
+.solo-command-bar .equipment-action-button,
+.solo-choice-actions .equipment-action-button {
+  width: 100%;
+  min-height: 46px;
+}
+
+.solo-action-picker {
+  display: grid;
+  gap: .75rem;
+  padding: .85rem;
+}
+
+.solo-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .6rem;
+}
+
+.solo-action-option {
+  display: grid;
+  gap: .35rem;
+  width: 100%;
+  min-height: 94px;
+  padding: .75rem;
+  border: 1px solid rgba(113, 177, 209, .34);
+  border-radius: 11px;
+  background: rgba(16, 45, 61, .72);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.solo-action-option > span:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.solo-action-option > span:nth-child(2) {
+  color: var(--accent-soft, #cce8f5);
+  font-size: .82rem;
+}
+
+.solo-action-option:hover:not(:disabled),
+.solo-action-option:focus-visible {
+  border-color: rgba(155, 221, 245, .75);
+  background: rgba(23, 61, 80, .92);
+}
+
+.solo-action-option:disabled {
+  cursor: not-allowed;
+  opacity: .64;
+}
+
+.solo-retreat-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.solo-retreat-row .danger {
+  border-color: rgba(224, 118, 118, .45);
+}
+
+.solo-stage-cleared {
+  display: grid;
+  gap: .85rem;
+  padding: .9rem;
+}
+
+.solo-choice-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 820px) {
+  .solo-expedition-ledger {
+    grid-template-columns: 1fr;
+  }
+  .solo-command-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .solo-action-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .solo-command-bar,
+  .solo-choice-actions {
+    grid-template-columns: 1fr;
+  }
+  .solo-retreat-row .equipment-action-button {
+    width: 100%;
+  }
+}

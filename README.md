@@ -1,9 +1,8 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3a
+# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3b
 
-Matching website for Crystal Guild Bot runtime `1.1.14-cloud-continuity-h3`.
+Hotfix 3b keeps the richer Job reference from Hotfix 3a but moves it out of the main Job cards and into the existing Job detail pop-out. The Jobs tab is compact again, while View Details retains Combat Identity, Stat Growth, Battle Abilities, Passive Job Milestones, and JLv.50 Mastery.
 
-Hotfix 3a expands the Adventurer Portal Jobs tab into an in-Portal Job/ability quick reference. Job cards use the same Guide catalog to show combat identity, Active Battle abilities, passive milestones, and JLv.50 Mastery, with current unlock state. Job details now include the deeper Guide-style Combat Identity and Stat Growth information.
+The Moogle Emporium now enriches equipment shop stock from the shared Guide item catalog and displays equipment stat boosts plus the net comparison against the currently equipped item in the matching slot.
 
-Frontend asset revision: `1.1.14-continuity3a`.
-
-Hosted sync schema 1 and Portal Action protocol 12 remain unchanged. No Bot redeploy, new Web secret, database migration, or OAuth change is required.
+Frontend asset revision: `1.1.14-continuity3b`.
+Hosted runtime remains `1.1.14-cloud-continuity-h3`; hosted sync schema 1 and Portal Action protocol 12 are unchanged.

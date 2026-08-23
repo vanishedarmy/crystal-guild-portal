@@ -1,9 +1,9 @@
-Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3a
+Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3b
 Hosted runtime: 1.1.14-cloud-continuity-h3
-Frontend asset revision: 1.1.14-continuity3a
+Frontend asset revision: 1.1.14-continuity3b
 Hosted sync schema: 1
 Portal Action protocol: 12
-Purpose: Jobs tab Battle Ability + passive milestone + Mastery quick reference using shared Guide catalog
+Purpose: Moogle Emporium equipment stat comparison + compact Jobs cards with Guide-style details pop-out
 Database migration: none
 Bot redeploy: none
 New Web secrets: none

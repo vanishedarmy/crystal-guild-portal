@@ -1,22 +1,42 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3a
+# Crystal Guild v1.1.14 — Cloud Continuity Hotfix 3b
 
-## Jobs ability quick reference
+Hotfix 3b is a Web-only refinement on top of the certified Hotfix 3/3a line. The Bot runtime, Raid action fix, Rally Venture consolidation, selectable-control pass, database schema, hosted sync schema, and Portal Action protocol remain unchanged.
 
-The Adventurer Portal **Jobs** tab now mirrors the Player Guide's useful Job information instead of requiring players to leave the Portal to check abilities.
+## Moogle Emporium — equipment stat comparison
 
-Every Job card shows:
+Equipment cards in the Moogle Emporium now show their stat bonuses directly in the shop before purchase. The Portal enriches the lightweight shop rotation from the existing versioned `guide-data.json` item catalog, so the shop and Player Guide use the same equipment definitions.
 
-- Attack, Signature, and primary MP/AP resource;
-- Active Battle abilities with JLv. unlock, cost, target, description, and Ready/Locked state;
-- passive Job milestones with JLv. unlock, description, and Learned/Locked state;
-- JLv.50 cross-Job Mastery.
+For weapons, armor, and accessories, the card shows:
 
-The Job detail dialog also adds Guide-style Combat Identity, Stat Growth, full Battle Ability reference, passive milestones, and Mastery.
+- the item's complete stat-boost line;
+- a comparison against the currently equipped item in the same slot when one exists;
+- the net stat delta, making upgrades and trade-offs visible at a glance;
+- an explicit empty-slot note when no item is equipped in that slot.
 
-## One frontend source of truth
+No shop price, rotation, eligibility, inventory, or purchase logic changes.
 
-The Portal reuses the existing versioned `guide-data.json` catalog. It does not duplicate ability definitions or expand hosted `CHARACTER_STATE` payloads, keeping the existing Portal Action result-size contract intact.
+## Jobs — compact cards, detailed pop-out
+
+The Hotfix 3a Guide-style Job reference remains available, but the Jobs tab cards are restored to the compact pre-3a presentation. Job cards again focus on Job name, status, JLv/progress, signature, unlock requirements, and management actions.
+
+The full reference now lives in **View <Job> Details**, including Combat Identity, Stat Growth, Battle Abilities with JLv/MP/AP/target information, Passive Job Milestones, and JLv.50 Cross-Job Mastery.
+
+Public/read-only Job cards now also expose an explicit **View <Job> Details** button instead of relying only on whole-card activation.
 
 ## Compatibility
 
-Hosted runtime remains `1.1.14-cloud-continuity-h3`; frontend asset revision advances to `1.1.14-continuity3a`. Hosted sync schema 1 and Portal Action protocol 12 are unchanged. No hosted DB migration, Bot redeploy, new Web secret, or OAuth change is required.
+- Bot runtime: `1.1.14-cloud-continuity-h3` — unchanged
+- Hosted Web runtime: `1.1.14-cloud-continuity-h3` — unchanged
+- Frontend asset revision: `1.1.14-continuity3b`
+- Hosted sync version/snapshots: `1.1.14-cloud-continuity`
+- Local DB schema: 4
+- Hosted sync schema: 1
+- Portal Action protocol: 12
+- Twitch prefix: `!`
+- Database migration: none
+- Player reset: none
+- New Render secrets: none
+- New OAuth scope: none
+- Bot redeploy required from Hotfix 3a: no
+
+Hotfix 2's subscriber authorization requirement (`channel:read:subscriptions`) remains unchanged if it has not already been completed.

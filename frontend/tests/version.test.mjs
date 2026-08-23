@@ -8,7 +8,7 @@ test("Wayfarer public web identity is centralized and omits the Beta marker", ()
   assert.equal(WEB_BUILD, "Wayfarer");
   assert.equal(WEB_RELEASE, "v1.1.15 — Wayfarer");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.15 — Wayfarer");
-  assert.equal(WEB_ASSET_REVISION, "1.1.15-wayfarer1h2");
+  assert.equal(WEB_ASSET_REVISION, "1.1.15-wayfarer1h3");
   assert.doesNotMatch(WEB_RELEASE, /Beta/i);
 });
 

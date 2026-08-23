@@ -50,6 +50,10 @@ export function submitUnequipSlot(slot, csrfToken, idempotencyKey) {
   return submitPortalAction("UNEQUIP_SLOT", { slot }, csrfToken, idempotencyKey);
 }
 
+export function submitSetTitle(titleId, csrfToken, idempotencyKey) {
+  return submitPortalAction("SET_TITLE", { title_id: titleId }, csrfToken, idempotencyKey);
+}
+
 export function submitCharacterState(csrfToken, idempotencyKey) {
   return submitPortalAction("CHARACTER_STATE", {}, csrfToken, idempotencyKey);
 }

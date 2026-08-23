@@ -150,6 +150,22 @@ export function submitSoloVenture(csrfToken, idempotencyKey) {
   return submitPortalAction("SOLO_VENTURE", {}, csrfToken, idempotencyKey);
 }
 
+export function submitSoloExpeditionAction(action, csrfToken, idempotencyKey) {
+  return submitPortalAction("SOLO_EXPEDITION_ACTION", { action }, csrfToken, idempotencyKey);
+}
+
+export function submitSoloExpeditionContinue(csrfToken, idempotencyKey) {
+  return submitPortalAction("SOLO_EXPEDITION_CONTINUE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitSoloExpeditionReturn(csrfToken, idempotencyKey) {
+  return submitPortalAction("SOLO_EXPEDITION_RETURN", {}, csrfToken, idempotencyKey);
+}
+
+export function submitSoloExpeditionRetreat(csrfToken, idempotencyKey) {
+  return submitPortalAction("SOLO_EXPEDITION_RETREAT", {}, csrfToken, idempotencyKey);
+}
+
 export function submitChallengeHunt(huntId, csrfToken, idempotencyKey) {
   return submitPortalAction("CHALLENGE_HUNT", { hunt_id: huntId }, csrfToken, idempotencyKey);
 }

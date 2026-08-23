@@ -190,7 +190,7 @@
        Use
        <code>
         !venture
-       </code>. A Venture can produce an <b>ENCOUNTER</b> or a <b>TREASURE CHEST</b>. Encounter Ventures open a rally window so others can use <code>!join</code>; treasure Ventures immediately award a level-appropriate item. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only mode with its own 7-minute cooldown, 50% ENCOUNTER / 50% TREASURE split, +3 enemy cap, no rally, 50% of normal Venture Fellowship Renown, <b>instant encounter resolution</b>, and <b>no Twitch chat announcements</b>.
+       </code>. A Venture can produce an <b>ENCOUNTER</b> or a <b>TREASURE CHEST</b>. Encounter Ventures open a rally window so others can use <code>!join</code>; treasure Ventures immediately award a level-appropriate item. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only, player-paced mode with its own 7-minute cooldown. Each stage rolls <b>60% ENCOUNTER / 40% TREASURE</b>, enemies stay roughly within <b>Lv.-2 through Lv.+3</b>, and a run can continue for up to <b>three stages</b>. Encounter rounds wait for your Attack, Ability, Item, or Defend choice and never post automatic Twitch chat announcements.
       </div>
       <div class="step">
        <b>
@@ -461,7 +461,7 @@
      </section>
      <section class="section searchable" id="combat">
       <h2>Combat &amp; Stances</h2>
-      <p class="lead">When a normal Venture rolls an ENCOUNTER and its rally closes, the party enters timed combat rounds. A Portal Solo Venture ENCOUNTER skips the rally and resolves the full one-hero fight immediately using the same combat math and the normal no-input default action. The website then shows a compact result summary; no Solo Venture combat output is posted to Twitch chat. Rally Ventures and Hunts still use the normal timed Active Battle flow. Every living hero in those battles chooses one action, then all actions resolve and the monster takes its turn. Ordinary enemy attacks choose one hero; only designated multi-target skills can strike more than one party member.</p>
+      <p class="lead">When a normal Venture rolls an ENCOUNTER and its rally closes, the party enters timed combat rounds. A Portal Solo Venture ENCOUNTER instead becomes a <b>player-paced private battle</b>: the Adventure Board shows enemy HP and intent plus your HP/MP/AP, then waits for you to choose Attack, Ability, Use Item, or Defend. One choice resolves one full round, with no Solo Venture combat timer and no automatic Twitch chat output. Rally Ventures and Hunts keep their normal timed Active Battle flow. Ordinary enemy attacks choose one hero; only designated multi-target skills can strike more than one party member.</p>
       <div class="grid">
        <div class="card"><h3>Attack</h3><p><code>!attack</code> queues your Job's basic attack, including your stance, critical chance, signature attack chance and any double-strike effects.</p></div>
        <div class="card"><h3>Ability</h3><p><code>!ability &lt;name&gt; [target]</code> spends MP for magical techniques or AP for physical techniques. Current resources carry between battles. <code>!skill</code> and <code>!cast</code> are aliases.</p></div>
@@ -501,7 +501,12 @@
        <div class="card"><h3>Rally Venture Roll</h3><p><code>!venture</code> is a Twitch-chat activity and currently resolves as <b>70% ENCOUNTER</b> or <b>30% TREASURE CHEST</b>.</p></div>
        <div class="card"><h3>Treasure Chest</h3><p>Chest loot is selected from roughly <b>5 levels below through 2 levels above</b> the venturing hero. Consumables, weapons, armor and accessories are eligible; Relic-progression weapons are not.</p></div>
       </div>
-      <div class="callout"><b>Portal-only Solo Venture:</b> the Adventure Board also has a private field run on a separate <b>7-minute</b> cooldown. It rolls <b>50% ENCOUNTER / 50% TREASURE</b>, caps enemies at <b>three levels above</b> the hero, never opens a rally, <b>resolves encounter combat immediately</b>, posts <b>no automatic Twitch chat messages</b>, and awards <b>4 Fellowship Renown</b> on a completed Solo Venture instead of the normal 8. The result card shows the encounter or treasure outcome, rewards, remaining HP, and cooldown at a glance.</div>
+      <div class="callout"><b>Portal-only Solo Venture — Wayfarer:</b> the Adventure Board has a private, player-paced run on a separate <b>7-minute</b> cooldown. Every stage rolls <b>60% ENCOUNTER / 40% TREASURE</b>, with enemy selection roughly <b>two levels below through three levels above</b> the hero. A run lasts up to <b>three stages</b>. After Stage I or II, choose <b>Return to Guild</b> to bank your expedition spoils or <b>Press On</b> for a deeper reward multiplier. Stage II adds <b>+15% XP/JP/Gil</b>; Stage III adds <b>+30%</b> and improves chest rarity weighting. XP/JP earned from defeated enemies is secured immediately, while Gil and ordinary item spoils remain at risk until you return. Defeat recovers 50% of unbanked Gil but loses loose item spoils; Retreat preserves secured progression but abandons all unbanked spoils. Fellowship Renown scales modestly with depth and remains below Rally Venture value.</div>
+      <div class="grid">
+       <div class="card"><h3>Solo Battle Controls</h3><p><b>Attack</b> is free and reliable. <b>Ability</b> opens learned Job techniques with their MP/AP costs. <b>Use Item</b> shows eligible battle supplies and quantities. <b>Defend</b> reduces incoming damage for the round and restores a small amount of battle resource.</p></div>
+       <div class="card"><h3>Enemy Intent</h3><p>Solo battles telegraph the enemy's prepared action before you commit your turn. A dangerous named technique may make Defend, healing, control, or an aggressive finishing attempt the better choice.</p></div>
+       <div class="card"><h3>Persistent Run State</h3><p>HP, MP, AP, and consumed items carry through the run. A Solo Venture can wait safely for your next decision and survives Portal refreshes or Bot restarts. Guild resupply, recovery, Job changes, and equipment changes are locked until you return or retreat.</p></div>
+      </div>
       <div class="callout"><b>Rally reward bonus:</b> Rally Venture encounter victories reward each participant with <b>+5% XP, JP, and Gil per enemy level above that hero</b>, capped at <b>+50%</b>. The bonus is personal to each hero's risk. Equal- or lower-level enemies give no Rally bonus, and treasure rewards are unchanged.</div>
       <div class="grid">
        <div class="card"><h3>1. Rally</h3><p>If <code>!venture</code> rolls an ENCOUNTER, it selects a monster and opens a <b>45-second</b> rally in Twitch chat. The initiator joins automatically, and the rolled monster can be no more than <b>ten levels above</b> that initiating hero.</p></div>
@@ -756,7 +761,7 @@
         The complete item catalog, organized by level band and class/job: consumables, materials, weapons, armor, accessories and raid trophies.
        </p>
        <div class="callout">
-        <b>Portal character controls:</b> If you sign in with Twitch and open your own Adventurer profile, you can manage Jobs and Masteries, equipment and recovery, shop through the Moogle Emporium, contribute to Fellowship projects, craft and forge at the Guild Blacksmith, claim Daily Guild Provisions, and use the <b>Adventure Board</b> for Solo Ventures, travel, and Hunts. Rally Ventures are started and joined in Twitch chat. Crystal Guild checks identity, cooldowns, requirements, resources, and availability before applying any change. Active Battle turn commands and raids remain Twitch-first.
+        <b>Portal character controls:</b> If you sign in with Twitch and open your own Adventurer profile, you can manage Jobs and Masteries, equipment and recovery, shop through the Moogle Emporium, contribute to Fellowship projects, craft and forge at the Guild Blacksmith, claim Daily Guild Provisions, and use the <b>Adventure Board</b> for interactive Solo Ventures, travel, and Hunts. Rally Ventures are started and joined in Twitch chat. Crystal Guild checks identity, cooldowns, requirements, resources, and availability before applying any change. Active Battle turn commands and raids remain Twitch-first.
        </div>
        <div class="toolbar item-catalog-toolbar">
         <input class="search" id="itemSearch" placeholder="Search items"/>
@@ -1098,7 +1103,7 @@
         Why can't I Venture?
        </summary>
        <div>
-        Common reasons: the relevant normal or Solo Venture cooldown is active, you're resting, you're KO'd, or you're already involved in the active channel encounter. Solo Venture uses its own 7-minute timer and does not consume the normal Venture cooldown.
+        Common reasons: the relevant normal or Solo Venture cooldown is active, you're resting, you're KO'd, or you're already involved in the active channel encounter. Solo Venture uses its own 7-minute cooldown and does not consume the normal Venture cooldown. An active Solo Venture remains waiting on the Adventure Board until you act, return, or retreat.
        </div>
       </details>
       <details>

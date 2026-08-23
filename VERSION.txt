@@ -1,6 +1,6 @@
-Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 2
-Runtime: 1.1.14-cloud-continuity-h2
+Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3a
+Runtime: 1.1.14-cloud-continuity-h3
 Hosted sync schema: 1
 Portal Action protocol: 12
-Frontend asset revision: 1.1.14-continuity2
-Matching Bot runtime: 1.1.14-cloud-continuity-h2
+Frontend asset revision: 1.1.14-continuity3a
+Matching Bot runtime: 1.1.14-cloud-continuity-h3

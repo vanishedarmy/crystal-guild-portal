@@ -1,17 +1,22 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 2
+# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3a
 
-The signed-in Overview now presents Daily Guild Provisions as a randomized reward instead of promising a fixed Potion.
+## Jobs ability quick reference
 
-The Daily card displays:
+The Adventurer Portal **Jobs** tab now mirrors the Player Guide's useful Job information instead of requiring players to leave the Portal to check abilities.
 
-- the current level-scaled Gil range;
-- the number of randomized provision rolls;
-- the detected Twitch subscriber tier when present;
-- the tier's Daily Gil bonus;
-- the actual authoritative claim result returned by the Bot.
+Every Job card shows:
 
-The Player Guide now documents randomized Daily provisions and `!substatus`.
+- Attack, Signature, and primary MP/AP resource;
+- Active Battle abilities with JLv. unlock, cost, target, description, and Ready/Locked state;
+- passive Job milestones with JLv. unlock, description, and Learned/Locked state;
+- JLv.50 cross-Job Mastery.
 
-Subscriber-tier verification remains Bot-authoritative. The public Web service receives only the resulting perk metadata inside the existing typed Daily action result; no Twitch subscriber list or OAuth token is exposed to the browser.
+The Job detail dialog also adds Guide-style Combat Identity, Stat Growth, full Battle Ability reference, passive milestones, and Mastery.
 
-Compatibility: hosted runtime `1.1.14-cloud-continuity-h2`, frontend `1.1.14-continuity2`, hosted sync schema 1, Portal Action protocol 12. No Web secret or OAuth change is required.
+## One frontend source of truth
+
+The Portal reuses the existing versioned `guide-data.json` catalog. It does not duplicate ability definitions or expand hosted `CHARACTER_STATE` payloads, keeping the existing Portal Action result-size contract intact.
+
+## Compatibility
+
+Hosted runtime remains `1.1.14-cloud-continuity-h3`; frontend asset revision advances to `1.1.14-continuity3a`. Hosted sync schema 1 and Portal Action protocol 12 are unchanged. No hosted DB migration, Bot redeploy, new Web secret, or OAuth change is required.

@@ -1,20 +1,31 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 2 Validation
+# Crystal Guild v1.1.14 — Cloud Continuity Hotfix 3a Validation
 
-## Result
+**PASS — Jobs ability quick-reference addendum certified on the Hotfix 3 baseline.**
 
-PASS.
+- Bot tests: **342 / 342 PASS** (Bot remains unchanged from Hotfix 3)
+- Frontend tests: **154 / 154 PASS**
+- Hosted Portal/API tests: **39 / 39 PASS**
+- Independent TypeScript JS/JSX syntax parse: **49 / 49 source files PASS**
+- Python grammar sweep: **72 / 72 files PASS**
 
-- Frontend source/unit suite: **148 / 148 PASS**.
-- Hosted Portal/API regression suite: **39 / 39 PASS**.
-- Python hosted-source compile/parse checks: PASS.
-- Daily card no longer contains the fixed `potion_quantity` presentation contract.
-- Daily card renders randomized provision summary, tier label, tier Gil bonus, and provision-roll count from the authoritative action result.
-- Player Guide documents randomized Daily provisions and `!substatus`.
-- Hosted overlay CSP-safe external JavaScript fix remains present.
-- Existing accessibility/continuity, ascending-level ordering, Portal Actions, Fellowship, Guide, privacy, and streamer-dashboard regressions remain green.
+## Jobs reference coverage
 
-Compatibility: hosted runtime `1.1.14-cloud-continuity-h2`, frontend `1.1.14-continuity2`, hosted sync schema 1, Portal Action protocol 12. No Web secret/OAuth change is required.
+Automated coverage verifies that the Jobs tab enriches live/public Job records from the same versioned Guide catalog while preserving the live learned-ability state. Job cards expose Battle Abilities, the `!ability <name> [target]` command form, passive Job milestones, and JLv.50 Mastery. The Job detail dialog includes Combat Identity, Stat Growth, Battle Abilities, passive milestones, and Mastery.
 
-## Build-environment note
+Responsive regression coverage verifies that the richer Job cards widen safely on desktop/tablet and collapse to a single column on narrow layouts, with ability metadata/badges wrapping instead of truncating.
 
-A final local `npm install`/Vite production-build attempt timed out in this sandbox before dependencies were installed. No partial `node_modules` or lockfile artifacts were retained. The complete 148-test frontend source suite passed, and Render will perform the normal dependency install/Vite build during deployment.
+## Contract safety
+
+No full ability catalog was added to the hosted player snapshot or `CHARACTER_STATE` action result. The Portal reads the existing static `guide-data.json` catalog, so hosted sync schema 1 and Portal Action protocol 12 remain unchanged and the existing action-result size boundary is unaffected.
+
+## Compatibility
+
+- Bot runtime: `1.1.14-cloud-continuity-h3` — unchanged
+- Hosted Web runtime: `1.1.14-cloud-continuity-h3` — unchanged
+- Frontend asset revision: `1.1.14-continuity3a`
+- Local DB schema: 4
+- Hosted sync schema: 1
+- Portal Action protocol: 12
+- Twitch prefix: `!`
+
+No Bot code change, DB migration, player reset, new Render secret, or new OAuth scope is introduced by Hotfix 3a.

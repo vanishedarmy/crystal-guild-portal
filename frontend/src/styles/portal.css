@@ -5988,3 +5988,6 @@ body { font-size: 15px; line-height: 1.54; }
     border-color: rgba(220, 237, 248, .42);
   }
 }
+
+/* v1.1.14 Hotfix 2 — Daily subscriber perk clarity */
+.daily-subscriber-perk { margin: .45rem 0 0; font-size: .88rem; line-height: 1.45; }

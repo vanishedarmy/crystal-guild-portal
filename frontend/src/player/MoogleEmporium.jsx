@@ -261,7 +261,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       disabled={!shopActionsAvailable || shop.combat_locked || !affordable || Boolean(busyKey)}
                       onClick={() => buy(item)}
                     >
-                      {busy ? "Buying…" : (affordable ? `Buy · ${number(total)}g` : `Need ${number(total)}g`)}
+                      {busy ? "Buying…" : (affordable ? `Buy ${item.name} · ${number(total)}g` : `Need ${number(total)}g`)}
                     </button>
                   </div>
                 </article>
@@ -297,7 +297,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                             disabled={!shopActionsAvailable || shop.combat_locked || max <= 0 || Boolean(busyKey)}
                             onClick={() => sell(item)}
                           >
-                            {busy ? "Selling…" : `Sell · ${number(proceeds)}g`}
+                            {busy ? "Selling…" : `Sell ${item.name} · ${number(proceeds)}g`}
                           </button>
                         </div>
                       </article>

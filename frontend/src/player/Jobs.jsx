@@ -12,6 +12,7 @@ import {
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { pct } from "../utils/formatters.js";
+import { loadGuideData, mergeJobsWithCatalog } from "../utils/itemCatalog.js";
 
 const STANCES = [
   { id: "balanced", name: "Balanced", description: "Neutral offense and defense. A dependable default for any Job." },
@@ -41,6 +42,79 @@ function masterySlotMap(slots = []) {
   return result;
 }
 
+function abilityReady(job, ability) {
+  return Boolean(job?.owned && Number(job?.level || 0) >= Number(ability?.level || 0));
+}
+
+function JobAbilityReference({ job }) {
+  const activeAbilities = Array.isArray(job?.active_abilities) ? job.active_abilities : [];
+  const passiveAbilities = Array.isArray(job?.passive_abilities) ? job.passive_abilities : [];
+  const resource = String(job?.resource_mode || "").toUpperCase() || "—";
+
+  return (
+    <div className="job-reference-block">
+      <div className="job-combat-identity" aria-label={`${job.name} combat identity`}>
+        <div><span>Attack</span><strong>{job.attack_name || "Standard attack"}</strong></div>
+        <div><span>Signature</span><strong>{job.signature || "—"}</strong></div>
+        <div><span>Resource</span><strong>{resource}</strong></div>
+      </div>
+
+      <div className="job-reference-section">
+        <div className="job-reference-heading">
+          <span className="data-label">Battle Abilities</span>
+          <span className="job-command-hint">!ability &lt;name&gt; [target]</span>
+        </div>
+        {activeAbilities.length ? (
+          <div className="job-active-ability-list">
+            {activeAbilities.map((ability) => {
+              const ready = abilityReady(job, ability);
+              const abilityResource = String(ability.resource || job.resource_mode || "mp").toUpperCase();
+              return (
+                <div className={`job-active-ability ${ready ? "ready" : "locked"}`} key={`${job.id}-active-${ability.id || ability.name}`}>
+                  <div className="job-ability-heading">
+                    <strong>{ability.name}</strong>
+                    <span className="job-ability-badges">
+                      <span className="small-badge">JLv.{ability.level}</span>
+                      <span className="small-badge">{ability.cost} {abilityResource}</span>
+                      <span className="small-badge">{humanizeLabel(ability.target)}</span>
+                      <span className={`small-badge ${ready ? "success" : "locked"}`}>{ready ? "Ready" : "Locked"}</span>
+                    </span>
+                  </div>
+                  <p>{ability.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        ) : <div className="job-reference-empty">Ability reference is loading…</div>}
+      </div>
+
+      {passiveAbilities.length ? (
+        <div className="job-reference-section">
+          <span className="data-label">Passive Job Milestones</span>
+          <div className="job-passive-list">
+            {passiveAbilities.map((ability) => {
+              const ready = abilityReady(job, ability);
+              return (
+                <div className={`job-passive-row ${ready ? "ready" : "locked"}`} key={`${job.id}-passive-${ability.level}-${ability.name}`}>
+                  <span className="job-passive-level">JLv.{ability.level}</span>
+                  <div><strong>{ability.name}</strong><p>{ability.description}</p></div>
+                  <span className={`small-badge ${ready ? "success" : "locked"}`}>{ready ? "Learned" : "Locked"}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="job-mastery-reference">
+        <span className="data-label">JLv.50 Cross-Job Mastery</span>
+        <strong>{job.mastery?.name || "—"}</strong>
+        <p>{job.mastery?.description || "Mastery details unavailable."}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Jobs({ data, overview, onDetail, onRefresh }) {
   const { auth } = usePortalAuth();
   const [view, setView] = useState("jobs");
@@ -48,6 +122,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
   const [busyKey, setBusyKey] = useState("");
   const [message, setMessage] = useState("");
   const [masteryChoice, setMasteryChoice] = useState({ 1: "", 2: "" });
+  const [guideData, setGuideData] = useState(null);
 
   const isOwnProfile = Boolean(
     auth.authenticated
@@ -66,7 +141,8 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
   const csrfToken = auth.csrf_token || "";
   const controlsReady = Boolean(managementAvailable && liveState);
 
-  const jobs = liveState?.jobs || data.jobs || [];
+  const rawJobs = liveState?.jobs || data.jobs || [];
+  const jobs = useMemo(() => mergeJobsWithCatalog(rawJobs, guideData), [rawJobs, guideData]);
   const owned = jobs.filter((job) => job.owned).length;
   const currentJob = jobs.find((job) => job.current) || null;
   const currentStance = liveState?.stance || overview?.identity?.stance || "balanced";
@@ -76,6 +152,16 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
     const snapshot = (data.jobs || []).find((entry) => entry.id === job.id) || {};
     return { ...snapshot, ...job, abilities: snapshot.abilities || job.abilities || [] };
   };
+
+  useEffect(() => {
+    let cancelled = false;
+    loadGuideData().then((payload) => {
+      if (!cancelled) setGuideData(payload);
+    }).catch(() => {
+      // The Jobs tab remains usable if the static reference catalog is temporarily unavailable.
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     if (liveState?.mastery_slots) setMasteryChoice(masterySlotMap(liveState.mastery_slots));
@@ -189,6 +275,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
           <div className="job-name">{job.name}</div>
           <div className="card-meta">{job.owned ? `JLv.${job.level}` : "Not learned"} · {job.signature}</div>
           {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
+          <JobAbilityReference job={job} />
         </ClickableCard>
       ))}
     </div>
@@ -225,7 +312,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
       {isOwnProfile ? (
         <nav className="character-management-tabs" aria-label="Character management sections">
           {[['jobs', 'Jobs'], ['stance', 'Stance'], ['masteries', 'Masteries']].map(([id, label]) => (
-            <button key={id} type="button" className={view === id ? "active" : ""} onClick={() => setView(id)}>{label}</button>
+            <button key={id} type="button" className={view === id ? "active" : ""} aria-pressed={view === id} onClick={() => setView(id)}>{label}</button>
           ))}
         </nav>
       ) : null}
@@ -259,8 +346,9 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                       <ul>{job.requirements.map((req, index) => <li className={req.met ? "met" : "missing"} key={`${job.id}-req-${index}`}>{req.met ? "✓" : "○"} {req.text}</li>)}</ul>
                     </details>
                   ) : null}
+                  <JobAbilityReference job={job} />
                   <div className="management-job-actions">
-                    <button type="button" className="equipment-action-button secondary" onClick={() => onDetail?.({ type: "job", job: detailJob(job) })}>Details</button>
+                    <button type="button" className="equipment-action-button secondary" onClick={() => onDetail?.({ type: "job", job: detailJob(job) })}>{`View ${job.name} Details`}</button>
                     <button
                       type="button"
                       className="equipment-action-button"
@@ -294,7 +382,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                     disabled={!controlsReady || Boolean(busyKey) || active || Boolean(locks.stance_change)}
                     onClick={() => changeStance(stance.id)}
                   >
-                    {active ? "Selected" : (busyKey === `stance:${stance.id}` ? "Changing…" : `Use ${stance.name}`)}
+                    {active ? "Selected" : (busyKey === `stance:${stance.id}` ? "Changing…" : `Select ${stance.name}`)}
                   </button>
                 </article>
               );
@@ -330,10 +418,10 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                   })() : null}
                   <div className="mastery-management-actions">
                     <button type="button" className="equipment-action-button" disabled={!controlsReady || !selected || Boolean(busyKey) || Boolean(locks.mastery_change)} onClick={() => applyMastery(slot)}>
-                      {busyKey === `mastery:${slot}` ? "Applying…" : "Apply"}
+                      {busyKey === `mastery:${slot}` ? "Applying…" : "Apply Mastery"}
                     </button>
                     <button type="button" className="equipment-action-button secondary" disabled={!controlsReady || !activeSlot?.job_id || Boolean(busyKey) || Boolean(locks.mastery_change)} onClick={() => clearMastery(slot)}>
-                      {busyKey === `mastery-clear:${slot}` ? "Clearing…" : "Clear"}
+                      {busyKey === `mastery-clear:${slot}` ? "Clearing…" : "Clear Mastery"}
                     </button>
                   </div>
                 </article>

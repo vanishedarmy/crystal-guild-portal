@@ -272,7 +272,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                   <div className="blacksmith-card-actions">
                     <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max={Math.max(1, maximum)} value={quantity} disabled={maximum < 1} onChange={(event) => setQuantities((current) => ({ ...current, [recipe.id]: clampQuantity(event.target.value, Math.max(1, maximum)) }))} /></label>
                     <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !recipe.craftable || maximum < 1 || Boolean(busyKey)} onClick={() => craft(recipe)}>
-                      {busy ? "Crafting…" : `Craft x${number(quantity)}`}
+                      {busy ? "Crafting…" : `Craft ${recipe.output?.name || recipe.name} ×${number(quantity)}`}
                     </button>
                   </div>
                 </article>
@@ -317,7 +317,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                       <div className="blacksmith-next-bonus">After forging: <strong>+{number(item.next_bonus_percent)}%</strong> equipment stat bonus over base.</div>
                       <div className="blacksmith-card-actions forge-action">
                         <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !item.forgeable || Boolean(busyKey)} onClick={() => forge(item)}>
-                          {busy ? "Forging…" : `Forge to +${number(item.next_upgrade)}`}
+                          {busy ? "Forging…" : `Forge ${item.name} to +${number(item.next_upgrade)}`}
                         </button>
                       </div>
                     </>

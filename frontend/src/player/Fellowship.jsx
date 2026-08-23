@@ -257,7 +257,7 @@ export default function Fellowship({ data, onRefresh }) {
                               onChange={(event) => setGilAmount(event.target.value)}
                             />
                           </label>
-                          <button type="button" className="equipment-action-button secondary compact" disabled={!contributionAvailable || Boolean(busyKey) || maxContribution < 1} onClick={() => setGilAmount(String(maxContribution))}>Max</button>
+                          <button type="button" className="equipment-action-button secondary compact" disabled={!contributionAvailable || Boolean(busyKey) || maxContribution < 1} onClick={() => setGilAmount(String(maxContribution))}>Use Max</button>
                           <button type="button" className="equipment-action-button" disabled={!contributionAvailable || Boolean(busyKey) || maxContribution < 1} onClick={() => contributeGil(req)}>
                             {busy ? "Contributing…" : "Contribute Gil"}
                           </button>
@@ -279,9 +279,9 @@ export default function Fellowship({ data, onRefresh }) {
                               onChange={(event) => setItemAmounts((current) => ({ ...current, [req.asset_id]: event.target.value }))}
                             />
                           </label>
-                          <button type="button" className="equipment-action-button secondary compact" disabled={!contributionAvailable || Boolean(busyKey) || maxContribution < 1} onClick={() => setItemAmounts((current) => ({ ...current, [req.asset_id]: String(maxContribution) }))}>Max</button>
+                          <button type="button" className="equipment-action-button secondary compact" disabled={!contributionAvailable || Boolean(busyKey) || maxContribution < 1} onClick={() => setItemAmounts((current) => ({ ...current, [req.asset_id]: String(maxContribution) }))}>Use Max</button>
                           <button type="button" className="equipment-action-button" disabled={!contributionAvailable || Boolean(busyKey) || maxContribution < 1} onClick={() => contributeItem(req)}>
-                            {busy ? "Contributing…" : "Contribute"}
+                            {busy ? "Contributing…" : `Contribute ${req.label}`}
                           </button>
                         </div>
                       ) : null}

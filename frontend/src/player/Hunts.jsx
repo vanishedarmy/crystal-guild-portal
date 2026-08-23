@@ -302,6 +302,51 @@ export default function Hunts({ data, overview, onRefresh }) {
   const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
   const recentSoloSummary = soloVentureSummary(recentSoloResult);
 
+
+  const renderActiveEncounter = (embedded = false) => {
+    if (!encounter) return null;
+    const Tag = embedded ? "div" : "section";
+    return (
+      <Tag className={`${embedded ? "active-adventure-embedded " : "panel "}active-adventure-panel ${encounter.kind}`}>
+        <div className="panel-title-row">
+          <div>
+            <p className="eyebrow">{encounter.kind === "hunt" ? `${encounter.hunt?.rank || ""}-Rank Active Hunt` : encounter.kind === "solo_venture" ? "Solo Venture Encounter" : "Active Rally Venture"}</p>
+            <h2>{encounter.hunt?.name || encounter.monster?.name}</h2>
+            <p className="muted">{encounter.monster?.name} · Lv.{number(encounter.monster?.level)} · {encounter.region?.name}</p>
+          </div>
+          <span className="small-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
+        </div>
+        {encounter.state === "combat" && Number(encounter.enemy_max_hp || 0) > 0 ? (
+          <div className="adventure-enemy-vitals">
+            <div><span>Enemy HP</span><strong>{number(encounter.enemy_hp)} / {number(encounter.enemy_max_hp)}</strong></div>
+            <ProgressBar value={pct(encounter.enemy_hp, encounter.enemy_max_hp)} className="hp" />
+            <small>{roundRemaining > 0 ? `Next round in ${duration(roundRemaining)}` : "Round resolving…"}</small>
+          </div>
+        ) : null}
+        <div className="adventure-party-grid">
+          {(encounter.party || []).map((member) => (
+            <div className="adventure-party-member" key={`${member.username}:${member.display_name}`}>
+              <strong>{member.display_name}</strong><span>{member.job_name}</span>
+              {encounter.state === "combat" && Number(member.max_hp || 0) > 0 ? <small>HP {number(member.hp)} / {number(member.max_hp)}</small> : null}
+            </div>
+          ))}
+        </div>
+        {encounter.state === "rally" && encounter.kind === "venture" ? (
+          <div className="adventure-combat-note rally-venture-chat-note">
+            <strong>Rally entry is in Twitch chat.</strong>
+            <span>{encounter.you_joined ? "You are already in this rally. Watch chat for the battle start." : "Type !join in Twitch chat before the rally closes to take part."}</span>
+          </div>
+        ) : null}
+        {encounter.state === "combat" ? (
+          <div className="adventure-combat-note">
+            <strong>Battle is underway.</strong>
+            <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : encounter.kind === "venture" ? "Rally battles use Twitch chat for combat. Choose !attack, !ability, !defend, or !use before the round timer closes; otherwise your hero uses the default action." : "Hunt combat uses Twitch chat. If you do not choose an action, your hero uses the default action."}</span>
+          </div>
+        ) : null}
+      </Tag>
+    );
+  };
+
   return (
     <section className="adventure-board-stack">
       <section className="panel adventure-hero-panel">
@@ -369,6 +414,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <strong>{ventureRemaining > 0 ? `Rally Venture ready in ${duration(ventureRemaining)}` : "Rally Venture ready in Twitch chat"}</strong>
           <span>Each enemy level above your hero adds 5% XP, JP, and Gil, up to 50%. Treasure chests keep their normal rewards.</span>
         </div>
+        {encounter?.kind === "venture" ? renderActiveEncounter(true) : null}
       </section>
 
       <section className="panel adventure-region-panel">
@@ -395,7 +441,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                     title={region.reason || "Travel to this region"}
                     onClick={() => runRequest(`travel:${region.id}`, () => submitTravelRegion(region.id, csrfToken, actionKey("travel", region.id)), "Travel complete.")}
                   >
-                    {busy === `travel:${region.id}` ? "Traveling…" : "Travel"}
+                    {busy === `travel:${region.id}` ? "Traveling…" : `Travel to ${region.name}`}
                   </button>
                 </div>
               ) : null}
@@ -405,45 +451,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
       </section>
 
-      {encounter ? (
-        <section className={`panel active-adventure-panel ${encounter.kind}`}>
-          <div className="panel-title-row">
-            <div>
-              <p className="eyebrow">{encounter.kind === "hunt" ? `${encounter.hunt?.rank || ""}-Rank Active Hunt` : encounter.kind === "solo_venture" ? "Solo Venture Encounter" : "Active Encounter"}</p>
-              <h2>{encounter.hunt?.name || encounter.monster?.name}</h2>
-              <p className="muted">{encounter.monster?.name} · Lv.{number(encounter.monster?.level)} · {encounter.region?.name}</p>
-            </div>
-            <span className="small-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
-          </div>
-          {encounter.state === "combat" && Number(encounter.enemy_max_hp || 0) > 0 ? (
-            <div className="adventure-enemy-vitals">
-              <div><span>Enemy HP</span><strong>{number(encounter.enemy_hp)} / {number(encounter.enemy_max_hp)}</strong></div>
-              <ProgressBar value={pct(encounter.enemy_hp, encounter.enemy_max_hp)} className="hp" />
-              <small>{roundRemaining > 0 ? `Next round in ${duration(roundRemaining)}` : "Round resolving…"}</small>
-            </div>
-          ) : null}
-          <div className="adventure-party-grid">
-            {(encounter.party || []).map((member) => (
-              <div className="adventure-party-member" key={`${member.username}:${member.display_name}`}>
-                <strong>{member.display_name}</strong><span>{member.job_name}</span>
-                {encounter.state === "combat" && Number(member.max_hp || 0) > 0 ? <small>HP {number(member.hp)} / {number(member.max_hp)}</small> : null}
-              </div>
-            ))}
-          </div>
-          {encounter.state === "rally" && encounter.kind === "venture" ? (
-            <div className="adventure-combat-note rally-venture-chat-note">
-              <strong>Rally entry is in Twitch chat.</strong>
-              <span>{encounter.you_joined ? "You are already in this rally. Watch chat for the battle start." : "Type !join in Twitch chat before the rally closes to take part."}</span>
-            </div>
-          ) : null}
-          {encounter.state === "combat" ? (
-            <div className="adventure-combat-note">
-              <strong>Battle is underway.</strong>
-              <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : encounter.kind === "venture" ? "Rally battles use Twitch chat for combat. If you do not choose an action, your hero uses the default action." : "Hunt combat uses Twitch chat. If you do not choose an action, your hero uses the default action."}</span>
-            </div>
-          ) : null}
-        </section>
-      ) : null}
+      {encounter && encounter.kind !== "venture" ? renderActiveEncounter(false) : null}
 
       {state?.recent_result && state.recent_result.kind !== "solo_venture" ? (
         <section className={`panel adventure-result-panel ${state.recent_result.won ? "won" : "lost"}`}>
@@ -459,7 +467,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
         </div>
         <div className="hunt-rank-filters" role="group" aria-label="Filter Hunts by rank">
-          {["ALL", "C", "B", "A", "S"].map((value) => <button key={value} type="button" className={rank === value ? "active" : ""} onClick={() => setRank(value)}>{value === "ALL" ? "All" : `${value}-Rank`}</button>)}
+          {["ALL", "C", "B", "A", "S"].map((value) => <button key={value} type="button" className={rank === value ? "active" : ""} aria-pressed={rank === value} onClick={() => setRank(value)}>{value === "ALL" ? "All Hunts" : `${value}-Rank Hunts`}</button>)}
         </div>
         <div className="hunt-board-grid">
           {hunts.map((hunt) => {

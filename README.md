@@ -1,11 +1,7 @@
-# Crystal Guild Web v1.1.15 — Wayfarer
+# Crystal Guild Web v1.1.15 — Wayfarer Hotfix 3
 
-Wayfarer adds the interactive Solo Venture Adventure Board: Attack, Ability, Use Item, Defend, enemy intent, persistent stage state, Return/Press On choices, and final run summaries. Profile navigation is reordered with Adventure Board immediately after Overview.
+Wayfarer provides the interactive Solo Venture Adventure Board, player-focused profile ordering, What's New notices, attainability-sorted Achievements, and now direct earned-Title management from the authenticated Portal.
 
-Hosted runtime: `1.1.15-wayfarer` · frontend asset revision `1.1.15-wayfarer1h2` · hosted sync schema **1** · Portal Action protocol **13**.
+Hosted runtime: `1.1.15-wayfarer-h3` · frontend asset revision `1.1.15-wayfarer1h3` · hosted sync schema **1** · Portal Action protocol **14**.
 
-Deploy this Web build together with the matching v1.1.15 Bot. No new Render secret is required. See `UPGRADE_GUIDE.md` and `PORTAL_ACTIONS_SETUP.md`.
-
-## Wayfarer Hotfix 1
-
-The Adventurer Portal Overview includes a reusable player-facing **What's New** panel for major releases. Existing v1.1.15 Wayfarer installs only need the matching Web redeploy; Bot runtime, schema 5, and Portal Action protocol 13 are unchanged.
+Deploy this Web build together with the matching `1.1.15-wayfarer-h3` Bot. Local DB schema remains **5**; no new Render secret, database migration, player reset, or OAuth scope is required. See `UPGRADE_GUIDE.md` and `PORTAL_ACTIONS_SETUP.md`.

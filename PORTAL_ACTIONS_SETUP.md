@@ -1,8 +1,10 @@
 # Crystal Guild Portal Actions — v1.1.15 Wayfarer
 
-Portal Action protocol is **13**. The browser still uses the strict authenticated action relay; arbitrary Twitch/chat command execution is not exposed.
+Portal Action protocol is **14**. The browser still uses the strict authenticated action relay; arbitrary Twitch/chat command execution is not exposed.
 
-Wayfarer retains all protocol-12 actions and adds four typed Solo Venture flows:
+Wayfarer retains the established typed Portal actions. Protocol 14 adds authenticated Title management and keeps the four typed Solo Venture flows:
+
+- `SET_TITLE` with exactly one earned `title_id`;
 
 - `SOLO_EXPEDITION_ACTION` with exactly one `action` value: `attack`, `defend`, `ability:<id>`, or `item:<id>`;
 - `SOLO_EXPEDITION_CONTINUE` with no payload;
@@ -13,4 +15,4 @@ Wayfarer retains all protocol-12 actions and adds four typed Solo Venture flows:
 
 The hosted Web validates the exact action shape before queueing it. The Bot remains authoritative for ownership, current Solo Venture state, Job level, MP/AP, inventory quantity, status restrictions, combat math, rewards, and replay/idempotency receipts.
 
-Deploy matching `1.1.15-wayfarer` Bot/Web builds. Hosted sync schema remains **1** and no new Render secret is required.
+Deploy matching `1.1.15-wayfarer-h3` Bot/Web builds. Hosted sync schema remains **1** and no new Render secret is required.

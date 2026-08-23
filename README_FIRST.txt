@@ -1,7 +1,7 @@
-Crystal Guild v1.1.15 — Wayfarer Hotfix 2 — Web Patch
+Crystal Guild v1.1.15 — Wayfarer Hotfix 3 — Web
 
-Apply these files over an existing v1.1.15 Wayfarer Hotfix 1 Web repository, commit/push, and redeploy the Web service.
+Hotfix 3 adds authenticated Portal Title equipping from Achievements & Titles → Title Collection.
 
-This hotfix reorders Achievements by attainment/progress and ascending attainability, and advances only the frontend asset revision to 1.1.15-wayfarer1h2.
+Deploy this Web build with the matching `1.1.15-wayfarer-h3` Bot. Portal Action protocol advances 13 → 14 for strict `SET_TITLE` requests. Local DB schema remains 5, hosted sync schema remains 1, and no migration/new secret/OAuth scope is required.
 
-Bot runtime remains 1.1.15-wayfarer. Local DB schema remains 5. Portal Action protocol remains 13. No migration, Bot restart, OAuth change, or new Render secret is required.
+Frontend asset revision: 1.1.15-wayfarer1h3

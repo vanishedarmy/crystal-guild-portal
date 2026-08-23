@@ -44,7 +44,7 @@ export function mergeInventoryWithCatalog(payload, guideData) {
 
 async function loadGuideData() {
   if (!catalogPromise) {
-    catalogPromise = fetch("/guide-data.json?v=1.1.14-continuity1", { cache: "no-store" })
+    catalogPromise = fetch("/guide-data.json?v=1.1.14-continuity2", { cache: "no-store" })
       .then((response) => {
         if (!response.ok) throw new Error(`Item catalog request failed: ${response.status}`);
         return response.json();

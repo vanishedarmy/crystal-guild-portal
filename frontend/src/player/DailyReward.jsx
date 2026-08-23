@@ -141,9 +141,16 @@ export default function DailyReward({ username, onRefresh }) {
           <h2>{available ? "Today's reward is ready" : "Provisions already collected"}</h2>
           <p className="muted">
             {daily
-              ? `Reward: ${number(daily.gil_min)}–${number(daily.gil_max)} Gil + ${number(daily.potion_quantity || 1)} Potion.`
-              : "Claim the same 24-hour daily reward available through !daily."}
+              ? `Reward: ${number(daily.gil_min)}–${number(daily.gil_max)} Gil + ${daily.provision_summary || "a random level-appropriate provision bundle"}.`
+              : "Claim the same randomized 24-hour Daily Guild Provisions available through !daily."}
           </p>
+          {daily?.subscriber_tier > 0 ? (
+            <p className="daily-subscriber-perk">
+              <strong>{daily.subscriber_label}</strong> — +{number(daily.subscriber_gil_bonus_percent)}% Daily Gil and {number(daily.provision_rolls)} provision rolls.
+            </p>
+          ) : (
+            daily ? <p className="daily-subscriber-perk muted">Twitch subscribers receive tier-based Daily Guild Provision bonuses.</p> : null
+          )}
           {daily && !available ? <div className="daily-reward-timer">Next claim in <strong>{duration(remaining)}</strong></div> : null}
           {message ? <small className="daily-reward-message" aria-live="polite">{message}</small> : null}
         </div>

@@ -29,26 +29,25 @@ const MODULES = {
 
 const TABS = [
   ["overview", "Overview", "◇"],
-  ["fellowship", "Fellowship", "✥"],
-  ["chocobo", "Chocobo Stable", "♞"],
+  ["hunts", "Adventure Board", "⌖"],
   ["jobs", "Jobs", "✦"],
   ["inventory", "Equipment & Inventory", "◆"],
   ["shop", "Moogle Emporium", "¤"],
   ["blacksmith", "Blacksmith", "⚒"],
-  ["hunts", "Adventure Board", "⌖"],
+  ["chocobo", "Chocobo Stable", "♞"],
+  ["fellowship", "Fellowship", "✥"],
   ["bestiary", "Bestiary", "◈"],
   ["relics", "Relics", "✧"],
   ["achievements", "Achievements & Titles", "★"],
-  ["trophies", "Trophy Hall", "♛"],
   ["records", "Records", "▤"],
+  ["trophies", "Trophy Hall", "♛"],
 ];
 
 const TAB_GROUPS = [
-  ["At a Glance", ["overview", "fellowship", "chocobo"]],
-  ["Character", ["jobs", "inventory"]],
-  ["Guild Services", ["shop", "blacksmith"]],
-  ["Adventure", ["hunts", "bestiary", "relics"]],
-  ["Legacy & Records", ["achievements", "trophies", "records"]],
+  ["Core", ["overview", "hunts", "jobs", "inventory"]],
+  ["Guild Services", ["shop", "blacksmith", "chocobo"]],
+  ["Guild", ["fellowship"]],
+  ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies"]],
 ];
 
 export default function PlayerProfile() {

@@ -23,12 +23,12 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.15-wayfarer"
-FRONTEND_ASSET_REVISION = "1.1.15-wayfarer1h2"
+HOSTED_PORTAL_VERSION = "1.1.15-wayfarer-h3"
+FRONTEND_ASSET_REVISION = "1.1.15-wayfarer1h3"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 13
+ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {
-    "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
+    "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM",
@@ -509,6 +509,13 @@ class HostedPortalStore:
             if slot not in {"weapon", "armor", "accessory"}:
                 raise ValueError("Invalid equipment slot.")
             payload = {"slot": slot}
+        elif kind == "SET_TITLE":
+            if set(payload) != {"title_id"}:
+                raise ValueError("SET_TITLE requires only title_id.")
+            title_id = str(payload.get("title_id") or "").strip().lower()
+            if not title_id or len(title_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", title_id):
+                raise ValueError("Invalid Title ID.")
+            payload = {"title_id": title_id}
         elif kind == "CHARACTER_STATE":
             if payload:
                 raise ValueError("CHARACTER_STATE does not accept parameters.")

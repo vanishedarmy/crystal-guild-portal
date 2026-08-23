@@ -67,6 +67,11 @@ test("Portal Phase 3 adds a dedicated Moogle Emporium tab with buy and collapsed
   assert.match(shop, /<details className="moogle-sell-disclosure">/);
   assert.match(shop, /current stock/);
   assert.match(shop, /Prices and availability are checked again before every transaction/);
+  assert.match(shop, /Stat boosts/);
+  assert.match(shop, /formatBonuses\(itemBonuses\(item\)\)/);
+  assert.match(shop, /equipmentDelta\(item, current\)/);
+  assert.match(shop, /Vs\. \{current\.name\}/);
+  assert.match(shop, /mergeItemListWithCatalog/);
   assert.doesNotMatch(shop, /authoritative Crystal Guild Bot|local Bot|action relay|still queued|synchronized with the Bot/);
   assert.doesNotMatch(shop, /!readyall|!venture|JOIN_ENCOUNTER/);
 });

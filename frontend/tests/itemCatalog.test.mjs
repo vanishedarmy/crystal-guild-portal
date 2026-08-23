@@ -93,3 +93,20 @@ test("Player Guide keeps item notes compact and avoids duplicate equipment descr
   assert.match(script, /else if\(it\.type==='material'\)/);
   assert.doesNotMatch(script, /if\(it\.description\)bits\.push\(it\.description\)/);
 });
+
+test("Moogle Emporium can enrich lightweight equipment stock with Guide stat bonuses", async () => {
+  const { mergeItemListWithCatalog } = await import("../src/utils/itemCatalog.js");
+  const guideData = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
+  const [robe] = mergeItemListWithCatalog([{
+    id: "novice_robe",
+    name: "Novice Robe",
+    type: "armor",
+    rarity: "common",
+    price: 180,
+    owned: 0,
+    equipment: true,
+  }], guideData);
+
+  assert.deepEqual(robe.bonuses, { vit: 2, spr: 5, mag: 2, hp: 15 });
+  assert.equal(robe.equipment, true);
+});

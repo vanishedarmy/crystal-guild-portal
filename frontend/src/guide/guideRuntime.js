@@ -122,7 +122,7 @@ $('#heroChips').innerHTML=[`${D.jobs.length} Jobs`,`${D.monsters.length} Monster
 // Commands grouped by practical usage.
 const COMMAND_GROUPS=[
   {id:'start',name:'Start Here & Character',description:'Create your hero, inspect your profile, claim routine rewards, and find help.',categories:['Getting Started','Character','Progress','Help']},
-  {id:'adventure',name:'Adventure & Recovery',description:'Start Rally Ventures in Twitch chat, resolve Solo Ventures instantly on the website, travel, battle, and recover HP.',categories:['Adventure','Combat','Recovery',
+  {id:'adventure',name:'Adventure & Recovery',description:'Start Rally Ventures in Twitch chat, play interactive Solo Ventures on the website, travel, battle, and recover HP.',categories:['Adventure','Combat','Recovery',
     'World','Bestiary']},
   {id:'jobs',name:'Jobs & Progression',description:'Switch Jobs, inspect abilities, equip Masteries, and manage titles.',categories:['Jobs','Cosmetics']},
   {id:'gear',name:'Inventory & Economy',description:'Manage gear and inventory, buy or sell items, and check currencies.',categories:['Inventory','Economy']},

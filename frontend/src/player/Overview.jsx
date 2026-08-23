@@ -3,6 +3,7 @@ import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
 import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
+import WhatsNew from "./WhatsNew.jsx";
 import { formatBonuses, number, timeAgo } from "../utils/formatters.js";
 
 function EquipmentCard({ item, onDetail }) {
@@ -48,6 +49,7 @@ export default function Overview({ data, onDetail, onRefresh, onNavigate }) {
           ))}
         </div>
       </section>
+      <WhatsNew onNavigate={onNavigate} />
       <DailyReward username={data.identity?.username} onRefresh={onRefresh} />
       <section className="panel span-7">
         <div className="panel-title-row"><h2>Battle Profile</h2><span className="small-badge">{data.region.name}</span></div>

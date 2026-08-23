@@ -1598,6 +1598,19 @@ h1 {
   border-color: rgba(230, 203, 136, 0.32);
 }
 
+.title-card.is-equipped {
+  border-color: var(--line-bright);
+  box-shadow: inset 0 0 0 1px rgba(143, 219, 255, 0.16), 0 0 22px rgba(80, 177, 222, 0.08);
+}
+
+.title-card-actions {
+  margin-top: 0.9rem;
+}
+
+.title-card-actions .equipment-action-button {
+  width: 100%;
+}
+
 .title-card-foot {
   margin-top: 0.85rem;
   color: var(--muted);

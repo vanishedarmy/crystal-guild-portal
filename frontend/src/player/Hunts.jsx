@@ -4,6 +4,10 @@ import {
   submitChallengeHunt,
   submitTravelRegion,
   submitSoloVenture,
+  submitSoloExpeditionAction,
+  submitSoloExpeditionContinue,
+  submitSoloExpeditionReturn,
+  submitSoloExpeditionRetreat,
   waitForPortalAction,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -41,6 +45,12 @@ function compareByLevel(left, right) {
 
 function soloVentureSummary(summary) {
   if (!summary) return "";
+  if (summary.type === "expedition") {
+    const rewards = summary.rewards || {};
+    if (summary.outcome === "defeat") return `Solo Venture: Defeated after Stage ${number(summary.stages || 1)} — ${number(rewards.gil || 0)} Gil recovered.`;
+    if (summary.outcome === "retreat") return `Solo Venture: Retreated during Stage ${number(summary.stages || 1)}.`;
+    return `Solo Venture: ${number(summary.stages || 1)} stage${Number(summary.stages || 1) === 1 ? "" : "s"} complete — +${number(rewards.xp)} XP · +${number(rewards.jp)} JP · +${number(rewards.gil)} Gil.`;
+  }
   const treasure = summary.type === "treasure";
   const rewards = summary.rewards || {};
   const enemy = summary.enemy || {};
@@ -58,6 +68,27 @@ function soloVentureSummary(summary) {
 
 function SoloVentureResult({ summary, cooldownRemaining }) {
   if (!summary) return null;
+  if (summary.type === "expedition") {
+    const rewards = summary.rewards || {};
+    const success = !["defeat", "retreat"].includes(summary.outcome);
+    return (
+      <div className={`solo-result-panel solo-result-inline ${success ? "won" : "lost"}`}>
+        <div className="panel-title-row">
+          <div><p className="eyebrow">Last Solo Venture</p><h3>{summary.title || (success ? "Expedition Complete" : "Expedition Ended")}</h3><p className="muted">{summary.region_name} · {number(summary.stages || 1)} stage{Number(summary.stages || 1) === 1 ? "" : "s"}</p></div>
+          <span className={`small-badge ${success ? "success" : ""}`}>{summary.outcome === "defeat" ? "Defeat" : summary.outcome === "retreat" ? "Retreated" : "Returned"}</span>
+        </div>
+        <div className="solo-result-grid">
+          <div><span>Secured Progress</span><strong>+{number(rewards.xp)} XP · +{number(rewards.jp)} JP</strong></div>
+          <div><span>Banked Gil</span><strong>{number(rewards.gil)} Gil</strong></div>
+          <div><span>Fellowship</span><strong>+{number(rewards.fellowship_renown)} Renown</strong></div>
+          <div><span>Condition</span><strong>HP {number(summary.player?.hp)} / {number(summary.player?.max_hp)}</strong></div>
+        </div>
+        {Array.isArray(rewards.loot) && rewards.loot.length ? <p className="solo-result-loot"><strong>Banked spoils:</strong> {rewards.loot.join(" · ")}</p> : null}
+        {summary.lost_spoils?.gil || summary.lost_spoils?.items?.length ? <p className="solo-result-loot"><strong>Lost on the road:</strong> {number(summary.lost_spoils?.gil || 0)} Gil{summary.lost_spoils?.items?.length ? ` · ${summary.lost_spoils.items.join(" · ")}` : ""}</p> : null}
+        <div className="adventure-combat-note"><strong>{cooldownRemaining > 0 ? `Next Solo Venture in ${duration(cooldownRemaining)}` : "Solo Venture ready again"}</strong><span>{soloVentureSummary(summary)}</span></div>
+      </div>
+    );
+  }
   const treasure = summary.type === "treasure";
   const victory = summary.outcome === "victory";
   const rewards = summary.rewards || {};
@@ -152,6 +183,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState("");
   const [rank, setRank] = useState("ALL");
+  const [soloPicker, setSoloPicker] = useState("");
   const [clock, setClock] = useState(() => Date.now());
   const completionRefresh = useRef(0);
 
@@ -165,7 +197,7 @@ export default function Hunts({ data, overview, onRefresh }) {
     () => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []),
     [auth.action_capabilities],
   );
-  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "CHALLENGE_HUNT"];
+  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT"];
   const actionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
@@ -275,6 +307,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         await loadState({ quiet: true });
       }
       if (finished.status === "completed" && finished.result?.ok !== false) {
+        setSoloPicker("");
         onRefresh?.();
         window.clearTimeout(completionRefresh.current);
         completionRefresh.current = window.setTimeout(() => onRefresh?.(), 3200);
@@ -299,6 +332,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const currentRegion = state?.current_region || { name: overview?.region?.name || "Unknown Region" };
   const regions = [...(state?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
   const hunts = (state?.hunts || []).filter((hunt) => rank === "ALL" || hunt.rank === rank).sort(compareByLevel);
+  const expedition = state?.solo_venture?.expedition || null;
   const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
   const recentSoloSummary = soloVentureSummary(recentSoloResult);
 
@@ -367,30 +401,133 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
       </section>
 
-      <section className="panel venture-panel solo-venture-panel">
+      <section className={`panel venture-panel solo-venture-panel ${expedition ? "expedition-active" : ""}`}>
         <div className="panel-title-row">
-          <div><p className="eyebrow">Solo Venture · Portal Only</p><h2>{soloRemaining > 0 ? `Ready in ${duration(soloRemaining)}` : "Take the road alone"}</h2></div>
-          <span className={`small-badge ${state?.solo_venture?.ready && soloRemaining <= 0 ? "success" : ""}`}>{soloRemaining > 0 ? "Recovering" : "Ready"}</span>
+          <div>
+            <p className="eyebrow">Solo Venture · Portal Only</p>
+            <h2>{expedition ? `Stage ${number(expedition.stage)} of ${number(expedition.max_stages)}` : soloRemaining > 0 ? `Ready in ${duration(soloRemaining)}` : "Take the road alone"}</h2>
+          </div>
+          <span className={`small-badge ${expedition || (state?.solo_venture?.ready && soloRemaining <= 0) ? "success" : ""}`}>
+            {expedition ? (expedition.status === "combat" ? "In Battle" : "Stage Cleared") : soloRemaining > 0 ? "Recovering" : "Ready"}
+          </span>
         </div>
-        <p className="muted">A private one-click adventure that stays on the website. Encounter fights resolve immediately, with even Encounter/Treasure odds, a {duration(state?.solo_venture?.cooldown_seconds || 420)} cooldown, and enemies no more than {number(state?.solo_venture?.max_enemy_levels_above_player || 3)} levels above you.</p>
-        <div className="solo-venture-rules" aria-label="Solo Venture rules">
-          <span><strong>50 / 50</strong>Encounter / Treasure</span>
-          <span><strong>Instant</strong>Encounter resolution</span>
-          <span><strong>+3</strong>Enemy level cap</span>
-          <span><strong>7m</strong>Separate cooldown</span>
-        </div>
-        <div className="venture-action-row">
-          <button
-            type="button"
-            className="equipment-action-button"
-            disabled={!actionsAvailable || !state?.solo_venture?.ready || soloRemaining > 0 || Boolean(busy)}
-            onClick={() => runRequest("solo-venture", () => submitSoloVenture(csrfToken, actionKey("solo-venture")), "Solo Venture complete.")}
-          >
-            {busy === "solo-venture" ? "Resolving…" : "Solo Venture"}
-          </button>
-          {soloReason ? <span className="adventure-disabled-reason">{soloReason}</span> : null}
-        </div>
-        {recentSoloResult ? (
+
+        {!expedition ? (
+          <>
+            <p className="muted">A private, player-paced Solo Venture of up to three stages. Each stage can reveal an Encounter or Treasure Chest; after a clear, return safely or press deeper for stronger rewards.</p>
+            <div className="solo-venture-rules" aria-label="Solo Venture rules">
+              <span><strong>60 / 40</strong>Encounter / Treasure</span>
+              <span><strong>3 stages</strong>Maximum depth</span>
+              <span><strong>+3</strong>Enemy level ceiling</span>
+              <span><strong>7m</strong>Separate cooldown</span>
+            </div>
+            <div className="venture-action-row">
+              <button
+                type="button"
+                className="equipment-action-button"
+                disabled={!actionsAvailable || !state?.solo_venture?.ready || soloRemaining > 0 || Boolean(busy)}
+                onClick={() => runRequest("solo-venture", () => submitSoloVenture(csrfToken, actionKey("solo-venture")), "Solo Venture started.")}
+              >
+                {busy === "solo-venture" ? "Setting Out…" : "Begin Solo Venture"}
+              </button>
+              {soloReason ? <span className="adventure-disabled-reason">{soloReason}</span> : null}
+            </div>
+          </>
+        ) : (
+          <div className="solo-expedition-shell">
+            <div className="solo-expedition-ledger">
+              <div><span>Secured</span><strong>{number(expedition.secured?.xp || 0)} XP · {number(expedition.secured?.jp || 0)} JP</strong></div>
+              <div><span>Venture Spoils</span><strong>{number(expedition.spoils?.gil || 0)} Gil · {number((expedition.spoils?.items || []).reduce((sum, row) => sum + Number(row.quantity || 1), 0))} items</strong></div>
+              <div><span>Current Depth Bonus</span><strong>+{number(expedition.stage_bonus_percent || 0)}%</strong></div>
+            </div>
+
+            {expedition.status === "combat" && expedition.combat ? (
+              <div className="solo-combat-board">
+                <div className="solo-combatant enemy">
+                  <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv.{number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
+                  <div className="vital-label"><span>HP</span><span>{number(expedition.combat.enemy?.hp)} / {number(expedition.combat.enemy?.max_hp)}</span></div>
+                  <ProgressBar value={pct(expedition.combat.enemy?.hp, expedition.combat.enemy?.max_hp)} className="hp" />
+                  <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing an action"}</strong></div>
+                  {expedition.combat.enemy?.statuses && expedition.combat.enemy.statuses !== "—" ? <small>Status: {expedition.combat.enemy.statuses}</small> : null}
+                </div>
+
+                <div className="solo-combatant hero">
+                  <div className="solo-combat-head"><div><span>Your Hero</span><h3>{expedition.combat.player?.name} · {expedition.combat.player?.job_name}</h3></div></div>
+                  <div className="vital-label"><span>HP</span><span>{number(expedition.combat.player?.hp)} / {number(expedition.combat.player?.max_hp)}</span></div>
+                  <ProgressBar value={pct(expedition.combat.player?.hp, expedition.combat.player?.max_hp)} className="hp" />
+                  {Number(expedition.combat.player?.max_mp || 0) > 0 ? <><div className="vital-label"><span>MP</span><span>{number(expedition.combat.player?.mp)} / {number(expedition.combat.player?.max_mp)}</span></div><ProgressBar value={pct(expedition.combat.player?.mp, expedition.combat.player?.max_mp)} className="mp" /></> : null}
+                  {Number(expedition.combat.player?.max_ap || 0) > 0 ? <><div className="vital-label"><span>AP</span><span>{number(expedition.combat.player?.ap)} / {number(expedition.combat.player?.max_ap)}</span></div><ProgressBar value={pct(expedition.combat.player?.ap, expedition.combat.player?.max_ap)} className="ap" /></> : null}
+                  {expedition.combat.player?.statuses && expedition.combat.player.statuses !== "—" ? <small>Status: {expedition.combat.player.statuses}</small> : null}
+                </div>
+
+                {expedition.last_round?.events?.length ? (
+                  <div className="solo-round-log" aria-live="polite">
+                    <strong>Round {number(expedition.last_round.round)}</strong>
+                    {expedition.last_round.events.map((line, index) => <span key={`${index}:${line}`}>{line}</span>)}
+                  </div>
+                ) : null}
+
+                <div className="solo-command-bar" aria-label="Solo Venture battle actions">
+                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", () => submitSoloExpeditionAction("attack", csrfToken, actionKey("solo-action", "attack")), "Round resolved.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
+                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={() => setSoloPicker((value) => value === "ability" ? "" : "ability")}>Ability</button>
+                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "item" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "item"} onClick={() => setSoloPicker((value) => value === "item" ? "" : "item")}>Use Item</button>
+                  <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:defend", () => submitSoloExpeditionAction("defend", csrfToken, actionKey("solo-action", "defend")), "Round resolved.")}>{busy === "solo:defend" ? "Defending…" : "Defend"}</button>
+                </div>
+
+                {soloPicker === "ability" ? (
+                  <div className="solo-action-picker">
+                    <div className="panel-title-row"><div><p className="eyebrow">Battle Abilities</p><h3>Choose an ability</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
+                    <div className="solo-action-grid">
+                      {(expedition.combat.abilities || []).map((ability) => (
+                        <button key={ability.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => runRequest(`solo:ability:${ability.id}`, () => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, actionKey("solo-ability", ability.id)), `${ability.name} resolved.`)}>
+                          <span><strong>{ability.name}</strong><small>{ability.cost}{String(ability.resource || "").toUpperCase()} · {ability.target}</small></span>
+                          <span>{ability.usable ? "Use" : ability.reason}</span>
+                          <small>{ability.description}</small>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {soloPicker === "item" ? (
+                  <div className="solo-action-picker">
+                    <div className="panel-title-row"><div><p className="eyebrow">Battle Inventory</p><h3>Choose an item</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
+                    <div className="solo-action-grid">
+                      {(expedition.combat.items || []).length ? (expedition.combat.items || []).map((item) => (
+                        <button key={item.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`solo:item:${item.id}`, () => submitSoloExpeditionAction(`item:${item.id}`, csrfToken, actionKey("solo-item", item.id)), `${item.name} used.`)}>
+                          <span><strong>{item.name}</strong><small>Qty {number(item.quantity)} · {item.target}</small></span>
+                          <span>{item.usable ? "Use" : item.reason}</span>
+                          <small>{item.description}</small>
+                        </button>
+                      )) : <p className="muted">No usable battle items are in your inventory.</p>}
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="solo-retreat-row">
+                  <button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Solo Venture? Secured progression is kept, but unbanked Venture Spoils will be lost.")) runRequest("solo:retreat", () => submitSoloExpeditionRetreat(csrfToken, actionKey("solo-retreat")), "Retreated from Solo Venture."); }}>{busy === "solo:retreat" ? "Retreating…" : "Retreat — Abandon Venture Spoils"}</button>
+                </div>
+              </div>
+            ) : null}
+
+            {expedition.status === "choice" ? (
+              <div className="solo-stage-cleared">
+                <div className="solo-result-highlight">
+                  <span>Stage {number(expedition.stage)} cleared</span>
+                  <strong>{expedition.treasure?.name || expedition.last_stage?.monster?.name || "The road is clear"}</strong>
+                  <small>{expedition.treasure ? [expedition.treasure.category, expedition.treasure.level ? `Lv.${number(expedition.treasure.level)}` : "", expedition.treasure.rarity].filter(Boolean).join(" · ") : expedition.last_stage?.rewards ? `+${number(expedition.last_stage.rewards.xp)} XP · +${number(expedition.last_stage.rewards.jp)} JP secured · ${number(expedition.last_stage.rewards.gil)} Gil in spoils` : "Choose whether to return or continue."}</small>
+                </div>
+                <div className="solo-choice-actions">
+                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:return", () => submitSoloExpeditionReturn(csrfToken, actionKey("solo-return")), "Returned to the Guild.")}>{busy === "solo:return" ? "Returning…" : "Return to Guild — Bank Spoils"}</button>
+                  {expedition.can_press_on ? <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:continue", () => submitSoloExpeditionContinue(csrfToken, actionKey("solo-continue")), "Pressed deeper into the Solo Venture.")}>{busy === "solo:continue" ? "Pressing On…" : `Press On — Stage ${number(expedition.stage + 1)}`}</button> : null}
+                </div>
+                {expedition.can_press_on ? <p className="adventure-disabled-reason">Going deeper raises the stage reward modifier, but your current HP/MP/AP and consumed items carry forward.</p> : null}
+              </div>
+            ) : null}
+          </div>
+        )}
+
+        {!expedition && recentSoloResult ? (
           <div className="solo-result-wrap">
             <p className="solo-result-summary" aria-live="polite"><strong>Last result:</strong> {recentSoloSummary.replace(/^Solo Venture:\s*/, "")}</p>
             <SoloVentureResult summary={recentSoloResult} cooldownRemaining={soloRemaining} />

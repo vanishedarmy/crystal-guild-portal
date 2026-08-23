@@ -138,7 +138,7 @@ export default function DailyReward({ username, onRefresh }) {
       <div className="daily-reward-copy">
         <div>
           <p className="eyebrow">Daily Guild Provisions</p>
-          <h2>{available ? "Today's reward is ready" : "Provisions already collected"}</h2>
+          <h2>{daily?.blocked_reason ? "Provisions wait at the Guild" : available ? "Today's reward is ready" : "Provisions already collected"}</h2>
           <p className="muted">
             {daily
               ? `Reward: ${number(daily.gil_min)}–${number(daily.gil_max)} Gil + ${daily.provision_summary || "a random level-appropriate provision bundle"}.`
@@ -151,7 +151,7 @@ export default function DailyReward({ username, onRefresh }) {
           ) : (
             daily ? <p className="daily-subscriber-perk muted">Twitch subscribers receive tier-based Daily Guild Provision bonuses.</p> : null
           )}
-          {daily && !available ? <div className="daily-reward-timer">Next claim in <strong>{duration(remaining)}</strong></div> : null}
+          {daily?.blocked_reason ? <div className="daily-reward-timer"><strong>{daily.blocked_reason}</strong></div> : daily && !available ? <div className="daily-reward-timer">Next claim in <strong>{duration(remaining)}</strong></div> : null}
           {message ? <small className="daily-reward-message" aria-live="polite">{message}</small> : null}
         </div>
         <div className="daily-reward-actions">
@@ -161,7 +161,7 @@ export default function DailyReward({ username, onRefresh }) {
             disabled={!actionsAvailable || !available || Boolean(busy)}
             onClick={claim}
           >
-            {busy === "claim" ? "Claiming…" : available ? "Claim Daily Reward" : "Already Claimed"}
+            {busy === "claim" ? "Claiming…" : daily?.blocked_reason ? "Solo Venture in Progress" : available ? "Claim Daily Reward" : "Already Claimed"}
           </button>
           <button
             type="button"

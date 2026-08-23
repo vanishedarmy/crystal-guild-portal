@@ -4,12 +4,12 @@ import test from "node:test";
 
 const SRC = new URL("../src/", import.meta.url);
 
-test("v1.1.14 Cloud Continuity keeps Rally Venture start/join out of the Portal", async () => {
+test("v1.1.15 Wayfarer keeps Rally Venture start/join out of the Portal", async () => {
   const api = await readFile(new URL("api/auth.js", SRC), "utf8");
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   for (const token of [
-    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "CHALLENGE_HUNT",
-    "submitAdventureState", "submitTravelRegion", "submitSoloVenture", "submitChallengeHunt",
+    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
+    "submitAdventureState", "submitTravelRegion", "submitSoloVenture", "submitSoloExpeditionAction", "submitSoloExpeditionContinue", "submitSoloExpeditionReturn", "submitSoloExpeditionRetreat", "submitChallengeHunt",
   ]) assert.match(api, new RegExp(token));
   assert.doesNotMatch(api, /submitVenture|submitJoinEncounter|"VENTURE"|"JOIN_ENCOUNTER"/);
   assert.doesNotMatch(board, /submitVenture|submitJoinEncounter|Join Encounter/);
@@ -24,9 +24,10 @@ test("Solo Venture is the first actionable section before Rally notice and regio
   const rally = board.indexOf('Rally Venture · Twitch Chat Only');
   const region = board.indexOf('Current Region');
   assert.ok(solo > 0 && rally > solo && region > rally, { solo, rally, region });
-  assert.match(board, /50 \/ 50/);
-  assert.match(board, /50%/);
-  assert.match(board, /Enemy level cap/);
+  assert.match(board, /60 \/ 40/);
+  assert.match(board, /Encounter \/ Treasure/);
+  assert.match(board, /3 stages/);
+  assert.match(board, /Enemy level ceiling/);
   assert.match(board, /Separate cooldown/);
 });
 
@@ -36,7 +37,7 @@ test("Adventure Board uses clearer player-facing wording", async () => {
   assert.match(board, /Choose Your Next Adventure/);
   assert.doesNotMatch(board, /Phase 9 Adventure Board|authoritative rules|Portal action|mutation|protocol/i);
   assert.match(board, /Rally battles use Twitch chat for combat/);
-  assert.match(board, /private one-click adventure that stays on the website/);
+  assert.match(board, /private, player-paced Solo Venture/);
 });
 
 test("Adventure Board uses local timers and polls only while an encounter is active", async () => {
@@ -66,26 +67,49 @@ test("Solo Venture cooldown participates in the Adventure Board local deadline r
   assert.match(board, /`Solo Venture ready in \$\{duration\(soloRemaining\)\}\.`/);
 });
 
-test("Solo Venture resolves immediately and keeps its readable result inside the Solo Venture card", async () => {
+test("Wayfarer Solo Venture is player-paced and keeps combat inside the Solo Venture card", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
-  assert.match(board, /Encounter fights resolve immediately/);
-  assert.match(board, /<strong>Instant<\/strong>Encounter resolution/);
+  for (const label of ["Attack", "Ability", "Use Item", "Defend", "Enemy intent", "Return to Guild — Bank Spoils", "Press On — Stage"]) {
+    assert.match(board, new RegExp(label));
+  }
+  assert.match(board, /Stage \${number\(expedition\.stage\)} of/);
+  assert.match(board, /Venture Spoils/);
+  assert.match(board, /Secured/);
+  assert.match(board, /Retreat — Abandon Venture Spoils/);
+  assert.match(board, /current HP\/MP\/AP and consumed items carry forward/);
   assert.match(board, /SoloVentureResult/);
-  assert.match(board, /Last Solo Venture/);
-  assert.match(board, /Won in/);
-  assert.match(board, /Damage dealt/);
-  assert.match(board, /Next Solo Venture in/);
-  assert.doesNotMatch(board, /Solo Venture resolved\./);
-  assert.match(board, /Solo Venture: Victory over/);
-  assert.match(board, /Solo Venture: Found/);
-  assert.match(board, /Solo Venture: Defeated by/);
-  const soloCard = board.indexOf('className="panel venture-panel solo-venture-panel"');
-  const embeddedResult = board.indexOf('<SoloVentureResult summary={recentSoloResult}');
+  assert.doesNotMatch(board, /Encounter fights resolve immediately/);
+  const soloCard = board.indexOf('className={`panel venture-panel solo-venture-panel');
   const rallyCard = board.indexOf('Rally Venture · Twitch Chat Only');
-  assert.ok(soloCard > 0 && embeddedResult > soloCard && rallyCard > embeddedResult, { soloCard, embeddedResult, rallyCard });
-  assert.match(css, /v1\.1\.12 Hotfix 1 — instant Solo Venture result summary/);
-  assert.match(css, /v1\.1\.12 Hotfix 2 — embedded Solo result \+ mobile connection token/);
-  assert.match(css, /\.solo-result-grid/);
-  assert.match(css, /\.solo-result-wrap/);
+  assert.ok(soloCard > 0 && rallyCard > soloCard, { soloCard, rallyCard });
+  assert.match(css, /v1\.1\.15 — Wayfarer interactive Solo Expedition/);
+  assert.match(css, /\.solo-expedition-shell/);
+  assert.match(css, /\.solo-command-bar/);
+  assert.match(css, /\.solo-enemy-intent/);
+});
+
+test("Wayfarer orders the Adventurer Portal around the most-used character actions", async () => {
+  const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
+  const ordered = [
+    '["overview", "Overview"',
+    '["hunts", "Adventure Board"',
+    '["jobs", "Jobs"',
+    '["inventory", "Equipment & Inventory"',
+    '["shop", "Moogle Emporium"',
+    '["blacksmith", "Blacksmith"',
+    '["chocobo", "Chocobo Stable"',
+    '["fellowship", "Fellowship"',
+    '["bestiary", "Bestiary"',
+    '["relics", "Relics"',
+    '["achievements", "Achievements & Titles"',
+    '["records", "Records"',
+    '["trophies", "Trophy Hall"',
+  ];
+  let previous = -1;
+  for (const marker of ordered) {
+    const at = profile.indexOf(marker);
+    assert.ok(at > previous, `${marker} is out of order`);
+    previous = at;
+  }
 });

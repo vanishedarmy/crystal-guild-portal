@@ -5,9 +5,9 @@ import test from "node:test";
 const PUBLIC = new URL("../public/", import.meta.url);
 const SRC = new URL("../src/", import.meta.url);
 
-test("v1.1.14 Player Guide command catalog uses exclamation commands exclusively", async () => {
+test("v1.1.15 Player Guide command catalog uses exclamation commands exclusively", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.1.14 — Cloud Continuity");
+  assert.equal(data.meta.version, "v1.1.15 — Wayfarer");
   assert.ok(data.commands.length > 30);
   assert.ok(data.commands.every((entry) => String(entry.command || "").startsWith("!")));
   assert.ok(data.commands.every((entry) => !String(entry.command || "").startsWith("&")));

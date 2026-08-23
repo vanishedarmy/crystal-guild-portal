@@ -4,9 +4,9 @@ import test from "node:test";
 
 const PUBLIC = new URL("../public/", import.meta.url);
 
-test("lazy guide data is valid and versioned for v1.1.14 Cloud Continuity", async () => {
+test("lazy guide data is valid and versioned for v1.1.15 Wayfarer", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.1.14 — Cloud Continuity");
+  assert.equal(data.meta.version, "v1.1.15 — Wayfarer");
   assert.doesNotMatch(data.meta.version, /Beta/i);
   assert.equal(data.meta.encounter_round, 20);
   assert.ok(data.jobs.length > 0);
@@ -44,6 +44,10 @@ test("lazy guide markup documents Active Battle and keeps the organized guide sh
   assert.match(markup, /never shorten the deadline/i);
   assert.match(markup, /70% ENCOUNTER/i);
   assert.match(markup, /30% TREASURE CHEST/i);
+  assert.match(markup, /60% ENCOUNTER/i);
+  assert.match(markup, /40% TREASURE/i);
+  assert.match(markup, /three stages|3 stages/i);
+  assert.match(markup, /Enemy Intent/i);
   assert.match(markup, /5 levels below through 2 levels above/i);
   assert.match(markup, /Hunts are solo battles/i);
   assert.match(markup, /named C\/B\/A\/S marks/i);
@@ -62,7 +66,7 @@ test("GuidePage cache-busts lazy assets and uses the shared release label", asyn
   assert.match(page, /initGuide\(guide\.data, WEB_RELEASE\)/);
   assert.match(legacy, /releaseLabel/);
   assert.match(legacy, /activeAbilityBlock/);
-  assert.match(version, /1\.1\.14/);
+  assert.match(version, /1\.1\.15/);
 });
 
 

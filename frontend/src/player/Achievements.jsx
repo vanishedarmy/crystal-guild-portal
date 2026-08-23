@@ -1,5 +1,7 @@
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useMemo, useState } from "react";
+import { submitSetTitle, waitForPortalAction } from "../api/auth.js";
+import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
 import {
   achievementAttainmentState,
@@ -48,9 +50,14 @@ function AchievementCard({ achievement }) {
   );
 }
 
-function TitleCard({ title }) {
+function TitleCard({ title, canManage, busy, blocked, onEquip }) {
+  const buttonLabel = title.equipped
+    ? "Equipped Now"
+    : busy
+      ? "Equipping…"
+      : `Equip ${title.name}`;
   return (
-    <article className={`title-card rarity-${title.rarity || "common"} ${title.unlocked ? "unlocked" : "locked"}`}>
+    <article className={`title-card rarity-${title.rarity || "common"} ${title.unlocked ? "unlocked" : "locked"} ${title.equipped ? "is-equipped" : ""}`}>
       <div className="title-card-head">
         <span className="slot-label">{humanizeLabel(title.source)}</span>
         <span className={`title-rarity rarity-${title.rarity || "common"}`}>{humanizeLabel(title.rarity)}</span>
@@ -61,16 +68,45 @@ function TitleCard({ title }) {
         <span>{humanizeLabel(title.category)}</span>
         {title.equipped ? <strong>Equipped</strong> : title.unlocked ? <strong>Unlocked</strong> : <span>Locked</span>}
       </div>
+      {title.unlocked && canManage ? (
+        <div className="title-card-actions">
+          <button
+            type="button"
+            className={`equipment-action-button ${title.equipped ? "secondary" : ""}`}
+            disabled={title.equipped || blocked}
+            onClick={() => onEquip(title)}
+          >
+            {buttonLabel}
+          </button>
+        </div>
+      ) : null}
     </article>
   );
 }
 
-export default function Achievements({ data }) {
+function actionKey(titleId) {
+  const suffix = globalThis.crypto?.randomUUID
+    ? globalThis.crypto.randomUUID()
+    : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
+  return `title:${titleId}:${suffix}`;
+}
+
+export default function Achievements({ data, onRefresh }) {
   const [category, setCategory] = useState("All");
   const [state, setState] = useState("all");
   const [view, setView] = useState("achievements");
   const [titleState, setTitleState] = useState("unlocked");
   const [rarity, setRarity] = useState("All");
+  const [busyTitle, setBusyTitle] = useState("");
+  const [titleMessage, setTitleMessage] = useState("");
+  const { auth } = usePortalAuth();
+  const isOwnProfile = Boolean(
+    auth.authenticated
+    && auth.player?.username
+    && String(auth.player.username).toLowerCase() === String(data.player?.username || "").toLowerCase(),
+  );
+  const capabilities = new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []);
+  const titleActionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && capabilities.has("SET_TITLE"));
   const categories = useMemo(() => achievementCategories(data.achievements), [data.achievements]);
   const shown = useMemo(
     () => filterAchievements(data.achievements, category, state),
@@ -80,6 +116,31 @@ export default function Achievements({ data }) {
     () => filterTitles(data.titles || [], titleState, rarity),
     [data.titles, titleState, rarity],
   );
+
+  const equipTitle = async (title) => {
+    if (!titleActionsAvailable || busyTitle || !title?.unlocked || title?.equipped) return;
+    setBusyTitle(title.id);
+    setTitleMessage(`Equipping ${title.name}…`);
+    try {
+      const response = await submitSetTitle(title.id, auth.csrf_token, actionKey(title.id));
+      const action = response?.action;
+      if (!action?.id) throw new Error("Crystal Guild did not return a request ID.");
+      const finished = (action.status === "completed" || action.status === "failed")
+        ? action
+        : await waitForPortalAction(action.id, { attempts: 28, delayMs: 650 });
+      if (!finished) throw new Error("This Title change is still processing. Please check again shortly.");
+      const message = finished.result?.message || (finished.status === "completed" ? `${title.name} equipped.` : "Title change failed.");
+      setTitleMessage(message);
+      if (finished.status === "completed" && finished.result?.ok !== false) {
+        onRefresh?.();
+        window.setTimeout(() => onRefresh?.(), 2200);
+      }
+    } catch (error) {
+      setTitleMessage(error.message);
+    } finally {
+      setBusyTitle("");
+    }
+  };
 
   return (
     <section className="achievement-hall">
@@ -160,10 +221,26 @@ export default function Achievements({ data }) {
               </button>
             ))}
           </div>
+          {isOwnProfile ? (
+            <div className={`equipment-action-status ${titleActionsAvailable ? "ready" : "offline"}`}>
+              <strong>{titleActionsAvailable ? "Title controls ready" : "Title controls unavailable"}</strong>
+              <span>{titleActionsAvailable ? "Choose any Title you have earned and equip it here." : "Your earned Titles are still available to view."}</span>
+              {titleMessage ? <small aria-live="polite">{titleMessage}</small> : null}
+            </div>
+          ) : null}
           <div className="title-grid">
-            {shownTitles.map((title) => <TitleCard title={title} key={title.id} />)}
+            {shownTitles.map((title) => (
+              <TitleCard
+                title={title}
+                key={title.id}
+                canManage={titleActionsAvailable}
+                busy={busyTitle === title.id}
+                blocked={Boolean(busyTitle)}
+                onEquip={equipTitle}
+              />
+            ))}
           </div>
-          <p className="portal-command-note">Equip an unlocked title in Twitch chat with <code>!title &lt;name&gt;</code>.</p>
+          <p className="portal-command-note">Earned Titles can be equipped here or in Twitch chat with <code>!title &lt;name&gt;</code>.</p>
         </section>
       )}
     </section>

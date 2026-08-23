@@ -6,7 +6,27 @@ import {
   waitForPortalAction,
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
-import { duration, number } from "../utils/formatters.js";
+import { duration, formatBonuses, number } from "../utils/formatters.js";
+import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
+
+
+const EQUIPMENT_TYPES = new Set(["weapon", "armor", "accessory"]);
+const STAT_LABELS = { attack: "ATK", magic_power: "M.PWR", str: "STR", vit: "VIT", mag: "MAG", spr: "SPR", dex: "DEX", lck: "LCK", hp: "HP" };
+
+function itemBonuses(item) {
+  return item?.effective_bonuses || item?.bonuses || {};
+}
+
+function equipmentDelta(item, current) {
+  const next = itemBonuses(item);
+  const prior = itemBonuses(current);
+  const keys = [...new Set([...Object.keys(next), ...Object.keys(prior)])];
+  const parts = keys
+    .map((key) => [key, Number(next[key] || 0) - Number(prior[key] || 0)])
+    .filter(([, value]) => value !== 0)
+    .map(([key, value]) => `${STAT_LABELS[key] || key.toUpperCase()} ${value > 0 ? "+" : ""}${value}`);
+  return parts.length ? parts.join(" · ") : "No direct stat change";
+}
 
 function actionKey(kind, target = "shop") {
   const suffix = globalThis.crypto?.randomUUID
@@ -53,6 +73,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const [buyQty, setBuyQty] = useState({});
   const [sellQty, setSellQty] = useState({});
   const [clock, setClock] = useState(() => Date.now());
+  const [guideData, setGuideData] = useState(null);
 
   const playerUsername = String(data?.player?.username || overview?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -73,6 +94,16 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     }))
     .sort(compareShopItems), [data?.items]);
 
+  const currentBySlot = useMemo(() => {
+    const map = new Map();
+    for (const entry of overview?.equipment || []) map.set(String(entry.slot || "").toLowerCase(), entry);
+    return map;
+  }, [overview?.equipment]);
+  const displayedStock = useMemo(
+    () => mergeItemListWithCatalog(Array.isArray(shop?.stock) ? shop.stock : [], guideData).sort(compareShopItems),
+    [shop?.stock, guideData],
+  );
+
   const shopActionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
@@ -81,6 +112,14 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     && capabilities.has("SELL_ITEM")
   );
   const csrfToken = auth.csrf_token || "";
+
+  useEffect(() => {
+    let cancelled = false;
+    loadGuideData()
+      .then((catalog) => { if (!cancelled) setGuideData(catalog); })
+      .catch(() => { if (!cancelled) setGuideData(null); });
+    return () => { cancelled = true; };
+  }, []);
 
   const loadShop = useCallback(async ({ quiet = false } = {}) => {
     if (!shopActionsAvailable) return null;
@@ -232,7 +271,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
             <div className="moogle-combat-lock">Transactions are locked while this adventurer is committed to an active encounter or raid.</div>
           ) : null}
           <div className="moogle-stock-grid">
-            {[...(shop.stock || [])].sort(compareShopItems).map((item) => {
+            {displayedStock.map((item) => {
               const max = item.equipment ? 1 : 99;
               const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] || 1, max);
               const total = Number(item.price || 0) * quantity;
@@ -246,6 +285,19 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                   </div>
                   <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span></div>
                   <div className="card-meta">Owned {number(item.owned)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</div>
+                  {item.equipment && Object.keys(itemBonuses(item)).length ? (
+                    <div className="moogle-stat-summary">
+                      <span className="moogle-stat-label">Stat boosts</span>
+                      <strong>{formatBonuses(itemBonuses(item))}</strong>
+                      {EQUIPMENT_TYPES.has(String(item.type || "").toLowerCase()) ? (() => {
+                        const slot = String(item.type || "").toLowerCase();
+                        const current = currentBySlot.get(slot);
+                        if (!current?.id) return <small>Compared with empty {typeLabel(slot).toLowerCase()} slot: all listed boosts are gained.</small>;
+                        const upgrade = current.upgrade_level ? ` +${current.upgrade_level}` : "";
+                        return <small>Vs. {current.name}{upgrade}: {equipmentDelta(item, current)}</small>;
+                      })() : null}
+                    </div>
+                  ) : null}
                   {item.description ? <p className="moogle-item-description">{item.description}</p> : null}
                   {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? (
                     <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div>

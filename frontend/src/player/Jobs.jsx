@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import {
   submitCharacterState,
@@ -40,79 +39,6 @@ function masterySlotMap(slots = []) {
   const result = { 1: "", 2: "" };
   for (const slot of slots) result[Number(slot.slot)] = slot.job_id || "";
   return result;
-}
-
-function abilityReady(job, ability) {
-  return Boolean(job?.owned && Number(job?.level || 0) >= Number(ability?.level || 0));
-}
-
-function JobAbilityReference({ job }) {
-  const activeAbilities = Array.isArray(job?.active_abilities) ? job.active_abilities : [];
-  const passiveAbilities = Array.isArray(job?.passive_abilities) ? job.passive_abilities : [];
-  const resource = String(job?.resource_mode || "").toUpperCase() || "—";
-
-  return (
-    <div className="job-reference-block">
-      <div className="job-combat-identity" aria-label={`${job.name} combat identity`}>
-        <div><span>Attack</span><strong>{job.attack_name || "Standard attack"}</strong></div>
-        <div><span>Signature</span><strong>{job.signature || "—"}</strong></div>
-        <div><span>Resource</span><strong>{resource}</strong></div>
-      </div>
-
-      <div className="job-reference-section">
-        <div className="job-reference-heading">
-          <span className="data-label">Battle Abilities</span>
-          <span className="job-command-hint">!ability &lt;name&gt; [target]</span>
-        </div>
-        {activeAbilities.length ? (
-          <div className="job-active-ability-list">
-            {activeAbilities.map((ability) => {
-              const ready = abilityReady(job, ability);
-              const abilityResource = String(ability.resource || job.resource_mode || "mp").toUpperCase();
-              return (
-                <div className={`job-active-ability ${ready ? "ready" : "locked"}`} key={`${job.id}-active-${ability.id || ability.name}`}>
-                  <div className="job-ability-heading">
-                    <strong>{ability.name}</strong>
-                    <span className="job-ability-badges">
-                      <span className="small-badge">JLv.{ability.level}</span>
-                      <span className="small-badge">{ability.cost} {abilityResource}</span>
-                      <span className="small-badge">{humanizeLabel(ability.target)}</span>
-                      <span className={`small-badge ${ready ? "success" : "locked"}`}>{ready ? "Ready" : "Locked"}</span>
-                    </span>
-                  </div>
-                  <p>{ability.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        ) : <div className="job-reference-empty">Ability reference is loading…</div>}
-      </div>
-
-      {passiveAbilities.length ? (
-        <div className="job-reference-section">
-          <span className="data-label">Passive Job Milestones</span>
-          <div className="job-passive-list">
-            {passiveAbilities.map((ability) => {
-              const ready = abilityReady(job, ability);
-              return (
-                <div className={`job-passive-row ${ready ? "ready" : "locked"}`} key={`${job.id}-passive-${ability.level}-${ability.name}`}>
-                  <span className="job-passive-level">JLv.{ability.level}</span>
-                  <div><strong>{ability.name}</strong><p>{ability.description}</p></div>
-                  <span className={`small-badge ${ready ? "success" : "locked"}`}>{ready ? "Learned" : "Locked"}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ) : null}
-
-      <div className="job-mastery-reference">
-        <span className="data-label">JLv.50 Cross-Job Mastery</span>
-        <strong>{job.mastery?.name || "—"}</strong>
-        <p>{job.mastery?.description || "Mastery details unavailable."}</p>
-      </div>
-    </div>
-  );
 }
 
 export default function Jobs({ data, overview, onDetail, onRefresh }) {
@@ -264,7 +190,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
   const renderPublicJobs = () => (
     <div className="job-grid">
       {jobs.map((job) => (
-        <ClickableCard className={`job-card public-job-card ${job.current ? "current" : ""}`} key={job.id || job.name} detail={{ type: "job", job }} onOpen={onDetail}>
+        <article className={`job-card public-job-card ${job.current ? "current" : ""}`} key={job.id || job.name}>
           <div className="card-status-row">
             <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
             <div className="card-status-badges" aria-label="Job status">
@@ -275,8 +201,10 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
           <div className="job-name">{job.name}</div>
           <div className="card-meta">{job.owned ? `JLv.${job.level}` : "Not learned"} · {job.signature}</div>
           {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
-          <JobAbilityReference job={job} />
-        </ClickableCard>
+          <div className="management-job-actions public-job-actions">
+            <button type="button" className="equipment-action-button secondary" onClick={() => onDetail?.({ type: "job", job: detailJob(job) })}>{`View ${job.name} Details`}</button>
+          </div>
+        </article>
       ))}
     </div>
   );
@@ -346,7 +274,6 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                       <ul>{job.requirements.map((req, index) => <li className={req.met ? "met" : "missing"} key={`${job.id}-req-${index}`}>{req.met ? "✓" : "○"} {req.text}</li>)}</ul>
                     </details>
                   ) : null}
-                  <JobAbilityReference job={job} />
                   <div className="management-job-actions">
                     <button type="button" className="equipment-action-button secondary" onClick={() => onDetail?.({ type: "job", job: detailJob(job) })}>{`View ${job.name} Details`}</button>
                     <button

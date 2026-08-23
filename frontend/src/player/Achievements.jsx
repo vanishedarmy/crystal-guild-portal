@@ -2,6 +2,7 @@ import { humanizeLabel } from "../utils/displayLabels.js";
 import { useMemo, useState } from "react";
 import ProgressBar from "../components/ProgressBar.jsx";
 import {
+  achievementAttainmentState,
   achievementCategories,
   filterAchievements,
   filterTitles,
@@ -12,6 +13,14 @@ const TITLE_RARITIES = ["All", "Legendary", "Epic", "Rare", "Uncommon", "Common"
 
 function AchievementCard({ achievement }) {
   const tier = achievement.tier || "bronze";
+  const attainment = achievementAttainmentState(achievement);
+  const progressLabel = achievement.progress?.hidden
+    ? "Secret"
+    : achievement.unlocked
+      ? "Complete"
+      : attainment === "progress"
+        ? "In Progress"
+        : "Not Started";
   return (
     <article className={`achievement-card tier-${tier} ${achievement.unlocked ? "unlocked" : "locked"}`}>
       <div className="achievement-card-head">
@@ -23,7 +32,7 @@ function AchievementCard({ achievement }) {
       <div className="card-meta">{achievement.description}</div>
       <div className="achievement-progress">
         <div className="achievement-progress-label">
-          <span>{achievement.progress?.hidden ? "Secret" : achievement.unlocked ? "Complete" : "Progress"}</span>
+          <span>{progressLabel}</span>
           <strong>{achievement.progress?.hidden ? "???" : progressText(achievement.progress)}</strong>
         </div>
         {achievement.progress?.hidden ? null : <ProgressBar value={achievement.progress?.percent || 0} />}

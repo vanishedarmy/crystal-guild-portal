@@ -1,3 +1,20 @@
+# Crystal Guild v1.1.15 — Wayfarer Hotfix 2 Upgrade Guide
+
+## Upgrade from Wayfarer Hotfix 1
+
+Hotfix 2 is Web-only. The Wayfarer schema-5 migration is already complete on a working v1.1.15 installation and **does not run again for this hotfix**.
+
+1. Keep the existing `1.1.15-wayfarer` Bot/runtime state unchanged.
+2. Apply the **Wayfarer Hotfix 1 → Hotfix 2 Web patch**, or replace the hosted Web files with the full Hotfix 2 Web package.
+3. Commit/push the Web files to GitHub and redeploy the hosted Render Web service as usual.
+4. Verify Web `/api/health` reports frontend revision `1.1.15-wayfarer1h2`, runtime `1.1.15-wayfarer`, and Portal Action protocol **13**.
+5. Open **Achievements & Titles → Achievements** and confirm Earned achievements appear first, active progress follows from closest completion downward, untouched goals follow from the lowest requirement upward, and hidden Secret achievements remain last.
+6. Try a category and Locked filter and confirm the same ordering remains within the filtered result.
+
+No database migration command, backup cycle, player reset, OAuth reauthorization, Render secret change, or Bot restart is introduced by Hotfix 2.
+
+---
+
 # Crystal Guild v1.1.15 — Wayfarer Hotfix 1 Upgrade Guide
 
 ## Upgrade from v1.1.15 Wayfarer

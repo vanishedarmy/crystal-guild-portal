@@ -1,3 +1,31 @@
+# Crystal Guild v1.1.15 — Wayfarer — Hotfix 2
+
+Hotfix 2 reorganizes the Adventurer Portal **Achievements** gallery around what is most useful to the player right now. Achievement definitions, rewards, unlock conditions, points, titles, and saved progression are unchanged.
+
+## Achievement progression order
+
+Achievement cards now sort automatically after the existing category and attainment filters:
+
+1. **Earned** achievements appear first and read from the smallest/easiest requirement upward.
+2. **In Progress** achievements follow, ordered by highest completion percentage first. Ties favor the goal with the least work remaining, then the lower requirement.
+3. **Not Started** achievements follow in ascending requirement order.
+4. **Secret** unearned achievements remain last because their target/progress is intentionally hidden.
+
+This keeps tier chains in a natural progression such as **10 → 25 → 50** instead of exposing the underlying data order. The same ordering is preserved inside category and Locked/Unlocked filters. Achievement cards also distinguish **In Progress** from **Not Started** in the progress label.
+
+## Compatibility
+
+- Bot/Web runtime: `1.1.15-wayfarer`
+- Frontend asset revision: `1.1.15-wayfarer1h2`
+- Local DB schema: **5**
+- Hosted sync schema: **1**
+- Portal Action protocol: **13**
+- Twitch prefix: `!`
+
+This is a **Web presentation hotfix only**. No database migration, player reset, Bot replacement/restart, new Render secret, hosted sync change, Portal protocol change, or Twitch OAuth change is required.
+
+---
+
 # Crystal Guild v1.1.15 — Wayfarer — Hotfix 1
 
 Hotfix 1 adds a reusable, player-facing **What's New** section to the Adventurer Portal Overview. The latest major update is shown near the top of the character home so players can quickly understand what changed without reading developer release notes.

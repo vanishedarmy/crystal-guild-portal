@@ -1,3 +1,5 @@
+import { WEB_ASSET_REVISION } from "../version.js";
+
 let catalogPromise = null;
 
 function hasEffects(use) {
@@ -42,11 +44,11 @@ export function mergeInventoryWithCatalog(payload, guideData) {
   };
 }
 
-async function loadGuideData() {
+export async function loadGuideData() {
   if (!catalogPromise) {
-    catalogPromise = fetch("/guide-data.json?v=1.1.14-continuity2", { cache: "no-store" })
+    catalogPromise = fetch(`/guide-data.json?v=${WEB_ASSET_REVISION}`, { cache: "no-store" })
       .then((response) => {
-        if (!response.ok) throw new Error(`Item catalog request failed: ${response.status}`);
+        if (!response.ok) throw new Error(`Guide catalog request failed: ${response.status}`);
         return response.json();
       })
       .catch((error) => {
@@ -55,6 +57,30 @@ async function loadGuideData() {
       });
   }
   return catalogPromise;
+}
+
+
+export function mergeJobsWithCatalog(jobs, guideData) {
+  if (!Array.isArray(jobs)) return [];
+  const catalogJobs = Array.isArray(guideData?.jobs) ? guideData.jobs : [];
+  const activeCatalog = guideData?.active_abilities && typeof guideData.active_abilities === "object"
+    ? guideData.active_abilities
+    : {};
+  if (!catalogJobs.length) return jobs;
+
+  const byId = new Map(catalogJobs.filter((job) => job?.id).map((job) => [String(job.id), job]));
+  return jobs.map((job) => {
+    const catalogJob = byId.get(String(job?.id || ""));
+    if (!catalogJob) return job;
+    return {
+      ...catalogJob,
+      ...job,
+      abilities: Array.isArray(job?.abilities) ? job.abilities : [],
+      passive_abilities: Array.isArray(catalogJob.abilities) ? catalogJob.abilities : [],
+      active_abilities: Array.isArray(activeCatalog[catalogJob.id]) ? activeCatalog[catalogJob.id] : [],
+      mastery: { ...(catalogJob.mastery || {}), ...(job?.mastery || {}) },
+    };
+  });
 }
 
 export async function enrichInventoryWithCatalog(payload) {

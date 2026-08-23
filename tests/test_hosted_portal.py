@@ -48,7 +48,7 @@ class PortalServerCase(unittest.TestCase):
         static = root / "dist"
         static.mkdir()
         (static / "index.html").write_text("<div id='root'>Tonberry Rebuild</div>", encoding="utf-8")
-        (static / "guide-data.json").write_text("{\"meta\":{\"version\":\"v1.1.14 — Cloud Continuity\"}}", encoding="utf-8")
+        (static / "guide-data.json").write_text("{\"meta\":{\"version\":\"v1.1.15 — Wayfarer\"}}", encoding="utf-8")
         (static / "guide.css").write_text(".guide{}", encoding="utf-8")
         (static / "raid-overlay.html").write_text("<title>Crystal Guild Raid Overlay</title>", encoding="utf-8")
         store = HostedPortalStore(root / "mirror.db")
@@ -118,7 +118,7 @@ class PortalServerCase(unittest.TestCase):
     def test_fellowship_sync_and_public_api(self):
         payload = {
             "schema_version": 1,
-            "sync_version": "1.1.14-cloud-continuity",
+            "sync_version": "1.1.15-wayfarer",
             "fellowship": {
                 "level": 2, "level_label": "LVL 2", "renown": 1250,
                 "level_progress": {"level": 2, "current": 1250, "start": 1000, "next": 2500, "maxed": False},
@@ -142,7 +142,7 @@ class PortalServerCase(unittest.TestCase):
     def test_hosted_overlay_sync_public_api_and_obs_route(self):
         payload = {
             "schema_version": 1,
-            "sync_version": "1.1.14-cloud-continuity",
+            "sync_version": "1.1.15-wayfarer",
             "overlay": {
                 "active": True, "status": "COMBAT", "boss": "Behemoth King",
                 "tier": "World Boss", "hp": 1500, "max_hp": 2500, "round": 3,
@@ -174,8 +174,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.1.14", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.1.14-continuity3c")
+        self.assertIn("1.1.15", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.1.15-wayfarer1")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

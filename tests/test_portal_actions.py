@@ -24,7 +24,7 @@ TWITCH_ID = "987654321"
 def snapshot_payload(username: str = "van", twitch_id: str = TWITCH_ID) -> dict:
     return {
         "schema_version": 1,
-        "sync_version": "1.1.14-cloud-continuity",
+        "sync_version": "1.1.15-wayfarer",
         "username": username,
         "player_twitch_id": twitch_id,
         "snapshot": {
@@ -508,11 +508,15 @@ class PortalActionServerCase(unittest.TestCase):
                 )
             self.assertEqual(caught.exception.code, 400)
 
-    def test_v112_accepts_only_portal_side_adventure_actions(self):
+    def test_wayfarer_accepts_only_typed_portal_side_adventure_actions(self):
         for action_type, payload, key in (
             ("ADVENTURE_STATE", {}, "adventure-state"),
             ("TRAVEL_REGION", {"region_id": "sable_coast"}, "travel-sable"),
             ("SOLO_VENTURE", {}, "solo-venture-now"),
+            ("SOLO_EXPEDITION_ACTION", {"action": "attack"}, "solo-action-attack"),
+            ("SOLO_EXPEDITION_CONTINUE", {}, "solo-continue"),
+            ("SOLO_EXPEDITION_RETURN", {}, "solo-return"),
+            ("SOLO_EXPEDITION_RETREAT", {}, "solo-retreat"),
             ("CHALLENGE_HUNT", {"hunt_id": "red_hot_problem"}, "hunt-red-hot"),
         ):
             status, response, _ = self.request(
@@ -535,6 +539,12 @@ class PortalActionServerCase(unittest.TestCase):
             ("VENTURE", {}),
             ("VENTURE", {"bypass_cooldown": True}),
             ("SOLO_VENTURE", {"bypass_cooldown": True}),
+            ("SOLO_EXPEDITION_ACTION", {}),
+            ("SOLO_EXPEDITION_ACTION", {"action": "!attack"}),
+            ("SOLO_EXPEDITION_ACTION", {"action": "attack", "target": "monster"}),
+            ("SOLO_EXPEDITION_CONTINUE", {"force": True}),
+            ("SOLO_EXPEDITION_RETURN", {"force": True}),
+            ("SOLO_EXPEDITION_RETREAT", {"force": True}),
             ("JOIN_ENCOUNTER", {}),
             ("JOIN_ENCOUNTER", {"encounter_id": 1}),
             ("CHALLENGE_HUNT", {}),
@@ -549,7 +559,7 @@ class PortalActionServerCase(unittest.TestCase):
                 self.request(
                     "/api/actions", method="POST",
                     payload={"type": action_type, "payload": payload},
-                    headers={**self.user_headers(csrf=True), "Idempotency-Key": f"reject-v112-{index:02d}"},
+                    headers={**self.user_headers(csrf=True), "Idempotency-Key": f"reject-wayfarer-{index:02d}"},
                 )
             self.assertEqual(caught.exception.code, 400)
 

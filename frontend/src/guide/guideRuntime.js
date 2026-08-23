@@ -128,7 +128,7 @@ const COMMAND_GROUPS=[
   {id:'gear',name:'Inventory & Economy',description:'Manage gear and inventory, buy or sell items, and check currencies.',categories:['Inventory','Economy']},
   {id:'hunts',name:'Hunts & Quests',description:'Take notorious marks and complete unlock quests.',categories:['Hunts','Quests']},
   {id:'craft',name:'Crafting & Relics',description:'Use the Blacksmith, forge upgrades, spend Hunt Seals, and awaken Relic weapons.',categories:['Crafting','Hunt Seals','Relics']},
-  {id:'raids',name:'Raids & Bosses',description:'Browse bosses, join raids, use Limit Breaks and Summons, revive allies, and inspect contributions.',categories:['Raids']}
+  {id:'raids',name:'Raids & Bosses',description:'Browse bosses, join raids, queue round actions, use Limit Breaks and Summons, revive allies, and inspect contributions.',categories:['Raids']}
 ];
 const ALL_COMMANDS=D.commands;
 let activeCommandGroup='all';

@@ -1,8 +1,7 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3c
+# Crystal Guild Web v1.1.15 — Wayfarer
 
-Hotfix 3c keeps all Hotfix 3b Job/Emporium presentation work and adds a dedicated Current Loadout summary to Equipment & Inventory, reliable mobile header scroll behavior, and matching release identity for the Bot-side Gil-spent achievement correction.
+Wayfarer adds the interactive Solo Venture Adventure Board: Attack, Ability, Use Item, Defend, enemy intent, persistent stage state, Return/Press On choices, and final run summaries. Profile navigation is reordered with Adventure Board immediately after Overview.
 
-Frontend asset revision: `1.1.14-continuity3c`.
-Hosted runtime: `1.1.14-cloud-continuity-h3c`. Hosted sync schema 1 and Portal Action protocol 12 are unchanged.
+Hosted runtime: `1.1.15-wayfarer` · frontend asset revision `1.1.15-wayfarer1` · hosted sync schema **1** · Portal Action protocol **13**.
 
-See `UPGRADE_GUIDE.md` and `RELEASE_NOTES.md` for deployment details.
+Deploy this Web build together with the matching v1.1.15 Bot. No new Render secret is required. See `UPGRADE_GUIDE.md` and `PORTAL_ACTIONS_SETUP.md`.

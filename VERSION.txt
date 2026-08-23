@@ -1,7 +1,7 @@
-Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3c
-Runtime: 1.1.14-cloud-continuity-h3c
+Crystal Guild Web v1.1.15 — Wayfarer
+Runtime: 1.1.15-wayfarer
 Hosted sync schema: 1
-Hosted sync runtime compatibility: 1.1.14-cloud-continuity
-Portal Action protocol: 12
-Frontend asset revision: 1.1.14-continuity3c
-Matching Bot runtime: 1.1.14-cloud-continuity-h3c
+Hosted sync runtime compatibility: 1.1.15-wayfarer
+Portal Action protocol: 13
+Frontend asset revision: 1.1.15-wayfarer1
+Matching Bot runtime: 1.1.15-wayfarer

@@ -1,8 +1,8 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3b
+# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 3c
 
-Hotfix 3b keeps the richer Job reference from Hotfix 3a but moves it out of the main Job cards and into the existing Job detail pop-out. The Jobs tab is compact again, while View Details retains Combat Identity, Stat Growth, Battle Abilities, Passive Job Milestones, and JLv.50 Mastery.
+Hotfix 3c keeps all Hotfix 3b Job/Emporium presentation work and adds a dedicated Current Loadout summary to Equipment & Inventory, reliable mobile header scroll behavior, and matching release identity for the Bot-side Gil-spent achievement correction.
 
-The Moogle Emporium now enriches equipment shop stock from the shared Guide item catalog and displays equipment stat boosts plus the net comparison against the currently equipped item in the matching slot.
+Frontend asset revision: `1.1.14-continuity3c`.
+Hosted runtime: `1.1.14-cloud-continuity-h3c`. Hosted sync schema 1 and Portal Action protocol 12 are unchanged.
 
-Frontend asset revision: `1.1.14-continuity3b`.
-Hosted runtime remains `1.1.14-cloud-continuity-h3`; hosted sync schema 1 and Portal Action protocol 12 are unchanged.
+See `UPGRADE_GUIDE.md` and `RELEASE_NOTES.md` for deployment details.

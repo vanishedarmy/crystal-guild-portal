@@ -1,21 +1,25 @@
-# Crystal Guild v1.1.14 — Cloud Continuity Hotfix 3b Upgrade
+# Crystal Guild v1.1.14 — Cloud Continuity Hotfix 3c Upgrade
 
-Hotfix 3b is a Web-only refinement for an existing Hotfix 3a install. A consolidated Hotfix 2 → Hotfix 3b update is also provided so the complete Hotfix 3 + 3a + 3b sequence can still be deployed as one update.
+Hotfix 3c is an in-place Bot + Web update for the **Hotfix 3b** baseline. Player progression and runtime state remain compatible.
 
-## Upgrade from Hotfix 3a
+## Upgrade from Hotfix 3b
 
-1. Leave the Bot installation unchanged; Bot runtime remains `1.1.14-cloud-continuity-h3`.
-2. Back up/commit the current Web repository.
-3. Overlay the **Hotfix 3b Web Patch from Hotfix 3a** into the Web repository.
-4. Keep all existing Render environment variables and OAuth settings unchanged.
-5. Commit/push and let Render redeploy the Web service.
-6. Verify `/api/health` reports runtime `1.1.14-cloud-continuity-h3` and frontend revision `1.1.14-continuity3b`.
-7. Open **Moogle Emporium** and confirm equipment cards show **Stat boosts** plus the comparison against the currently equipped item or an empty-slot note.
-8. Open **Jobs** and confirm the cards are compact again, with **View <Job> Details** available.
-9. Open a Job detail pop-out and confirm Combat Identity, Stat Growth, Battle Abilities, Passive Job Milestones, and JLv.50 Mastery remain available.
+1. Stop the local Crystal Guild Bot/Portal sync cleanly.
+2. Preserve `.env`, `.tio.tokens.json`, `crystal_guild.db`, `/var/data/twitch_tokens.db` (cloud installs), and other private runtime files.
+3. Make the normal verified backup of `crystal_guild.db`.
+4. Apply the **Hotfix 3b → Hotfix 3c Update** package over the existing installation. It contains both the Bot economy fix and the Web UI/mobile changes.
+5. Deploy the matching Web files to the hosted repository/Render service.
+6. Restart the Bot and Portal sync.
+7. Verify `!cgversion` / `!health` reports `1.1.14-cloud-continuity-h3c`.
+8. Verify Web `/api/health` reports frontend revision `1.1.14-continuity3c`.
+9. Open Equipment & Inventory and confirm the **Current Loadout** summary matches the equipped Weapon/Armor/Accessory.
+10. On mobile, scroll down to hide the header, then scroll upward and confirm it returns without tapping elsewhere.
+11. Check **Stimulating the Economy**; its progress should reflect lifetime negative-Gil transaction history.
 
-No Bot redeploy, database migration, player reset, new Render secret, or OAuth reauthorization is required when upgrading from Hotfix 3a.
+## Migration / authorization
 
-## Direct upgrade from Hotfix 2
-
-Use the **Hotfix 3b Consolidated Update from Hotfix 2**. It contains the Hotfix 3 Bot/Raid/Rally/control fixes plus the final Hotfix 3b Web state, including the 3a Job-reference work and these 3b refinements. Apply that one package over Hotfix 2 instead of chaining separate Hotfix 3, 3a, and 3b packages.
+- Local DB schema remains **4** — no migration helper runs.
+- Hosted sync schema remains **1**.
+- Portal Action protocol remains **12**.
+- No new Render secret is required.
+- No new Twitch OAuth scope is introduced. If subscriber perks already work, do not re-authorize solely for Hotfix 3c.

@@ -1,42 +1,40 @@
-# Crystal Guild v1.1.14 — Cloud Continuity Hotfix 3b
+# Crystal Guild v1.1.14 — Cloud Continuity Hotfix 3c
 
-Hotfix 3b is a Web-only refinement on top of the certified Hotfix 3/3a line. The Bot runtime, Raid action fix, Rally Venture consolidation, selectable-control pass, database schema, hosted sync schema, and Portal Action protocol remain unchanged.
+Hotfix 3c moves forward from the certified Hotfix 3b baseline and combines one equipment-clarity update, one economy/achievement correctness fix, and one mobile navigation correction.
 
-## Moogle Emporium — equipment stat comparison
+## Equipment & Inventory — current loadout clarity
 
-Equipment cards in the Moogle Emporium now show their stat bonuses directly in the shop before purchase. The Portal enriches the lightweight shop rotation from the existing versioned `guide-data.json` item catalog, so the shop and Player Guide use the same equipment definitions.
+- Adds a dedicated **Current Loadout** summary at the top of Equipment & Inventory.
+- Weapon, Armor, and Accessory are visible together with the effective stat bonuses currently applied.
+- Empty slots are explicit instead of visually disappearing.
+- Equipped items are sorted to the top of their equipment group.
+- Equipped inventory cards receive a stronger highlight and an **Equipped now** marker.
+- Existing replacement comparison, eligibility checks, equip/unequip actions, recovery controls, and item details are preserved.
 
-For weapons, armor, and accessories, the card shows:
+## “Stimulating the Economy” — Gil-spent correction
 
-- the item's complete stat-boost line;
-- a comparison against the currently equipped item in the same slot when one exists;
-- the net stat delta, making upgrades and trade-offs visible at a glance;
-- an explicit empty-slot note when no item is equipped in that slot.
+- The `gil_spent` achievement metric now reads the authoritative lifetime transaction ledger, matching the Records page.
+- Existing historical spending is therefore recognized without a migration or manual player-data repair.
+- Shop purchases now run the achievement check immediately after a successful purchase.
+- Chocobo Registration Writ purchases and Fellowship Gil contributions also check achievements immediately.
+- Crafting, forging, Relic costs, and other transaction-backed sinks continue to count through the same ledger.
 
-No shop price, rotation, eligibility, inventory, or purchase logic changes.
+## Mobile Portal header
 
-## Jobs — compact cards, detailed pop-out
-
-The Hotfix 3a Guide-style Job reference remains available, but the Jobs tab cards are restored to the compact pre-3a presentation. Job cards again focus on Job name, status, JLv/progress, signature, unlock requirements, and management actions.
-
-The full reference now lives in **View <Job> Details**, including Combat Identity, Stat Growth, Battle Abilities with JLv/MP/AP/target information, Passive Job Milestones, and JLv.50 Cross-Job Mastery.
-
-Public/read-only Job cards now also expose an explicit **View <Job> Details** button instead of relying only on whole-card activation.
+- At widths up to 720px, downward scrolling automatically tucks the sticky Portal header away.
+- Scrolling upward restores the header immediately.
+- Near the top of the page, the header is always shown.
+- Keyboard focus inside the header forces it visible so navigation cannot become inaccessible.
+- Reduced-motion users get the same behavior without the transition animation.
 
 ## Compatibility
 
-- Bot runtime: `1.1.14-cloud-continuity-h3` — unchanged
-- Hosted Web runtime: `1.1.14-cloud-continuity-h3` — unchanged
-- Frontend asset revision: `1.1.14-continuity3b`
-- Hosted sync version/snapshots: `1.1.14-cloud-continuity`
-- Local DB schema: 4
-- Hosted sync schema: 1
-- Portal Action protocol: 12
+- Bot/Web runtime: `1.1.14-cloud-continuity-h3c`
+- Frontend asset revision: `1.1.14-continuity3c`
+- Local DB schema: **4**
+- Hosted sync schema: **1**
+- Hosted sync compatibility: `1.1.14-cloud-continuity`
+- Portal Action protocol: **12**
 - Twitch prefix: `!`
-- Database migration: none
-- Player reset: none
-- New Render secrets: none
-- New OAuth scope: none
-- Bot redeploy required from Hotfix 3a: no
 
-Hotfix 2's subscriber authorization requirement (`channel:read:subscriptions`) remains unchanged if it has not already been completed.
+No database migration, player reset, new Render secret, new OAuth scope, hosted sync schema change, or Portal protocol change is required. The `channel:read:subscriptions` broadcaster authorization remains the inherited Hotfix 2 requirement for subscriber perks.

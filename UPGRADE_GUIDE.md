@@ -1,12 +1,11 @@
-# Upgrade the Website to Crystal Guild v1.1.14 — Cloud Continuity
+# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 2 Upgrade
 
 1. Back up/commit the current Web repository.
-2. Replace/update it with this v1.1.14 Web package.
-3. Keep the existing Render environment variables and secrets. Do not commit a real `hosted.env`.
-4. Push and let Render redeploy.
-5. Confirm `/api/health` reports runtime `1.1.14-cloud-continuity` and frontend `1.1.14-continuity1`.
-6. Wait up to one Bot heartbeat and confirm `/fellowship` populates automatically.
-7. Open `/overlay`; use that full URL as the OBS Browser Source.
-8. Check `/players`, `/guide`, `/privacy`, and `/streamer`.
+2. Overlay the Hotfix 2 Web patch.
+3. Keep all existing Render Web environment variables and OAuth settings unchanged.
+4. Commit and push; let Render redeploy.
+5. Confirm `/api/health` reports runtime `1.1.14-cloud-continuity-h2` and frontend `1.1.14-continuity2`.
+6. Open your own Adventurer Overview and confirm Daily Guild Provisions describes randomized provision bundles.
+7. After the matching Bot token has the Twitch subscriber scope, subscribed viewers should see their tier-based Daily perk in the Daily card.
 
-Deploy the matching v1.1.14 Bot first so Fellowship self-healing and overlay synchronization are active.
+No hosted DB migration, new Web secret, or Web OAuth reauthorization is required.

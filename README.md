@@ -1,13 +1,9 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity
+# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 2
 
-Matching Web companion for the v1.1.14 Bot. It adds hosted OBS raid presentation, automatic Fellowship/overlay recovery after Web restarts, a continuity/accessibility pass, and explicit ascending level order for progression-oriented lists.
+Matching website for Crystal Guild Bot `1.1.14-cloud-continuity-h2`.
 
-## New public route
+Hotfix 2 updates Daily Guild Provisions from a fixed Potion description to the new randomized, level-appropriate provision system and surfaces the Bot-authoritative Twitch Tier 1/2/3 Daily perk.
 
-`/overlay` is a transparent OBS Browser Source. It reads only the sanitized hosted overlay snapshot; it has no access to the authoritative Bot database or Twitch credentials.
+Frontend asset revision: `1.1.14-continuity2`.
 
-## Website continuity
-
-The shared header provides a keyboard skip link, common controls meet a 44px minimum touch target, compact profile navigation is grouped by task, Fellowship future-content redundancy is reduced, and the Streamer Dashboard links/copies the hosted overlay URL.
-
-Runtime `1.1.14-cloud-continuity` · frontend `1.1.14-continuity1` · hosted sync schema 1 · Portal Action protocol 12.
+The Web service does **not** query Twitch's subscriber list itself and requires no new Web secret. Subscriber verification occurs in the authoritative Bot worker and only the tier/perk result is returned through the existing typed Daily Portal action.

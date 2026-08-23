@@ -1,13 +1,17 @@
-# Crystal Guild Web v1.1.14 — Cloud Continuity Release Notes
+# Crystal Guild Web v1.1.14 — Cloud Continuity Hotfix 2
 
-- Adds `/overlay` and `/api/overlay/state` for OBS/browser presentation.
-- Adds private authenticated `/api/sync/overlay` ingestion using the existing Portal sync key.
-- Keeps a sanitized singleton overlay snapshot in the hosted mirror.
-- Adds skip-navigation, focus targets, 44px primary interaction targets, and higher-contrast preference support.
-- Groups compact Adventurer profile navigation by task.
-- Consolidates the Fellowship Expedition preview into one collapsed disclosure.
-- Adds Hosted Raid Overlay controls to the Streamer Dashboard.
-- Explicitly sorts level-oriented Portal/Guide lists low-to-high.
-- Retains the v1.1.13 Privacy Policy phone-number removal.
+The signed-in Overview now presents Daily Guild Provisions as a randomized reward instead of promising a fixed Potion.
 
-No new hosted secret, OAuth change, DB migration, player reset, sync-schema bump, or Portal Action protocol change.
+The Daily card displays:
+
+- the current level-scaled Gil range;
+- the number of randomized provision rolls;
+- the detected Twitch subscriber tier when present;
+- the tier's Daily Gil bonus;
+- the actual authoritative claim result returned by the Bot.
+
+The Player Guide now documents randomized Daily provisions and `!substatus`.
+
+Subscriber-tier verification remains Bot-authoritative. The public Web service receives only the resulting perk metadata inside the existing typed Daily action result; no Twitch subscriber list or OAuth token is exposed to the browser.
+
+Compatibility: hosted runtime `1.1.14-cloud-continuity-h2`, frontend `1.1.14-continuity2`, hosted sync schema 1, Portal Action protocol 12. No Web secret or OAuth change is required.

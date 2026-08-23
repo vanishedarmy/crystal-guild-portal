@@ -8,7 +8,7 @@ test("Cloud Continuity public web identity is centralized and omits the Beta mar
   assert.equal(WEB_BUILD, "Cloud Continuity");
   assert.equal(WEB_RELEASE, "v1.1.14 — Cloud Continuity");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.14 — Cloud Continuity");
-  assert.equal(WEB_ASSET_REVISION, "1.1.14-continuity1");
+  assert.equal(WEB_ASSET_REVISION, "1.1.14-continuity2");
   assert.doesNotMatch(WEB_RELEASE, /Beta/i);
 });
 

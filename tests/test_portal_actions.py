@@ -175,6 +175,30 @@ class PortalActionServerCase(unittest.TestCase):
         self.assertEqual(claimed[0]["username"], "newhero")
         self.assertEqual(claimed[0]["payload"], {"display_name": "New Hero"})
 
+    def test_set_title_action_is_strictly_validated_and_queued(self):
+        status, auth, _ = self.request("/api/auth/status", headers=self.user_headers())
+        self.assertEqual(status, 200)
+        self.assertIn("SET_TITLE", auth["action_capabilities"])
+        self.assertEqual(auth["action_protocol_version"], ACTION_PROTOCOL_VERSION)
+
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            self.request(
+                "/api/actions", method="POST",
+                payload={"type": "SET_TITLE", "payload": {"title_id": "monster_botherer", "extra": True}},
+                headers={**self.user_headers(csrf=True), "Idempotency-Key": "bad-title-action-123"},
+            )
+        self.assertEqual(caught.exception.code, 400)
+
+        status, queued, _ = self.request(
+            "/api/actions", method="POST",
+            payload={"type": "SET_TITLE", "payload": {"title_id": "monster_botherer"}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "title-action-123"},
+        )
+        self.assertEqual(status, 202)
+        self.assertEqual(queued["action"]["type"], "SET_TITLE")
+        claimed = self.store.claim_actions("bot:test", limit=1)
+        self.assertEqual(claimed[0]["payload"], {"title_id": "monster_botherer"})
+
     def test_ping_requires_session_and_csrf_then_claims_and_completes_with_lease(self):
         with self.assertRaises(urllib.error.HTTPError) as caught:
             self.request(

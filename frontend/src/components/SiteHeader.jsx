@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import LiveStatus from "./LiveStatus.jsx";
 import { loginUrl } from "../api/auth.js";
@@ -7,13 +8,55 @@ import { WEB_BUILD, WEB_VERSION } from "../version.js";
 export default function SiteHeader({ liveStatus }) {
   const location = useLocation();
   const { auth, logout } = usePortalAuth();
+  const [mobileHeaderHidden, setMobileHeaderHidden] = useState(false);
+  const headerRef = useRef(null);
+  const lastScrollY = useRef(0);
   const heroesActive = location.pathname === "/players" || location.pathname.startsWith("/player/");
   const fellowshipActive = location.pathname.startsWith("/fellowship");
   const guideActive = location.pathname.startsWith("/guide");
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 720px)");
+    lastScrollY.current = Math.max(0, window.scrollY || 0);
+
+    const updateForViewport = () => {
+      if (!media.matches) setMobileHeaderHidden(false);
+      lastScrollY.current = Math.max(0, window.scrollY || 0);
+    };
+
+    const onScroll = () => {
+      const nextY = Math.max(0, window.scrollY || 0);
+      const delta = nextY - lastScrollY.current;
+      if (!media.matches || nextY <= 72) {
+        setMobileHeaderHidden(false);
+      } else if (delta > 8) {
+        setMobileHeaderHidden(true);
+      } else if (delta < 0) {
+        setMobileHeaderHidden(false);
+      }
+      lastScrollY.current = nextY;
+    };
+
+    const onFocusIn = (event) => {
+      if (headerRef.current?.contains(event.target)) setMobileHeaderHidden(false);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("focusin", onFocusIn);
+    if (typeof media.addEventListener === "function") media.addEventListener("change", updateForViewport);
+    else if (typeof media.addListener === "function") media.addListener(updateForViewport);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("focusin", onFocusIn);
+      if (typeof media.removeEventListener === "function") media.removeEventListener("change", updateForViewport);
+      else if (typeof media.removeListener === "function") media.removeListener(updateForViewport);
+    };
+  }, []);
   return (
     <>
       <a className="skip-link portal-skip-link" href="#main-content">Skip to main content</a>
-      <header className="site-header">
+      <header ref={headerRef} className={`site-header ${mobileHeaderHidden ? "mobile-header-collapsed" : ""}`}>
       <a className="brand" href="/players" aria-label="Crystal Guild hero directory">
         <span className="brand-mark" aria-hidden="true">
           <img className="brand-mark-image" src="/crystal-guild-portal-roundel.png" alt="" width="256" height="256" decoding="async" />

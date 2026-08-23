@@ -103,23 +103,56 @@ function DetailBody({ detail }) {
   }
   if (type === "job") {
     const job = detail.job;
+    const activeAbilities = Array.isArray(job.active_abilities) ? job.active_abilities : [];
+    const passiveAbilities = Array.isArray(job.passive_abilities) ? job.passive_abilities : (job.abilities || []);
+    const level = Number(job.level || 0);
+    const ready = (ability) => Boolean(job.owned && level >= Number(ability.level || 0));
     return (
-      <div className="detail-body">
-        <p className="eyebrow">{humanizeLabel(job.tier)} Job · {job.owned ? `JLv.${job.level}` : "Not learned"}</p>
+      <div className="detail-body job-detail-body">
+        <p className="eyebrow">{humanizeLabel(job.tier)} {humanizeLabel(job.combat_type || "physical")} Job · {job.owned ? `JLv.${job.level}` : "Not learned"}</p>
         <h2>{job.name}</h2>
-        <section className="detail-section"><div className="data-label">Signature</div><p>{job.signature}</p></section>
         <section className="detail-section">
-          <div className="data-label">Learned Abilities</div>
-          <div className="data-list">
-            {job.abilities?.length ? job.abilities.map((ability) => (
-              <div key={`${ability.level}-${ability.name}`}>
-                <strong>JLv.{ability.level} {ability.name}</strong><br />
-                <span className="muted">{ability.description}</span>
-              </div>
-            )) : <span className="muted">None learned yet.</span>}
+          <div className="data-label">Combat Identity</div>
+          <div className="job-detail-stat-grid">
+            <div><span>Attack</span><strong>{job.attack_name || "Standard attack"}</strong></div>
+            <div><span>Signature</span><strong>{job.signature || "—"}</strong></div>
+            <div><span>Resource</span><strong>{String(job.resource_mode || "—").toUpperCase()}</strong></div>
+            <div><span>Base Damage</span><strong>{job.damage_mod ? `×${job.damage_mod}` : "—"}</strong></div>
+            <div><span>Signature Chance</span><strong>{job.signature_chance != null ? `${Math.round(Number(job.signature_chance) * 100)}%` : "—"}</strong></div>
+            <div><span>Signature Power</span><strong>{job.signature_multiplier ? `×${job.signature_multiplier}` : "—"}</strong></div>
           </div>
         </section>
-        <section className="detail-section"><div className="data-label">Mastery</div><p><strong>{job.mastery?.name || "—"}</strong><br />{job.mastery?.description || ""}</p></section>
+        {job.growth && Object.keys(job.growth).length ? (
+          <section className="detail-section">
+            <div className="data-label">Stat Growth</div>
+            <div className="job-detail-growth-grid">{Object.entries(job.growth).map(([stat, value]) => <div key={stat}><span>{stat.toUpperCase()}</span><strong>{value}</strong></div>)}</div>
+          </section>
+        ) : null}
+        <section className="detail-section">
+          <div className="data-label">Battle Abilities</div>
+          <p className="muted">Use <code>!ability &lt;name&gt; [target]</code> during Active Battles and Raids. Physical techniques generally spend AP; magical techniques generally spend MP.</p>
+          <div className="job-detail-ability-list">
+            {activeAbilities.length ? activeAbilities.map((ability) => (
+              <div className={`job-detail-ability ${ready(ability) ? "ready" : "locked"}`} key={ability.id || ability.name}>
+                <div className="job-detail-ability-head"><strong>JLv.{ability.level} · {ability.name}</strong><span>{ability.cost} {String(ability.resource || job.resource_mode || "mp").toUpperCase()} · {humanizeLabel(ability.target)}</span></div>
+                <p>{ability.description}</p>
+                <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : `Unlocks at JLv.${ability.level}`}</span>
+              </div>
+            )) : <span className="muted">Battle ability reference unavailable.</span>}
+          </div>
+        </section>
+        <section className="detail-section">
+          <div className="data-label">Passive Job Milestones</div>
+          <div className="job-detail-ability-list">
+            {passiveAbilities.length ? passiveAbilities.map((ability) => (
+              <div className={`job-detail-ability ${ready(ability) ? "ready" : "locked"}`} key={`${ability.level}-${ability.name}`}>
+                <div className="job-detail-ability-head"><strong>JLv.{ability.level} · {ability.name}</strong><span>{ready(ability) ? "Learned" : "Locked"}</span></div>
+                <p>{ability.description}</p>
+              </div>
+            )) : <span className="muted">No passive Job milestones listed.</span>}
+          </div>
+        </section>
+        <section className="detail-section"><div className="data-label">JLv.50 Cross-Job Mastery</div><p><strong>{job.mastery?.name || "—"}</strong><br />{job.mastery?.description || ""}</p></section>
       </div>
     );
   }

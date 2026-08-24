@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h4"
-FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h4"
+HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h5"
+FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h5"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {
@@ -38,6 +38,11 @@ ALLOWED_PORTAL_ACTIONS = {
 }
 MAX_ACTION_BYTES = 16 * 1024
 MAX_ACTION_RESULT_BYTES = 64 * 1024
+# The authenticated Bot result POST includes protocol/id/lease/message metadata
+# around the bounded result payload. Give the HTTP envelope a small, explicit
+# allowance while complete_action() still enforces MAX_ACTION_RESULT_BYTES on
+# the stored result itself.
+MAX_ACTION_RESULT_REQUEST_BYTES = MAX_ACTION_RESULT_BYTES + (4 * 1024)
 MAX_ACTION_HISTORY = 20
 # Daily Guild Provisions is mounted on Overview and may be retried across page
 # refreshes while the Bot is temporarily slow/offline. Treat its state/claim
@@ -1580,7 +1585,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                 self._json({"error": "Unauthorized."}, HTTPStatus.UNAUTHORIZED)
                 return
             try:
-                payload = self._read_json(MAX_ACTION_BYTES)
+                payload = self._read_json(
+                    MAX_ACTION_BYTES if path == "/api/actions/claim" else MAX_ACTION_RESULT_REQUEST_BYTES
+                )
                 if path == "/api/actions/claim":
                     if int(payload.get("protocol_version") or 0) != ACTION_PROTOCOL_VERSION:
                         raise ValueError("Unsupported Portal action protocol version.")

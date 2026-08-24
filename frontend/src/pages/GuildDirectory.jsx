@@ -4,7 +4,9 @@ import { fetchPlayers } from "../api/players.js";
 import SiteHeader from "../components/SiteHeader.jsx";
 import RecruitPanel from "../components/RecruitPanel.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
+import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
+import { sortGuildDirectory } from "../utils/playerDirectorySort.js";
 
 export default function GuildDirectory() {
   const [players, setPlayers] = useState([]);
@@ -13,6 +15,7 @@ export default function GuildDirectory() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [refreshToken, setRefreshToken] = useState(0);
+  const { auth } = usePortalAuth();
 
   const refresh = useCallback(() => setRefreshToken((value) => value + 1), []);
   const liveStatus = useLiveUpdates(refresh);
@@ -37,14 +40,14 @@ export default function GuildDirectory() {
 
   const shownPlayers = useMemo(() => {
     const term = deferredSearch.trim().toLowerCase();
-    if (!term) return players;
-    return players.filter((player) => (
+    const filtered = term ? players.filter((player) => (
       player.username.toLowerCase().includes(term)
       || player.display_name.toLowerCase().includes(term)
       || player.job_name.toLowerCase().includes(term)
       || player.title.toLowerCase().includes(term)
-    ));
-  }, [players, deferredSearch]);
+    )) : players;
+    return sortGuildDirectory(filtered, auth.authenticated ? auth.player?.username : "");
+  }, [players, deferredSearch, auth.authenticated, auth.player?.username]);
 
   const rosterSummary = useMemo(() => players.reduce((summary, player) => {
     const state = String(player.status || "ready");

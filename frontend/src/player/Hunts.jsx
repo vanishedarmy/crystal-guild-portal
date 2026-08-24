@@ -248,13 +248,13 @@ export default function Hunts({ data, overview, onRefresh }) {
   }, []);
 
   useEffect(() => {
-    if (!actionsAvailable || !state?.encounter) return undefined;
+    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt)) return undefined;
     const refreshActive = () => {
       if (document.visibilityState === "visible") void loadState({ quiet: true });
     };
-    const timer = window.setInterval(refreshActive, 4000);
+    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : 4000);
     return () => window.clearInterval(timer);
-  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, loadState]);
+  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, loadState]);
 
   useEffect(() => {
     if (!actionsAvailable || !state) return undefined;
@@ -263,6 +263,7 @@ export default function Hunts({ data, overview, onRefresh }) {
       Number(state.solo_venture?.available_at || 0),
       ...((state.hunts || []).map((hunt) => Number(hunt.cooldown_available_at || 0))),
       Number(state.encounter?.rally_closes_at || 0),
+      Number(state.active_hunt?.resolves_at || 0),
     ].filter((value) => value > Math.floor(Date.now() / 1000));
     if (!deadlines.length) return undefined;
     const nearest = Math.min(...deadlines);
@@ -327,11 +328,14 @@ export default function Hunts({ data, overview, onRefresh }) {
     ? `Solo Venture ready in ${duration(soloRemaining)}.`
     : String(state?.solo_venture?.reason || "");
   const encounter = state?.encounter || null;
+  const activeHunt = state?.active_hunt || null;
+  const activeHuntRemaining = remainingUntil(activeHunt?.resolves_at, clock);
   const rallyRemaining = remainingUntil(encounter?.rally_closes_at, clock);
   const roundRemaining = remainingUntil(encounter?.next_round_at, clock);
   const currentRegion = state?.current_region || { name: overview?.region?.name || "Unknown Region" };
   const regions = [...(state?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
   const hunts = (state?.hunts || []).filter((hunt) => rank === "ALL" || hunt.rank === rank).sort(compareByLevel);
+  const huntRanks = ["ALL", "C", "B", "A", "S", ...((state?.hunts || []).some((hunt) => hunt.rank === "S+") ? ["S+"] : [])];
   const expedition = state?.solo_venture?.expedition || null;
   const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
   const recentSoloSummary = soloVentureSummary(recentSoloResult);
@@ -374,7 +378,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         {encounter.state === "combat" ? (
           <div className="adventure-combat-note">
             <strong>Battle is underway.</strong>
-            <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : encounter.kind === "venture" ? "Rally battles use Twitch chat for combat. Choose !attack, !ability, !defend, or !use before the round timer closes; otherwise your hero uses the default action." : "Hunt combat uses Twitch chat. If you do not choose an action, your hero uses the default action."}</span>
+            <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : encounter.kind === "venture" ? "Rally battles use Twitch chat for combat. Choose !attack, !ability, !defend, or !use before the round timer closes; otherwise your hero uses the default action." : "This Hunt began before the timed-Hunt hotfix and is finishing under the legacy battle state. New Hunts resolve automatically at their rank timer without chat combat."}</span>
           </div>
         ) : null}
       </Tag>
@@ -599,13 +603,41 @@ export default function Hunts({ data, overview, onRefresh }) {
         </section>
       ) : null}
 
+      {activeHunt ? (
+        <section className="panel timed-hunt-panel" aria-live="polite">
+          <div className="panel-title-row timed-hunt-title-row">
+            <div>
+              <p className="eyebrow">Hunt in Progress · {activeHunt.rank}-Rank</p>
+              <h2>{activeHunt.name}</h2>
+              <p className="muted">{activeHunt.monster?.name} · Mark Lv.{number(activeHunt.monster?.level)}</p>
+            </div>
+            <span className="small-badge success">Auto Hunt</span>
+          </div>
+          <div className="timed-hunt-countdown">
+            <div>
+              <span>Expected return</span>
+              <strong>{activeHuntRemaining > 0 ? duration(activeHuntRemaining) : "Resolving…"}</strong>
+            </div>
+            <div>
+              <span>Assignment length</span>
+              <strong>{duration(activeHunt.duration_seconds)}</strong>
+            </div>
+          </div>
+          <ProgressBar value={Number(activeHunt.progress_percent || 0)} />
+          <div className="adventure-combat-note timed-hunt-note">
+            <strong>No chat combat required.</strong>
+            <span>Your hero handles the mark automatically, using learned abilities and Defend when useful and only a small number of survival consumables when the situation warrants it. The final result is announced when the timer expires.</span>
+          </div>
+        </section>
+      ) : null}
+
       <section className="panel hunt-board-panel">
         <div className="panel-title-row hunt-board-title-row">
           <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
           <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
         </div>
         <div className="hunt-rank-filters" role="group" aria-label="Filter Hunts by rank">
-          {["ALL", "C", "B", "A", "S"].map((value) => <button key={value} type="button" className={rank === value ? "active" : ""} aria-pressed={rank === value} onClick={() => setRank(value)}>{value === "ALL" ? "All Hunts" : `${value}-Rank Hunts`}</button>)}
+          {huntRanks.map((value) => <button key={value} type="button" className={rank === value ? "active" : ""} aria-pressed={rank === value} onClick={() => setRank(value)}>{value === "ALL" ? "All Hunts" : `${value}-Rank Hunts`}</button>)}
         </div>
         <div className="hunt-board-grid">
           {hunts.map((hunt) => {
@@ -626,6 +658,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 <div className="hunt-traits">
                   {hunt.monster?.weakness ? <span>Weak: <strong>{String(hunt.monster.weakness)}</strong></span> : null}
                   {hunt.monster?.resistance ? <span>Resists: <strong>{String(hunt.monster.resistance)}</strong></span> : null}
+                  <span>Duration: <strong>{duration(hunt.duration_seconds)}</strong></span>
                   {hunt.first_clear_rewards?.length ? <span>First clear: <strong>{hunt.first_clear_rewards.join(" · ")}</strong></span> : null}
                 </div>
                 <div className="adventure-card-footer">
@@ -636,7 +669,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                     disabled={!actionsAvailable || !available || Boolean(busy)}
                     onClick={() => runRequest(`hunt:${hunt.id}`, () => submitChallengeHunt(hunt.id, csrfToken, actionKey("hunt", hunt.id)), "Hunt accepted.")}
                   >
-                    {busy === `hunt:${hunt.id}` ? "Accepting…" : "Challenge Hunt"}
+                    {busy === `hunt:${hunt.id}` ? "Dispatching…" : `Dispatch ${hunt.rank}-Rank Hunt`}
                   </button>
                 </div>
               </article>

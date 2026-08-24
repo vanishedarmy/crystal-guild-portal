@@ -15,11 +15,43 @@ import StatCard from "../components/StatCard.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 
-function actionKey(kind, target = "adventure") {
+const volatileAdventureActionKeys = new Map();
+
+function actionStorageKey(kind, target, username) {
+  return `crystal-guild:adventure:${String(username || "").toLowerCase()}:${kind}:${target || "adventure"}`;
+}
+
+function actionKey(kind, target = "adventure", username = "") {
+  const storageKey = actionStorageKey(kind, target, username);
+  try {
+    const existing = window.sessionStorage?.getItem(storageKey);
+    if (existing) return existing;
+  } catch {
+    const existing = volatileAdventureActionKeys.get(storageKey);
+    if (existing) return existing;
+  }
   const suffix = globalThis.crypto?.randomUUID
     ? globalThis.crypto.randomUUID()
     : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
-  return `${kind}:${target}:${suffix}`;
+  const key = `${kind}:${target}:${suffix}`;
+  volatileAdventureActionKeys.set(storageKey, key);
+  try {
+    window.sessionStorage?.setItem(storageKey, key);
+  } catch {
+    // Browser privacy settings may disable sessionStorage; memory fallback remains.
+  }
+  return key;
+}
+
+function clearActionKey(kind, target = "adventure", username = "", key = "") {
+  const storageKey = actionStorageKey(kind, target, username);
+  if (!key || volatileAdventureActionKeys.get(storageKey) === key) volatileAdventureActionKeys.delete(storageKey);
+  try {
+    const existing = window.sessionStorage?.getItem(storageKey);
+    if (!key || existing === key) window.sessionStorage?.removeItem(storageKey);
+  } catch {
+    // Best-effort cleanup only.
+  }
 }
 
 async function finishedAction(response) {
@@ -186,6 +218,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const [soloPicker, setSoloPicker] = useState("");
   const [clock, setClock] = useState(() => Date.now());
   const completionRefresh = useRef(0);
+  const stateInflight = useRef(false);
 
   const username = String(overview?.identity?.username || data?.player?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -206,18 +239,21 @@ export default function Hunts({ data, overview, onRefresh }) {
   const csrfToken = auth.csrf_token || "";
 
   const loadState = useCallback(async ({ quiet = false } = {}) => {
-    if (!actionsAvailable || (busy && !quiet)) return null;
+    if (!actionsAvailable || (busy && !quiet) || stateInflight.current) return null;
     if (!quiet) {
       setBusy("state");
       setMessage("Checking the Adventure Board…");
     }
+    stateInflight.current = true;
+    const idem = actionKey("adventure-state", "board", username);
     try {
-      const response = await submitAdventureState(csrfToken, actionKey("adventure-state"));
+      const response = await submitAdventureState(csrfToken, idem);
       const finished = await finishedAction(response);
       if (!finished) {
-        if (!quiet) setMessage("The Adventure Board is still updating. Try again in a moment.");
+        if (!quiet) setMessage("The Adventure Board request is still being processed. Refreshing or retrying will resume the same request instead of adding another one.");
         return null;
       }
+      clearActionKey("adventure-state", "board", username, idem);
       if (finished.status !== "completed" || finished.result?.ok === false) {
         if (!quiet) setMessage(finished.result?.message || "Adventure state could not be loaded.");
         return null;
@@ -230,12 +266,16 @@ export default function Hunts({ data, overview, onRefresh }) {
       if (!quiet) setMessage("Adventure Board refreshed.");
       return next;
     } catch (error) {
-      if (!quiet) setMessage(error.message);
+      const text = String(error?.message || error);
+      if (!quiet) setMessage(text.includes("Too many") && text.includes("waiting for the Bot")
+        ? "Crystal Guild is catching up on existing Portal requests. This board will resume the same refresh instead of adding another one."
+        : text);
       return null;
     } finally {
+      stateInflight.current = false;
       if (!quiet) setBusy("");
     }
-  }, [actionsAvailable, busy, csrfToken]);
+  }, [actionsAvailable, busy, csrfToken, username]);
 
   useEffect(() => {
     if (!actionsAvailable || state) return;
@@ -248,13 +288,14 @@ export default function Hunts({ data, overview, onRefresh }) {
   }, []);
 
   useEffect(() => {
-    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt)) return undefined;
+    const expeditionActive = Boolean(state?.solo_venture?.expedition);
+    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt && !expeditionActive)) return undefined;
     const refreshActive = () => {
       if (document.visibilityState === "visible") void loadState({ quiet: true });
     };
-    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : 4000);
+    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : expeditionActive ? 5000 : 4000);
     return () => window.clearInterval(timer);
-  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, loadState]);
+  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, state?.solo_venture?.expedition?.updated_at, loadState]);
 
   useEffect(() => {
     if (!actionsAvailable || !state) return undefined;
@@ -287,17 +328,19 @@ export default function Hunts({ data, overview, onRefresh }) {
     };
   }, [actionsAvailable, loadState]);
 
-  const runRequest = async (key, submit, fallback) => {
+  const runRequest = async (key, idemKind, idemTarget, submit, fallback) => {
     if (!actionsAvailable || busy) return;
     setBusy(key);
     setMessage("Crystal Guild is handling that request…");
+    const idem = actionKey(idemKind, idemTarget, username);
     try {
-      const response = await submit();
+      const response = await submit(idem);
       const finished = await finishedAction(response);
       if (!finished) {
-        setMessage("Your request is still being processed. Please wait a moment before trying again.");
+        setMessage("That request is still being processed. Retry or refresh safely resumes the same request; it will not queue the action twice.");
         return;
       }
+      clearActionKey(idemKind, idemTarget, username, idem);
       const soloResult = finished.result?.data?.solo_result;
       setMessage(soloResult ? soloVentureSummary(soloResult) : (finished.result?.message || fallback));
       const next = finished.result?.data?.adventure_state;
@@ -314,7 +357,10 @@ export default function Hunts({ data, overview, onRefresh }) {
         completionRefresh.current = window.setTimeout(() => onRefresh?.(), 3200);
       }
     } catch (error) {
-      setMessage(error.message);
+      const text = String(error?.message || error);
+      setMessage(text.includes("Too many") && text.includes("waiting for the Bot")
+        ? "Crystal Guild is catching up on existing Portal requests. Retry this same action in a moment; it will not be duplicated."
+        : text);
     } finally {
       setBusy("");
     }
@@ -430,7 +476,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 type="button"
                 className="equipment-action-button"
                 disabled={!actionsAvailable || !state?.solo_venture?.ready || soloRemaining > 0 || Boolean(busy)}
-                onClick={() => runRequest("solo-venture", () => submitSoloVenture(csrfToken, actionKey("solo-venture")), "Solo Venture started.")}
+                onClick={() => runRequest("solo-venture", "solo-venture", "start", (idem) => submitSoloVenture(csrfToken, idem), "Solo Venture started.")}
               >
                 {busy === "solo-venture" ? "Setting Out…" : "Begin Solo Venture"}
               </button>
@@ -472,10 +518,10 @@ export default function Hunts({ data, overview, onRefresh }) {
                 ) : null}
 
                 <div className="solo-command-bar" aria-label="Solo Venture battle actions">
-                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", () => submitSoloExpeditionAction("attack", csrfToken, actionKey("solo-action", "attack")), "Round resolved.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
+                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Round resolved.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
                   <button type="button" className={`equipment-action-button secondary ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={() => setSoloPicker((value) => value === "ability" ? "" : "ability")}>Ability</button>
                   <button type="button" className={`equipment-action-button secondary ${soloPicker === "item" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "item"} onClick={() => setSoloPicker((value) => value === "item" ? "" : "item")}>Use Item</button>
-                  <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:defend", () => submitSoloExpeditionAction("defend", csrfToken, actionKey("solo-action", "defend")), "Round resolved.")}>{busy === "solo:defend" ? "Defending…" : "Defend"}</button>
+                  <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:defend", "solo-action", "defend", (idem) => submitSoloExpeditionAction("defend", csrfToken, idem), "Round resolved.")}>{busy === "solo:defend" ? "Defending…" : "Defend"}</button>
                 </div>
 
                 {soloPicker === "ability" ? (
@@ -483,7 +529,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                     <div className="panel-title-row"><div><p className="eyebrow">Battle Abilities</p><h3>Choose an ability</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid">
                       {(expedition.combat.abilities || []).map((ability) => (
-                        <button key={ability.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => runRequest(`solo:ability:${ability.id}`, () => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, actionKey("solo-ability", ability.id)), `${ability.name} resolved.`)}>
+                        <button key={ability.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => runRequest(`solo:ability:${ability.id}`, "solo-ability", ability.id, (idem) => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}>
                           <span><strong>{ability.name}</strong><small>{ability.cost}{String(ability.resource || "").toUpperCase()} · {ability.target}</small></span>
                           <span>{ability.usable ? "Use" : ability.reason}</span>
                           {Array.isArray(ability.traits) && ability.traits.length ? <small className="solo-ability-traits">{ability.traits.join(" · ")}</small> : null}
@@ -499,7 +545,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                     <div className="panel-title-row"><div><p className="eyebrow">Battle Inventory</p><h3>Choose an item</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid">
                       {(expedition.combat.items || []).length ? (expedition.combat.items || []).map((item) => (
-                        <button key={item.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`solo:item:${item.id}`, () => submitSoloExpeditionAction(`item:${item.id}`, csrfToken, actionKey("solo-item", item.id)), `${item.name} used.`)}>
+                        <button key={item.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`solo:item:${item.id}`, "solo-item", item.id, (idem) => submitSoloExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}>
                           <span><strong>{item.name}</strong><small>Qty {number(item.quantity)} · {item.target}</small></span>
                           <span>{item.usable ? "Use" : item.reason}</span>
                           <small>{item.description}</small>
@@ -510,7 +556,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 ) : null}
 
                 <div className="solo-retreat-row">
-                  <button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Solo Venture? Secured progression is kept, but unbanked Venture Spoils will be lost.")) runRequest("solo:retreat", () => submitSoloExpeditionRetreat(csrfToken, actionKey("solo-retreat")), "Retreated from Solo Venture."); }}>{busy === "solo:retreat" ? "Retreating…" : "Retreat — Abandon Venture Spoils"}</button>
+                  <button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Solo Venture? Secured progression is kept, but unbanked Venture Spoils will be lost.")) runRequest("solo:retreat", "solo-retreat", "run", (idem) => submitSoloExpeditionRetreat(csrfToken, idem), "Retreated from Solo Venture."); }}>{busy === "solo:retreat" ? "Retreating…" : "Retreat — Abandon Venture Spoils"}</button>
                 </div>
               </div>
             ) : null}
@@ -523,8 +569,8 @@ export default function Hunts({ data, overview, onRefresh }) {
                   <small>{expedition.treasure ? [expedition.treasure.category, expedition.treasure.level ? `Lv.${number(expedition.treasure.level)}` : "", expedition.treasure.rarity].filter(Boolean).join(" · ") : expedition.last_stage?.rewards ? `+${number(expedition.last_stage.rewards.xp)} XP · +${number(expedition.last_stage.rewards.jp)} JP secured · ${number(expedition.last_stage.rewards.gil)} Gil in spoils` : "Choose whether to return or continue."}</small>
                 </div>
                 <div className="solo-choice-actions">
-                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:return", () => submitSoloExpeditionReturn(csrfToken, actionKey("solo-return")), "Returned to the Guild.")}>{busy === "solo:return" ? "Returning…" : "Return to Guild — Bank Spoils"}</button>
-                  {expedition.can_press_on ? <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:continue", () => submitSoloExpeditionContinue(csrfToken, actionKey("solo-continue")), "Pressed deeper into the Solo Venture.")}>{busy === "solo:continue" ? "Pressing On…" : `Press On — Stage ${number(expedition.stage + 1)}`}</button> : null}
+                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:return", "solo-return", "run", (idem) => submitSoloExpeditionReturn(csrfToken, idem), "Returned to the Guild.")}>{busy === "solo:return" ? "Returning…" : "Return to Guild — Bank Spoils"}</button>
+                  {expedition.can_press_on ? <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:continue", "solo-continue", "run", (idem) => submitSoloExpeditionContinue(csrfToken, idem), "Pressed deeper into the Solo Venture.")}>{busy === "solo:continue" ? "Pressing On…" : `Press On — Stage ${number(expedition.stage + 1)}`}</button> : null}
                 </div>
                 {expedition.can_press_on ? <p className="adventure-disabled-reason">Going deeper raises the stage reward modifier, but your current HP/MP/AP and consumed items carry forward.</p> : null}
               </div>
@@ -581,7 +627,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                     className="equipment-action-button secondary"
                     disabled={!actionsAvailable || !region.can_travel || Boolean(busy)}
                     title={region.reason || "Travel to this region"}
-                    onClick={() => runRequest(`travel:${region.id}`, () => submitTravelRegion(region.id, csrfToken, actionKey("travel", region.id)), "Travel complete.")}
+                    onClick={() => runRequest(`travel:${region.id}`, "travel", region.id, (idem) => submitTravelRegion(region.id, csrfToken, idem), "Travel complete.")}
                   >
                     {busy === `travel:${region.id}` ? "Traveling…" : `Travel to ${region.name}`}
                   </button>
@@ -667,7 +713,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                     type="button"
                     className="equipment-action-button"
                     disabled={!actionsAvailable || !available || Boolean(busy)}
-                    onClick={() => runRequest(`hunt:${hunt.id}`, () => submitChallengeHunt(hunt.id, csrfToken, actionKey("hunt", hunt.id)), "Hunt accepted.")}
+                    onClick={() => runRequest(`hunt:${hunt.id}`, "hunt", hunt.id, (idem) => submitChallengeHunt(hunt.id, csrfToken, idem), "Hunt accepted.")}
                   >
                     {busy === `hunt:${hunt.id}` ? "Dispatching…" : `Dispatch ${hunt.rank}-Rank Hunt`}
                   </button>

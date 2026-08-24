@@ -410,3 +410,35 @@ a:focus-visible {
   button,
   a { transition: none !important; }
 }
+
+/* v1.1.18 Retro Phase 1 Hotfix 1 — compact Solo Venture abilities. */
+.solo-ability-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: .4rem;
+}
+
+.solo-action-option.solo-ability-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-height: 42px;
+  padding: .48rem .65rem;
+}
+
+.solo-action-option.solo-ability-option > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.solo-action-option.solo-ability-option > span {
+  flex: 0 0 auto;
+  color: var(--crystal-soft);
+  font-size: max(.78rem, 12.5px);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .solo-ability-grid { grid-template-columns: 1fr; }
+}

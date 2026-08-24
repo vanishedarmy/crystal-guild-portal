@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h2"
-FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h2"
+HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h3"
+FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h3"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {
@@ -37,6 +37,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO",
 }
 MAX_ACTION_BYTES = 16 * 1024
+MAX_ACTION_RESULT_BYTES = 64 * 1024
 MAX_ACTION_HISTORY = 20
 # Daily Guild Provisions is mounted on Overview and may be retried across page
 # refreshes while the Bot is temporarily slow/offline. Treat its state/claim
@@ -935,7 +936,7 @@ class HostedPortalStore:
             "data": result_data,
         }
         encoded = json.dumps(result, separators=(",", ":"), sort_keys=True, ensure_ascii=False)
-        if len(encoded.encode("utf-8")) > MAX_ACTION_BYTES:
+        if len(encoded.encode("utf-8")) > MAX_ACTION_RESULT_BYTES:
             raise ValueError("Action result is too large.")
         now = int(time.time())
         with self._lock, self._connect() as conn:

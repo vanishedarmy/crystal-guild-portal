@@ -1,5 +1,6 @@
-Crystal Guild v1.1.17 — Arsenal II
+Crystal Guild v1.1.17 — Arsenal II Hotfix 3
 
-Upgrade baseline: v1.1.16 Arsenal Hotfix 6.
-This is a paired Bot + Web release. DB schema stays 5; Portal Action protocol stays 14.
-Read UPGRADE_GUIDE.md before deployment and preserve private/runtime files when replacing source.
+Current Web asset revision: 1.1.17-arsenal-ii1h3.
+If upgrading from Arsenal II Hotfix 2, read HOTFIX_3_UPGRADE_GUIDE.md.
+Bot runtime remains 1.1.17-arsenal-ii; DB schema stays 5; Portal Action protocol stays 14.
+Preserve private/runtime environment values when replacing hosted Web source.

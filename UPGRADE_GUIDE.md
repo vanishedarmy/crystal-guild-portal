@@ -13,7 +13,7 @@ Arsenal II is a **paired Bot + Web update**. Database schema remains 5 and Porta
 5. Push the matching Arsenal II Web source to GitHub and redeploy the hosted Web service.
 6. Restart/redeploy the Bot worker.
 7. Verify `!cgversion` reports `1.1.17-arsenal-ii`.
-8. Verify hosted `/api/health` reports runtime `1.1.17-arsenal-ii` and frontend revision `1.1.17-arsenal-ii1h2`.
+8. Verify hosted `/api/health` reports runtime `1.1.17-arsenal-ii` and frontend revision `1.1.17-arsenal-ii1h3`.
 9. Open the Player Guide and confirm it identifies **v1.1.17 — Arsenal II**.
 
 ## No migration required
@@ -38,4 +38,4 @@ Do not reset players or manually edit SQLite for this update.
 - While Twitch is offline, use a Portal action and verify gameplay completes without an automated Twitch chat announcement.
 
 
-> Current Web patch: **Arsenal II Hotfix 2** (`1.1.17-arsenal-ii1h2`). See `HOTFIX_2_UPGRADE_GUIDE.md` and `HOTFIX_2_RELEASE_NOTES.md`.
+> Current Web patch: **Arsenal II Hotfix 2** (`1.1.17-arsenal-ii1h3`). See `HOTFIX_2_UPGRADE_GUIDE.md` and `HOTFIX_2_RELEASE_NOTES.md`.

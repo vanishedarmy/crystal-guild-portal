@@ -1,9 +1,9 @@
-Crystal Guild Web v1.1.17 — Arsenal II Hotfix 2
+Crystal Guild Web v1.1.17 — Arsenal II Hotfix 3
 Hosted runtime: 1.1.17-arsenal-ii
-Frontend asset revision: 1.1.17-arsenal-ii1h2
+Frontend asset revision: 1.1.17-arsenal-ii1h3
 Hosted sync schema: 1
 Hosted sync compatibility: 1.1.15-wayfarer
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii
 
-Includes Arsenal II plus Hotfix 1 Guide identity correction and Hotfix 2 shared mobile site header.
+Includes Arsenal II plus Hotfix 1 Guide identity correction, Hotfix 2 shared mobile site header, and Hotfix 3 Adventure Board card spacing continuity.

@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h5"
-FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h5"
+HOSTED_PORTAL_VERSION = "1.1.17-arsenal-ii"
+FRONTEND_ASSET_REVISION = "1.1.17-arsenal-ii1"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {

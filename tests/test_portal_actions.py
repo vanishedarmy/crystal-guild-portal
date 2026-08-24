@@ -632,6 +632,46 @@ class PortalActionServerCase(unittest.TestCase):
         self.assertEqual(claimed[0]["id"], solo_id)
         self.assertEqual(claimed[0]["type"], "SOLO_EXPEDITION_ACTION")
 
+    def test_hotfix3_large_adventure_state_result_can_complete(self):
+        status, queued, _ = self.request(
+            "/api/actions",
+            method="POST",
+            payload={"type": "ADVENTURE_STATE", "payload": {}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "h3-large-adventure-state"},
+        )
+        self.assertEqual(status, 202)
+        claimed = self.store.claim_actions("bot:h3-large-state", limit=1)
+        self.assertEqual(len(claimed), 1)
+        self.assertEqual(claimed[0]["type"], "ADVENTURE_STATE")
+        # Arsenal's expanded Hunt/ability data plus a stocked Solo Venture can
+        # legitimately exceed the old 16 KiB request-payload ceiling. Result
+        # envelopes use their own larger bound so the Bot can complete them.
+        large_board = {"adventure_state": {"solo_venture": {"expedition": {"combat": {"items": [
+            {"id": f"item-{index}", "name": "Emergency Supply", "description": "x" * 700}
+            for index in range(30)
+        ]}}}}}
+        self.assertGreater(len(json.dumps(large_board).encode("utf-8")), 16 * 1024)
+        self.assertTrue(self.store.complete_action(
+            claimed[0]["id"], claimed[0]["lease_token"], True, "Adventure Board refreshed.", large_board
+        ))
+        rows = self.store.list_actions(TWITCH_ID, limit=5)
+        row = next(item for item in rows if item["id"] == claimed[0]["id"])
+        self.assertEqual(row["status"], "completed")
+
+    def test_hotfix3_result_limit_remains_bounded(self):
+        status, queued, _ = self.request(
+            "/api/actions",
+            method="POST",
+            payload={"type": "PING", "payload": {}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "h3-result-bound"},
+        )
+        self.assertEqual(status, 202)
+        claimed = self.store.claim_actions("bot:h3-bound", limit=1)
+        with self.assertRaises(ValueError):
+            self.store.complete_action(
+                claimed[0]["id"], claimed[0]["lease_token"], True, "oversized", {"blob": "x" * (70 * 1024)}
+            )
+
     def test_hotfix2_duplicate_solo_round_retry_reuses_inflight_action(self):
         seen = []
         for key in ("h2-solo-retry-one", "h2-solo-retry-two"):

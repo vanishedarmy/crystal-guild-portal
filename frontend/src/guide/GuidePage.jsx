@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { initGuide } from "./guideRuntime.js";
 import { WEB_ASSET_REVISION, WEB_RELEASE } from "../version.js";
+import SiteHeader from "../components/SiteHeader.jsx";
+import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 
 export default function GuidePage() {
+  const liveStatus = useLiveUpdates();
   const [guide, setGuide] = useState({ markup: "", data: null, error: "" });
 
   useEffect(() => {
@@ -59,5 +62,10 @@ export default function GuidePage() {
 
   if (guide.error) return <div className="state-message">Unable to open the Player Guide: {guide.error}</div>;
   if (!guide.markup) return <div className="state-message">Opening the Player Guide...</div>;
-  return <div className="guide-react-host" dangerouslySetInnerHTML={{ __html: guide.markup }} />;
+  return (
+    <>
+      <SiteHeader liveStatus={liveStatus} sectionTitle="Player Guide" brandHref="/guide" skipHref="#mainContent" skipLabel="Skip to guide content" />
+      <div className="guide-react-host" dangerouslySetInnerHTML={{ __html: guide.markup }} />
+    </>
+  );
 }

@@ -59,3 +59,12 @@ test("Arsenal II What's New explains the deeper caster and Portal UX expansion",
   assert.match(data, /Camp from the Adventure Board/);
   assert.match(data, /suppressed until Twitch is live again/);
 });
+
+test("Retro Phase 1 What's New explains the visual-foundation rollout", async () => {
+  const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
+  assert.match(data, /v1\.1\.18/);
+  assert.match(data, /Retro Phase 1/);
+  assert.match(data, /Classic menu windows/);
+  assert.match(data, /Retro without tiny text/);
+  assert.match(data, /Mobile preserved/);
+});

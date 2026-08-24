@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("Arsenal II publishes the expanded ability curve to the shared Guide catalog", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.1.17 — Arsenal II");
+  assert.equal(data.meta.version, "v1.1.18 — Retro Phase 1");
   assert.equal(data.active_abilities.blackmage.length, 12);
   assert.equal(data.active_abilities.whitemage.length, 12);
   assert.equal(data.active_abilities.warrior.length, 8);
@@ -58,13 +58,13 @@ test("Hosted Raid Overlay is rendered after the dashboard frame", async () => {
 });
 
 
-test("Player Guide release identity comes from the shared header and keeps Arsenal II", async () => {
+test("Player Guide release identity comes from the shared header and uses Retro Phase 1", async () => {
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
   const guidePage = await readFile(new URL("guide/GuidePage.jsx", SRC), "utf8");
   const version = await readFile(new URL("version.js", SRC), "utf8");
   assert.doesNotMatch(guide, /Cloud Continuity/);
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
-  assert.match(version, /WEB_BUILD = "Arsenal II"/);
-  assert.match(version, /1\.1\.17-arsenal-ii1h5/);
+  assert.match(version, /WEB_BUILD = "Retro Phase 1"/);
+  assert.match(version, /1\.1\.18-retro-phase1/);
 });

@@ -1159,3 +1159,58 @@ body.streamer-page {
   .streamer-overlay-actions { width: 100%; }
   .streamer-overlay-actions .ghost-button { flex: 1 1 11rem; }
 }
+
+/* v1.1.16 Arsenal Hotfix 1 — dashboard readability and responsive polish. */
+.streamer-shell,
+.streamer-panel,
+.streamer-command-card,
+.streamer-summary-card,
+.streamer-leader-card,
+.streamer-sync-card {
+  min-width: 0;
+}
+
+.streamer-brand small,
+.streamer-panel-heading > div > span,
+.streamer-summary-card > span,
+.streamer-leader-card > span,
+.streamer-sync-card > span {
+  font-size: max(0.69rem, 11px);
+  line-height: 1.35;
+  letter-spacing: 0.12em;
+}
+
+.streamer-hero p:not(.eyebrow),
+.streamer-command-card p,
+.streamer-panel p,
+.streamer-panel li,
+.streamer-sync-card small {
+  line-height: 1.58;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.streamer-nav a,
+.streamer-jumpbar a,
+.streamer-build {
+  font-size: max(0.72rem, 11.5px);
+}
+
+.streamer-header a:focus-visible,
+.streamer-shell a:focus-visible,
+.streamer-shell button:focus-visible,
+.streamer-shell input:focus-visible,
+.streamer-shell select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 620px) {
+  .streamer-brand small,
+  .streamer-panel-heading > div > span,
+  .streamer-summary-card > span,
+  .streamer-leader-card > span,
+  .streamer-sync-card > span {
+    letter-spacing: 0.09em;
+  }
+}

@@ -6634,3 +6634,191 @@ body { font-size: 15px; line-height: 1.54; }
 .ability-trait-row { display:flex; flex-wrap:wrap; gap:.35rem; margin:.45rem 0 .1rem; }
 .small-badge.ability-trait { background:rgba(67, 121, 177, .13); border-color:rgba(118, 177, 232, .28); color:#d7ebff; }
 .solo-ability-traits { color:#b9d9f6; font-weight:700; letter-spacing:.015em; }
+
+/* v1.1.16 Arsenal Hotfix 1 — timed Hunts + site readability polish. */
+:root {
+  --muted: #adbdcc;
+  --line: rgba(151, 216, 255, 0.24);
+}
+
+body {
+  line-height: 1.62;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+.panel-title-row,
+.job-name {
+  text-wrap: balance;
+}
+
+p,
+li,
+.card-meta,
+.muted,
+.adventure-disabled-reason,
+.adventure-combat-note,
+.whats-new-highlight p {
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.panel,
+article,
+.content-grid > *,
+.panel-title-row > *,
+.card-status-row > * {
+  min-width: 0;
+}
+
+.eyebrow,
+.brand small,
+.slot-label,
+.small-badge {
+  font-size: max(0.72rem, 11.5px);
+  line-height: 1.35;
+}
+
+.eyebrow,
+.brand small {
+  letter-spacing: 0.16em;
+}
+
+.card-meta,
+.adventure-disabled-reason,
+.solo-action-option > span:nth-child(2),
+.whats-new-highlight p {
+  font-size: max(0.78rem, 12.5px);
+  line-height: 1.52;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.progress-track,
+.progress-bar,
+.vital-bar {
+  overflow: hidden;
+}
+
+.timed-hunt-panel {
+  border-color: rgba(230, 203, 136, 0.34);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(230, 203, 136, 0.08), transparent 34%),
+    linear-gradient(145deg, rgba(13, 33, 49, 0.96), rgba(7, 21, 34, 0.96));
+}
+
+.timed-hunt-title-row {
+  align-items: flex-start;
+}
+
+.timed-hunt-countdown {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 0.85rem 0 0.65rem;
+}
+
+.timed-hunt-countdown > div {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid rgba(143, 219, 255, 0.16);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.timed-hunt-countdown span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timed-hunt-countdown strong {
+  color: var(--crystal-soft);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.1vw, 1.25rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.timed-hunt-note {
+  margin-top: 0.75rem;
+}
+
+.hunt-reward-grid strong,
+.hunt-seal-wallet strong,
+.vital-label,
+.adventure-enemy-vitals,
+.solo-expedition-ledger,
+.timed-hunt-countdown {
+  font-variant-numeric: tabular-nums;
+}
+
+.hunt-traits {
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .panel-title-row,
+  .adventure-title-row,
+  .hunt-board-title-row,
+  .timed-hunt-title-row {
+    gap: 0.65rem;
+  }
+
+  .eyebrow,
+  .brand small {
+    letter-spacing: 0.12em;
+  }
+
+  .timed-hunt-countdown {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 16px;
+    line-height: 1.64;
+  }
+
+  .panel-title-row:not(.solo-combat-head),
+  .adventure-title-row,
+  .hunt-board-title-row,
+  .timed-hunt-title-row {
+    align-items: stretch;
+  }
+
+  .equipment-action-button,
+  .card-actions button,
+  .adventure-card-footer button {
+    min-height: 44px;
+  }
+
+  .hunt-rank-filters button {
+    min-height: 42px;
+  }
+
+  .small-badge,
+  .slot-label {
+    letter-spacing: 0.045em;
+  }
+}

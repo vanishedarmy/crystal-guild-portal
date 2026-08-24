@@ -36,15 +36,14 @@ test("Jobs tab enriches Portal Jobs from the same Guide ability catalog", () => 
   assert.equal(job.abilities.length, 1, "live learned-ability state remains authoritative");
 });
 
-test("Jobs cards expose Guide-style combat abilities, passive milestones, and Mastery reference", () => {
+test("Jobs cards stay compact while exposing an explicit details pop-out", () => {
   const source = read("src/player/Jobs.jsx");
-  assert.match(source, /Battle Abilities/);
-  assert.match(source, /!ability &lt;name&gt; \[target\]/);
-  assert.match(source, /Passive Job Milestones/);
-  assert.match(source, /JLv\.50 Cross-Job Mastery/);
-  assert.match(source, /ability\.cost/);
-  assert.match(source, /humanizeLabel\(ability\.target\)/);
-  assert.match(source, /<JobAbilityReference job=\{job\} \/>/);
+  assert.match(source, /View \${job\.name} Details/);
+  assert.match(source, /public-job-actions/);
+  assert.doesNotMatch(source, /JobAbilityReference/);
+  assert.doesNotMatch(source, /Battle Abilities/);
+  assert.doesNotMatch(source, /Passive Job Milestones/);
+  assert.doesNotMatch(source, /JLv\.50 Cross-Job Mastery/);
 });
 
 test("Job detail dialog carries the richer Player Guide information", () => {
@@ -56,10 +55,22 @@ test("Job detail dialog carries the richer Player Guide information", () => {
   assert.match(detail, /JLv\.50 Cross-Job Mastery/);
 });
 
-test("Jobs ability reference remains readable across desktop and narrow layouts", () => {
+test("Job ability reference remains readable inside the details pop-out", () => {
   const css = read("src/styles/portal.css");
-  assert.match(css, /\.job-combat-identity\s*\{/);
-  assert.match(css, /\.job-active-ability-list/);
-  assert.match(css, /minmax\(min\(100%, 340px\), 1fr\)/);
-  assert.match(css, /@media \(max-width: 560px\)[\s\S]*\.job-combat-identity/);
+  assert.match(css, /\.job-detail-stat-grid\s*\{/);
+  assert.match(css, /\.job-detail-ability-list/);
+  assert.match(css, /\.public-job-actions/);
+  assert.doesNotMatch(css, /\.job-reference-block/);
+  assert.doesNotMatch(css, /minmax\(min\(100%, 340px\), 1fr\)/);
+  assert.match(css, /@media \(max-width: 560px\)[\s\S]*\.job-detail-stat-grid/);
+});
+
+test("Arsenal ability cards surface element and special-effect traits", () => {
+  const detail = read("src/components/DetailDialog.jsx");
+  const solo = read("src/player/Hunts.jsx");
+  const guide = read("src/guide/guideRuntime.js");
+  assert.match(detail, /abilityTraitLabels/);
+  assert.match(detail, /ability-trait-row/);
+  assert.match(solo, /ability\.traits/);
+  assert.match(guide, /activeAbilityTraits/);
 });

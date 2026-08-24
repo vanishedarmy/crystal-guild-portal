@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./styles/portal.css";
 import "./styles/streamer.css";
+import "./styles/retro.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

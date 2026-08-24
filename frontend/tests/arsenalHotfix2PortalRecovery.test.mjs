@@ -4,7 +4,7 @@ import test from "node:test";
 
 const SRC = new URL("../src/", import.meta.url);
 
-test("Arsenal Hotfix 2 resumes Daily requests instead of flooding the Portal queue", async () => {
+test("Arsenal Hotfix 3 resumes Daily requests instead of flooding the Portal queue", async () => {
   const daily = await readFile(new URL("player/DailyReward.jsx", SRC), "utf8");
   assert.match(daily, /sessionStorage/);
   assert.match(daily, /stateInflight/);
@@ -13,7 +13,7 @@ test("Arsenal Hotfix 2 resumes Daily requests instead of flooding the Portal que
   assert.match(daily, /loadDaily\(\{ quiet: true \}\)/);
 });
 
-test("Arsenal Hotfix 2 makes Solo Venture requests resumable and keeps active runs refreshing", async () => {
+test("Arsenal Hotfix 3 makes Solo Venture requests resumable and keeps active runs refreshing", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(board, /volatileAdventureActionKeys/);
   assert.match(board, /sessionStorage/);
@@ -24,4 +24,14 @@ test("Arsenal Hotfix 2 makes Solo Venture requests resumable and keeps active ru
   assert.match(board, /submitSoloExpeditionAction\("attack", csrfToken, idem\)/);
   assert.match(board, /submitSoloExpeditionContinue\(csrfToken, idem\)/);
   assert.match(board, /submitSoloExpeditionReturn\(csrfToken, idem\)/);
+});
+
+
+test("Arsenal Hotfix 3 retries initial Adventure Board recovery instead of showing a false READY state", async () => {
+  const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
+  assert.match(board, /retryBootstrap/);
+  assert.match(board, /window\.setInterval\(retryBootstrap, 5000\)/);
+  assert.match(board, /const boardStateReady = Boolean\(state\)/);
+  assert.match(board, /Checking your venture/);
+  assert.match(board, /!boardStateReady \|\| !state\?\.solo_venture\?\.ready/);
 });

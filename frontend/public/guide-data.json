@@ -18365,13 +18365,13 @@
     {
       "category": "Combat",
       "command": "!attack",
-      "description": "Queue your Job’s basic attack for the current Venture, Hunt, or Raid round.",
+      "description": "Queue your Job’s basic attack for the current Rally Venture or Raid round. Timed Hunts choose actions automatically.",
       "aliases": ""
     },
     {
       "category": "Combat",
       "command": "!ability <name> [target]",
-      "description": "Queue an unlocked Job ability for the current Venture, Hunt, or Raid round. Add a target when the ability needs one.",
+      "description": "Queue an unlocked Job ability for the current Rally Venture or Raid round. Timed Hunts choose learned abilities automatically when useful.",
       "aliases": "!skill, !cast"
     },
     {
@@ -18383,7 +18383,7 @@
     {
       "category": "Combat",
       "command": "!use <item> [target]",
-      "description": "Use a supported consumable during a Venture, Hunt, or Raid battle. The item is consumed only when the action resolves successfully.",
+      "description": "Use a supported consumable during a Rally Venture or Raid battle. Timed Hunts may use a limited number of survival items automatically.",
       "aliases": ""
     },
     {
@@ -18425,13 +18425,13 @@
     {
       "category": "Hunts",
       "command": "!hunts [rank]",
-      "description": "View the Hunt Board, optionally filtered C/B/A/S.",
+      "description": "View the Hunt Board, optionally filtered C/B/A/S/S+. Rank timers are C 5m, B 15m, A 30m, S 1h, S+ 2h.",
       "aliases": "!huntboard, !marks"
     },
     {
       "category": "Hunts",
       "command": "!hunt <name>",
-      "description": "Challenge a named Hunt mark.",
+      "description": "Dispatch your hero on a named timed Hunt. No round commands are required; the final result resolves automatically at the rank deadline.",
       "aliases": "!mark"
     },
     {
@@ -18757,7 +18757,7 @@
     "solo_venture_encounter_chance": 60,
     "solo_venture_treasure_chance": 40,
     "solo_venture_max_stages": 3,
-    "release": "1.1.16-arsenal"
+    "release": "1.1.16-arsenal-h1"
   },
   "active_abilities": {
     "warrior": [

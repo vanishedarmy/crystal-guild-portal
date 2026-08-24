@@ -1966,3 +1966,114 @@ table { font-size: 0.88rem; }
   .content { padding-top: 25px; }
   .guide-section-summary { padding-block: 10px; }
 }
+
+/* v1.1.16 — Arsenal Hotfix 1: Player Guide readability pass */
+:root {
+  --muted: #b4c1da;
+}
+
+html { text-size-adjust: 100%; }
+body { line-height: 1.62; }
+button, input, select, textarea { font: inherit; }
+
+.hero h2,
+.section h2,
+.card h3,
+.command-group-head h3,
+.info-header h2,
+.guide-section-summary h3 {
+  text-wrap: balance;
+}
+
+.hero p,
+.section > .lead,
+.card p,
+.command .desc,
+.table-note,
+.table-sub,
+.info-stage-block p,
+.info-ability p,
+.guide-section-lead-full {
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.card,
+.command,
+.catalog-panel,
+.info-card,
+.callout,
+.guide-section-summary,
+.table-wrap,
+.catalog-table-wrap,
+.command-group-head,
+.info-stage-block {
+  min-width: 0;
+}
+
+/* Keep supporting labels readable without letting metadata overpower content. */
+.side small,
+.datatable th,
+.info-kicker,
+.info-section-title,
+.info-stat span,
+.boss-hp small,
+.info-stage-block > span,
+.info-reward span,
+.datatable td::before {
+  font-size: max(11px, .69rem);
+  letter-spacing: .085em;
+  line-height: 1.35;
+}
+
+.table-sub,
+.table-pill,
+.group-count,
+.phase-name span,
+.info-loot span,
+.mobile-title span,
+.chip {
+  font-size: max(12px, .75rem);
+  line-height: 1.45;
+}
+
+.command .desc,
+.command-group-head p {
+  font-size: max(13px, .8125rem);
+  line-height: 1.58;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--crystal);
+  outline-offset: 3px;
+}
+
+.command code,
+.datatable td,
+.table-note {
+  line-height: 1.52;
+}
+
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .hero p,
+  .section > .lead { line-height: 1.68; }
+  .card,
+  .catalog-panel,
+  .info-card,
+  .callout { padding: 14px; }
+  .command { gap: 10px; }
+  .tabs button,
+  .job-view-tabs button,
+  .completion-view-tabs button,
+  .group-filter,
+  .toolbar button,
+  .command-toolbar button,
+  .copy {
+    min-height: 44px;
+  }
+}

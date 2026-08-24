@@ -1,7 +1,7 @@
 import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchStreamerDashboard } from "../api/streamer.js";
-import LiveStatus from "../components/LiveStatus.jsx";
+import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
@@ -99,32 +99,6 @@ function hpTone(player) {
   if (value <= 30) return "danger";
   if (value <= 60) return "warning";
   return "good";
-}
-
-function StreamerHeader({ liveStatus }) {
-  return (
-    <>
-      <a className="skip-link portal-skip-link" href="#main-content">Skip to main content</a>
-      <header className="streamer-header">
-        <a className="streamer-brand" href="/streamer" aria-label="Crystal Guild Streamer Dashboard">
-          <span className="streamer-brand-mark" aria-hidden="true"><img src="/crystal-guild-portal-roundel.png" alt="" width="256" height="256" decoding="async" /></span>
-          <span>
-            <small>Crystal Guild</small>
-            <strong>Streamer Dashboard</strong>
-          </span>
-        </a>
-        <div className="streamer-header-actions">
-          <nav className="streamer-nav" aria-label="Streamer dashboard links">
-            <Link to="/players">Adventurer Portal</Link>
-            <Link to="/fellowship">Fellowship</Link>
-            <a href="/guide">Player Guide</a>
-          </nav>
-          <span className="streamer-build">{WEB_RELEASE}</span>
-          <LiveStatus status={liveStatus} />
-        </div>
-      </header>
-    </>
-  );
 }
 
 function HostedOverlayCard() {
@@ -296,7 +270,7 @@ export default function StreamerDashboard() {
     <>
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
-      <StreamerHeader liveStatus={liveStatus} />
+      <SiteHeader liveStatus={liveStatus} sectionTitle="Streamer Dashboard" brandHref="/streamer" includeStreamer />
       <main id="main-content" className="streamer-shell" tabIndex="-1">
         <section className="streamer-hero">
           <div>

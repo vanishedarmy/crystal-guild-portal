@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "../components/SiteHeader.jsx";
+import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 
 const RIGHTS = [
   ["Access", "Request access to personal information we hold about you and information about how it is processed."],
@@ -35,6 +36,8 @@ function PolicySection({ id, eyebrow, title, children }) {
 }
 
 export default function PrivacyPolicy() {
+  const liveStatus = useLiveUpdates();
+
   useEffect(() => {
     document.title = "Privacy Policy — Crystal Guild";
   }, []);
@@ -43,7 +46,7 @@ export default function PrivacyPolicy() {
     <>
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
-      <SiteHeader />
+      <SiteHeader liveStatus={liveStatus} sectionTitle="Privacy Policy" brandHref="/privacy" />
       <main id="main-content" className="shell privacy-shell" tabIndex="-1">
         <section className="privacy-hero">
           <div>

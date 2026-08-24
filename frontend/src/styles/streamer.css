@@ -1214,3 +1214,12 @@ body.streamer-page {
     letter-spacing: 0.09em;
   }
 }
+
+/* v1.1.17 Arsenal II — Hosted Raid Overlay is ordinary bottom-page reference content. */
+.streamer-overlay-card {
+  margin-top: 1.4rem;
+  margin-bottom: .35rem;
+}
+@media (min-width: 980px) {
+  .streamer-overlay-card { position: static; }
+}

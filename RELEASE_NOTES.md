@@ -1,48 +1,29 @@
-# Crystal Guild v1.1.16 — Arsenal Hotfix 2 Release Notes
+# Crystal Guild v1.1.16 — Arsenal Hotfix 3
 
-Arsenal Hotfix 2 repairs Portal action recovery after reports of **Daily Guild Provisions remaining stuck in an updating state**, the hosted action queue reaching **“Too many … waiting for the Bot”**, and interactive **Solo Venture appearing frozen after an action**.
+## Solo Venture state delivery fix
 
-## Portal queue recovery
+Hotfix 3 fixes an Adventure Board failure that could leave a persisted Solo Venture active on the Bot while the browser showed an empty READY-style card with Begin Solo Venture disabled. The same hidden run could still block Daily Guild Provisions, producing the contradictory message to return or retreat from a Solo Venture that was not visible on the board.
 
-The hosted relay now treats read-only state refreshes differently from gameplay mutations:
+Arsenal's larger Hunt catalog, expanded Job ability data, and a stocked player's battle-item list can make an authoritative Adventure Board result exceed the previous 16 KiB relay result ceiling. The Bot could calculate the correct state, but the hosted relay could reject the completed result before the browser received it.
 
-- identical state requests are coalesced instead of filling the per-player queue;
-- duplicate pending state refreshes left by older Web builds are compacted automatically on the next request;
-- read-only state refreshes no longer consume the gameplay-action queue budget;
-- gameplay mutations are claimed ahead of ordinary state refreshes, so Attack/Ability/claims are not starved behind page polling;
-- identical in-flight Daily/Solo/Hunt requests are reused rather than queued again.
+The Web relay now keeps the strict 16 KiB limit for browser-submitted action payloads while allowing authoritative Bot results up to a separately bounded 64 KiB limit. This preserves the request-side security boundary while giving the richer Adventure Board enough room to return an active Solo Venture safely.
 
-This is recovery logic, not a player reset. Existing pending rows do not need to be deleted manually.
+The Adventure Board also now:
+- retries its initial authoritative state request every five seconds while the board has not loaded;
+- reuses the same in-flight state request rather than generating duplicate queue entries;
+- shows **Checking your venture…** / **Checking** until authoritative state arrives instead of falsely displaying READY;
+- keeps Begin Solo Venture disabled until the board has a confirmed state.
 
-## Daily Guild Provisions
-
-Daily Provision state and claim requests now keep one stable browser idempotency key while a request is outstanding. Refresh/retry therefore checks the same authoritative request rather than creating a new one.
-
-The Daily card also prevents overlapping state requests and automatically re-checks a delayed state response. Subscriber-tier Daily bonuses and the randomized 24-hour reward design are unchanged.
-
-## Solo Venture recovery
-
-The Adventure Board now treats an active interactive Solo Venture as live state that deserves periodic authoritative refreshes. Previously, only shared encounters and timed Hunts enabled that polling path. If a Solo action finished after the browser wait window, the backend could advance while the card remained on the previous round until another page interaction.
-
-Hotfix 2 adds:
-
-- periodic Adventure Board refresh while a Solo Venture is active;
-- a single in-flight Adventure-state request guard;
-- stable idempotency keys for Solo Venture start, Attack, Defend, Ability, Item, Continue, Return and Retreat actions;
-- safe retry/resume wording instead of encouraging repeated queue submissions;
-- hosted coalescing for identical in-flight Solo requests, protecting against duplicate round execution during slow responses.
-
-No Solo Venture rewards, stage odds, cooldowns, combat balance or Wayfarer progression rules are changed.
+Existing persisted Solo Ventures are not reset. Once the updated Web deployment receives the authoritative state, the current combat/choice stage should reappear and can continue normally.
 
 ## Compatibility
 
-- Bot runtime: `1.1.16-arsenal-h1` (**unchanged**)
-- Hosted Web runtime: `1.1.16-arsenal-h2`
-- Frontend asset revision: `1.1.16-arsenal1h2`
-- Local DB schema: **5** (unchanged)
-- Hosted sync schema: **1** (unchanged)
-- Hosted sync compatibility: `1.1.15-wayfarer` (unchanged)
-- Portal Action protocol: **14** (unchanged)
+- Bot runtime: `1.1.16-arsenal-h1` (unchanged)
+- Hosted Web runtime: `1.1.16-arsenal-h3`
+- Frontend asset revision: `1.1.16-arsenal1h3`
+- Local DB schema: 5 (unchanged)
+- Hosted sync schema: 1 (unchanged)
+- Portal Action protocol: 14 (unchanged)
 - Twitch prefix: `!`
 
-Hotfix 2 is **Web-only**. It requires no database migration, Bot replacement/restart, new Render secret, OAuth change or player reset.
+This is a Web-only hotfix. No database migration, player reset, Bot replacement/restart, OAuth change, or new Render secret is required.

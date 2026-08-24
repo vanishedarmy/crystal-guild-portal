@@ -1,43 +1,31 @@
-# Crystal Guild v1.1.16 — Arsenal Hotfix 2 Validation Report
+# Validation Report — v1.1.16 Arsenal Hotfix 3
 
-## Certification summary
+## Root-cause reproduction
 
-**PASS — Daily/Portal queue recovery and Solo Venture refresh/retry behavior are certified on the Arsenal Hotfix 1 schema-5 / protocol-14 baseline.**
+A representative Arsenal Adventure Board result measured about 12.8 KiB while idle and about 16.0 KiB during an interactive Solo Venture with only one battle item. A stocked test character with all eligible battle consumables produced an Adventure Board result of about 21.6 KiB, exceeding the former 16 KiB action-result ceiling.
 
-| Check | Result |
-|---|---:|
-| Unchanged Bot automated regression tests | **366 / 366 PASS** |
-| Frontend source/unit/regression tests | **170 / 170 PASS** |
-| Hosted Portal/API tests | **43 / 43 PASS** |
-| Python grammar sweep | **74 / 74 PASS** |
-| JS/JSX/MJS independent TypeScript parse | **104 / 104 PASS** |
+Hotfix 3 separates request and result limits: browser action payloads remain capped at 16 KiB while authoritative Bot result envelopes are capped at 64 KiB.
 
-## Queue/recovery contracts
+## Automated validation
 
-New automated coverage verifies:
+- Bot regression suite: 366 / 366 PASS (Bot unchanged from Arsenal Hotfix 1)
+- Frontend tests: 171 / 171 PASS
+- Hosted Portal/API tests: 45 / 45 PASS
+- Python grammar sweep: 74 / 74 PASS
+- Frontend JS/JSX/MJS syntax sweep: 104 / 104 files PASS
 
-- repeated Daily state requests with different browser retry keys resolve to one in-flight hosted action;
-- repeated Adventure Board state requests similarly coalesce;
-- five simultaneous read-only state requests do not consume the gameplay-mutation queue budget;
-- a Solo Venture action is accepted even when several state panels are waiting;
-- gameplay actions are claimed ahead of ordinary read-only state refreshes;
-- repeated identical Solo round submissions reuse one in-flight action rather than creating two mutations;
-- the Adventure Board prevents overlapping state polls;
-- an active Solo Venture enables periodic authoritative board refresh;
-- Solo start/round/continue/return/retreat requests keep a stable browser key until terminal completion;
-- Daily state/claim retries keep a stable browser key and Daily state re-checks delayed completion without spawning a new request.
+Dedicated regressions verify that:
+- an Adventure Board result larger than 16 KiB can complete successfully;
+- results above the new 64 KiB bound are still rejected;
+- an unloaded Adventure Board retries initial state recovery every five seconds;
+- the Solo Venture card does not display a false READY state before authoritative data arrives;
+- Hotfix 2 queue coalescing/idempotent Solo action protections remain intact.
 
-## Compatibility
+No schema, hosted-sync, Portal-protocol, OAuth, or Bot-runtime changes are introduced.
 
-- Bot runtime: `1.1.16-arsenal-h1` (unchanged)
-- Web runtime: `1.1.16-arsenal-h2`
-- Frontend asset revision: `1.1.16-arsenal1h2`
-- Local DB schema: **5**
-- Hosted sync schema: **1**
-- Hosted sync compatibility: `1.1.15-wayfarer`
-- Portal Action protocol: **14**
-- Twitch prefix: `!`
+## Package certification
 
-No database migration, Bot restart, player reset, new Render secret, or Twitch OAuth scope is introduced.
-
-Build-environment note: a full local Vite production bundle is not part of this certification because the frontend dependency tree is not installed in this execution environment. Frontend regressions, independent syntax parsing, hosted API tests, and release-package verification cover the shipped source; Render performs the normal production dependency install/build during deployment.
+- Extracted Complete package: 366 / 366 Bot, 171 / 171 frontend, 45 / 45 hosted Portal/API PASS.
+- Hotfix 2 + Hotfix 3 Web patch compared with finalized Hotfix 3 tree: 0 file-content differences.
+- Standalone Hotfix 3 Web package compared with finalized Web tree: 0 file-content differences.
+- Complete Hotfix 3 package compared with finalized complete tree: 0 file-content differences.

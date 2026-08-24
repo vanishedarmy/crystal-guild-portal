@@ -65,12 +65,13 @@ test("Job ability reference remains readable inside the details pop-out", () => 
   assert.match(css, /@media \(max-width: 560px\)[\s\S]*\.job-detail-stat-grid/);
 });
 
-test("Arsenal ability cards surface element and special-effect traits", () => {
+test("Arsenal Job and Guide ability cards keep traits while Solo Venture uses the compact picker", () => {
   const detail = read("src/components/DetailDialog.jsx");
   const solo = read("src/player/Hunts.jsx");
   const guide = read("src/guide/guideRuntime.js");
   assert.match(detail, /abilityTraitLabels/);
   assert.match(detail, /ability-trait-row/);
-  assert.match(solo, /ability\.traits/);
+  assert.doesNotMatch(solo, /ability\.traits/);
+  assert.match(solo, /solo-ability-option/);
   assert.match(guide, /activeAbilityTraits/);
 });

@@ -65,6 +65,6 @@ test("Player Guide release identity comes from the shared header and uses Retro 
   assert.doesNotMatch(guide, /Cloud Continuity/);
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
-  assert.match(version, /WEB_BUILD = "Retro Phase 1"/);
+  assert.match(version, /WEB_BUILD = "Retro Phase 1 Hotfix 1"/);
   assert.match(version, /1\.1\.18-retro-phase1/);
 });

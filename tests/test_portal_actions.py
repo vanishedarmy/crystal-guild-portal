@@ -658,6 +658,53 @@ class PortalActionServerCase(unittest.TestCase):
         row = next(item for item in rows if item["id"] == claimed[0]["id"])
         self.assertEqual(row["status"], "completed")
 
+    def test_hotfix5_http_result_endpoint_accepts_large_authoritative_result(self):
+        status, queued, _ = self.request(
+            "/api/actions",
+            method="POST",
+            payload={"type": "ADVENTURE_STATE", "payload": {}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "h5-http-large-adventure-state"},
+        )
+        self.assertEqual(status, 202)
+
+        status, claim, _ = self.request(
+            "/api/actions/claim",
+            method="POST",
+            payload={"worker_id": "bot:h5-http", "limit": 1, "protocol_version": ACTION_PROTOCOL_VERSION},
+            headers={"X-Crystal-Guild-Key": SYNC_KEY},
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(len(claim["actions"]), 1)
+        action = claim["actions"][0]
+
+        large_board = {"adventure_state": {"solo_venture": {"expedition": {"combat": {"items": [
+            {"id": f"item-{index}", "name": "Emergency Supply", "description": "x" * 700}
+            for index in range(30)
+        ]}}}}}
+        result_payload = {
+            "protocol_version": ACTION_PROTOCOL_VERSION,
+            "id": action["id"],
+            "lease_token": action["lease_token"],
+            "ok": True,
+            "message": "Adventure Board refreshed.",
+            "data": large_board,
+        }
+        encoded = json.dumps(result_payload).encode("utf-8")
+        self.assertGreater(len(encoded), 16 * 1024)
+        self.assertLess(len(encoded), 64 * 1024)
+
+        status, completed, _ = self.request(
+            "/api/actions/result",
+            method="POST",
+            payload=result_payload,
+            headers={"X-Crystal-Guild-Key": SYNC_KEY},
+        )
+        self.assertEqual(status, 200)
+        self.assertTrue(completed["ok"])
+        rows = self.store.list_actions(TWITCH_ID, limit=5)
+        row = next(item for item in rows if item["id"] == queued["action"]["id"])
+        self.assertEqual(row["status"], "completed")
+
     def test_hotfix3_result_limit_remains_bounded(self):
         status, queued, _ = self.request(
             "/api/actions",

@@ -1,79 +1,37 @@
-# Crystal Guild v1.1.16 — Arsenal Hotfix 4 Validation Report
+# Crystal Guild v1.1.16 — Arsenal Hotfix 5 Validation Report
 
-## Feature validation
+## Regression fixed
 
-PASS — `!clearadventures` is registered as a streamer-only Twitch command and uses the existing shared owner gate.
+PASS — an authenticated `/api/actions/result` POST larger than 16 KiB and below the bounded Bot-result HTTP-envelope limit is accepted by the live HTTP handler.
 
-PASS — `!clearventures` is retained as a convenience alias while `!clearadventures` remains the documented canonical command.
+PASS — the same large Adventure Board result is accepted by `complete_action()` and stored as completed.
 
-PASS — the engine recovery operation clears the shared field/Rally encounter and encounter roster.
+PASS — `/api/actions/claim` and ordinary browser/player action requests remain on the 16 KiB ceiling.
 
-PASS — all timed Hunt assignments are removed from authoritative runtime state and the empty set is persisted through the combat checkpoint.
+PASS — the stored authoritative action result remains independently bounded at 64 KiB.
 
-PASS — all schema-5 `solo_expeditions` rows are deleted directly, so an orphaned Solo Venture can be recovered even when Portal cannot render it.
+PASS — Portal Action protocol remains 14 and no database/schema change is introduced.
 
-PASS — an active raid/world boss remains untouched.
+## Automated suites
 
-PASS — adventure cooldowns remain untouched; `!resettimers` remains the separate explicit timer reset.
+Final source:
+- Bot regression suite: **368 / 368 PASS** (unchanged Hotfix 4 Bot)
+- Frontend suite: **171 / 171 PASS**
+- Hosted Portal/API suite: **46 / 46 PASS**
+- Python grammar sweep: **74 / 74 PASS**
+- JS/JSX/MJS TypeScript syntax parse: **103 / 103 PASS**
 
-PASS — Streamer Dashboard documents the new recovery command and its scope.
+Actual extracted Complete package:
+- Bot regression suite: **368 / 368 PASS**
+- Frontend suite: **171 / 171 PASS**
+- Hosted Portal/API suite: **46 / 46 PASS**
 
-## Source regression suites
+## Release integrity
 
-- Bot automated tests: **368 / 368 PASS**
-- Frontend automated tests: **171 / 171 PASS**
-- Hosted Portal/API tests: **45 / 45 PASS**
-- Python grammar: **74 / 74 PASS**
-- JavaScript / JSX / MJS syntax parse: **104 / 104 PASS**
+PASS — Hotfix 4 + Hotfix 5 Web patch reproduces the finalized Hotfix 5 Web tree with **0 differences**.
 
-Expected simulated-error log messages in the Bot tests (notification outage, action acknowledgement loss, corrupt recovery fixture, Twitch status lookup failures) remained test fixtures and did not fail the suite.
+PASS — standalone Hotfix 5 Web archive reproduces the finalized Web tree with **0 differences**.
 
-## Synthetic concurrency stress
+PASS — Hotfix 5 Complete archive reproduces the finalized complete tree with **0 differences**.
 
-Configuration:
-
-- 1,000 players
-- 10,000 mutation operations
-- 4 concurrent Portal readers
-
-Result:
-
-- elapsed: **16.38 s**
-- throughput: **610.3 ops/s**
-- Portal reads: **7,557**
-- SQLite journal mode: **WAL**
-- quick-check failures: **0**
-- foreign-key violations: **0**
-- negative Gil rows: **0**
-- negative inventory rows: **0**
-- Portal read errors: **0**
-- transaction rollbacks: **0**
-
-**CLOUD RUNTIME STRESS PASS**
-
-## Release identity
-
-- Bot runtime: `1.1.16-arsenal-h4`
-- Web runtime: `1.1.16-arsenal-h4`
-- frontend asset revision: `1.1.16-arsenal1h4`
-- local DB schema: **5**
-- hosted sync schema: **1**
-- Portal Action protocol: **14**
-
-Package extraction/overlay verification is recorded after release archives are assembled.
-
-## Exact release-package verification
-
-PASS — extracted Complete archive matches the finalized Hotfix 4 source tree exactly: **0 diff lines**.
-
-PASS — extracted standalone Bot archive matches the finalized Bot tree exactly: **0 diff lines**.
-
-PASS — extracted standalone Web archive matches the finalized Web tree exactly: **0 diff lines**.
-
-PASS — applying `CrystalGuild-v1.1.16-Arsenal-Hotfix4-Update-from-Hotfix3.zip` over an untouched Arsenal Hotfix 3 Complete tree reproduces the finalized Hotfix 4 tree exactly: **0 diff lines**.
-
-Suites rerun from the extracted Complete archive:
-
-- Bot: **368 / 368 PASS**
-- Frontend: **171 / 171 PASS**
-- Hosted Portal/API: **45 / 45 PASS**
+PASS — the Hotfix 5 Complete Bot subtree is byte-identical to the certified Hotfix 4 Bot subtree with **0 differences**.

@@ -1,7 +1,7 @@
-# Crystal Guild Web — v1.1.16 Arsenal Hotfix 4
+# Crystal Guild Web — v1.1.16 Arsenal Hotfix 5
 
-Hosted runtime: `1.1.16-arsenal-h4` · frontend asset revision `1.1.16-arsenal1h4` · hosted sync schema **1** · Portal Action protocol **14**.
+Hosted runtime: `1.1.16-arsenal-h5` · frontend asset revision `1.1.16-arsenal1h5` · hosted sync schema **1** · Portal Action protocol **14**.
 
-Hotfix 4 pairs with Bot runtime `1.1.16-arsenal-h4` and adds the Streamer Dashboard reference for the authoritative `!clearadventures` recovery command. The Hotfix 3 64 KiB authoritative action-result allowance and truthful Adventure Board Checking/retry behavior remain intact.
+Hotfix 5 fixes large authenticated Bot result acknowledgements being rejected by the old 16 KiB HTTP request reader. Browser/action claims remain at 16 KiB; Bot result envelopes use a separate bounded allowance while actual stored results remain capped at 64 KiB.
 
-No database migration, new Render secret, player reset, or OAuth scope is required.
+Matching Bot runtime remains `1.1.16-arsenal-h4`. No database migration, Bot replacement, new Render secret, player reset, or OAuth scope is required.

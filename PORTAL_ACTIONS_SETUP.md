@@ -1,5 +1,10 @@
-# Portal Actions Setup — Arsenal Hotfix 4
+# Portal Actions Setup — Arsenal Hotfix 5
 
-Portal Action protocol remains **14**. Deploy Web runtime `1.1.16-arsenal-h4` with Bot runtime `1.1.16-arsenal-h4`. Hosted sync schema remains **1**, compatibility remains `1.1.15-wayfarer`, and no new Render secret is required.
+Portal Action protocol remains **14**. Deploy Web runtime `1.1.16-arsenal-h5` with unchanged Bot runtime `1.1.16-arsenal-h4`. Hosted sync schema remains **1** and no new Render secret is required.
 
-Hotfix 4 adds no new player-facing Portal mutation. The new `!clearadventures` recovery path is streamer-only and executes directly in the authoritative Bot. Existing Hotfix 3 Portal result-size and retry protections remain unchanged.
+Security bounds are split by direction:
+- normal browser/action request and Bot claim request: 16 KiB maximum;
+- authenticated Bot result HTTP envelope: 68 KiB maximum;
+- stored authoritative action result: 64 KiB maximum.
+
+This prevents Arsenal's larger Adventure Board state from failing acknowledgement without relaxing ordinary player request limits.

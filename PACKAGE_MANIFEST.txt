@@ -1,9 +1,9 @@
-Crystal Guild Web v1.1.16 — Arsenal Hotfix 4
-Hosted runtime: 1.1.16-arsenal-h4
-Frontend asset revision: 1.1.16-arsenal1h4
+Crystal Guild Web v1.1.16 — Arsenal Hotfix 5
+Hosted runtime: 1.1.16-arsenal-h5
+Frontend asset revision: 1.1.16-arsenal1h5
 Hosted sync schema: 1
 Hosted sync compatibility: 1.1.15-wayfarer
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.16-arsenal-h4
 
-Includes the Streamer Dashboard reference for !clearadventures and retains Hotfix 3 Portal result-size/recovery protections.
+Includes the authenticated Portal result-envelope fix and retains Hotfix 4 streamer recovery support.

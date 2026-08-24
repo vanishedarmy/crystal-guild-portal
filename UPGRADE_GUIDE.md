@@ -1,35 +1,16 @@
-# Crystal Guild v1.1.16 — Arsenal Hotfix 4 Upgrade Guide
+# Crystal Guild v1.1.16 — Arsenal Hotfix 5 Upgrade Guide
 
-Upgrade baseline: **v1.1.16 — Arsenal Hotfix 3**.
+Upgrade baseline: **v1.1.16 — Arsenal Hotfix 4**.
 
-## Normal upgrade
+## Upgrade
 
-1. Stop/restart the Bot worker as you normally would for a Bot code update.
-2. Preserve runtime/private files such as `.env`, `.tio.tokens.json`, `crystal_guild.db`, the Twitch token database, and Render persistent-disk data.
-3. Overlay the Hotfix 4 update onto the existing Arsenal Hotfix 3 installation, or replace Bot/Web from the full packages.
-4. Push the matching Web files to GitHub and redeploy Render.
-5. Start/restart the Bot worker.
-6. Verify `!cgversion` reports `1.1.16-arsenal-h4`.
-7. Verify Web `/api/health` reports frontend asset revision `1.1.16-arsenal1h4`.
+1. Replace/overlay the Hotfix 5 Web files onto the current Hotfix 4 Web repository.
+2. Push the Web files to GitHub and redeploy Render.
+3. Leave the Bot installation unchanged; Bot runtime `1.1.16-arsenal-h4` is the matching runtime for this Web hotfix.
+4. After Render reports the deployment live, refresh the Portal once.
+5. Verify `/api/health` reports hosted runtime `1.1.16-arsenal-h5` and frontend revision `1.1.16-arsenal1h5`.
+6. Watch the worker log: the repeated `Request payload size is invalid.` acknowledgement/poll error should stop on the next successful action cycle.
 
-There is **no schema migration** in this hotfix. Local DB schema remains 5 and Portal Action protocol remains 14.
+There is no schema migration and no Portal Action protocol change.
 
-## Clearing the currently stuck adventure
-
-After Hotfix 4 is live, run in Twitch chat from the configured streamer/owner account:
-
-`!clearadventures`
-
-This immediately clears:
-
-- any active shared field/Rally encounter;
-- all timed Hunt assignments;
-- all persisted Solo Ventures, including orphaned/stuck rows.
-
-It does **not** clear raids/world bosses or player progression.
-
-The command also leaves all adventure cooldowns intact. If you deliberately want those timers reset too, run `!resettimers` separately afterward.
-
-## Expected result
-
-The Bot replies with a count of the adventure state it cleared. In the hosted/cloud runtime, Portal sync is woken immediately; refresh the Adventure Board if an already-open browser tab still shows stale content.
+If a stuck adventure remains from the prior failed acknowledgements, the Hotfix 4 streamer recovery command `!clearadventures` remains available and unchanged.

@@ -1,8 +1,8 @@
-Crystal Guild Web v1.1.15 — Wayfarer Hotfix 3
-Hosted runtime: 1.1.15-wayfarer-h3
-Frontend asset revision: 1.1.15-wayfarer1h3
+Crystal Guild Web v1.1.16 — Arsenal
+Hosted runtime: 1.1.16-arsenal
+Frontend asset revision: 1.1.16-arsenal1
 Hosted sync schema: 1
 Hosted sync compatibility: 1.1.15-wayfarer
 Portal Action protocol: 14
-Matching Bot runtime: 1.1.15-wayfarer-h3
+Matching Bot runtime: 1.1.16-arsenal
 Matching Bot DB schema: 5

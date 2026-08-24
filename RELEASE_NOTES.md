@@ -1,155 +1,68 @@
-# Crystal Guild v1.1.15 — Wayfarer Hotfix 3
+# Crystal Guild v1.1.16 — Arsenal Release Notes
 
-Hotfix 3 brings earned Title selection into the authenticated Adventurer Portal.
+Arsenal expands the early and mid-game combat toolbox while adding more reasons to use it. Every Job now develops a broader active kit, elemental and special-effect information is surfaced directly where players choose abilities, and the lower-level Hunt, World Boss, and crafting curves have been filled in.
 
-## Title Collection controls
+## Abilities expansion
 
-Open **Achievements & Titles → Title Collection** on your own signed-in profile. Every earned Title now has an **Equip** action. The active Title is highlighted and marked **Equipped Now**. Locked Titles remain visible according to the existing filters but cannot be selected.
+All **18 Jobs** now have **6 active Battle Abilities** for **108 total abilities**. Active techniques are learned across **JLv.1, 8, 15, 22, 30, and 40**, while the existing JLv.1/15/30 abilities remain at their established unlock points.
 
-The Portal still supports the existing Twitch `!title <name>` command; both surfaces now update the same authoritative `players.title` value.
+New techniques reinforce each Job's identity with Fire, Ice, Lightning, Wind, Water, Holy, and Dark attacks plus effects already supported by Crystal Guild: Poison, Slow, Stun, Blind, Weaken, Vulnerable, Protect, Haste, Regen, cleansing, healing, HP drain, MP/AP recovery, piercing, and critical focus. No new multi-target selection system is introduced; Arsenal remains designed around the current single-enemy combat model.
 
-The Bot re-checks the request against `player_titles`, so a browser cannot equip a Title the character has not earned. Public/read-only profiles never expose Title mutation controls.
+Job-level unlock messages now call out newly learned Battle Abilities alongside passive Job milestones.
+
+## Ability information at a glance
+
+The same active-ability catalog remains authoritative across gameplay and reference surfaces. Job detail pop-outs, the Player Guide, and the interactive Solo Venture ability picker now show relevant elemental/special-effect traits in addition to JLv unlock, MP/AP cost, target, and description.
+
+## New starter Hunts
+
+Four new C-rank marks create a smoother Hunt path before the existing Lv.10 content:
+
+- **Chieftain's Challenge** — Lv.2, Goblin Chieftain
+- **Alpha on the Prowl** — Lv.4, Dire Wolf Alpha
+- **Sting Operation** — Lv.6, Queen Hornet
+- **Bones to Pick** — Lv.8, Ossuary Knight
+
+Each has its own rewards, elemental weakness, enemy behavior, first-clear reward, and first-clear Title. Hunt lists continue to display in ascending level order.
+
+## New early World Bosses
+
+Four lower-level World Bosses now lead into Bomb King:
+
+- **Goblin King** — recommended Lv.6
+- **Hornet Empress** — recommended Lv.10
+- **Skeleton Warlord** — recommended Lv.14
+- **Gigas Chief** — recommended Lv.18
+
+Each includes its own HP/reward curve, phases, signature attack, drops, enrage timing, and raid attack cadence.
+
+## New low-level crafting
+
+Eight practical consumable recipes have been added for Lv.3–15 adventurers:
+
+- Field Hi-Potion
+- Antidote Satchel
+- Echo Herb Bundle
+- Stamina Draught Mix
+- Ether Distillation
+- Iron Tonic Mix
+- Smoke Bomb Kit
+- Remedy Kit
+
+These recipes use existing low-level consumables and common monster materials and are intended to make early drops useful before higher-tier forge/crafting progression opens up.
+
+## What's New
+
+The Adventurer Portal's reusable **What's New** section now features Arsenal and points players directly to the Jobs tab to explore the expanded ability catalog. Wayfarer remains available under previous major updates.
 
 ## Compatibility
 
-- Bot/Web runtime: `1.1.15-wayfarer-h3`
-- Frontend asset revision: `1.1.15-wayfarer1h3`
+- Runtime: `1.1.16-arsenal`
+- Frontend asset revision: `1.1.16-arsenal1`
 - Local DB schema: **5** (unchanged)
 - Hosted sync schema: **1** (unchanged)
-- Hosted sync compatibility: `1.1.15-wayfarer`
-- Portal Action protocol: **14** (from 13)
-- Twitch prefix: `!`
+- Hosted sync compatibility: `1.1.15-wayfarer` (unchanged)
+- Portal Action protocol: **14** (unchanged)
+- Twitch command prefix: `!`
 
-No database migration, player reset, new Render secret, or new Twitch OAuth scope is required. Because the action protocol changes, deploy the matching Hotfix 3 Bot and Web together.
-
-
----
-
-# Crystal Guild v1.1.15 — Wayfarer — Hotfix 2
-
-Hotfix 2 reorganizes the Adventurer Portal **Achievements** gallery around what is most useful to the player right now. Achievement definitions, rewards, unlock conditions, points, titles, and saved progression are unchanged.
-
-## Achievement progression order
-
-Achievement cards now sort automatically after the existing category and attainment filters:
-
-1. **Earned** achievements appear first and read from the smallest/easiest requirement upward.
-2. **In Progress** achievements follow, ordered by highest completion percentage first. Ties favor the goal with the least work remaining, then the lower requirement.
-3. **Not Started** achievements follow in ascending requirement order.
-4. **Secret** unearned achievements remain last because their target/progress is intentionally hidden.
-
-This keeps tier chains in a natural progression such as **10 → 25 → 50** instead of exposing the underlying data order. The same ordering is preserved inside category and Locked/Unlocked filters. Achievement cards also distinguish **In Progress** from **Not Started** in the progress label.
-
-## Compatibility
-
-- Bot/Web runtime: `1.1.15-wayfarer`
-- Frontend asset revision: `1.1.15-wayfarer1h2`
-- Local DB schema: **5**
-- Hosted sync schema: **1**
-- Portal Action protocol: **13**
-- Twitch prefix: `!`
-
-This is a **Web presentation hotfix only**. No database migration, player reset, Bot replacement/restart, new Render secret, hosted sync change, Portal protocol change, or Twitch OAuth change is required.
-
----
-
-# Crystal Guild v1.1.15 — Wayfarer — Hotfix 1
-
-Hotfix 1 adds a reusable, player-facing **What's New** section to the Adventurer Portal Overview. The latest major update is shown near the top of the character home so players can quickly understand what changed without reading developer release notes.
-
-## What's New — Wayfarer
-
-The first featured entry explains the interactive Solo Venture in plain player language:
-
-- choose each encounter turn with **Attack / Ability / Use Item / Defend**;
-- **Return to Guild** to bank spoils or **Press On** through up to three stages;
-- HP, MP/AP, statuses, and consumed items carry forward while pressing deeper;
-- every stage uses the new **60% Encounter / 40% Treasure** split;
-- Solo Venture has no battle timer and waits for the player even after leaving or refreshing the Portal.
-
-The panel includes a direct **Go to Adventure Board** action. The content is driven by a reusable major-update list so future major releases can be added to the same section, with the newest entry featured automatically and older entries available as update history.
-
-The layout collapses cleanly on mobile and preserves keyboard/focus accessibility.
-
-## Compatibility
-
-- Bot/Web runtime: `1.1.15-wayfarer`
-- Frontend asset revision: `1.1.15-wayfarer1h1`
-- Local DB schema: **5**
-- Hosted sync schema: **1**
-- Portal Action protocol: **13**
-- Twitch prefix: `!`
-
-This is a **Web presentation hotfix only**. No database migration, player reset, Bot replacement, new Render secret, hosted sync change, Portal protocol change, or Twitch OAuth change is required.
-
----
-
-# Crystal Guild v1.1.15 — Wayfarer
-
-Wayfarer turns the Portal-only **Solo Venture** into a compact, interactive RPG run while preserving Rally Venture as Crystal Guild's higher-risk live-stream cooperative mode. It also reorganizes the Adventurer Portal so the most frequently used character actions appear first.
-
-## Interactive Solo Venture
-
-- Solo Venture remains Portal-only and now resolves **one player-selected combat round at a time**.
-- Battle controls are **Attack**, **Ability**, **Use Item**, and **Defend**.
-- The current enemy intent is shown before the player's choice so defensive and resource decisions can react to incoming attacks or specials.
-- Ability choices show learned/unlocked state, MP/AP cost, target, and description.
-- Battle inventory shows eligible owned consumables and quantities.
-- HP, MP, AP, statuses, and consumed items persist through the run.
-- Solo combat is player-paced: there is **no round timer** and no autonomous scheduler advance while waiting for the next Portal action.
-
-## Three-stage Wayfarer run
-
-Every stage rolls **60% Encounter / 40% Treasure**. A run ends after at most three stages.
-
-- **Stage I:** normal Solo rewards.
-- **Stage II:** +15% XP / JP / Gil from encounter rewards.
-- **Stage III:** +30% XP / JP / Gil from encounter rewards.
-- Deeper Treasure events keep the same 40% event chance but bias the chest toward better rarity.
-- Solo enemies are selected roughly from **two levels below through three levels above** the hero, with deeper stages weighting the stronger end of that range more heavily.
-
-After Stage I or II is cleared, the player chooses:
-
-- **Return to Guild — Bank Spoils:** safely ends the run and awards unbanked Gil/items.
-- **Press On:** carries current HP/MP/AP and consumed inventory forward into the next stage for better reward potential.
-
-XP and JP from defeated enemies are secured immediately. Encounter Gil and ordinary item drops remain **Venture Spoils** until banked. Rare pity drops and recipe discoveries remain secured progression rewards.
-
-If the hero is defeated, secured XP/JP and secured progression loot remain, **50% of unbanked Gil is recovered**, and loose item spoils are lost. Retreating from combat preserves secured progression but abandons all unbanked Venture Spoils.
-
-## Independent persistent Solo state
-
-Interactive Solo Ventures no longer borrow the Guild-wide live encounter slot as their authoritative state. Each active run is persisted per player in the local database. This means a player may leave the Portal and return later without a timer advancing their fight, and an unattended Solo Venture does not block unrelated Rally Ventures or Hunts for the Guild.
-
-While a Solo Venture is active, build/recovery/economy mutations that could bypass the run's resource pressure—such as changing Jobs, re-equipping, resting, field-item use, shopping, crafting, or forging—are blocked until the player Returns or Retreats. Battle items remain usable through the Solo Venture combat interface.
-
-## Portal navigation order
-
-Profile tabs now prioritize the normal player journey:
-
-1. Overview
-2. Adventure Board
-3. Jobs
-4. Equipment & Inventory
-5. Moogle Emporium
-6. Blacksmith
-7. Chocobo Stable
-8. Fellowship
-9. Bestiary
-10. Relics
-11. Achievements & Titles
-12. Records
-13. Trophy Hall
-
-## Compatibility and migration
-
-- Bot/Web runtime: `1.1.15-wayfarer`
-- Frontend asset revision: `1.1.15-wayfarer1h1`
-- Local DB schema: **5** (from 4)
-- Hosted sync schema: **1**
-- Portal Action protocol: **13** (from 12)
-- Twitch prefix: `!`
-
-Schema 5 adds only the persistent per-player Solo Venture state table. When an existing schema-4 Guild database is opened, Crystal Guild automatically creates and verifies `backups/pre_schema_5_<timestamp>.db` before applying the additive migration. Existing progression is preserved.
-
-No player reset, new Render secret, hosted sync schema change, or new Twitch OAuth scope is required. The existing `channel:read:subscriptions` broadcaster authorization remains required only for the subscriber perks introduced previously.
+Arsenal requires matching **Bot + Web** files because gameplay data and the player-facing catalogs both change. It does **not** require a database migration, player reset, new Render secret, or new Twitch OAuth scope.

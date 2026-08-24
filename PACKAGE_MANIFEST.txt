@@ -1,9 +1,9 @@
-Crystal Guild Web v1.1.17 — Arsenal II Hotfix 5
-Hosted runtime: 1.1.17-arsenal-ii-h4
-Frontend asset revision: 1.1.17-arsenal-ii1h5
+Crystal Guild Web v1.1.18 — Retro Phase 1
+Hosted Web runtime: 1.1.18-retro-phase-1
+Frontend asset revision: 1.1.18-retro-phase1
 Hosted sync schema: 1
-Hosted sync compatibility: 1.1.15-wayfarer
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
+Twitch command prefix: !
 
-Includes Arsenal II Hotfixes 1–4 plus Hotfix 5 Guild Heroes ordering: signed-in linked hero first, then remaining heroes by level descending with stable display-name tie-breaking.
+Includes the complete v1.1.17 Arsenal II Hotfix 5 Web baseline plus the Retro Phase 1 shared SNES-era visual foundation for Portal, Player Guide, and Streamer Dashboard.

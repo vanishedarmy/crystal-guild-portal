@@ -474,6 +474,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const hunts = (state?.hunts || []).filter((hunt) => rank === "ALL" || hunt.rank === rank).sort(compareByLevel);
   const huntRanks = ["ALL", "C", "B", "A", "S", ...((state?.hunts || []).some((hunt) => hunt.rank === "S+") ? ["S+"] : [])];
   const expedition = state?.solo_venture?.expedition || null;
+  const availableSoloAbilities = (expedition?.combat?.abilities || []).filter((ability) => ability.usable);
   const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
   const soloEncounterChance = Number(state?.solo_venture?.encounter_chance_percent ?? 80);
   const soloTreasureChance = Number(state?.solo_venture?.treasure_chance_percent ?? 20);
@@ -639,15 +640,13 @@ export default function Hunts({ data, overview, onRefresh }) {
                 {soloPicker === "ability" ? (
                   <div className="solo-action-picker">
                     <div className="panel-title-row"><div><p className="eyebrow">Battle Abilities</p><h3>Choose an ability</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
-                    <div className="solo-action-grid">
-                      {(expedition.combat.abilities || []).map((ability) => (
-                        <button key={ability.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => runRequest(`solo:ability:${ability.id}`, "solo-ability", ability.id, (idem) => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}>
-                          <span><strong>{ability.name}</strong><small>{ability.cost}{String(ability.resource || "").toUpperCase()} · {ability.target}</small></span>
-                          <span>{ability.usable ? "Use" : ability.reason}</span>
-                          {Array.isArray(ability.traits) && ability.traits.length ? <small className="solo-ability-traits">{ability.traits.join(" · ")}</small> : null}
-                          <small>{ability.description}</small>
+                    <div className="solo-action-grid solo-ability-grid">
+                      {availableSoloAbilities.length ? availableSoloAbilities.map((ability) => (
+                        <button key={ability.id} type="button" className="solo-action-option solo-ability-option" disabled={Boolean(busy)} onClick={() => runRequest(`solo:ability:${ability.id}`, "solo-ability", ability.id, (idem) => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}>
+                          <strong>{ability.name}</strong>
+                          <span>{number(ability.cost)} {String(ability.resource || "MP").toUpperCase()}</span>
                         </button>
-                      ))}
+                      )) : <p className="muted">No abilities are currently available.</p>}
                     </div>
                   </div>
                 ) : null}

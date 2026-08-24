@@ -283,6 +283,15 @@ export default function Hunts({ data, overview, onRefresh }) {
   }, [actionsAvailable, state, loadState]);
 
   useEffect(() => {
+    if (!actionsAvailable || state) return undefined;
+    const retryBootstrap = () => {
+      if (document.visibilityState === "visible") void loadState({ quiet: true });
+    };
+    const timer = window.setInterval(retryBootstrap, 5000);
+    return () => window.clearInterval(timer);
+  }, [actionsAvailable, state, loadState]);
+
+  useEffect(() => {
     const timer = window.setInterval(() => setClock(Date.now()), 1000);
     return () => window.clearInterval(timer);
   }, []);
@@ -368,11 +377,14 @@ export default function Hunts({ data, overview, onRefresh }) {
 
   if (!isOwnProfile) return <HuntRecord data={data} />;
 
+  const boardStateReady = Boolean(state);
   const ventureRemaining = remainingUntil(state?.venture?.available_at, clock);
   const soloRemaining = remainingUntil(state?.solo_venture?.available_at, clock);
-  const soloReason = soloRemaining > 0
-    ? `Solo Venture ready in ${duration(soloRemaining)}.`
-    : String(state?.solo_venture?.reason || "");
+  const soloReason = !boardStateReady
+    ? "Checking Crystal Guild for your current Solo Venture…"
+    : soloRemaining > 0
+      ? `Solo Venture ready in ${duration(soloRemaining)}.`
+      : String(state?.solo_venture?.reason || "");
   const encounter = state?.encounter || null;
   const activeHunt = state?.active_hunt || null;
   const activeHuntRemaining = remainingUntil(activeHunt?.resolves_at, clock);
@@ -455,10 +467,10 @@ export default function Hunts({ data, overview, onRefresh }) {
         <div className="panel-title-row">
           <div>
             <p className="eyebrow">Solo Venture · Portal Only</p>
-            <h2>{expedition ? `Stage ${number(expedition.stage)} of ${number(expedition.max_stages)}` : soloRemaining > 0 ? `Ready in ${duration(soloRemaining)}` : "Take the road alone"}</h2>
+            <h2>{expedition ? `Stage ${number(expedition.stage)} of ${number(expedition.max_stages)}` : !boardStateReady ? "Checking your venture…" : soloRemaining > 0 ? `Ready in ${duration(soloRemaining)}` : "Take the road alone"}</h2>
           </div>
-          <span className={`small-badge ${expedition || (state?.solo_venture?.ready && soloRemaining <= 0) ? "success" : ""}`}>
-            {expedition ? (expedition.status === "combat" ? "In Battle" : "Stage Cleared") : soloRemaining > 0 ? "Recovering" : "Ready"}
+          <span className={`small-badge ${expedition || (boardStateReady && state?.solo_venture?.ready && soloRemaining <= 0) ? "success" : ""}`}>
+            {expedition ? (expedition.status === "combat" ? "In Battle" : "Stage Cleared") : !boardStateReady ? "Checking" : soloRemaining > 0 ? "Recovering" : state?.solo_venture?.ready ? "Ready" : "Unavailable"}
           </span>
         </div>
 
@@ -475,7 +487,7 @@ export default function Hunts({ data, overview, onRefresh }) {
               <button
                 type="button"
                 className="equipment-action-button"
-                disabled={!actionsAvailable || !state?.solo_venture?.ready || soloRemaining > 0 || Boolean(busy)}
+                disabled={!actionsAvailable || !boardStateReady || !state?.solo_venture?.ready || soloRemaining > 0 || Boolean(busy)}
                 onClick={() => runRequest("solo-venture", "solo-venture", "start", (idem) => submitSoloVenture(csrfToken, idem), "Solo Venture started.")}
               >
                 {busy === "solo-venture" ? "Setting Out…" : "Begin Solo Venture"}

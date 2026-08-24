@@ -47,7 +47,7 @@ export const MAJOR_UPDATES = [
       },
       {
         title: "More encounters",
-        description: "Each stage now has a 60% chance of an Encounter and a 40% chance of Treasure.",
+        description: "Each stage now has an 80% chance of an Encounter and a 20% chance of Treasure.",
       },
       {
         title: "Come back when you're ready",

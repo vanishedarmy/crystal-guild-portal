@@ -187,6 +187,83 @@ function SoloVentureResult({ summary, cooldownRemaining }) {
   );
 }
 
+function HuntResult({ result }) {
+  const summary = result?.summary || null;
+  if (!summary) {
+    return (
+      <section className={`panel hunt-result-panel legacy ${result?.won ? "won" : "lost"}`} aria-live="polite">
+        <div className="panel-title-row">
+          <div><p className="eyebrow">Last Hunt Result</p><h2>{result?.hunt_name || result?.monster_name || "Hunt Result"}</h2></div>
+          <span className={`small-badge ${result?.won ? "success" : ""}`}>{result?.won ? "Victory" : "Failed"}</span>
+        </div>
+        {(result?.messages || []).slice(0, 2).map((line, index) => <p className="hunt-result-legacy-line" key={`${index}:${line}`}>{line}</p>)}
+      </section>
+    );
+  }
+
+  const victory = summary.outcome === "victory";
+  const rewards = summary.rewards || {};
+  const monster = summary.monster || {};
+  const player = summary.player || {};
+  const combat = summary.combat || {};
+  const autoPlan = summary.auto_plan || null;
+  const loot = Array.isArray(rewards.loot) ? rewards.loot.filter(Boolean) : [];
+  const firstRewards = Array.isArray(rewards.first_rewards) ? rewards.first_rewards.filter(Boolean) : [];
+  const levelups = Array.isArray(rewards.levelups) ? rewards.levelups.filter(Boolean) : [];
+  const achievements = Array.isArray(rewards.achievements) ? rewards.achievements.filter(Boolean) : [];
+
+  return (
+    <section className={`panel hunt-result-panel ${victory ? "won" : "lost"}`} aria-live="polite" aria-labelledby="last-hunt-result-title">
+      <div className="panel-title-row hunt-result-title-row">
+        <div>
+          <p className="eyebrow">Last Hunt Result · {summary.rank || "C"}-Rank</p>
+          <h2 id="last-hunt-result-title">{summary.hunt_name || "Named Mark"}</h2>
+          <p className="muted">{monster.name || "Unknown Mark"}{monster.level ? ` · Mark Lv.${number(monster.level)}` : ""} · {number(summary.rounds || 0)} round{Number(summary.rounds || 0) === 1 ? "" : "s"}</p>
+        </div>
+        <span className={`hunt-result-outcome ${victory ? "victory" : "defeat"}`}>{victory ? "Mark Slain" : "Hunt Failed"}</span>
+      </div>
+
+      {victory ? (
+        <div className="hunt-result-reward-grid" aria-label="Hunt rewards">
+          <div><span>XP</span><strong>+{number(rewards.xp)}</strong></div>
+          <div><span>JP</span><strong>+{number(rewards.jp)}</strong></div>
+          <div><span>Gil</span><strong>+{number(rewards.gil)}</strong></div>
+          <div><span>Hunt Seals</span><strong>+{number(rewards.seals)}</strong></div>
+        </div>
+      ) : (
+        <div className="hunt-result-survival">
+          <div><span>Mark remaining HP</span><strong>{number(monster.hp_remaining)} / {number(monster.max_hp)}</strong></div>
+          {Number(monster.max_hp || 0) > 0 ? <ProgressBar value={pct(monster.hp_remaining, monster.max_hp)} className="hp" /> : null}
+          {summary.reason ? <p>{summary.reason}</p> : null}
+        </div>
+      )}
+
+      <div className="hunt-result-combat-grid">
+        <div><span>Your condition</span><strong>HP {number(player.hp)} / {number(player.max_hp)}</strong></div>
+        <div><span>Damage dealt</span><strong>{number(combat.damage_dealt)}</strong></div>
+        <div><span>Damage taken</span><strong>{number(combat.damage_taken)}</strong></div>
+        <div><span>Best hit</span><strong>{number(combat.best_hit)}</strong></div>
+      </div>
+
+      {victory && (loot.length || firstRewards.length || levelups.length || achievements.length) ? (
+        <div className="hunt-result-details">
+          {loot.length ? <p><strong>Loot</strong><span>{loot.join(" · ")}</span></p> : null}
+          {firstRewards.length ? <p className="first-clear"><strong>First clear</strong><span>{firstRewards.join(" · ")}</span></p> : null}
+          {levelups.length ? <p><strong>Level up</strong><span>{levelups.join(" · ")}</span></p> : null}
+          {achievements.length ? <p><strong>Achievement</strong><span>{achievements.join(" · ")}</span></p> : null}
+        </div>
+      ) : null}
+
+      {autoPlan ? (
+        <div className="hunt-result-auto-plan">
+          <strong>Auto plan</strong>
+          <span>{number(autoPlan.abilities)} abilities · {number(autoPlan.items)} items · {number(autoPlan.defends)} defends</span>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
 function HuntRecord({ data }) {
   return (
     <section className="panel">
@@ -398,7 +475,8 @@ export default function Hunts({ data, overview, onRefresh }) {
   const huntRanks = ["ALL", "C", "B", "A", "S", ...((state?.hunts || []).some((hunt) => hunt.rank === "S+") ? ["S+"] : [])];
   const expedition = state?.solo_venture?.expedition || null;
   const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
-  const recentSoloSummary = soloVentureSummary(recentSoloResult);
+  const soloEncounterChance = Number(state?.solo_venture?.encounter_chance_percent ?? 80);
+  const soloTreasureChance = Number(state?.solo_venture?.treasure_chance_percent ?? 20);
 
 
   const renderActiveEncounter = (embedded = false) => {
@@ -452,15 +530,15 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div>
             <p className="eyebrow">Adventure Board</p>
             <h2>Choose Your Next Adventure</h2>
-            <p className="muted">Take a Solo Venture, travel between regions, or challenge Hunt marks here. Rally Ventures remain a Twitch chat activity.</p>
+            <p className="muted">Solo Venture, travel, recovery, and Hunts in one place. Rally Ventures stay in Twitch chat.</p>
           </div>
           <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
             {busy === "state" ? "Refreshing…" : "Refresh Board"}
           </button>
         </div>
-        <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>
-          <strong>{actionsAvailable ? "Adventure Board online" : "Adventure Board offline"}</strong>
-          <span>{actionsAvailable ? "Solo Venture, travel, and Hunts are ready to use." : "Adventure actions return when Crystal Guild reconnects."}</span>
+        <div className={`equipment-action-status compact-status ${actionsAvailable ? "ready" : "offline"}`} role="status">
+          <strong>{actionsAvailable ? "Online" : "Offline"}</strong>
+          <span>{actionsAvailable ? "Adventure actions are ready." : "Actions return when Crystal Guild reconnects."}</span>
           {message ? <small aria-live="polite">{message}</small> : null}
         </div>
       </section>
@@ -500,7 +578,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <>
             <p className="muted">A private, player-paced Solo Venture of up to three stages. Each stage can reveal an Encounter or Treasure Chest; after a clear, return safely or press deeper for stronger rewards.</p>
             <div className="solo-venture-rules" aria-label="Solo Venture rules">
-              <span><strong>60 / 40</strong>Encounter / Treasure</span>
+              <span><strong>{soloEncounterChance} / {soloTreasureChance}</strong>Encounter / Treasure</span>
               <span><strong>3 stages</strong>Maximum depth</span>
               <span><strong>+3</strong>Enemy level ceiling</span>
               <span><strong>7m</strong>Separate cooldown</span>
@@ -613,8 +691,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         )}
 
         {!expedition && recentSoloResult ? (
-          <div className="solo-result-wrap">
-            <p className="solo-result-summary" aria-live="polite"><strong>Last result:</strong> {recentSoloSummary.replace(/^Solo Venture:\s*/, "")}</p>
+          <div className="solo-result-wrap" aria-live="polite">
             <SoloVentureResult summary={recentSoloResult} cooldownRemaining={soloRemaining} />
           </div>
         ) : null}
@@ -625,26 +702,25 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
           <span className="small-badge">Live Stream</span>
         </div>
-        <p className="muted">Rally Ventures are started and joined in Twitch chat. Use <code>!venture</code> to start one and <code>!join</code> to enter an open rally.</p>
+        <p className="muted">Start with <code>!venture</code> and join an open rally with <code>!join</code>.</p>
         <div className="solo-venture-rules rally-venture-rules" aria-label="Rally Venture rules">
           <span><strong>70 / 30</strong>Encounter / Treasure</span>
           <span><strong>+10</strong>Enemy level cap</span>
           <span><strong>+5% / level</strong>XP / JP / Gil reward bonus</span>
           <span><strong>+50%</strong>Maximum reward bonus</span>
         </div>
-        <div className="adventure-combat-note rally-venture-chat-note">
-          <strong>{ventureRemaining > 0 ? `Rally Venture ready in ${duration(ventureRemaining)}` : "Rally Venture ready in Twitch chat"}</strong>
-          <span>Each enemy level above your hero adds 5% XP, JP, and Gil, up to 50%. Treasure chests keep their normal rewards.</span>
+        <div className="adventure-combat-note rally-venture-chat-note compact-adventure-note">
+          <strong>{ventureRemaining > 0 ? `Ready in ${duration(ventureRemaining)}` : "Ready in Twitch chat"}</strong>
+          <span>Live-stream activity</span>
         </div>
         {encounter?.kind === "venture" ? renderActiveEncounter(true) : null}
       </section>
 
       <section className="panel adventure-region-panel">
         <div className="panel-title-row">
-          <div><p className="eyebrow">Current Region</p><h2>{currentRegion.name}</h2></div>
-          <span className="small-badge">Lv.{number(currentRegion.min_level || 1)}+</span>
+          <div><p className="eyebrow">Travel</p><h2>Regions</h2></div>
+          <span className="small-badge success">Current · {currentRegion.name}</span>
         </div>
-        <p className="muted">{currentRegion.description}</p>
         <div className="adventure-region-grid">
           {regions.map((region) => (
             <article className={`adventure-region-card ${region.current ? "current" : ""} ${!region.unlocked ? "locked" : ""}`} key={region.id}>
@@ -675,11 +751,12 @@ export default function Hunts({ data, overview, onRefresh }) {
 
       {encounter && encounter.kind !== "venture" ? renderActiveEncounter(false) : null}
 
-      {state?.recent_result && state.recent_result.kind !== "solo_venture" ? (
-        <section className={`panel adventure-result-panel ${state.recent_result.won ? "won" : "lost"}`}>
-          <div className="panel-title-row"><h2>{state.recent_result.won ? "Adventure Complete" : "Adventure Ended"}</h2><span className="small-badge">Recent result</span></div>
-          <strong>{state.recent_result.hunt_name || state.recent_result.monster_name}</strong>
-          {(state.recent_result.messages || []).map((line, index) => <p key={`${index}:${line}`}>{line}</p>)}
+      {state?.recent_result?.kind === "hunt" ? <HuntResult result={state.recent_result} /> : null}
+      {state?.recent_result && !["solo_venture", "hunt"].includes(state.recent_result.kind) ? (
+        <section className={`panel adventure-result-panel compact-result ${state.recent_result.won ? "won" : "lost"}`} aria-live="polite">
+          <div className="panel-title-row"><div><p className="eyebrow">Recent Adventure</p><h2>{state.recent_result.won ? "Complete" : "Ended"}</h2></div><span className={`small-badge ${state.recent_result.won ? "success" : ""}`}>{state.recent_result.won ? "Victory" : "Defeat"}</span></div>
+          <strong>{state.recent_result.monster_name}</strong>
+          {(state.recent_result.messages || []).slice(-2).map((line, index) => <p key={`${index}:${line}`}>{line}</p>)}
         </section>
       ) : null}
 

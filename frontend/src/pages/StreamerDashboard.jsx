@@ -315,8 +315,8 @@ export default function StreamerDashboard() {
           <a href="#roster">Roster</a>
           <a href="#commands">Stream Commands</a>
           <a href="#owner-commands">Owner Commands</a>
-          <a href="#overlay">OBS Overlay</a>
           <a href="#activity">Ledger</a>
+          <a href="#overlay">OBS Overlay</a>
         </nav>
 
         <section className="streamer-summary-grid" aria-label="Guild summary">
@@ -326,8 +326,6 @@ export default function StreamerDashboard() {
           <SummaryCard label="KO" value={number(summary.ko)} detail="Needs recovery" tone={summary.ko ? "danger" : ""} />
           <SummaryCard label="Average Level" value={number(summary.average_level)} detail="Guild average" />
         </section>
-
-        <HostedOverlayCard />
 
         {loading && !dashboard ? <div className="state-message">Loading the Streamer Dashboard...</div> : null}
         {error ? <div className="state-message compact-state">{error}</div> : null}
@@ -446,6 +444,8 @@ export default function StreamerDashboard() {
             </div>
           </div>
         ) : null}
+
+        <HostedOverlayCard />
       </main>
       <footer className="site-footer streamer-footer">
         <span>Crystal Guild Streamer Dashboard · {WEB_RELEASE}</span>

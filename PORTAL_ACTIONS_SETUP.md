@@ -15,4 +15,4 @@ Arsenal retains the established typed Portal actions. Protocol 14 includes authe
 
 The hosted Web validates the exact action shape before queueing it. The Bot remains authoritative for ownership, current Solo Venture state, Job level, MP/AP, inventory quantity, status restrictions, combat math, rewards, and replay/idempotency receipts.
 
-Deploy matching `1.1.16-arsenal` Bot/Web builds. Hosted sync schema remains **1**, hosted sync compatibility remains `1.1.15-wayfarer`, and no new Render secret is required.
+Deploy matching `1.1.16-arsenal-h1` Bot/Web builds. Hosted sync schema remains **1**, hosted sync compatibility remains `1.1.15-wayfarer`, and no new Render secret is required.

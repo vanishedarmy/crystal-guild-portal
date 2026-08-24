@@ -4,4 +4,4 @@ Use the existing Render Web Service and Docker configuration. Preserve the curre
 
 Health check: `/api/health`. Public pages include `/players`, `/fellowship`, `/guide`, `/privacy`, `/streamer`, and `/overlay`.
 
-Arsenal uses hosted sync schema **1**, hosted sync compatibility **1.1.15-wayfarer**, and Portal Action protocol **14**. No new Web secret is introduced. Deploy matching `1.1.16-arsenal` Bot and Web code so gameplay content and frontend asset `1.1.16-arsenal1` stay aligned.
+Arsenal uses hosted sync schema **1**, hosted sync compatibility **1.1.15-wayfarer**, and Portal Action protocol **14**. No new Web secret is introduced. Deploy matching `1.1.16-arsenal-h1` Bot and Web code so gameplay content and frontend asset `1.1.16-arsenal1h1` stay aligned.

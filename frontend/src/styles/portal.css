@@ -6974,3 +6974,168 @@ textarea:focus-visible,
   .brand-mark { width: 32px; height: 32px; flex-basis: 32px; }
   .build-badge { display: none; }
 }
+
+
+/* v1.1.17 Arsenal II Hotfix 2 — one mobile site header everywhere.
+   Phone layout is intentionally reduced to: roundel, connection state, page menu. */
+.mobile-site-header-actions,
+.mobile-site-menu { display: none; }
+
+@media (max-width: 720px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    min-height: 52px;
+    padding: .34rem .55rem;
+    gap: .55rem;
+    overflow: visible;
+  }
+
+  .site-header .brand {
+    display: inline-flex;
+    width: max-content;
+    gap: 0;
+  }
+
+  .site-header .brand-copy,
+  .site-header > .site-header-actions { display: none !important; }
+
+  .site-header .brand-mark {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .site-header .brand-mark::before,
+  .site-header .brand-mark::after { display: none; }
+
+  .site-header .brand-mark-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.48)) drop-shadow(0 0 10px rgba(143,219,255,.12));
+  }
+
+  .mobile-site-header-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .48rem;
+    min-width: 0;
+  }
+
+  .mobile-site-header-actions .live-status {
+    display: inline-flex !important;
+    min-height: 32px;
+    padding: .25rem .52rem;
+    margin: 0;
+    border: 1px solid rgba(133,180,205,.24);
+    border-radius: 999px;
+    background: rgba(5,20,31,.72);
+  }
+
+  .mobile-site-menu-toggle {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-content: center;
+    gap: 4px;
+    padding: 0;
+    border: 1px solid rgba(143,219,255,.28);
+    border-radius: 10px;
+    background: rgba(7,20,33,.88);
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: inset 0 0 16px rgba(143,219,255,.035);
+  }
+
+  .mobile-site-menu-toggle span {
+    display: block;
+    width: 17px;
+    height: 2px;
+    border-radius: 99px;
+    background: currentColor;
+    transition: transform .18s ease, opacity .18s ease;
+  }
+
+  .site-header.mobile-menu-open .mobile-site-menu-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .site-header.mobile-menu-open .mobile-site-menu-toggle span:nth-child(2) { opacity: 0; }
+  .site-header.mobile-menu-open .mobile-site-menu-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .mobile-site-menu {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: .55rem;
+    left: auto;
+    width: min(320px, calc(100vw - 1.1rem));
+    max-height: calc(100dvh - 64px);
+    overflow: auto;
+    padding: .58rem;
+    border: 1px solid rgba(143,219,255,.24);
+    border-radius: 0 0 14px 14px;
+    background: rgba(4,13,22,.98);
+    box-shadow: 0 18px 42px rgba(0,0,0,.42), inset 0 1px rgba(230,203,136,.08);
+    backdrop-filter: blur(20px);
+  }
+
+  .mobile-site-menu.open { display: grid; gap: .55rem; }
+  .mobile-site-menu nav { display: grid; gap: .28rem; }
+  .mobile-site-menu nav a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding: .62rem .72rem;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: var(--text-soft);
+    font-family: var(--font-display);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .mobile-site-menu nav a:hover,
+  .mobile-site-menu nav a:focus-visible { border-color: rgba(143,219,255,.22); background: rgba(143,219,255,.07); color: var(--text); }
+  .mobile-site-menu nav a.active { border-color: rgba(230,203,136,.36); background: rgba(230,203,136,.09); color: var(--gold); }
+  .mobile-site-menu nav a > span:last-child { color: var(--crystal-soft); font-size: 1.15rem; line-height: 1; }
+
+  .mobile-site-menu-meta {
+    display: grid;
+    gap: .5rem;
+    padding: .58rem .2rem .08rem;
+    border-top: 1px solid rgba(143,219,255,.12);
+  }
+  .mobile-site-build { color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .mobile-site-menu-meta .portal-auth-control,
+  .mobile-site-menu-meta .portal-auth-button { width: 100%; }
+  .mobile-site-menu-meta .portal-auth-control { justify-content: space-between; }
+  .mobile-site-menu-meta .portal-auth-name { display: inline; max-width: 12rem; }
+
+  .site-header.mobile-menu-open { transform: none !important; }
+}
+
+@media (max-width: 390px) {
+  .site-header { min-height: 48px; padding: .28rem .42rem; }
+  .site-header .brand-mark { width: 36px; height: 36px; flex-basis: 36px; }
+  .mobile-site-menu-toggle { width: 36px; height: 36px; flex-basis: 36px; }
+  .mobile-site-header-actions .live-status { min-height: 30px; padding-inline: .46rem; }
+  .mobile-site-menu { right: .42rem; width: calc(100vw - .84rem); }
+}
+
+/* Hotfix 2 token override: every phone-width shared header uses the same compact LIVE/OFFLINE label. */
+@media (max-width: 720px) {
+  .mobile-site-header-actions .live-status-desktop-text { display: none !important; }
+  .mobile-site-header-actions .live-status-mobile-token { display: inline !important; color: var(--text); font-size: .68rem; letter-spacing: .12em; }
+}

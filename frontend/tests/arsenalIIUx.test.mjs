@@ -66,5 +66,5 @@ test("Player Guide release identity comes from the shared header and keeps Arsen
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
   assert.match(version, /WEB_BUILD = "Arsenal II"/);
-  assert.match(version, /1\.1\.17-arsenal-ii1h3/);
+  assert.match(version, /1\.1\.17-arsenal-ii1h4/);
 });

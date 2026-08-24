@@ -46,8 +46,8 @@ test("lazy guide markup documents Active Battle and keeps the organized guide sh
   assert.match(markup, /never shorten the deadline/i);
   assert.match(markup, /70% ENCOUNTER/i);
   assert.match(markup, /30% TREASURE CHEST/i);
-  assert.match(markup, /60% ENCOUNTER/i);
-  assert.match(markup, /40% TREASURE/i);
+  assert.match(markup, /80% ENCOUNTER/i);
+  assert.match(markup, /20% TREASURE/i);
   assert.match(markup, /three stages|3 stages/i);
   assert.match(markup, /Enemy Intent/i);
   assert.match(markup, /5 levels below through 2 levels above/i);

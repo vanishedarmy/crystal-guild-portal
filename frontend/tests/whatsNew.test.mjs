@@ -22,7 +22,7 @@ test("Wayfarer What's New copy explains Solo Venture in player language", async 
 
   assert.match(data, /Solo Venture is now in your hands/);
   assert.match(data, /Attack, use a Job ability, spend an item, or Defend/);
-  assert.match(data, /60% chance of an Encounter and a 40% chance of Treasure/);
+  assert.match(data, /80% chance of an Encounter and a 20% chance of Treasure/);
   assert.match(data, /three stages/);
   assert.match(data, /There is no Solo battle timer/);
   assert.match(data, /Go to Adventure Board/);

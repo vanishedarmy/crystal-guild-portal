@@ -22,9 +22,10 @@ test("Solo Venture is the first actionable section before Rally notice and regio
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   const solo = board.indexOf('Solo Venture · Portal Only');
   const rally = board.indexOf('Rally Venture · Twitch Chat Only');
-  const region = board.indexOf('Current Region');
+  const region = board.indexOf('<h2>Regions</h2>');
   assert.ok(solo > 0 && rally > solo && region > rally, { solo, rally, region });
-  assert.match(board, /60 \/ 40/);
+  assert.match(board, /encounter_chance_percent \?\? 80/);
+  assert.match(board, /treasure_chance_percent \?\? 20/);
   assert.match(board, /Encounter \/ Treasure/);
   assert.match(board, /3 stages/);
   assert.match(board, /Enemy level ceiling/);
@@ -49,7 +50,7 @@ test("Adventure Board uses local timers and polls while a live encounter, Solo V
   assert.match(board, /window\.setTimeout\(\(\) => void loadState\(\{ quiet: true \}\), waitMs\)/);
   assert.match(board, /const ventureRemaining = remainingUntil\(state\?\.venture\?\.available_at, clock\)/);
   assert.match(board, /Number\(state\.active_hunt\?\.resolves_at \|\| 0\)/);
-  assert.match(board, /Rally Venture ready in \$\{duration\(ventureRemaining\)\}/);
+  assert.match(board, /Ready in \$\{duration\(ventureRemaining\)\}/);
 });
 
 test("Adventure Board styles Solo and Rally cards responsively", async () => {

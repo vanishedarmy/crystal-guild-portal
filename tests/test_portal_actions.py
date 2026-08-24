@@ -587,6 +587,68 @@ class PortalActionServerCase(unittest.TestCase):
                 )
             self.assertEqual(caught.exception.code, 400)
 
+    def test_hotfix2_coalesces_daily_and_adventure_refreshes_across_browser_retry_keys(self):
+        ids = {}
+        for action_type in ("ADVENTURE_STATE", "DAILY_STATE"):
+            seen = []
+            for index in range(4):
+                status, response, _ = self.request(
+                    "/api/actions",
+                    method="POST",
+                    payload={"type": action_type, "payload": {}},
+                    headers={**self.user_headers(csrf=True), "Idempotency-Key": f"h2-{action_type.lower()}-{index:02d}"},
+                )
+                self.assertEqual(status, 202)
+                seen.append(response["action"]["id"])
+            self.assertEqual(len(set(seen)), 1, action_type)
+            ids[action_type] = seen[0]
+
+        queued = self.store.list_actions(TWITCH_ID, limit=20)
+        pending = [row for row in queued if row["status"] in {"pending", "processing"}]
+        self.assertEqual({row["id"] for row in pending}, set(ids.values()))
+
+    def test_hotfix2_state_refreshes_do_not_starve_solo_gameplay_actions(self):
+        for index, action_type in enumerate((
+            "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE", "ADVENTURE_STATE",
+        )):
+            status, _, _ = self.request(
+                "/api/actions",
+                method="POST",
+                payload={"type": action_type, "payload": {}},
+                headers={**self.user_headers(csrf=True), "Idempotency-Key": f"h2-state-backlog-{index:02d}"},
+            )
+            self.assertEqual(status, 202)
+
+        status, response, _ = self.request(
+            "/api/actions",
+            method="POST",
+            payload={"type": "SOLO_EXPEDITION_ACTION", "payload": {"action": "attack"}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "h2-solo-priority-attack"},
+        )
+        self.assertEqual(status, 202)
+        solo_id = response["action"]["id"]
+        claimed = self.store.claim_actions("bot:h2-priority", limit=1)
+        self.assertEqual(len(claimed), 1)
+        self.assertEqual(claimed[0]["id"], solo_id)
+        self.assertEqual(claimed[0]["type"], "SOLO_EXPEDITION_ACTION")
+
+    def test_hotfix2_duplicate_solo_round_retry_reuses_inflight_action(self):
+        seen = []
+        for key in ("h2-solo-retry-one", "h2-solo-retry-two"):
+            status, response, _ = self.request(
+                "/api/actions",
+                method="POST",
+                payload={"type": "SOLO_EXPEDITION_ACTION", "payload": {"action": "ability:fire"}},
+                headers={**self.user_headers(csrf=True), "Idempotency-Key": key},
+            )
+            self.assertEqual(status, 202)
+            seen.append(response["action"]["id"])
+        self.assertEqual(seen[0], seen[1])
+        claimed = self.store.claim_actions("bot:h2-retry", limit=8)
+        solo = [row for row in claimed if row["type"] == "SOLO_EXPEDITION_ACTION"]
+        self.assertEqual(len(solo), 1)
+        self.assertEqual(solo[0]["id"], seen[0])
+
     def test_claim_rejects_old_action_protocol_workers(self):
         with self.assertRaises(urllib.error.HTTPError) as caught:
             self.request(

@@ -1,6 +1,6 @@
 # Crystal Guild Web Hosting — Arsenal Hotfix 5
 
-The hosted Web runtime is `1.1.16-arsenal-h5` with frontend asset `1.1.16-arsenal1h5`, paired with unchanged Bot runtime `1.1.16-arsenal-h4`. Hosted sync schema remains **1** and Portal Action protocol remains **14**.
+The hosted Web runtime is `1.1.17-arsenal-ii` with frontend asset `1.1.17-arsenal-ii1`, paired with unchanged Bot runtime `1.1.17-arsenal-ii`. Hosted sync schema remains **1** and Portal Action protocol remains **14**.
 
 Deploy the Web files to GitHub/Render as normal. No new environment variable, OAuth scope, database migration, or Bot restart is required.
 

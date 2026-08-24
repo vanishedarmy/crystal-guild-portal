@@ -1,6 +1,6 @@
 # Portal Actions Setup — Arsenal Hotfix 5
 
-Portal Action protocol remains **14**. Deploy Web runtime `1.1.16-arsenal-h5` with unchanged Bot runtime `1.1.16-arsenal-h4`. Hosted sync schema remains **1** and no new Render secret is required.
+Portal Action protocol remains **14**. Deploy Web runtime `1.1.17-arsenal-ii` with unchanged Bot runtime `1.1.17-arsenal-ii`. Hosted sync schema remains **1** and no new Render secret is required.
 
 Security bounds are split by direction:
 - normal browser/action request and Bot claim request: 16 KiB maximum;

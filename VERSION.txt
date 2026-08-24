@@ -1,7 +1,1 @@
-Crystal Guild Web v1.1.16 — Arsenal Hotfix 5
-Runtime: 1.1.16-arsenal-h5
-Hosted sync schema: 1
-Hosted sync runtime compatibility: 1.1.15-wayfarer
-Portal Action protocol: 14
-Frontend asset revision: 1.1.16-arsenal1h5
-Matching Bot runtime: 1.1.16-arsenal-h4
+v1.1.17 — Arsenal II

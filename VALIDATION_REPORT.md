@@ -1,37 +1,70 @@
-# Crystal Guild v1.1.16 — Arsenal Hotfix 5 Validation Report
+# Crystal Guild v1.1.17 — Arsenal II Validation Report
 
-## Regression fixed
+## Source release validation
 
-PASS — an authenticated `/api/actions/result` POST larger than 16 KiB and below the bounded Bot-result HTTP-envelope limit is accepted by the live HTTP handler.
+- Bot unittest suite: **377 / 377 PASS**
+- Frontend Node tests: **178 / 178 PASS**
+- Hosted Portal/API tests: **46 / 46 PASS**
+- Python grammar/compile sweep: **75 / 75 PASS**
+- JS/JSX source syntax parse: **52 / 52 PASS**
+- Static game-data validation: **PASS**
+- Active Battle ability catalog: **172 abilities across 18 Jobs**
+  - 7 core caster Jobs: 12 abilities each
+  - 11 other Jobs: 8 abilities each
 
-PASS — the same large Adventure Board result is accepted by `complete_action()` and stored as completed.
+## Arsenal II targeted coverage
 
-PASS — `/api/actions/claim` and ordinary browser/player action requests remain on the 16 KiB ceiling.
+PASS — core caster spellbooks use the new 12-step JLv progression.
 
-PASS — the stored authoritative action result remains independently bounded at 64 KiB.
+PASS — every non-caster Job retains the existing six abilities and gains JLv.12/JLv.35 additions.
 
-PASS — Portal Action protocol remains 14 and no database/schema change is introduced.
+PASS — all 172 active abilities resolve through the existing Active Battle resource/effect path under the combat-balance suite.
 
-## Automated suites
+PASS — off-stream autonomous Twitch announcements are suppressed; live announcements still deliver.
 
-Final source:
-- Bot regression suite: **368 / 368 PASS** (unchanged Hotfix 4 Bot)
-- Frontend suite: **171 / 171 PASS**
-- Hosted Portal/API suite: **46 / 46 PASS**
-- Python grammar sweep: **74 / 74 PASS**
-- JS/JSX/MJS TypeScript syntax parse: **103 / 103 PASS**
+PASS — Adventure Board state exposes authoritative Camp recovery state and START_REST remains the mutation path.
 
-Actual extracted Complete package:
-- Bot regression suite: **368 / 368 PASS**
-- Frontend suite: **171 / 171 PASS**
-- Hosted Portal/API suite: **46 / 46 PASS**
+PASS — Moogle Buy/Sell category UI, Blacksmith active view state, compact mobile header, and Streamer Overlay placement have dedicated frontend regression coverage.
 
-## Release integrity
+## Synthetic cloud-runtime stress profile
 
-PASS — Hotfix 4 + Hotfix 5 Web patch reproduces the finalized Hotfix 5 Web tree with **0 differences**.
+Configuration: **1,000 players / 10,000 operations / 4 concurrent Portal readers**.
 
-PASS — standalone Hotfix 5 Web archive reproduces the finalized Web tree with **0 differences**.
+- Throughput: **554.8 ops/sec**
+- Portal reads: **8,449**
+- SQLite journal mode: WAL
+- SQLite quick-check failures: **0**
+- Foreign-key violations: **0**
+- Negative Gil rows: **0**
+- Negative inventory rows: **0**
+- Portal read errors: **0**
+- Transaction rollbacks: **0**
 
-PASS — Hotfix 5 Complete archive reproduces the finalized complete tree with **0 differences**.
+Result: **CLOUD RUNTIME STRESS PASS**.
 
-PASS — the Hotfix 5 Complete Bot subtree is byte-identical to the certified Hotfix 4 Bot subtree with **0 differences**.
+## Compatibility
+
+- Bot runtime: `1.1.17-arsenal-ii`
+- Hosted Web runtime: `1.1.17-arsenal-ii`
+- Frontend asset revision: `1.1.17-arsenal-ii1`
+- DB schema: **5**
+- Hosted sync schema: **1**
+- Portal Action protocol: **14**
+
+No database migration, reset, OAuth change, or new environment variable is required.
+
+Package extraction/overlay verification and checksum verification are recorded after final archive generation.
+
+## Final archive verification
+
+The release archives were generated from the finalized source and independently extracted for verification.
+
+- Complete archive vs finalized complete tree: **0 differences**
+- Bot archive vs finalized Bot tree: **0 differences**
+- Web archive vs finalized Web tree: **0 differences**
+- Hotfix 6 + direct Arsenal II update overlay vs finalized tree: **0 differences**
+- Tests from extracted Complete archive: **377 / 377 Bot PASS**
+- Tests from extracted Complete archive: **178 / 178 frontend PASS**
+- Tests from extracted Complete archive: **46 / 46 hosted Portal/API PASS**
+
+The standalone SHA-256 manifest is generated after the final archive rebuild so its hashes describe the exact files delivered to the user.

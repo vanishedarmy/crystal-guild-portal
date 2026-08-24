@@ -9,8 +9,8 @@ test("Fellowship has its own public route and navigation entry", async () => {
   const header = await readFile(new URL("components/SiteHeader.jsx", SRC), "utf8");
   assert.match(app, /path="\/fellowship"/);
   assert.match(app, /<FellowshipPage/);
-  assert.match(header, /(?:to|href)="\/fellowship"/);
-  assert.match(header, />\s*Fellowship\s*</);
+  assert.match(header, /href: "\/fellowship"/);
+  assert.match(header, /label: "Fellowship"/);
 });
 
 test("Fellowship page is summary-first and keeps deep ledgers collapsible", async () => {

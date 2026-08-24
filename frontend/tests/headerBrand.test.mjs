@@ -25,16 +25,12 @@ test("site header uses the full circular Crystal Guild portal roundel instead of
 });
 
 
-test("Player Guide header uses the same full circular Crystal Guild portal roundel without clipping", async () => {
-  const markup = await readFile(new URL("public/guide-body.html", FRONTEND), "utf8");
-  const css = await readFile(new URL("public/guide.css", FRONTEND), "utf8");
 
-  assert.match(markup, /class="guide-brand-mark-image"/);
-  assert.match(markup, /src="\/crystal-guild-portal-roundel\.png"/);
-  assert.doesNotMatch(markup, /guide-brand-mark"><span>✦<\/span>/);
-  assert.match(css, /v1\.1\.12 Web Hotfix 7 — shared full-roundel Player Guide header/);
-  assert.match(css, /\.guide-brand-mark-image/);
-  assert.match(css, /object-fit:\s*contain/);
-  assert.match(css, /\.guide-brand-mark[\s\S]*?overflow:\s*visible/);
-  assert.match(css, /\.guide-brand-mark-image[\s\S]*?border-radius:\s*0/);
+test("Player Guide uses the shared SiteHeader roundel instead of a separate Guide masthead", async () => {
+  const guidePage = await readFile(new URL("src/guide/GuidePage.jsx", FRONTEND), "utf8");
+  const markup = await readFile(new URL("public/guide-body.html", FRONTEND), "utf8");
+  assert.match(guidePage, /import SiteHeader/);
+  assert.match(guidePage, /sectionTitle="Player Guide"/);
+  assert.doesNotMatch(markup, /guide-site-header/);
+  assert.doesNotMatch(markup, /guide-brand-mark-image/);
 });

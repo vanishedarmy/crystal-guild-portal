@@ -9,9 +9,9 @@ test("player-profile exit navigation uses full document links", async () => {
   const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
   const fellowship = await readFile(new URL("player/Fellowship.jsx", SRC), "utf8");
 
-  assert.match(header, /<a className="brand" href="\/players"/);
-  assert.match(header, /href="\/players"/);
-  assert.match(header, /href="\/fellowship"/);
+  assert.match(header, /brandHref = "\/players"/);
+  assert.match(header, /href: "\/players"/);
+  assert.match(header, /href: "\/fellowship"/);
   assert.doesNotMatch(header, /<Link[^>]+to="\/(?:players|fellowship)"/);
   assert.match(profile, /<a className="back-link" href="\/players">/);
   assert.match(fellowship, /href="\/fellowship">View the full Fellowship/);

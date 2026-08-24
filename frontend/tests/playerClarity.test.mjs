@@ -27,8 +27,9 @@ test("public portal shows build identity but hides backend terminology from play
   assert.match(liveStatus, /Updating/);
   assert.doesNotMatch(liveStatus, /Backup Sync/);
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
-  assert.match(guide, /guide-build-badge/);
-  assert.match(guide, /versionTop/);
+  const guidePage = await readFile(new URL("guide/GuidePage.jsx", SRC), "utf8");
+  assert.match(guidePage, /SiteHeader/);
+  assert.match(guidePage, /sectionTitle="Player Guide"/);
   assert.match(guide, /versionSide/);
 });
 
@@ -38,7 +39,7 @@ test("streamer dashboard explains tools in plain language while preserving its l
   assert.match(dashboard, /Live Ledger/);
   assert.match(dashboard, /Command buttons copy text only/);
   assert.match(dashboard, /WEB_RELEASE/);
-  assert.match(dashboard, /streamer-build/);
+  assert.match(dashboard, /<SiteHeader liveStatus=\{liveStatus\}/);
   assert.doesNotMatch(dashboard, /Hosted Mirror|sanitized mirror|Bot authority|runtime services|direct Twitch REST|daemon, notifier|Gold Saucer gil/i);
 });
 

@@ -45,8 +45,9 @@ test("mobile header is compact while preserving scroll-away behavior", async () 
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
   assert.match(header, /mobile-header-collapsed/);
   assert.match(css, /v1\.1\.17 Arsenal II/);
-  assert.match(css, /\.brand-mark \{ width: 40px; height: 40px/);
-  assert.match(css, /\.build-badge strong \{ display: none; \}/);
+  assert.match(css, /mobile-site-header-actions/);
+  assert.match(css, /mobile-site-menu-toggle/);
+  assert.match(css, /\.site-header \.brand-mark \{[\s\S]*?width: 40px;[\s\S]*?height: 40px/);
 });
 
 test("Hosted Raid Overlay is rendered after the dashboard frame", async () => {
@@ -57,14 +58,13 @@ test("Hosted Raid Overlay is rendered after the dashboard frame", async () => {
 });
 
 
-test("Player Guide build badge is release-driven and identifies Arsenal II", async () => {
+test("Player Guide release identity comes from the shared header and keeps Arsenal II", async () => {
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
-  const runtime = await readFile(new URL("guide/guideRuntime.js", SRC), "utf8");
+  const guidePage = await readFile(new URL("guide/GuidePage.jsx", SRC), "utf8");
   const version = await readFile(new URL("version.js", SRC), "utf8");
-  assert.match(guide, /id="versionTop">v1\.1\.17<\/span>/);
-  assert.match(guide, /id="buildTop">Arsenal II<\/strong>/);
   assert.doesNotMatch(guide, /Cloud Continuity/);
-  assert.match(runtime, /buildTop/);
-  assert.match(runtime, /releaseBuild/);
-  assert.match(version, /1\.1\.17-arsenal-ii1h1/);
+  assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
+  assert.match(guidePage, /SiteHeader/);
+  assert.match(version, /WEB_BUILD = "Arsenal II"/);
+  assert.match(version, /1\.1\.17-arsenal-ii1h2/);
 });

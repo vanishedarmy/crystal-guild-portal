@@ -40,10 +40,15 @@ test("Player Guide level catalogs use ascending level order", async () => {
 test("Streamer Dashboard exposes the hosted OBS overlay and shared roundel", async () => {
   const page = await readFile(new URL("pages/StreamerDashboard.jsx", SRC), "utf8");
   const css = await readFile(new URL("styles/streamer.css", SRC), "utf8");
+  const header = await readFile(new URL("components/SiteHeader.jsx", SRC), "utf8");
   const overlay = await readFile(new URL("raid-overlay.html", PUBLIC), "utf8");
+  const overlayJs = await readFile(new URL("raid-overlay.js", PUBLIC), "utf8");
   assert.match(page, /Hosted Raid Overlay/);
   assert.match(page, /href="\/overlay"/);
-  assert.match(page, /crystal-guild-portal-roundel\.png/);
+  assert.match(page, /SiteHeader/);
+  assert.match(header, /crystal-guild-portal-roundel\.png/);
   assert.match(css, /streamer-overlay-card/);
-  assert.match(overlay, /\/api\/overlay\/state/);
+  assert.match(overlay, /src="\/raid-overlay\.js"/);
+  assert.doesNotMatch(overlay, /<script>(?:.|\n)*?<\/script>/);
+  assert.match(overlayJs, /\/api\/overlay\/state/);
 });

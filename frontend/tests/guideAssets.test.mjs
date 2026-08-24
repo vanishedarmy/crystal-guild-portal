@@ -26,9 +26,11 @@ test("lazy guide data is valid and versioned for v1.1.17 Arsenal II", async () =
 
 test("lazy guide markup documents Active Battle and keeps the organized guide shell", async () => {
   const markup = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
+  const page = await readFile(new URL("../src/guide/GuidePage.jsx", import.meta.url), "utf8");
   assert.match(markup, /id="completion"/);
   assert.match(markup, /Trophy Hall/);
-  assert.match(markup, /class="guide-site-header"/);
+  assert.doesNotMatch(markup, /class="guide-site-header"/);
+  assert.match(page, /<SiteHeader liveStatus=\{liveStatus\}/);
   assert.doesNotMatch(markup, /development build|Beta|production baseline/i);
   assert.doesNotMatch(markup, /v0\.9\.8 Beta/i);
   assert.match(markup, /id="guideNav"/);

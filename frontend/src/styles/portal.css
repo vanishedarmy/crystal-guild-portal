@@ -7200,3 +7200,184 @@ textarea:focus-visible,
   }
 }
 
+
+/* v1.1.17 Arsenal II Hotfix 4 — Hunt-result clarity, lower visual noise, and accessibility. */
+:root {
+  --muted: #bdcbd7;
+}
+
+/* Status blocks carry useful state without becoming full secondary panels. */
+.equipment-action-status.compact-status,
+.equipment-action-status {
+  padding: .58rem .72rem;
+  margin-bottom: .72rem;
+  gap: .28rem .72rem;
+}
+@media not all and (max-width: 720px) {
+  .equipment-action-status {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .equipment-action-status > strong { flex: 0 0 auto; }
+  .equipment-action-status > span { flex: 1 1 260px; }
+  .equipment-action-status > small { flex: 1 0 100%; }
+}
+
+/* The Adventure Board uses compact status notes where the rules already explain the mechanic. */
+.compact-adventure-note {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .45rem .9rem;
+  padding: .62rem .72rem;
+}
+.compact-adventure-note span { text-align: right; }
+.adventure-result-panel.compact-result > p { margin: .35rem 0 0; }
+
+/* Hunt resolution is structured like a result card rather than a chat transcript. */
+.hunt-result-panel {
+  border-color: rgba(143, 219, 255, .3);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(143, 219, 255, .07), transparent 36%),
+    linear-gradient(145deg, rgba(10, 28, 44, .98), rgba(6, 19, 31, .98));
+}
+.hunt-result-panel.won { border-color: rgba(147, 230, 178, .42); }
+.hunt-result-panel.lost { border-color: rgba(255, 142, 156, .42); }
+.hunt-result-title-row { align-items: flex-start; }
+.hunt-result-outcome {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: .4rem .68rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hunt-result-outcome.victory { color: var(--success); background: rgba(147, 230, 178, .08); }
+.hunt-result-outcome.defeat { color: #ffb1ba; background: rgba(255, 142, 156, .08); }
+.hunt-result-reward-grid,
+.hunt-result-combat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .58rem;
+}
+.hunt-result-reward-grid { margin-top: .2rem; }
+.hunt-result-reward-grid > div,
+.hunt-result-combat-grid > div {
+  min-width: 0;
+  display: grid;
+  gap: .12rem;
+  padding: .7rem .74rem;
+  border: 1px solid rgba(143, 219, 255, .17);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .025);
+}
+.hunt-result-reward-grid span,
+.hunt-result-combat-grid span,
+.hunt-result-survival span {
+  color: var(--muted);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+.hunt-result-reward-grid strong {
+  color: var(--crystal-soft);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  font-variant-numeric: tabular-nums;
+}
+.hunt-result-combat-grid {
+  margin-top: .62rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.hunt-result-combat-grid strong { font-variant-numeric: tabular-nums; }
+.hunt-result-survival {
+  display: grid;
+  gap: .48rem;
+  padding: .76rem .82rem;
+  border: 1px solid rgba(255, 142, 156, .2);
+  border-radius: 12px;
+  background: rgba(255, 142, 156, .045);
+}
+.hunt-result-survival > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .7rem;
+}
+.hunt-result-survival strong { font-variant-numeric: tabular-nums; }
+.hunt-result-survival p { margin: 0; color: var(--muted); }
+.hunt-result-details {
+  display: grid;
+  gap: .42rem;
+  margin-top: .62rem;
+}
+.hunt-result-details p {
+  display: grid;
+  grid-template-columns: minmax(88px, auto) 1fr;
+  gap: .55rem;
+  margin: 0;
+  padding: .55rem .65rem;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .022);
+}
+.hunt-result-details p.first-clear { border: 1px solid rgba(230, 203, 136, .2); }
+.hunt-result-details strong { color: var(--gold-bright, var(--gold)); }
+.hunt-result-details span { min-width: 0; overflow-wrap: anywhere; }
+.hunt-result-auto-plan {
+  display: flex;
+  align-items: baseline;
+  gap: .55rem;
+  margin-top: .62rem;
+  padding-top: .58rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+.hunt-result-auto-plan strong { color: var(--text); }
+.hunt-result-legacy-line { margin: .4rem 0 0; color: var(--muted); }
+
+/* Accessibility: preserve hierarchy at high contrast and keep dense metadata readable. */
+.muted,
+.card-meta,
+.adventure-disabled-reason,
+.hunt-traits,
+small {
+  line-height: 1.5;
+}
+.adventure-disabled-reason { color: #b8c7d3; }
+button:disabled { opacity: .78; }
+
+@media (prefers-contrast: more) {
+  .panel,
+  .adventure-region-card,
+  .adventure-hunt-card,
+  .hunt-result-reward-grid > div,
+  .hunt-result-combat-grid > div {
+    border-color: rgba(220, 239, 255, .58);
+  }
+  .muted,
+  .card-meta,
+  .adventure-disabled-reason,
+  small { color: #d8e2e9; }
+  .equipment-action-button:disabled { opacity: .9; }
+}
+
+@media (max-width: 720px) {
+  .hunt-result-reward-grid,
+  .hunt-result-combat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .compact-adventure-note { align-items: flex-start; flex-direction: column; }
+  .compact-adventure-note span { text-align: left; }
+}
+
+@media (max-width: 430px) {
+  .hunt-result-title-row { align-items: stretch; }
+  .hunt-result-outcome { align-self: flex-start; }
+  .hunt-result-details p { grid-template-columns: 1fr; gap: .15rem; }
+}

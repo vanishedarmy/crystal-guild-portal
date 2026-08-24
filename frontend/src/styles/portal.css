@@ -7139,3 +7139,64 @@ textarea:focus-visible,
   .mobile-site-header-actions .live-status-desktop-text { display: none !important; }
   .mobile-site-header-actions .live-status-mobile-token { display: inline !important; color: var(--text); font-size: .68rem; letter-spacing: .12em; }
 }
+
+/* v1.1.17 Arsenal II Hotfix 3 — graphical + spacing continuity for selectable cards. */
+.adventure-region-grid {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+
+.adventure-region-card {
+  height: 100%;
+  padding: .9rem;
+}
+
+.adventure-region-card > p {
+  margin: .62rem 0 0;
+  line-height: 1.55;
+}
+
+.adventure-region-card .adventure-card-footer {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.adventure-region-card .adventure-card-footer .equipment-action-button {
+  width: 100%;
+  max-width: none;
+  min-height: 56px;
+  padding: .62rem .76rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: balance;
+}
+
+.adventure-region-card > .adventure-disabled-reason {
+  display: block;
+  min-height: 1.1rem;
+  margin-top: .28rem;
+  line-height: 1.35;
+}
+
+/* Keep Hunt cards using the same bottom-anchored action rhythm. */
+.hunt-board-grid { align-items: stretch; }
+.adventure-hunt-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.adventure-hunt-card .adventure-card-footer {
+  margin-top: auto;
+  padding-top: .9rem;
+}
+
+@media (max-width: 560px) {
+  .adventure-region-grid { grid-auto-rows: auto; }
+  .adventure-region-card { min-height: 0; }
+  .adventure-region-card .adventure-card-footer .equipment-action-button {
+    min-height: 52px;
+  }
+}
+

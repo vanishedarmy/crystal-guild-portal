@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.1.18",
+    name: "Retro Phase 1",
+    title: "The Guild gets its first 16-bit visual pass",
+    summary: "Retro Phase 1 establishes a shared SNES-era Final Fantasy-inspired visual language across the Crystal Guild website while preserving the readable, responsive layout underneath.",
+    highlights: [
+      { title: "Classic menu windows", description: "Core panels, cards, dialogs, tables, and dashboard modules now use crisp layered blue window frames with stepped shadows instead of glassy floating surfaces." },
+      { title: "Clearer selected states", description: "Navigation, tabs, filters, and active controls use brighter framed menu states and a small diamond cursor cue for faster scanning." },
+      { title: "Retro without tiny text", description: "Typography remains comfortably readable while borders, geometry, texture, and shadows carry the 16-bit character." },
+      { title: "One visual language", description: "Guild Heroes, character pages, the Player Guide, and the Streamer Dashboard now share the same foundational window treatment." },
+      { title: "Mobile preserved", description: "The compact icon-left, LIVE/OFFLINE, and hamburger header remains intact, with simplified retro framing for narrow screens." },
+    ],
+    action: { tab: "overview", label: "View Your Character" },
+  },
+  {
     version: "v1.1.17",
     name: "Arsenal II",
     title: "More spells, cleaner tools, quieter off-stream play",

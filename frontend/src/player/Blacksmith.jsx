@@ -220,9 +220,9 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       </div>
 
       <div className="blacksmith-toolbar">
-        <div className="character-view-tabs" role="tablist" aria-label="Blacksmith views">
-          <button type="button" className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}>Recipes</button>
-          <button type="button" className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}>Forge</button>
+        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith views">
+          <button type="button" role="tab" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Recipes</span><small>{view === "recipes" ? "Active · Craft items" : "Craft items"}</small></button>
+          <button type="button" role="tab" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}><span>Forge Gear</span><small>{view === "forge" ? "Active · Upgrade equipment" : "Upgrade equipment"}</small></button>
         </div>
         <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : "Equipment…"} /></label>
         <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busyKey)} onClick={() => loadState()}>

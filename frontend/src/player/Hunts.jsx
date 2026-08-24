@@ -8,6 +8,7 @@ import {
   submitSoloExpeditionContinue,
   submitSoloExpeditionReturn,
   submitSoloExpeditionRetreat,
+  submitStartRest,
   waitForPortalAction,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -230,7 +231,7 @@ export default function Hunts({ data, overview, onRefresh }) {
     () => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []),
     [auth.action_capabilities],
   );
-  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT"];
+  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "START_REST"];
   const actionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
@@ -314,6 +315,7 @@ export default function Hunts({ data, overview, onRefresh }) {
       ...((state.hunts || []).map((hunt) => Number(hunt.cooldown_available_at || 0))),
       Number(state.encounter?.rally_closes_at || 0),
       Number(state.active_hunt?.resolves_at || 0),
+      Number(state.camp?.until || 0),
     ].filter((value) => value > Math.floor(Date.now() / 1000));
     if (!deadlines.length) return undefined;
     const nearest = Math.min(...deadlines);
@@ -460,6 +462,26 @@ export default function Hunts({ data, overview, onRefresh }) {
           <strong>{actionsAvailable ? "Adventure Board online" : "Adventure Board offline"}</strong>
           <span>{actionsAvailable ? "Solo Venture, travel, and Hunts are ready to use." : "Adventure actions return when Crystal Guild reconnects."}</span>
           {message ? <small aria-live="polite">{message}</small> : null}
+        </div>
+      </section>
+
+      <section className={`panel adventure-camp-panel ${state?.camp?.resting ? "camp-active" : ""}`}>
+        <div className="panel-title-row">
+          <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, clock))}` : "Set Up Camp"}</h2></div>
+          <span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span>
+        </div>
+        <p className="muted">Camp restores HP and your current Job’s MP/AP after the normal rest timer. You cannot adventure while resting.</p>
+        {state?.camp ? (
+          <div className="adventure-camp-grid">
+            <div><span>HP</span><strong>{number(state.camp.hp)} / {number(state.camp.max_hp)}</strong></div>
+            {Number(state.camp.max_mp || 0) > 0 ? <div><span>MP</span><strong>{number(state.camp.mp)} / {number(state.camp.max_mp)}</strong></div> : null}
+            {Number(state.camp.max_ap || 0) > 0 ? <div><span>AP</span><strong>{number(state.camp.ap)} / {number(state.camp.max_ap)}</strong></div> : null}
+            <div><span>Rest timer</span><strong>{duration(state.camp.duration_seconds)}</strong></div>
+          </div>
+        ) : null}
+        <div className="venture-action-row">
+          <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !boardStateReady || !state?.camp?.can_start || Boolean(busy)} onClick={() => runRequest("camp:start", "camp", "start", (idem) => submitStartRest(csrfToken, idem), "Camp started.")}>{busy === "camp:start" ? "Setting Camp…" : state?.camp?.resting ? "Camp in Progress" : "Set Up Camp"}</button>
+          {state?.camp?.reason ? <span className="adventure-disabled-reason">{state.camp.reason}</span> : null}
         </div>
       </section>
 

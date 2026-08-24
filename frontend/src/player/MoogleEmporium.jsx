@@ -47,6 +47,13 @@ function typeLabel(type) {
   return value.replace(/^./, (letter) => letter.toUpperCase());
 }
 
+function shopCategory(item) {
+  const type = String(item?.type || "item").toLowerCase();
+  if (type === "weapon") return "weapons";
+  if (type === "armor" || type === "accessory") return "armor";
+  return "items";
+}
+
 function shopLevel(item) {
   const value = Number(item?.min_level ?? item?.level ?? item?.shop_level);
   return Number.isFinite(value) ? value : Number.POSITIVE_INFINITY;
@@ -74,6 +81,8 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const [sellQty, setSellQty] = useState({});
   const [clock, setClock] = useState(() => Date.now());
   const [guideData, setGuideData] = useState(null);
+  const [mode, setMode] = useState("buy");
+  const [category, setCategory] = useState("weapons");
 
   const playerUsername = String(data?.player?.username || overview?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -103,6 +112,8 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     () => mergeItemListWithCatalog(Array.isArray(shop?.stock) ? shop.stock : [], guideData).sort(compareShopItems),
     [shop?.stock, guideData],
   );
+  const filteredStock = useMemo(() => displayedStock.filter((item) => shopCategory(item) === category), [displayedStock, category]);
+  const filteredSellableItems = useMemo(() => sellableItems.filter((item) => shopCategory(item) === category), [sellableItems, category]);
 
   const shopActionsAvailable = Boolean(
     isOwnProfile
@@ -270,95 +281,80 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           {shop.combat_locked ? (
             <div className="moogle-combat-lock">Transactions are locked while this adventurer is committed to an active encounter or raid.</div>
           ) : null}
-          <div className="moogle-stock-grid">
-            {displayedStock.map((item) => {
-              const max = item.equipment ? 1 : 99;
-              const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] || 1, max);
-              const total = Number(item.price || 0) * quantity;
-              const affordable = Number(shop.gil || 0) >= total;
-              const busy = busyKey === `buy:${item.id}`;
-              return (
-                <article className="moogle-item-card" key={item.id}>
-                  <div className="moogle-item-head">
-                    <span className="slot-label">{typeLabel(item.type)}</span>
-                    <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
-                  </div>
-                  <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span></div>
-                  <div className="card-meta">Owned {number(item.owned)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</div>
-                  {item.equipment && Object.keys(itemBonuses(item)).length ? (
-                    <div className="moogle-stat-summary">
-                      <span className="moogle-stat-label">Stat boosts</span>
-                      <strong>{formatBonuses(itemBonuses(item))}</strong>
-                      {EQUIPMENT_TYPES.has(String(item.type || "").toLowerCase()) ? (() => {
-                        const slot = String(item.type || "").toLowerCase();
-                        const current = currentBySlot.get(slot);
-                        if (!current?.id) return <small>Compared with empty {typeLabel(slot).toLowerCase()} slot: all listed boosts are gained.</small>;
-                        const upgrade = current.upgrade_level ? ` +${current.upgrade_level}` : "";
-                        return <small>Vs. {current.name}{upgrade}: {equipmentDelta(item, current)}</small>;
-                      })() : null}
-                    </div>
-                  ) : null}
-                  {item.description ? <p className="moogle-item-description">{item.description}</p> : null}
-                  {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? (
-                    <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div>
-                  ) : null}
-                  {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv.{number(item.min_level)}</div> : null}
-                  <div className="moogle-card-actions">
-                    {!item.equipment ? (
-                      <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max="99" value={quantity} onChange={(event) => setBuyQty((current) => ({ ...current, [item.id]: clampQuantity(event.target.value, 99) }))} /></label>
-                    ) : <span className="moogle-fixed-quantity">Qty 1</span>}
-                    <button
-                      type="button"
-                      className="equipment-action-button"
-                      disabled={!shopActionsAvailable || shop.combat_locked || !affordable || Boolean(busyKey)}
-                      onClick={() => buy(item)}
-                    >
-                      {busy ? "Buying…" : (affordable ? `Buy ${item.name} · ${number(total)}g` : `Need ${number(total)}g`)}
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
+          <div className="moogle-commerce-tabs" role="tablist" aria-label="Moogle Emporium transaction mode">
+            <button type="button" role="tab" aria-selected={mode === "buy"} className={mode === "buy" ? "active" : ""} onClick={() => setMode("buy")}><span>Buy</span><small>Current Moogle stock</small></button>
+            <button type="button" role="tab" aria-selected={mode === "sell"} className={mode === "sell" ? "active" : ""} onClick={() => setMode("sell")}><span>Sell</span><small>Your eligible inventory</small></button>
+          </div>
+          <div className="moogle-category-tabs" role="tablist" aria-label={`${mode === "buy" ? "Buy" : "Sell"} category`}>
+            {[["weapons", "Weapons"], ["armor", "Armor"], ["items", "Items"]].map(([value, label]) => (
+              <button key={value} type="button" role="tab" aria-selected={category === value} className={category === value ? "active" : ""} onClick={() => setCategory(value)}>{label}</button>
+            ))}
           </div>
 
-          <details className="moogle-sell-disclosure">
-            <summary>
-              <span><strong>Sell from Inventory</strong><small>Optional · {sellableItems.length} sellable stacks</small></span>
-              <span aria-hidden="true">⌄</span>
-            </summary>
-            <div className="moogle-sell-body">
-              {!sellableItems.length ? <div className="muted">Nothing in this inventory can currently be sold.</div> : (
-                <div className="moogle-sell-grid">
-                  {sellableItems.map((item) => {
-                    const max = Number(item.max_sell_quantity || 0);
-                    const quantity = clampQuantity(sellQty[item.id] || 1, Math.max(1, max));
-                    const proceeds = Number(item.sell_price || 0) * quantity;
-                    const busy = busyKey === `sell:${item.id}`;
-                    return (
-                      <article className="moogle-sell-row" key={item.id}>
-                        <div className="moogle-sell-copy">
-                          <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
-                          <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
-                          {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
-                        </div>
-                        <div className="moogle-card-actions sell-actions">
-                          <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max={Math.max(1, max)} value={quantity} disabled={max <= 0} onChange={(event) => setSellQty((current) => ({ ...current, [item.id]: clampQuantity(event.target.value, Math.max(1, max)) }))} /></label>
-                          <button
-                            type="button"
-                            className="equipment-action-button secondary"
-                            disabled={!shopActionsAvailable || shop.combat_locked || max <= 0 || Boolean(busyKey)}
-                            onClick={() => sell(item)}
-                          >
-                            {busy ? "Selling…" : `Sell ${item.name} · ${number(proceeds)}g`}
-                          </button>
-                        </div>
-                      </article>
-                    );
-                  })}
-                </div>
-              )}
+          {mode === "buy" ? (
+            <div className="moogle-stock-grid" role="tabpanel" aria-label={`Buy ${category}`}>
+              {filteredStock.length ? filteredStock.map((item) => {
+                const max = item.equipment ? 1 : 99;
+                const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] || 1, max);
+                const total = Number(item.price || 0) * quantity;
+                const affordable = Number(shop.gil || 0) >= total;
+                const busy = busyKey === `buy:${item.id}`;
+                return (
+                  <article className="moogle-item-card" key={item.id}>
+                    <div className="moogle-item-head">
+                      <span className="slot-label">{typeLabel(item.type)}</span>
+                      <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
+                    </div>
+                    <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span></div>
+                    <div className="card-meta">Owned {number(item.owned)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</div>
+                    {item.equipment && Object.keys(itemBonuses(item)).length ? (
+                      <div className="moogle-stat-summary">
+                        <span className="moogle-stat-label">Stat boosts</span>
+                        <strong>{formatBonuses(itemBonuses(item))}</strong>
+                        {EQUIPMENT_TYPES.has(String(item.type || "").toLowerCase()) ? (() => {
+                          const slot = String(item.type || "").toLowerCase();
+                          const current = currentBySlot.get(slot);
+                          if (!current?.id) return <small>Compared with empty {typeLabel(slot).toLowerCase()} slot: all listed boosts are gained.</small>;
+                          const upgrade = current.upgrade_level ? ` +${current.upgrade_level}` : "";
+                          return <small>Vs. {current.name}{upgrade}: {equipmentDelta(item, current)}</small>;
+                        })() : null}
+                      </div>
+                    ) : null}
+                    {item.description ? <p className="moogle-item-description">{item.description}</p> : null}
+                    {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
+                    {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv.{number(item.min_level)}</div> : null}
+                    <div className="moogle-card-actions">
+                      {!item.equipment ? <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max="99" value={quantity} onChange={(event) => setBuyQty((current) => ({ ...current, [item.id]: clampQuantity(event.target.value, 99) }))} /></label> : <span className="moogle-fixed-quantity">Qty 1</span>}
+                      <button type="button" className="equipment-action-button" disabled={!shopActionsAvailable || shop.combat_locked || !affordable || Boolean(busyKey)} onClick={() => buy(item)}>{busy ? "Buying…" : (affordable ? `Buy ${item.name} · ${number(total)}g` : `Need ${number(total)}g`)}</button>
+                    </div>
+                  </article>
+                );
+              }) : <div className="state-message compact-state moogle-empty-category">No {category} are available in this rotation.</div>}
             </div>
-          </details>
+          ) : (
+            <div className="moogle-sell-grid moogle-sell-panel" role="tabpanel" aria-label={`Sell ${category}`}>
+              {filteredSellableItems.length ? filteredSellableItems.map((item) => {
+                const max = Number(item.max_sell_quantity || 0);
+                const quantity = clampQuantity(sellQty[item.id] || 1, Math.max(1, max));
+                const proceeds = Number(item.sell_price || 0) * quantity;
+                const busy = busyKey === `sell:${item.id}`;
+                return (
+                  <article className="moogle-sell-row" key={item.id}>
+                    <div className="moogle-sell-copy">
+                      <span className="slot-label">{typeLabel(item.type)}</span>
+                      <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
+                      <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
+                      {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
+                    </div>
+                    <div className="moogle-card-actions sell-actions">
+                      <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max={Math.max(1, max)} value={quantity} disabled={max <= 0} onChange={(event) => setSellQty((current) => ({ ...current, [item.id]: clampQuantity(event.target.value, Math.max(1, max)) }))} /></label>
+                      <button type="button" className="equipment-action-button secondary" disabled={!shopActionsAvailable || shop.combat_locked || max <= 0 || Boolean(busyKey)} onClick={() => sell(item)}>{busy ? "Selling…" : `Sell ${item.name} · ${number(proceeds)}g`}</button>
+                    </div>
+                  </article>
+                );
+              }) : <div className="state-message compact-state moogle-empty-category">No sellable {category} are currently in your inventory.</div>}
+            </div>
+          )}
         </>
       ) : null}
     </section>

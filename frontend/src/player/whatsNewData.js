@@ -1,11 +1,25 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.1.17",
+    name: "Arsenal II",
+    title: "More spells, cleaner tools, quieter off-stream play",
+    summary: "Arsenal II deepens Job ability progression—especially for magic users—and makes several everyday Portal tools easier to navigate on desktop and mobile.",
+    highlights: [
+      { title: "Deeper spellbooks", description: "Core caster Jobs now learn abilities across a 12-step JLv curve, while every other Job receives additional mid- and high-level techniques." },
+      { title: "Cleaner shops and crafting", description: "The Moogle Emporium separates Weapons, Armor, and Items in both Buy and Sell views, while the Blacksmith makes Recipes and Forge Gear unmistakably distinct." },
+      { title: "Camp from the Adventure Board", description: "Check your HP and MP/AP, start Camp recovery, and follow the rest timer without leaving your adventure hub." },
+      { title: "Smaller mobile header", description: "The top Portal guide is more compact on phones and still automatically scrolls out of the way while you browse." },
+      { title: "Quiet when stream is offline", description: "Portal play can continue off-stream, but automated Crystal Guild action/result announcements are suppressed until Twitch is live again." },
+    ],
+    action: { tab: "jobs", label: "Explore Expanded Abilities" },
+  },
+  {
     version: "v1.1.16",
     name: "Arsenal",
     title: "More ways to fight, hunt, and craft",
     summary: "Every Job has a much deeper Battle Ability kit, with clearer elemental and special-effect identities. Early adventurers also have more Hunts, world bosses, and useful consumable recipes to chase.",
     highlights: [
-      { title: "Twice the Job abilities", description: "Each Job now grows through six active Battle abilities across JLv.1, 8, 15, 22, 30, and 40." },
+      { title: "Expanded Job abilities", description: "Arsenal established the six-ability active Battle foundation that Arsenal II now builds upon." },
       { title: "Elements matter more", description: "Fire, Ice, Lightning, Wind, Water, Holy, and Dark techniques now clearly show their element alongside effects such as Poison, Slow, Stun, Blind, Weaken, and Vulnerable." },
       { title: "Hunts start earlier", description: "New C-rank marks begin at Lv.2, giving newer Guild members a Hunt progression before the original Lv.10 marks." },
       { title: "Earlier world bosses", description: "New lower-level raid targets create a smoother road toward Bomb King and the larger world bosses." },

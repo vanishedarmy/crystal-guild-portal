@@ -60,10 +60,13 @@ Portal gameplay remains available while the Twitch channel is offline, but **aut
 
 - Bot runtime: `1.1.17-arsenal-ii`
 - Hosted Web runtime: `1.1.17-arsenal-ii`
-- Frontend asset revision: `1.1.17-arsenal-ii1`
+- Frontend asset revision: `1.1.17-arsenal-ii1h2`
 - Local DB schema: **5** (unchanged)
 - Hosted sync schema: **1** (unchanged)
 - Portal Action protocol: **14** (unchanged)
 - Twitch command prefix: `!` (unchanged)
 
 There is **no database migration, player reset, new OAuth scope, or new environment variable** in this release.
+
+
+> Current Web patch: **Arsenal II Hotfix 2** (`1.1.17-arsenal-ii1h2`). See `HOTFIX_2_UPGRADE_GUIDE.md` and `HOTFIX_2_RELEASE_NOTES.md`.

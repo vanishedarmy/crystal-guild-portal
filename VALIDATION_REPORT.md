@@ -3,7 +3,7 @@
 ## Source release validation
 
 - Bot unittest suite: **377 / 377 PASS**
-- Frontend Node tests: **178 / 178 PASS**
+- Frontend Node tests: **181 / 181 PASS**
 - Hosted Portal/API tests: **46 / 46 PASS**
 - Python grammar/compile sweep: **75 / 75 PASS**
 - JS/JSX source syntax parse: **52 / 52 PASS**
@@ -46,7 +46,7 @@ Result: **CLOUD RUNTIME STRESS PASS**.
 
 - Bot runtime: `1.1.17-arsenal-ii`
 - Hosted Web runtime: `1.1.17-arsenal-ii`
-- Frontend asset revision: `1.1.17-arsenal-ii1`
+- Frontend asset revision: `1.1.17-arsenal-ii1h2`
 - DB schema: **5**
 - Hosted sync schema: **1**
 - Portal Action protocol: **14**
@@ -64,7 +64,10 @@ The release archives were generated from the finalized source and independently 
 - Web archive vs finalized Web tree: **0 differences**
 - Hotfix 6 + direct Arsenal II update overlay vs finalized tree: **0 differences**
 - Tests from extracted Complete archive: **377 / 377 Bot PASS**
-- Tests from extracted Complete archive: **178 / 178 frontend PASS**
+- Tests from extracted Complete archive: **181 / 181 frontend PASS**
 - Tests from extracted Complete archive: **46 / 46 hosted Portal/API PASS**
 
 The standalone SHA-256 manifest is generated after the final archive rebuild so its hashes describe the exact files delivered to the user.
+
+
+> Current Web patch: **Arsenal II Hotfix 2** (`1.1.17-arsenal-ii1h2`). See `HOTFIX_2_UPGRADE_GUIDE.md` and `HOTFIX_2_RELEASE_NOTES.md`.

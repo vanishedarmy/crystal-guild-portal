@@ -55,3 +55,16 @@ test("Hosted Raid Overlay is rendered after the dashboard frame", async () => {
   const overlay = source.lastIndexOf("<HostedOverlayCard />");
   assert.ok(frame >= 0 && overlay > frame);
 });
+
+
+test("Player Guide build badge is release-driven and identifies Arsenal II", async () => {
+  const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
+  const runtime = await readFile(new URL("guide/guideRuntime.js", SRC), "utf8");
+  const version = await readFile(new URL("version.js", SRC), "utf8");
+  assert.match(guide, /id="versionTop">v1\.1\.17<\/span>/);
+  assert.match(guide, /id="buildTop">Arsenal II<\/strong>/);
+  assert.doesNotMatch(guide, /Cloud Continuity/);
+  assert.match(runtime, /buildTop/);
+  assert.match(runtime, /releaseBuild/);
+  assert.match(version, /1\.1\.17-arsenal-ii1h1/);
+});

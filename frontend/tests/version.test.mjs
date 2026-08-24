@@ -8,7 +8,7 @@ test("Arsenal II public web identity is centralized and omits the Beta marker", 
   assert.equal(WEB_BUILD, "Arsenal II");
   assert.equal(WEB_RELEASE, "v1.1.17 — Arsenal II");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.17 — Arsenal II");
-  assert.equal(WEB_ASSET_REVISION, "1.1.17-arsenal-ii1");
+  assert.equal(WEB_ASSET_REVISION, "1.1.17-arsenal-ii1h1");
   assert.doesNotMatch(WEB_RELEASE, /Beta/i);
 });
 

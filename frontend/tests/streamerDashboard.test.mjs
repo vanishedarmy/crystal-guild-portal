@@ -36,13 +36,14 @@ test("Streamer dashboard lists every Twitch owner-only command", async () => {
     "!fellowshipproject <project>",
     "!readyall",
     "!resettimers",
+    "!clearadventures",
     "!resolveencounter",
     "!clearencounter",
     "!spawnboss <boss name>",
     "!resolveboss",
   ];
   for (const command of commands) assert.equal(page.includes(command), true, `missing ${command}`);
-  assert.match(page, /12 streamer-only commands/);
+  assert.match(page, /13 streamer-only commands/);
   assert.doesNotMatch(page, /TWITCH_OWNER_ID/);
 });
 

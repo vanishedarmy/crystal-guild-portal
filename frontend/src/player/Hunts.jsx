@@ -482,6 +482,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                         <button key={ability.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => runRequest(`solo:ability:${ability.id}`, () => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, actionKey("solo-ability", ability.id)), `${ability.name} resolved.`)}>
                           <span><strong>{ability.name}</strong><small>{ability.cost}{String(ability.resource || "").toUpperCase()} · {ability.target}</small></span>
                           <span>{ability.usable ? "Use" : ability.reason}</span>
+                          {Array.isArray(ability.traits) && ability.traits.length ? <small className="solo-ability-traits">{ability.traits.join(" · ")}</small> : null}
                           <small>{ability.description}</small>
                         </button>
                       ))}

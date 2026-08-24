@@ -1,0 +1,412 @@
+/* Crystal Guild v1.1.18 — Retro Phase 1
+ * Shared SNES-era visual foundation. Presentation only: no gameplay/layout semantics.
+ */
+:root {
+  --bg: #07091b;
+  --bg-soft: #0d1230;
+  --panel: rgba(12, 20, 54, 0.96);
+  --panel-strong: rgba(16, 27, 68, 0.985);
+  --line: rgba(190, 211, 255, 0.43);
+  --line-bright: rgba(235, 244, 255, 0.88);
+  --text: #f7f8ff;
+  --muted: #bac5df;
+  --gold: #f1d88f;
+  --crystal: #8fe7ff;
+  --crystal-soft: #caf4ff;
+  --danger: #ff9ca8;
+  --success: #9ce8b7;
+  --warning: #ffdb91;
+  --retro-edge: #dce8ff;
+  --retro-edge-dark: #53658f;
+  --retro-ink: #050817;
+  --retro-shadow: 4px 4px 0 rgba(0, 0, 0, 0.56);
+  --shadow: 6px 8px 0 rgba(0, 0, 0, 0.34);
+}
+
+html {
+  background: #050716;
+}
+
+body {
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px),
+    radial-gradient(circle at 18% 10%, rgba(58, 92, 180, .24), transparent 34rem),
+    radial-gradient(circle at 84% 28%, rgba(82, 54, 146, .17), transparent 30rem),
+    linear-gradient(160deg, #050716 0%, #090e28 52%, #050713 100%);
+  background-size: 4px 4px, 4px 4px, auto, auto, auto;
+  -webkit-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+/* Remove glass blur: Phase 1 uses crisp menu-window layering. */
+.site-header,
+.streamer-header,
+.mobile-site-menu,
+.portal-action-panel,
+.profile-tabs,
+.detail-dialog,
+.info-panel,
+.info-header {
+  backdrop-filter: none !important;
+}
+
+.site-header {
+  min-height: 70px;
+  border-bottom: 2px solid var(--retro-edge-dark);
+  background: linear-gradient(180deg, rgba(14, 24, 61, .99), rgba(6, 11, 34, .99));
+  box-shadow: inset 0 -1px 0 rgba(238, 246, 255, .7), 0 4px 0 rgba(0,0,0,.35);
+}
+
+.brand-mark {
+  border: 2px solid var(--retro-edge);
+  border-radius: 4px;
+  background: linear-gradient(135deg, #172c66, #0b1538);
+  box-shadow: inset 0 0 0 2px #283c70, 3px 3px 0 rgba(0,0,0,.45);
+}
+
+.brand-mark-image { image-rendering: auto; }
+
+.brand small,
+.eyebrow {
+  color: var(--gold);
+  text-shadow: 1px 1px 0 #000;
+}
+
+.brand strong,
+h1,
+h2,
+h3,
+.display-name {
+  text-shadow: 2px 2px 0 rgba(0,0,0,.82);
+}
+
+.site-nav {
+  gap: .32rem;
+}
+
+.site-nav-link,
+.portal-auth-button,
+.ghost-button,
+.primary-link,
+.profile-tabs button,
+.filter-chip,
+.achievement-view-tabs button,
+.job-view-tab,
+.mobile-site-menu a {
+  border-radius: 3px !important;
+}
+
+.site-nav-link {
+  position: relative;
+  border: 1px solid transparent;
+  padding-inline: .75rem;
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+  border-color: var(--retro-edge-dark);
+  background: #152556;
+}
+
+.site-nav-link.active {
+  border-color: var(--retro-edge);
+  background: linear-gradient(180deg, #243d79, #122554);
+  box-shadow: inset 0 0 0 1px #536aa0, 2px 2px 0 rgba(0,0,0,.42);
+}
+
+.site-nav-link.active::before {
+  content: "◆";
+  margin-right: .38rem;
+  color: var(--gold);
+  font-size: .62em;
+  vertical-align: .12em;
+}
+
+.build-badge,
+.live-status {
+  border-radius: 3px !important;
+}
+
+.build-badge {
+  border: 1px solid var(--retro-edge-dark);
+  background: #080d25;
+  box-shadow: inset 0 0 0 1px rgba(220,232,255,.1);
+}
+
+.live-dot {
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.7), 0 0 8px currentColor;
+}
+
+/* Universal RPG window treatment. */
+.panel,
+.registry-stat,
+.toolbar,
+.player-card,
+.profile-header,
+.stat-card,
+.equipment-card,
+.job-card,
+.inventory-card,
+.hunt-card,
+.relic-card,
+.achievement-card,
+.title-card,
+.boss-card,
+.mastery-card,
+.currency-box,
+.record-feature-card,
+.achievement-summary-card,
+.streamer-panel,
+.streamer-summary-card,
+.streamer-sync-card,
+.streamer-leader-card,
+.portal-action-panel,
+.detail-dialog {
+  border: 2px solid var(--retro-edge-dark) !important;
+  border-radius: 4px !important;
+  background: linear-gradient(145deg, rgba(22, 37, 84, .98), rgba(8, 15, 43, .985) 68%) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(231, 240, 255, .62),
+    inset 0 0 0 3px rgba(42, 61, 112, .54),
+    var(--retro-shadow) !important;
+}
+
+.panel,
+.player-card,
+.profile-header,
+.streamer-panel,
+.detail-dialog {
+  position: relative;
+}
+
+.panel::after,
+.profile-header::after,
+.streamer-panel::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: 5px;
+  border: 1px solid rgba(115, 142, 204, .26);
+}
+
+.player-card {
+  transition: border-color .12s linear, background .12s linear, box-shadow .12s linear !important;
+}
+
+.player-card:hover,
+.player-card:focus-visible,
+.clickable-card:hover,
+.clickable-card:focus-visible {
+  border-color: var(--retro-edge) !important;
+  background: linear-gradient(145deg, rgba(31, 52, 111, .99), rgba(10, 20, 55, .99) 68%) !important;
+  box-shadow: inset 0 0 0 1px #fff, inset 0 0 0 3px #4a63a0, 5px 5px 0 rgba(0,0,0,.48) !important;
+  transform: none !important;
+}
+
+.panel h2,
+.panel h3,
+.streamer-panel-heading h2 {
+  letter-spacing: .035em;
+}
+
+.panel-title-row,
+.streamer-panel-heading {
+  border-bottom: 1px solid rgba(184, 205, 250, .25);
+  padding-bottom: .62rem;
+}
+
+/* Menu controls: square, legible, obvious selection. */
+button,
+input,
+select,
+textarea {
+  border-radius: 3px !important;
+}
+
+.primary-link,
+.portal-auth-button,
+.ghost-button,
+.profile-tabs button,
+.filter-chip,
+.achievement-view-tabs button,
+.job-view-tab,
+.streamer-nav a,
+.streamer-jumpbar a,
+.streamer-copy-button,
+.streamer-command-copy {
+  box-shadow: 2px 2px 0 rgba(0,0,0,.38);
+}
+
+.primary-link,
+.portal-auth-button,
+.profile-tabs button.active,
+.filter-chip.active,
+.achievement-view-tabs button.active,
+.job-view-tab.active {
+  border: 1px solid var(--retro-edge) !important;
+  background: linear-gradient(180deg, #2a4a8d, #162f68) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 2px 2px 0 rgba(0,0,0,.46) !important;
+}
+
+.primary-link:hover,
+.primary-link:focus-visible,
+.portal-auth-button:hover,
+.portal-auth-button:focus-visible,
+.profile-tabs button:hover,
+.profile-tabs button:focus-visible,
+.filter-chip:hover,
+.filter-chip:focus-visible {
+  filter: brightness(1.12);
+  transform: none !important;
+}
+
+.search-box input,
+.streamer-toolbar input,
+.streamer-toolbar select,
+input,
+select {
+  border: 1px solid #6c7fae !important;
+  background: #060b22 !important;
+  color: var(--text) !important;
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,.35);
+}
+
+.search-box input:focus,
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 2px !important;
+}
+
+.profile-tabs {
+  border: 2px solid var(--retro-edge-dark);
+  border-radius: 4px;
+  background: #080d25;
+  box-shadow: inset 0 0 0 1px rgba(231,240,255,.35), 4px 4px 0 rgba(0,0,0,.34);
+}
+
+.progress-track,
+.progress,
+.job-progress,
+.relic-progress {
+  border-radius: 2px !important;
+  border-color: #6478aa !important;
+  background: #040717 !important;
+}
+
+.progress-fill,
+.progress > span {
+  border-radius: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.status-badge,
+.rarity-badge,
+.tier-badge,
+.small-badge,
+.card-level,
+.badge,
+.chip {
+  border-radius: 2px !important;
+  border-width: 1px !important;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.7);
+}
+
+.data-table-wrap,
+.tablewrap {
+  border: 2px solid var(--retro-edge-dark) !important;
+  border-radius: 4px !important;
+  background: #070c22 !important;
+  box-shadow: inset 0 0 0 1px rgba(231,240,255,.36), 4px 4px 0 rgba(0,0,0,.3) !important;
+}
+
+.data-table th {
+  background: #172858;
+  color: #dce8ff;
+  border-bottom-color: #697cac;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(48, 77, 145, .28);
+}
+
+.detail-dialog::backdrop {
+  background: rgba(1, 3, 12, .82);
+}
+
+.dialog-close {
+  border-radius: 2px !important;
+}
+
+.state-message {
+  border: 2px solid var(--retro-edge-dark);
+  border-radius: 4px;
+  background: #0b1436;
+  box-shadow: inset 0 0 0 1px rgba(231,240,255,.42), 4px 4px 0 rgba(0,0,0,.38);
+}
+
+/* Streamer dashboard inherits the same menu-window language. */
+.streamer-jumpbar {
+  border: 2px solid var(--retro-edge-dark);
+  border-radius: 4px;
+  background: #080d25;
+}
+
+.streamer-nav a,
+.streamer-jumpbar a {
+  border-radius: 2px;
+}
+
+.streamer-command,
+.streamer-player-row,
+.streamer-leader-row,
+.streamer-activity-row {
+  border-radius: 3px !important;
+}
+
+/* Mobile keeps the shared icon-left / live-status / hamburger composition. */
+@media (max-width: 720px) {
+  .site-header {
+    min-height: 58px;
+    padding-top: .45rem;
+    padding-bottom: .45rem;
+  }
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+  .mobile-site-menu {
+    border: 2px solid var(--retro-edge-dark);
+    border-top: 0;
+    border-radius: 0 0 4px 4px !important;
+    background: linear-gradient(180deg, #111f4d, #070d29);
+    box-shadow: inset 0 0 0 1px rgba(231,240,255,.38), 4px 4px 0 rgba(0,0,0,.4);
+  }
+  .mobile-site-menu-toggle {
+    border: 1px solid var(--retro-edge-dark);
+    border-radius: 3px !important;
+    background: #0b1538;
+    box-shadow: inset 0 0 0 1px rgba(231,240,255,.2), 2px 2px 0 rgba(0,0,0,.4);
+  }
+  .panel,
+  .player-card,
+  .profile-header,
+  .streamer-panel,
+  .registry-stat,
+  .toolbar {
+    box-shadow: inset 0 0 0 1px rgba(231,240,255,.55), inset 0 0 0 3px rgba(42,61,112,.44), 3px 3px 0 rgba(0,0,0,.4) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-card,
+  .clickable-card,
+  .site-nav-link,
+  button,
+  a { transition: none !important; }
+}

@@ -42,9 +42,20 @@ test("Arsenal What's New copy summarizes the combat/content expansion", async ()
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   assert.match(data, /v1\.1\.16/);
   assert.match(data, /Arsenal/);
-  assert.match(data, /six active Battle abilities/);
+  assert.match(data, /six-ability active Battle foundation/);
   assert.match(data, /Fire, Ice, Lightning, Wind, Water, Holy, and Dark/);
   assert.match(data, /New C-rank marks begin at Lv\.2/);
   assert.match(data, /lower-level raid targets/);
   assert.match(data, /low-level recipes/);
+});
+
+
+test("Arsenal II What's New explains the deeper caster and Portal UX expansion", async () => {
+  const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
+  assert.match(data, /v1\.1\.17/);
+  assert.match(data, /Arsenal II/);
+  assert.match(data, /12-step JLv curve/);
+  assert.match(data, /Weapons, Armor, and Items/);
+  assert.match(data, /Camp from the Adventure Board/);
+  assert.match(data, /suppressed until Twitch is live again/);
 });

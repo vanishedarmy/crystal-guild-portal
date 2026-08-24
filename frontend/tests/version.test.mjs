@@ -3,17 +3,17 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
-test("Arsenal public web identity is centralized and omits the Beta marker", () => {
-  assert.equal(WEB_VERSION, "v1.1.16");
-  assert.equal(WEB_BUILD, "Arsenal Hotfix 5");
-  assert.equal(WEB_RELEASE, "v1.1.16 — Arsenal Hotfix 5");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.16 — Arsenal Hotfix 5");
-  assert.equal(WEB_ASSET_REVISION, "1.1.16-arsenal1h5");
+test("Arsenal II public web identity is centralized and omits the Beta marker", () => {
+  assert.equal(WEB_VERSION, "v1.1.17");
+  assert.equal(WEB_BUILD, "Arsenal II");
+  assert.equal(WEB_RELEASE, "v1.1.17 — Arsenal II");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.17 — Arsenal II");
+  assert.equal(WEB_ASSET_REVISION, "1.1.17-arsenal-ii1");
   assert.doesNotMatch(WEB_RELEASE, /Beta/i);
 });
 
 
-test("Arsenal production web build dependencies are pinned", () => {
+test("Arsenal II production web build dependencies are pinned", () => {
   const packageJson = JSON.parse(fs.readFileSync(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(packageJson.dependencies.react, "19.2.8");
   assert.equal(packageJson.dependencies["react-dom"], "19.2.8");

@@ -55,7 +55,7 @@ test("Portal Phase 2 inventory retains equip, unequip, eligibility, and comparis
   assert.doesNotMatch(inventory, /Bot re-checks|action relay|Waiting for the Bot|still queued/);
 });
 
-test("Portal Phase 3 adds a dedicated Moogle Emporium tab with buy and collapsed sell UI", async () => {
+test("Arsenal II gives the Moogle Emporium dedicated Buy/Sell and category tabs", async () => {
   const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
   const shop = await readFile(new URL("player/MoogleEmporium.jsx", SRC), "utf8");
   assert.match(profile, /Moogle Emporium/);
@@ -63,8 +63,13 @@ test("Portal Phase 3 adds a dedicated Moogle Emporium tab with buy and collapsed
   assert.match(shop, /submitShopState/);
   assert.match(shop, /submitBuyItem/);
   assert.match(shop, /submitSellItem/);
-  assert.match(shop, /Sell from Inventory/);
-  assert.match(shop, /<details className="moogle-sell-disclosure">/);
+  assert.match(shop, /moogle-commerce-tabs/);
+  assert.match(shop, /moogle-category-tabs/);
+  assert.match(shop, /Weapons/);
+  assert.match(shop, /Armor/);
+  assert.match(shop, /Items/);
+  assert.match(shop, /role="tabpanel"/);
+  assert.doesNotMatch(shop, /moogle-sell-disclosure/);
   assert.match(shop, /current stock/);
   assert.match(shop, /Prices and availability are checked again before every transaction/);
   assert.match(shop, /Stat boosts/);

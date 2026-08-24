@@ -1,16 +1,35 @@
-# Upgrade Guide — v1.1.16 Arsenal Hotfix 2 → Hotfix 3
+# Crystal Guild v1.1.16 — Arsenal Hotfix 4 Upgrade Guide
 
-Hotfix 3 is Web-only.
+Upgrade baseline: **v1.1.16 — Arsenal Hotfix 3**.
 
-1. Keep the existing `1.1.16-arsenal-h1` Bot running; no Bot files or database migration are required.
-2. Apply the Hotfix 2 → Hotfix 3 Web patch to the Web repository, or replace the Web tree with the full Hotfix 3 Web package.
-3. Commit/push the Web changes to GitHub and redeploy Render as usual.
-4. Verify `/api/health` reports:
-   - Web runtime `1.1.16-arsenal-h3`
-   - frontend asset revision `1.1.16-arsenal1h3`
-   - hosted sync schema 1
-   - Portal Action protocol 14
-5. Refresh any already-open Adventurer Portal tab once so it loads the Hotfix 3 frontend.
-6. Reopen Adventure Board. If a Solo Venture was already persisted, the card should show **Checking your venture…** briefly and then restore the active stage instead of appearing as an empty READY card.
+## Normal upgrade
 
-Existing queued Adventure Board requests are safe to resume. If one was already leased when the Web redeploy occurred, the existing Bot can retry/complete it under the corrected result-size allowance after the lease is reclaimed.
+1. Stop/restart the Bot worker as you normally would for a Bot code update.
+2. Preserve runtime/private files such as `.env`, `.tio.tokens.json`, `crystal_guild.db`, the Twitch token database, and Render persistent-disk data.
+3. Overlay the Hotfix 4 update onto the existing Arsenal Hotfix 3 installation, or replace Bot/Web from the full packages.
+4. Push the matching Web files to GitHub and redeploy Render.
+5. Start/restart the Bot worker.
+6. Verify `!cgversion` reports `1.1.16-arsenal-h4`.
+7. Verify Web `/api/health` reports frontend asset revision `1.1.16-arsenal1h4`.
+
+There is **no schema migration** in this hotfix. Local DB schema remains 5 and Portal Action protocol remains 14.
+
+## Clearing the currently stuck adventure
+
+After Hotfix 4 is live, run in Twitch chat from the configured streamer/owner account:
+
+`!clearadventures`
+
+This immediately clears:
+
+- any active shared field/Rally encounter;
+- all timed Hunt assignments;
+- all persisted Solo Ventures, including orphaned/stuck rows.
+
+It does **not** clear raids/world bosses or player progression.
+
+The command also leaves all adventure cooldowns intact. If you deliberately want those timers reset too, run `!resettimers` separately afterward.
+
+## Expected result
+
+The Bot replies with a count of the adventure state it cleared. In the hosted/cloud runtime, Portal sync is woken immediately; refresh the Adventure Board if an already-open browser tab still shows stale content.

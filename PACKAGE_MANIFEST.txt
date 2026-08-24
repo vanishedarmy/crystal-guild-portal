@@ -1,10 +1,9 @@
-Crystal Guild Web v1.1.16 — Arsenal Hotfix 3
-Hosted runtime: 1.1.16-arsenal-h3
-Frontend asset revision: 1.1.16-arsenal1h3
+Crystal Guild Web v1.1.16 — Arsenal Hotfix 4
+Hosted runtime: 1.1.16-arsenal-h4
+Frontend asset revision: 1.1.16-arsenal1h4
 Hosted sync schema: 1
 Hosted sync compatibility: 1.1.15-wayfarer
 Portal Action protocol: 14
-Compatible Bot runtime: 1.1.16-arsenal-h1
-Matching Bot DB schema: 5
+Compatible Bot runtime: 1.1.16-arsenal-h4
 
-Web-only Solo Venture state-delivery hotfix: separate 16 KiB request / 64 KiB authoritative-result limits plus bootstrap Adventure Board retry and truthful loading state.
+Includes the Streamer Dashboard reference for !clearadventures and retains Hotfix 3 Portal result-size/recovery protections.

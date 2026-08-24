@@ -39,12 +39,13 @@ The dashboard mirrors the explicit `TWITCH_OWNER_ID` gates in `crystal_guild/twi
 | Diagnostics | `!directtest` | Test the direct Twitch REST announcement path |
 | Player Recovery | `!readyall` | Set every recruited player to READY and restore full HP plus applicable MP/AP |
 | Player Recovery | `!resettimers` | Clear Venture/Daily/Hunt cooldowns, camp timers, and personal shop refresh timers |
+| Player Recovery | `!clearadventures` | Emergency-clear active field/Rally encounters, timed Hunts, and all persisted Solo Ventures |
 | Encounter Recovery | `!resolveencounter` | Force the current field encounter through admin resolution |
 | Encounter Recovery | `!clearencounter` | Abort and clear the current field encounter |
 | Raid Control | `!spawnboss <boss name>` | Force-spawn a named raid boss |
 | Raid Control | `!resolveboss` | Force resolution of the active raid/boss |
 
-`!readyall` refuses to run while an encounter or raid is active so database HP/resources cannot diverge from live combat state. `!resettimers` resets persistent player-side timers only; active rally/round combat deadlines remain owned by the combat scheduler and are unchanged.
+`!readyall` refuses to run while an encounter or raid is active so database HP/resources cannot diverge from live combat state. `!resettimers` resets persistent player-side timers only; active rally/round combat deadlines remain owned by the combat scheduler and are unchanged. `!clearadventures` is the emergency escape hatch for orphaned adventure state: it abandons field/Rally encounters, timed Hunts, and persisted Solo Ventures while leaving raids/world bosses, progression, inventory, and cooldowns untouched.
 
 The hosted dashboard never executes these commands. Clicking a command only copies its text; the local Twitch Bot still validates the owner's Twitch user ID before running it.
 

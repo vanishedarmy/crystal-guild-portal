@@ -1,29 +1,53 @@
-# Crystal Guild v1.1.16 — Arsenal Hotfix 3
+# Crystal Guild v1.1.16 — Arsenal Hotfix 4 Release Notes
 
-## Solo Venture state delivery fix
+Arsenal Hotfix 4 adds an authoritative streamer recovery path for adventure state that cannot be cleared from the player Portal.
 
-Hotfix 3 fixes an Adventure Board failure that could leave a persisted Solo Venture active on the Bot while the browser showed an empty READY-style card with Begin Solo Venture disabled. The same hidden run could still block Daily Guild Provisions, producing the contradictory message to return or retreat from a Solo Venture that was not visible on the board.
+## New streamer recovery command
 
-Arsenal's larger Hunt catalog, expanded Job ability data, and a stocked player's battle-item list can make an authoritative Adventure Board result exceed the previous 16 KiB relay result ceiling. The Bot could calculate the correct state, but the hosted relay could reject the completed result before the browser received it.
+### `!clearadventures`
 
-The Web relay now keeps the strict 16 KiB limit for browser-submitted action payloads while allowing authoritative Bot results up to a separately bounded 64 KiB limit. This preserves the request-side security boundary while giving the richer Adventure Board enough room to return an active Solo Venture safely.
+Streamer-only emergency command. Alias: `!clearventures`.
 
-The Adventure Board also now:
-- retries its initial authoritative state request every five seconds while the board has not loaded;
-- reuses the same in-flight state request rather than generating duplicate queue entries;
-- shows **Checking your venture…** / **Checking** until authoritative state arrives instead of falsely displaying READY;
-- keeps Begin Solo Venture disabled until the board has a confirmed state.
+The command atomically abandons all currently active non-raid adventure activity:
 
-Existing persisted Solo Ventures are not reset. Once the updated Web deployment receives the authoritative state, the current combat/choice stage should reappear and can continue normally.
+- the shared field / Rally Venture encounter, if one is active;
+- every timed Hunt assignment currently waiting to resolve;
+- every persisted Wayfarer Solo Venture row, including an orphaned/stuck Solo Venture that the Portal can no longer render.
+
+The command operates directly against the authoritative Bot/runtime state and schema-5 `solo_expeditions` table. It therefore does not depend on an Adventure Board request succeeding first.
+
+After a successful clear, the Bot wakes its in-process hosted Portal sync worker immediately when available so the cleared activity state is published without waiting for the normal sync interval.
+
+## What the command intentionally preserves
+
+`!clearadventures` is a recovery command, not a player reset. It leaves these untouched:
+
+- player level, XP, JP, Gil and progression;
+- inventory and equipment;
+- the player's last successfully persisted HP / MP / AP state;
+- achievements and Titles;
+- Chocobo/Fellowship progression;
+- Venture, Solo Venture, Daily and Hunt cooldowns;
+- camp timers and personal shop rotations;
+- active raids / world bosses and raid rosters.
+
+Unbanked Solo Venture spoils and unresolved Hunt rewards are abandoned when those activities are cleared. If the streamer also wants to clear cooldowns afterward, `!resettimers` remains the separate explicit recovery tool.
+
+## Streamer Dashboard
+
+The Streamer Dashboard now lists `!clearadventures` under Player Recovery and explains its scope. The dashboard now documents 13 streamer-only commands.
 
 ## Compatibility
 
-- Bot runtime: `1.1.16-arsenal-h1` (unchanged)
-- Hosted Web runtime: `1.1.16-arsenal-h3`
-- Frontend asset revision: `1.1.16-arsenal1h3`
-- Local DB schema: 5 (unchanged)
-- Hosted sync schema: 1 (unchanged)
-- Portal Action protocol: 14 (unchanged)
-- Twitch prefix: `!`
+- Bot runtime: `1.1.16-arsenal-h4`
+- Hosted Web runtime: `1.1.16-arsenal-h4`
+- Frontend asset revision: `1.1.16-arsenal1h4`
+- Local DB schema: **5** (unchanged)
+- Hosted sync schema: **1** (unchanged)
+- Hosted sync compatibility: `1.1.15-wayfarer` (unchanged)
+- Portal Action protocol: **14** (unchanged)
+- Twitch command prefix: `!`
 
-This is a Web-only hotfix. No database migration, player reset, Bot replacement/restart, OAuth change, or new Render secret is required.
+No database migration, player reset, new Render secret, or new Twitch OAuth authorization is required.
+
+This is a matching **Bot + Web** hotfix because the authoritative recovery command is implemented in the Bot and its streamer-facing command reference is updated on the Web dashboard.

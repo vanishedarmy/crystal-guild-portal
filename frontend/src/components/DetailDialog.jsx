@@ -135,6 +135,7 @@ function DetailBody({ detail }) {
             {activeAbilities.length ? activeAbilities.map((ability) => (
               <div className={`job-detail-ability ${ready(ability) ? "ready" : "locked"}`} key={ability.id || ability.name}>
                 <div className="job-detail-ability-head"><strong>JLv.{ability.level} · {ability.name}</strong><span>{ability.cost} {String(ability.resource || job.resource_mode || "mp").toUpperCase()} · {humanizeLabel(ability.target)}</span></div>
+                {abilityTraitLabels(ability).length ? <div className="ability-trait-row">{abilityTraitLabels(ability).map((label) => <span className="small-badge ability-trait" key={label}>{label}</span>)}</div> : null}
                 <p>{ability.description}</p>
                 <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : `Unlocks at JLv.${ability.level}`}</span>
               </div>
@@ -182,6 +183,24 @@ function DetailBody({ detail }) {
     );
   }
   return null;
+}
+
+
+function abilityTraitLabels(ability = {}) {
+  const labels = [];
+  if (ability.element) labels.push(String(ability.element));
+  for (const effect of Array.isArray(ability.effects) ? ability.effects : []) {
+    if (effect.type === "status" && effect.status) labels.push(humanizeLabel(effect.status));
+    if (effect.type === "heal") labels.push("Healing");
+    if (effect.type === "cleanse") labels.push("Cleanse");
+    if (effect.type === "drain") labels.push("HP Drain");
+    if (effect.type === "restore_mp") labels.push("MP Restore");
+    if (effect.type === "restore_ap") labels.push("AP Restore");
+    if (effect.type === "revive") labels.push("Revive");
+    if (effect.type === "damage" && Number(effect.pierce || 0) > 0) labels.push("Piercing");
+    if (effect.type === "damage" && Number(effect.crit_bonus || 0) > 0) labels.push("High Crit");
+  }
+  return [...new Set(labels)];
 }
 
 export default function DetailDialog({ detail, onClose }) {

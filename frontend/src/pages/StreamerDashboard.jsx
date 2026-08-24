@@ -68,6 +68,7 @@ const OWNER_COMMAND_GROUPS = [
     commands: [
       { command: "!readyall", description: "Make every player READY and restore full HP plus applicable MP/AP", risk: "caution" },
       { command: "!resettimers", description: "Clear all player cooldowns, camp timers, and shop refresh timers", risk: "danger" },
+      { command: "!clearadventures", description: "Emergency-clear all active field adventures, timed Hunts, and Solo Ventures without touching raids or player progression", risk: "danger" },
     ],
   },
   {
@@ -414,7 +415,7 @@ export default function StreamerDashboard() {
                 <section className="streamer-panel streamer-owner-panel" id="owner-commands">
                   <div className="streamer-panel-heading streamer-owner-heading">
                     <div><span>Streamer Tools</span><h2>All Streamer-Only Commands</h2></div>
-                    <small>12 streamer-only commands · click to copy</small>
+                    <small>13 streamer-only commands · click to copy</small>
                   </div>
                   <div className="streamer-owner-notice">
                     Only the configured streamer account can run these commands. Use recovery and force-action commands only when a battle is genuinely stuck.

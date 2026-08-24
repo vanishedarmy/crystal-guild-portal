@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h1"
-FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h1"
+HOSTED_PORTAL_VERSION = "1.1.16-arsenal-h2"
+FRONTEND_ASSET_REVISION = "1.1.16-arsenal1h2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {
@@ -38,6 +38,23 @@ ALLOWED_PORTAL_ACTIONS = {
 }
 MAX_ACTION_BYTES = 16 * 1024
 MAX_ACTION_HISTORY = 20
+# Daily Guild Provisions is mounted on Overview and may be retried across page
+# refreshes while the Bot is temporarily slow/offline. Treat its state/claim
+# requests as one logical in-flight operation per player so browser retries
+# cannot flood the bounded Portal relay queue.
+# Read/state requests are safe to collapse because only the newest response matters.
+READ_ONLY_STATE_ACTIONS = {
+    "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
+    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE",
+}
+# Gameplay mutations below are also safe to coalesce while one identical request is
+# still pending/processing. This prevents a browser retry from applying a Solo
+# Venture round twice after the first request completed slowly.
+COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
+    "CLAIM_DAILY", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
+    "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN",
+    "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
+}
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
 USERNAME_RE = re.compile(r"^[A-Za-z0-9_]{1,25}$")
@@ -698,6 +715,91 @@ class HostedPortalStore:
             ).fetchone()
             if existing:
                 return self._public_action(existing)
+
+            # State panels can refresh automatically while Render or the Bot is
+            # waking. Older builds used a fresh idempotency key for each refresh,
+            # which could fill the five-action per-player queue with duplicate
+            # reads and starve real gameplay actions. Compact those pending reads
+            # proactively whenever the player submits anything. A processing row
+            # is never cancelled because the Bot may already be executing it.
+            state_placeholders = ",".join("?" for _ in READ_ONLY_STATE_ACTIONS)
+            state_rows = conn.execute(
+                f"""
+                SELECT * FROM portal_actions
+                WHERE twitch_id=? AND action_type IN ({state_placeholders})
+                  AND status IN ('pending','processing')
+                ORDER BY action_type,payload_json,
+                         CASE status WHEN 'processing' THEN 0 ELSE 1 END,
+                         created_at ASC,action_id ASC
+                """,
+                (twitch_id, *sorted(READ_ONLY_STATE_ACTIONS)),
+            ).fetchall()
+            state_keepers: set[tuple[str, str]] = set()
+            superseded = json.dumps(
+                {
+                    "ok": False,
+                    "message": "A newer matching Portal state request superseded this refresh.",
+                    "data": {"coalesced": True},
+                },
+                separators=(",", ":"),
+                sort_keys=True,
+                ensure_ascii=False,
+            )
+            for pending_state in state_rows:
+                signature = (str(pending_state["action_type"]), str(pending_state["payload_json"]))
+                if signature not in state_keepers:
+                    state_keepers.add(signature)
+                    continue
+                if pending_state["status"] == "pending":
+                    conn.execute(
+                        """
+                        UPDATE portal_actions
+                        SET status='failed',result_json=?,lease_hash=NULL,lease_until=0,worker_id=NULL,updated_at=?
+                        WHERE action_id=? AND status='pending'
+                        """,
+                        (superseded, now, pending_state["action_id"]),
+                    )
+
+            # Reuse one authoritative in-flight request for browser retries. This
+            # covers both state reads and replay-safe Adventure/Daily mutations,
+            # preventing delayed Solo Venture clicks from becoming two rounds.
+            if kind in COALESCED_PENDING_ACTIONS:
+                in_flight = conn.execute(
+                    """
+                    SELECT * FROM portal_actions
+                    WHERE twitch_id=? AND action_type=? AND payload_json=?
+                      AND status IN ('pending','processing')
+                    ORDER BY CASE status WHEN 'processing' THEN 0 ELSE 1 END,
+                             created_at ASC, action_id ASC
+                    """,
+                    (twitch_id, kind, encoded),
+                ).fetchall()
+                if in_flight:
+                    keeper = in_flight[0]
+                    duplicate_result = json.dumps(
+                        {
+                            "ok": False,
+                            "message": "A matching Portal request is already waiting for Crystal Guild.",
+                            "data": {"coalesced": True, "replacement_action_id": keeper["action_id"]},
+                        },
+                        separators=(",", ":"),
+                        sort_keys=True,
+                        ensure_ascii=False,
+                    )
+                    for duplicate in in_flight[1:]:
+                        if duplicate["status"] != "pending":
+                            continue
+                        conn.execute(
+                            """
+                            UPDATE portal_actions
+                            SET status='failed',result_json=?,lease_hash=NULL,lease_until=0,worker_id=NULL,updated_at=?
+                            WHERE action_id=? AND status='pending'
+                            """,
+                            (duplicate_result, now, duplicate["action_id"]),
+                        )
+                    conn.commit()
+                    return self._public_action(keeper)
+
             player = conn.execute(
                 "SELECT username FROM portal_players WHERE twitch_id=?",
                 (twitch_id,),
@@ -713,12 +815,21 @@ class HostedPortalStore:
                 "DELETE FROM portal_actions WHERE status IN ('completed','failed') AND updated_at<?",
                 (now - (30 * 24 * 60 * 60),),
             )
-            queued = conn.execute(
-                "SELECT COUNT(*) AS count FROM portal_actions WHERE twitch_id=? AND status IN ('pending','processing')",
-                (twitch_id,),
-            ).fetchone()
-            if int(queued["count"] or 0) >= 5:
-                raise ValueError("Too many Portal actions are already waiting for the Bot.")
+            # Read-only state refreshes are separately coalesced and must never
+            # consume the mutation queue budget. Otherwise a few stale tab
+            # refreshes can prevent Attack/Ability/Daily claim actions entirely.
+            if kind not in READ_ONLY_STATE_ACTIONS:
+                mutation_placeholders = ",".join("?" for _ in READ_ONLY_STATE_ACTIONS)
+                queued = conn.execute(
+                    f"""
+                    SELECT COUNT(*) AS count FROM portal_actions
+                    WHERE twitch_id=? AND status IN ('pending','processing')
+                      AND action_type NOT IN ({mutation_placeholders})
+                    """,
+                    (twitch_id, *sorted(READ_ONLY_STATE_ACTIONS)),
+                ).fetchone()
+                if int(queued["count"] or 0) >= 5:
+                    raise ValueError("Too many gameplay Portal actions are already waiting for the Bot.")
             conn.execute(
                 """
                 INSERT INTO portal_actions(
@@ -759,15 +870,17 @@ class HostedPortalStore:
                 """,
                 (now, now),
             )
+            state_placeholders = ",".join("?" for _ in READ_ONLY_STATE_ACTIONS)
             rows = conn.execute(
-                """
+                f"""
                 SELECT a.* FROM portal_actions a
                 LEFT JOIN portal_players p ON p.twitch_id=a.twitch_id AND lower(p.username)=lower(a.username)
                 WHERE a.status='pending' AND (a.action_type='RECRUIT' OR p.username IS NOT NULL)
-                ORDER BY a.created_at ASC,a.action_id ASC
+                ORDER BY CASE WHEN a.action_type IN ({state_placeholders}) THEN 1 ELSE 0 END,
+                         a.created_at ASC,a.action_id ASC
                 LIMIT ?
                 """,
-                (safe_limit,),
+                (*sorted(READ_ONLY_STATE_ACTIONS), safe_limit),
             ).fetchall()
             for row in rows:
                 lease_token = random_token(24)

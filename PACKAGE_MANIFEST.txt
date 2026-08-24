@@ -1,9 +1,9 @@
-Crystal Guild Web v1.1.18 — Retro Phase 1
+Crystal Guild Web v1.1.18 — Retro Phase 1 Hotfix 1
 Hosted Web runtime: 1.1.18-retro-phase-1
-Frontend asset revision: 1.1.18-retro-phase1
+Frontend asset revision: 1.1.18-retro-phase1h1
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Includes the complete v1.1.17 Arsenal II Hotfix 5 Web baseline plus the Retro Phase 1 shared SNES-era visual foundation for Portal, Player Guide, and Streamer Dashboard.
+Includes the complete v1.1.18 Retro Phase 1 Web baseline plus Hotfix 1: compact Solo Venture ability selection showing only currently usable abilities with name and MP/AP cost.

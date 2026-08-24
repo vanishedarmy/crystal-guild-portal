@@ -40,11 +40,12 @@ test("Adventure Board uses clearer player-facing wording", async () => {
   assert.match(board, /private, player-paced Solo Venture/);
 });
 
-test("Adventure Board uses local timers and polls while a live encounter or timed Hunt is active", async () => {
+test("Adventure Board uses local timers and polls while a live encounter, Solo Venture, or timed Hunt is active", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(board, /window\.setInterval\(\(\) => setClock\(Date\.now\(\)\), 1000\)/);
-  assert.match(board, /if \(!actionsAvailable \|\| \(!state\?\.encounter && !state\?\.active_hunt\)\) return undefined/);
-  assert.match(board, /window\.setInterval\(refreshActive, state\?\.active_hunt \? 10000 : 4000\)/);
+  assert.match(board, /const expeditionActive = Boolean\(state\?\.solo_venture\?\.expedition\)/);
+  assert.match(board, /!state\?\.encounter && !state\?\.active_hunt && !expeditionActive/);
+  assert.match(board, /window\.setInterval\(refreshActive, state\?\.active_hunt \? 10000 : expeditionActive \? 5000 : 4000\)/);
   assert.match(board, /window\.setTimeout\(\(\) => void loadState\(\{ quiet: true \}\), waitMs\)/);
   assert.match(board, /const ventureRemaining = remainingUntil\(state\?\.venture\?\.available_at, clock\)/);
   assert.match(board, /Number\(state\.active_hunt\?\.resolves_at \|\| 0\)/);

@@ -1,7 +1,7 @@
-# Hosting Crystal Guild Web v1.1.16 — Arsenal
+# Crystal Guild Web Hosting — Arsenal Hotfix 2
 
-Use the existing Render Web Service and Docker configuration. Preserve the current Render Environment values. Required production secrets remain `PORTAL_SYNC_KEY`, `PORTAL_TWITCH_CLIENT_ID`, `PORTAL_TWITCH_CLIENT_SECRET`, and `PORTAL_TWITCH_REDIRECT_URI`; do not put real values in GitHub.
+Deploy the Web repository to Render as usual. Hotfix 2 uses hosted sync schema **1**, sync compatibility `1.1.15-wayfarer`, and Portal Action protocol **14**.
 
-Health check: `/api/health`. Public pages include `/players`, `/fellowship`, `/guide`, `/privacy`, `/streamer`, and `/overlay`.
+The hosted Web runtime is `1.1.16-arsenal-h2` with frontend asset `1.1.16-arsenal1h2`; it is intentionally compatible with the unchanged `1.1.16-arsenal-h1` Bot. No new Web secret or OAuth scope is introduced.
 
-Arsenal uses hosted sync schema **1**, hosted sync compatibility **1.1.15-wayfarer**, and Portal Action protocol **14**. No new Web secret is introduced. Deploy matching `1.1.16-arsenal-h1` Bot and Web code so gameplay content and frontend asset `1.1.16-arsenal1h1` stay aligned.
+The hosted action relay now coalesces repeated state refreshes and prioritizes gameplay mutations so stale page polling cannot starve Solo Venture or Daily actions.

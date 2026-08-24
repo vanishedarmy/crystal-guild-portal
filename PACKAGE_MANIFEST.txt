@@ -1,10 +1,10 @@
-Crystal Guild Web v1.1.16 — Arsenal Hotfix 1
-Hosted runtime: 1.1.16-arsenal-h1
-Frontend asset revision: 1.1.16-arsenal1h1
+Crystal Guild Web v1.1.16 — Arsenal Hotfix 2
+Hosted runtime: 1.1.16-arsenal-h2
+Frontend asset revision: 1.1.16-arsenal1h2
 Hosted sync schema: 1
 Hosted sync compatibility: 1.1.15-wayfarer
 Portal Action protocol: 14
-Matching Bot runtime: 1.1.16-arsenal-h1
+Compatible Bot runtime: 1.1.16-arsenal-h1
 Matching Bot DB schema: 5
 
-Timed Hunts: C 5m / B 15m / A 30m / S 1h / S+ 2h; autonomous resolution, no new schema/protocol.
+Web-only queue/recovery hotfix: Daily request dedupe, state-read coalescing/prioritization, and Solo Venture authoritative refresh/retry recovery.

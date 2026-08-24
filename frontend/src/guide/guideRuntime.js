@@ -114,8 +114,10 @@ function statNotes(it){
 function costText(cost){if(!cost)return'—';let b=[];if(cost.gil)b.push(`${fmtInt(cost.gil)} gil`);if(cost.hunt_seals)b.push(`${fmtInt(cost.hunt_seals)} Seals`);for(const x of
   cost.items||[])b.push(`${itemName(x.item_id)} ×${x.quantity}`);return b.join(' • ')||'None'}
 
+const [releaseVersion,releaseBuild='']=releaseLabel.split(/\s+—\s+/,2);
 const versionSide=$('#versionSide');if(versionSide)versionSide.textContent=releaseLabel;
-const versionTop=$('#versionTop');if(versionTop)versionTop.textContent=releaseLabel.split(/\s+—\s+/)[0];
+const versionTop=$('#versionTop');if(versionTop)versionTop.textContent=releaseVersion||releaseLabel;
+const buildTop=$('#buildTop');if(buildTop)buildTop.textContent=releaseBuild;
 $('#heroChips').innerHTML=[`${D.jobs.length} Jobs`,`${D.monsters.length} Monsters`,`${D.bosses.length} Raid Bosses`,`${D.regions.length} Regions`,`${D.hunts.length} Hunts`,`${D.relics.length} Relics`,
   `${D.items.length} Items`].map(x=>`<span class="chip">${x}</span>`).join('');
 

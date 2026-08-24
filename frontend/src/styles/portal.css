@@ -6629,3 +6629,8 @@ body { font-size: 15px; line-height: 1.54; }
   .whats-new-highlight:last-child:nth-child(odd) { grid-column: auto; }
   .whats-new-action { width: 100%; justify-self: stretch; }
 }
+
+/* v1.1.16 Arsenal — elemental/special-effect ability reference */
+.ability-trait-row { display:flex; flex-wrap:wrap; gap:.35rem; margin:.45rem 0 .1rem; }
+.small-badge.ability-trait { background:rgba(67, 121, 177, .13); border-color:rgba(118, 177, 232, .28); color:#d7ebff; }
+.solo-ability-traits { color:#b9d9f6; font-weight:700; letter-spacing:.015em; }

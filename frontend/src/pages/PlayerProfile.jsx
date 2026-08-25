@@ -10,6 +10,7 @@ import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import Overview from "../player/Overview.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
 import { campDeadlineMs, campRemainingSeconds } from "../utils/campCountdown.js";
+import { jobSigil, jobTone } from "../utils/retroAssets.js";
 
 const MODULES = {
   overview: Overview,
@@ -168,7 +169,7 @@ export default function PlayerProfile() {
           {error ? <div className="state-message compact-state">{error}</div> : null}
           {overview ? (
             <div className="profile-header">
-              <div className="profile-sigil" aria-hidden="true">✦</div>
+              <div className={`profile-sigil retro-job-portrait tone-${jobTone(overview.job)}`} aria-hidden="true"><span className="retro-job-glyph">{jobSigil(overview.job)}</span></div>
               <div className="profile-identity">
                 <p className="eyebrow">Crystal Guild Adventurer</p>
                 <h1 className="display-name">{overview.identity.display_name}</h1>

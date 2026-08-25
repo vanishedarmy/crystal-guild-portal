@@ -24,7 +24,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.1.18-retro-phase-ii"
-FRONTEND_ASSET_REVISION = "1.1.18-retro-phase-ii24"
+FRONTEND_ASSET_REVISION = "1.1.18-retro-phase-ii25"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {
@@ -1945,8 +1945,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         self.send_header("Cross-Origin-Resource-Policy", "same-origin")
         self.send_header(
             "Content-Security-Policy",
-            "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
-            "img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+            "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; "
+            "object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
         )
 
     def _serve_static(self, path: str) -> None:

@@ -175,7 +175,7 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
         self.assertIn("1.1.18", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.1.18-retro-phase-ii24")
+        self.assertEqual(payload["frontend_asset_revision"], "1.1.18-retro-phase-ii25")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)
@@ -416,7 +416,10 @@ class PortalServerCase(unittest.TestCase):
             self.assertEqual(status, 200)
             self.assertEqual(headers.get("X-Frame-Options"), "DENY")
             self.assertEqual(headers.get("X-Content-Type-Options"), "nosniff")
-            self.assertIn("frame-ancestors 'none'", headers.get("Content-Security-Policy", ""))
+            csp = headers.get("Content-Security-Policy", "")
+            self.assertIn("frame-ancestors 'none'", csp)
+            self.assertIn("https://fonts.googleapis.com", csp)
+            self.assertIn("https://fonts.gstatic.com", csp)
             self.assertIn("camera=()", headers.get("Permissions-Policy", ""))
 
     def test_rejects_invalid_or_mismatched_usernames(self):

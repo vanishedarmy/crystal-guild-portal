@@ -11,7 +11,7 @@ This Web-only hotfix corrects long adventurer display names in the mobile player
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii24`
+- Frontend asset revision: `1.1.18-retro-phase-ii25`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

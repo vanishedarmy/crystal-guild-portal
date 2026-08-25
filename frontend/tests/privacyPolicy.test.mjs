@@ -20,7 +20,7 @@ test("privacy policy is routed and linked from the public portal", async () => {
 
 test("privacy policy includes contact, rights, storage, and truthful tracking language", async () => {
   const policy = await readFile(new URL("pages/PrivacyPolicy.jsx", SRC), "utf8");
-  assert.match(policy, /August 19, 2026/);
+  assert.match(policy, /August 25, 2026/);
   assert.match(policy, /vanishedarmy@gmail\.com/);
   assert.match(policy, /the method below/i);
   assert.doesNotMatch(policy, /<span>Phone<\/span>/i);
@@ -31,5 +31,6 @@ test("privacy policy includes contact, rights, storage, and truthful tracking la
   assert.match(policy, /Sign in with Twitch/);
   assert.match(policy, /access tokens are used only during sign-in and are not stored/i);
   assert.match(policy, /strictly necessary first-party cookies/i);
+  assert.match(policy, /Pixelify Sans display typeface from Google Fonts/i);
   assert.doesNotMatch(policy, /Advertising and targeting cookies: Used to deliver advertisements/i);
 });

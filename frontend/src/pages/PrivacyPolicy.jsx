@@ -56,7 +56,7 @@ export default function PrivacyPolicy() {
               This policy explains how Crystal Guild handles personal information connected with the Adventurer Portal,
               its public player profiles, and related interactions.
             </p>
-            <div className="privacy-effective"><span>Effective</span><strong>August 19, 2026</strong></div>
+            <div className="privacy-effective"><span>Effective</span><strong>August 25, 2026</strong></div>
           </div>
           <aside className="privacy-summary" aria-label="Privacy summary">
             <div><span>Website</span><strong>crystal-guild-web.onrender.com</strong></div>
@@ -157,6 +157,12 @@ export default function PrivacyPolicy() {
               <p>
                 Crystal Guild does not sell personal information. We also do not disclose personal information except as
                 described in this policy, as needed to provide the service, or where disclosure is required or permitted by law.
+              </p>
+              <p>
+                The website loads the Pixelify Sans display typeface from Google Fonts. When your browser requests that
+                stylesheet or font resource, Google may receive ordinary network information such as your IP address and
+                browser request metadata needed to deliver the resource. Crystal Guild does not use this font request for
+                advertising or cross-site profiling.
               </p>
             </PolicySection>
 

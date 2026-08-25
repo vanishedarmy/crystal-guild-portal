@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii24
+Frontend asset revision: 1.1.18-retro-phase-ii25
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Current Web build: Mobile Profile Name No-Wrap Hotfix on top of the ii23 Bestiary Name Alignment Hotfix. Long adventurer display names now remain on one line in the mobile profile masthead.
+Current Web build: Pixelify Sans Typography Pass on top of ii24. Major page/section titles, character names, Bestiary/boss identity text, and major Player Guide headings now use Pixelify Sans with existing readable body typography retained.

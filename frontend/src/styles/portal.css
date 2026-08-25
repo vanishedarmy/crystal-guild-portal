@@ -7559,3 +7559,55 @@ button:disabled { opacity: .78; }
     grid-column: 1;
   }
 }
+
+
+/* v1.1.18 ii25 — Pixelify Sans retro display typography pass */
+:root {
+  --font-retro: "Pixelify Sans", "Crystal Display", "Cinzel", "Trajan Pro", "Palatino Linotype", Georgia, serif;
+}
+
+/* Major page and section identity only — body and dense data remain on the readable UI stack. */
+.brand strong,
+main h1,
+.panel-title-row h2,
+.panel-title-row h3,
+.display-name,
+.character-player-card h2,
+.bestiary-monster-copy strong,
+.boss-name,
+.trophy-record-card > strong,
+.detail-body > h2 {
+  font-family: var(--font-retro);
+  font-weight: 600;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
+}
+
+.brand strong {
+  font-weight: 600;
+  letter-spacing: .045em;
+}
+
+.hero-intro h1,
+.privacy-hero h1 {
+  font-weight: 600;
+  letter-spacing: .015em;
+}
+
+.profile-identity .display-name,
+.character-player-card h2 {
+  font-weight: 600;
+  letter-spacing: .005em;
+}
+
+.panel-title-row h2,
+.panel-title-row h3 {
+  letter-spacing: .025em;
+}
+
+.bestiary-monster-copy strong,
+.boss-name,
+.trophy-record-card > strong,
+.detail-body > h2 {
+  letter-spacing: .012em;
+}

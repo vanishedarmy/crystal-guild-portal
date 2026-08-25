@@ -277,7 +277,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){infoPanel.addE
 // Regions and monster locations
 const monsterRegions={};D.regions.forEach(r=>(r.encounters||[]).forEach(e=>(monsterRegions[e.monster_id]??=[]).push(r.name)));
 $('#regionGrid').innerHTML=[...D.regions].sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||''))).map(r=>{let total=r.encounters.reduce((a,x)=>a+x.weight,0);let ents=[...r.encounters].sort((a,b)=>b.weight-a.weight).map(e=>`${monsterName(e.monster_id)}
-  <span class="muted">(${Math.round(e.weight/total*100)}%)</span>`).join(' • ');return `<div class="card searchable guide-region-card"><div class="guide-region-art" aria-hidden="true"><img src="/retro-phase-ii/regions/${esc(r.id)}.webp" alt="" loading="lazy" decoding="async"></div><div class="statline"><span class="badge gold">Min Lv.${r.min_level}</span>
+  <span class="muted">(${Math.round(e.weight/total*100)}%)</span>`).join(' • ');return `<div class="card searchable guide-region-card"><div class="guide-region-art" aria-hidden="true"><img src="/retro-phase-ii/regions-hd/${esc(r.id)}.webp" alt="" loading="lazy" decoding="async"></div><div class="statline"><span class="badge gold">Min Lv.${r.min_level}</span>
   <span class="badge">${r.encounters.length} encounters</span></div><h3>${esc(r.name)}</h3><p>${esc(r.description)}</p><p>${ents}</p></div>`}).join('');
 D.regions.forEach(r=>$('#monsterRegion').insertAdjacentHTML('beforeend',`<option>${esc(r.name)}</option>`));
 function renderMonsters(){let q=$('#monsterSearch').value.toLowerCase(),r=$('#monsterRegion').value;let ms=D.monsters.filter(m=>(!r||(monsterRegions[m.id]||[]).includes(r))&&([m.name,m.weakness,

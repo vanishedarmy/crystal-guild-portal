@@ -21,19 +21,19 @@ test("Retro Phase II loads after the Phase 1 foundation", async () => {
 
 test("all eight live regions have standalone production artwork", async () => {
   for (const id of REGIONS) {
-    const url = new URL(`retro-phase-ii/regions/${id}.webp`, PUBLIC);
+    const url = new URL(`retro-phase-ii/regions-hd/${id}.webp`, PUBLIC);
     await access(url);
     const data = await readFile(url);
-    assert.ok(data.length > 2000, `${id} artwork is unexpectedly small`);
+    assert.ok(data.length > 500000, `${id} detailed artwork is unexpectedly small`);
     assert.equal(data.subarray(0, 4).toString("ascii"), "RIFF", `${id} is not WebP`);
   }
 });
 
-test("Adventure Board and Guide use live region ids instead of concept-board slices", async () => {
+test("Adventure Board and Guide use the cache-busted detailed live region art", async () => {
   const hunts = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   const guide = await readFile(new URL("guide/guideRuntime.js", SRC), "utf8");
-  assert.match(hunts, /retro-phase-ii\/regions\/\$\{region\.id\}\.webp/);
-  assert.match(guide, /retro-phase-ii\/regions\/\$\{esc\(r\.id\)\}\.webp/);
+  assert.match(hunts, /retro-phase-ii\/regions-hd\/\$\{region\.id\}\.webp/);
+  assert.match(guide, /retro-phase-ii\/regions-hd\/\$\{esc\(r\.id\)\}\.webp/);
   assert.doesNotMatch(hunts + guide, /Verdleaf|Stonewall Range|Sands of Kaldor|Celestial Isles/);
 });
 

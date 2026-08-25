@@ -724,7 +724,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           {regions.map((region) => (
             <article className={`adventure-region-card ${region.current ? "current" : ""} ${!region.unlocked ? "locked" : ""}`} key={region.id}>
               <div className="adventure-region-art" aria-hidden="true">
-                <img src={`/retro-phase-ii/regions/${region.id}.webp`} alt="" loading="lazy" decoding="async" />
+                <img src={`/retro-phase-ii/regions-hd/${region.id}.webp`} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="card-status-row adventure-region-head">
                 <div className="slot-label">Lv.{number(region.min_level)}+</div>

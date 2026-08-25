@@ -1,19 +1,20 @@
-# Bestiary Name Alignment Hotfix — Validation Report
+# Mobile Profile Name No-Wrap Hotfix — Validation Report
 
-Prepared from the validated ii22 Mobile Readability Hotfix baseline.
+Prepared from the validated ii23 Bestiary Name Alignment Hotfix baseline.
 
 ## Layout validation
-- Corrected the mobile Bestiary monster identity grid to reserve a fixed portrait column.
-- Monster names and levels remain aligned to the right of the portrait across supported mobile widths.
-- Preserved the portrait-led Bestiary card layout and existing search/filter behavior.
+- Player profile display names are constrained to one line on mobile viewports.
+- Mobile display-name sizing is reduced responsively without changing other profile typography.
+- Extremely long names use ellipsis instead of wrapping or overlapping the portrait.
+- Desktop profile masthead behavior remains unchanged.
 
 ## Regression validation
-- Frontend unit/regression suite: **246/246 PASS**
+- Frontend unit/regression suite: **247/247 PASS**
 - Hosted Web/API tests: **46/46 PASS**
 
 ## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii23`
+- Frontend asset revision: `1.1.18-retro-phase-ii24`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

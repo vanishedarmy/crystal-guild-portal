@@ -13,7 +13,7 @@ Prepared from the validated ii22 Mobile Readability Hotfix baseline.
 
 ## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii23`
+- Frontend asset revision: `1.1.18-retro-phase-ii24`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

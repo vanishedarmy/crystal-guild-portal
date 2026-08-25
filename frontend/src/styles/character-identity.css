@@ -337,3 +337,33 @@
     align-self: flex-start;
   }
 }
+
+
+/* v1.1.18 ii24 — mobile profile display-name no-wrap hotfix */
+.profile-identity .display-name {
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .profile-identity {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .profile-identity .display-name {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(1.45rem, 6.3vw, 2.1rem);
+    line-height: 1.06;
+  }
+}
+
+@media (max-width: 390px) {
+  .profile-identity .display-name {
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+  }
+}

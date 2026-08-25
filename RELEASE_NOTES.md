@@ -1,16 +1,17 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Bestiary Name Alignment Hotfix
+## Mobile Profile Name No-Wrap Hotfix
 
-This Web-only hotfix corrects the Adventurer Portal Bestiary card identity layout on mobile. Monster names now begin immediately to the right of the portrait instead of being pushed behind the image.
+This Web-only hotfix corrects long adventurer display names in the mobile player profile masthead. Names now remain on one line beside the Job portrait instead of wrapping into a second line.
 
 ### What changed
-- Corrected the mobile Bestiary identity grid so the portrait column reserves its full width.
-- Kept monster name and level copy justified to the right of the image.
-- Preserved the ii22 portrait-led card layout and all prior readability improvements.
+- Added a mobile-only single-line display-name rule to the player profile masthead.
+- Reduced the display-name scale slightly on narrow phone widths while retaining the existing fantasy display type treatment.
+- Added graceful ellipsis only as a last-resort fallback for exceptionally long names.
+- Preserved portrait sizing, job/level information, status badges, title styling, vitals, and desktop presentation.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii23`
+- Frontend asset revision: `1.1.18-retro-phase-ii24`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

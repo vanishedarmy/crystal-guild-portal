@@ -4384,7 +4384,7 @@
       "gil": 4523,
       "weakness": "Holy",
       "special": {
-        "name": "Pharaoh\u2019s Curse",
+        "name": "Pharaoh’s Curse",
         "chance": 0.256,
         "multiplier": 2.81
       },
@@ -4399,7 +4399,7 @@
         }
       ],
       "combat_profile": "Controller",
-      "active_skill": "Pharaoh\u2019s Curse"
+      "active_skill": "Pharaoh’s Curse"
     },
     {
       "id": "floating_death",
@@ -4579,7 +4579,7 @@
     },
     {
       "id": "great_malboro_omega",
-      "name": "Great Malboro \u03a9",
+      "name": "Great Malboro Ω",
       "level": 92,
       "hp": 11358,
       "attack": 419,
@@ -4666,306 +4666,6 @@
       ],
       "combat_profile": "Caster",
       "active_skill": "Wave Cannon"
-    },
-    {
-      "id": "cosmic_crystal_colossus",
-      "name": "Cosmic Crystal Colossus",
-      "level": 97,
-      "hp": 13984,
-      "attack": 462,
-      "defense": 272,
-      "spirit": 255,
-      "xp": 8602,
-      "jp": 412,
-      "gil": 6320,
-      "weakness": "Earth",
-      "special": {
-        "name": "Singularity Core",
-        "chance": 0.281,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "dark_matter",
-          "chance": 0.08
-        },
-        {
-          "item_id": "eidolon_shard",
-          "chance": 0.08
-        }
-      ],
-      "combat_profile": "Tank",
-      "active_skill": "Singularity Core"
-    },
-    {
-      "id": "violet_crystal_archangel",
-      "name": "Violet Crystal Archangel",
-      "level": 99,
-      "hp": 12640,
-      "attack": 438,
-      "defense": 228,
-      "spirit": 286,
-      "xp": 8951,
-      "jp": 420,
-      "gil": 6577,
-      "weakness": "Holy",
-      "special": {
-        "name": "Astral Judgment",
-        "chance": 0.283,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "eidolon_shard",
-          "chance": 0.1
-        },
-        {
-          "item_id": "void_essence",
-          "chance": 0.45
-        }
-      ],
-      "combat_profile": "Caster",
-      "active_skill": "Astral Judgment"
-    },
-    {
-      "id": "crimson_crystal_demon",
-      "name": "Crimson Crystal Demon",
-      "level": 101,
-      "hp": 14628,
-      "attack": 487,
-      "defense": 239,
-      "spirit": 234,
-      "xp": 9308,
-      "jp": 428,
-      "gil": 6840,
-      "weakness": "Ice",
-      "special": {
-        "name": "Bloodflare",
-        "chance": 0.284,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "dark_matter",
-          "chance": 0.085
-        },
-        {
-          "item_id": "void_essence",
-          "chance": 0.4
-        }
-      ],
-      "combat_profile": "Aggressive",
-      "active_skill": "Bloodflare"
-    },
-    {
-      "id": "void_knight",
-      "name": "Void Knight",
-      "level": 103,
-      "hp": 15219,
-      "attack": 501,
-      "defense": 281,
-      "spirit": 244,
-      "xp": 9672,
-      "jp": 437,
-      "gil": 7108,
-      "weakness": "Holy",
-      "special": {
-        "name": "Null Sever",
-        "chance": 0.285,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "demonolith_shard",
-          "chance": 0.18
-        },
-        {
-          "item_id": "dark_matter",
-          "chance": 0.09
-        }
-      ],
-      "combat_profile": "Aggressive",
-      "active_skill": "Null Sever"
-    },
-    {
-      "id": "stormforged_thunderwing",
-      "name": "Stormforged Thunderwing",
-      "level": 105,
-      "hp": 14872,
-      "attack": 516,
-      "defense": 252,
-      "spirit": 266,
-      "xp": 10043,
-      "jp": 446,
-      "gil": 7381,
-      "weakness": "Earth",
-      "special": {
-        "name": "Judgment Volt",
-        "chance": 0.286,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "eidolon_shard",
-          "chance": 0.09
-        },
-        {
-          "item_id": "magitek_core",
-          "chance": 0.4
-        }
-      ],
-      "combat_profile": "Aggressive",
-      "active_skill": "Judgment Volt"
-    },
-    {
-      "id": "toxic_hydra",
-      "name": "Toxic Hydra",
-      "level": 107,
-      "hp": 17106,
-      "attack": 522,
-      "defense": 269,
-      "spirit": 249,
-      "xp": 10421,
-      "jp": 455,
-      "gil": 7660,
-      "weakness": "Fire",
-      "special": {
-        "name": "Venom Cataclysm",
-        "chance": 0.287,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "morbol_bulb",
-          "chance": 0.32
-        },
-        {
-          "item_id": "dark_matter",
-          "chance": 0.095
-        }
-      ],
-      "combat_profile": "Controller",
-      "active_skill": "Venom Cataclysm"
-    },
-    {
-      "id": "glacial_runebound_mammoth",
-      "name": "Glacial Runebound Mammoth",
-      "level": 109,
-      "hp": 18244,
-      "attack": 535,
-      "defense": 301,
-      "spirit": 258,
-      "xp": 10807,
-      "jp": 464,
-      "gil": 7944,
-      "weakness": "Fire",
-      "special": {
-        "name": "Runic Avalanche",
-        "chance": 0.288,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "celestial_thread",
-          "chance": 0.22
-        },
-        {
-          "item_id": "eidolon_shard",
-          "chance": 0.09
-        }
-      ],
-      "combat_profile": "Tank",
-      "active_skill": "Runic Avalanche"
-    },
-    {
-      "id": "abyssal_kraken_king",
-      "name": "Abyssal Kraken King",
-      "level": 111,
-      "hp": 18836,
-      "attack": 548,
-      "defense": 274,
-      "spirit": 301,
-      "xp": 11200,
-      "jp": 474,
-      "gil": 8234,
-      "weakness": "Lightning",
-      "special": {
-        "name": "Tidal Dominion",
-        "chance": 0.289,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "void_essence",
-          "chance": 0.5
-        },
-        {
-          "item_id": "eidolon_shard",
-          "chance": 0.1
-        }
-      ],
-      "combat_profile": "Controller",
-      "active_skill": "Tidal Dominion"
-    },
-    {
-      "id": "infernal_phoenix",
-      "name": "Infernal Phoenix",
-      "level": 113,
-      "hp": 17502,
-      "attack": 561,
-      "defense": 263,
-      "spirit": 319,
-      "xp": 11601,
-      "jp": 484,
-      "gil": 8530,
-      "weakness": "Water",
-      "special": {
-        "name": "Cinder Rebirth",
-        "chance": 0.29,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "dark_matter",
-          "chance": 0.1
-        },
-        {
-          "item_id": "eidolon_shard",
-          "chance": 0.1
-        }
-      ],
-      "combat_profile": "Caster",
-      "active_skill": "Cinder Rebirth"
-    },
-    {
-      "id": "obsidian_scorpion_king",
-      "name": "Obsidian Scorpion King",
-      "level": 115,
-      "hp": 19490,
-      "attack": 578,
-      "defense": 312,
-      "spirit": 268,
-      "xp": 12009,
-      "jp": 494,
-      "gil": 8832,
-      "weakness": "Ice",
-      "special": {
-        "name": "Eclipse Stinger",
-        "chance": 0.291,
-        "multiplier": 3.0
-      },
-      "drops": [
-        {
-          "item_id": "dark_matter",
-          "chance": 0.11
-        },
-        {
-          "item_id": "omega_core",
-          "chance": 0.03
-        }
-      ],
-      "combat_profile": "Aggressive",
-      "active_skill": "Eclipse Stinger"
     }
   ],
   "bosses": [
@@ -5060,7 +4760,7 @@
       "tier": "World Boss",
       "recommended_level": 14,
       "signature": "Grave March",
-      "description": "An ancient commander who has interpreted \u201crest in peace\u201d as optional guidance.",
+      "description": "An ancient commander who has interpreted “rest in peace” as optional guidance.",
       "drops": [
         {
           "item_id": "bone_chip",
@@ -6208,7 +5908,7 @@
       "xp": 59000,
       "gil": 180000,
       "signature": "Armageddon",
-      "description": "A monster-arena nightmare assembled from the Guild\u2019s worst collection habits.",
+      "description": "A monster-arena nightmare assembled from the Guild’s worst collection habits.",
       "drops": [
         {
           "item_id": "nemesis_mark",
@@ -6520,7 +6220,7 @@
       "price": 250,
       "shop": true,
       "shop_level": 10,
-      "description": "A stronger restorative mixture for heroes whose wounds have graduated beyond \u201cwalk it off.\u201d Restores 200 HP for one hero. Usable where item rules permit, including outside Active Battle.",
+      "description": "A stronger restorative mixture for heroes whose wounds have graduated beyond “walk it off.” Restores 200 HP for one hero. Usable where item rules permit, including outside Active Battle.",
       "use": {
         "target": "ally",
         "field": true,
@@ -6560,7 +6260,7 @@
       "price": 300,
       "shop": true,
       "shop_level": 8,
-      "description": "A compact vial of refined aether for restoring a spellcaster\u2019s reserves between difficult fights. Restores 40% of maximum MP and can be used in or out of Active Battle.",
+      "description": "A compact vial of refined aether for restoring a spellcaster’s reserves between difficult fights. Restores 40% of maximum MP and can be used in or out of Active Battle.",
       "use": {
         "target": "ally",
         "field": true,
@@ -6580,7 +6280,7 @@
       "price": 500,
       "shop": true,
       "shop_level": 12,
-      "description": "A feather charged with enough restorative aether to pull a fallen hero back into the fight. Revives a KO\u2019d hero with 30% maximum HP for one hero. Usable where item rules permit, including outside Active Battle.",
+      "description": "A feather charged with enough restorative aether to pull a fallen hero back into the fight. Revives a KO’d hero with 30% maximum HP for one hero. Usable where item rules permit, including outside Active Battle.",
       "use": {
         "target": "ally",
         "field": true,
@@ -6958,7 +6658,7 @@
         "thief",
         "ninja"
       ],
-      "description": "A practical dagger for Thief/Ninja. A nimble sidearm made for fast openings and opportunistic attacks. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.5 and grants +15 Attack, +3 DEX, and +1 LCK."
+      "description": "A practical dagger for Thief/Ninja. A nimble sidearm made for fast openings and opportunistic attacks. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.5 and grants +15 Attack, +3 DEX, and +1 LCK."
     },
     {
       "id": "iron_pistol",
@@ -6978,7 +6678,7 @@
       "allowed_jobs": [
         "machinist"
       ],
-      "description": "A practical firearm for Machinist. Engineered for measured ranged fire and dependable battlefield handling. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.5 and grants +18 Attack, +3 DEX, and +1 LCK."
+      "description": "A practical firearm for Machinist. Engineered for measured ranged fire and dependable battlefield handling. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.5 and grants +18 Attack, +3 DEX, and +1 LCK."
     },
     {
       "id": "maple_harp",
@@ -7020,7 +6720,7 @@
         "samurai",
         "ninja"
       ],
-      "description": "A practical katana for Samurai/Ninja. Its long edge rewards measured technique over reckless swinging. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.5 and grants +18 Attack, +2 STR, and +2 DEX."
+      "description": "A practical katana for Samurai/Ninja. Its long edge rewards measured technique over reckless swinging. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.5 and grants +18 Attack, +2 STR, and +2 DEX."
     },
     {
       "id": "brass_knuckles",
@@ -7062,7 +6762,7 @@
         "redmage",
         "bluemage"
       ],
-      "description": "A practical rapier for Red Mage/Blue Mage. A light dueling blade that leaves room for spellwork and precise footwork. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.5 and grants +15 Attack, +11 Magic Power, +2 DEX, and +2 MAG."
+      "description": "A practical rapier for Red Mage/Blue Mage. A light dueling blade that leaves room for spellwork and precise footwork. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.5 and grants +15 Attack, +11 Magic Power, +2 DEX, and +2 MAG."
     },
     {
       "id": "bronze_lance",
@@ -7175,7 +6875,7 @@
         "str": 4,
         "vit": 2
       },
-      "description": "A well-crafted axe for Beastmaster/Warrior/Dark Knight. A broad-headed weapon made for adventurers who solve problems at full force. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.8 and grants +27 Attack, +4 STR, and +2 VIT.",
+      "description": "A well-crafted axe for Beastmaster/Warrior/Dark Knight. A broad-headed weapon made for adventurers who solve problems at full force. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.8 and grants +27 Attack, +4 STR, and +2 VIT.",
       "gear_family": "axe"
     },
     {
@@ -7278,7 +6978,7 @@
         "str": 2,
         "dex": 2
       },
-      "description": "A well-crafted set of knuckles for Monk. Reinforced striking gear focused on speed, force, and hand-to-hand pressure. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.8 and grants +24 Attack, +2 STR, and +2 DEX.",
+      "description": "A well-crafted set of knuckles for Monk. Reinforced striking gear focused on speed, force, and hand-to-hand pressure. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.8 and grants +24 Attack, +2 STR, and +2 DEX.",
       "gear_family": "knuckles"
     },
     {
@@ -7320,7 +7020,7 @@
         "str": 4,
         "dex": 2
       },
-      "description": "A well-crafted spear for Dragoon. A Dragoon-minded weapon built around reach, momentum, and piercing force. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.8 and grants +26 Attack, +4 STR, and +2 DEX.",
+      "description": "A well-crafted spear for Dragoon. A Dragoon-minded weapon built around reach, momentum, and piercing force. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.8 and grants +26 Attack, +4 STR, and +2 DEX.",
       "gear_family": "spear"
     },
     {
@@ -7367,7 +7067,7 @@
         "bluemage"
       ],
       "gear_family": "sword",
-      "description": "A well-crafted blade. A dependable front-line blade with a balanced combat profile. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.8 and grants +24 Attack and +2 STR."
+      "description": "A well-crafted blade. A dependable front-line blade with a balanced combat profile. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.8 and grants +24 Attack and +2 STR."
     },
     {
       "id": "yew_wand",
@@ -8963,7 +8663,7 @@
     },
     {
       "id": "last_knife_dormant",
-      "name": "Last Knife \u2014 Dormant",
+      "name": "Last Knife — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9002,7 +8702,7 @@
     },
     {
       "id": "masamune_dormant",
-      "name": "Masamune \u2014 Dormant",
+      "name": "Masamune — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9025,7 +8725,7 @@
     },
     {
       "id": "godhand_dormant",
-      "name": "Godhand \u2014 Dormant",
+      "name": "Godhand — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9047,7 +8747,7 @@
     },
     {
       "id": "gae_bolg_dormant",
-      "name": "Gae Bolg \u2014 Dormant",
+      "name": "Gae Bolg — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9069,7 +8769,7 @@
     },
     {
       "id": "nirvana_dormant",
-      "name": "Nirvana \u2014 Dormant",
+      "name": "Nirvana — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9092,7 +8792,7 @@
     },
     {
       "id": "stardust_rod_dormant",
-      "name": "Stardust Rod \u2014 Dormant",
+      "name": "Stardust Rod — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9116,7 +8816,7 @@
     },
     {
       "id": "apocalypse_dormant",
-      "name": "Apocalypse \u2014 Dormant",
+      "name": "Apocalypse — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9138,7 +8838,7 @@
     },
     {
       "id": "excalibur_dormant",
-      "name": "Excalibur \u2014 Dormant",
+      "name": "Excalibur — Dormant",
       "type": "weapon",
       "rarity": "relic",
       "price": 7000,
@@ -9375,7 +9075,7 @@
     },
     {
       "id": "last_knife_awakened",
-      "name": "Last Knife \u2014 Awakened",
+      "name": "Last Knife — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9399,7 +9099,7 @@
     },
     {
       "id": "masamune_awakened",
-      "name": "Masamune \u2014 Awakened",
+      "name": "Masamune — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9423,7 +9123,7 @@
     },
     {
       "id": "godhand_awakened",
-      "name": "Godhand \u2014 Awakened",
+      "name": "Godhand — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9446,7 +9146,7 @@
     },
     {
       "id": "gae_bolg_awakened",
-      "name": "Gae Bolg \u2014 Awakened",
+      "name": "Gae Bolg — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9469,7 +9169,7 @@
     },
     {
       "id": "nirvana_awakened",
-      "name": "Nirvana \u2014 Awakened",
+      "name": "Nirvana — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9493,7 +9193,7 @@
     },
     {
       "id": "stardust_rod_awakened",
-      "name": "Stardust Rod \u2014 Awakened",
+      "name": "Stardust Rod — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9518,7 +9218,7 @@
     },
     {
       "id": "apocalypse_awakened",
-      "name": "Apocalypse \u2014 Awakened",
+      "name": "Apocalypse — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9541,7 +9241,7 @@
     },
     {
       "id": "excalibur_awakened",
-      "name": "Excalibur \u2014 Awakened",
+      "name": "Excalibur — Awakened",
       "type": "weapon",
       "rarity": "artifact",
       "price": 12000,
@@ -9603,7 +9303,7 @@
     },
     {
       "id": "last_knife_zenith",
-      "name": "Last Knife \u2014 Zenith",
+      "name": "Last Knife — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9710,7 +9410,7 @@
     },
     {
       "id": "masamune_zenith",
-      "name": "Masamune \u2014 Zenith",
+      "name": "Masamune — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9754,7 +9454,7 @@
     },
     {
       "id": "godhand_zenith",
-      "name": "Godhand \u2014 Zenith",
+      "name": "Godhand — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9819,7 +9519,7 @@
     },
     {
       "id": "gae_bolg_zenith",
-      "name": "Gae Bolg \u2014 Zenith",
+      "name": "Gae Bolg — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9866,7 +9566,7 @@
     },
     {
       "id": "nirvana_zenith",
-      "name": "Nirvana \u2014 Zenith",
+      "name": "Nirvana — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9890,7 +9590,7 @@
     },
     {
       "id": "stardust_rod_zenith",
-      "name": "Stardust Rod \u2014 Zenith",
+      "name": "Stardust Rod — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9915,7 +9615,7 @@
     },
     {
       "id": "apocalypse_zenith",
-      "name": "Apocalypse \u2014 Zenith",
+      "name": "Apocalypse — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -9962,7 +9662,7 @@
     },
     {
       "id": "excalibur_zenith",
-      "name": "Excalibur \u2014 Zenith",
+      "name": "Excalibur — Zenith",
       "type": "weapon",
       "rarity": "legendary",
       "price": 25000,
@@ -10221,7 +9921,7 @@
         "redmage",
         "bluemage"
       ],
-      "description": "A practical caster robe. A spellcaster\u2019s defense woven for concentration, spirit, and magical output. Requires Lv.5 and grants +3 VIT, +7 SPR, +3 MAG, and +30 HP."
+      "description": "A practical caster robe. A spellcaster’s defense woven for concentration, spirit, and magical output. Requires Lv.5 and grants +3 VIT, +7 SPR, +3 MAG, and +30 HP."
     },
     {
       "id": "scale_mail",
@@ -10272,7 +9972,7 @@
         "beastmaster"
       ],
       "gear_family": "heavy",
-      "description": "A well-crafted set of heavy armor. A sturdy defensive set made for adventurers expected to be hit repeatedly. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.8 and grants +8 VIT and +55 HP."
+      "description": "A well-crafted set of heavy armor. A sturdy defensive set made for adventurers expected to be hit repeatedly. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.8 and grants +8 VIT and +55 HP."
     },
     {
       "id": "steel_plate",
@@ -10404,7 +10104,7 @@
         "samurai",
         "beastmaster"
       ],
-      "description": "A well-crafted set of heavy armor. Dense defensive plating favors durability over subtle movement. Straightforward iron construction makes it dependable early in an adventurer\u2019s career. Requires Lv.12 and grants +11 VIT, +3 SPR, and +85 HP."
+      "description": "A well-crafted set of heavy armor. Dense defensive plating favors durability over subtle movement. Straightforward iron construction makes it dependable early in an adventurer’s career. Requires Lv.12 and grants +11 VIT, +3 SPR, and +85 HP."
     },
     {
       "id": "scouts_vest",
@@ -10697,7 +10397,7 @@
         "mag": 6,
         "hp": 100
       },
-      "description": "A rare caster robe. A spellcaster\u2019s defense woven for concentration, spirit, and magical output. Requires Lv.20 and grants +12 VIT, +17 SPR, +6 MAG, and +100 HP.",
+      "description": "A rare caster robe. A spellcaster’s defense woven for concentration, spirit, and magical output. Requires Lv.20 and grants +12 VIT, +17 SPR, +6 MAG, and +100 HP.",
       "gear_family": "robe"
     },
     {
@@ -10821,7 +10521,7 @@
         "redmage",
         "bluemage"
       ],
-      "description": "A rare caster robe. A spellcaster\u2019s defense woven for concentration, spirit, and magical output. Requires Lv.25 and grants +13 VIT, +19 SPR, +7 MAG, and +115 HP."
+      "description": "A rare caster robe. A spellcaster’s defense woven for concentration, spirit, and magical output. Requires Lv.25 and grants +13 VIT, +19 SPR, +7 MAG, and +115 HP."
     },
     {
       "id": "white_robe",
@@ -11360,7 +11060,7 @@
         "spr": 12,
         "lck": 8
       },
-      "description": "An artifact-grade accessory. A deceptively simple-looking ward against the many creative ways monsters ruin an adventurer\u2019s day. Requires Lv.25 and grants +8 VIT, +12 SPR, and +8 LCK. Prevents every currently supported harmful Active Battle status.",
+      "description": "An artifact-grade accessory. A deceptively simple-looking ward against the many creative ways monsters ruin an adventurer’s day. Requires Lv.25 and grants +8 VIT, +12 SPR, and +8 LCK. Prevents every currently supported harmful Active Battle status.",
       "status_immune": [
         "vulnerable",
         "weaken",
@@ -11400,7 +11100,7 @@
       "bonuses": {
         "str": 7
       },
-      "description": "A well-crafted accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.10 and grants +7 STR."
+      "description": "A well-crafted accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.10 and grants +7 STR."
     },
     {
       "id": "magic_ring",
@@ -11597,7 +11297,7 @@
         "dex": 10,
         "lck": 10
       },
-      "description": "A relic-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.24 and grants +10 DEX and +10 LCK."
+      "description": "A relic-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.24 and grants +10 DEX and +10 LCK."
     },
     {
       "id": "masamune_fragment",
@@ -11639,7 +11339,7 @@
         "magic_power": 18,
         "lck": 12
       },
-      "description": "An artifact-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.42 and grants +18 Attack, +18 Magic Power, and +12 LCK."
+      "description": "An artifact-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.42 and grants +18 Attack, +18 Magic Power, and +12 LCK."
     },
     {
       "id": "behemoth_crown",
@@ -11654,7 +11354,7 @@
         "vit": 12,
         "hp": 180
       },
-      "description": "An artifact-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.52 and grants +12 STR, +12 VIT, and +180 HP."
+      "description": "An artifact-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.52 and grants +12 STR, +12 VIT, and +180 HP."
     },
     {
       "id": "crystal_shard",
@@ -11758,7 +11458,7 @@
         "dex": 11,
         "lck": 10
       },
-      "description": "A rare accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.22 and grants +11 DEX and +10 LCK."
+      "description": "A rare accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.22 and grants +11 DEX and +10 LCK."
     },
     {
       "id": "crystal_focus",
@@ -11773,7 +11473,7 @@
         "spr": 12,
         "lck": 6
       },
-      "description": "A relic-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.40 and grants +12 MAG, +12 SPR, and +6 LCK."
+      "description": "A relic-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.40 and grants +12 MAG, +12 SPR, and +6 LCK."
     },
     {
       "id": "void_charm",
@@ -11804,7 +11504,7 @@
         "vit": 6,
         "lck": 8
       },
-      "description": "A relic-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.35 and grants +6 STR, +6 VIT, and +8 LCK."
+      "description": "A relic-grade accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.35 and grants +6 STR, +6 VIT, and +8 LCK."
     },
     {
       "id": "imp_wing",
@@ -12178,7 +11878,7 @@
         "str": 5,
         "vit": 5
       },
-      "description": "A well-crafted accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.10 and grants +5 STR and +5 VIT."
+      "description": "A well-crafted accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.10 and grants +5 STR and +5 VIT."
     },
     {
       "id": "thiefs_gloves",
@@ -12197,7 +11897,7 @@
         "dex": 6,
         "lck": 5
       },
-      "description": "A well-crafted accessory intended for Thief/Ninja. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.10 and grants +6 DEX and +5 LCK."
+      "description": "A well-crafted accessory intended for Thief/Ninja. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.10 and grants +6 DEX and +5 LCK."
     },
     {
       "id": "mage_earring",
@@ -12276,7 +11976,7 @@
         "dex": 9,
         "lck": 5
       },
-      "description": "A rare accessory intended for Machinist. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.25 and grants +9 DEX and +5 LCK."
+      "description": "A rare accessory intended for Machinist. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.25 and grants +9 DEX and +5 LCK."
     },
     {
       "id": "mega_potion",
@@ -12360,7 +12060,7 @@
     },
     {
       "id": "warriors_tonic",
-      "name": "Warrior\u2019s Tonic",
+      "name": "Warrior’s Tonic",
       "type": "consumable",
       "rarity": "rare",
       "price": 950,
@@ -12380,7 +12080,7 @@
     },
     {
       "id": "heros_brew",
-      "name": "Hero\u2019s Brew",
+      "name": "Hero’s Brew",
       "type": "consumable",
       "rarity": "epic",
       "price": 2700,
@@ -12574,7 +12274,7 @@
     },
     {
       "id": "mages_incense",
-      "name": "Mage\u2019s Incense",
+      "name": "Mage’s Incense",
       "type": "consumable",
       "rarity": "rare",
       "price": 760,
@@ -12828,7 +12528,7 @@
       "status_immune": [
         "blind"
       ],
-      "description": "A well-crafted accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.12 and grants +3 DEX and +2 LCK. Prevents Blind."
+      "description": "A well-crafted accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.12 and grants +3 DEX and +2 LCK. Prevents Blind."
     },
     {
       "id": "chronos_charm",
@@ -12905,7 +12605,7 @@
         "slow": 0.5,
         "stun": 0.35
       },
-      "description": "An exceptional accessory. A deceptively simple-looking ward against the many creative ways monsters ruin an adventurer\u2019s day. Requires Lv.35 and grants +5 VIT, +7 SPR, and +5 LCK. Provides 50% Poison resistance, 50% Silence resistance, 50% Blind resistance, 50% Slow resistance, 35% Stun resistance."
+      "description": "An exceptional accessory. A deceptively simple-looking ward against the many creative ways monsters ruin an adventurer’s day. Requires Lv.35 and grants +5 VIT, +7 SPR, and +5 LCK. Provides 50% Poison resistance, 50% Silence resistance, 50% Blind resistance, 50% Slow resistance, 35% Stun resistance."
     },
     {
       "id": "guard_belt",
@@ -12965,7 +12665,7 @@
         "dex": 9,
         "lck": 4
       },
-      "description": "A rare accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.20 and grants +9 DEX and +4 LCK."
+      "description": "A rare accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.20 and grants +9 DEX and +4 LCK."
     },
     {
       "id": "critical_band",
@@ -12980,11 +12680,11 @@
         "lck": 10,
         "dex": 3
       },
-      "description": "A rare accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.22 and grants +10 LCK and +3 DEX."
+      "description": "A rare accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.22 and grants +10 LCK and +3 DEX."
     },
     {
       "id": "knights_crest",
-      "name": "Knight\u2019s Crest",
+      "name": "Knight’s Crest",
       "type": "accessory",
       "rarity": "rare",
       "price": 2700,
@@ -13002,11 +12702,11 @@
         "darkknight",
         "dragoon"
       ],
-      "description": "A rare accessory. A class-focused insignia that reinforces the wearer\u2019s preferred combat strengths. Requires Lv.30 and grants +9 VIT, +4 STR, and +80 HP."
+      "description": "A rare accessory. A class-focused insignia that reinforces the wearer’s preferred combat strengths. Requires Lv.30 and grants +9 VIT, +4 STR, and +80 HP."
     },
     {
       "id": "mages_crest",
-      "name": "Mage\u2019s Crest",
+      "name": "Mage’s Crest",
       "type": "accessory",
       "rarity": "rare",
       "price": 2700,
@@ -13027,11 +12727,11 @@
         "redmage",
         "bluemage"
       ],
-      "description": "A rare accessory. A class-focused insignia that reinforces the wearer\u2019s preferred combat strengths. Requires Lv.30 and grants +9 MAG, +6 SPR, and +10 Magic Power."
+      "description": "A rare accessory. A class-focused insignia that reinforces the wearer’s preferred combat strengths. Requires Lv.30 and grants +9 MAG, +6 SPR, and +10 Magic Power."
     },
     {
       "id": "warriors_crest",
-      "name": "Warrior\u2019s Crest",
+      "name": "Warrior’s Crest",
       "type": "accessory",
       "rarity": "rare",
       "price": 2700,
@@ -13051,7 +12751,7 @@
         "darkknight",
         "beastmaster"
       ],
-      "description": "A rare accessory. A class-focused insignia that reinforces the wearer\u2019s preferred combat strengths. Requires Lv.30 and grants +9 STR, +4 DEX, and +10 Attack."
+      "description": "A rare accessory. A class-focused insignia that reinforces the wearer’s preferred combat strengths. Requires Lv.30 and grants +9 STR, +4 DEX, and +10 Attack."
     },
     {
       "id": "mana_charm",
@@ -13122,11 +12822,11 @@
         "spr": 12,
         "hp": 110
       },
-      "description": "An exceptional accessory. Specialized support gear built to sharpen a particular part of an adventurer\u2019s combat profile. Requires Lv.45 and grants +12 VIT, +12 SPR, and +110 HP."
+      "description": "An exceptional accessory. Specialized support gear built to sharpen a particular part of an adventurer’s combat profile. Requires Lv.45 and grants +12 VIT, +12 SPR, and +110 HP."
     },
     {
       "id": "sages_emblem",
-      "name": "Sage\u2019s Emblem",
+      "name": "Sage’s Emblem",
       "type": "accessory",
       "rarity": "epic",
       "price": 6200,
@@ -13147,11 +12847,11 @@
         "redmage",
         "bluemage"
       ],
-      "description": "An exceptional accessory. A class-focused insignia that reinforces the wearer\u2019s preferred combat strengths. Requires Lv.45 and grants +12 MAG, +10 SPR, and +18 Magic Power."
+      "description": "An exceptional accessory. A class-focused insignia that reinforces the wearer’s preferred combat strengths. Requires Lv.45 and grants +12 MAG, +10 SPR, and +18 Magic Power."
     },
     {
       "id": "champions_emblem",
-      "name": "Champion\u2019s Emblem",
+      "name": "Champion’s Emblem",
       "type": "accessory",
       "rarity": "epic",
       "price": 6200,
@@ -13172,7 +12872,7 @@
         "beastmaster",
         "paladin"
       ],
-      "description": "An exceptional accessory. A class-focused insignia that reinforces the wearer\u2019s preferred combat strengths. Requires Lv.45 and grants +12 STR, +8 DEX, and +18 Attack."
+      "description": "An exceptional accessory. A class-focused insignia that reinforces the wearer’s preferred combat strengths. Requires Lv.45 and grants +12 STR, +8 DEX, and +18 Attack."
     },
     {
       "id": "darksteel_axe",
@@ -13415,7 +13115,7 @@
     },
     {
       "id": "giants_axe",
-      "name": "Giant\u2019s Axe",
+      "name": "Giant’s Axe",
       "type": "weapon",
       "rarity": "rare",
       "price": 8900,
@@ -13478,7 +13178,7 @@
     },
     {
       "id": "minstrels_harp",
-      "name": "Minstrel\u2019s Harp",
+      "name": "Minstrel’s Harp",
       "type": "weapon",
       "rarity": "rare",
       "price": 8975,
@@ -14005,7 +13705,7 @@
         "hp": 175
       },
       "gear_family": "robe",
-      "description": "A well-crafted caster robe. A spellcaster\u2019s defense woven for concentration, spirit, and magical output. Requires Lv.40 and grants +18 VIT, +23 SPR, +9 MAG, and +175 HP."
+      "description": "A well-crafted caster robe. A spellcaster’s defense woven for concentration, spirit, and magical output. Requires Lv.40 and grants +18 VIT, +23 SPR, +9 MAG, and +175 HP."
     },
     {
       "id": "dragon_coat",
@@ -14329,7 +14029,7 @@
   "hunts": [
     {
       "id": "chieftains_challenge",
-      "name": "Chieftain\u2019s Challenge",
+      "name": "Chieftain’s Challenge",
       "rank": "C",
       "monster_id": "goblin_chieftain",
       "min_level": 2,
@@ -17221,7 +16921,7 @@
     },
     {
       "id": "everyones_grudge",
-      "name": "Everyone\u2019s Grudge",
+      "name": "Everyone’s Grudge",
       "description": "Has made the Tonberry community collectively aware of their existence.",
       "category": "Comedy",
       "rarity": "epic",
@@ -17310,7 +17010,7 @@
     {
       "id": "master_artisan",
       "name": "Master Artisan",
-      "description": "Crafted enough equipment to start criticizing other people\u2019s hammer technique.",
+      "description": "Crafted enough equipment to start criticizing other people’s hammer technique.",
       "category": "Crafting",
       "rarity": "epic",
       "source": "Achievement"
@@ -17430,7 +17130,7 @@
     {
       "id": "breath_test_failure",
       "name": "Breath Test Failure",
-      "description": "Has been KO\u2019d by Malboro enough times to identify Bad Breath by vintage.",
+      "description": "Has been KO’d by Malboro enough times to identify Bad Breath by vintage.",
       "category": "Secret",
       "rarity": "rare",
       "source": "Achievement"
@@ -17966,7 +17666,7 @@
     {
       "id": "floor_tank_25",
       "name": "Floor Tank",
-      "description": "Get KO\u2019d 25 times.",
+      "description": "Get KO’d 25 times.",
       "condition": {
         "type": "stat",
         "field": "deaths",
@@ -17981,7 +17681,7 @@
     {
       "id": "floor_tank_100",
       "name": "OSHA Would Like a Word",
-      "description": "Get KO\u2019d 100 times.",
+      "description": "Get KO’d 100 times.",
       "condition": {
         "type": "stat",
         "field": "deaths",
@@ -18023,7 +17723,7 @@
     },
     {
       "id": "tonberry_100",
-      "name": "Everybody\u2019s Grudge",
+      "name": "Everybody’s Grudge",
       "description": "Defeat 100 Tonberries.",
       "condition": {
         "type": "monster_kills",
@@ -18390,7 +18090,7 @@
     {
       "id": "tonberry_ko_10",
       "name": "???",
-      "description": "Be KO\u2019d by Tonberry 10 times.",
+      "description": "Be KO’d by Tonberry 10 times.",
       "condition": {
         "type": "monster_record_defeats",
         "monster_id": "tonberry",
@@ -18406,7 +18106,7 @@
     {
       "id": "malboro_ko_5",
       "name": "???",
-      "description": "Be KO\u2019d by Malboro 5 times.",
+      "description": "Be KO’d by Malboro 5 times.",
       "condition": {
         "type": "monster_record_defeats",
         "monster_id": "malboro",
@@ -18665,7 +18365,7 @@
     {
       "category": "Combat",
       "command": "!attack",
-      "description": "Queue your Job\u2019s basic attack for the current Rally Venture or Raid round. Timed Hunts choose actions automatically.",
+      "description": "Queue your Job’s basic attack for the current Rally Venture or Raid round. Timed Hunts choose actions automatically.",
       "aliases": ""
     },
     {
@@ -18947,13 +18647,13 @@
     {
       "category": "Raids",
       "command": "!revive <hero>",
-      "description": "Spend a Phoenix Down to revive a KO\u2019d raid member.",
+      "description": "Spend a Phoenix Down to revive a KO’d raid member.",
       "aliases": ""
     },
     {
       "category": "Help",
       "command": "!guild [topic]",
-      "description": "Show the command list or help for a topic. With no topic, it also shows your hero\u2019s next objective.",
+      "description": "Show the command list or help for a topic. With no topic, it also shows your hero’s next objective.",
       "aliases": "!cghelp, !cgcommands, !rpghelp, !rpg"
     },
     {
@@ -19042,7 +18742,7 @@
     }
   ],
   "meta": {
-    "version": "v1.1.18 \u2014 Retro Phase II",
+    "version": "v1.1.18 — Retro Phase II",
     "venture_cooldown": 600,
     "encounter_rally": 45,
     "camp_rest": 1800,
@@ -19089,7 +18789,7 @@
         "name": "Tomahawk",
         "level": 8,
         "target": "enemy",
-        "description": "A ranged axe strike that punches through part of the enemy\u2019s defenses.",
+        "description": "A ranged axe strike that punches through part of the enemy’s defenses.",
         "effects": [
           {
             "type": "damage",
@@ -19106,7 +18806,7 @@
         "name": "Skull Sunder",
         "level": 12,
         "target": "enemy",
-        "description": "A punishing axe blow that cuts through part of the enemy\u2019s defense.",
+        "description": "A punishing axe blow that cuts through part of the enemy’s defense.",
         "effects": [
           {
             "type": "damage",
@@ -19459,7 +19159,7 @@
         "name": "Feint",
         "level": 12,
         "target": "enemy",
-        "description": "A deceptive strike that disrupts the enemy\u2019s timing and can Slow it.",
+        "description": "A deceptive strike that disrupts the enemy’s timing and can Slow it.",
         "effects": [
           {
             "type": "damage",
@@ -19499,7 +19199,7 @@
         "name": "Shadowstep",
         "level": 22,
         "target": "self",
-        "description": "Slip through the enemy\u2019s guard, gaining Haste and Evasion for 2 rounds.",
+        "description": "Slip through the enemy’s guard, gaining Haste and Evasion for 2 rounds.",
         "effects": [
           {
             "type": "status",
@@ -19869,7 +19569,7 @@
         "name": "Dia",
         "level": 5,
         "target": "enemy",
-        "description": "Holy-aspected light magic that weakens a foe\u2019s defenses.",
+        "description": "Holy-aspected light magic that weakens a foe’s defenses.",
         "effects": [
           {
             "type": "damage",
@@ -20204,7 +19904,7 @@
         "name": "Verthunder",
         "level": 22,
         "target": "enemy",
-        "description": "Lightning-aspected magic that can Slow the target\u2019s momentum.",
+        "description": "Lightning-aspected magic that can Slow the target’s momentum.",
         "effects": [
           {
             "type": "damage",
@@ -21068,7 +20768,7 @@
         "name": "Gekko",
         "level": 12,
         "target": "enemy",
-        "description": "A measured crescent cut that weakens the enemy\u2019s offense.",
+        "description": "A measured crescent cut that weakens the enemy’s offense.",
         "effects": [
           {
             "type": "damage",
@@ -21211,7 +20911,7 @@
       },
       {
         "id": "carbuncles_aegis",
-        "name": "Carbuncle\u2019s Aegis",
+        "name": "Carbuncle’s Aegis",
         "level": 5,
         "target": "self",
         "description": "Call Carbuncle to wrap the summoner in a protective ward.",
@@ -21230,7 +20930,7 @@
       },
       {
         "id": "ifrits_favor",
-        "name": "Ifrit\u2019s Favor",
+        "name": "Ifrit’s Favor",
         "level": 8,
         "target": "enemy",
         "description": "Call on Ifrit for concentrated Fire damage.",
@@ -21247,10 +20947,10 @@
       },
       {
         "id": "titans_ward",
-        "name": "Titan\u2019s Ward",
+        "name": "Titan’s Ward",
         "level": 12,
         "target": "self",
-        "description": "Invoke Titan\u2019s endurance for stronger protection and brief regeneration.",
+        "description": "Invoke Titan’s endurance for stronger protection and brief regeneration.",
         "effects": [
           {
             "type": "status",
@@ -21289,7 +20989,7 @@
       },
       {
         "id": "leviathans_favor",
-        "name": "Leviathan\u2019s Favor",
+        "name": "Leviathan’s Favor",
         "level": 18,
         "target": "enemy",
         "description": "Call on Leviathan for Water damage that weakens the enemy.",
@@ -21313,7 +21013,7 @@
       },
       {
         "id": "shivas_favor",
-        "name": "Shiva\u2019s Favor",
+        "name": "Shiva’s Favor",
         "level": 22,
         "target": "enemy",
         "description": "Call on Shiva for Ice damage with a chance to Slow.",
@@ -21337,7 +21037,7 @@
       },
       {
         "id": "garudas_favor",
-        "name": "Garuda\u2019s Favor",
+        "name": "Garuda’s Favor",
         "level": 26,
         "target": "enemy",
         "description": "Call on Garuda for Wind damage with a chance to Blind.",
@@ -21377,10 +21077,10 @@
       },
       {
         "id": "bahamuts_favor",
-        "name": "Bahamut\u2019s Favor",
+        "name": "Bahamut’s Favor",
         "level": 35,
         "target": "enemy",
-        "description": "Focus Bahamut\u2019s aether into one devastating non-elemental blast.",
+        "description": "Focus Bahamut’s aether into one devastating non-elemental blast.",
         "effects": [
           {
             "type": "damage",
@@ -21400,7 +21100,7 @@
       },
       {
         "id": "ramuhs_judgment",
-        "name": "Ramuh\u2019s Judgment",
+        "name": "Ramuh’s Judgment",
         "level": 40,
         "target": "enemy",
         "description": "Call on Ramuh for punishing Lightning damage with a chance to Stun.",
@@ -21424,7 +21124,7 @@
       },
       {
         "id": "phoenixs_favor",
-        "name": "Phoenix\u2019s Favor",
+        "name": "Phoenix’s Favor",
         "level": 45,
         "target": "enemy",
         "description": "Call Phoenix for searing Fire damage and restorative flames around the summoner.",
@@ -21786,7 +21486,7 @@
         "name": "Float",
         "level": 12,
         "target": "ally",
-        "description": "Temporal buoyancy increases one ally\u2019s evasion for three rounds.",
+        "description": "Temporal buoyancy increases one ally’s evasion for three rounds.",
         "effects": [
           {
             "type": "status",
@@ -22043,7 +21743,7 @@
       },
       {
         "id": "wardens_paean",
-        "name": "Warden\u2019s Paean",
+        "name": "Warden’s Paean",
         "level": 22,
         "target": "ally",
         "description": "Cleanse two harmful statuses and grant brief protection to one ally.",
@@ -22323,7 +22023,7 @@
         "name": "Feral Howl",
         "level": 8,
         "target": "self",
-        "description": "Channel a beast\u2019s aggression to gain Power Up for 3 rounds.",
+        "description": "Channel a beast’s aggression to gain Power Up for 3 rounds.",
         "effects": [
           {
             "type": "status",

@@ -48,7 +48,7 @@ test("Streamer Dashboard exposes the hosted OBS overlay and shared roundel", asy
   assert.match(page, /SiteHeader/);
   assert.match(header, /crystal-guild-portal-roundel\.png/);
   assert.match(css, /streamer-overlay-card/);
-  assert.match(overlay, /src="\/raid-overlay\.js"/);
+  assert.match(overlay, /src="\/raid-overlay\.js(?:\?v=[^"]+)?"/);
   assert.doesNotMatch(overlay, /<script>(?:.|\n)*?<\/script>/);
   assert.match(overlayJs, /\/api\/overlay\/state/);
 });

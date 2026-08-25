@@ -1,23 +1,20 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## World / Raid Boss Artwork Pass
+## Retro Environment Pass
 
-This Web-only build completes a dedicated 16:9 artwork pass for all 37 canonical World Bosses, Primals, High Bosses, Superbosses, and Ultimate Superbosses.
+This Web-only presentation pass adds transparent retro-fantasy environmental dressing and a more cohesive Final Fantasy-inspired UI voice without changing gameplay, data, or information density.
 
-### Artwork coverage
-- 37/37 canonical raid bosses illustrated.
-- Every raid artwork asset is normalized to 1280×720 (16:9) WebP for consistent Web presentation.
-- Artwork is available in the Player Guide boss catalog and boss dossier modal.
-- Player Records and Trophy Hall boss victory cards now surface the same shared artwork.
-- Boss detail dialogs use the shared raid artwork.
-- The OBS raid overlay now uses the active boss artwork as a subdued background while preserving status readability.
-
-### Compatibility
-- Canonical boss roster and gameplay data are unchanged.
-- No Bot runtime change, DB migration, OAuth change, environment-variable change, or player reset is required.
+### Visual additions
+- Transparent pixel-art airship ambience for desktop page heroes/background space.
+- Subtle blue crystal watermarks inside major RPG windows.
+- Gold crystal divider artwork for panel and Guide section headings.
+- Crystal-row ornament used as restrained hero/Guide branding detail.
+- Portal-arch ambience used at very low opacity in desktop page space.
+- Final Fantasy-inspired local display-font stack expanded to navigation, labels, tabs, and major headings while body copy remains the existing readable sans-serif stack.
+- Mobile treatment deliberately removes the large airship/portal scene dressing and keeps only a small crystal accent.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii20`
+- Frontend asset revision: `1.1.18-retro-phase-ii21`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

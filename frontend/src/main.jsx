@@ -7,6 +7,7 @@ import "./styles/retro.css";
 import "./styles/retro-phase-ii.css";
 import "./styles/character-identity.css";
 import "./styles/monster-identity.css";
+import "./styles/environment-pass.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

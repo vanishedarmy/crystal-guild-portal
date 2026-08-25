@@ -1,9 +1,9 @@
-# World / Raid Boss Artwork Pass — Upgrade Guide
+# Retro Environment Pass — Upgrade Guide
 
-1. Deploy the full Web package over the current v1.1.18 Retro Phase II site, or apply the ii19 → ii20 patch.
-2. Confirm `frontend/public/retro-phase-ii/boss-art-v1/` publishes all 37 WebP assets.
-3. Verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii20`.
-4. Hard-refresh the Player Guide, Adventurer Portal, Trophy Hall/Records, and OBS `/overlay` browser source.
-5. In Player Guide → Raids & Bosses, spot-check low-, mid-, and endgame entries such as Goblin King, Leviathan, Bahamut, Omega Weapon, Ozma, Penance, and Yiazmat.
-6. During an active raid, verify the OBS overlay shows the matching boss artwork behind the raid status card without reducing text readability.
-7. No Bot deploy, database migration, OAuth change, environment-variable change, or player reset is required.
+1. Deploy the full ii21 Web package over the current ii20 site, or apply the ii20 → ii21 patch.
+2. Confirm `frontend/public/retro-phase-ii/environment-pass/` is published.
+3. Verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii21`.
+4. Hard-refresh the Portal, Fellowship, Player Guide, and Streamer Dashboard.
+5. Check desktop heroes/panels for subtle airship/crystal ambience and gold section dividers.
+6. Check portrait and landscape phone layouts: large environment decoration should be suppressed so content remains readable.
+7. No Bot deploy, DB migration, OAuth change, environment-variable change, or player reset is required.

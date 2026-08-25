@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./styles/portal.css";
 import "./styles/streamer.css";
 import "./styles/retro.css";
+import "./styles/retro-phase2.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

@@ -17,11 +17,11 @@ test("Retro Phase II character portrait set is versioned and complete for the st
     "dragoon.webp", "monk.webp", "thief.webp", "ranger.webp", "summoner.webp",
   ];
   for (const file of files) {
-    await access(path.join(root, "public/retro-phase-ii/job-portraits-v1", file));
+    await access(path.join(root, "public/retro-phase-ii/job-portraits-v2", file));
   }
   const mapping = await text("src/utils/jobPortraits.js");
-  assert.match(mapping, /rogue:\s*"\/retro-phase-ii\/job-portraits-v1\/thief\.webp"/);
-  assert.match(mapping, /"dark knight":\s*"\/retro-phase-ii\/job-portraits-v1\/dark_knight\.webp"/);
+  assert.match(mapping, /rogue:\s*"\/retro-phase-ii\/job-portraits-v2\/thief\.webp"/);
+  assert.match(mapping, /"dark knight":\s*"\/retro-phase-ii\/job-portraits-v2\/dark_knight\.webp"/);
 });
 
 test("character portraits never crop or distort artwork", async () => {

@@ -3,7 +3,7 @@
 This Web-only visual pass builds on the Retro Phase II Region Cache Fix and introduces production Job portrait integration without changing gameplay, database, sync, or Portal Action behavior.
 
 ## Character portrait system
-- Adds 10 standalone 3:4 WebP Job portraits under `/retro-phase-ii/job-portraits-v1/`.
+- Adds 10 standalone 3:4 WebP Job portraits under `/retro-phase-ii/job-portraits-v2/`.
 - Illustrated mappings: Black Mage, White Mage, Red Mage, Paladin, Dark Knight, Dragoon, Monk, Thief/Rogue, Ranger, and Summoner.
 - Unsupported Jobs use a readable framed fallback instead of a missing/broken image.
 - Portrait assets are loaded lazily except for the active profile masthead portrait.
@@ -23,7 +23,7 @@ This Web-only visual pass builds on the Retro Phase II Region Cache Fix and intr
 
 ## Compatibility
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii3`
+- Frontend asset revision: `1.1.18-retro-phase-ii4`
 - Bot runtime: unchanged `1.1.17-arsenal-ii-h4`
 - Local DB schema: 5 unchanged
 - Hosted sync schema: 1 unchanged

@@ -29,7 +29,7 @@ PASS — What's New includes the major release lineage and monikers from Ultima 
 ## Compatibility
 
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii3`
+- Frontend asset revision: `1.1.18-retro-phase-ii4`
 - Bot runtime: `1.1.17-arsenal-ii-h4` unchanged
 - Local DB schema: **5**
 - Hosted sync schema: **1**

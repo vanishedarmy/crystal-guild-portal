@@ -1,3 +1,4 @@
+import BossArtwork from "../components/BossArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -96,6 +97,7 @@ export default function TrophyHall({ data, onDetail }) {
         <div className="trophy-card-grid">
           {bosses.length ? bosses.map((boss) => (
             <ClickableCard className="trophy-record-card" detail={{ type: "boss", boss }} key={boss.id || boss.name} onOpen={onDetail}>
+              <BossArtwork boss={boss} className="boss-card-artwork" />
               <div className="slot-label">{humanizeLabel(boss.tier || "boss")}</div>
               <strong>{boss.name}</strong>
               <span>{number(boss.clears)} clears · Best {number(boss.best_damage)} damage</span>

@@ -1,8 +1,9 @@
-# Hosting Guide — Monster Identity Wave 11 Completion
+# Hosting Guide — World / Raid Boss Artwork Pass
 
-The hosted Web runtime remains `1.1.18-retro-phase-ii` with frontend asset revision `1.1.18-retro-phase-ii19`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`.
+The hosted Web runtime remains `1.1.18-retro-phase-ii` with frontend asset revision `1.1.18-retro-phase-ii20`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`.
 
-Deploy the Web package, confirm the `monster-portraits-v10` directory is served, then verify `/api/health` before checking Bestiary, Hunts, Player Guide, and Solo Venture imagery.
+Deploy the full Web package or the ii19 → ii20 patch, then confirm `/api/health` reports `1.1.18-retro-phase-ii20`. The new artwork folder is `frontend/public/retro-phase-ii/boss-art-v1/` and contains all 37 canonical boss images.
 
+After deployment, hard-refresh the Player Guide and Adventurer Portal. If `/overlay` is already loaded in OBS, refresh that browser source as well so the active boss artwork background is picked up.
 
-Latest Web art pass: Monster Portrait Fix Pass refreshes 18 existing monster portraits while preserving the canonical 107-monster Bestiary roster and gameplay data.
+No Bot deploy, database migration, OAuth reconfiguration, environment-variable change, or player reset is required.

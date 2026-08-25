@@ -1,8 +1,7 @@
 # Crystal Guild Web — v1.1.18 Retro Phase II
 
-Hosted Web runtime: `1.1.18-retro-phase-ii` · frontend asset revision `1.1.18-retro-phase-ii19` · hosted sync schema **1** · Portal Action protocol **14**.
+Hosted Web runtime: `1.1.18-retro-phase-ii` · frontend asset revision `1.1.18-retro-phase-ii20` · hosted sync schema **1** · Portal Action protocol **14**.
 
-This build includes Region HD artwork, full Job Portrait Wave 2 coverage, Monster Identity Waves 1–11 Completion, the portrait Image Fit Hotfix, shared Player Guide imagery, and Solo Venture enemy portraits.
+This build carries forward the complete Retro Phase II visual suite, the mobile header / Player Guide viewport hotfix, 107/107 Bestiary monster portraits, and now **37/37 World / Raid Boss 16:9 artwork coverage**.
 
-
-Latest Web art pass: Monster Portrait Fix Pass refreshes 18 existing monster portraits while preserving the canonical 107-monster Bestiary roster and gameplay data.
+Raid artwork is shared across the Player Guide boss catalog and dossier modal, Player Records, Trophy Hall, boss detail dialogs, and the OBS raid overlay. Boss gameplay data, progression, schemas, OAuth behavior, and Portal Action behavior are unchanged.

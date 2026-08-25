@@ -1,7 +1,7 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
-Frontend asset revision: 1.1.18-retro-phase-ii19
+Frontend asset revision: 1.1.18-retro-phase-ii20
 
-Mobile Header & Guide Viewport Hotfix: portrait Guide controls now scroll out naturally, and phone landscape uses the compact mobile header rather than the large desktop stack.
+World / Raid Boss Artwork Pass adds complete 16:9 artwork coverage for all 37 canonical raid bosses and surfaces it in the Player Guide, Player Records, Trophy Hall, boss detail dialogs, and OBS raid overlay.
 
 No Bot update, DB migration, OAuth change, environment-variable change, or player reset is required.
 See UPGRADE_GUIDE.md for deployment steps.

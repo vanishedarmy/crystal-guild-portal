@@ -190,6 +190,11 @@ code,.cmd{font-family:Consolas,Monaco,monospace;background:#080d1c;border:1px so
 .boss-hp{font-size:24px;font-weight:900;letter-spacing:-.025em;color:#f5f8ff;margin:8px 0 2px}.boss-hp small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8297bd;font-weight:900;
   margin-left:4px}
 .boss-signature{color:#e8d8ff!important}.boss-signature b{color:var(--violet)}
+.boss-art-frame{aspect-ratio:16/9;margin:-17px -17px 14px;overflow:hidden;border-bottom:1px solid rgba(125,228,255,.22);background:#050914}
+.boss-art-frame img,.info-boss-art img{display:block;width:100%;height:100%;object-fit:cover}
+.boss-art-frame img{transition:transform .28s ease,filter .28s ease}.boss-overview:hover .boss-art-frame img{transform:scale(1.025);filter:brightness(1.06)}
+.info-boss-art{aspect-ratio:16/9;margin:0 0 16px;overflow:hidden;border:1px solid #31466e;border-radius:14px;background:#050914;box-shadow:0 14px 34px rgba(0,0,0,.3)}
+
 .info-stage-list,.info-phase-list,.info-loot-grid{display:grid;gap:10px}
 .info-stage{position:relative;border:1px solid #31466e;background:linear-gradient(180deg,#111b32,#0c1529);border-radius:15px;padding:15px}
 .info-stage-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:9px}.info-stage-head h3{margin:0;font-size:18px}.info-stage-head .badge{flex:none}

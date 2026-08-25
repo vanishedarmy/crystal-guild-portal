@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii19
+Frontend asset revision: 1.1.18-retro-phase-ii20
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Current Web build includes complete 107/107 Bestiary portrait coverage, the 18-monster portrait fix pass, and the Mobile Header & Guide Viewport Hotfix for portrait/landscape phone usability.
+Current Web build: Retro Phase II visual suite + complete 107/107 Bestiary portrait coverage + 37/37 World/Raid Boss 16:9 artwork coverage + mobile header/Guide viewport hotfix.

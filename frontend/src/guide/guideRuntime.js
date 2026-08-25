@@ -6,6 +6,7 @@ import {
 import { humanizeLabel, metricLabel } from "../utils/displayLabels.js";
 import { jobPortraitPath } from "../utils/jobPortraits.js";
 import { monsterPortraitPath } from "../utils/monsterPortraits.js";
+import { bossArtworkPath } from "../utils/bossArtwork.js";
 
 export function initGuide(GAME_DATA, releaseLabel = GAME_DATA?.meta?.version || "") {
   const D = GAME_DATA;
@@ -497,15 +498,15 @@ $('#relicSearch').oninput=renderRelics;$('#relicJob').onchange=renderRelics;rend
 
 // Bosses — independent raid dossiers
 const tiers=[...new Set(D.bosses.map(b=>b.tier))];tiers.forEach(x=>$('#bossTier').insertAdjacentHTML('beforeend',`<option>${esc(x)}</option>`));
-function bossOverview(b){return `<button type="button" class="card boss-overview searchable" data-open-boss="${esc(b.id)}" aria-label="Open ${esc(b.name)} raid boss details"><div class="statline">
+function bossOverview(b){let art=bossArtworkPath(b);return `<button type="button" class="card boss-overview searchable" data-open-boss="${esc(b.id)}" aria-label="Open ${esc(b.name)} raid boss details">${art?`<div class="boss-art-frame"><img src="${esc(art)}" alt="${esc(b.name)} artwork" loading="lazy" decoding="async"></div>`:''}<div class="statline">
   <span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}</span><span class="badge">Lv.${b.recommended_level}</span></div><h3>${esc(b.name)}</h3><div class="boss-hp">
   ${fmtInt(b.hp)}<small>HP</small></div><p class="boss-signature"><b>${esc(b.signature)}</b> signature</p><p>${esc(b.description||'')}</p><div class="card-spacer"></div><div class="card-open-hint">
   <span>${b.phases.length} phases • Enrage R${b.enrage_round}</span><b>Open Boss →</b></div></button>`;}
 function renderBosses(){let q=$('#bossSearch').value.toLowerCase(),t=$('#bossTier').value;let bs=D.bosses.filter(b=>(!t||b.tier===t)&&([b.name,b.tier,b.signature,b.description,
   ...(b.drops||[]).map(d=>itemName(d.item_id)),...(b.phases||[]).map(p=>p.name)].join(' ').toLowerCase().includes(q)));
   $('#bossGrid').innerHTML=bs.map(bossOverview).join('')||'<div class="command-empty">No raid bosses match this filter.</div>';}
-function renderBossInfo(b){infoKicker.textContent='Raid Boss';infoTitle.textContent=b.name;infoBadges.innerHTML=`<span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}
-  </span><span class="badge">Recommended Lv.${b.recommended_level}</span><span class="badge">${b.phases.length} phases</span>`;infoBody.innerHTML=`<section class="info-section">
+function renderBossInfo(b){let art=bossArtworkPath(b);infoKicker.textContent='Raid Boss';infoTitle.textContent=b.name;infoBadges.innerHTML=`<span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}
+  </span><span class="badge">Recommended Lv.${b.recommended_level}</span><span class="badge">${b.phases.length} phases</span>`;infoBody.innerHTML=`${art?`<div class="info-boss-art"><img src="${esc(art)}" alt="${esc(b.name)} artwork" decoding="async"></div>`:''}<section class="info-section">
   <div class="info-section-title">Threat Profile</div><p>${esc(b.description||'')}</p><div class="info-hero-stat"><div class="info-stat"><span>Boss HP</span><b>${fmtInt(b.hp)}</b></div>
   <div class="info-stat"><span>Signature</span><b>${esc(b.signature)}</b></div><div class="info-stat"><span>Attacks / Round</span><b>${b.attacks_per_round}</b></div><div class="info-stat"><span>
   Party Attack</span><b>Every ${b.aoe_every} rounds</b></div><div class="info-stat"><span>Enrage</span><b>Round ${b.enrage_round}</b></div><div class="info-stat"><span>Victory XP</span><b>${fmtInt(b.xp)}</b>

@@ -1,3 +1,4 @@
+import BossArtwork from "./BossArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useEffect, useRef } from "react";
 import {
@@ -176,6 +177,7 @@ function DetailBody({ detail }) {
       <div className="detail-body">
         <p className="eyebrow">{humanizeLabel(boss.tier)}</p>
         <h2>{boss.name}</h2>
+        <BossArtwork boss={boss} className="detail-boss-artwork" eager />
         <section className="detail-section"><div className="data-label">Career Clears</div><p>{number(boss.clears)}</p></section>
         <section className="detail-section"><div className="data-label">Best Damage</div><p>{number(boss.best_damage)}</p></section>
         <section className="detail-section"><div className="data-label">Last Victory</div><p>{boss.last_cleared_at || "—"}</p></section>

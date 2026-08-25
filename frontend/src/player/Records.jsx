@@ -1,3 +1,4 @@
+import BossArtwork from "../components/BossArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import ClickableCard from "../components/ClickableCard.jsx";
 import StatCard from "../components/StatCard.jsx";
@@ -131,6 +132,7 @@ export default function Records({ data, onDetail }) {
               key={boss.id || boss.name}
               onOpen={onDetail}
             >
+              <BossArtwork boss={boss} className="boss-card-artwork" />
               <div className="slot-label">{humanizeLabel(boss.tier)}</div>
               <div className="boss-name">{boss.name}</div>
               <div className="card-meta">

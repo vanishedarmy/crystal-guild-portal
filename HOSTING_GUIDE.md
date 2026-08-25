@@ -1,7 +1,7 @@
-# Crystal Guild Hosted Web — v1.1.18 Retro Phase 2
+# Crystal Guild Web Hosting — v1.1.18 Retro Phase II
 
-The hosted Web runtime is `1.1.18-retro-phase-2` with frontend asset `1.1.18-retro-phase2`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`. Hosted sync schema remains **1** and Portal Action protocol remains **14**.
+The hosted Web runtime is `1.1.18-retro-phase-ii` with frontend asset `1.1.18-retro-phase-ii1`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`. Hosted sync schema remains **1** and Portal Action protocol remains **14**.
 
-Deploy the Retro Phase 2 Web source to the existing hosted Web service using the same environment variables and persistent configuration. No Bot redeploy or database migration is required.
+Deploy the Web files to GitHub/Render as normal. No new environment variable, OAuth scope, database migration, or Bot restart is required.
 
-After deploy, verify `/api/health`, the Adventure Board region images, Bestiary/Hunt tokens, and `/overlay` during an active raid.
+Recommended source baseline: replace/update the current Retro Phase 1 Hotfix 1 Web tree with the Retro Phase II Web package, commit the Web source, and deploy the latest commit.

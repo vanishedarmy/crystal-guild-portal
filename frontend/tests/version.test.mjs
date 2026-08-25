@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
-test("Retro Phase 2 public web identity is centralized and omits the Beta marker", () => {
+test("Retro Phase II public web identity is centralized and omits the Beta marker", () => {
   assert.equal(WEB_VERSION, "v1.1.18");
-  assert.equal(WEB_BUILD, "Retro Phase 2");
-  assert.equal(WEB_RELEASE, "v1.1.18 — Retro Phase 2");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.18 — Retro Phase 2");
-  assert.equal(WEB_ASSET_REVISION, "1.1.18-retro-phase2");
+  assert.equal(WEB_BUILD, "Retro Phase II");
+  assert.equal(WEB_RELEASE, "v1.1.18 — Retro Phase II");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.18 — Retro Phase II");
+  assert.equal(WEB_ASSET_REVISION, "1.1.18-retro-phase-ii1");
   assert.doesNotMatch(WEB_RELEASE, /Beta/i);
 });
 

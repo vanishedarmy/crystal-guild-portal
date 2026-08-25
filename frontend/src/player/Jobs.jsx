@@ -10,7 +10,6 @@ import {
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { humanizeLabel } from "../utils/displayLabels.js";
-import { jobSigil, jobTone } from "../utils/retroAssets.js";
 import { pct } from "../utils/formatters.js";
 import { loadGuideData, mergeJobsWithCatalog } from "../utils/itemCatalog.js";
 
@@ -199,10 +198,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
               {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
             </div>
           </div>
-          <div className="job-card-retro-title">
-            <span className={`retro-job-portrait tone-${jobTone(job)}`} aria-hidden="true"><span className="retro-job-glyph">{jobSigil(job)}</span></span>
-            <div className="job-name">{job.name}</div>
-          </div>
+          <div className="job-name">{job.name}</div>
           <div className="card-meta">{job.owned ? `JLv.${job.level}` : "Not learned"} · {job.signature}</div>
           {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
           <div className="management-job-actions public-job-actions">
@@ -269,10 +265,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                       {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
                     </div>
                   </div>
-                  <div className="job-card-retro-title">
-                    <span className={`retro-job-portrait tone-${jobTone(job)}`} aria-hidden="true"><span className="retro-job-glyph">{jobSigil(job)}</span></span>
-                    <div className="job-name">{job.name}</div>
-                  </div>
+                  <div className="job-name">{job.name}</div>
                   <div className="card-meta">{job.owned ? `JLv.${job.level} · ${job.signature}` : unlocked ? `Ready to learn · ${job.signature}` : `Signature: ${job.signature}`}</div>
                   {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
                   {!unlocked && Array.isArray(job.requirements) && job.requirements.length ? (

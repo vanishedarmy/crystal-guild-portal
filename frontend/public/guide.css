@@ -2091,7 +2091,32 @@ code,.cmd,.bigcmd{background:#050919;border-color:#53658f}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline-color:var(--gold)}
 @media(max-width:720px){.side{box-shadow:inset -1px 0 0 rgba(231,240,255,.32),4px 0 0 rgba(0,0,0,.35)}}
 
-/* v1.1.18 — Retro Phase 2: restrained world-art integration for the Guide hero. */
-.hero{position:relative;overflow:hidden;isolation:isolate}
-.hero:before{content:"";position:absolute;z-index:-1;right:-3%;top:-16%;width:min(520px,46%);height:132%;background:linear-gradient(90deg,rgba(9,15,45,0),rgba(9,15,45,.28)),url('/retro-phase2/world-map.webp') center/cover no-repeat;opacity:.22;filter:saturate(.7) contrast(1.05);mask-image:linear-gradient(90deg,transparent 0,#000 28%,#000 100%);pointer-events:none}
-@media(max-width:720px){.hero:before{width:62%;right:-18%;opacity:.13}}
+/* v1.1.18 — Retro Phase II: purpose-built region artwork. */
+.guide-region-card { overflow: hidden; padding-top: 0; }
+.guide-region-art {
+  width: calc(100% + 2rem);
+  margin: 0 -1rem .85rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 2px solid rgba(224,183,89,.68);
+  background: #071529;
+  position: relative;
+}
+.guide-region-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 64%, rgba(3,10,22,.34));
+}
+.guide-region-art img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+@media (max-width: 680px) {
+  .guide-region-art { width: calc(100% + 1.5rem); margin-inline: -.75rem; }
+}

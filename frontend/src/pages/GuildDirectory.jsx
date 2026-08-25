@@ -7,7 +7,6 @@ import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
 import { sortGuildDirectory } from "../utils/playerDirectorySort.js";
-import { jobSigil, jobTone } from "../utils/retroAssets.js";
 
 export default function GuildDirectory() {
   const [players, setPlayers] = useState([]);
@@ -120,13 +119,8 @@ export default function GuildDirectory() {
               <Link className="player-card" to={`/player/${encodeURIComponent(player.username)}`} key={player.username}>
                 <span className={`status-badge ${player.status}`}>{player.status_label}</span>
                 <div className="card-level">Level {number(player.level)}</div>
-                <div className="player-card-retro-head">
-                  <span className={`retro-job-portrait tone-${jobTone(player.job_name)}`} aria-hidden="true"><span className="retro-job-glyph">{jobSigil(player.job_name)}</span></span>
-                  <div className="player-card-retro-copy">
-                    <h2>{player.display_name}</h2>
-                    <div className="handle">@{player.username}</div>
-                  </div>
-                </div>
+                <h2>{player.display_name}</h2>
+                <div className="handle">@{player.username}</div>
                 <div className="card-job">{player.job_name}</div>
                 <div className="card-title">{player.title}</div>
                 <div className="card-footer">

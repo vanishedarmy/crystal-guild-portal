@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { formatMonsterSpecial, number } from "../utils/formatters.js";
 import { sortBestiaryByLevel } from "./bestiarySort.js";
-import { monsterToken } from "../utils/retroAssets.js";
 
 function monsterName(monster) {
   return typeof monster?.name === "string" && monster.name.trim()
@@ -32,14 +31,6 @@ export default function Bestiary({ data }) {
           {number(summary.discovered)} / {number(summary.total)} discovered
         </span>
       </div>
-      <div className="bestiary-field-guide" aria-label="Bestiary field guide presentation">
-        <div className="bestiary-field-art" aria-hidden="true"><img src="/retro-phase2/monster-feature.webp" alt="" loading="lazy" decoding="async" /></div>
-        <div className="bestiary-field-copy">
-          <p className="eyebrow">Retro Field Guide</p>
-          <h3>Monster portraits join the record</h3>
-          <p>Discovered entries now carry illustrated monster tokens for faster scanning while level, weakness, combat style, and active-skill information stay in the same compact record.</p>
-        </div>
-      </div>
       <div className="toolbar">
         <label className="search-box">
           <span>Search Bestiary</span>
@@ -68,12 +59,7 @@ export default function Bestiary({ data }) {
               const discovered = Boolean(monster?.discovered);
               return (
                 <tr className={discovered ? "" : "locked"} key={`${monster?.id || monsterName(monster)}-${index}`}>
-                  <td>
-                    <span className="bestiary-monster-name">
-                      {discovered ? <img className="retro-monster-token" src={monsterToken(monster)} alt="" loading="lazy" decoding="async" /> : <span className="retro-monster-token" aria-hidden="true" />}
-                      <span>{discovered ? monsterName(monster) : "Undiscovered"}</span>
-                    </span>
-                  </td>
+                  <td>{discovered ? monsterName(monster) : "Undiscovered"}</td>
                   <td>{discovered ? number(monster?.level) : "—"}</td>
                   <td>{number(monster?.defeats)}</td>
                   <td>{discovered ? String(monster?.weakness || "—") : "—"}</td>

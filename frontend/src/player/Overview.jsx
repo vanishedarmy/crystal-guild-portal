@@ -5,20 +5,14 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
 import WhatsNew from "./WhatsNew.jsx";
 import { formatBonuses, number, timeAgo } from "../utils/formatters.js";
-import { equipmentArt } from "../utils/retroAssets.js";
 
 function EquipmentCard({ item, onDetail }) {
   const upgrade = item.upgrade_level ? ` +${item.upgrade_level}` : "";
   return (
     <ClickableCard className="equipment-card" detail={{ type: "equipment", item }} onOpen={onDetail}>
       <div className="slot-label">{humanizeLabel(item.slot)}</div>
-      <div className="equipment-card-retro-row">
-        <img className="retro-equipment-icon" src={equipmentArt(item.slot)} alt="" loading="lazy" decoding="async" />
-        <div className="equipment-card-retro-copy">
-          <div className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</div>
-          <div className="item-meta">{formatBonuses(item.bonuses)}</div>
-        </div>
-      </div>
+      <div className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</div>
+      <div className="item-meta">{formatBonuses(item.bonuses)}</div>
     </ClickableCard>
   );
 }

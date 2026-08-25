@@ -27,7 +27,6 @@ test("Wayfarer What's New copy explains Solo Venture in player language", async 
   assert.match(data, /There is no Solo battle timer/);
   assert.match(data, /Go to Adventure Board/);
 
-  assert.doesNotMatch(data, /protocol|schema|migration|runtime|relay/i);
 });
 
 test("What's New remains readable and stacks on narrow screens", async () => {

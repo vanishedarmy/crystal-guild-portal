@@ -4,6 +4,8 @@ import {
   filterGuideTitles,
 } from "./guideCompletionUtils.js";
 import { humanizeLabel, metricLabel } from "../utils/displayLabels.js";
+import { jobPortraitPath } from "../utils/jobPortraits.js";
+import { monsterPortraitPath } from "../utils/monsterPortraits.js";
 
 export function initGuide(GAME_DATA, releaseLabel = GAME_DATA?.meta?.version || "") {
   const D = GAME_DATA;
@@ -218,8 +220,7 @@ const effectLabels={physical_mult:'Physical damage',magic_mult:'Magic damage',da
 function effectText(k,v){let label=effectLabels[k]||humanizeLabel(k);let value=(typeof v==='number'&&Math.abs(v)<=2)?`${v>=0?'+':''}${Math.round(v*100)}%`:`${v}`;return `${label} ${value}`;}
 function unlockText(j){let req=j.unlock_requirements||j.requirements||[];let quest=D.quests.find(q=>q.rewards?.job===j.id);if(j.tier==='starter'&&!req.length&&!quest)return'Starter Job';let
   bits=req.map(reqText);if(quest)bits.push(`Quest: ${quest.name}`);return bits.join(' • ')||'Advanced unlock';}
-const guideJobPortraitIds=new Set(['warrior','monk','thief','black_mage','white_mage','red_mage','paladin','dark_knight','dragoon','ninja','samurai','summoner','blue_mage','time_mage','bard','machinist','beastmaster','sage','ranger']);
-function guideJobPortraitPath(j){let id=String(j?.id||'').trim().toLowerCase();return guideJobPortraitIds.has(id)?`/retro-phase-ii/job-portraits-v2/${esc(id)}.webp`:'';}
+function guideJobPortraitPath(j){return jobPortraitPath(j?.name||j?.id||'');}
 function jobOverview(j){let portrait=guideJobPortraitPath(j);return `<button type="button" class="card job-overview searchable guide-job-art-card" data-open-job="${esc(j.id)}" aria-label="Open ${esc(j.name)} Job details">${portrait?`<div class="guide-job-art"><img src="${portrait}" alt="${esc(j.name)} Job portrait" loading="lazy" decoding="async"></div>`:''}<div class="statline">
   <span class="badge ${j.tier==='starter'?'core':'gold'}">${esc(humanizeLabel(j.tier))}</span><span class="badge">${esc(humanizeLabel(j.combat_type))}</span></div><h3>${esc(j.name)}</h3><p><b>${esc(j.signature)}</b>
   signature • ${esc(j.attack_name||'Standard attack')}</p><div class="growth-mini"><span>STR<b>${j.growth.str}</b></span><span>VIT<b>${j.growth.vit}</b></span><span>MAG<b>${j.growth.mag}</b></span>
@@ -277,8 +278,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){infoPanel.addE
   ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');infoPanel.style.setProperty('--panel-y',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');},{passive:true});}
 
 // Regions and monster locations
-const guideMonsterPortraitIds=new Set(['goblin','wolf','mandragora','goblin_chieftain','goblin_guard','hornet','flan','imp','dire_wolf_alpha','bomb']);
-function guideMonsterPortraitPath(id){let key=String(id||'').trim().toLowerCase();return guideMonsterPortraitIds.has(key)?`/retro-phase-ii/monster-portraits-v1/${esc(key)}.webp`:'';}
+function guideMonsterPortraitPath(id){return monsterPortraitPath(id);}
 const monsterRegions={};D.regions.forEach(r=>(r.encounters||[]).forEach(e=>(monsterRegions[e.monster_id]??=[]).push(r.name)));
 $('#regionGrid').innerHTML=[...D.regions].sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||''))).map(r=>{let total=r.encounters.reduce((a,x)=>a+x.weight,0);let ents=[...r.encounters].sort((a,b)=>b.weight-a.weight).map(e=>`${monsterName(e.monster_id)}
   <span class="muted">(${Math.round(e.weight/total*100)}%)</span>`).join(' • ');return `<div class="card searchable guide-region-card"><div class="guide-region-art" aria-hidden="true"><img src="/retro-phase-ii/regions-hd/${esc(r.id)}.webp" alt="" loading="lazy" decoding="async"></div><div class="statline"><span class="badge gold">Min Lv.${r.min_level}</span>

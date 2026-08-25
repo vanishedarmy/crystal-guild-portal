@@ -1,7 +1,10 @@
-# Upgrade — v1.1.18 Retro Phase II Monster Identity Wave 1
+# Crystal Guild v1.1.18 — Retro Phase II Monster Identity Wave 2 Upgrade
 
-1. Deploy the full Web package, or overlay the Wave 1 patch onto the immediately previous Job Portrait Wave 2 Web source.
-2. Do not replace Bot runtime data or player databases; this is a Web-only visual release.
-3. After deploy, verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii5`.
-4. Hard refresh only if the browser still has an older application shell open; the new monster art uses its own versioned `/retro-phase-ii/monster-portraits-v1/` path.
-5. Check Bestiary, Hunts, and Player Guide on desktop and mobile widths.
+Web-only update from Monster Identity Wave 1.
+
+1. Deploy the full Wave 2 Web source, or overlay the Wave 2 patch over the Wave 1 Web tree.
+2. No database migration, Bot deploy, OAuth change, player reset, or new environment variable is required.
+3. Verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii6`.
+4. Open Player Guide → Jobs and confirm Black Mage, White Mage, Red Mage, Dark Knight, Blue Mage, and Time Mage artwork appears.
+5. Open Bestiary/Hunts and confirm Wave 2 portraits appear for Cockatrice through Crimson Detonator where those monsters are shown.
+6. If a browser had the prior visual build open during deployment, reload once after the new asset revision is live.

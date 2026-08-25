@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii5
+Frontend asset revision: 1.1.18-retro-phase-ii6
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Fresh build from v1.1.18 Retro Phase 1 Hotfix 1. Includes eight standalone purpose-built region scenes, Adventure Board/Player Guide integration, and the major release-moniker archive. Rejected concept-board visual assets are not included.
+Retro Phase II current Web build: Region HD art + full Job Portrait Wave 2 + Monster Identity Waves 1–2 + Player Guide shared-image lookup fix. Twenty monster portraits and all live Guide Job portraits use versioned asset paths.

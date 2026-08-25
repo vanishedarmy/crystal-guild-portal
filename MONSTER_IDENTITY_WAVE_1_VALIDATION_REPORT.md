@@ -8,5 +8,5 @@
 - Shared Bestiary/Hunt/Guide mapping uses authoritative monster IDs
 - Responsive art rendering uses `object-fit: contain`
 - Player Guide reuses `job-portraits-v2` and `monster-portraits-v1`
-- Frontend asset revision: `1.1.18-retro-phase-ii5`
+- Frontend asset revision: `1.1.18-retro-phase-ii6`
 - No Bot, database, sync-schema, Portal Action protocol, OAuth, or gameplay change

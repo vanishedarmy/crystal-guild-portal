@@ -1,12 +1,24 @@
-# Validation — v1.1.18 Retro Phase II Monster Identity Wave 1
+# Crystal Guild v1.1.18 — Retro Phase II Monster Identity Wave 2 Validation
 
-- Frontend regression tests: 207 / 207 PASS
-- Hosted Web/API tests: 46 / 46 PASS
-- Monster asset count: 10
-- Monster asset dimensions: 512 × 768 (2:3) for all Wave 1 files
-- All ten monster assets have unique SHA-256 hashes
-- Shared Bestiary/Hunt/Guide mapping uses authoritative monster IDs
-- Responsive art rendering uses `object-fit: contain`
-- Player Guide reuses `job-portraits-v2` and `monster-portraits-v1`
-- Frontend asset revision: `1.1.18-retro-phase-ii5`
-- No Bot, database, sync-schema, Portal Action protocol, OAuth, or gameplay change
+## Result
+PASS
+
+## Automated regression
+- Frontend: 211 / 211 PASS
+- Hosted Web/API: 46 / 46 PASS
+
+## Artwork checks
+- `monster-portraits-v2`: 20 standalone WebP assets.
+- All monster portraits: 512 × 768 (2:3).
+- All 18 live Player Guide Jobs resolve through `jobPortraitPath()` to existing `job-portraits-v2` files.
+- All 20 illustrated monsters resolve through `monsterPortraitPath()` to existing `monster-portraits-v2` files.
+- Guide and Portal image rules use `object-fit: contain`; no cover-crop path is used for Job/monster portrait art.
+- Superseded `job-portraits-v1` and `monster-portraits-v1` directories are omitted from the clean full Web package.
+
+## Release contract
+- Hosted Web runtime: `1.1.18-retro-phase-ii`
+- Frontend asset revision: `1.1.18-retro-phase-ii6`
+- DB schema: 5
+- Hosted sync schema: 1
+- Portal Action protocol: 14
+- Compatible Bot runtime: `1.1.17-arsenal-ii-h4`

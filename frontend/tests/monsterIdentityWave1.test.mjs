@@ -9,8 +9,8 @@ const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
 test("Monster Identity Wave 1 maps all ten authoritative monster ids", () => {
   const src = read("src/utils/monsterPortraits.js");
   for (const id of ["goblin","wolf","mandragora","goblin_chieftain","goblin_guard","hornet","flan","imp","dire_wolf_alpha","bomb"]) {
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v1`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v1/${id}.webp`)));
+    assert.match(src, new RegExp(`${id}.*monster-portraits-v2`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v2/${id}.webp`)));
   }
 });
 
@@ -34,10 +34,10 @@ test("Monster art and Guide art preserve aspect ratio without cover cropping", (
   assert.match(guideCss, /object-fit:contain/);
 });
 
-test("Player Guide reuses Job v2 and Monster v1 portrait libraries", () => {
+test("Player Guide reuses shared Job and Monster portrait libraries", () => {
   const runtime = read("src/guide/guideRuntime.js");
-  assert.match(runtime, /job-portraits-v2/);
-  assert.match(runtime, /monster-portraits-v1/);
+  assert.match(runtime, /import \{ jobPortraitPath \}/);
+  assert.match(runtime, /import \{ monsterPortraitPath \}/);
   assert.match(runtime, /guideMonsterPortraitPath/);
   assert.match(runtime, /guideJobPortraitPath/);
 });

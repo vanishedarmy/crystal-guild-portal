@@ -23,7 +23,7 @@ This Web-only visual pass builds on the Retro Phase II Region Cache Fix and intr
 
 ## Compatibility
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii5`
+- Frontend asset revision: `1.1.18-retro-phase-ii6`
 - Bot runtime: unchanged `1.1.17-arsenal-ii-h4`
 - Local DB schema: 5 unchanged
 - Hosted sync schema: 1 unchanged

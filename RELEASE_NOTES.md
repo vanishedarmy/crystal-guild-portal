@@ -1,31 +1,33 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Monster Identity Pass — Wave 1
+## Monster Identity Pass — Wave 2
 
-This Web-only visual pass adds the first ten production monster portraits and uses one shared monster-art system across the Bestiary, Hunts, and Player Guide.
+This Web-only graphical pass expands the shared monster-art system to twenty illustrated Bestiary/Hunt monsters and repairs Player Guide portrait resolution so the Guide uses the same authoritative Job/monster lookup logic as the Portal.
 
-### Wave 1 monsters
-- Goblin
-- Wolf
-- Mandragora
-- Goblin Chieftain
-- Goblin Guard
-- Hornet
-- Flan
-- Imp
-- Dire Wolf Alpha
-- Bomb
+### Wave 2 monsters
+- Cockatrice
+- Cave Bat
+- Queen Hornet
+- Ochu
+- Skeleton
+- Cactuar
+- Ossuary Knight
+- Spriggan
+- Basilisk
+- Crimson Detonator
 
-### Interface integration
-- Bestiary rows now show discovered monster portraits with neutral fallbacks for entries that do not yet have artwork.
-- Hunt Board cards, active Hunts, and Hunt results reuse the same authoritative monster portrait mapping.
-- Player Guide Bestiary and Hunt sections reuse the same monster art library.
-- Player Guide Jobs cards now reuse the existing `job-portraits-v2` library so the recently created player/job artwork is visible in the Guide too.
-- Monster and Job art use fixed aspect-ratio containers with `object-fit: contain`; the layouts collapse before images are compressed or cropped.
+Wave 1 remains included: Goblin, Wolf, Mandragora, Goblin Chieftain, Goblin Guard, Hornet, Flan, Imp, Dire Wolf Alpha, and Bomb.
+
+### Player Guide image fixes
+- Guide Job cards now use `jobPortraitPath()` rather than constructing file names from raw Job IDs.
+- This repairs Black Mage, White Mage, Red Mage, Dark Knight, Blue Mage, and Time Mage, whose compact data IDs did not match their underscore-based image filenames.
+- Guide Bestiary and Hunt art now use the same `monsterPortraitPath()` lookup as the Portal.
+- The Guide, Bestiary, and Hunts retain `object-fit: contain`, preserving artwork without cropping or squashing.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii5`
-- Bot runtime: unchanged
-- DB schema: unchanged
-- Hosted sync schema: unchanged
-- Portal Action protocol: unchanged
+- Frontend asset revision: `1.1.18-retro-phase-ii6`
+- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
+- DB schema: unchanged (5)
+- Hosted sync schema: unchanged (1)
+- Portal Action protocol: unchanged (14)
+- Twitch prefix: unchanged (`!`)

@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii11
+Frontend asset revision: 1.1.18-retro-phase-ii12
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Retro Phase II current Web build: Region HD art + full Job Portrait Wave 2 + Monster Identity Waves 1–7 + Solo Venture enemy portrait panel + Player Guide shared-image validation. Seventy monster portraits and all live Guide Job portraits use versioned asset paths.
+Current Web build: Monster Identity Wave 7 + Image Fit Hotfix. 70 monster portraits are normalized to edge-to-edge 512×768 (2:3), 19 Job portraits remain 543×724 (3:4), Regions remain 16:9, and the Player Guide now presents Job/Hunt art in matching portrait frames.

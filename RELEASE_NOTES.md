@@ -1,32 +1,25 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Monster Identity Pass — Wave 7
+## Wave 7 Image Fit Hotfix
 
-This Web-only graphical pass expands the shared Bestiary/Hunt monster-art system from sixty to seventy illustrated monsters. Wave 7 also retains the Solo Venture enemy portrait integration introduced in Wave 6, so any illustrated encounter automatically displays the same authoritative portrait used by Bestiary, Hunts, and Player Guide.
+This Web-only hotfix standardizes artwork framing across Crystal Guild so portrait assets fill their intended UI frames without stretching, internal letterboxing, or mismatched card ratios.
 
-### Wave 7 monsters
-- Crystal Wolf
-- Mover
-- Tonberry Executioner
-- Tonberry King
-- Crystal Golem
-- Red Dragon
-- Blue Dragon
-- Elemental Archon
-- Magitek Juggernaut
-- Gold Dragon
+### Portrait normalization
+- All 70 monster portraits are rebuilt as true edge-to-edge 512×768 (2:3) WebP assets.
+- Transparent padding left by earlier source conversions is removed before final export.
+- Wider source compositions are proportionally center-cropped only as needed to reach 2:3; images are never stretched.
+- Job portraits remain native 543×724 (3:4).
+- Region artwork remains 16:9.
 
-Waves 1–6 remain included in the new cache-busted `monster-portraits-v7` asset library.
+### Player Guide
+- Job artwork now uses a native 3:4 presentation frame.
+- Hunt artwork now uses a native 2:3 presentation frame.
+- Mobile no longer forces portrait artwork into landscape 16:10 or 4:3 containers.
 
-### Image handling
-- Wave 7 source artwork is proportionally fitted inside the established 512×768 WebP portrait canvas.
-- Bestiary, Hunts, Player Guide, and Solo Venture continue using contain-fit rendering so artwork is not stretched, squashed, or cover-cropped.
-- The full Web package removes the superseded v6 portrait directory; the Wave 7 patch leaves previously deployed v6 files harmlessly unused.
+### Shared presentation
+The normalized monster library is reused by Bestiary, Hunts, Hunt results, Player Guide, and Solo Venture combat.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii11`
-- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
-- DB schema: unchanged (5)
-- Hosted sync schema: unchanged (1)
-- Portal Action protocol: unchanged (14)
-- Twitch prefix: unchanged (`!`)
+- Frontend asset revision: `1.1.18-retro-phase-ii12`
+- Monster asset library: `monster-portraits-v7h1`
+- Bot runtime/schema/protocol/gameplay: unchanged

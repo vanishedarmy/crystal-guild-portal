@@ -1,24 +1,26 @@
-# Monster Identity Wave 6 — Validation Report
+# Monster Identity Wave 7 — Validation Report
 
-Prepared from the validated Monster Identity Wave 5 Web baseline.
+Prepared from the validated Monster Identity Wave 6 Web baseline.
 
 ## Asset and mapping checks
-- 10 new Wave 6 monster portraits added: Iron Giant, Iron Giant Exile, Ironclad, Behemoth, Chimera Brain, Evil Eye, Great Malboro, Three Moon Chimera, Death Machine, and Magitek Armor.
-- Consolidated monster artwork into cache-busted `monster-portraits-v6`.
-- 60 total monster portrait WebP assets packaged.
-- All 60 mapped monster IDs exist in the authoritative Player Guide Bestiary data.
-- All 60 mapped portrait URLs resolve to real packaged files.
-- Solo Venture combat now renders the shared `MonsterPortrait` component for the active enemy.
-- New Wave 6 source compositions are proportionally fitted into transparent 512×768 canvases; UI presentation continues using contain-fit rendering.
+- 10 new Wave 7 portraits added for Crystal Wolf, Mover, Tonberry Executioner, Tonberry King, Crystal Golem, Red Dragon, Blue Dragon, Elemental Archon, Magitek Juggernaut, and Gold Dragon.
+- Consolidated monster artwork into cache-busted `monster-portraits-v7`.
+- 70 total monster portrait WebP assets packaged.
+- All 70 mapped monster IDs exist in authoritative Player Guide Bestiary data.
+- All 70 mapped portrait URLs resolve to real packaged files.
+- Solo Venture continues to render the shared `MonsterPortrait` component for the active enemy.
+- UI presentation continues using contain-fit rendering for Bestiary, Hunts, Guide, and Solo Venture.
+
 
 ## Regression validation
-- Shared lookup remains authoritative across Bestiary, Hunts, Player Guide, and Solo Venture.
-- Frontend asset revision bumped to `1.1.18-retro-phase-ii10` for cache busting.
-- No gameplay logic, DB schema, hosted sync schema, OAuth flow, or Portal Action protocol changes were introduced.
+- Frontend unit/regression tests: **225/225 PASS**.
+- Hosted Web/API tests: **46/46 PASS**.
+- Portrait mapping audit: **70/70** mapped IDs exist in authoritative Bestiary data and resolve to packaged files.
+- Production Vite bundling was not run in this packaging environment because local npm dependencies were not installed; source-level regression and hosted contract tests completed successfully.
 
 ## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii10`
+- Frontend asset revision: `1.1.18-retro-phase-ii11`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

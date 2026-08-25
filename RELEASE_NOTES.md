@@ -1,35 +1,30 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Monster Identity Pass — Wave 6
+## Monster Identity Pass — Wave 7
 
-This Web-only graphical pass expands the shared Bestiary/Hunt monster-art system from fifty to sixty illustrated monsters and now surfaces the same shared monster portrait directly inside Solo Venture combat whenever an illustrated enemy is encountered.
+This Web-only graphical pass expands the shared Bestiary/Hunt monster-art system from sixty to seventy illustrated monsters. Wave 7 also retains the Solo Venture enemy portrait integration introduced in Wave 6, so any illustrated encounter automatically displays the same authoritative portrait used by Bestiary, Hunts, and Player Guide.
 
-### Wave 6 monsters
-- Iron Giant
-- Iron Giant Exile
-- Ironclad
-- Behemoth
-- Chimera Brain
-- Evil Eye
-- Great Malboro
-- Three Moon Chimera
-- Death Machine
-- Magitek Armor
+### Wave 7 monsters
+- Crystal Wolf
+- Mover
+- Tonberry Executioner
+- Tonberry King
+- Crystal Golem
+- Red Dragon
+- Blue Dragon
+- Elemental Archon
+- Magitek Juggernaut
+- Gold Dragon
 
-Waves 1–5 remain included in the new cache-busted `monster-portraits-v6` asset library.
-
-### Solo Venture presentation update
-- Solo Venture combat now shows the active enemy portrait beside the enemy stat block.
-- Existing illustrated monsters, including earlier entries like Basilisk, now display their art during Solo Venture battles automatically through the shared lookup.
-- Bestiary, Hunts, Player Guide, and Solo Venture continue sharing a single authoritative monster portrait map.
+Waves 1–6 remain included in the new cache-busted `monster-portraits-v7` asset library.
 
 ### Image handling
-- Wave 6 source artwork is proportionally fitted inside the established 512×768 WebP portrait canvas with transparent padding.
-- Bestiary, Hunts, Player Guide, and Solo Venture continue using contain-fit presentation so artwork is not stretched or cropped.
-- The full Web package removes the superseded v5 portrait directory; the Wave 6 patch leaves previously deployed v5 files harmlessly unused.
+- Wave 7 source artwork is proportionally fitted inside the established 512×768 WebP portrait canvas.
+- Bestiary, Hunts, Player Guide, and Solo Venture continue using contain-fit rendering so artwork is not stretched, squashed, or cover-cropped.
+- The full Web package removes the superseded v6 portrait directory; the Wave 7 patch leaves previously deployed v6 files harmlessly unused.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii10`
+- Frontend asset revision: `1.1.18-retro-phase-ii11`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

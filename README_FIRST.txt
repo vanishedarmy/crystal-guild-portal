@@ -1,7 +1,7 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
-Frontend asset revision: 1.1.18-retro-phase-ii21
+Frontend asset revision: 1.1.18-retro-phase-ii22
 
-Retro Environment Pass adds transparent pixel-art airship/crystal/portal ambience, gold section dividers, and a readable Final Fantasy-inspired display/UI typography treatment.
+Mobile Readability Hotfix: fixes long hero-name/status collisions and replaces the squeezed phone Bestiary table with a portrait-led labeled card layout.
 
 No Bot update, DB migration, OAuth change, environment-variable change, or player reset is required.
 See UPGRADE_GUIDE.md for deployment steps.

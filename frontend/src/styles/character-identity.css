@@ -288,3 +288,52 @@
     justify-self: center;
   }
 }
+
+
+/* v1.1.18 ii22 — roster name/status readability hotfix */
+.character-player-card .player-card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+  min-width: 0;
+}
+
+.character-player-card .player-card-topline .card-level {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.character-player-card .player-card-topline .status-badge {
+  position: static;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding-inline: .48rem;
+  font-size: .6rem;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.character-player-card h2 {
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(1.08rem, 2.5vw, 1.55rem);
+}
+
+@media (max-width: 700px) {
+  .character-player-card .player-card-topline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .38rem;
+  }
+
+  .character-player-card .player-card-topline .status-badge {
+    align-self: flex-start;
+  }
+}

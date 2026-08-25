@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii21
+Frontend asset revision: 1.1.18-retro-phase-ii22
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Current Web build: complete Region/Job/Monster/World-Raid artwork plus the Retro Environment Pass with transparent pixel-art atmosphere, gold dividers, and readable fantasy UI typography.
+Current Web build includes Retro Environment Pass plus Mobile Readability Hotfix for hero names/status and Adventurer Portal Bestiary mobile cards.

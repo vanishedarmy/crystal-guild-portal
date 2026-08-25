@@ -1,20 +1,14 @@
-# Retro Environment Pass — Validation Report
+# Mobile Readability Hotfix — Validation Report
 
-## Presentation checks
-- Five approved transparent environment assets packaged under `retro-phase-ii/environment-pass/`.
-- React site imports the new environment layer after existing Phase II/identity styles.
-- Player Guide receives matching environment and typography treatment in its dynamically loaded stylesheet.
-- Body text font stack remains unchanged; fantasy display typography is limited to headings, navigation, labels, and controls.
-- Mobile/phone-landscape media rules suppress large decorative scene elements.
+## Targeted checks
+- Long hero display-name wrapping removed from character cards.
+- Status badge moved into the hero card top-line flow.
+- Mobile Bestiary uses portrait-led labeled cards at <=720px.
+- Very narrow Bestiary layout stacks to one column at <=390px.
+- Existing monster/job artwork remains unchanged.
 
-## Regression validation
-- Frontend unit/regression suite: **244/244 PASS**
-- Hosted Web/API tests: **46/46 PASS**
+## Automated validation
+- Frontend unit/regression suite: **246/246 PASS**.
+- Hosted Web/API suite: **46/46 PASS**.
 
-## Release identity
-- Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii21`
-- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
-- DB schema: unchanged (5)
-- Hosted sync schema: unchanged (1)
-- Portal Action protocol: unchanged (14)
+Frontend asset revision: `1.1.18-retro-phase-ii22`.

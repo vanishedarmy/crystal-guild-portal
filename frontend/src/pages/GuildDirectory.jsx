@@ -118,12 +118,14 @@ export default function GuildDirectory() {
           <div className="player-grid" aria-live="polite">
             {shownPlayers.map((player) => (
               <Link className="player-card character-player-card" to={`/player/${encodeURIComponent(player.username)}`} key={player.username}>
-                <span className={`status-badge ${player.status}`}>{player.status_label}</span>
                 <div className="player-card-layout">
                   <JobPortrait jobName={player.job_name} className="player-card-portrait" />
                   <div className="player-card-copy">
-                    <div className="card-level">Level {number(player.level)}</div>
-                    <h2>{player.display_name}</h2>
+                    <div className="player-card-topline">
+                      <div className="card-level">Level {number(player.level)}</div>
+                      <span className={`status-badge ${player.status}`}>{player.status_label}</span>
+                    </div>
+                    <h2 title={player.display_name}>{player.display_name}</h2>
                     <div className="handle">@{player.username}</div>
                     <div className="card-job">{player.job_name}</div>
                     <div className="card-title">{player.title}</div>

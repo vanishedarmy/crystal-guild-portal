@@ -1,22 +1,20 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Retro Environment Pass
+## Mobile Readability Hotfix
 
-This Web-only presentation pass adds transparent retro-fantasy environmental dressing and a more cohesive Final Fantasy-inspired UI voice without changing gameplay, data, or information density.
+This Web-only pass fixes long hero-name wrapping and rebuilds the Adventurer Portal Bestiary presentation for narrow screens.
 
-### Visual additions
-- Transparent pixel-art airship ambience for desktop page heroes/background space.
-- Subtle blue crystal watermarks inside major RPG windows.
-- Gold crystal divider artwork for panel and Guide section headings.
-- Crystal-row ornament used as restrained hero/Guide branding detail.
-- Portal-arch ambience used at very low opacity in desktop page space.
-- Final Fantasy-inspired local display-font stack expanded to navigation, labels, tabs, and major headings while body copy remains the existing readable sans-serif stack.
-- Mobile treatment deliberately removes the large airship/portal scene dressing and keeps only a small crystal accent.
+### Hero directory
+- Level and status now share a deliberate top line instead of overlapping card identity content.
+- Long display names stay on one line and gracefully truncate only when necessary.
+- Full display names remain available through the title tooltip.
 
-### Release identity
-- Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii21`
-- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
-- DB schema: unchanged (5)
-- Hosted sync schema: unchanged (1)
-- Portal Action protocol: unchanged (14)
-- Twitch prefix: unchanged (`!`)
+### Bestiary
+- Desktop/tablet table behavior is retained.
+- At phone widths the Bestiary becomes a portrait-led card list instead of compressing six columns into unreadable text.
+- Level remains beside the monster identity; Defeats, Weakness, Combat Style, and Active Skill become clearly labeled fields.
+- Very narrow phones fall back to a single-column information stack.
+
+No new artwork was necessary; existing job and monster portraits remain the visual anchors.
+
+Frontend asset revision: `1.1.18-retro-phase-ii22`.
+No Bot runtime, DB schema, OAuth, hosted sync schema, or Portal Action protocol changes.

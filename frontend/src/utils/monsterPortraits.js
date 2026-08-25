@@ -99,6 +99,16 @@ const MONSTER_PORTRAITS = {
   wyrm: "/retro-phase-ii/monster-portraits-v10/wyrm.webp",
   great_malboro_omega: "/retro-phase-ii/monster-portraits-v10/great_malboro_omega.webp",
   dark_element: "/retro-phase-ii/monster-portraits-v10/dark_element.webp",
+  cosmic_crystal_colossus: "/retro-phase-ii/monster-portraits-v10/cosmic_crystal_colossus.webp",
+  violet_crystal_archangel: "/retro-phase-ii/monster-portraits-v10/violet_crystal_archangel.webp",
+  crimson_crystal_demon: "/retro-phase-ii/monster-portraits-v10/crimson_crystal_demon.webp",
+  void_knight: "/retro-phase-ii/monster-portraits-v10/void_knight.webp",
+  stormforged_thunderwing: "/retro-phase-ii/monster-portraits-v10/stormforged_thunderwing.webp",
+  toxic_hydra: "/retro-phase-ii/monster-portraits-v10/toxic_hydra.webp",
+  glacial_runebound_mammoth: "/retro-phase-ii/monster-portraits-v10/glacial_runebound_mammoth.webp",
+  abyssal_kraken_king: "/retro-phase-ii/monster-portraits-v10/abyssal_kraken_king.webp",
+  infernal_phoenix: "/retro-phase-ii/monster-portraits-v10/infernal_phoenix.webp",
+  obsidian_scorpion_king: "/retro-phase-ii/monster-portraits-v10/obsidian_scorpion_king.webp",
 };
 
 export function normalizeMonsterId(monster) {

@@ -13,8 +13,8 @@ test("Monster Identity Wave 7 maps the next ten authoritative Bestiary ids", () 
   const ids = new Set(data.monsters.map((entry) => entry.id));
   for (const id of wave7) {
     assert.ok(ids.has(id), `authoritative monster id missing: ${id}`);
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v7h1`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v7h1/${id}.webp`)), id);
+    assert.match(src, new RegExp(`${id}.*monster-portraits-v8`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v8/${id}.webp`)), id);
   }
 });
 

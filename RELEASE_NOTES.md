@@ -1,31 +1,30 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Monster Identity Pass — Wave 3
+## Monster Identity Pass — Wave 4
 
-This Web-only graphical pass expands the shared monster-art system to thirty illustrated Bestiary/Hunt monsters and runs another Player Guide image validation pass so recent Job artwork and monster portraits resolve cleanly from the same authoritative lookup utilities.
+This Web-only graphical pass expands the shared Bestiary/Hunt monster-art system from thirty to forty illustrated monsters and carries the same artwork through the Player Guide via the authoritative shared portrait lookup.
 
-### Wave 3 monsters
-- Gigas
-- Lamia
-- Mimic
-- Gargoyle
-- Sahagin
-- Sahagin Prince
-- Tonberry
-- Killer Fish
-- Cactuar Jack
-- Gigantoad
+### Wave 4 monsters
+- Mindflayer
+- Zu
+- Antlion
+- Piscodemon
+- Black Flan
+- Coeurl
+- Sand Worm
+- Chimera
+- Remora
+- King Coeurl
 
-Waves 1 and 2 remain included, bringing the illustrated Bestiary/Hunt roster to thirty total monsters through level 18 content.
+Waves 1–3 remain included in the new cache-busted `monster-portraits-v4` asset library.
 
-### Player Guide image validation
-- Monster portrait lookup now points to the cache-busted `/retro-phase-ii/monster-portraits-v3/` asset path.
-- The Guide continues using the shared `jobPortraitPath()` and `monsterPortraitPath()` utilities used by the Portal.
-- Wave 3 adds an automated asset check to confirm all mapped Player Guide Job portraits exist in `job-portraits-v2`.
-- Bestiary, Hunt, and Guide portrait presentation remains `object-fit: contain` to avoid cropping or squashing.
+### Image handling
+- Wave 4 source artwork is 3:4; export preserves that composition without stretching by fitting it proportionally inside the established 512×768 portrait canvas.
+- Bestiary, Hunts, and Player Guide continue using `object-fit: contain` so artwork is not cropped or squashed.
+- Superseded v2/v3 monster portrait directories are removed from the full Web package; the Wave 4 patch leaves older deployed files harmlessly unused.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii7`
+- Frontend asset revision: `1.1.18-retro-phase-ii8`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

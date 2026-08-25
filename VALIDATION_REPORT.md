@@ -1,17 +1,28 @@
-# Monster Identity Wave 3 — Validation Report
+# Monster Identity Wave 4 — Validation Report
 
-Validated against the hosted Web package source prepared from `Monster Identity Wave 2`.
+## Scope
+- Added ten Wave 4 monster portraits: Mindflayer, Zu, Antlion, Piscodemon, Black Flan, Coeurl, Sand Worm, Chimera, Remora, and King Coeurl.
+- Consolidated all forty illustrated monsters under the cache-busted `monster-portraits-v4` asset directory.
+- Updated the shared monster portrait map used by Bestiary, Hunts, and Player Guide.
+- Bumped frontend asset revision to `1.1.18-retro-phase-ii8`.
 
-## Checks completed
-- Added ten new Wave 3 Bestiary/Hunt portrait assets under `frontend/public/retro-phase-ii/monster-portraits-v3/`.
-- Carried forward all Wave 1 and Wave 2 monster portraits into the same versioned directory for consistent cache-busted resolution.
-- Updated `frontend/src/utils/monsterPortraits.js` so Bestiary, Hunts, and Player Guide all resolve monster art through the `monster-portraits-v3` lookup.
-- Added `frontend/tests/monsterIdentityWave3.test.mjs` to validate:
-  - all Wave 1–3 monster portrait mappings exist,
-  - all Wave 1–3 `.webp` portrait assets exist,
-  - all mapped Job portrait assets used by the Player Guide exist.
-- Bumped frontend asset revision to `1.1.18-retro-phase-ii7` in shared version sources and hosted health-report metadata.
+## Visual safeguards
+- Wave 4 source artwork is preserved proportionally and centered on the established 512×768 monster portrait canvas; no forced aspect-ratio distortion is used.
+- Existing Bestiary/Hunt/Guide presentation continues to use `object-fit: contain`.
+- Player Guide continues using the shared `jobPortraitPath()` and `monsterPortraitPath()` utilities rather than duplicating filename logic.
 
-## Expected result
-- Bestiary and Hunt inventory now display illustrated portraits for thirty monsters across Waves 1–3.
-- Player Guide Job and monster images resolve through the authoritative shared lookup utilities with cache-busted URLs.
+## Automated validation
+- Frontend regression suite: **216 / 216 PASS**.
+- Hosted Web/API suite: **46 / 46 PASS**.
+- All forty mapped monster portrait URLs resolve to packaged `.webp` files.
+- All ten Wave 4 portrait files are 512×768 WebP assets.
+- No production frontend source references superseded `monster-portraits-v2` or `monster-portraits-v3` paths.
+
+## Compatibility
+- Hosted Web runtime: `1.1.18-retro-phase-ii`
+- Frontend asset revision: `1.1.18-retro-phase-ii8`
+- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
+- DB schema: unchanged (5)
+- Hosted sync schema: unchanged (1)
+- Portal Action protocol: unchanged (14)
+- Twitch prefix: unchanged (`!`)

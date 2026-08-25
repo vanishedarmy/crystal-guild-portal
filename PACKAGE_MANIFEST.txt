@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii7
+Frontend asset revision: 1.1.18-retro-phase-ii8
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Retro Phase II current Web build: Region HD art + full Job Portrait Wave 2 + Monster Identity Waves 1–3 + Player Guide shared-image validation. Thirty monster portraits and all live Guide Job portraits use versioned asset paths.
+Current Web graphical state: Region HD art + complete Job Portrait Wave 2 + Monster Identity Waves 1–4. Forty Bestiary/Hunt monsters use the shared cache-busted `monster-portraits-v4` library; Player Guide uses the same Job/monster lookup utilities as the Portal.

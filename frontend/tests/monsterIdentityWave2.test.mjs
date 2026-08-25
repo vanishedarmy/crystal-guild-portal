@@ -11,8 +11,7 @@ const wave2 = ["cockatrice","bat","queen_hornet","ochu","skeleton","cactuar","os
 
 test("Monster portrait system contains Wave 1 and Wave 2 authoritative ids", () => {
   const src = read("src/utils/monsterPortraits.js");
-  const hasV3 = src.includes("monster-portraits-v3");
-  const baseDir = hasV3 ? "monster-portraits-v3" : "monster-portraits-v2";
+  const baseDir = "monster-portraits-v4";
   for (const id of [...wave1, ...wave2]) {
     assert.match(src, new RegExp(`${id}.*${baseDir}`));
     assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/${baseDir}/${id}.webp`)), id);

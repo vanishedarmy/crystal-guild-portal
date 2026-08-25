@@ -51,7 +51,7 @@ test("lazy guide markup documents Active Battle and keeps the organized guide sh
   assert.match(markup, /three stages|3 stages/i);
   assert.match(markup, /Enemy Intent/i);
   assert.match(markup, /5 levels below through 2 levels above/i);
-  assert.match(markup, /Hunts are solo battles/i);
+  assert.match(markup, /Hunts are personal timed assignments/i);
   assert.match(markup, /named C\/B\/A\/S marks/i);
   assert.match(markup, /no rally/i);
   assert.doesNotMatch(markup, /Achievements & Titles · React Edition/);

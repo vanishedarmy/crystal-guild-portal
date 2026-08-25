@@ -298,7 +298,7 @@ $('#monsterSearch').oninput=renderMonsters;$('#monsterRegion').onchange=renderMo
 // Hunts
 let activeHunt='';$('#huntTabs').innerHTML=['All','C','B','A','S'].map((x,i)=>`<button class="tab ${i===0?'active':''}" data-rank="${x==='All'?'':x}">${x}</button>`).join('');
 function renderHunts(){let hs=D.hunts.filter(h=>!activeHunt||h.rank===activeHunt).sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#huntGrid').innerHTML=hs.map(h=>{let portrait=guideMonsterPortraitPath(h.monster_id);return `<div class="card searchable guide-hunt-art-card">${portrait?`<div class="guide-hunt-art"><img src="${portrait}" alt="${esc(monsterName(h.monster_id))} monster portrait" loading="lazy" decoding="async"></div>`:''}<div class="statline"><span class="badge gold">
-  ${h.rank}-Rank</span><span class="badge">Min Lv.${h.min_level}</span><span class="badge">CD ${sec(h.cooldown_seconds)}</span></div><h3>${esc(h.name)}</h3><p><b>Mark:</b>
+  ${h.rank}-Rank</span><span class="badge">Min Lv.${h.min_level}</span><span class="badge">Timer ${sec(h.cooldown_seconds)}</span></div><h3>${esc(h.name)}</h3><p><b>Mark:</b>
   ${esc(monsterName(h.monster_id))}</p>${(h.requirements||[]).length?`<p><b>Requires:</b> ${(h.requirements||[]).map(reqText).map(esc).join(' • ')}</p>`:''}<p><b>Rewards:</b> ${fmtInt(h.rewards.xp)}
   XP • ${fmtInt(h.rewards.jp)} JP • ${fmtInt(h.rewards.gil)} gil • ${h.rewards.seals} Seals</p><p><b>First clear:</b> ${esc(itemName(h.first_clear_item))} • Title: <span class="gold">
   ${esc(titleName(h.first_clear_title))}</span></p></div>`}).join('')}

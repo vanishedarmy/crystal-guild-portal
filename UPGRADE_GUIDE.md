@@ -1,8 +1,9 @@
-# Profile Name + Recovery Cleanup Hotfix — Upgrade Guide
+# Hunt Board Timer Pass — Web Upgrade Guide
 
-1. Deploy the full Web package over the current v1.1.18 Retro Phase II site, or apply the ii26 → ii27 patch.
-2. Verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii27`.
-3. Hard-refresh the Adventurer Portal after deployment.
-4. Confirm a longer Cinzel character name such as `VanishedArmy` remains on one line in the profile masthead.
-5. Open Equipment & Inventory and confirm Recovery lists only items that can currently be used, with a concise recovery summary.
-6. No Bot deploy, DB migration, OAuth change, environment-variable change, or player reset is required.
+1. Deploy the full Web package over the current ii27 site, or apply the ii27 → ii28 Web patch.
+2. Deploy the matching Bot Hunt Board Hotfix so the displayed rank timers and authoritative gameplay timers agree.
+3. Verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii28`.
+4. Open Player Guide → Hunt Board and confirm the four-step flow is Dispatch → Auto Hunt → Wait → Resolve.
+5. Confirm Hunt cards display C 15m, B 30m, A 2h and S 5h timers.
+
+No DB migration, OAuth change, environment-variable change, Portal Action protocol change, or player reset is required.

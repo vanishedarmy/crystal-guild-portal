@@ -1,24 +1,21 @@
-# Profile Name + Recovery Cleanup Hotfix — Validation Report
+# Crystal Guild v1.1.18 — Hunt Board Timer Pass Validation
 
-Prepared from the validated ii26 Cinzel Typography Pass baseline.
+## Guide / Portal contract
+- Player Guide Hunt Board now documents Dispatch → Auto Hunt → Wait → Resolve.
+- Removed obsolete Round 1 / `!attack` / `!ability` Hunt instructions.
+- Current rank timers display as C 15m, B 30m, A 2h, S 5h.
+- All 17 Hunt catalog entries use the matching rank timer.
+- Hunt catalog badge label changed from `CD` to `Timer`.
 
-## Layout and UX validation
-- Profile display names use an all-width single-line rule with responsive Cinzel sizing and ellipsis fallback.
-- Recovery filters to `usable_now && field_usable` before rendering action controls.
-- Unavailable and battle-only recovery cards are no longer rendered in the recovery workspace.
-- Full Inventory browsing remains intact below Recovery.
-
-## Regression validation
-- Frontend unit/regression suite: **250/250 PASS**
-- Hosted Web/API tests: **46/46 PASS**
-
-- Production Vite build was not executed in this container because the Vite binary is not installed; source/regression validation completed successfully.
+## Automated validation
+- Frontend test suite: **252/252 PASS**.
+- Hosted Web/API test suite: **46/46 PASS**.
 
 ## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii27`
-- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
-- DB schema: unchanged (5)
-- Hosted sync schema: unchanged (1)
-- Portal Action protocol: unchanged (14)
-- Twitch prefix: unchanged (`!`)
+- Frontend asset revision: `1.1.18-retro-phase-ii28`
+- Compatible Bot runtime: `1.1.18-hunt-board-h1`
+- DB schema: 5 unchanged
+- Hosted sync schema: 1 unchanged
+- Portal Action protocol: 14 unchanged
+- Twitch prefix: `!`

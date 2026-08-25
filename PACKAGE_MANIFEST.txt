@@ -1,9 +1,9 @@
-Crystal Guild Web v1.1.18 — Retro Phase II
+Crystal Guild Web v1.1.18 — Hunt Board Timer Pass
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii27
+Frontend asset revision: 1.1.18-retro-phase-ii28
 Hosted sync schema: 1
 Portal Action protocol: 14
-Compatible Bot runtime: 1.1.17-arsenal-ii-h4
+Compatible Bot runtime: 1.1.18-hunt-board-h1
 Twitch command prefix: !
 
-Current Web build: Cinzel typography + profile name no-wrap refinement + streamlined usable-now Recovery actions, retaining all prior Retro Phase II artwork, mobile readability, and environment passes.
+Player Guide Hunt Board behavior corrected to autonomous timed Hunts. Timer catalog: C 15m · B 30m · A 2h · S 5h.

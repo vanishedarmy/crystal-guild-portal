@@ -1,26 +1,24 @@
-# Monster Identity Wave 4 — Validation Report
+# Monster Identity Wave 5 — Validation Report
 
-## Scope
-- Added ten Wave 4 monster portraits: Mindflayer, Zu, Antlion, Piscodemon, Black Flan, Coeurl, Sand Worm, Chimera, Remora, and King Coeurl.
-- Consolidated all forty illustrated monsters under the cache-busted `monster-portraits-v4` asset directory.
-- Updated the shared monster portrait map used by Bestiary, Hunts, and Player Guide.
-- Bumped frontend asset revision to `1.1.18-retro-phase-ii8`.
+Prepared from the validated Monster Identity Wave 4 Web baseline.
 
-## Visual safeguards
-- Wave 4 source artwork is preserved proportionally and centered on the established 512×768 monster portrait canvas; no forced aspect-ratio distortion is used.
-- Existing Bestiary/Hunt/Guide presentation continues to use `object-fit: contain`.
-- Player Guide continues using the shared `jobPortraitPath()` and `monsterPortraitPath()` utilities rather than duplicating filename logic.
+## Asset and mapping checks
+- 10 new Wave 5 monster portraits added: Magic Pot, Malboro, Sea Serpent, The Riven Ronin, Adamantoise, Magitek Drone, Ahriman, Garuda, Malboro Overlord, and Death Claw.
+- Consolidated monster artwork into cache-busted `monster-portraits-v5`.
+- 50 total monster portrait WebP assets packaged.
+- All 50 mapped monster IDs exist in the authoritative Player Guide Bestiary data.
+- All 50 mapped portrait URLs resolve to real packaged files.
+- No active frontend source/test reference remains to monster portrait v1–v4 paths.
+- New Wave 5 source compositions are proportionally fitted into transparent 512×768 canvases; UI presentation continues using `object-fit: contain`.
 
-## Automated validation
-- Frontend regression suite: **216 / 216 PASS**.
-- Hosted Web/API suite: **46 / 46 PASS**.
-- All forty mapped monster portrait URLs resolve to packaged `.webp` files.
-- All ten Wave 4 portrait files are 512×768 WebP assets.
-- No production frontend source references superseded `monster-portraits-v2` or `monster-portraits-v3` paths.
+## Regression validation
+- Frontend unit/regression tests: **219/219 PASS**.
+- Hosted Web/API tests: **46/46 PASS**.
+- Player Guide continues sharing `jobPortraitPath()` and `monsterPortraitPath()` with the Portal rather than maintaining a separate image map.
 
-## Compatibility
+## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii8`
+- Frontend asset revision: `1.1.18-retro-phase-ii9`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

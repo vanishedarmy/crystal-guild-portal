@@ -24,7 +24,7 @@ Waves 1–3 remain included in the new cache-busted `monster-portraits-v4` asset
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii8`
+- Frontend asset revision: `1.1.18-retro-phase-ii9`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

@@ -4,7 +4,7 @@
 - Added ten Wave 4 monster portraits: Mindflayer, Zu, Antlion, Piscodemon, Black Flan, Coeurl, Sand Worm, Chimera, Remora, and King Coeurl.
 - Consolidated all forty illustrated monsters under the cache-busted `monster-portraits-v4` asset directory.
 - Updated the shared monster portrait map used by Bestiary, Hunts, and Player Guide.
-- Bumped frontend asset revision to `1.1.18-retro-phase-ii8`.
+- Bumped frontend asset revision to `1.1.18-retro-phase-ii9`.
 
 ## Visual safeguards
 - Wave 4 source artwork is preserved proportionally and centered on the established 512×768 monster portrait canvas; no forced aspect-ratio distortion is used.
@@ -20,7 +20,7 @@
 
 ## Compatibility
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii8`
+- Frontend asset revision: `1.1.18-retro-phase-ii9`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

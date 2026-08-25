@@ -1,24 +1,19 @@
-# Crystal Guild v1.1.18 — Hunt Board Timer Pass
+# Crystal Guild v1.1.18 — Retro Phase II
+## Forge Gear Priority Hotfix
 
-The Player Guide Hunt Board now documents the actual autonomous Hunt behavior, and the frontend catalog matches the new authoritative rank timers.
+This Web-only update reorganizes the Guild Blacksmith Forge Gear list around the equipment players are most likely to care about first.
 
-## Updated Hunt Board flow
-1. Dispatch an available mark from Adventurer Portal → Adventure Board → Hunt Board, or use `!hunt <name>` while the channel is LIVE.
-2. No round-by-round chat combat is required.
-3. The hero automatically uses attacks, learned abilities, Defend, and limited survival items.
-4. The Hunt resolves automatically when its rank timer expires and then records rewards/results.
+### Forge Gear order
+1. Currently equipped gear
+2. Already-forged `+` gear, ordered by equipment level
+3. Unforged `+0` gear, ordered by equipment level
 
-## Rank timers
-- C: 15 minutes
-- B: 30 minutes
-- A: 2 hours
-- S: 5 hours
+Each section is visually separated and equipment cards now show their required equipment level alongside type/equipped status. Search filtering preserves the same priority order inside the filtered results.
 
-## Release identity
+### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii28`
-- Compatible Bot runtime: `1.1.18-hunt-board-h1`
-- DB schema: 5 (unchanged)
-- Hosted sync schema: 1 (unchanged)
-- Portal Action protocol: 14 (unchanged)
-- Twitch prefix: `!`
+- Frontend asset revision: `1.1.18-retro-phase-ii29`
+- Hunt/Bot runtime remains the current v1.1.18 Hunt Board Timer Pass build
+- DB schema: unchanged (5)
+- Hosted sync schema: unchanged (1)
+- Portal Action protocol: unchanged (14)

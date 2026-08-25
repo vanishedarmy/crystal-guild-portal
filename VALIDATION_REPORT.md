@@ -1,21 +1,14 @@
-# Crystal Guild v1.1.18 — Hunt Board Timer Pass Validation
+# Forge Gear Priority Hotfix — Validation Report
 
-## Guide / Portal contract
-- Player Guide Hunt Board now documents Dispatch → Auto Hunt → Wait → Resolve.
-- Removed obsolete Round 1 / `!attack` / `!ability` Hunt instructions.
-- Current rank timers display as C 15m, B 30m, A 2h, S 5h.
-- All 17 Hunt catalog entries use the matching rank timer.
-- Hunt catalog badge label changed from `CD` to `Timer`.
+## Behavior
+- Currently equipped forgeable equipment is grouped first.
+- Non-equipped forged gear (`+1` and above) is grouped second and sorted by equipment level.
+- Non-equipped unforged gear (`+0`) is grouped third and sorted by equipment level.
+- Equipment level is visible on each Forge Gear card.
+- Search results retain the same priority grouping and sorting.
 
-## Automated validation
-- Frontend test suite: **252/252 PASS**.
-- Hosted Web/API test suite: **46/46 PASS**.
+## Regression
+- Frontend tests: **253/253 PASS**
+- Hosted Web/API tests: **46/46 PASS**
 
-## Release identity
-- Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii28`
-- Compatible Bot runtime: `1.1.18-hunt-board-h1`
-- DB schema: 5 unchanged
-- Hosted sync schema: 1 unchanged
-- Portal Action protocol: 14 unchanged
-- Twitch prefix: `!`
+Frontend asset revision: `1.1.18-retro-phase-ii29`.

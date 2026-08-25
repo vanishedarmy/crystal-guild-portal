@@ -1,7 +1,7 @@
-Crystal Guild Web v1.1.18 — Hunt Board Timer Pass
-Frontend asset revision: 1.1.18-retro-phase-ii28
-Compatible Bot runtime: 1.1.18-hunt-board-h1
+Crystal Guild Web v1.1.18 — Retro Phase II
+Frontend asset revision: 1.1.18-retro-phase-ii29
 
-The Player Guide Hunt Board now matches the autonomous timed-Hunt system. Current timers are C 15m, B 30m, A 2h and S 5h.
+Forge Gear Priority Hotfix reorganizes Blacksmith forging as: equipped gear first, forged + gear by level, then unforged +0 gear by level.
 
-Deploy the matching Bot update so gameplay and Web timers agree. No DB migration or player reset is required.
+No Bot update, DB migration, OAuth change, protocol change, or player reset is required.
+See UPGRADE_GUIDE.md for deployment steps.

@@ -164,11 +164,25 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             : Number(rule.bonus_percent || 0),
         };
       })
-      .sort((a, b) => a.min_level - b.min_level || String(a.type).localeCompare(String(b.type)) || Number(a.maxed) - Number(b.maxed) || a.current_upgrade - b.current_upgrade || String(a.name).localeCompare(String(b.name)));
+      .sort((a, b) => {
+        const groupA = a.equipped ? 0 : a.current_upgrade > 0 ? 1 : 2;
+        const groupB = b.equipped ? 0 : b.current_upgrade > 0 ? 1 : 2;
+        return groupA - groupB
+          || a.min_level - b.min_level
+          || String(a.type).localeCompare(String(b.type))
+          || b.current_upgrade - a.current_upgrade
+          || String(a.name).localeCompare(String(b.name));
+      });
     const needle = query.trim().toLowerCase();
     if (needle) values = values.filter((item) => [item.name, item.type].some((value) => String(value || "").toLowerCase().includes(needle)));
     return values;
   }, [state, data?.items, query]);
+
+  const forgeGroups = useMemo(() => ([
+    { id: "equipped", title: "Currently Equipped", description: "Your active weapon, armor, and accessories appear first.", items: forgeItems.filter((item) => item.equipped) },
+    { id: "forged", title: "Forged Gear", description: "Already-upgraded gear, ordered by equipment level.", items: forgeItems.filter((item) => !item.equipped && item.current_upgrade > 0) },
+    { id: "unforged", title: "Unforged Gear", description: "Owned +0 gear, ordered by equipment level.", items: forgeItems.filter((item) => !item.equipped && item.current_upgrade === 0) },
+  ]), [forgeItems]);
 
   if (!isOwnProfile) {
     return (
@@ -290,41 +304,54 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             <span>Workshop facility discounts are already included.</span>
           </div>
           <div className="blacksmith-grid forge-grid">
-            {forgeItems.map((item) => {
-              const busy = busyKey === `forge:${item.item_id}`;
-              return (
-                <article className="blacksmith-card forge-card" key={item.item_id}>
-                  <div className="blacksmith-card-head">
-                    <div><span className="slot-label">{titleCase(item.type)}{item.equipped ? " · Equipped" : ""}</span><h3 className={`rarity-${item.rarity || "common"}`}>{item.name} +{number(item.current_upgrade)}</h3></div>
-                    <span className="small-badge">{item.maxed ? "MAX" : `Next +${number(item.next_upgrade)}`}</span>
+            {forgeGroups.map((group) => group.items.length ? (
+              <section className="forge-group" key={group.id} aria-labelledby={`forge-group-${group.id}`}>
+                <div className="forge-group-heading">
+                  <div>
+                    <h3 id={`forge-group-${group.id}`}>{group.title}</h3>
+                    <p>{group.description}</p>
                   </div>
-                  {item.description ? <p className="blacksmith-description">{item.description}</p> : null}
-                  {item.maxed ? (
-                    <div className="blacksmith-maxed">Maximum forge level reached · +{number(item.next_bonus_percent)}% equipment stat bonus.</div>
-                  ) : (
-                    <>
-                      <div className="blacksmith-forge-price">
-                        <span>Forge fee</span><strong>{number(item.effective_gil)} Gil</strong>
-                        {Number(item.discount_gil || 0) > 0 ? <small>Workshop saves {number(item.discount_gil)} Gil</small> : null}
-                      </div>
-                      <div className="blacksmith-material-list">
-                        {(item.materials || []).map((material) => (
-                          <div className={material.enough ? "enough" : "missing"} key={material.item_id}>
-                            <span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="blacksmith-next-bonus">After forging: <strong>+{number(item.next_bonus_percent)}%</strong> equipment stat bonus over base.</div>
-                      <div className="blacksmith-card-actions forge-action">
-                        <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !item.forgeable || Boolean(busyKey)} onClick={() => forge(item)}>
-                          {busy ? "Forging…" : `Forge ${item.name} to +${number(item.next_upgrade)}`}
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </article>
-              );
-            })}
+                  <span className="small-badge">{number(group.items.length)} item{group.items.length === 1 ? "" : "s"}</span>
+                </div>
+                <div className="forge-group-grid">
+                  {group.items.map((item) => {
+                    const busy = busyKey === `forge:${item.item_id}`;
+                    return (
+                      <article className="blacksmith-card forge-card" key={item.item_id}>
+                        <div className="blacksmith-card-head">
+                          <div><span className="slot-label">{titleCase(item.type)} · Lv.{number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span><h3 className={`rarity-${item.rarity || "common"}`}>{item.name} +{number(item.current_upgrade)}</h3></div>
+                          <span className="small-badge">{item.maxed ? "MAX" : `Next +${number(item.next_upgrade)}`}</span>
+                        </div>
+                        {item.description ? <p className="blacksmith-description">{item.description}</p> : null}
+                        {item.maxed ? (
+                          <div className="blacksmith-maxed">Maximum forge level reached · +{number(item.next_bonus_percent)}% equipment stat bonus.</div>
+                        ) : (
+                          <>
+                            <div className="blacksmith-forge-price">
+                              <span>Forge fee</span><strong>{number(item.effective_gil)} Gil</strong>
+                              {Number(item.discount_gil || 0) > 0 ? <small>Workshop saves {number(item.discount_gil)} Gil</small> : null}
+                            </div>
+                            <div className="blacksmith-material-list">
+                              {(item.materials || []).map((material) => (
+                                <div className={material.enough ? "enough" : "missing"} key={material.item_id}>
+                                  <span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
+                                </div>
+                              ))}
+                            </div>
+                            <div className="blacksmith-next-bonus">After forging: <strong>+{number(item.next_bonus_percent)}%</strong> equipment stat bonus over base.</div>
+                            <div className="blacksmith-card-actions forge-action">
+                              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !item.forgeable || Boolean(busyKey)} onClick={() => forge(item)}>
+                                {busy ? "Forging…" : `Forge ${item.name} to +${number(item.next_upgrade)}`}
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            ) : null)}
           </div>
           {!forgeItems.length ? <div className="state-message compact-state">No owned equipment matches that search.</div> : null}
         </>

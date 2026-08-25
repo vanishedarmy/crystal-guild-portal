@@ -51,3 +51,14 @@ test("Phase 7 Blacksmith and Daily layouts collapse without horizontal-scrolling
   assert.match(phase, /@media \(max-width: 560px\)/);
   assert.doesNotMatch(phase, /overflow-x:\s*(auto|scroll)/);
 });
+
+
+test("Forge Gear prioritizes equipped, then forged, then unforged equipment by level", async () => {
+  const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
+  assert.match(smith, /const groupA = a\.equipped \? 0 : a\.current_upgrade > 0 \? 1 : 2/);
+  assert.match(smith, /groupA - groupB[\s\S]*a\.min_level - b\.min_level/);
+  assert.match(smith, /Currently Equipped/);
+  assert.match(smith, /Forged Gear/);
+  assert.match(smith, /Unforged Gear/);
+  assert.match(smith, /Lv\.\{number\(item\.min_level\)\}/);
+});

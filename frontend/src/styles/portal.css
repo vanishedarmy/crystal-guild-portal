@@ -7611,3 +7611,89 @@ main h1,
 .detail-body > h2 {
   letter-spacing: .012em;
 }
+
+
+/* v1.1.18 ii27 — usable-now recovery cleanup */
+.recovery-usable-summary {
+  color: var(--muted);
+  font-size: .78rem;
+  letter-spacing: .025em;
+}
+
+.recovery-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .65rem;
+  margin-top: .8rem;
+}
+
+.recovery-quick-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  width: 100%;
+  min-width: 0;
+  padding: .72rem .8rem;
+  border: 1px solid rgba(211,177,91,.3);
+  border-radius: 9px;
+  background: linear-gradient(135deg, rgba(17,39,63,.92), rgba(6,20,36,.96));
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.recovery-quick-action:hover:not(:disabled),
+.recovery-quick-action:focus-visible:not(:disabled) {
+  border-color: rgba(230,203,136,.62);
+  background: linear-gradient(135deg, rgba(24,51,80,.96), rgba(8,25,43,.98));
+}
+
+.recovery-quick-action:disabled {
+  cursor: wait;
+  opacity: .62;
+}
+
+.recovery-quick-copy {
+  display: grid;
+  gap: .18rem;
+  min-width: 0;
+}
+
+.recovery-quick-copy strong {
+  font-family: var(--font-retro, var(--font-display));
+  font-size: .95rem;
+  line-height: 1.1;
+}
+
+.recovery-quick-copy small {
+  display: block;
+  max-width: 42ch;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.3;
+}
+
+.recovery-quick-meta {
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.recovery-empty {
+  margin-top: .75rem;
+  padding: .7rem .8rem;
+  border: 1px dashed rgba(143,219,255,.18);
+  border-radius: 8px;
+  background: rgba(255,255,255,.018);
+}
+
+@media (max-width: 620px) {
+  .recovery-quick-grid { grid-template-columns: 1fr; }
+  .recovery-quick-action { align-items: flex-start; }
+}

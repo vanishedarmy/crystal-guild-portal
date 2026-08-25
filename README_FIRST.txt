@@ -1,7 +1,7 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
-Frontend asset revision: 1.1.18-retro-phase-ii26
+Frontend asset revision: 1.1.18-retro-phase-ii27
 
-Cinzel Typography Pass replaces Pixelify Sans with Cinzel for major Crystal Guild display and identity text while retaining the clean UI font for body copy and dense interface content.
+Profile Name + Recovery Cleanup Hotfix keeps Cinzel character names on one line and reduces the Recovery workspace to currently usable item actions with concise effect summaries.
 
 No Bot update, DB migration, OAuth change, environment-variable change, or player reset is required.
 See UPGRADE_GUIDE.md for deployment steps.

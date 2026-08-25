@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii26
+Frontend asset revision: 1.1.18-retro-phase-ii27
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Current Web build: Cinzel Typography Pass on top of ii25. Major page/section titles, character names, Bestiary/boss identity text, and major Player Guide headings use Cinzel while readable body typography remains unchanged.
+Current Web build: Cinzel typography + profile name no-wrap refinement + streamlined usable-now Recovery actions, retaining all prior Retro Phase II artwork, mobile readability, and environment passes.

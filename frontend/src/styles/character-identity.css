@@ -339,24 +339,35 @@
 }
 
 
-/* v1.1.18 ii24 — mobile profile display-name no-wrap hotfix */
-.profile-identity .display-name {
+/* v1.1.18 ii27 — Cinzel profile-name fit / no-wrap hotfix */
+.profile-identity {
   min-width: 0;
+  overflow: hidden;
+}
+
+.profile-identity .display-name {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(2rem, 4.2vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .profile-identity .display-name {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+  }
 }
 
 @media (max-width: 700px) {
-  .profile-identity {
-    min-width: 0;
-    overflow: hidden;
-  }
-
   .profile-identity .display-name {
-    display: block;
-    max-width: 100%;
-    overflow: hidden;
-    overflow-wrap: normal;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     font-size: clamp(1.45rem, 6.3vw, 2.1rem);
     line-height: 1.06;
   }

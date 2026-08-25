@@ -44,6 +44,11 @@ function eligibility(item, overview) {
   return { eligible: true, reason: "" };
 }
 function stateActionResult(action, fallback) { return action?.result?.message || fallback; }
+function quickRecoveryText(item) {
+  const raw = String(item?.preview || item?.description || "Recovery item").replace(/\s+/g, " ").trim();
+  const first = raw.split(/[.!?](?:\s|$)/)[0] || raw;
+  return first.length > 72 ? `${first.slice(0, 69).trimEnd()}…` : first;
+}
 
 export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const { auth } = usePortalAuth();
@@ -52,7 +57,6 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const [actionMessage, setActionMessage] = useState("");
   const [recoveryState, setRecoveryState] = useState(null);
   const [recoveryMessage, setRecoveryMessage] = useState("");
-  const [usableOnly, setUsableOnly] = useState(false);
   const [clockNow, setClockNow] = useState(() => Date.now());
   const recoveryLoadedFor = useRef("");
   const expiryRefreshFor = useRef(0);
@@ -130,7 +134,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
     setRecoveryMessage(message); const state = finished?.result?.data?.recovery_state; if (state) setRecoveryState(state); if (finished?.status === "completed") onRefresh?.();
   });
 
-  const recoveryItems = (recoveryState?.items || []).filter((item) => !usableOnly || item.usable_now);
+  const recoveryItems = (recoveryState?.items || []).filter((item) => item.usable_now && item.field_usable);
   const stateLabel = recoveryState?.state_label || (overview?.status?.label || "READY");
 
   return (
@@ -150,13 +154,12 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
           </div>
           {recoveryState?.state === "resting" ? <div className="recovery-callout"><strong>Camp recovery in {duration(campRemaining)}</strong><span>Recovery time stays accurate even if you leave the page and come back.</span></div> : null}
           {recoveryState?.active_statuses?.length ? <div className="recovery-callout"><strong>Active Battle status</strong><span>{recoveryState.active_statuses.map((status) => `${status.name} (${status.turns}r)`).join(" · ")} — use status-curing items during battle.</span></div> : null}
-          {recoveryState?.recommended_item_name ? <div className="recovery-suggestion">Suggested recovery: <strong>{recoveryState.recommended_item_name}</strong></div> : null}
           <div className="recovery-actions-row">
             <button type="button" className="equipment-action-button" disabled={!recoveryActionsAvailable || Boolean(busyKey) || recoveryState?.state === "in_battle" || recoveryState?.state === "resting"} onClick={startRest}>{busyKey === "start-rest" ? "Starting…" : recoveryState?.state === "resting" ? "Already Resting" : "Start Camp"}</button>
-            <label className="recovery-filter"><input type="checkbox" checked={usableOnly} onChange={(event) => setUsableOnly(event.target.checked)} /> Show usable now</label>
+            <span className="recovery-usable-summary">{recoveryItems.length ? `${recoveryItems.length} recovery ${recoveryItems.length === 1 ? "item" : "items"} usable now` : "No item recovery needed right now"}</span>
           </div>
           {recoveryMessage ? <div className="recovery-result" aria-live="polite">{recoveryMessage}</div> : null}
-          {recoveryItems.length ? <div className="recovery-item-grid">{recoveryItems.map((item) => <article className={`recovery-item ${item.usable_now ? "usable" : ""}`} key={item.id}><div><span className={`item-name rarity-${item.rarity}`}>{item.name}</span><small>Owned {number(item.quantity)}</small><p>{item.preview || item.description || item.reason}</p>{item.preview && item.reason ? <small>{item.reason}</small> : null}</div>{item.field_usable ? <button type="button" className="equipment-action-button" disabled={!recoveryActionsAvailable || !item.usable_now || Boolean(busyKey)} title={!item.usable_now ? item.reason : undefined} onClick={() => useRecoveryItem(item)}>{busyKey === `use:${item.id}` ? "Using…" : item.usable_now ? `Use ${item.name}` : item.reason || "Unavailable"}</button> : <span className="small-badge">Battle only</span>}</article>)}</div> : <div className="muted inventory-group-empty">No recovery items match the current filter.</div>}
+          {recoveryItems.length ? <div className="recovery-quick-grid">{recoveryItems.map((item) => <button type="button" className="recovery-quick-action" key={item.id} aria-label={`Use ${item.name}`} disabled={!recoveryActionsAvailable || Boolean(busyKey)} onClick={() => useRecoveryItem(item)}><span className="recovery-quick-copy"><strong className={`item-name rarity-${item.rarity}`}>{item.name}</strong><small>{quickRecoveryText(item)}</small></span><span className="recovery-quick-meta">Owned {number(item.quantity)} · {busyKey === `use:${item.id}` ? "Using…" : "Use"}</span></button>)}</div> : <div className="muted recovery-empty">{recoveryState ? "No recovery item can be used right now." : "Recovery options will appear here when available."}</div>}
         </section>
       ) : null}
 

@@ -1,23 +1,19 @@
-# Monster Portrait Fix Pass — Validation Report
+# Mobile Header & Guide Viewport Hotfix — Validation Report
 
-Prepared from the validated Wave 11 Completion Web baseline.
-
-## Asset refresh validation
-- Refreshed 18 existing monster portrait assets with new artwork.
-- 107/107 Bestiary monsters remain illustrated.
-- 107/107 mapped portrait files exist in the packaged Web build.
-- 107/107 mapped portrait files resolve to authoritative Bestiary monster IDs.
-- All 18 refreshed portraits are exactly 512×768 (2:3).
-- Shared `MonsterPortrait` rendering remains active in Bestiary, Hunts/Hunt results, Player Guide, and Solo Venture combat.
+## Behavior checks
+- Phone portrait uses the existing compact shared SiteHeader and hide-on-scroll behavior.
+- Phone landscape is explicitly included in mobile header detection using coarse pointer + landscape + low-height viewport criteria.
+- Player Guide mobile `Guide Sections` and global search controls are non-sticky and remain in normal page flow.
+- Guide navigation drawer remains available as a full-height overlay.
+- Landscape Guide hero/header density is reduced.
 
 ## Regression validation
-- Frontend unit/regression suite: **238/238 PASS**
+- Frontend unit/regression suite: **240/240 PASS**
 - Hosted Web/API tests: **46/46 PASS**
-- Frontend production build: **not executed in this container (Vite not installed)**
 
 ## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii18`
+- Frontend asset revision: `1.1.18-retro-phase-ii19`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

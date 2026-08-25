@@ -1,36 +1,19 @@
 # Crystal Guild v1.1.18 — Retro Phase II
-## Monster Portrait Fix Pass
+## Mobile Header & Guide Viewport Hotfix
 
-This Web-only build refreshes 18 existing Bestiary monster portraits with improved 16-bit Final Fantasy-inspired art while preserving the canonical 107-monster Bestiary roster and all existing gameplay data.
+This Web-only hotfix corrects mobile header obstruction in portrait and landscape orientations.
 
-### Refreshed portraits
-- Ancient Mimic
-- Behemoth Tyrant
-- Catoblepas
-- Holy Dragon
-- Land Worm
-- Malboro Menace
-- Master Coeurl
-- Master Tonberry
-- Mimic King
-- Rift Drake
-- Skull Dragon
-- Spriggan
-- Storm Dragon
-- Tonberry
-- Tonberry Executioner
-- Tonberry King
-- Void Tonberry
-- Wyrm
-
-### What changed
-- Replaced 18 portrait assets with new SNES / 16-bit Final Fantasy-style artwork.
-- Preserved all existing monster IDs, portrait mappings, levels, drops, and combat data.
-- Preserved the 512×768 / 2:3 portrait standard and the shared portrait presentation across Bestiary, Hunts, Player Guide, and Solo Venture.
+### Changes
+- Shared SiteHeader now treats coarse-pointer phone landscape as a mobile viewport even when its CSS width exceeds 720px.
+- Compact mobile header remains roundel + LIVE/OFFLINE + hamburger page selection.
+- Compact header hides on downward scroll and returns on upward scroll / near the top.
+- Player Guide `Guide Sections` toolbar and global search no longer remain permanently sticky on mobile; they scroll naturally with the guide.
+- Mobile landscape Player Guide uses reduced hero/header density to preserve usable vertical space.
+- Guide drawer becomes a full-height overlay when opened, independent of the scrolled header position.
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii18`
+- Frontend asset revision: `1.1.18-retro-phase-ii19`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

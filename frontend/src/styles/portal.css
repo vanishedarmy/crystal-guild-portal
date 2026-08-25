@@ -6981,7 +6981,7 @@ textarea:focus-visible,
 .mobile-site-header-actions,
 .mobile-site-menu { display: none; }
 
-@media (max-width: 720px) {
+@media (max-width: 720px), (max-width: 1180px) and (max-height: 620px) and (orientation: landscape) and (pointer: coarse) {
   .site-header {
     position: sticky;
     top: 0;
@@ -7135,7 +7135,7 @@ textarea:focus-visible,
 }
 
 /* Hotfix 2 token override: every phone-width shared header uses the same compact LIVE/OFFLINE label. */
-@media (max-width: 720px) {
+@media (max-width: 720px), (max-width: 1180px) and (max-height: 620px) and (orientation: landscape) and (pointer: coarse) {
   .mobile-site-header-actions .live-status-desktop-text { display: none !important; }
   .mobile-site-header-actions .live-status-mobile-token { display: inline !important; color: var(--text); font-size: .68rem; letter-spacing: .12em; }
 }
@@ -7380,4 +7380,44 @@ button:disabled { opacity: .78; }
   .hunt-result-title-row { align-items: stretch; }
   .hunt-result-outcome { align-self: flex-start; }
   .hunt-result-details p { grid-template-columns: 1fr; gap: .15rem; }
+}
+
+
+/* v1.1.18 Retro Phase II — Mobile Header Viewport Hotfix.
+   A phone in landscape can exceed the old width-only breakpoint. Keep the
+   shared header in its compact mobile form and let it leave the viewport on
+   downward scroll just like portrait mobile. */
+@media (max-width: 1180px) and (max-height: 620px) and (orientation: landscape) and (pointer: coarse) {
+  .site-header {
+    min-height: 44px;
+    padding: .22rem .48rem;
+    gap: .42rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+    will-change: transform;
+  }
+  .site-header.mobile-header-collapsed {
+    transform: translateY(calc(-100% - 2px));
+    box-shadow: none;
+  }
+  .site-header .brand-mark {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+  .mobile-site-header-actions { gap: .38rem; }
+  .mobile-site-header-actions .live-status {
+    min-height: 28px;
+    padding: .18rem .44rem;
+  }
+  .mobile-site-menu-toggle {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    border-radius: 8px;
+  }
+  .mobile-site-menu {
+    right: .48rem;
+    width: min(300px, calc(100vw - .96rem));
+    max-height: calc(100dvh - 48px);
+  }
 }

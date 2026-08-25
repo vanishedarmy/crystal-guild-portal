@@ -19,7 +19,7 @@ test("Equipment & Inventory surfaces a dedicated current-loadout summary and pri
 test("mobile site header hides on downward scroll and reliably returns on upward scroll", async () => {
   const header = await readFile(new URL("components/SiteHeader.jsx", SRC), "utf8");
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
-  assert.ok(header.includes('window.matchMedia("(max-width: 720px)")'));
+  assert.match(header, /window\.matchMedia\("\(max-width: 720px\)[\s\S]*max-width: 1180px[\s\S]*orientation: landscape/);
   assert.match(header, /delta > 8/);
   assert.match(header, /delta < 0/);
   assert.match(header, /nextY <= 72/);

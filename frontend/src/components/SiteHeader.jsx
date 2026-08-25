@@ -25,7 +25,7 @@ export default function SiteHeader({
   const streamerActive = location.pathname.startsWith("/streamer");
 
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 720px)");
+    const media = window.matchMedia("(max-width: 720px), (max-width: 1180px) and (max-height: 620px) and (orientation: landscape) and (pointer: coarse)");
     lastScrollY.current = Math.max(0, window.scrollY || 0);
 
     const updateForViewport = () => {

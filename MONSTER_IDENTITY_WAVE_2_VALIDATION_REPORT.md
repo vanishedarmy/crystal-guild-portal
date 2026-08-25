@@ -17,7 +17,7 @@ PASS
 
 ## Release contract
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii6`
+- Frontend asset revision: `1.1.18-retro-phase-ii7`
 - DB schema: 5
 - Hosted sync schema: 1
 - Portal Action protocol: 14

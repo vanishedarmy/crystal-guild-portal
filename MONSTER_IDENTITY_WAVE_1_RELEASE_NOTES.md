@@ -24,7 +24,7 @@ This Web-only visual pass adds the first ten production monster portraits and us
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii6`
+- Frontend asset revision: `1.1.18-retro-phase-ii7`
 - Bot runtime: unchanged
 - DB schema: unchanged
 - Hosted sync schema: unchanged

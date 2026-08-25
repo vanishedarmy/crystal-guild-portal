@@ -25,7 +25,7 @@ Wave 1 remains included: Goblin, Wolf, Mandragora, Goblin Chieftain, Goblin Guar
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii6`
+- Frontend asset revision: `1.1.18-retro-phase-ii7`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

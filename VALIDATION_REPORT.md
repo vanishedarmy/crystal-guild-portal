@@ -1,24 +1,17 @@
-# Crystal Guild v1.1.18 — Retro Phase II Monster Identity Wave 2 Validation
+# Monster Identity Wave 3 — Validation Report
 
-## Result
-PASS
+Validated against the hosted Web package source prepared from `Monster Identity Wave 2`.
 
-## Automated regression
-- Frontend: 211 / 211 PASS
-- Hosted Web/API: 46 / 46 PASS
+## Checks completed
+- Added ten new Wave 3 Bestiary/Hunt portrait assets under `frontend/public/retro-phase-ii/monster-portraits-v3/`.
+- Carried forward all Wave 1 and Wave 2 monster portraits into the same versioned directory for consistent cache-busted resolution.
+- Updated `frontend/src/utils/monsterPortraits.js` so Bestiary, Hunts, and Player Guide all resolve monster art through the `monster-portraits-v3` lookup.
+- Added `frontend/tests/monsterIdentityWave3.test.mjs` to validate:
+  - all Wave 1–3 monster portrait mappings exist,
+  - all Wave 1–3 `.webp` portrait assets exist,
+  - all mapped Job portrait assets used by the Player Guide exist.
+- Bumped frontend asset revision to `1.1.18-retro-phase-ii7` in shared version sources and hosted health-report metadata.
 
-## Artwork checks
-- `monster-portraits-v2`: 20 standalone WebP assets.
-- All monster portraits: 512 × 768 (2:3).
-- All 18 live Player Guide Jobs resolve through `jobPortraitPath()` to existing `job-portraits-v2` files.
-- All 20 illustrated monsters resolve through `monsterPortraitPath()` to existing `monster-portraits-v2` files.
-- Guide and Portal image rules use `object-fit: contain`; no cover-crop path is used for Job/monster portrait art.
-- Superseded `job-portraits-v1` and `monster-portraits-v1` directories are omitted from the clean full Web package.
-
-## Release contract
-- Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii6`
-- DB schema: 5
-- Hosted sync schema: 1
-- Portal Action protocol: 14
-- Compatible Bot runtime: `1.1.17-arsenal-ii-h4`
+## Expected result
+- Bestiary and Hunt inventory now display illustrated portraits for thirty monsters across Waves 1–3.
+- Player Guide Job and monster images resolve through the authoritative shared lookup utilities with cache-busted URLs.

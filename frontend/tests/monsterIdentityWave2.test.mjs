@@ -9,11 +9,13 @@ const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
 const wave1 = ["goblin","wolf","mandragora","goblin_chieftain","goblin_guard","hornet","flan","imp","dire_wolf_alpha","bomb"];
 const wave2 = ["cockatrice","bat","queen_hornet","ochu","skeleton","cactuar","ossuary_knight","spriggan","basilisk","crimson_detonator"];
 
-test("Monster portrait v2 contains Wave 1 and Wave 2 authoritative ids", () => {
+test("Monster portrait system contains Wave 1 and Wave 2 authoritative ids", () => {
   const src = read("src/utils/monsterPortraits.js");
+  const hasV3 = src.includes("monster-portraits-v3");
+  const baseDir = hasV3 ? "monster-portraits-v3" : "monster-portraits-v2";
   for (const id of [...wave1, ...wave2]) {
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v2`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v2/${id}.webp`)), id);
+    assert.match(src, new RegExp(`${id}.*${baseDir}`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/${baseDir}/${id}.webp`)), id);
   }
 });
 

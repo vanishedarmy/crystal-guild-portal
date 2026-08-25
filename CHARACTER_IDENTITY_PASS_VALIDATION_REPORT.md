@@ -23,7 +23,7 @@ PASS — responsive rules collapse to one column at narrow-phone widths instead 
 
 ## Compatibility
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii6`
+- Frontend asset revision: `1.1.18-retro-phase-ii7`
 - Local DB schema: **5** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **14** unchanged

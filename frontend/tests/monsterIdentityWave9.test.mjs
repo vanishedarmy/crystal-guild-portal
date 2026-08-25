@@ -13,8 +13,8 @@ test("Monster Identity Wave 9 maps all generated portraits to authoritative Best
   const ids = new Set(data.monsters.map((entry) => entry.id));
   for (const id of wave9) {
     assert.ok(ids.has(id), `authoritative monster id missing: ${id}`);
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v9`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v9/${id}.webp`)), id);
+    assert.match(src, new RegExp(`${id}.*monster-portraits-v10`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v10/${id}.webp`)), id);
   }
 });
 
@@ -29,6 +29,6 @@ test("Wave 9 keeps the image-fit hotfix active across all portrait surfaces", ()
 
 test("Wave 9 uses the cache-busted v9 portrait library", () => {
   const src = read("src/utils/monsterPortraits.js");
-  assert.match(src, /monster-portraits-v9/);
+  assert.match(src, /monster-portraits-v10/);
   assert.doesNotMatch(src, /monster-portraits-v8\//);
 });

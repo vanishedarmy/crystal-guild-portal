@@ -23,7 +23,7 @@ This Web-only visual pass introduces Pixelify Sans as Crystal Guild's retro disp
 
 ### Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii25`
+- Frontend asset revision: `1.1.18-retro-phase-ii26`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

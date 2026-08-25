@@ -2257,9 +2257,9 @@ body{
 }
 
 
-/* v1.1.18 ii25 — Pixelify Sans retro display typography pass */
+/* v1.1.18 ii25 — Cinzel display typography pass */
 :root{
-  --font-retro:"Pixelify Sans",var(--font-display);
+  --font-retro:"Cinzel",var(--font-display);
 }
 .guide-brand h1,
 .hero h2,

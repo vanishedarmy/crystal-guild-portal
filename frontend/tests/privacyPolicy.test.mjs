@@ -31,6 +31,6 @@ test("privacy policy includes contact, rights, storage, and truthful tracking la
   assert.match(policy, /Sign in with Twitch/);
   assert.match(policy, /access tokens are used only during sign-in and are not stored/i);
   assert.match(policy, /strictly necessary first-party cookies/i);
-  assert.match(policy, /Pixelify Sans display typeface from Google Fonts/i);
+  assert.match(policy, /Cinzel display typeface from Google Fonts/i);
   assert.doesNotMatch(policy, /Advertising and targeting cookies: Used to deliver advertisements/i);
 });

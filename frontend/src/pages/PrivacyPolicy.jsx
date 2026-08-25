@@ -159,7 +159,7 @@ export default function PrivacyPolicy() {
                 described in this policy, as needed to provide the service, or where disclosure is required or permitted by law.
               </p>
               <p>
-                The website loads the Pixelify Sans display typeface from Google Fonts. When your browser requests that
+                The website loads the Cinzel display typeface from Google Fonts. When your browser requests that
                 stylesheet or font resource, Google may receive ordinary network information such as your IP address and
                 browser request metadata needed to deliver the resource. Crystal Guild does not use this font request for
                 advertising or cross-site profiling.

@@ -7561,9 +7561,9 @@ button:disabled { opacity: .78; }
 }
 
 
-/* v1.1.18 ii25 — Pixelify Sans retro display typography pass */
+/* v1.1.18 ii25 — Cinzel display typography pass */
 :root {
-  --font-retro: "Pixelify Sans", "Crystal Display", "Cinzel", "Trajan Pro", "Palatino Linotype", Georgia, serif;
+  --font-retro: "Cinzel", "Crystal Display", "Trajan Pro", "Palatino Linotype", Georgia, serif;
 }
 
 /* Major page and section identity only — body and dense data remain on the readable UI stack. */

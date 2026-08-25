@@ -10,14 +10,14 @@ const wave4 = ["mindflayer","zu","antlion","piscodemon","black_flan","coeurl","s
 test("Monster Identity Wave 4 maps the next ten authoritative Bestiary ids", () => {
   const src = read("src/utils/monsterPortraits.js");
   for (const id of wave4) {
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v5`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v5/${id}.webp`)), id);
+    assert.match(src, new RegExp(`${id}.*monster-portraits-v6`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v6/${id}.webp`)), id);
   }
 });
 
 test("Wave 4 portrait files use the standardized 512x768 canvas", () => {
   for (const id of wave4) {
-    const file = path.join(root, `public/retro-phase-ii/monster-portraits-v5/${id}.webp`);
+    const file = path.join(root, `public/retro-phase-ii/monster-portraits-v6/${id}.webp`);
     assert.ok(fs.statSync(file).size > 0, id);
   }
 });

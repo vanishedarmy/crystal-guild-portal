@@ -12,3 +12,10 @@
 .timed-hunt-identity,.hunt-result-identity{display:grid;grid-template-columns:116px minmax(0,1fr);gap:16px;align-items:start}.timed-hunt-portrait,.hunt-result-portrait{width:116px}
 @media(max-width:720px){.hunt-card-identity{grid-template-columns:72px minmax(0,1fr)}.hunt-card-portrait{width:72px}.timed-hunt-identity,.hunt-result-identity{grid-template-columns:92px minmax(0,1fr)}.timed-hunt-portrait,.hunt-result-portrait{width:92px}}
 @media(max-width:480px){.timed-hunt-identity,.hunt-result-identity{grid-template-columns:1fr}.timed-hunt-portrait,.hunt-result-portrait{width:min(42vw,132px);justify-self:center}.bestiary-monster-cell{grid-template-columns:38px minmax(0,1fr)}.bestiary-monster-thumb{width:38px}}
+
+.solo-enemy-layout{display:grid;grid-template-columns:clamp(74px,17vw,102px) minmax(0,1fr);align-items:start;gap:.9rem;min-width:0}
+.solo-enemy-portrait{width:100%}
+.solo-enemy-copy{display:grid;gap:.55rem;min-width:0}
+.solo-enemy-copy h3,.solo-enemy-copy small{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:480px){.solo-enemy-layout{grid-template-columns:88px minmax(0,1fr)}}
+@media(max-width:360px){.solo-enemy-layout{grid-template-columns:1fr}.solo-enemy-portrait{width:min(100%,150px);justify-self:center}}

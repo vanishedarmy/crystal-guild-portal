@@ -13,8 +13,8 @@ const wave3 = ["gigas","lamia","mimic","gargoyle","sahagin","sahagin_prince","to
 test("Monster portrait v3 contains Waves 1-3 authoritative ids", () => {
   const src = read("src/utils/monsterPortraits.js");
   for (const id of [...wave1, ...wave2, ...wave3]) {
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v5`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v5/${id}.webp`)), id);
+    assert.match(src, new RegExp(`${id}.*monster-portraits-v6`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v6/${id}.webp`)), id);
   }
 });
 

@@ -612,11 +612,16 @@ export default function Hunts({ data, overview, onRefresh }) {
             {expedition.status === "combat" && expedition.combat ? (
               <div className="solo-combat-board">
                 <div className="solo-combatant enemy">
-                  <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv.{number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
-                  <div className="vital-label"><span>HP</span><span>{number(expedition.combat.enemy?.hp)} / {number(expedition.combat.enemy?.max_hp)}</span></div>
-                  <ProgressBar value={pct(expedition.combat.enemy?.hp, expedition.combat.enemy?.max_hp)} className="hp" />
-                  <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing an action"}</strong></div>
-                  {expedition.combat.enemy?.statuses && expedition.combat.enemy.statuses !== "—" ? <small>Status: {expedition.combat.enemy.statuses}</small> : null}
+                  <div className="solo-enemy-layout">
+                    <MonsterPortrait monster={expedition.combat.enemy} name={expedition.combat.enemy?.name} className="solo-enemy-portrait" eager />
+                    <div className="solo-enemy-copy">
+                      <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv.{number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
+                      <div className="vital-label"><span>HP</span><span>{number(expedition.combat.enemy?.hp)} / {number(expedition.combat.enemy?.max_hp)}</span></div>
+                      <ProgressBar value={pct(expedition.combat.enemy?.hp, expedition.combat.enemy?.max_hp)} className="hp" />
+                      <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing an action"}</strong></div>
+                      {expedition.combat.enemy?.statuses && expedition.combat.enemy.statuses !== "—" ? <small>Status: {expedition.combat.enemy.statuses}</small> : null}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="solo-combatant hero character-solo-hero">

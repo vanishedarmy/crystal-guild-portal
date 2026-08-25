@@ -9,8 +9,8 @@ const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
 test("Monster Identity Wave 1 maps all ten authoritative monster ids", () => {
   const src = read("src/utils/monsterPortraits.js");
   for (const id of ["goblin","wolf","mandragora","goblin_chieftain","goblin_guard","hornet","flan","imp","dire_wolf_alpha","bomb"]) {
-    assert.match(src, new RegExp(`${id}.*monster-portraits-v5`));
-    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v5/${id}.webp`)));
+    assert.match(src, new RegExp(`${id}.*monster-portraits-v6`));
+    assert.ok(fs.existsSync(path.join(root, `public/retro-phase-ii/monster-portraits-v6/${id}.webp`)));
   }
 });
 

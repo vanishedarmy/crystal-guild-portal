@@ -29,7 +29,7 @@ PASS — What's New includes the major release lineage and monikers from Ultima 
 ## Compatibility
 
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii2`
+- Frontend asset revision: `1.1.18-retro-phase-ii3`
 - Bot runtime: `1.1.17-arsenal-ii-h4` unchanged
 - Local DB schema: **5**
 - Hosted sync schema: **1**
@@ -44,3 +44,10 @@ No database migration, reset, OAuth change, new environment variable, or Bot red
 - Complete archive vs finalized complete tree: **0 differences**
 - Web patch over Retro Phase 1 Hotfix 1 vs finalized Web tree: **0 differences**
 - Direct update over Retro Phase 1 Hotfix 1 Complete vs finalized complete tree: **0 differences**
+## Character Identity Pass validation
+
+- Frontend Node tests: **203 / 203 PASS**
+- Hosted Portal/API tests: **46 / 46 PASS**
+- Portraits: **10 unique 543 × 724 WebP assets**
+- Portrait rendering: **3:4 + object-fit: contain; no crop/stretch**
+

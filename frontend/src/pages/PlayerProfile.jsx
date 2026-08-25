@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom";
 import { fetchPlayer } from "../api/players.js";
 import DetailDialog from "../components/DetailDialog.jsx";
+import JobPortrait from "../components/JobPortrait.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PortalLinkPanel from "../components/PortalLinkPanel.jsx";
 import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
@@ -168,7 +169,7 @@ export default function PlayerProfile() {
           {error ? <div className="state-message compact-state">{error}</div> : null}
           {overview ? (
             <div className="profile-header">
-              <div className="profile-sigil" aria-hidden="true">✦</div>
+              <JobPortrait jobName={overview.job.name} className="profile-job-portrait" eager label={`${overview.identity.display_name} — ${overview.job.name}`} />
               <div className="profile-identity">
                 <p className="eyebrow">Crystal Guild Adventurer</p>
                 <h1 className="display-name">{overview.identity.display_name}</h1>

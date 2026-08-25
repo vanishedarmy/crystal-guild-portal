@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ProgressBar from "../components/ProgressBar.jsx";
+import JobPortrait from "../components/JobPortrait.jsx";
 import {
   submitCharacterState,
   submitChangeJob,
@@ -190,17 +191,22 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
   const renderPublicJobs = () => (
     <div className="job-grid">
       {jobs.map((job) => (
-        <article className={`job-card public-job-card ${job.current ? "current" : ""}`} key={job.id || job.name}>
-          <div className="card-status-row">
-            <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
-            <div className="card-status-badges" aria-label="Job status">
-              {job.current ? <span className="small-badge success">Current</span> : null}
-              {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
+        <article className={`job-card public-job-card character-job-card ${job.current ? "current" : ""}`} key={job.id || job.name}>
+          <div className="job-card-identity">
+            <JobPortrait jobName={job.name} className="job-card-portrait" />
+            <div className="job-card-copy">
+              <div className="card-status-row">
+                <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
+                <div className="card-status-badges" aria-label="Job status">
+                  {job.current ? <span className="small-badge success">Current</span> : null}
+                  {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
+                </div>
+              </div>
+              <div className="job-name">{job.name}</div>
+              <div className="card-meta">{job.owned ? `JLv.${job.level}` : "Not learned"} · {job.signature}</div>
+              {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
             </div>
           </div>
-          <div className="job-name">{job.name}</div>
-          <div className="card-meta">{job.owned ? `JLv.${job.level}` : "Not learned"} · {job.signature}</div>
-          {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
           <div className="management-job-actions public-job-actions">
             <button type="button" className="equipment-action-button secondary" onClick={() => onDetail?.({ type: "job", job: detailJob(job) })}>{`View ${job.name} Details`}</button>
           </div>
@@ -256,18 +262,23 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
               const unlocked = liveState ? job.unlocked !== false : Boolean(job.owned || job.tier === "starter");
               const changing = busyKey === `job:${job.id}`;
               return (
-                <article className={`job-card management-job-card ${job.current ? "current" : ""} ${!unlocked ? "locked" : ""}`} key={job.id || job.name}>
-                  <div className="card-status-row management-job-head">
-                    <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
-                    <div className="card-status-badges" aria-label="Job status">
-                      {job.current ? <span className="small-badge success">Current</span> : null}
-                      {!unlocked ? <span className="small-badge locked">Locked</span> : null}
-                      {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
+                <article className={`job-card management-job-card character-job-card ${job.current ? "current" : ""} ${!unlocked ? "locked" : ""}`} key={job.id || job.name}>
+                  <div className="job-card-identity">
+                    <JobPortrait jobName={job.name} className="job-card-portrait" />
+                    <div className="job-card-copy">
+                      <div className="card-status-row management-job-head">
+                        <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
+                        <div className="card-status-badges" aria-label="Job status">
+                          {job.current ? <span className="small-badge success">Current</span> : null}
+                          {!unlocked ? <span className="small-badge locked">Locked</span> : null}
+                          {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
+                        </div>
+                      </div>
+                      <div className="job-name">{job.name}</div>
+                      <div className="card-meta">{job.owned ? `JLv.${job.level} · ${job.signature}` : unlocked ? `Ready to learn · ${job.signature}` : `Signature: ${job.signature}`}</div>
+                      {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
                     </div>
                   </div>
-                  <div className="job-name">{job.name}</div>
-                  <div className="card-meta">{job.owned ? `JLv.${job.level} · ${job.signature}` : unlocked ? `Ready to learn · ${job.signature}` : `Signature: ${job.signature}`}</div>
-                  {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
                   {!unlocked && Array.isArray(job.requirements) && job.requirements.length ? (
                     <details className="job-requirements">
                       <summary>How to unlock</summary>

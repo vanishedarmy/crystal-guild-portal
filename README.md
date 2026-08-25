@@ -1,6 +1,6 @@
 # Crystal Guild Web — v1.1.18 Retro Phase II
 
-Hosted Web runtime: `1.1.18-retro-phase-ii` · frontend asset revision `1.1.18-retro-phase-ii2` · hosted sync schema **1** · Portal Action protocol **14**.
+Hosted Web runtime: `1.1.18-retro-phase-ii` · frontend asset revision `1.1.18-retro-phase-ii3` · hosted sync schema **1** · Portal Action protocol **14**.
 
 Retro Phase II is the fresh production-art rebuild based on Retro Phase 1 Hotfix 1. It begins with eight purpose-built region scenes integrated into the Adventure Board and Player Guide. The rejected concept-board visual package is not included.
 

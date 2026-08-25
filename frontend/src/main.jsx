@@ -5,6 +5,7 @@ import "./styles/portal.css";
 import "./styles/streamer.css";
 import "./styles/retro.css";
 import "./styles/retro-phase-ii.css";
+import "./styles/character-identity.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

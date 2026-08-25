@@ -1,0 +1,290 @@
+/* v1.1.18 — Retro Phase II Character Identity Pass
+   Portraits are always shown at their native 3:4 composition. The UI adapts around
+   the artwork; images are never stretched and never cropped. */
+.job-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid rgba(223, 186, 89, .62);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(16, 39, 69, .94), rgba(4, 13, 28, .98));
+  box-shadow:
+    inset 0 0 0 2px rgba(10, 25, 52, .86),
+    inset 0 0 24px rgba(121, 177, 255, .08),
+    0 8px 22px rgba(0, 0, 0, .22);
+}
+
+.job-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: auto;
+}
+
+.job-portrait-fallback {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: .45rem;
+  width: 100%;
+  height: 100%;
+  padding: .7rem;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(137, 103, 207, .22), transparent 34%),
+    linear-gradient(145deg, rgba(11, 31, 54, .96), rgba(5, 15, 29, .98));
+}
+
+.job-portrait-fallback span {
+  color: var(--gold, #dfba59);
+  font-size: clamp(1.6rem, 6vw, 3rem);
+  line-height: 1;
+}
+
+.job-portrait-fallback small {
+  max-width: 100%;
+  color: var(--crystal-soft, #bce9ff);
+  font-family: var(--font-display);
+  font-size: .68rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+/* Guild Heroes */
+.character-player-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.player-card-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: clamp(92px, 34%, 122px) minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.player-card-portrait {
+  align-self: start;
+  width: 100%;
+}
+
+.player-card-copy,
+.job-card-copy,
+.solo-hero-copy {
+  min-width: 0;
+}
+
+.character-player-card h2,
+.character-player-card .handle,
+.character-player-card .card-job,
+.character-player-card .card-title {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.character-player-card h2 {
+  margin-top: .45rem;
+  font-size: clamp(1.15rem, 4vw, 1.55rem);
+  line-height: 1.08;
+}
+
+.character-player-card .card-job {
+  margin-top: .85rem;
+}
+
+.character-player-card .card-footer {
+  margin-top: auto;
+}
+
+/* Profile masthead */
+.profile-header {
+  grid-template-columns: clamp(132px, 16vw, 184px) minmax(0, 1.15fr) minmax(260px, .82fr);
+  align-items: center;
+}
+
+.profile-job-portrait {
+  z-index: 1;
+  align-self: center;
+  width: min(100%, 184px);
+}
+
+.profile-identity,
+.profile-vitals {
+  min-width: 0;
+}
+
+.profile-jobline {
+  align-items: flex-start;
+}
+
+.profile-jobline > span,
+.profile-title,
+.profile-handle {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Jobs */
+.character-job-card {
+  min-width: 0;
+}
+
+.job-card-identity {
+  display: grid;
+  grid-template-columns: clamp(82px, 28%, 108px) minmax(0, 1fr);
+  align-items: start;
+  gap: .8rem;
+  min-width: 0;
+}
+
+.job-card-portrait {
+  width: 100%;
+}
+
+.job-card-copy .card-status-row,
+.job-card-copy .management-job-head {
+  align-items: flex-start;
+}
+
+.job-card-copy .card-status-badges {
+  justify-content: flex-end;
+}
+
+.job-card-copy .job-name,
+.job-card-copy .card-meta {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.job-card-copy .job-name {
+  margin-top: .35rem;
+  line-height: 1.08;
+}
+
+.character-job-card .management-job-actions {
+  margin-top: auto;
+}
+
+/* Solo Venture */
+.solo-hero-layout {
+  display: grid;
+  grid-template-columns: clamp(74px, 17vw, 102px) minmax(0, 1fr);
+  align-items: start;
+  gap: .9rem;
+  min-width: 0;
+}
+
+.solo-hero-portrait {
+  width: 100%;
+}
+
+.solo-hero-copy {
+  display: grid;
+  gap: .55rem;
+}
+
+.solo-hero-copy h3,
+.solo-hero-copy small {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) {
+  .profile-header {
+    grid-template-columns: clamp(120px, 22vw, 160px) minmax(0, 1fr);
+  }
+
+  .profile-vitals {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .player-card-layout {
+    grid-template-columns: clamp(82px, 31vw, 110px) minmax(0, 1fr);
+    gap: .8rem;
+  }
+
+  .profile-header {
+    grid-template-columns: minmax(104px, 132px) minmax(0, 1fr);
+    gap: .85rem;
+  }
+
+  .profile-job-portrait {
+    width: 100%;
+  }
+
+  .profile-identity .display-name {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  .profile-jobline {
+    gap: .4rem .55rem;
+  }
+
+  .profile-jobline > span:not(.status-badge) {
+    padding-right: .55rem;
+  }
+
+  .job-card-identity {
+    grid-template-columns: clamp(76px, 27vw, 96px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .player-card-layout,
+  .job-card-identity,
+  .solo-hero-layout {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .profile-header {
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .profile-vitals {
+    grid-column: 1 / -1;
+  }
+
+  .profile-jobline > span:not(.status-badge) {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .profile-jobline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 360px) {
+  .player-card-layout,
+  .job-card-identity,
+  .solo-hero-layout,
+  .profile-header {
+    grid-template-columns: 1fr;
+  }
+
+  .player-card-portrait,
+  .job-card-portrait,
+  .solo-hero-portrait,
+  .profile-job-portrait {
+    width: min(100%, 150px);
+    justify-self: center;
+  }
+}

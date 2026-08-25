@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { fetchPlayers } from "../api/players.js";
 import SiteHeader from "../components/SiteHeader.jsx";
 import RecruitPanel from "../components/RecruitPanel.jsx";
+import JobPortrait from "../components/JobPortrait.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
@@ -116,13 +117,18 @@ export default function GuildDirectory() {
           ) : null}
           <div className="player-grid" aria-live="polite">
             {shownPlayers.map((player) => (
-              <Link className="player-card" to={`/player/${encodeURIComponent(player.username)}`} key={player.username}>
+              <Link className="player-card character-player-card" to={`/player/${encodeURIComponent(player.username)}`} key={player.username}>
                 <span className={`status-badge ${player.status}`}>{player.status_label}</span>
-                <div className="card-level">Level {number(player.level)}</div>
-                <h2>{player.display_name}</h2>
-                <div className="handle">@{player.username}</div>
-                <div className="card-job">{player.job_name}</div>
-                <div className="card-title">{player.title}</div>
+                <div className="player-card-layout">
+                  <JobPortrait jobName={player.job_name} className="player-card-portrait" />
+                  <div className="player-card-copy">
+                    <div className="card-level">Level {number(player.level)}</div>
+                    <h2>{player.display_name}</h2>
+                    <div className="handle">@{player.username}</div>
+                    <div className="card-job">{player.job_name}</div>
+                    <div className="card-title">{player.title}</div>
+                  </div>
+                </div>
                 <div className="card-footer">
                   <span>View Profile</span>
                   <span aria-hidden="true">→</span>

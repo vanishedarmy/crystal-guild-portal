@@ -1,4 +1,8 @@
-# Crystal Guild v1.1.18 — Retro Phase II Release Notes
+# Crystal Guild v1.1.18 — Retro Phase II
+
+## Character Identity Pass
+
+Retro Phase II now includes production Job portrait integration across Guild Heroes, character profiles, Jobs, and Solo Venture. Portraits preserve a 3:4 frame with no cropping or stretching and fall back cleanly for Jobs that do not yet have illustrated artwork. Frontend asset revision: `1.1.18-retro-phase-ii3`.
 
 Retro Phase II is a **fresh Web-only production-art rebuild** based directly on **v1.1.18 — Retro Phase 1 Hotfix 1**. The rejected Phase 2 concept-board visual package is not part of this release.
 
@@ -50,7 +54,7 @@ What's New now records the major Crystal Guild release lineage and monikers:
 ## Compatibility
 
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii2`
+- Frontend asset revision: `1.1.18-retro-phase-ii3`
 - Compatible Bot runtime: `1.1.17-arsenal-ii-h4` unchanged
 - Local DB schema: **5** unchanged
 - Hosted sync schema: **1** unchanged

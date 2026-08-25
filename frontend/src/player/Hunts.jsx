@@ -12,6 +12,7 @@ import {
   waitForPortalAction,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
+import JobPortrait from "../components/JobPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
@@ -614,13 +615,18 @@ export default function Hunts({ data, overview, onRefresh }) {
                   {expedition.combat.enemy?.statuses && expedition.combat.enemy.statuses !== "—" ? <small>Status: {expedition.combat.enemy.statuses}</small> : null}
                 </div>
 
-                <div className="solo-combatant hero">
-                  <div className="solo-combat-head"><div><span>Your Hero</span><h3>{expedition.combat.player?.name} · {expedition.combat.player?.job_name}</h3></div></div>
-                  <div className="vital-label"><span>HP</span><span>{number(expedition.combat.player?.hp)} / {number(expedition.combat.player?.max_hp)}</span></div>
-                  <ProgressBar value={pct(expedition.combat.player?.hp, expedition.combat.player?.max_hp)} className="hp" />
-                  {Number(expedition.combat.player?.max_mp || 0) > 0 ? <><div className="vital-label"><span>MP</span><span>{number(expedition.combat.player?.mp)} / {number(expedition.combat.player?.max_mp)}</span></div><ProgressBar value={pct(expedition.combat.player?.mp, expedition.combat.player?.max_mp)} className="mp" /></> : null}
-                  {Number(expedition.combat.player?.max_ap || 0) > 0 ? <><div className="vital-label"><span>AP</span><span>{number(expedition.combat.player?.ap)} / {number(expedition.combat.player?.max_ap)}</span></div><ProgressBar value={pct(expedition.combat.player?.ap, expedition.combat.player?.max_ap)} className="ap" /></> : null}
-                  {expedition.combat.player?.statuses && expedition.combat.player.statuses !== "—" ? <small>Status: {expedition.combat.player.statuses}</small> : null}
+                <div className="solo-combatant hero character-solo-hero">
+                  <div className="solo-hero-layout">
+                    <JobPortrait jobName={expedition.combat.player?.job_name} className="solo-hero-portrait" />
+                    <div className="solo-hero-copy">
+                      <div className="solo-combat-head"><div><span>Your Hero</span><h3>{expedition.combat.player?.name} · {expedition.combat.player?.job_name}</h3></div></div>
+                      <div className="vital-label"><span>HP</span><span>{number(expedition.combat.player?.hp)} / {number(expedition.combat.player?.max_hp)}</span></div>
+                      <ProgressBar value={pct(expedition.combat.player?.hp, expedition.combat.player?.max_hp)} className="hp" />
+                      {Number(expedition.combat.player?.max_mp || 0) > 0 ? <><div className="vital-label"><span>MP</span><span>{number(expedition.combat.player?.mp)} / {number(expedition.combat.player?.max_mp)}</span></div><ProgressBar value={pct(expedition.combat.player?.mp, expedition.combat.player?.max_mp)} className="mp" /></> : null}
+                      {Number(expedition.combat.player?.max_ap || 0) > 0 ? <><div className="vital-label"><span>AP</span><span>{number(expedition.combat.player?.ap)} / {number(expedition.combat.player?.max_ap)}</span></div><ProgressBar value={pct(expedition.combat.player?.ap, expedition.combat.player?.max_ap)} className="ap" /></> : null}
+                      {expedition.combat.player?.statuses && expedition.combat.player.statuses !== "—" ? <small>Status: {expedition.combat.player.statuses}</small> : null}
+                    </div>
+                  </div>
                 </div>
 
                 {expedition.last_round?.events?.length ? (

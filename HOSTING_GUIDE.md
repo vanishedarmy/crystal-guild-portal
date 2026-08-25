@@ -1,6 +1,6 @@
 # Crystal Guild Web Hosting — v1.1.18 Retro Phase II
 
-The hosted Web runtime is `1.1.18-retro-phase-ii` with frontend asset `1.1.18-retro-phase-ii4`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`. Hosted sync schema remains **1** and Portal Action protocol remains **14**.
+The hosted Web runtime is `1.1.18-retro-phase-ii` with frontend asset `1.1.18-retro-phase-ii5`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`. Hosted sync schema remains **1** and Portal Action protocol remains **14**.
 
 Deploy the Web files to GitHub/Render as normal. No new environment variable, OAuth scope, database migration, or Bot restart is required.
 

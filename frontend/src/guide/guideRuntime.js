@@ -218,7 +218,9 @@ const effectLabels={physical_mult:'Physical damage',magic_mult:'Magic damage',da
 function effectText(k,v){let label=effectLabels[k]||humanizeLabel(k);let value=(typeof v==='number'&&Math.abs(v)<=2)?`${v>=0?'+':''}${Math.round(v*100)}%`:`${v}`;return `${label} ${value}`;}
 function unlockText(j){let req=j.unlock_requirements||j.requirements||[];let quest=D.quests.find(q=>q.rewards?.job===j.id);if(j.tier==='starter'&&!req.length&&!quest)return'Starter Job';let
   bits=req.map(reqText);if(quest)bits.push(`Quest: ${quest.name}`);return bits.join(' • ')||'Advanced unlock';}
-function jobOverview(j){return `<button type="button" class="card job-overview searchable" data-open-job="${esc(j.id)}" aria-label="Open ${esc(j.name)} Job details"><div class="statline">
+const guideJobPortraitIds=new Set(['warrior','monk','thief','black_mage','white_mage','red_mage','paladin','dark_knight','dragoon','ninja','samurai','summoner','blue_mage','time_mage','bard','machinist','beastmaster','sage','ranger']);
+function guideJobPortraitPath(j){let id=String(j?.id||'').trim().toLowerCase();return guideJobPortraitIds.has(id)?`/retro-phase-ii/job-portraits-v2/${esc(id)}.webp`:'';}
+function jobOverview(j){let portrait=guideJobPortraitPath(j);return `<button type="button" class="card job-overview searchable guide-job-art-card" data-open-job="${esc(j.id)}" aria-label="Open ${esc(j.name)} Job details">${portrait?`<div class="guide-job-art"><img src="${portrait}" alt="${esc(j.name)} Job portrait" loading="lazy" decoding="async"></div>`:''}<div class="statline">
   <span class="badge ${j.tier==='starter'?'core':'gold'}">${esc(humanizeLabel(j.tier))}</span><span class="badge">${esc(humanizeLabel(j.combat_type))}</span></div><h3>${esc(j.name)}</h3><p><b>${esc(j.signature)}</b>
   signature • ${esc(j.attack_name||'Standard attack')}</p><div class="growth-mini"><span>STR<b>${j.growth.str}</b></span><span>VIT<b>${j.growth.vit}</b></span><span>MAG<b>${j.growth.mag}</b></span>
   </div><div class="card-spacer"></div><div class="card-open-hint"><span>${esc(j.mastery?.name||'No Mastery')}</span><b>Open Job →</b></div></button>`;}
@@ -275,28 +277,30 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){infoPanel.addE
   ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');infoPanel.style.setProperty('--panel-y',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');},{passive:true});}
 
 // Regions and monster locations
+const guideMonsterPortraitIds=new Set(['goblin','wolf','mandragora','goblin_chieftain','goblin_guard','hornet','flan','imp','dire_wolf_alpha','bomb']);
+function guideMonsterPortraitPath(id){let key=String(id||'').trim().toLowerCase();return guideMonsterPortraitIds.has(key)?`/retro-phase-ii/monster-portraits-v1/${esc(key)}.webp`:'';}
 const monsterRegions={};D.regions.forEach(r=>(r.encounters||[]).forEach(e=>(monsterRegions[e.monster_id]??=[]).push(r.name)));
 $('#regionGrid').innerHTML=[...D.regions].sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||''))).map(r=>{let total=r.encounters.reduce((a,x)=>a+x.weight,0);let ents=[...r.encounters].sort((a,b)=>b.weight-a.weight).map(e=>`${monsterName(e.monster_id)}
   <span class="muted">(${Math.round(e.weight/total*100)}%)</span>`).join(' • ');return `<div class="card searchable guide-region-card"><div class="guide-region-art" aria-hidden="true"><img src="/retro-phase-ii/regions-hd/${esc(r.id)}.webp" alt="" loading="lazy" decoding="async"></div><div class="statline"><span class="badge gold">Min Lv.${r.min_level}</span>
   <span class="badge">${r.encounters.length} encounters</span></div><h3>${esc(r.name)}</h3><p>${esc(r.description)}</p><p>${ents}</p></div>`}).join('');
 D.regions.forEach(r=>$('#monsterRegion').insertAdjacentHTML('beforeend',`<option>${esc(r.name)}</option>`));
 function renderMonsters(){let q=$('#monsterSearch').value.toLowerCase(),r=$('#monsterRegion').value;let ms=D.monsters.filter(m=>(!r||(monsterRegions[m.id]||[]).includes(r))&&([m.name,m.weakness,
-  m.special?.name,m.combat_profile,m.active_skill,...(monsterRegions[m.id]||[]),...(m.drops||[]).map(x=>itemName(x.item_id))].join(' ').toLowerCase().includes(q))).sort((a,b)=>Number(a.level||0)-Number(b.level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#monsterRows').innerHTML=ms.map(m=>`<tr class="searchable"><td>
-  <span class="table-primary">${esc(m.name)}</span><span class="table-sub">${esc(m.combat_profile||'Balanced')} combat style</span></td><td><span class="table-pill gold">Lv.${m.level}</span></td><td>
+  m.special?.name,m.combat_profile,m.active_skill,...(monsterRegions[m.id]||[]),...(m.drops||[]).map(x=>itemName(x.item_id))].join(' ').toLowerCase().includes(q))).sort((a,b)=>Number(a.level||0)-Number(b.level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#monsterRows').innerHTML=ms.map(m=>{let portrait=guideMonsterPortraitPath(m.id);return `<tr class="searchable"><td>
+  <div class="guide-monster-table-identity">${portrait?`<div class="guide-monster-thumb"><img src="${portrait}" alt="${esc(m.name)} monster portrait" loading="lazy" decoding="async"></div>`:`<div class="guide-monster-thumb fallback" aria-hidden="true">?</div>`}<div><span class="table-primary">${esc(m.name)}</span><span class="table-sub">${esc(m.combat_profile||'Balanced')} combat style</span></div></div></td><td><span class="table-pill gold">Lv.${m.level}</span></td><td>
   <span class="table-primary">${fmtInt(m.hp)}</span><span class="table-sub">base HP</span></td><td>${m.weakness?`<span class="table-pill crystal">${esc(m.weakness)}</span>
   `:'<span class="muted">—</span>'}</td><td><span class="table-primary">${esc(m.active_skill||'Basic attacks')}</span><span class="table-sub">${esc(m.combat_profile||'Balanced')}</span></td><td>
   <div class="table-stack">${(monsterRegions[m.id]||[]).map(x=>`<span class="table-pill">
   ${esc(x)}</span>`).join('')||'<span class="table-pill">Hunt / special</span>'}</div></td><td><div class="table-stack">${(m.drops||[]).map(d=>`<span class="table-pill">${esc(itemName(d.item_id))} <b>
-  ${pct(d.chance)}</b></span>`).join('')||'<span class="muted">—</span>'}</div></td></tr>`).join('')}
+  ${pct(d.chance)}</b></span>`).join('')||'<span class="muted">—</span>'}</div></td></tr>`}).join('')}
 $('#monsterSearch').oninput=renderMonsters;$('#monsterRegion').onchange=renderMonsters;renderMonsters();
 
 // Hunts
 let activeHunt='';$('#huntTabs').innerHTML=['All','C','B','A','S'].map((x,i)=>`<button class="tab ${i===0?'active':''}" data-rank="${x==='All'?'':x}">${x}</button>`).join('');
-function renderHunts(){let hs=D.hunts.filter(h=>!activeHunt||h.rank===activeHunt).sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#huntGrid').innerHTML=hs.map(h=>`<div class="card searchable"><div class="statline"><span class="badge gold">
+function renderHunts(){let hs=D.hunts.filter(h=>!activeHunt||h.rank===activeHunt).sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#huntGrid').innerHTML=hs.map(h=>{let portrait=guideMonsterPortraitPath(h.monster_id);return `<div class="card searchable guide-hunt-art-card">${portrait?`<div class="guide-hunt-art"><img src="${portrait}" alt="${esc(monsterName(h.monster_id))} monster portrait" loading="lazy" decoding="async"></div>`:''}<div class="statline"><span class="badge gold">
   ${h.rank}-Rank</span><span class="badge">Min Lv.${h.min_level}</span><span class="badge">CD ${sec(h.cooldown_seconds)}</span></div><h3>${esc(h.name)}</h3><p><b>Mark:</b>
   ${esc(monsterName(h.monster_id))}</p>${(h.requirements||[]).length?`<p><b>Requires:</b> ${(h.requirements||[]).map(reqText).map(esc).join(' • ')}</p>`:''}<p><b>Rewards:</b> ${fmtInt(h.rewards.xp)}
   XP • ${fmtInt(h.rewards.jp)} JP • ${fmtInt(h.rewards.gil)} gil • ${h.rewards.seals} Seals</p><p><b>First clear:</b> ${esc(itemName(h.first_clear_item))} • Title: <span class="gold">
-  ${esc(titleName(h.first_clear_title))}</span></p></div>`).join('')}
+  ${esc(titleName(h.first_clear_title))}</span></p></div>`}).join('')}
 $('#huntTabs').onclick=e=>{if(!e.target.matches('.tab'))return;$$('#huntTabs .tab').forEach(x=>x.classList.remove('active'));e.target.classList.add('active');activeHunt=e.target.dataset.rank;
   renderHunts()};renderHunts();
 

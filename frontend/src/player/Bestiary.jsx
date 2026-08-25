@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { formatMonsterSpecial, number } from "../utils/formatters.js";
 import { sortBestiaryByLevel } from "./bestiarySort.js";
+import MonsterPortrait from "../components/MonsterPortrait.jsx";
 
 function monsterName(monster) {
   return typeof monster?.name === "string" && monster.name.trim()
@@ -59,7 +60,7 @@ export default function Bestiary({ data }) {
               const discovered = Boolean(monster?.discovered);
               return (
                 <tr className={discovered ? "" : "locked"} key={`${monster?.id || monsterName(monster)}-${index}`}>
-                  <td>{discovered ? monsterName(monster) : "Undiscovered"}</td>
+                  <td><div className="bestiary-monster-cell"><MonsterPortrait monster={monster} name={monsterName(monster)} discovered={discovered} className="bestiary-monster-thumb" /><div className="bestiary-monster-copy"><strong>{discovered ? monsterName(monster) : "Undiscovered"}</strong>{discovered ? <small>Lv.{number(monster?.level)}</small> : <small>???</small>}</div></div></td>
                   <td>{discovered ? number(monster?.level) : "—"}</td>
                   <td>{number(monster?.defeats)}</td>
                   <td>{discovered ? String(monster?.weakness || "—") : "—"}</td>

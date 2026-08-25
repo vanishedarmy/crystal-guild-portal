@@ -2120,3 +2120,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 @media (max-width: 680px) {
   .guide-region-art { width: calc(100% + 1.5rem); margin-inline: -.75rem; }
 }
+
+/* Retro Phase II — illustrated Jobs + Monster Identity Wave 1 */
+.guide-job-art-card,.guide-hunt-art-card{overflow:hidden}
+.guide-job-art,.guide-hunt-art{display:grid;place-items:center;width:100%;aspect-ratio:3/2;overflow:hidden;margin:-1px -1px 12px;width:calc(100% + 2px);background:#071027;border-bottom:1px solid rgba(226,190,100,.35)}
+.guide-job-art img,.guide-hunt-art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#071027}
+.guide-monster-table-identity{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;align-items:center;min-width:180px}
+.guide-monster-thumb{display:grid;place-items:center;width:52px;aspect-ratio:2/3;overflow:hidden;border:1px solid rgba(226,190,100,.38);border-radius:6px;background:#071027;color:#e2be64}
+.guide-monster-thumb img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.guide-monster-thumb.fallback{font-family:var(--display);font-size:1.25rem;opacity:.65}
+@media(max-width:720px){.guide-job-art,.guide-hunt-art{aspect-ratio:16/10}.guide-monster-table-identity{grid-template-columns:42px minmax(0,1fr);min-width:150px}.guide-monster-thumb{width:42px}}
+@media(max-width:480px){.guide-job-art,.guide-hunt-art{aspect-ratio:4/3}}

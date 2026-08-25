@@ -1,53 +1,12 @@
-# Crystal Guild v1.1.18 — Retro Phase II Validation Report
+# Validation — v1.1.18 Retro Phase II Monster Identity Wave 1
 
-## Automated validation
-
-- Frontend Node tests: **199 / 199 PASS**
-- Hosted Portal/API tests: **46 / 46 PASS**
-- Unchanged Bot regression suite: **378 / 378 PASS**
-- Bot source tree vs Retro Phase 1 Hotfix 1 baseline: **0 differences**
-- Frontend production Vite build: **NOT RUN in the clean release workspace** because the source archive intentionally does not include `node_modules`; `vite` is therefore unavailable without dependency installation.
-
-## Retro Phase II targeted coverage
-
-PASS — the Retro Phase II stylesheet loads after the Retro Phase 1 foundation.
-
-PASS — all eight live region IDs have independent `.webp` production assets.
-
-PASS — every region asset is exactly **640×360 (16:9)** and all eight files have unique SHA-256 hashes.
-
-PASS — combined region-art payload is **46,446 bytes** before HTTP compression/caching.
-
-PASS — Adventure Board cards resolve artwork from each live `region.id`; no rejected concept-board names are used by the runtime integration.
-
-PASS — Player Guide region cards resolve the same live region artwork.
-
-PASS — locked-state visual rules dim artwork without removing level/status/travel information.
-
-PASS — What's New includes the major release lineage and monikers from Ultima Web through Retro Phase II.
-
-## Compatibility
-
-- Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii4`
-- Bot runtime: `1.1.17-arsenal-ii-h4` unchanged
-- Local DB schema: **5**
-- Hosted sync schema: **1**
-- Portal Action protocol: **14**
-- Twitch command prefix: `!`
-
-No database migration, reset, OAuth change, new environment variable, or Bot redeploy is required.
-
-## Final archive verification
-
-- Full Web archive vs finalized Web tree: **0 differences**
-- Complete archive vs finalized complete tree: **0 differences**
-- Web patch over Retro Phase 1 Hotfix 1 vs finalized Web tree: **0 differences**
-- Direct update over Retro Phase 1 Hotfix 1 Complete vs finalized complete tree: **0 differences**
-## Character Identity Pass validation
-
-- Frontend Node tests: **203 / 203 PASS**
-- Hosted Portal/API tests: **46 / 46 PASS**
-- Portraits: **10 unique 543 × 724 WebP assets**
-- Portrait rendering: **3:4 + object-fit: contain; no crop/stretch**
-
+- Frontend regression tests: 207 / 207 PASS
+- Hosted Web/API tests: 46 / 46 PASS
+- Monster asset count: 10
+- Monster asset dimensions: 512 × 768 (2:3) for all Wave 1 files
+- All ten monster assets have unique SHA-256 hashes
+- Shared Bestiary/Hunt/Guide mapping uses authoritative monster IDs
+- Responsive art rendering uses `object-fit: contain`
+- Player Guide reuses `job-portraits-v2` and `monster-portraits-v1`
+- Frontend asset revision: `1.1.18-retro-phase-ii5`
+- No Bot, database, sync-schema, Portal Action protocol, OAuth, or gameplay change

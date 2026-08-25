@@ -13,6 +13,7 @@ import {
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
+import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
@@ -215,13 +216,16 @@ function HuntResult({ result }) {
 
   return (
     <section className={`panel hunt-result-panel ${victory ? "won" : "lost"}`} aria-live="polite" aria-labelledby="last-hunt-result-title">
-      <div className="panel-title-row hunt-result-title-row">
+      <div className="hunt-result-identity">
+        <MonsterPortrait monster={monster} name={monster.name} className="hunt-result-portrait" />
+        <div className="panel-title-row hunt-result-title-row">
         <div>
           <p className="eyebrow">Last Hunt Result · {summary.rank || "C"}-Rank</p>
           <h2 id="last-hunt-result-title">{summary.hunt_name || "Named Mark"}</h2>
           <p className="muted">{monster.name || "Unknown Mark"}{monster.level ? ` · Mark Lv.${number(monster.level)}` : ""} · {number(summary.rounds || 0)} round{Number(summary.rounds || 0) === 1 ? "" : "s"}</p>
         </div>
         <span className={`hunt-result-outcome ${victory ? "victory" : "defeat"}`}>{victory ? "Mark Slain" : "Hunt Failed"}</span>
+      </div>
       </div>
 
       {victory ? (
@@ -770,13 +774,16 @@ export default function Hunts({ data, overview, onRefresh }) {
 
       {activeHunt ? (
         <section className="panel timed-hunt-panel" aria-live="polite">
-          <div className="panel-title-row timed-hunt-title-row">
+          <div className="timed-hunt-identity">
+            <MonsterPortrait monster={activeHunt.monster} name={activeHunt.monster?.name} className="timed-hunt-portrait" />
+            <div className="panel-title-row timed-hunt-title-row">
             <div>
               <p className="eyebrow">Hunt in Progress · {activeHunt.rank}-Rank</p>
               <h2>{activeHunt.name}</h2>
               <p className="muted">{activeHunt.monster?.name} · Mark Lv.{number(activeHunt.monster?.level)}</p>
             </div>
             <span className="small-badge success">Auto Hunt</span>
+          </div>
           </div>
           <div className="timed-hunt-countdown">
             <div>
@@ -810,9 +817,12 @@ export default function Hunts({ data, overview, onRefresh }) {
             const available = Boolean(hunt.challengeable && cooldown <= 0);
             return (
               <article className={`adventure-hunt-card rank-${String(hunt.rank || "c").toLowerCase()} ${available ? "available" : ""}`} key={hunt.id}>
-                <div className="adventure-hunt-head">
-                  <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv.{number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
-                  <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : "Locked"}</span>
+                <div className="hunt-card-identity">
+                  <MonsterPortrait monster={hunt.monster} name={hunt.monster?.name} className="hunt-card-portrait" />
+                  <div className="adventure-hunt-head">
+                    <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv.{number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
+                    <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : "Locked"}</span>
+                  </div>
                 </div>
                 <div className="hunt-reward-grid">
                   <span><strong>{number(hunt.rewards?.xp)}</strong> XP</span>

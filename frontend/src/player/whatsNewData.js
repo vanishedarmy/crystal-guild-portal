@@ -1,6 +1,21 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.1.18",
+    name: "Retro Phase 2",
+    title: "The Guild world steps into the 16-bit era",
+    summary: "Retro Phase 2 turns the Phase 1 menu foundation into a visual world: illustrated regions, Job identity, monster tokens, treasure art, equipment icons, and a stronger raid-overlay presentation now sit inside the existing readable Portal layout.",
+    highlights: [
+      { title: "Illustrated regions", description: "Every Adventure Board destination now carries its own compact pixel-art scene, with locked destinations automatically subdued without hiding requirements or travel controls." },
+      { title: "Job identity at a glance", description: "Guild Heroes, character headers, and Job cards now share role-aware retro crests so a character’s current Job reads before the detail copy does." },
+      { title: "Monster field guide", description: "Hunts, Solo Venture encounters, and discovered Bestiary entries gain illustrated monster tokens while the existing weakness, skill, timer, and reward information stays compact." },
+      { title: "Treasure and gear art", description: "Solo treasure results use rarity-aware chest artwork and the Overview loadout receives a consistent equipment-icon pass." },
+      { title: "Battle presentation", description: "The hosted raid overlay receives the Retro Phase 2 battle-window treatment with a restrained atmospheric vignette behind the live boss data." },
+      { title: "Major update archive", description: "What’s New now carries the major Crystal Guild release lineage and its established monikers, from Ultima Web through Retro Phase 2." },
+    ],
+    action: { tab: "hunts", label: "Explore the Adventure Board" },
+  },
+  {
+    version: "v1.1.18",
     name: "Retro Phase 1",
     title: "The Guild gets its first 16-bit visual pass",
     summary: "Retro Phase 1 establishes a shared SNES-era Final Fantasy-inspired visual language across the Crystal Guild website while preserving the readable, responsive layout underneath.",
@@ -11,7 +26,6 @@ export const MAJOR_UPDATES = [
       { title: "One visual language", description: "Guild Heroes, character pages, the Player Guide, and the Streamer Dashboard now share the same foundational window treatment." },
       { title: "Mobile preserved", description: "The compact icon-left, LIVE/OFFLINE, and hamburger header remains intact, with simplified retro framing for narrow screens." },
     ],
-    action: { tab: "overview", label: "View Your Character" },
   },
   {
     version: "v1.1.17",
@@ -25,7 +39,6 @@ export const MAJOR_UPDATES = [
       { title: "Smaller mobile header", description: "The top Portal guide is more compact on phones and still automatically scrolls out of the way while you browse." },
       { title: "Quiet when stream is offline", description: "Portal play can continue off-stream, but automated Crystal Guild action/result announcements are suppressed until Twitch is live again." },
     ],
-    action: { tab: "jobs", label: "Explore Expanded Abilities" },
   },
   {
     version: "v1.1.16",
@@ -39,7 +52,6 @@ export const MAJOR_UPDATES = [
       { title: "Earlier world bosses", description: "New lower-level raid targets create a smoother road toward Bomb King and the larger world bosses." },
       { title: "More practical crafting", description: "New low-level recipes turn common monster drops and basic supplies into useful potions, status cures, MP/AP restoratives, and battle items." },
     ],
-    action: { tab: "jobs", label: "Explore Job Abilities" },
   },
   {
     version: "v1.1.15",
@@ -47,30 +59,92 @@ export const MAJOR_UPDATES = [
     title: "Solo Venture is now in your hands",
     summary: "Solo Ventures are no longer decided all at once. When you meet an enemy, you choose each turn yourself—and after a cleared stage, you decide whether to bank your spoils or press your luck.",
     highlights: [
-      {
-        title: "Choose every turn",
-        description: "Attack, use a Job ability, spend an item, or Defend when an encounter begins.",
-      },
-      {
-        title: "Push your luck",
-        description: "Return to the Guild to bank your spoils, or press on through up to three stages for stronger rewards.",
-      },
-      {
-        title: "Your condition carries forward",
-        description: "HP, MP/AP, status effects, and items you use stay with you as you continue deeper into the Venture.",
-      },
-      {
-        title: "More encounters",
-        description: "Each stage now has an 80% chance of an Encounter and a 20% chance of Treasure.",
-      },
-      {
-        title: "Come back when you're ready",
-        description: "There is no Solo battle timer. Your Venture waits for your next choice, even if you leave or refresh the Portal.",
-      },
+      { title: "Choose every turn", description: "Attack, use a Job ability, spend an item, or Defend when an encounter begins." },
+      { title: "Push your luck", description: "Return to the Guild to bank your spoils, or press on through up to three stages for stronger rewards." },
+      { title: "Your condition carries forward", description: "HP, MP/AP, status effects, and items you use stay with you as you continue deeper into the Venture." },
+      { title: "More encounters", description: "Each stage now has an 80% chance of an Encounter and a 20% chance of Treasure." },
+      { title: "Come back when you're ready", description: "There is no Solo battle timer. Your Venture waits for your next choice, even if you leave or refresh the Portal." },
     ],
-    action: {
-      tab: "hunts",
-      label: "Go to Adventure Board",
-    },
+    action: { tab: "hunts", label: "Go to Adventure Board" },
+  },
+  {
+    version: "v1.1.14",
+    name: "Cloud Continuity",
+    title: "The hosted Guild becomes stream-aware",
+    summary: "Cloud Continuity added hosted self-healing, sanitized OBS raid-overlay synchronization, and Twitch live-state verification for stream-only activity.",
+    highlights: [
+      { title: "Hosted continuity", description: "Fellowship heartbeat recovery and hosted overlay synchronization made the cloud runtime more resilient." },
+      { title: "Live-state stopgates", description: "Stream-only commands and participation fail closed unless Twitch is positively confirmed LIVE." },
+    ],
+  },
+  {
+    version: "v1.1.13",
+    name: "Cloud Runtime",
+    title: "Crystal Guild moves cleanly into hosted operation",
+    summary: "Cloud Runtime introduced the Render worker path, durable Twitch token storage, migration tooling, persistent logs and backups, and safe cloud bootstrap checks.",
+    highlights: [
+      { title: "Optional hosted Bot", description: "The authoritative Bot can run as a Render Background Worker while local Windows operation remains supported." },
+      { title: "Safer migration", description: "Token/database migration, persistent storage, startup backups, and fail-closed bootstrap guards protect existing Guild state." },
+    ],
+  },
+  {
+    version: "v1.1.12",
+    name: "Adventure Board",
+    title: "Portal adventures become a dedicated hub",
+    summary: "Adventure Board separated Portal Solo Venture from Twitch Rally Venture, reorganized travel and Hunts, and added clearer embedded Solo results and responsive card hierarchy.",
+    highlights: [
+      { title: "Solo first", description: "Portal-only Solo Venture moved to the top of the Adventure Board while Rally Venture stayed in Twitch chat." },
+      { title: "Readable results", description: "Solo outcomes became explicit embedded result cards with rewards, condition, combat totals, and cooldown context." },
+    ],
+  },
+  {
+    version: "v1.1.11",
+    name: "Solo Venture",
+    title: "A private road opens in the Portal",
+    summary: "Solo Venture introduced a separate Portal-only adventure cooldown, lower enemy ceiling, half Fellowship Renown, and no rally requirement or automatic Twitch chatter.",
+    highlights: [
+      { title: "Portal only", description: "Solo Venture became its own authenticated web action rather than another chat command." },
+      { title: "Separate risk profile", description: "A +3 enemy ceiling and independent cooldown created a lower-pressure alternative to live Rally Ventures." },
+    ],
+  },
+  {
+    version: "v1.1.10",
+    name: "Chocobo Companions",
+    title: "The Stable opens ahead of Expeditions",
+    summary: "Chocobo Companions added the Fellowship Stable, personal acquisition quest, Registration Writ, naming, Bond progression, traits, and the future Expedition-readiness path.",
+    highlights: [
+      { title: "Companion progression", description: "Registered Chocobos gained names, Bond levels, and persistent starter traits." },
+      { title: "Expedition foundation", description: "Chocobo registration and the Fellowship Expedition Board became the preparation path for the planned v1.2 system." },
+    ],
+  },
+  {
+    version: "v1.1.0",
+    name: "Fellowship",
+    title: "Crystal Guild becomes a shared community progression system",
+    summary: "Fellowship introduced Guild-wide levels and Renown, personal Guild Ranks, shared projects, contributions, Orders, and the Fellowship Portal experience.",
+    highlights: [
+      { title: "Shared Guild progression", description: "Player activity began advancing a channel-wide Fellowship level and project path." },
+      { title: "Personal standing", description: "Guild Rank and personal Fellowship Renown added a long-term community identity alongside character progression." },
+    ],
+  },
+  {
+    version: "v1.0.5",
+    name: "Ultima",
+    title: "The 1.0 systems receive their definitive polish pass",
+    summary: "Ultima expanded Venture events, standardized encounter language, documented status effects and combat values, and tightened the Player Guide and streamer recovery tools.",
+    highlights: [
+      { title: "Adventure variety", description: "Ventures could resolve into encounters or treasure events under the refined 1.0 loop." },
+      { title: "Better reference material", description: "Stats, buffs, ailments, recovery, commands, and guide accordions received a coordinated clarity pass." },
+    ],
+  },
+  {
+    version: "v1.0.0",
+    name: "Ultima Web",
+    title: "Crystal Guild reaches its first full Web milestone",
+    summary: "Ultima Web established the v1.0 Adventurer Portal foundation and the web-facing presentation that later Fellowship, Portal Actions, Adventure Board, and Retro releases continued to expand.",
+    highlights: [
+      { title: "Portal foundation", description: "The web experience became a first-class companion to the Twitch RPG rather than a static reference page." },
+      { title: "Long-term baseline", description: "The v1.0 architecture became the base for the additive, migration-safe releases that followed." },
+    ],
   },
 ];

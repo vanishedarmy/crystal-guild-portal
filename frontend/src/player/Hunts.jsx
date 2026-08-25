@@ -15,6 +15,7 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
+import { monsterToken, regionArt, treasureArt } from "../utils/retroAssets.js";
 
 const volatileAdventureActionKeys = new Map();
 
@@ -145,7 +146,8 @@ function SoloVentureResult({ summary, cooldownRemaining }) {
       </div>
 
       {treasure ? (
-        <div className="solo-result-highlight">
+        <div className="solo-result-highlight retro-treasure-highlight">
+          <img className="retro-treasure-art" src={treasureArt(item.rarity)} alt="" loading="lazy" decoding="async" />
           <span>Chest reward</span>
           <strong>{item.name || loot[0] || "Treasure"}</strong>
           <small>{[item.category, item.level ? `Lv.${number(item.level)}` : "", item.rarity].filter(Boolean).join(" · ")}</small>
@@ -607,7 +609,7 @@ export default function Hunts({ data, overview, onRefresh }) {
             {expedition.status === "combat" && expedition.combat ? (
               <div className="solo-combat-board">
                 <div className="solo-combatant enemy">
-                  <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv.{number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
+                  <div className="solo-combat-head"><div className="solo-combat-head-main"><img className="retro-monster-token" src={monsterToken(expedition.combat.enemy)} alt="" loading="lazy" decoding="async" /><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv.{number(expedition.combat.enemy?.level)}</h3></div></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
                   <div className="vital-label"><span>HP</span><span>{number(expedition.combat.enemy?.hp)} / {number(expedition.combat.enemy?.max_hp)}</span></div>
                   <ProgressBar value={pct(expedition.combat.enemy?.hp, expedition.combat.enemy?.max_hp)} className="hp" />
                   <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing an action"}</strong></div>
@@ -723,6 +725,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         <div className="adventure-region-grid">
           {regions.map((region) => (
             <article className={`adventure-region-card ${region.current ? "current" : ""} ${!region.unlocked ? "locked" : ""}`} key={region.id}>
+              <div className="adventure-region-art" aria-hidden="true"><img src={regionArt(region.id)} alt="" loading="lazy" decoding="async" /></div>
               <div className="card-status-row adventure-region-head">
                 <div className="slot-label">Lv.{number(region.min_level)}+</div>
                 <span className={`small-badge ${region.current ? "success" : !region.unlocked ? "locked" : ""}`}>{region.current ? "Current" : region.unlocked ? "Unlocked" : "Locked"}</span>
@@ -802,7 +805,8 @@ export default function Hunts({ data, overview, onRefresh }) {
             return (
               <article className={`adventure-hunt-card rank-${String(hunt.rank || "c").toLowerCase()} ${available ? "available" : ""}`} key={hunt.id}>
                 <div className="adventure-hunt-head">
-                  <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv.{number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
+                  <img className="retro-monster-token" src={monsterToken(hunt.monster)} alt="" loading="lazy" decoding="async" />
+                  <div className="adventure-hunt-head-copy"><span className="slot-label">{hunt.rank}-Rank · Mark Lv.{number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
                   <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : "Locked"}</span>
                 </div>
                 <div className="hunt-reward-grid">

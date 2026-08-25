@@ -1,0 +1,247 @@
+/* Crystal Guild v1.1.18 — Retro Phase 2
+ * Visual-content layer: region art, job identity, monster tokens, treasure art,
+ * and selective battle/overlay presentation. Gameplay semantics remain unchanged.
+ */
+
+:root {
+  --retro-p2-gold: #e9c46a;
+  --retro-p2-cyan: #80e6ff;
+  --retro-p2-emerald: #75d795;
+  --retro-p2-ruby: #f27782;
+  --retro-p2-amethyst: #b390ff;
+}
+
+/* ---------- Shared portrait / job identity ---------- */
+.retro-job-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  border: 2px solid var(--retro-edge-dark);
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.08), transparent 48%),
+    linear-gradient(145deg, #162a62, #080e28);
+  box-shadow: inset 0 0 0 1px rgba(232,242,255,.56), inset 0 0 0 4px rgba(39,59,111,.6), 3px 3px 0 rgba(0,0,0,.42);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.retro-job-portrait::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(222,235,255,.16);
+  transform: rotate(45deg) scale(.7);
+  z-index: -1;
+}
+
+.retro-job-portrait .retro-job-glyph {
+  color: #fff;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1;
+  text-shadow: 2px 2px 0 #000, 0 0 10px currentColor;
+}
+
+.retro-job-portrait.tone-light { color: #fff4b0; background: linear-gradient(145deg, #335373, #101833); }
+.retro-job-portrait.tone-dark { color: #d2a2ff; background: linear-gradient(145deg, #351b55, #0b0b23); }
+.retro-job-portrait.tone-warm { color: #ffb17f; background: linear-gradient(145deg, #6b2635, #171022); }
+.retro-job-portrait.tone-arcane { color: #83e9ff; background: linear-gradient(145deg, #153f65, #101333); }
+.retro-job-portrait.tone-field { color: #9ce7a7; background: linear-gradient(145deg, #214d46, #0b1821); }
+.retro-job-portrait.tone-crystal { color: var(--crystal); }
+
+.player-card-retro-head {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding-right: 4.7rem;
+  margin-bottom: .55rem;
+}
+.player-card-retro-copy { min-width: 0; }
+.player-card-retro-copy h2 { margin: 0; }
+.player-card .retro-job-portrait { width: 52px; height: 52px; }
+
+.profile-header .profile-sigil {
+  width: 88px;
+  height: 88px;
+  font-size: 2.35rem;
+  border-radius: 4px;
+}
+
+.job-card-retro-title {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin: .2rem 0 .15rem;
+}
+.job-card-retro-title .retro-job-portrait { width: 46px; height: 46px; }
+.job-card-retro-title .job-name { margin: 0; }
+
+/* ---------- Adventure region art ---------- */
+.adventure-region-art {
+  position: relative;
+  margin: -.15rem -.15rem .8rem;
+  height: 124px;
+  overflow: hidden;
+  border: 1px solid #6b7da8;
+  background: #05091b;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.38);
+}
+.adventure-region-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: auto;
+  filter: saturate(.94) contrast(1.03);
+}
+.adventure-region-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, rgba(4,8,22,.36));
+  box-shadow: inset 0 0 0 1px rgba(241,216,143,.18);
+}
+.adventure-region-card.current .adventure-region-art { border-color: var(--gold); }
+.adventure-region-card.locked .adventure-region-art img { filter: saturate(.35) brightness(.62) contrast(1.08); }
+
+/* ---------- Monster tokens / Hunt board ---------- */
+.retro-monster-token {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border: 2px solid #53658f;
+  border-radius: 3px;
+  background: #070a1a;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 2px 2px 0 rgba(0,0,0,.36);
+}
+.adventure-hunt-head {
+  display: flex;
+  align-items: flex-start;
+  gap: .72rem;
+}
+.adventure-hunt-head-copy { min-width: 0; flex: 1; }
+.adventure-hunt-card.available .retro-monster-token { border-color: rgba(156,232,183,.72); }
+
+.solo-combat-head-main {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-width: 0;
+}
+.solo-combat-head-main .retro-monster-token { width: 58px; height: 58px; }
+
+/* ---------- Treasure result ---------- */
+.solo-result-highlight.retro-treasure-highlight {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 1rem;
+}
+.retro-treasure-art {
+  grid-row: 1 / span 3;
+  width: 118px;
+  height: 88px;
+  object-fit: contain;
+  image-rendering: auto;
+  filter: drop-shadow(3px 4px 0 rgba(0,0,0,.36));
+}
+
+/* ---------- Bestiary field guide ---------- */
+.bestiary-field-guide {
+  display: grid;
+  grid-template-columns: minmax(190px, .72fr) minmax(0, 1.28fr);
+  gap: 1rem;
+  margin: .8rem 0 1rem;
+  padding: .8rem;
+  border: 1px solid rgba(188,208,250,.35);
+  background: linear-gradient(145deg, rgba(17,33,76,.74), rgba(6,12,35,.84));
+}
+.bestiary-field-art {
+  min-height: 170px;
+  overflow: hidden;
+  border: 2px solid var(--retro-edge-dark);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 3px 3px 0 rgba(0,0,0,.35);
+}
+.bestiary-field-art img { width:100%; height:100%; object-fit:cover; display:block; }
+.bestiary-field-copy { align-self: center; }
+.bestiary-field-copy h3 { margin: .15rem 0 .35rem; }
+.bestiary-field-copy p { margin: 0; color: var(--muted); }
+.bestiary-monster-name {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  min-width: 180px;
+}
+.bestiary-monster-name .retro-monster-token { width: 42px; height: 42px; }
+
+/* ---------- Equipment icon pass ---------- */
+.equipment-card-retro-row {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+.retro-equipment-icon {
+  width: 45px;
+  height: 45px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border: 1px solid #5f73a4;
+  background: #05091d;
+  box-shadow: inset 0 0 0 1px rgba(235,244,255,.15);
+}
+.equipment-card-retro-copy { min-width:0; }
+
+/* ---------- What's New / history ---------- */
+.whats-new-history-list article {
+  position: relative;
+  padding-left: 1.15rem;
+}
+.whats-new-history-list article::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  top: .12rem;
+  color: var(--gold);
+  font-size: .65rem;
+}
+.whats-new-history-list article strong { color: var(--crystal-soft); }
+.whats-new-history-list article span { color: var(--muted); }
+
+/* ---------- Small retro status cues for battle readability ---------- */
+.status-badge,
+.small-badge {
+  position: relative;
+}
+.status-badge.ko,
+.small-badge.danger { border-color: rgba(242,119,130,.72) !important; }
+.status-badge.ready,
+.small-badge.success { border-color: rgba(117,215,149,.72) !important; }
+
+/* ---------- Responsive behavior ---------- */
+@media (max-width: 760px) {
+  .player-card-retro-head { padding-right: 0; }
+  .player-card .retro-job-portrait { width: 46px; height: 46px; }
+  .profile-header .profile-sigil { width: 68px; height: 68px; display:grid; }
+  .adventure-region-art { height: 150px; }
+  .bestiary-field-guide { grid-template-columns: 1fr; }
+  .bestiary-field-art { min-height: 145px; max-height: 210px; }
+  .solo-result-highlight.retro-treasure-highlight { grid-template-columns: 88px minmax(0,1fr); }
+  .retro-treasure-art { width:88px; height:70px; }
+}
+
+@media (max-width: 520px) {
+  .adventure-region-art { height: 132px; }
+  .adventure-hunt-head { gap: .55rem; }
+  .retro-monster-token { width: 52px; height: 52px; }
+  .job-card-retro-title .retro-job-portrait { width: 42px; height: 42px; }
+  .solo-combat-head-main .retro-monster-token { width: 50px; height: 50px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retro-job-portrait .retro-job-glyph { text-shadow: 2px 2px 0 #000; }
+}

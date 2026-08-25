@@ -16,5 +16,5 @@ This Web-only pass fixes long hero-name wrapping and rebuilds the Adventurer Por
 
 No new artwork was necessary; existing job and monster portraits remain the visual anchors.
 
-Frontend asset revision: `1.1.18-retro-phase-ii22`.
+Frontend asset revision: `1.1.18-retro-phase-ii23`.
 No Bot runtime, DB schema, OAuth, hosted sync schema, or Portal Action protocol changes.

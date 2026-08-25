@@ -1,9 +1,9 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii22
+Frontend asset revision: 1.1.18-retro-phase-ii23
 Hosted sync schema: 1
 Portal Action protocol: 14
 Compatible Bot runtime: 1.1.17-arsenal-ii-h4
 Twitch command prefix: !
 
-Current Web build includes Retro Environment Pass plus Mobile Readability Hotfix for hero names/status and Adventurer Portal Bestiary mobile cards.
+Current Web build: Bestiary Name Alignment Hotfix on top of the Mobile Readability Hotfix and Retro Environment Pass. Monster names in the Adventurer Portal Bestiary mobile cards now align correctly to the right of the portrait.

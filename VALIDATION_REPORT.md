@@ -1,14 +1,21 @@
-# Mobile Readability Hotfix — Validation Report
+# Bestiary Name Alignment Hotfix — Validation Report
 
-## Targeted checks
-- Long hero display-name wrapping removed from character cards.
-- Status badge moved into the hero card top-line flow.
-- Mobile Bestiary uses portrait-led labeled cards at <=720px.
-- Very narrow Bestiary layout stacks to one column at <=390px.
-- Existing monster/job artwork remains unchanged.
+Prepared from the validated ii22 Mobile Readability Hotfix baseline.
 
-## Automated validation
-- Frontend unit/regression suite: **246/246 PASS**.
-- Hosted Web/API suite: **46/46 PASS**.
+## Layout validation
+- Corrected the mobile Bestiary monster identity grid to reserve a fixed portrait column.
+- Monster names and levels remain aligned to the right of the portrait across supported mobile widths.
+- Preserved the portrait-led Bestiary card layout and existing search/filter behavior.
 
-Frontend asset revision: `1.1.18-retro-phase-ii22`.
+## Regression validation
+- Frontend unit/regression suite: **246/246 PASS**
+- Hosted Web/API tests: **46/46 PASS**
+
+## Release identity
+- Hosted Web runtime: `1.1.18-retro-phase-ii`
+- Frontend asset revision: `1.1.18-retro-phase-ii23`
+- Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
+- DB schema: unchanged (5)
+- Hosted sync schema: unchanged (1)
+- Portal Action protocol: unchanged (14)
+- Twitch prefix: unchanged (`!`)

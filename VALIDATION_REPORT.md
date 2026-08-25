@@ -37,3 +37,10 @@ PASS — What's New includes the major release lineage and monikers from Ultima 
 - Twitch command prefix: `!`
 
 No database migration, reset, OAuth change, new environment variable, or Bot redeploy is required.
+
+## Final archive verification
+
+- Full Web archive vs finalized Web tree: **0 differences**
+- Complete archive vs finalized complete tree: **0 differences**
+- Web patch over Retro Phase 1 Hotfix 1 vs finalized Web tree: **0 differences**
+- Direct update over Retro Phase 1 Hotfix 1 Complete vs finalized complete tree: **0 differences**

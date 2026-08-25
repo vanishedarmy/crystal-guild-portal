@@ -19,6 +19,6 @@ test("portrait families use their intended UI aspect ratios", () => {
 
 test("all mapped monsters use the cache-busted normalized portrait library", () => {
   const map = read("src/utils/monsterPortraits.js");
-  assert.match(map, /monster-portraits-v8/);
+  assert.match(map, /monster-portraits-v9/);
   assert.doesNotMatch(map, /monster-portraits-v7\//);
 });

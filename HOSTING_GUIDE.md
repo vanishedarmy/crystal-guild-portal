@@ -1,3 +1,5 @@
-# Hosting Guide — Monster Identity Wave 8
+# Hosting Guide — Monster Identity Wave 9
 
-Deploy the Web package and confirm `monster-portraits-v8` is served. Verify `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii13`, then hard-refresh Bestiary, Hunts, Player Guide, and Adventure Board.
+The hosted Web runtime remains `1.1.18-retro-phase-ii` with frontend asset revision `1.1.18-retro-phase-ii14`, paired with unchanged Bot runtime `1.1.17-arsenal-ii-h4`.
+
+Deploy the Web package, confirm the `monster-portraits-v9` directory is served, then verify `/api/health` before checking Bestiary, Hunts, Player Guide, and Solo Venture imagery.

@@ -1,23 +1,26 @@
-# Monster Identity Wave 8 — Validation Report
+# Monster Identity Wave 9 — Validation Report
 
-Prepared from the validated Wave 7 Image Fit Hotfix Web baseline.
+Prepared from the validated Monster Identity Wave 8 Web baseline and the Wave 7 Image Fit Hotfix rules.
 
 ## Asset and mapping checks
-- 10 new Wave 8 portrait assets added.
-- Shared portrait library moved to cache-busted `monster-portraits-v8`.
-- **80 total monster portrait WebP assets** packaged.
-- **80/80 portrait mappings** resolve to authoritative live Bestiary IDs and real packaged files.
-- **80/80 monster portraits** are normalized to edge-to-edge **512×768 (2:3)** assets.
-- Wave 7 image-fit rules remain active for Job portraits, monster portraits, Guide cards, Hunts, and Solo Venture combat.
+- Added 10 new Wave 9 monster portraits: Holy Dragon, Rift Hound, Void Mage, Abaddon, Rift Dragon, Great Wyrm, Void Avatar, Omega Fragment, Ancient Adamantoise, and Archeodemon.
+- Consolidated all illustrated monster artwork into cache-busted `monster-portraits-v9`.
+- 90 total monster portrait WebP assets packaged.
+- 90/90 mapped monster IDs exist in the authoritative Player Guide Bestiary data.
+- 90/90 mapped portrait URLs resolve to real packaged files.
+- 90/90 monster portraits are exactly 512×768 (2:3).
+- 90/90 monster portraits are fully opaque with no internal transparent padding.
+- Shared `MonsterPortrait` presentation remains active in Bestiary, Hunts/Hunt results, Player Guide, and Solo Venture combat.
 
 ## Regression validation
-- Frontend unit/regression tests: **230/230 PASS**.
+- Frontend unit/regression suite: **233/233 PASS**.
 - Hosted Web/API tests: **46/46 PASS**.
-- No Bot logic, gameplay data, DB schema, hosted sync schema, OAuth flow, or Portal Action protocol changes were introduced.
+- Frontend asset revision: `1.1.18-retro-phase-ii14`.
+- No Bot runtime, DB schema, hosted sync schema, OAuth flow, Portal Action protocol, or gameplay changes were introduced.
 
 ## Release identity
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii13`
+- Frontend asset revision: `1.1.18-retro-phase-ii14`
 - Bot runtime: unchanged (`1.1.17-arsenal-ii-h4`)
 - DB schema: unchanged (5)
 - Hosted sync schema: unchanged (1)

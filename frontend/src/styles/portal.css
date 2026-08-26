@@ -7738,3 +7738,97 @@ main h1,
 @media (max-width: 560px) {
   .forge-group-heading { align-items: flex-start; flex-direction: column; gap: .45rem; }
 }
+
+/* v1.1.18 ii31 — Inventory Identity Pass, Phase 1 consumable artwork */
+.item-artwork {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+.item-artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 8px rgba(0,0,0,.28));
+}
+
+.inventory-card-detail { position: relative; }
+.inventory-card-detail:has(.inventory-item-artwork) {
+  min-height: 7.25rem;
+  padding-right: 6.15rem;
+}
+.inventory-item-artwork {
+  position: absolute;
+  top: .8rem;
+  right: .8rem;
+  width: 76px;
+  height: 76px;
+  pointer-events: none;
+}
+
+.recovery-quick-action:has(.recovery-item-artwork) {
+  display: grid;
+  grid-template-columns: 54px minmax(0,1fr) auto;
+}
+.recovery-item-artwork {
+  width: 52px;
+  height: 52px;
+}
+
+.moogle-item-head:has(.moogle-item-artwork) {
+  grid-template-columns: 58px minmax(0,1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: .62rem;
+}
+.moogle-item-artwork {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 56px;
+  height: 56px;
+}
+.moogle-item-head:has(.moogle-item-artwork) > .slot-label,
+.moogle-item-head:has(.moogle-item-artwork) > .item-name {
+  grid-column: 2;
+}
+
+.moogle-sell-copy:has(.moogle-sell-item-artwork) {
+  grid-template-columns: 54px minmax(0,1fr);
+  grid-template-rows: repeat(4, auto);
+  column-gap: .6rem;
+  align-items: center;
+}
+.moogle-sell-item-artwork {
+  grid-column: 1;
+  grid-row: 1 / span 4;
+  width: 52px;
+  height: 52px;
+}
+.moogle-sell-copy:has(.moogle-sell-item-artwork) > :not(.moogle-sell-item-artwork) {
+  grid-column: 2;
+}
+
+.detail-item-artwork {
+  width: 132px;
+  height: 132px;
+  margin: .15rem auto .55rem;
+}
+.item-detail-body:has(.detail-item-artwork) > h2 {
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .inventory-card-detail:has(.inventory-item-artwork) {
+    min-height: 6.5rem;
+    padding-right: 5.2rem;
+  }
+  .inventory-item-artwork { width: 62px; height: 62px; }
+  .recovery-quick-action:has(.recovery-item-artwork) {
+    grid-template-columns: 46px minmax(0,1fr);
+  }
+  .recovery-item-artwork { width: 44px; height: 44px; }
+  .recovery-quick-meta { grid-column: 2; }
+  .detail-item-artwork { width: 112px; height: 112px; }
+}

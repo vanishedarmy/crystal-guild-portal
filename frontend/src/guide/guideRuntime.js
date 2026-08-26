@@ -7,6 +7,7 @@ import { humanizeLabel, metricLabel } from "../utils/displayLabels.js";
 import { jobPortraitPath } from "../utils/jobPortraits.js";
 import { monsterPortraitPath } from "../utils/monsterPortraits.js";
 import { bossArtworkPath } from "../utils/bossArtwork.js";
+import { itemArtworkPath } from "../utils/itemArtwork.js";
 
 export function initGuide(GAME_DATA, releaseLabel = GAME_DATA?.meta?.version || "") {
   const D = GAME_DATA;
@@ -374,8 +375,9 @@ function itemRow(i){
       +'<span class="table-sub">gil</span>'
     :'<span class="muted">—</span>';
   const jobs=itemJobs(i);
+  const art=itemArtworkPath(i);
   return `<tr class="searchable">`
-    +`<td data-label="Item"><span class="table-primary">${esc(i.name)}</span></td>`
+    +`<td data-label="Item"><div class="guide-item-identity">${art?`<span class="guide-item-thumb"><img src="${art}" alt="" loading="lazy" decoding="async"></span>`:''}<span class="table-primary">${esc(i.name)}</span></div></td>`
     +`<td data-label="Type"><span class="table-pill">${esc(humanizeLabel(i.type))}</span></td>`
     +`<td data-label="Class / Jobs">`
     +`<span class="table-primary">${esc(itemFamily(i))}</span>`

@@ -1,15 +1,9 @@
-# Hosting Guide — World / Raid Boss Artwork Pass
+# Crystal Guild v1.1.18 — Hosted Web Deployment
 
-The hosted Web runtime remains `1.1.18-retro-phase-ii` with frontend asset revision `1.1.18-retro-phase-ii30`, paired with unchanged Bot runtime `1.1.18-hunt-board-h1`.
+The hosted Web runtime remains `1.1.18-retro-phase-ii` with frontend asset revision `1.1.18-retro-phase-ii31`, paired with Bot runtime `1.1.18-recovery-h1`.
 
-Deploy the full Web package or the ii24 → ii25 patch, then confirm `/api/health` reports `1.1.18-retro-phase-ii30`. The new artwork folder is `frontend/public/retro-phase-ii/boss-art-v1/` and contains all 37 canonical boss images.
+Deploy the full Web package or the ii30 → ii31 patch. Confirm `/api/health` reports `1.1.18-retro-phase-ii31` after deployment.
 
-After deployment, hard-refresh the Player Guide and Adventurer Portal. If `/overlay` is already loaded in OBS, refresh that browser source as well so the active boss artwork background is picked up.
+Phase 1 item artwork lives in `frontend/public/retro-phase-ii/item-icons-v1/` and contains all 32 canonical consumables as transparent 256×256 WebP assets.
 
-No Bot deploy, database migration, OAuth reconfiguration, environment-variable change, or player reset is required.
-
-
-Retro Environment Pass assets publish under `frontend/public/retro-phase-ii/environment-pass/`. The pass is presentation-only and needs no new environment variables.
-
-
-Latest Web visual pass: Cinzel Typography Pass applies the retro display font to major identity text while preserving body readability.
+No database migration, hosted sync schema change, Portal Action protocol change, OAuth reconfiguration, environment-variable change, or player reset is required.

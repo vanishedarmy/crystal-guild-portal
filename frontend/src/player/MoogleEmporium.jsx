@@ -8,6 +8,7 @@ import {
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, formatBonuses, number } from "../utils/formatters.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
+import ItemArtwork from "../components/ItemArtwork.jsx";
 
 
 const EQUIPMENT_TYPES = new Set(["weapon", "armor", "accessory"]);
@@ -302,6 +303,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                 return (
                   <article className="moogle-item-card" key={item.id}>
                     <div className="moogle-item-head">
+                      <ItemArtwork item={item} className="moogle-item-artwork" />
                       <span className="slot-label">{typeLabel(item.type)}</span>
                       <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
                     </div>
@@ -341,6 +343,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                 return (
                   <article className="moogle-sell-row" key={item.id}>
                     <div className="moogle-sell-copy">
+                      <ItemArtwork item={item} className="moogle-sell-item-artwork" />
                       <span className="slot-label">{typeLabel(item.type)}</span>
                       <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
                       <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>

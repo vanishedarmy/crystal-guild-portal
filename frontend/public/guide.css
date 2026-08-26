@@ -2282,3 +2282,28 @@ body{
 .hero h2{letter-spacing:.005em}
 .section h2{letter-spacing:.025em}
 .card h3,.info-header h2,.info-stage-head h3,.info-mastery-feature h3,.command-group h3{letter-spacing:.018em}
+
+/* v1.1.18 ii31 — Inventory Identity Pass, Phase 1 consumable artwork */
+.guide-item-identity{
+  display:flex;
+  align-items:center;
+  gap:.58rem;
+  min-width:0;
+}
+.guide-item-thumb{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  display:grid;
+  place-items:center;
+}
+.guide-item-thumb img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.26));
+}
+@media(max-width:700px){
+  .guide-item-thumb{width:52px;height:52px;flex-basis:52px}
+}

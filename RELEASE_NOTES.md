@@ -1,23 +1,22 @@
-# Crystal Guild v1.1.18 — Passive Recovery Hotfix
+# Crystal Guild v1.1.18 — Inventory Identity Pass: Phase 1
 
-Adds two automatic recovery paths while preserving the existing Camp, item, and combat systems.
+This Web-only visual release packages all 32 consumable icons created in artwork Waves 1, 2, 3A, and 3B and introduces the reusable item-art identity layer.
 
-## Long Rest
-- Eight hours without an intentional player action triggers an automatic Long Rest refresh, normally within one minute of the threshold.
-- Restores full HP and the current Job's MP/AP.
-- Clears an ordinary Camp timer so the hero returns READY.
-- Intentional Twitch commands and Portal gameplay mutations reset the inactivity timer.
-- Passive Portal state polling does not reset the timer.
+## Included
+- 32 transparent 256×256 WebP consumable icons.
+- Recovery quick actions now show the appropriate usable consumable icon.
+- Inventory consumable cards show item artwork without crowding equipment/material cards that do not have art yet.
+- Moogle Emporium buy and sell entries show artwork when a mapped consumable is present.
+- Consumable item detail dialogs feature a larger item portrait.
+- Player Guide item catalog rows show mapped item artwork.
+- Future material, weapon, armor, and accessory waves can extend the same `itemArtwork` mapping.
 
-## Stream Start Refresh
-- When Twitch reports a new stream session as LIVE, all registered heroes are refreshed once.
-- Full HP and current-Job MP/AP are restored and ordinary Camp timers are cleared.
-- The Twitch `started_at` value is persisted as an idempotency key, so repeated live probes and reconnects during the same stream do not heal the roster again.
-
-## Release identity
+## Compatibility
 - Bot runtime: `1.1.18-recovery-h1`
-- Web asset revision: `1.1.18-retro-phase-ii30`
-- DB schema: 5 unchanged
+- Frontend asset revision: `1.1.18-retro-phase-ii31`
+- Local DB schema: 5 unchanged
 - Hosted sync schema: 1 unchanged
 - Portal Action protocol: 14 unchanged
 - Twitch prefix: `!` unchanged
+
+No migration or player reset is required.

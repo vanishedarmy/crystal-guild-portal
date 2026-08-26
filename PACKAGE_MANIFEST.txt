@@ -1,7 +1,11 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii30
+Frontend asset revision: 1.1.18-retro-phase-ii31
 Hosted sync schema: 1
 Portal Action protocol: 14
+Compatible Bot runtime: 1.1.18-recovery-h1
 
-Current Web build includes the Hunt Board Timer Pass presentation plus Forge Gear Priority Hotfix: equipped equipment first, forged + gear by level, then unforged +0 gear by level.
+Current Web build: Inventory Identity Pass — Phase 1.
+- 32 canonical consumable icons in frontend/public/retro-phase-ii/item-icons-v1/
+- Recovery, Inventory, Moogle Emporium, item details, and Player Guide integration
+- Retains Passive Recovery, Forge Gear Priority, Hunt Board Timer, Cinzel typography, mobile readability, environment, monster, job, region, and boss artwork passes

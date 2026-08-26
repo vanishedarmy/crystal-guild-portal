@@ -1,4 +1,5 @@
 import BossArtwork from "./BossArtwork.jsx";
+import ItemArtwork from "./ItemArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useEffect, useRef } from "react";
 import {
@@ -97,6 +98,7 @@ function DetailBody({ detail }) {
     return (
       <div className="detail-body item-detail-body">
         <p className="eyebrow">{humanizeLabel(isConsumable ? "consumable" : itemType)} · {humanizeLabel(item.rarity || "common")}</p>
+        <ItemArtwork item={item} className="detail-item-artwork" eager decorative={false} />
         <h2>{item.name}</h2>
         {content}
       </div>

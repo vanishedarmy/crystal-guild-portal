@@ -1,29 +1,20 @@
-# Release Notes — Crystal Guild v1.1.19 Retro Phase III
+# Crystal Guild v1.1.19 — Retro Phase III
+## Accessory Family Refresh (iii4)
 
-Frontend asset revision: `1.1.19-retro-phase-iii3`.
+This build replaces the first batch of legacy accessory/armor family thumbnails with refreshed SNES/FF-style artwork.
 
-## Gear fallback cleanup
-The shared weapon-family fallback artwork has been rebuilt in the same SNES/Final Fantasy-inspired visual language as the individual gear sprites.
+Updated files under `frontend/public/retro-phase-ii/accessory-families-v2/`:
+- armor_style_t1.webp
+- armor_style_t2.webp
+- armor_style_t3.webp
+- armor_style_t4.webp
+- armor_style_t5.webp
+- armor_style_t6.webp
+- belt_t1.webp
+- belt_t2.webp
+- belt_t3.webp
+- belt_t4.webp
 
-New transparent PNG family assets:
-- Axe
-- Dagger
-- Firearm
-- Instrument
-- Katana
-- Knuckles
-- Rapier
-- Spear
-- Staff
-- Sword
-- Wand
-
-The Web now resolves unmapped weapon-family artwork through `retro-phase-iii/weapon-families-v1/*.png` instead of the old Phase II WebP assets. Tier-specific sword, dagger, axe, and staff fallback WebPs are no longer used. The Artisan's Hammer accessory now reuses the existing `steel_warhammer.png` artwork.
-
-## Cleanup
-- Removed `retro-phase-ii/weapon-families-v2/`.
-- Removed `retro-phase-ii/weapon-tiers-v2/`.
-- Removed the obsolete ii40 deletion manifest from the clean full package.
-- Preserved the 180 named CG-GEAR-R01–R18 PNG assets.
-
-No Bot, database, OAuth, environment-variable, hosted-sync schema, or Portal Action protocol change is required.
+Notes:
+- New files replace the old filenames in place, so frontend paths remain unchanged.
+- This package supersedes the previous versions of these ten files.

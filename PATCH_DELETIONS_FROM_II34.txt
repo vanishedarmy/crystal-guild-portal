@@ -1,0 +1,4 @@
+Patch note for ii34 overlay:
+
+The clean ii35 Web package removes the superseded frontend/public/retro-phase-ii/item-icons-v1 directory.
+An overlay patch cannot delete files, so an existing item-icons-v1 directory may remain on disk after applying the patch. It is harmlessly unused because ii35 resolves canonical consumables through item-icons-v2.

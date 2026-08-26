@@ -1,9 +1,10 @@
-# Crystal Guild v1.1.18 — Inventory Identity Cache-Bust Hotfix Upgrade Guide
+# Inventory Identity Regeneration — Items R01–R06 Upgrade Guide
 
-1. Keep the existing Bot runtime and player database unchanged.
-2. Deploy the full ii34 Web package, or apply the ii33 → ii34 Web patch over the current Inventory Identity Asset Cleanup build.
-3. Rebuild/redeploy the hosted Web app normally.
-4. Confirm `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii34`.
-5. Open an equipment/inventory view. Phase 2 item art now resolves from new `-v2` URLs, so no manual browser cache purge should be required.
+1. Deploy this Web package over the current `v1.1.18 — Retro Phase II` ii34 Web deployment.
+2. Publish the new `frontend/public/retro-phase-ii/item-icons-v2/` and `item-materials-v3/` directories.
+3. Push/redeploy the hosted Web service normally.
+4. Confirm `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii35`.
+5. Hard-refresh once so the new cache-busted item-art paths load immediately.
+6. Spot-check Potion, Megalixir, Regen Tonic, Bomb Fragment, Iron Ore, Ancient Coin, Dark Matter, and Omega Core across Inventory/Guide/Blacksmith surfaces.
 
-No database migration, OAuth change, environment-variable change, Portal Action protocol change, or player reset is required.
+No Bot update, schema migration, player reset, OAuth change, or environment-variable change is required.

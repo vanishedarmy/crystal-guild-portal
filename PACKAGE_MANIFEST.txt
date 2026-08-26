@@ -1,12 +1,12 @@
-Crystal Guild v1.1.18 — Inventory Identity Cache-Bust Hotfix
+Crystal Guild v1.1.18 — Inventory Identity Regeneration: Items R01–R06
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii34
-Compatible Bot runtime: 1.1.18-recovery-h1
-Local DB schema: 5
+Frontend asset revision: 1.1.18-retro-phase-ii35
 Hosted sync schema: 1
 Portal Action protocol: 14
-Twitch prefix: !
+Bot compatibility: 1.1.18-recovery-h1
 
-Current Web build: Inventory Identity Cache-Bust Hotfix.
-Artwork library: 168 packaged item/equipment icons total (32 consumables + 136 corrected shared Phase 2 assets).
-Shared Phase 2 art now resolves from new -v2 public URLs so stale ii32/ii33 cached image responses cannot be reused.
+New cache-busted art directories:
+- frontend/public/retro-phase-ii/item-icons-v2/ — 32 WebP assets
+- frontend/public/retro-phase-ii/item-materials-v3/ — 31 WebP assets
+
+Existing Phase 2 equipment art directories remain unchanged.

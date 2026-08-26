@@ -69,3 +69,13 @@ test("Retro Phase 1 What's New explains the visual-foundation rollout", async ()
   assert.match(data, /Retro without tiny text/);
   assert.match(data, /Mobile preserved/);
 });
+
+test("Retro Phase III What's New explains the consolidated gear-art rollout", async () => {
+  const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
+  assert.match(data, /v1\.1\.19/);
+  assert.match(data, /Retro Phase III/);
+  assert.match(data, /130 standalone gear sprites/);
+  assert.match(data, /Whips, chains, and flails/);
+  assert.match(data, /Firearms finally get exact art/);
+  assert.match(data, /Grimoires join the visual library/);
+});

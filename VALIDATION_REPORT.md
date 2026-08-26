@@ -1,29 +1,43 @@
-# Validation — v1.1.18 SNES Gear Regeneration R05–R10
+# Validation — Crystal Guild v1.1.19 Retro Phase III
 
-Frontend asset revision: `1.1.18-retro-phase-ii40`.
+Frontend asset revision: `1.1.19-retro-phase-iii1`.
 
-## Automated checks
-- Frontend unit tests: **277 / 277 passed**.
-- Hosted Web/API tests: **46 / 46 passed**.
+## Automated validation
 
-## Artwork checks
-- `weapon-icons-v5`: **100 / 100** named CG-GEAR-R01–R10 assets present.
-- CG-GEAR-R05: **10 / 10** individual PNGs present.
-- CG-GEAR-R06: **10 / 10** individual PNGs present.
-- CG-GEAR-R07: **10 / 10** individual PNGs present.
-- CG-GEAR-R08: **10 / 10** individual PNGs present.
-- CG-GEAR-R09: **10 / 10** individual PNGs present.
-- CG-GEAR-R10: **10 / 10** individual PNGs present.
-- Every named weapon file is a **512×512 RGBA PNG** with alpha transparency.
-- Named R05–R10 catalog identities resolve to `weapon-icons-v5` before shared family/tier fallbacks.
-- Equipment outside the regenerated named identities continues to resolve through the existing Phase 2 fallback libraries.
-- Superseded `weapon-icons-v4` is absent from the full build.
+- Frontend Node test suite: **272 / 272 passed**.
+- Hosted Web/API Python test suite: **46 / 46 passed**.
+- Python package compile check: **passed**.
+- Consolidated named weapon library: **130 / 130 PNG files present**.
+- CG-GEAR-R11: **10 / 10** files present.
+- CG-GEAR-R12: **10 / 10** files present.
+- CG-GEAR-R13: **10 / 10** files present.
+- All 130 consolidated weapon assets validate as **512×512 RGBA PNG** files with real transparent pixels.
+- R12 live firearm catalog mappings resolve to exact named Phase III sprites.
+- `Morbol Lash` resolves to the R11 venom-whip sprite.
+- R13 grimoire identities resolve to their packaged direct artwork paths without adding new gameplay catalog entries.
+- Shared Phase II weapon family/tier fallbacks remain available for equipment outside direct named identities.
+
+## Cleanup validation
+
+Compared with the v1.1.18 Retro Phase II ii40 full source:
+
+- Top-level package files reduced from **163** to **20** before packaging metadata.
+- **146** obsolete/historical checkpoint documentation/manifest files removed.
+- Superseded `frontend/public/retro-phase-ii/weapon-icons-v5/` removed (**100 files**).
+- Three ii38/ii39/ii40 gear-art checkpoint test files consolidated into one Retro Phase III gear-art suite.
+- Historical release milestones consolidated into `HISTORY.md`.
+- Existing region, monster, boss, item, material, armor, accessory, and still-used fallback weapon assets were preserved.
 
 ## Compatibility
-No database migration, hosted-sync schema change, Portal Action protocol change, OAuth change, environment-variable change, Bot update, or player reset is required.
 
-## Package verification
-- Fresh extraction of the full ii40 Web ZIP matches the source package tree.
-- Clean ii39 extraction + ii39→ii40 patch + documented `weapon-icons-v4` deletion matches the full ii40 tree.
-- Full-package verification passed **277 / 277** frontend tests and **46 / 46** hosted Web/API tests.
-- Patch verification passed **277 / 277** frontend tests and **46 / 46** hosted Web/API tests.
+- Hosted Web runtime: `1.1.19-retro-phase-iii`
+- Hosted sync schema: `1` — unchanged
+- Portal Action protocol: `14` — unchanged
+- Database migration: none
+- Player reset: none
+- OAuth/environment changes: none
+
+## Patch verification
+
+- ii40 baseline + Retro Phase III patch + documented deletion pass produced an **exact file-for-file SHA-256 match** with the clean v1.1.19 working tree.
+- All **192 direct named weapon artwork references** resolve to packaged Phase III PNGs; the direct map references **130 unique files** with no missing assets.

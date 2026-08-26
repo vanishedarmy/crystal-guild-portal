@@ -1,6 +1,10 @@
-Crystal Guild v1.1.18 — Retro Phase II / SNES Gear Regeneration R05–R10
-Frontend asset revision: 1.1.18-retro-phase-ii40
+Crystal Guild v1.1.19 — Retro Phase III
 
-This Web-only package integrates CG-GEAR-R05 through R10 and consolidates CG-GEAR-R01 through R10 into weapon-icons-v5 (100 standalone transparent PNG assets).
+Start here:
+1. This is the full Web/hosted-portal package based on the verified v1.1.18 Retro Phase II ii40 checkpoint.
+2. Retro Phase III consolidates CG-GEAR-R01 through R13 into one 130-file named weapon library.
+3. CG-GEAR-R11, R12, and R13 add whips/chains/flails, exact firearms/Magitek weapons, and grimoires/spellbooks.
+4. The old weapon-icons-v5 directory and accumulated checkpoint-only documentation were removed from the full package.
+5. No player reset, database migration, OAuth change, environment-variable change, hosted sync schema change, or Portal Action protocol change is required.
 
-Start with UPGRADE_GUIDE.md for deployment notes.
+Read README.md and UPGRADE_GUIDE.md before deployment.

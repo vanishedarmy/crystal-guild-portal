@@ -1,7 +1,0 @@
-When applying the ii36 → ii37 patch as an overlay, delete these superseded directories from the destination:
-frontend/public/retro-phase-ii/item-icons-v2/
-frontend/public/retro-phase-ii/item-icons-v3/
-frontend/public/retro-phase-ii/item-materials-v3/
-frontend/public/retro-phase-ii/item-materials-v4/
-
-The full ii37 Web package already omits these directories.

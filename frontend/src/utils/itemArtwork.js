@@ -2,7 +2,7 @@ const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v4";
 const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
-const WEAPON_ITEM_BASE = "/retro-phase-ii/weapon-icons-v5";
+const WEAPON_ITEM_BASE = "/retro-phase-iii/weapon-icons-v1";
 const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v2";
 const WEAPON_TIER_BASE = "/retro-phase-ii/weapon-tiers-v2";
 const ARMOR_TIER_BASE = "/retro-phase-ii/armor-tiers-v2";
@@ -158,19 +158,6 @@ const WEAPON_ART_BY_ID = new Map([
   ["hunting_rifle", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
   ["magitek_rifle", `${WEAPON_ITEM_BASE}/magitek_rifle.png`],
   ["artemis_bow", `${WEAPON_ITEM_BASE}/artemis_bow.png`],
-  ["copper_pistol", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["iron_pistol", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["flintlock_pistol", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["steel_revolver", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["mythril_musket", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["mythril_revolver", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["magitek_pistol", `${WEAPON_ITEM_BASE}/magitek_rifle.png`],
-  ["aether_carbine", `${WEAPON_ITEM_BASE}/magitek_rifle.png`],
-  ["cerberus_carbine", `${WEAPON_ITEM_BASE}/magitek_rifle.png`],
-  ["magitek_cannon", `${WEAPON_ITEM_BASE}/magitek_rifle.png`],
-  ["machina_repeater", `${WEAPON_ITEM_BASE}/magitek_rifle.png`],
-  ["cerulean_rifle", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
-  ["mythril_repeater", `${WEAPON_ITEM_BASE}/hunting_rifle.png`],
 
   // CG-GEAR-R07 — Katana & Samurai Weapons.
   ["ashigaru_katana", `${WEAPON_ITEM_BASE}/ashigaru_katana.png`],
@@ -238,6 +225,47 @@ const WEAPON_ART_BY_ID = new Map([
   ["seraph_harp", `${WEAPON_ITEM_BASE}/apollo_harp.png`],
   ["celestial_harp", `${WEAPON_ITEM_BASE}/dream_harp.png`],
   ["minstrels_harp", `${WEAPON_ITEM_BASE}/rosewood_harp.png`],
+
+  // CG-GEAR-R11 — Whips, Chains & Flails.
+  ["leather_whip", `${WEAPON_ITEM_BASE}/leather_whip.png`],
+  ["spiked_chain", `${WEAPON_ITEM_BASE}/spiked_chain.png`],
+  ["thorn_whip", `${WEAPON_ITEM_BASE}/thorn_whip.png`],
+  ["flame_whip", `${WEAPON_ITEM_BASE}/flame_whip.png`],
+  ["frost_whip", `${WEAPON_ITEM_BASE}/frost_whip.png`],
+  ["lightning_whip", `${WEAPON_ITEM_BASE}/lightning_whip.png`],
+  ["venom_whip", `${WEAPON_ITEM_BASE}/venom_whip.png`],
+  ["morbol_lash", `${WEAPON_ITEM_BASE}/venom_whip.png`],
+  ["royal_flail", `${WEAPON_ITEM_BASE}/royal_flail.png`],
+  ["morning_star", `${WEAPON_ITEM_BASE}/morning_star.png`],
+  ["dragonfire_whip", `${WEAPON_ITEM_BASE}/dragonfire_whip.png`],
+
+  // CG-GEAR-R12 — Firearms & Magitek Weapons.
+  ["copper_pistol", `${WEAPON_ITEM_BASE}/copper_pistol.png`],
+  ["iron_pistol", `${WEAPON_ITEM_BASE}/iron_pistol.png`],
+  ["flintlock_pistol", `${WEAPON_ITEM_BASE}/flintlock_pistol.png`],
+  ["steel_revolver", `${WEAPON_ITEM_BASE}/steel_revolver.png`],
+  ["mythril_revolver", `${WEAPON_ITEM_BASE}/mythril_revolver.png`],
+  ["mythril_musket", `${WEAPON_ITEM_BASE}/mythril_musket.png`],
+  ["magitek_pistol", `${WEAPON_ITEM_BASE}/magitek_pistol.png`],
+  ["cerulean_rifle", `${WEAPON_ITEM_BASE}/cerulean_rifle.png`],
+  ["machina_repeater", `${WEAPON_ITEM_BASE}/machina_repeater.png`],
+  ["magitek_hand_cannon", `${WEAPON_ITEM_BASE}/magitek_hand_cannon.png`],
+  ["magitek_cannon", `${WEAPON_ITEM_BASE}/magitek_hand_cannon.png`],
+  ["aether_carbine", `${WEAPON_ITEM_BASE}/cerulean_rifle.png`],
+  ["cerberus_carbine", `${WEAPON_ITEM_BASE}/magitek_hand_cannon.png`],
+  ["mythril_repeater", `${WEAPON_ITEM_BASE}/mythril_musket.png`],
+
+  // CG-GEAR-R13 — Grimoires & Spellbooks.
+  ["arcane_grimoire", `${WEAPON_ITEM_BASE}/arcane_grimoire.png`],
+  ["enchanted_grimoire", `${WEAPON_ITEM_BASE}/enchanted_grimoire.png`],
+  ["rubybound_grimoire", `${WEAPON_ITEM_BASE}/rubybound_grimoire.png`],
+  ["frostbound_grimoire", `${WEAPON_ITEM_BASE}/frostbound_grimoire.png`],
+  ["inferno_grimoire", `${WEAPON_ITEM_BASE}/inferno_grimoire.png`],
+  ["stormbound_grimoire", `${WEAPON_ITEM_BASE}/stormbound_grimoire.png`],
+  ["holy_grimoire", `${WEAPON_ITEM_BASE}/holy_grimoire.png`],
+  ["shadow_grimoire", `${WEAPON_ITEM_BASE}/shadow_grimoire.png`],
+  ["starfall_grimoire", `${WEAPON_ITEM_BASE}/starfall_grimoire.png`],
+  ["astral_grimoire", `${WEAPON_ITEM_BASE}/astral_grimoire.png`],
 ]);
 
 const MATERIAL_ART_BY_ID = new Map([

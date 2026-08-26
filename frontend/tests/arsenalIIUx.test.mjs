@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("Arsenal II publishes the expanded ability curve to the shared Guide catalog", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.1.18 — Retro Phase II");
+  assert.equal(data.meta.version, "v1.1.19 — Retro Phase III");
   assert.equal(data.active_abilities.blackmage.length, 12);
   assert.equal(data.active_abilities.whitemage.length, 12);
   assert.equal(data.active_abilities.warrior.length, 8);
@@ -65,6 +65,6 @@ test("Player Guide release identity comes from the shared header and uses Retro 
   assert.doesNotMatch(guide, /Cloud Continuity/);
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
-  assert.match(version, /WEB_BUILD = "Retro Phase II"/);
-  assert.match(version, /1\.1\.18-retro-phase-ii/);
+  assert.match(version, /WEB_BUILD = "Retro Phase III"/);
+  assert.match(version, /1\.1\.19-retro-phase-iii/);
 });

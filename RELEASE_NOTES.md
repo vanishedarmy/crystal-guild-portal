@@ -1,104 +1,33 @@
-# Crystal Guild v1.1.18 — SNES Gear Regeneration R05–R10
+# Crystal Guild v1.1.19 — Retro Phase III Release Notes
 
-Frontend asset revision: `1.1.18-retro-phase-ii40`.
+Frontend asset revision: `1.1.19-retro-phase-iii1`.
 
-This Web-only checkpoint integrates six additional regenerated gear waves and consolidates **CG-GEAR-R01 through CG-GEAR-R10** into the new `weapon-icons-v5` library.
+## Gear artwork rollout
 
-## CG-GEAR-R05 — Staves, Rods & Mage Weapons
-Ten standalone transparent PNG identities:
-- Oak Staff
-- Elm Staff
-- Rune Staff
-- Silver Staff
-- Priest's Staff
-- Fire Rod
-- Frost Rod
-- Thunder Rod
-- Elemental Staff
-- Astral Staff
+### CG-GEAR-R11 — Whips, Chains & Flails
+`leather_whip`, `spiked_chain`, `thorn_whip`, `flame_whip`, `frost_whip`, `lightning_whip`, `venom_whip`, `royal_flail`, `morning_star`, `dragonfire_whip`.
 
-Current staff/rod catalog equivalents now prefer these named assets where appropriate. Nirvana, Stardust Rod, Sage, High Mage, Wizard, and Magus variants use the closest regenerated identity while retaining their own item data.
+`Morbol Lash` now resolves to the new venom-whip identity instead of the unrestricted shared fallback.
 
-## CG-GEAR-R06 — Bows & Ranged Weapons
-Ten standalone transparent PNG identities:
-- Shortbow
-- Longbow
-- Great Bow
-- Killer Bow
-- Elven Bow
-- Rune Bow
-- Yoichi Bow
-- Hunting Rifle
-- Magitek Rifle
-- Artemis Bow
+### CG-GEAR-R12 — Firearms & Magitek Weapons
+`copper_pistol`, `iron_pistol`, `flintlock_pistol`, `steel_revolver`, `mythril_revolver`, `mythril_musket`, `magitek_pistol`, `cerulean_rifle`, `machina_repeater`, `magitek_hand_cannon`.
 
-The bow identities are packaged and reserved for future catalog use. Current firearm entries now use Hunting Rifle or Magitek Rifle artwork where appropriate, including the live Magitek Rifle identity.
+Live firearm catalog identities now map to these exact sprites; related carbine/cannon/repeater aliases use the nearest named Phase III identity.
 
-## CG-GEAR-R07 — Katana & Samurai Weapons
-Ten standalone transparent PNG identities:
-- Ashigaru Katana
-- Iron Katana
-- Steel Katana
-- Osafune
-- Kogarasu
-- Kotetsu
-- Kiyomori
-- Genji Katana
-- Kiku-ichimonji
-- Heaven's Cloud
+### CG-GEAR-R13 — Grimoires & Spellbooks
+`arcane_grimoire`, `enchanted_grimoire`, `rubybound_grimoire`, `frostbound_grimoire`, `inferno_grimoire`, `stormbound_grimoire`, `holy_grimoire`, `shadow_grimoire`, `starfall_grimoire`, `astral_grimoire`.
 
-Current katana identities now prefer the new named artwork. Murasame, Murakumo, Ame-no-Murakumo, Riven Katana, and Masamune stages use the closest regenerated katana identity.
+These are packaged as direct future-ready identities without adding new gameplay items to the catalog.
 
-## CG-GEAR-R08 — Knuckles, Cesti & Claws
-Ten standalone transparent PNG identities:
-- Leather Knuckles
-- Brass Knuckles
-- Iron Knuckles
-- Steel Cesti
-- Tiger Cesti
-- Mythril Claws
-- Wyvern Claws
-- Diamond Knuckles
-- Demon Claws
-- Godhand
+## Consolidation and cleanup
 
-Current knuckle/claw entries now prefer the regenerated named artwork. Godhand stages share the Godhand identity; Dragon/Hell/Tiger variants use the closest matching regenerated claw/cesti art.
+- CG-GEAR-R01–R13 consolidated into `retro-phase-iii/weapon-icons-v1/`.
+- Total named weapon assets: **130**.
+- All new R11–R13 assets normalized to **512×512 RGBA PNG with transparency**.
+- Superseded `retro-phase-ii/weapon-icons-v5/` removed from the full build.
+- Three checkpoint-specific gear test files consolidated into one Retro Phase III gear-art test suite.
+- Historical checkpoint release/upgrade/validation documents removed and summarized in `HISTORY.md`.
 
-## CG-GEAR-R09 — Wands, Scepters & Focuses
-Ten standalone transparent PNG identities:
-- Ash Wand
-- Willow Wand
-- Yew Wand
-- Silver Wand
-- Rune Wand
-- Mythril Wand
-- Sage's Wand
-- Crystal Wand
-- Starfall Wand
-- Stardust Wand
+## Compatibility
 
-Current wand catalog identities now prefer these individual PNGs. Magus and Mystic Wands use the closest regenerated focus artwork.
-
-## CG-GEAR-R10 — Harps & Bard Instruments
-Ten standalone transparent PNG identities:
-- Traveler's Harp
-- Maple Harp
-- Silver Harp
-- Rosewood Harp
-- Faerie Harp
-- Dream Harp
-- Siren Harp
-- Rune Harp
-- Lamia Harp
-- Apollo Harp
-
-Current harp identities now prefer the new named artwork. Seraph, Celestial, and Minstrel variants use the closest regenerated harp identity.
-
-## Artwork normalization and cleanup
-- `weapon-icons-v5` contains **100** individual 512×512 RGBA PNG assets covering CG-GEAR-R01 through R10.
-- CG-GEAR-R05 through R10 contribute **60** new named PNG assets.
-- Each production file is a standalone PNG with alpha transparency; no sprite sheet or dark-background composite is used by the named library.
-- The superseded `weapon-icons-v4` directory is removed from the full ii40 package.
-- Existing `weapon-families-v2` and `weapon-tiers-v2` remain because equipment outside the named regeneration waves still depends on them.
-
-No Bot, database, hosted-sync schema, Portal Action protocol, OAuth, environment-variable, or player-data change.
+No database migration, player reset, OAuth change, environment-variable change, hosted sync schema change, or Portal Action protocol change is required.

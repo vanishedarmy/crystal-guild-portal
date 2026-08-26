@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.1.19",
+    name: "Retro Phase III",
+    title: "The Arsenal gets a complete 16-bit identity pass",
+    summary: "Retro Phase III consolidates Crystal Guild’s regenerated gear artwork into a single active weapon library and extends the SNES-era visual pass through whips, firearms, and grimoires.",
+    highlights: [
+      { title: "130 standalone gear sprites", description: "CG-GEAR-R01 through R13 now live in one consolidated transparent PNG library, with one 512×512 asset per weapon identity." },
+      { title: "Whips, chains, and flails", description: "R11 adds flexible and chained weapons, including a dedicated Morbol Lash identity rather than a generic unrestricted fallback." },
+      { title: "Firearms finally get exact art", description: "R12 replaces shared rifle placeholders for pistols, revolvers, muskets, repeaters, and Magitek weapons with named sprites." },
+      { title: "Grimoires join the visual library", description: "R13 establishes a spellbook and grimoire art set ready for current and future caster equipment identities." },
+      { title: "Phase transition cleanup", description: "Superseded weapon artwork and accumulated checkpoint documentation are removed or consolidated so the Web package starts Retro Phase III from a cleaner baseline." },
+    ],
+    action: { tab: "inventory", label: "View Equipment & Inventory" },
+  },
+  {
     version: "v1.1.18",
     name: "Retro Phase II",
     title: "The world gains its own 16-bit identity",

@@ -1,5 +1,0 @@
-Removed as superseded and unreferenced by ii37:
-frontend/public/retro-phase-ii/item-icons-v2/
-frontend/public/retro-phase-ii/item-icons-v3/
-frontend/public/retro-phase-ii/item-materials-v3/
-frontend/public/retro-phase-ii/item-materials-v4/

@@ -1,11 +1,22 @@
-# Crystal Guild Web — v1.1.18 Retro Phase II
+# Crystal Guild v1.1.19 — Retro Phase III
 
-Hosted Web runtime: `1.1.18-retro-phase-ii` · frontend asset revision `1.1.18-retro-phase-ii40` · hosted sync schema **1** · Portal Action protocol **14**.
+Retro Phase III is a Web-focused visual consolidation release built from the verified v1.1.18 Retro Phase II ii40 checkpoint. It rolls the named equipment artwork forward into a clean Phase III namespace while preserving all gameplay and Portal behavior from the baseline.
 
-This Web-only checkpoint integrates **CG-GEAR-R05 through CG-GEAR-R10** and rolls the named weapon artwork library forward to `weapon-icons-v5`.
+## What changed
 
-The library now contains **100 separate transparent 512×512 PNG weapon assets** covering **CG-GEAR-R01–R10**. The new R05–R10 art covers mage staves/rods, ranged weapons, katana, knuckles/claws, wands/focuses, and bard harps. Current catalog identities prefer the new named PNGs where an exact or close equivalent exists; equipment not covered by the named waves continues to use the established Phase 2 family/tier fallbacks.
+- **CG-GEAR-R11 — Whips, Chains & Flails:** 10 standalone transparent PNG assets.
+- **CG-GEAR-R12 — Firearms & Magitek Weapons:** 10 standalone transparent PNG assets. Existing pistol, revolver, musket, rifle, repeater, and Magitek firearm identities now prefer their exact new artwork instead of shared placeholders.
+- **CG-GEAR-R13 — Grimoires & Spellbooks:** 10 standalone transparent PNG assets, packaged as direct future-ready caster equipment identities.
+- **Consolidated weapon library:** CG-GEAR-R01 through R13 now live together under `frontend/public/retro-phase-iii/weapon-icons-v1/` as **130 individual 512×512 RGBA PNG files**.
+- **Cleanup:** the superseded `retro-phase-ii/weapon-icons-v5/` library and old checkpoint-only release/upgrade/validation documents were removed from the full package. Historical milestones are summarized in `HISTORY.md`.
 
-All previously integrated CG-ITEM-R01–R06 artwork remains intact. The superseded `weapon-icons-v4` directory has been removed from the full build.
+## Technical identity
 
-See `RELEASE_NOTES.md`, `UPGRADE_GUIDE.md`, and `VALIDATION_REPORT.md` for details.
+- Hosted Web runtime: `1.1.19-retro-phase-iii`
+- Frontend asset revision: `1.1.19-retro-phase-iii1`
+- Hosted sync schema: `1` (unchanged)
+- Portal Action protocol: `14` (unchanged)
+- Database migration: **none**
+- Player reset: **none**
+
+Existing Retro Phase II region, monster, boss, item, material, armor, accessory, and fallback weapon assets remain in their established directories so the release does not duplicate large production assets unnecessarily.

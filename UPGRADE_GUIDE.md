@@ -1,15 +1,15 @@
-# Upgrade Guide — v1.1.18 Retro Phase II ii40 → v1.1.19 Retro Phase III
+# Upgrade Guide — Crystal Guild v1.1.19 Retro Phase III
 
-1. Back up the currently deployed Web source.
-2. Prefer replacing the deployed source with the full v1.1.19 Retro Phase III package. If using the patch package, overlay it over ii40 and remove every path listed in `PATCH_DELETIONS_FROM_II40.txt`.
-3. Keep the current Bot/player database. No migration or reset is required.
-4. Deploy/restart the hosted Web service.
-5. Confirm `/api/health` reports:
+## From the prior v1.1.19 package
+1. Replace the existing web package with this build.
+2. Deploy as normal.
+3. Hard refresh the browser after deploy.
+4. Verify:
    - version `1.1.19-retro-phase-iii`
-   - frontend asset revision `1.1.19-retro-phase-iii1`
-   - hosted sync schema `1`
-   - Portal Action protocol `14`
-6. Hard-refresh the Portal once so clients pick up the new cache-busted artwork paths.
-7. Spot-check Equipment & Inventory, Moogle Emporium, Player Guide item dialogs, and any firearm/Morbol Lash entries you can view.
+   - frontend asset revision `1.1.19-retro-phase-iii2`
 
-The release intentionally retains existing Phase II fallback artwork for equipment identities not yet covered by a direct named sprite.
+## Notes
+- No database migration required.
+- No player reset required.
+- No environment variable changes required.
+- This build is an art/content consolidation and packaging refresh.

@@ -28,9 +28,9 @@ function pngInfo(file) {
   return { width: b.readUInt32BE(16), height: b.readUInt32BE(20), colorType: b[25] };
 }
 
-test("Retro Phase III consolidates CG-GEAR-R01 through R13 into one 130-file weapon library", () => {
+test("Retro Phase III consolidates CG-GEAR-R01 through R18 into one 180-file gear library", () => {
   const files = fs.readdirSync(artDir).filter((name) => name.endsWith(".png")).sort();
-  assert.equal(files.length, 130);
+  assert.equal(files.length, 180);
   for (const ids of Object.values(waves)) {
     for (const id of ids) assert.ok(files.includes(`${id}.png`), `${id}.png present`);
   }

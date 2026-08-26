@@ -1,14 +1,12 @@
-Crystal Guild v1.1.19 — Retro Phase III
+Package: Crystal Guild v1.1.19 — Retro Phase III
 Hosted Web runtime: 1.1.19-retro-phase-iii
-Frontend asset revision: 1.1.19-retro-phase-iii1
-Hosted sync schema: 1
-Portal Action protocol: 14
+Frontend asset revision: 1.1.19-retro-phase-iii2
 
-Current regenerated individual art directories:
-- frontend/public/retro-phase-ii/item-icons-v4/ — 32 transparent PNG assets
-- frontend/public/retro-phase-ii/item-materials-v5/ — 31 transparent PNG assets
-- frontend/public/retro-phase-iii/weapon-icons-v1/ — 130 transparent PNG assets (CG-GEAR-R01–R13)
+Included content:
+- Application source and frontend runtime files
+- frontend/public/retro-phase-iii/weapon-icons-v1/ — 180 transparent PNG assets (CG-GEAR-R01–R18)
+- Updated manifest and release documentation
 
-Existing Retro Phase II shared family/tier directories remain packaged only where they are still referenced by equipment outside the named regeneration waves.
-Superseded frontend/public/retro-phase-ii/weapon-icons-v5/ is intentionally omitted.
-Historical checkpoint documentation has been consolidated into HISTORY.md.
+Excluded from distributable output:
+- Staging-only loose generation helpers
+- Temporary patch verification workspaces

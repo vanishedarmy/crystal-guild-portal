@@ -1,13 +1,13 @@
 {
   "release": "v1.1.19 \u2014 Retro Phase III",
-  "frontend_asset_revision": "1.1.19-retro-phase-iii1",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii2",
   "directory": "frontend/public/retro-phase-iii/weapon-icons-v1/",
   "format": "PNG RGBA",
   "dimensions": [
     512,
     512
   ],
-  "count": 130,
+  "count": 180,
   "waves": {
     "R01": [
       "iron_sword.png",
@@ -164,6 +164,66 @@
       "shadow_grimoire.png",
       "starfall_grimoire.png",
       "astral_grimoire.png"
+    ],
+    "R14": [
+      "iron_dagger.png",
+      "rogues_dagger.png",
+      "royal_dagger.png",
+      "runic_dagger.png",
+      "santoku_dagger.png",
+      "orichalcum_dagger.png",
+      "crystal_sword.png",
+      "breaker_blade.png",
+      "zweihander.png",
+      "dragon_slayer_greatsword.png"
+    ],
+    "R15": [
+      "iron_rapier.png",
+      "silver_rapier.png",
+      "royal_rapier.png",
+      "coral_rapier.png",
+      "flame_rapier.png",
+      "mythril_rapier.png",
+      "crystal_rapier.png",
+      "froststeel_rapier.png",
+      "ice_rapier.png",
+      "rune_rapier.png"
+    ],
+    "R16": [
+      "buckler.png",
+      "bronze_shield.png",
+      "steel_shield.png",
+      "flame_shield.png",
+      "ice_shield.png",
+      "aegis_shield.png",
+      "crystal_shield.png",
+      "frost_crystal_shield.png",
+      "paladin_shield.png",
+      "dragon_shield.png"
+    ],
+    "R17": [
+      "bronze_sword.png",
+      "bluegem_sword.png",
+      "frost_crystal_sword.png",
+      "coral_tide_saber.png",
+      "ice_steel_sword.png",
+      "demonic_rune_greatsword.png",
+      "crystal_royal_sword.png",
+      "paladin_sword.png",
+      "infernal_greatsword.png",
+      "techno_crystal_sword.png"
+    ],
+    "R18": [
+      "knight_helm.png",
+      "paladin_helm.png",
+      "bishop_mitre.png",
+      "sapphire_circlet.png",
+      "crystal_tiara.png",
+      "dragoon_helm.png",
+      "dark_knight_helm.png",
+      "rogue_hood.png",
+      "flamecrest_helm.png",
+      "ice_crown.png"
     ]
   }
 }

@@ -5,7 +5,7 @@ import path from "node:path";
 import { itemArtworkPath } from "../src/utils/itemArtwork.js";
 
 const root = path.resolve(import.meta.dirname, "..");
-const artDir = path.join(root, "public/retro-phase-ii/weapon-icons-v4");
+const artDir = path.join(root, "public/retro-phase-ii/weapon-icons-v5");
 
 const r03 = [
   "battle_axe", "ornate_battle_axe", "froststeel_greataxe", "mythril_crescent_axe", "ogrekiller",
@@ -22,13 +22,13 @@ function pngInfo(file) {
   return { width: b.readUInt32BE(16), height: b.readUInt32BE(20), colorType: b[25] };
 }
 
-test("ii39 packages CG-GEAR-R03 and R04 into the 40-file named weapon library", () => {
+test("ii40 preserves CG-GEAR-R03 and R04 in the 100-file named weapon library", () => {
   const files = fs.readdirSync(artDir).filter((name) => name.endsWith(".png")).sort();
-  assert.equal(files.length, 40);
+  assert.equal(files.length, 100);
   for (const id of [...r03, ...r04]) assert.ok(files.includes(`${id}.png`), `${id}.png present`);
 });
 
-test("ii39 R03/R04 files are 512x512 RGBA PNG assets", () => {
+test("ii40 R03/R04 files are 512x512 RGBA PNG assets", () => {
   for (const id of [...r03, ...r04]) {
     const info = pngInfo(path.join(artDir, `${id}.png`));
     assert.equal(info.width, 512, `${id} width`);
@@ -37,7 +37,7 @@ test("ii39 R03/R04 files are 512x512 RGBA PNG assets", () => {
   }
 });
 
-test("ii39 maps current axe catalog equivalents to R03 identities", () => {
+test("ii40 maps current axe catalog equivalents to R03 identities", () => {
   const cases = new Map([
     ["hunters_axe", "battle_axe.png"],
     ["bronze_waraxe", "ornate_battle_axe.png"],
@@ -48,11 +48,11 @@ test("ii39 maps current axe catalog equivalents to R03 identities", () => {
     ["ogre_cleaver", "ogrekiller.png"],
   ]);
   for (const [id, file] of cases) {
-    assert.equal(itemArtworkPath({ id, type: "weapon" }), `/retro-phase-ii/weapon-icons-v4/${file}`, id);
+    assert.equal(itemArtworkPath({ id, type: "weapon" }), `/retro-phase-ii/weapon-icons-v5/${file}`, id);
   }
 });
 
-test("ii39 maps current spear catalog equivalents to R04 identities", () => {
+test("ii40 maps current spear catalog equivalents to R04 identities", () => {
   const cases = new Map([
     ["training_spear", "spear.png"],
     ["mythril_lance", "mythril_spear.png"],
@@ -63,6 +63,6 @@ test("ii39 maps current spear catalog equivalents to R04 identities", () => {
     ["gungnir_fragment", "gungnir.png"],
   ]);
   for (const [id, file] of cases) {
-    assert.equal(itemArtworkPath({ id, type: "weapon" }), `/retro-phase-ii/weapon-icons-v4/${file}`, id);
+    assert.equal(itemArtworkPath({ id, type: "weapon" }), `/retro-phase-ii/weapon-icons-v5/${file}`, id);
   }
 });

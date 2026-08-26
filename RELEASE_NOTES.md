@@ -1,19 +1,41 @@
-# Crystal Guild v1.1.18 — SNES Item Regeneration R01–R06
+# Crystal Guild v1.1.18 — SNES Gear Regeneration R01–R02
 
-Frontend asset revision: `1.1.18-retro-phase-ii37`.
+Frontend asset revision: `1.1.18-retro-phase-ii38`.
 
-This Web-only checkpoint replaces the current item/material checkpoint art with the regenerated SNES/FF-inspired R01–R06 set. The build uses one transparent PNG per identity and removes superseded inventory-art asset directories that are no longer referenced.
+This Web-only checkpoint integrates the first two regenerated gear waves as named, standalone transparent PNG assets while preserving the existing Phase 2 shared weapon families as fallbacks for equipment not yet regenerated.
 
 ## Artwork
-- CG-ITEM-R01: 10 core recovery items.
-- CG-ITEM-R02: 10 recovery/status/buff items.
-- CG-ITEM-R03: 9 battle/utility consumables plus Bomb Fragment.
-- CG-ITEM-R04: 10 common crafting materials.
-- CG-ITEM-R05: 10 advanced crafting materials.
-- CG-ITEM-R06: 10 rare/monster materials.
-- Antidote, Echo Herbs, and Remedy remain on their existing individual PNG art because they were outside the defined R01–R03 regeneration batches.
+- CG-GEAR-R01 — Swords & Great Blades: 10 individual PNGs.
+  - Iron Sword
+  - Steel Sword
+  - Mythril Sword
+  - Flametongue
+  - Icebrand
+  - Coral Sword
+  - Blood Sword
+  - Defender
+  - Excalibur
+  - Ragnarok
+- CG-GEAR-R02 — Daggers, Rapiers & Rogue Weapons: 10 individual PNGs.
+  - Knife
+  - Dagger
+  - Mythril Knife
+  - Mage Masher
+  - Poison Fang
+  - Main Gauche
+  - Assassin's Dagger
+  - Rapier
+  - Rune Blade
+  - Ultima Blade
 
-## Cleanup
-Removed superseded `item-icons-v2`, `item-icons-v3`, `item-materials-v3`, and `item-materials-v4` directories after moving all active references to `item-icons-v4` and `item-materials-v5`.
+All 20 assets are packaged under `frontend/public/retro-phase-ii/weapon-icons-v3/` as separate 512×512 RGBA PNG files.
 
-No Bot, database, hosted-sync schema, Portal Action protocol, OAuth, or environment change.
+## Live catalog integration
+Named current-catalog equivalents now prefer the new individual artwork before the older family/tier fallback, including Iron Blade, Steel Longsword, Mythril Sword, Flametongue, Icebrand, Coral Sword, Blood Sword, Defender, the Excalibur relic stages, Bronze Dagger, Mythril Dagger, Mage Masher, Poison Fang, Assassin Dagger, Copper Rapier, and Rune Blade.
+
+The planned identities Ragnarok, Knife, Main Gauche, and Ultima Blade are also reserved in the artwork map so their PNGs are ready when those exact catalog entries are introduced.
+
+## Asset cleanup
+No existing shared weapon family/tier directory is removed in this checkpoint because those files are still actively used by weapons outside CG-GEAR-R01/R02. The new named PNG library overrides only the regenerated identities and their close canonical aliases.
+
+No Bot, database, hosted-sync schema, Portal Action protocol, OAuth, environment-variable, or player-data change.

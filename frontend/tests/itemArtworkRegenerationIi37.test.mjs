@@ -60,11 +60,15 @@ test("ii37 R03-R06 material identities resolve to item-materials-v5 PNG artwork"
   }
 });
 
-test("ii37 keeps existing Phase 2 equipment family artwork intact", () => {
+test("ii37 shared Phase 2 equipment fallbacks remain packaged after later identity overrides", () => {
   for (const item of data.items.filter((entry) => ["weapon", "armor", "accessory"].includes(entry.type))) {
     const art = itemArtworkPath(item);
     assert.ok(art, `missing art path: ${item.id}`);
-    assert.match(art, /-v2\//, `expected existing Phase 2 path for ${item.id}: ${art}`);
+    if (item.type === "weapon") {
+      assert.match(art, /(?:-v2|weapon-icons-v3)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
+    } else {
+      assert.match(art, /-v2\//, `expected existing Phase 2 path for ${item.id}: ${art}`);
+    }
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing packaged art: ${item.id} -> ${art}`);
   }
 });

@@ -2,6 +2,7 @@ const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v4";
 const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
+const WEAPON_ITEM_BASE = "/retro-phase-ii/weapon-icons-v3";
 const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v2";
 const WEAPON_TIER_BASE = "/retro-phase-ii/weapon-tiers-v2";
 const ARMOR_TIER_BASE = "/retro-phase-ii/armor-tiers-v2";
@@ -46,6 +47,42 @@ const WEAPON_FAMILIES = new Set([
   "sword", "axe", "spear", "staff", "dagger", "katana", "knuckles", "firearm", "instrument", "rapier", "wand", "unrestricted",
 ]);
 const TIERED_WEAPON_FAMILIES = new Set(["sword", "dagger", "axe", "staff"]);
+
+const WEAPON_ART_BY_ID = new Map([
+  // CG-GEAR-R01 — Swords & Great Blades.
+  ["iron_sword", `${WEAPON_ITEM_BASE}/iron_sword.png`],
+  ["iron_blade", `${WEAPON_ITEM_BASE}/iron_sword.png`],
+  ["steel_sword", `${WEAPON_ITEM_BASE}/steel_sword.png`],
+  ["steel_longsword", `${WEAPON_ITEM_BASE}/steel_sword.png`],
+  ["mythril_sword", `${WEAPON_ITEM_BASE}/mythril_sword.png`],
+  ["flametongue", `${WEAPON_ITEM_BASE}/flametongue.png`],
+  ["flame_tongue", `${WEAPON_ITEM_BASE}/flametongue.png`],
+  ["icebrand", `${WEAPON_ITEM_BASE}/icebrand.png`],
+  ["coral_sword", `${WEAPON_ITEM_BASE}/coral_sword.png`],
+  ["blood_sword", `${WEAPON_ITEM_BASE}/blood_sword.png`],
+  ["defender", `${WEAPON_ITEM_BASE}/defender.png`],
+  ["defender_blade", `${WEAPON_ITEM_BASE}/defender.png`],
+  ["excalibur", `${WEAPON_ITEM_BASE}/excalibur.png`],
+  ["excalibur_dormant", `${WEAPON_ITEM_BASE}/excalibur.png`],
+  ["excalibur_awakened", `${WEAPON_ITEM_BASE}/excalibur.png`],
+  ["excalibur_zenith", `${WEAPON_ITEM_BASE}/excalibur.png`],
+  ["ragnarok", `${WEAPON_ITEM_BASE}/ragnarok.png`],
+
+  // CG-GEAR-R02 — Daggers, Rapiers & Rogue Weapons.
+  ["knife", `${WEAPON_ITEM_BASE}/knife.png`],
+  ["dagger", `${WEAPON_ITEM_BASE}/dagger.png`],
+  ["bronze_dagger", `${WEAPON_ITEM_BASE}/dagger.png`],
+  ["mythril_knife", `${WEAPON_ITEM_BASE}/mythril_knife.png`],
+  ["mythril_dagger", `${WEAPON_ITEM_BASE}/mythril_knife.png`],
+  ["mage_masher", `${WEAPON_ITEM_BASE}/mage_masher.png`],
+  ["poison_fang", `${WEAPON_ITEM_BASE}/poison_fang.png`],
+  ["main_gauche", `${WEAPON_ITEM_BASE}/main_gauche.png`],
+  ["assassins_dagger", `${WEAPON_ITEM_BASE}/assassins_dagger.png`],
+  ["rapier", `${WEAPON_ITEM_BASE}/rapier.png`],
+  ["copper_rapier", `${WEAPON_ITEM_BASE}/rapier.png`],
+  ["rune_blade", `${WEAPON_ITEM_BASE}/rune_blade.png`],
+  ["ultima_blade", `${WEAPON_ITEM_BASE}/ultima_blade.png`],
+]);
 
 const MATERIAL_ART_BY_ID = new Map([
   // CG-ITEM-R03 through R06: regenerated SNES-style individual PNG identities.
@@ -164,6 +201,9 @@ function materialArtworkPath(item = {}) {
 }
 
 function weaponArtworkPath(item = {}) {
+  const id = normalizeItemId(item.id || item.item_id || item.name || "");
+  const direct = WEAPON_ART_BY_ID.get(id);
+  if (direct) return direct;
   const family = inferWeaponFamily(item);
   if (TIERED_WEAPON_FAMILIES.has(family)) {
     return `${WEAPON_TIER_BASE}/${family}_t${itemArtworkTier(item)}.webp`;

@@ -1,24 +1,17 @@
-# Validation — v1.1.18 SNES Item Regeneration R01–R06
+# Validation — v1.1.18 SNES Gear Regeneration R01–R02
 
-Frontend asset revision: `1.1.18-retro-phase-ii37`.
+Frontend asset revision: `1.1.18-retro-phase-ii38`.
 
 ## Automated checks
-- Frontend unit tests: **265 / 265 passed**.
+- Frontend unit tests: **269 / 269 passed**.
 - Hosted Web/API tests: **46 / 46 passed**.
 
 ## Artwork checks
-- `item-icons-v4`: **32 / 32** canonical consumable PNGs, each a separate **512×512** PNG with alpha transparency.
-- Of those 32, **29** are regenerated R01–R03 assets; Antidote, Echo Herbs, and Remedy retain their previous validated individual PNG art because they were outside the defined generation batches.
-- `item-materials-v5`: **31 / 31** regenerated R03–R06 material PNG identities, each a separate **512×512** PNG with alpha transparency.
-- All live consumables resolve through the cache-busted `item-icons-v4` path.
-- All defined R03–R06 generated material identities resolve through `item-materials-v5`.
-- Existing weapon, armor, and accessory Phase 2 paths remain valid and unchanged.
+- `weapon-icons-v3`: **20 / 20** CG-GEAR-R01/R02 assets present.
+- Every file is an individual **512×512 RGBA PNG** with alpha transparency.
+- R01 and R02 filenames are stable, lowercase inventory IDs suitable for direct web mapping.
+- Current-catalog equivalents resolve to `weapon-icons-v3` before shared family/tier fallback artwork.
+- Weapons outside the regenerated waves continue resolving to the existing Phase 2 `weapon-families-v2` / `weapon-tiers-v2` assets.
 
-## Cleanup checks
-Confirmed removed from the full build:
-- `item-icons-v2`
-- `item-icons-v3`
-- `item-materials-v3`
-- `item-materials-v4`
-
+## Compatibility
 No database migration, hosted-sync schema change, Portal Action protocol change, OAuth change, environment-variable change, Bot update, or player reset is required.

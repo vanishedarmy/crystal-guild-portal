@@ -1,9 +1,7 @@
-# Upgrade — ii36 to ii37
+# Upgrade — ii37 to ii38
 
-1. Deploy this Web package over the current `1.1.18-retro-phase-ii36` deployment, or apply the supplied ii36 → ii37 patch.
-2. Ensure deleted superseded asset directories are removed from the deployed tree; do not leave stale `item-icons-v2/v3` or `item-materials-v3/v4` folders behind.
-3. Rebuild/redeploy the frontend normally.
-4. Confirm `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii37`.
-5. Hard-refresh once so the new cache-busted art paths are loaded.
-
-No database migration, Bot update, OAuth reconfiguration, or player reset is required.
+1. Deploy the full Web package over `1.1.18-retro-phase-ii37`, or overlay the supplied ii37 → ii38 patch.
+2. No files require manual deletion for this checkpoint; the older shared weapon families remain in use as fallbacks.
+3. No database migration, Bot update, OAuth reconfiguration, environment-variable change, or player reset is required.
+4. Confirm `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii38`.
+5. Hard-refresh the Portal once so the new named weapon PNG mappings are loaded.

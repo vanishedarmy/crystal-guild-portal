@@ -215,7 +215,7 @@
        <code>
         !use tent
        </code>
-       to recover immediately.
+       to recover immediately. Eight hours without an intentional player action also grants a Long Rest, and the whole Guild is refreshed once when a new stream goes LIVE.
       </div>
       <div class="step">
        <b>
@@ -537,6 +537,22 @@
         </h3>
         <p>
          Potion heals modest HP; Hi-Potion heals more; X-Potion restores full HP; Phoenix Down revives a KO'd hero at 30% HP.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Long Rest &mdash; 8 Hours
+        </h3>
+        <p>
+         If you make no intentional Twitch command or Portal gameplay action for <b>8 hours</b>, a Long Rest resolves automatically: full HP and the current Job's MP/AP are restored, and an ordinary Camp rest is cleared. The background game daemon checks the timer regularly, normally applying the refresh within one minute of the threshold. Passive Portal status polling does not keep the timer awake.
+        </p>
+       </div>
+       <div class="card">
+        <h3>
+         Stream Start Refresh
+        </h3>
+        <p>
+         When Twitch reports a new Crystal Guild stream session as <b>LIVE</b>, every registered hero is refreshed to full HP and current-Job MP/AP once for that stream session. Reconnects and repeated LIVE checks do not repeat the heal.
         </p>
        </div>
        <div class="card">

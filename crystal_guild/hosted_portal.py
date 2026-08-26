@@ -24,7 +24,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.1.18-retro-phase-ii"
-FRONTEND_ASSET_REVISION = "1.1.18-retro-phase-ii29"
+FRONTEND_ASSET_REVISION = "1.1.18-retro-phase-ii30"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 14
 ALLOWED_PORTAL_ACTIONS = {

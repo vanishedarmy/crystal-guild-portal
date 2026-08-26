@@ -1,6 +1,6 @@
 Crystal Guild Web v1.1.18 — Retro Phase II
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii29
+Frontend asset revision: 1.1.18-retro-phase-ii30
 Hosted sync schema: 1
 Portal Action protocol: 14
 

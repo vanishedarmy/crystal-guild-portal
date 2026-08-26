@@ -1,4 +1,11 @@
 Crystal Guild v1.1.19 — Retro Phase III
-Current Web asset revision: 1.1.19-retro-phase-iii7
+Current Web asset revision: 1.1.19-retro-phase-iii8
 
-This checkpoint adds 20 verified material sprites from CG-MAT-R01 and CG-MAT-R03. Read MATERIAL_ARTWORK_QA_REPORT.md before assuming R02/R04 are live; those two generated batches failed the identity QA pass and remain unrouted.
+This checkpoint completes the current material-art pass.
+
+- 84 / 84 materials now resolve to valid artwork.
+- 39 dedicated Phase III material PNGs are packaged in material-icons-v1.
+- The final 19 missing material identities are now routed.
+- No database migration, player reset, OAuth change, environment-variable change, hosted sync schema change, or Portal Action protocol change is required.
+
+Read README.md and UPGRADE_GUIDE.md before deployment.

@@ -1,11 +1,9 @@
 Package: Crystal Guild v1.1.19 — Retro Phase III
-Hosted Web runtime: 1.1.19-retro-phase-iii
-Frontend asset revision: 1.1.19-retro-phase-iii7
+Web runtime: 1.1.19-retro-phase-iii
+Frontend asset revision: 1.1.19-retro-phase-iii8
 
-New iii7 production content:
-- frontend/public/retro-phase-iii/material-icons-v1/ — 20 verified 512x512 PNG material assets
-- MATERIAL_ARTWORK_MANIFEST.json
-- MATERIAL_ARTWORK_QA_REPORT.md
-- Updated ARTWORK_ROUTING_AUDIT.json
-
-Existing Retro Phase III gear, equipment-family, weapon-family, and web runtime content remains packaged.
+Current checkpoint:
+- Complete material artwork coverage: 84 / 84
+- Dedicated Phase III material icons: 39 PNG files
+- Final 19 missing identities added and routed
+- No rejected QA-hold material generations included as production assets

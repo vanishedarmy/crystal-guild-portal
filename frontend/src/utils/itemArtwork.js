@@ -290,6 +290,29 @@ const MATERIAL_ART_BY_ID = new Map([
   ["deathgaze_plume", `${MATERIAL_ITEM_BASE}/deathgaze_plume.png`],
   ["earth_harp", `${MATERIAL_ITEM_BASE}/earth_harp.png`],
   ["desert_rose", `${MATERIAL_ITEM_BASE}/desert_rose.png`],
+  // CG-MAT-R02 — verified material identities.
+  ["triple_chimera_fang", `${MATERIAL_ITEM_BASE}/triple_chimera_fang.png`],
+  ["dragon_scale", `${MATERIAL_ITEM_BASE}/dragon_scale.png`],
+  ["ancient_cloth", `${MATERIAL_ITEM_BASE}/ancient_cloth.png`],
+  ["celestial_thread", `${MATERIAL_ITEM_BASE}/celestial_thread.png`],
+  ["imp_wing", `${MATERIAL_ITEM_BASE}/imp_wing.png`],
+  ["cockatrice_pinion", `${MATERIAL_ITEM_BASE}/cockatrice_pinion.png`],
+  ["ochu_vine", `${MATERIAL_ITEM_BASE}/ochu_vine.png`],
+  ["basilisk_eye", `${MATERIAL_ITEM_BASE}/basilisk_eye.png`],
+  ["lamia_scale", `${MATERIAL_ITEM_BASE}/lamia_scale.png`],
+  ["mindflayer_tentacle", `${MATERIAL_ITEM_BASE}/mindflayer_tentacle.png`],
+
+  // CG-MAT-R04 — verified rare/endgame/special material identities.
+  ["nemesis_mark", `${MATERIAL_ITEM_BASE}/nemesis_mark.png`],
+  ["yiazmat_scale", `${MATERIAL_ITEM_BASE}/yiazmat_scale.png`],
+  ["kaiser_scale", `${MATERIAL_ITEM_BASE}/kaiser_scale.png`],
+  ["long_gui_plate", `${MATERIAL_ITEM_BASE}/long_gui_plate.png`],
+  ["ahriman_lens", `${MATERIAL_ITEM_BASE}/ahriman_lens.png`],
+  ["morbol_spore", `${MATERIAL_ITEM_BASE}/morbol_spore.png`],
+  ["magitek_capacitor", `${MATERIAL_ITEM_BASE}/magitek_capacitor.png`],
+  ["behemoth_hide", `${MATERIAL_ITEM_BASE}/behemoth_hide.png`],
+  ["chocobo_writ", `${MATERIAL_ITEM_BASE}/chocobo_writ.png`],
+
   // CG-ITEM-R03 through R06: regenerated SNES-style individual PNG identities.
   ["bomb_fragment", `${ITEM_MATERIAL_BASE}/bomb_fragment.png`],
   ["iron_ore", `${ITEM_MATERIAL_BASE}/iron_ore.png`],

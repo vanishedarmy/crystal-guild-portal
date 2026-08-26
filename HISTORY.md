@@ -1,5 +1,10 @@
 # History
 
+## v1.1.19 — Retro Phase III (iii8)
+- Completed current material artwork coverage at 84/84.
+- Added the final 19 material identities and expanded material-icons-v1 to 39 transparent PNGs.
+- Cleared the prior R02/R04 QA hold with corrected artwork while keeping rejected generations out of production routing.
+
 ## v1.1.19 — Retro Phase III iii6
 - Fixed stale equipment artwork routing.
 - Moved refreshed armor/accessory family art to a cache-busting Retro Phase III path.

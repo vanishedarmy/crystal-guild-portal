@@ -1,9 +1,7 @@
-# Upgrade Guide — iii6 to iii7
+# Upgrade Guide — iii7 to iii8
 
-1. Deploy the iii7 Web build or apply the iii6 → iii7 patch.
+1. Deploy the iii8 full Web build or apply the iii7 → iii8 patch.
 2. No database migration or player reset is required.
-3. The new verified material art resolves through `/retro-phase-iii/material-icons-v1/`.
-4. Hard refresh the Portal after deploy so the new frontend asset revision is loaded.
-5. Verify `/api/health` reports frontend asset revision `1.1.19-retro-phase-iii7`.
-
-The patch introduces no required deletions from iii6.
+3. No OAuth or environment-variable changes are required.
+4. Hard-refresh the Portal after deployment so the new material sprites are fetched.
+5. Verify `/api/health` reports frontend asset revision `1.1.19-retro-phase-iii8`.

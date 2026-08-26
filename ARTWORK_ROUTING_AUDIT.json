@@ -24,14 +24,14 @@
       },
       "material": {
         "total": 84,
-        "art": 65,
-        "no_art": 19
+        "art": 84,
+        "no_art": 0
       }
     },
-    "nonempty_art_paths": 386,
+    "nonempty_art_paths": 405,
     "missing_art_files": 0,
-    "no_art_path": 19,
-    "phase_iii_material_files": 20
+    "no_art_path": 0,
+    "phase_iii_material_files": 39
   },
   "rows": [
     {
@@ -964,7 +964,7 @@
     },
     {
       "id": "last_knife_dormant",
-      "name": "Last Knife — Dormant",
+      "name": "Last Knife \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/dagger.png",
       "file_exists": true,
@@ -980,7 +980,7 @@
     },
     {
       "id": "masamune_dormant",
-      "name": "Masamune — Dormant",
+      "name": "Masamune \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/kiyomori.png",
       "file_exists": true,
@@ -988,7 +988,7 @@
     },
     {
       "id": "godhand_dormant",
-      "name": "Godhand — Dormant",
+      "name": "Godhand \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/godhand.png",
       "file_exists": true,
@@ -996,7 +996,7 @@
     },
     {
       "id": "gae_bolg_dormant",
-      "name": "Gae Bolg — Dormant",
+      "name": "Gae Bolg \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/spear.png",
       "file_exists": true,
@@ -1004,7 +1004,7 @@
     },
     {
       "id": "nirvana_dormant",
-      "name": "Nirvana — Dormant",
+      "name": "Nirvana \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/priests_staff.png",
       "file_exists": true,
@@ -1012,7 +1012,7 @@
     },
     {
       "id": "stardust_rod_dormant",
-      "name": "Stardust Rod — Dormant",
+      "name": "Stardust Rod \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/rune_staff.png",
       "file_exists": true,
@@ -1020,7 +1020,7 @@
     },
     {
       "id": "apocalypse_dormant",
-      "name": "Apocalypse — Dormant",
+      "name": "Apocalypse \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/sword.png",
       "file_exists": true,
@@ -1028,7 +1028,7 @@
     },
     {
       "id": "excalibur_dormant",
-      "name": "Excalibur — Dormant",
+      "name": "Excalibur \u2014 Dormant",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/excalibur.png",
       "file_exists": true,
@@ -1116,7 +1116,7 @@
     },
     {
       "id": "last_knife_awakened",
-      "name": "Last Knife — Awakened",
+      "name": "Last Knife \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/dagger.png",
       "file_exists": true,
@@ -1124,7 +1124,7 @@
     },
     {
       "id": "masamune_awakened",
-      "name": "Masamune — Awakened",
+      "name": "Masamune \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/genji_katana.png",
       "file_exists": true,
@@ -1132,7 +1132,7 @@
     },
     {
       "id": "godhand_awakened",
-      "name": "Godhand — Awakened",
+      "name": "Godhand \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/godhand.png",
       "file_exists": true,
@@ -1140,7 +1140,7 @@
     },
     {
       "id": "gae_bolg_awakened",
-      "name": "Gae Bolg — Awakened",
+      "name": "Gae Bolg \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/spear.png",
       "file_exists": true,
@@ -1148,7 +1148,7 @@
     },
     {
       "id": "nirvana_awakened",
-      "name": "Nirvana — Awakened",
+      "name": "Nirvana \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/astral_staff.png",
       "file_exists": true,
@@ -1156,7 +1156,7 @@
     },
     {
       "id": "stardust_rod_awakened",
-      "name": "Stardust Rod — Awakened",
+      "name": "Stardust Rod \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/elemental_staff.png",
       "file_exists": true,
@@ -1164,7 +1164,7 @@
     },
     {
       "id": "apocalypse_awakened",
-      "name": "Apocalypse — Awakened",
+      "name": "Apocalypse \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/sword.png",
       "file_exists": true,
@@ -1172,7 +1172,7 @@
     },
     {
       "id": "excalibur_awakened",
-      "name": "Excalibur — Awakened",
+      "name": "Excalibur \u2014 Awakened",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/excalibur.png",
       "file_exists": true,
@@ -1196,7 +1196,7 @@
     },
     {
       "id": "last_knife_zenith",
-      "name": "Last Knife — Zenith",
+      "name": "Last Knife \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/dagger.png",
       "file_exists": true,
@@ -1236,7 +1236,7 @@
     },
     {
       "id": "masamune_zenith",
-      "name": "Masamune — Zenith",
+      "name": "Masamune \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/heavens_cloud.png",
       "file_exists": true,
@@ -1252,7 +1252,7 @@
     },
     {
       "id": "godhand_zenith",
-      "name": "Godhand — Zenith",
+      "name": "Godhand \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/godhand.png",
       "file_exists": true,
@@ -1276,7 +1276,7 @@
     },
     {
       "id": "gae_bolg_zenith",
-      "name": "Gae Bolg — Zenith",
+      "name": "Gae Bolg \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/spear.png",
       "file_exists": true,
@@ -1292,7 +1292,7 @@
     },
     {
       "id": "nirvana_zenith",
-      "name": "Nirvana — Zenith",
+      "name": "Nirvana \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/astral_staff.png",
       "file_exists": true,
@@ -1300,7 +1300,7 @@
     },
     {
       "id": "stardust_rod_zenith",
-      "name": "Stardust Rod — Zenith",
+      "name": "Stardust Rod \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/astral_staff.png",
       "file_exists": true,
@@ -1308,7 +1308,7 @@
     },
     {
       "id": "apocalypse_zenith",
-      "name": "Apocalypse — Zenith",
+      "name": "Apocalypse \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/sword.png",
       "file_exists": true,
@@ -1324,7 +1324,7 @@
     },
     {
       "id": "excalibur_zenith",
-      "name": "Excalibur — Zenith",
+      "name": "Excalibur \u2014 Zenith",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/excalibur.png",
       "file_exists": true,
@@ -1958,8 +1958,8 @@
       "id": "triple_chimera_fang",
       "name": "Triple Chimera Fang",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/triple_chimera_fang.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2014,8 +2014,8 @@
       "id": "dragon_scale",
       "name": "Dragon Scale",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/dragon_scale.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2046,16 +2046,16 @@
       "id": "ancient_cloth",
       "name": "Ancient Cloth",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/ancient_cloth.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "celestial_thread",
       "name": "Celestial Thread",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/celestial_thread.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2094,48 +2094,48 @@
       "id": "imp_wing",
       "name": "Imp Wing",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/imp_wing.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "cockatrice_pinion",
       "name": "Cockatrice Pinion",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/cockatrice_pinion.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "ochu_vine",
       "name": "Ochu Vine",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/ochu_vine.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "basilisk_eye",
       "name": "Basilisk Eye",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/basilisk_eye.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "lamia_scale",
       "name": "Lamia Scale",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/lamia_scale.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "mindflayer_tentacle",
       "name": "Mindflayer Tentacle",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/mindflayer_tentacle.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2342,8 +2342,8 @@
       "id": "nemesis_mark",
       "name": "Nemesis Mark",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/nemesis_mark.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2358,16 +2358,16 @@
       "id": "yiazmat_scale",
       "name": "Yiazmat Scale",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/yiazmat_scale.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "kaiser_scale",
       "name": "Kaiser Dragon Scale",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/kaiser_scale.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2390,8 +2390,8 @@
       "id": "long_gui_plate",
       "name": "Long Gui Plate",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/long_gui_plate.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -2484,7 +2484,7 @@
     },
     {
       "id": "warriors_tonic",
-      "name": "Warrior’s Tonic",
+      "name": "Warrior\u2019s Tonic",
       "type": "consumable",
       "art_path": "/retro-phase-ii/item-icons-v4/warriors_tonic.png",
       "file_exists": true,
@@ -2492,7 +2492,7 @@
     },
     {
       "id": "heros_brew",
-      "name": "Hero’s Brew",
+      "name": "Hero\u2019s Brew",
       "type": "consumable",
       "art_path": "/retro-phase-ii/item-icons-v4/heros_brew.png",
       "file_exists": true,
@@ -2564,7 +2564,7 @@
     },
     {
       "id": "mages_incense",
-      "name": "Mage’s Incense",
+      "name": "Mage\u2019s Incense",
       "type": "consumable",
       "art_path": "/retro-phase-ii/item-icons-v4/mages_incense.png",
       "file_exists": true,
@@ -2732,7 +2732,7 @@
     },
     {
       "id": "knights_crest",
-      "name": "Knight’s Crest",
+      "name": "Knight\u2019s Crest",
       "type": "accessory",
       "art_path": "/retro-phase-iii/equipment-families-v1/ring_t4.webp",
       "file_exists": true,
@@ -2740,7 +2740,7 @@
     },
     {
       "id": "mages_crest",
-      "name": "Mage’s Crest",
+      "name": "Mage\u2019s Crest",
       "type": "accessory",
       "art_path": "/retro-phase-iii/equipment-families-v1/ring_t4.webp",
       "file_exists": true,
@@ -2748,7 +2748,7 @@
     },
     {
       "id": "warriors_crest",
-      "name": "Warrior’s Crest",
+      "name": "Warrior\u2019s Crest",
       "type": "accessory",
       "art_path": "/retro-phase-iii/equipment-families-v1/ring_t4.webp",
       "file_exists": true,
@@ -2780,7 +2780,7 @@
     },
     {
       "id": "sages_emblem",
-      "name": "Sage’s Emblem",
+      "name": "Sage\u2019s Emblem",
       "type": "accessory",
       "art_path": "/retro-phase-iii/equipment-families-v1/ring_t5.webp",
       "file_exists": true,
@@ -2788,7 +2788,7 @@
     },
     {
       "id": "champions_emblem",
-      "name": "Champion’s Emblem",
+      "name": "Champion\u2019s Emblem",
       "type": "accessory",
       "art_path": "/retro-phase-iii/equipment-families-v1/ring_t5.webp",
       "file_exists": true,
@@ -2884,7 +2884,7 @@
     },
     {
       "id": "giants_axe",
-      "name": "Giant’s Axe",
+      "name": "Giant\u2019s Axe",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-families-v1/axe.png",
       "file_exists": true,
@@ -2908,7 +2908,7 @@
     },
     {
       "id": "minstrels_harp",
-      "name": "Minstrel’s Harp",
+      "name": "Minstrel\u2019s Harp",
       "type": "weapon",
       "art_path": "/retro-phase-iii/weapon-icons-v1/rosewood_harp.png",
       "file_exists": true,
@@ -3198,32 +3198,32 @@
       "id": "ahriman_lens",
       "name": "Ahriman Lens",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/ahriman_lens.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "morbol_spore",
       "name": "Morbol Spore",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/morbol_spore.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "magitek_capacitor",
       "name": "Magitek Capacitor",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/magitek_capacitor.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
       "id": "behemoth_hide",
       "name": "Behemoth Hide",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/behemoth_hide.png",
+      "file_exists": true,
       "retired_path": false
     },
     {
@@ -3270,8 +3270,8 @@
       "id": "chocobo_writ",
       "name": "Chocobo Registration Writ",
       "type": "material",
-      "art_path": "",
-      "file_exists": false,
+      "art_path": "/retro-phase-iii/material-icons-v1/chocobo_writ.png",
+      "file_exists": true,
       "retired_path": false
     }
   ]

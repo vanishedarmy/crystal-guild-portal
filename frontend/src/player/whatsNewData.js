@@ -9,7 +9,7 @@ export const MAJOR_UPDATES = [
       { title: "Whips through headgear", description: "The consolidated Retro Phase III art pass now spans whips, firearms, grimoires, refreshed swords and daggers, shields, and new helm/headgear identities." },
       { title: "Expanded late-wave coverage", description: "R14 through R18 extend the named library with additional daggers, rapiers, swords, shields, and helms while keeping the same SNES/FF look." },
       { title: "Library stays consolidated", description: "All currently packaged Retro Phase III gear art remains in one active transparent PNG library for easier maintenance and future mapping work." },
-      { title: "Material artwork begins", description: "Verified CG-MAT-R01 and CG-MAT-R03 add 20 dedicated 512×512 material sprites while QA blocks mismatched artwork from being routed to the wrong items." },
+      { title: "Material artwork complete", description: "All 84 current materials now resolve to valid inventory artwork, including the final 19 dedicated SNES-style PNG identities added in this checkpoint." },
     ],
     action: { tab: "inventory", label: "View Equipment & Inventory" },
   },

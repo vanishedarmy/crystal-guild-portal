@@ -5,7 +5,7 @@ import path from "node:path";
 import { itemArtworkPath } from "../src/utils/itemArtwork.js";
 
 const root = path.resolve(import.meta.dirname, "..");
-const artDir = path.join(root, "public/retro-phase-ii/weapon-icons-v3");
+const artDir = path.join(root, "public/retro-phase-ii/weapon-icons-v4");
 const expected = [
   "iron_sword", "steel_sword", "mythril_sword", "flametongue", "icebrand",
   "coral_sword", "blood_sword", "defender", "excalibur", "ragnarok",
@@ -23,11 +23,13 @@ function pngInfo(file) {
   };
 }
 
-test("ii38 packages CG-GEAR-R01 and R02 as 20 separate 512x512 RGBA PNGs", () => {
+test("ii39 preserves CG-GEAR-R01 and R02 as separate 512x512 RGBA PNGs", () => {
   const files = fs.readdirSync(artDir).filter((name) => name.endsWith(".png")).sort();
-  assert.equal(files.length, 20);
-  assert.deepEqual(files, expected.map((id) => `${id}.png`).sort());
-  for (const file of files) {
+  assert.ok(files.length >= 20);
+  for (const file of expected.map((id) => `${id}.png`)) {
+    assert.ok(files.includes(file), `${file} preserved in v4`);
+  }
+  for (const file of expected.map((id) => `${id}.png`)) {
     const info = pngInfo(path.join(artDir, file));
     assert.equal(info.width, 512, `${file} width`);
     assert.equal(info.height, 512, `${file} height`);
@@ -35,7 +37,7 @@ test("ii38 packages CG-GEAR-R01 and R02 as 20 separate 512x512 RGBA PNGs", () =>
   }
 });
 
-test("ii38 direct weapon identities override the older shared family/tier fallback", () => {
+test("ii39 preserves direct R01/R02 weapon identities", () => {
   const cases = new Map([
     ["iron_blade", "iron_sword.png"],
     ["steel_longsword", "steel_sword.png"],
@@ -57,20 +59,20 @@ test("ii38 direct weapon identities override the older shared family/tier fallba
     ["rune_blade", "rune_blade.png"],
   ]);
   for (const [id, file] of cases) {
-    assert.equal(itemArtworkPath({ id, type: "weapon" }), `/retro-phase-ii/weapon-icons-v3/${file}`, id);
+    assert.equal(itemArtworkPath({ id, type: "weapon" }), `/retro-phase-ii/weapon-icons-v4/${file}`, id);
   }
 });
 
-test("ii38 also reserves direct artwork paths for planned batch names not yet present in the live catalog", () => {
+test("ii39 preserves planned R01/R02 direct artwork identities", () => {
   for (const id of ["iron_sword", "steel_sword", "excalibur", "ragnarok", "knife", "main_gauche", "ultima_blade"]) {
     const art = itemArtworkPath({ id, type: "weapon" });
-    assert.match(art, /^\/retro-phase-ii\/weapon-icons-v3\/.+\.png$/);
+    assert.match(art, /^\/retro-phase-ii\/weapon-icons-v4\/.+\.png$/);
     assert.ok(fs.existsSync(path.join(root, "public", art)), `${id} asset exists`);
   }
 });
 
 test("unregenerated weapons continue using the existing shared equipment art", () => {
-  const art = itemArtworkPath({ id: "iron_waraxe", name: "Iron Waraxe", type: "weapon", min_level: 8, gear_family: "axe" });
-  assert.equal(art, "/retro-phase-ii/weapon-tiers-v2/axe_t2.webp");
+  const art = itemArtworkPath({ id: "adamant_axe", name: "Adamant Axe", type: "weapon", min_level: 30, gear_family: "axe" });
+  assert.equal(art, "/retro-phase-ii/weapon-tiers-v2/axe_t4.webp");
   assert.ok(fs.existsSync(path.join(root, "public", art)));
 });

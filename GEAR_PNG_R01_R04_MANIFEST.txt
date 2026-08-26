@@ -1,0 +1,54 @@
+CG-GEAR-R01–R04 individual PNG manifest
+Frontend asset revision: 1.1.18-retro-phase-ii39
+Directory: frontend/public/retro-phase-ii/weapon-icons-v4/
+Count: 40
+Dimensions: 512x512
+Format: PNG RGBA with transparency
+
+CG-GEAR-R01:
+iron_sword.png
+steel_sword.png
+mythril_sword.png
+flametongue.png
+icebrand.png
+coral_sword.png
+blood_sword.png
+defender.png
+excalibur.png
+ragnarok.png
+
+CG-GEAR-R02:
+knife.png
+dagger.png
+mythril_knife.png
+mage_masher.png
+poison_fang.png
+main_gauche.png
+assassins_dagger.png
+rapier.png
+rune_blade.png
+ultima_blade.png
+
+CG-GEAR-R03:
+battle_axe.png
+ornate_battle_axe.png
+froststeel_greataxe.png
+mythril_crescent_axe.png
+ogrekiller.png
+runic_frostfire_axe.png
+steel_warhammer.png
+mythril_hammer.png
+earthshaker_hammer.png
+crescent_greataxe.png
+
+CG-GEAR-R04:
+spear.png
+javelin.png
+mythril_spear.png
+trident.png
+partisan.png
+ice_lance.png
+holy_lance.png
+dragon_lance.png
+gungnir.png
+longinus.png

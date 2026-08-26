@@ -65,7 +65,7 @@ test("ii37 shared Phase 2 equipment fallbacks remain packaged after later identi
     const art = itemArtworkPath(item);
     assert.ok(art, `missing art path: ${item.id}`);
     if (item.type === "weapon") {
-      assert.match(art, /(?:-v2|weapon-icons-v3)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
+      assert.match(art, /(?:-v2|weapon-icons-v4)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
     } else {
       assert.match(art, /-v2\//, `expected existing Phase 2 path for ${item.id}: ${art}`);
     }

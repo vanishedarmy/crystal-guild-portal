@@ -1,41 +1,43 @@
-# Crystal Guild v1.1.18 — SNES Gear Regeneration R01–R02
+# Crystal Guild v1.1.18 — SNES Gear Regeneration R03–R04
 
-Frontend asset revision: `1.1.18-retro-phase-ii38`.
+Frontend asset revision: `1.1.18-retro-phase-ii39`.
 
-This Web-only checkpoint integrates the first two regenerated gear waves as named, standalone transparent PNG assets while preserving the existing Phase 2 shared weapon families as fallbacks for equipment not yet regenerated.
+This Web-only checkpoint adds the next two regenerated gear waves and rolls the named weapon library forward from `weapon-icons-v3` to `weapon-icons-v4`.
 
-## Artwork
-- CG-GEAR-R01 — Swords & Great Blades: 10 individual PNGs.
-  - Iron Sword
-  - Steel Sword
-  - Mythril Sword
-  - Flametongue
-  - Icebrand
-  - Coral Sword
-  - Blood Sword
-  - Defender
-  - Excalibur
-  - Ragnarok
-- CG-GEAR-R02 — Daggers, Rapiers & Rogue Weapons: 10 individual PNGs.
-  - Knife
-  - Dagger
-  - Mythril Knife
-  - Mage Masher
-  - Poison Fang
-  - Main Gauche
-  - Assassin's Dagger
-  - Rapier
-  - Rune Blade
-  - Ultima Blade
+## CG-GEAR-R03 — Axes, Hammers & Heavy Weapons
+Ten standalone transparent PNG identities are included:
+- Battle Axe
+- Ornate Battle Axe
+- Froststeel Greataxe
+- Mythril Crescent Axe
+- Ogekiller
+- Runic Frostfire Axe
+- Steel Warhammer
+- Mythril Hammer
+- Earthshaker Hammer
+- Crescent Greataxe
 
-All 20 assets are packaged under `frontend/public/retro-phase-ii/weapon-icons-v3/` as separate 512×512 RGBA PNG files.
+Current axe-catalog equivalents now prefer these named assets where the identity is a close match: Hunter's Axe, Bronze Waraxe, Iron Waraxe, Steel Greataxe, Mythril Greataxe, Rune Axe, Ogre Cleaver, and Ogre Axe. The three hammer identities remain packaged and reserved because the current live weapon catalog does not yet contain a hammer weapon family.
 
-## Live catalog integration
-Named current-catalog equivalents now prefer the new individual artwork before the older family/tier fallback, including Iron Blade, Steel Longsword, Mythril Sword, Flametongue, Icebrand, Coral Sword, Blood Sword, Defender, the Excalibur relic stages, Bronze Dagger, Mythril Dagger, Mage Masher, Poison Fang, Assassin Dagger, Copper Rapier, and Rune Blade.
+## CG-GEAR-R04 — Spears & Polearms
+Ten standalone transparent PNG identities are included:
+- Spear
+- Javelin
+- Mythril Spear
+- Trident
+- Partisan
+- Ice Lance
+- Holy Lance
+- Dragon Lance
+- Gungnir
+- Longinus
 
-The planned identities Ragnarok, Knife, Main Gauche, and Ultima Blade are also reserved in the artwork map so their PNGs are ready when those exact catalog entries are introduced.
+Current close catalog equivalents now prefer the new named artwork, including Training Spear, Mythril Lance, Coral Trident, Partisan, Holy Lance, Dragon Lance / Dragon Spear / Dragonbone Spear / Wyvern spear variants, and Gungnir Fragment. Other spear entries continue to use the existing shared spear-family fallback until their own regeneration wave is available.
 
-## Asset cleanup
-No existing shared weapon family/tier directory is removed in this checkpoint because those files are still actively used by weapons outside CG-GEAR-R01/R02. The new named PNG library overrides only the regenerated identities and their close canonical aliases.
+## Artwork normalization and cleanup
+- `weapon-icons-v4` contains **40** individual 512×512 RGBA PNG assets covering CG-GEAR-R01 through R04.
+- The superseded `weapon-icons-v3` directory is removed from the full ii39 package.
+- Existing `weapon-families-v2` and `weapon-tiers-v2` remain because unregenerated weapons still depend on them.
+- No sprite sheets or dark-background composites are used by the named R03/R04 production assets.
 
 No Bot, database, hosted-sync schema, Portal Action protocol, OAuth, environment-variable, or player-data change.

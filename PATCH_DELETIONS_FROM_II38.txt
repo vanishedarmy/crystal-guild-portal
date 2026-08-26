@@ -1,0 +1,4 @@
+When applying the ii38 → ii39 patch as an overlay, delete this superseded directory from the destination:
+frontend/public/retro-phase-ii/weapon-icons-v3/
+
+The full ii39 Web package already omits this directory.

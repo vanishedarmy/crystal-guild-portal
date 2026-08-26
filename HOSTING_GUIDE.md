@@ -1,7 +1,7 @@
-# Hosted Web deployment — SNES Gear Regeneration R01–R02
+# Hosted Web deployment — ii39
 
-Deploy the Web source as usual. No new environment variables or secrets are required.
+Deploy the full package or overlay the ii38 → ii39 patch on the hosted Web service. If using the patch, remove `frontend/public/retro-phase-ii/weapon-icons-v3/`; ii39 replaces it with `weapon-icons-v4/`.
 
-After deployment, confirm `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii38`, then hard-refresh the Portal once to load the cache-busted named weapon PNG artwork.
+After deployment, confirm `/api/health` reports frontend asset revision `1.1.18-retro-phase-ii39`, then hard-refresh the Portal once to load the cache-busted named weapon PNG artwork.
 
-No manual asset deletion is required for ii37 → ii38. The existing Phase 2 shared weapon folders remain intentionally packaged because unregenerated weapons still use them as fallbacks.
+No database migration, Bot update, OAuth change, environment-variable change, or player reset is required.

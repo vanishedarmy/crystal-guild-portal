@@ -1,6 +1,6 @@
-Crystal Guild v1.1.18 — SNES Gear Regeneration R01–R02
+Crystal Guild v1.1.18 — SNES Gear Regeneration R03–R04
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii38
+Frontend asset revision: 1.1.18-retro-phase-ii39
 Hosted sync schema: 1
 Portal Action protocol: 14
 Bot compatibility: 1.1.18-recovery-h1
@@ -8,6 +8,7 @@ Bot compatibility: 1.1.18-recovery-h1
 Current regenerated individual art directories:
 - frontend/public/retro-phase-ii/item-icons-v4/ — 32 transparent PNG assets
 - frontend/public/retro-phase-ii/item-materials-v5/ — 31 transparent PNG assets
-- frontend/public/retro-phase-ii/weapon-icons-v3/ — 20 transparent PNG assets (CG-GEAR-R01/R02)
+- frontend/public/retro-phase-ii/weapon-icons-v4/ — 40 transparent PNG assets (CG-GEAR-R01–R04)
 
 Existing Phase 2 shared weapon/armor/accessory directories remain packaged for unregenerated equipment.
+The superseded weapon-icons-v3 directory is intentionally omitted.

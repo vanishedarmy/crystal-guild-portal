@@ -1,4 +1,4 @@
-Crystal Guild v1.1.18 — SNES Gear Regeneration R01–R02
-Frontend asset revision: 1.1.18-retro-phase-ii38
+Crystal Guild Web v1.1.18 — Retro Phase II
+Frontend asset revision: 1.1.18-retro-phase-ii39
 
-Deploy the full Web package or apply the ii37 → ii38 patch. No migration or manual deletion is required.
+Deploy the full Web package or apply the ii38 → ii39 patch. If using the patch, remove the superseded weapon-icons-v3 directory as listed in PATCH_DELETIONS_FROM_II38.txt. No migration is required.

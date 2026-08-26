@@ -2,7 +2,7 @@ const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v4";
 const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
-const WEAPON_ITEM_BASE = "/retro-phase-ii/weapon-icons-v3";
+const WEAPON_ITEM_BASE = "/retro-phase-ii/weapon-icons-v4";
 const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v2";
 const WEAPON_TIER_BASE = "/retro-phase-ii/weapon-tiers-v2";
 const ARMOR_TIER_BASE = "/retro-phase-ii/armor-tiers-v2";
@@ -82,6 +82,46 @@ const WEAPON_ART_BY_ID = new Map([
   ["copper_rapier", `${WEAPON_ITEM_BASE}/rapier.png`],
   ["rune_blade", `${WEAPON_ITEM_BASE}/rune_blade.png`],
   ["ultima_blade", `${WEAPON_ITEM_BASE}/ultima_blade.png`],
+
+  // CG-GEAR-R03 — Axes, Hammers & Heavy Weapons.
+  ["battle_axe", `${WEAPON_ITEM_BASE}/battle_axe.png`],
+  ["hunters_axe", `${WEAPON_ITEM_BASE}/battle_axe.png`],
+  ["ornate_battle_axe", `${WEAPON_ITEM_BASE}/ornate_battle_axe.png`],
+  ["bronze_waraxe", `${WEAPON_ITEM_BASE}/ornate_battle_axe.png`],
+  ["froststeel_greataxe", `${WEAPON_ITEM_BASE}/froststeel_greataxe.png`],
+  ["iron_waraxe", `${WEAPON_ITEM_BASE}/froststeel_greataxe.png`],
+  ["crescent_greataxe", `${WEAPON_ITEM_BASE}/crescent_greataxe.png`],
+  ["steel_greataxe", `${WEAPON_ITEM_BASE}/crescent_greataxe.png`],
+  ["mythril_crescent_axe", `${WEAPON_ITEM_BASE}/mythril_crescent_axe.png`],
+  ["mythril_greataxe", `${WEAPON_ITEM_BASE}/mythril_crescent_axe.png`],
+  ["ogrekiller", `${WEAPON_ITEM_BASE}/ogrekiller.png`],
+  ["ogre_cleaver", `${WEAPON_ITEM_BASE}/ogrekiller.png`],
+  ["ogre_axe", `${WEAPON_ITEM_BASE}/ogrekiller.png`],
+  ["runic_frostfire_axe", `${WEAPON_ITEM_BASE}/runic_frostfire_axe.png`],
+  ["rune_axe", `${WEAPON_ITEM_BASE}/runic_frostfire_axe.png`],
+  ["steel_warhammer", `${WEAPON_ITEM_BASE}/steel_warhammer.png`],
+  ["mythril_hammer", `${WEAPON_ITEM_BASE}/mythril_hammer.png`],
+  ["earthshaker_hammer", `${WEAPON_ITEM_BASE}/earthshaker_hammer.png`],
+
+  // CG-GEAR-R04 — Spears & Polearms.
+  ["spear", `${WEAPON_ITEM_BASE}/spear.png`],
+  ["training_spear", `${WEAPON_ITEM_BASE}/spear.png`],
+  ["javelin", `${WEAPON_ITEM_BASE}/javelin.png`],
+  ["mythril_spear", `${WEAPON_ITEM_BASE}/mythril_spear.png`],
+  ["mythril_lance", `${WEAPON_ITEM_BASE}/mythril_spear.png`],
+  ["trident", `${WEAPON_ITEM_BASE}/trident.png`],
+  ["coral_trident", `${WEAPON_ITEM_BASE}/trident.png`],
+  ["partisan", `${WEAPON_ITEM_BASE}/partisan.png`],
+  ["ice_lance", `${WEAPON_ITEM_BASE}/ice_lance.png`],
+  ["holy_lance", `${WEAPON_ITEM_BASE}/holy_lance.png`],
+  ["dragon_lance", `${WEAPON_ITEM_BASE}/dragon_lance.png`],
+  ["dragon_spear", `${WEAPON_ITEM_BASE}/dragon_lance.png`],
+  ["dragonbone_spear", `${WEAPON_ITEM_BASE}/dragon_lance.png`],
+  ["wyvern_spear", `${WEAPON_ITEM_BASE}/dragon_lance.png`],
+  ["wyvern_lance", `${WEAPON_ITEM_BASE}/dragon_lance.png`],
+  ["gungnir", `${WEAPON_ITEM_BASE}/gungnir.png`],
+  ["gungnir_fragment", `${WEAPON_ITEM_BASE}/gungnir.png`],
+  ["longinus", `${WEAPON_ITEM_BASE}/longinus.png`],
 ]);
 
 const MATERIAL_ART_BY_ID = new Map([

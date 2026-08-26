@@ -1,0 +1,69 @@
+Crystal Guild v1.1.18 — Item PNG R01–R06 Manifest
+Frontend asset revision: 1.1.18-retro-phase-ii36
+
+Consumable PNGs (32):
+- antidote.png
+- arctic_wind.png
+- chronos_tear.png
+- earth_drum.png
+- echo_herbs.png
+- elixir.png
+- ether.png
+- eye_drops.png
+- heros_brew.png
+- hi_ether.png
+- hi_potion.png
+- iron_tonic.png
+- lightning_marble.png
+- mages_incense.png
+- mega_potion.png
+- megalixir.png
+- panacea.png
+- phoenix_down.png
+- potion.png
+- regen_tonic.png
+- remedy.png
+- shadow_gem.png
+- smelling_salts.png
+- smoke_bomb.png
+- stamina_draught.png
+- swiftwater.png
+- tent.png
+- turbo_ether.png
+- war_horn.png
+- warriors_tonic.png
+- water_gem.png
+- x_potion.png
+
+Material PNGs (31):
+- adamantite.png
+- ancient_coin.png
+- archon_shard.png
+- bomb_fragment.png
+- bronze_ingot.png
+- copper_ore.png
+- crystal_ingot.png
+- crystal_ore.png
+- dark_matter.png
+- darksteel_ingot.png
+- darksteel_ore.png
+- demon_horn.png
+- dragon_heart.png
+- elemental_crystal.png
+- gold_ingot.png
+- gold_ore.png
+- holy_scale.png
+- iron_ingot.png
+- iron_ore.png
+- meteorite.png
+- mimic_lock.png
+- mythril_ingot.png
+- mythril_ore.png
+- omega_core.png
+- orichalcum.png
+- shinryu_scale.png
+- silver_ingot.png
+- silver_ore.png
+- steel_ingot.png
+- tonberry_lantern.png
+- wyvern_scale.png

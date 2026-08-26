@@ -1,12 +1,12 @@
-Crystal Guild v1.1.18 — Inventory Identity Regeneration: Items R01–R06
+Crystal Guild v1.1.18 — Inventory PNG Regeneration R03–R06
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii35
+Frontend asset revision: 1.1.18-retro-phase-ii36
 Hosted sync schema: 1
 Portal Action protocol: 14
 Bot compatibility: 1.1.18-recovery-h1
 
 New cache-busted art directories:
-- frontend/public/retro-phase-ii/item-icons-v2/ — 32 WebP assets
-- frontend/public/retro-phase-ii/item-materials-v3/ — 31 WebP assets
+- frontend/public/retro-phase-ii/item-icons-v3/ — 32 individual PNG assets, 512×512
+- frontend/public/retro-phase-ii/item-materials-v4/ — 31 individual PNG assets, 512×512
 
 Existing Phase 2 equipment art directories remain unchanged.

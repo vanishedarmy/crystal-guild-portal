@@ -1,5 +1,5 @@
-const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v2";
-const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v3";
+const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v3";
+const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v4";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
 const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v2";
@@ -48,27 +48,48 @@ const WEAPON_FAMILIES = new Set([
 const TIERED_WEAPON_FAMILIES = new Set(["sword", "dagger", "axe", "staff"]);
 
 const MATERIAL_ART_BY_ID = new Map([
-  ["iron_ore", `${ITEM_MATERIAL_BASE}/iron_ore.webp`],
-  ["mythril_ore", `${ITEM_MATERIAL_BASE}/mythril_ore.webp`],
-  ["adamantite", `${ITEM_MATERIAL_BASE}/adamantite.webp`],
+  // CG-ITEM-R03 through R06: dedicated individual PNG identities.
+  ["bomb_fragment", `${ITEM_MATERIAL_BASE}/bomb_fragment.png`],
+  ["iron_ore", `${ITEM_MATERIAL_BASE}/iron_ore.png`],
+  ["copper_ore", `${ITEM_MATERIAL_BASE}/copper_ore.png`],
+  ["bronze_ingot", `${ITEM_MATERIAL_BASE}/bronze_ingot.png`],
+  ["iron_ingot", `${ITEM_MATERIAL_BASE}/iron_ingot.png`],
+  ["steel_ingot", `${ITEM_MATERIAL_BASE}/steel_ingot.png`],
+  ["silver_ore", `${ITEM_MATERIAL_BASE}/silver_ore.png`],
+  ["silver_ingot", `${ITEM_MATERIAL_BASE}/silver_ingot.png`],
+  ["gold_ore", `${ITEM_MATERIAL_BASE}/gold_ore.png`],
+  ["gold_ingot", `${ITEM_MATERIAL_BASE}/gold_ingot.png`],
+  ["mythril_ore", `${ITEM_MATERIAL_BASE}/mythril_ore.png`],
+  ["mythril_ingot", `${ITEM_MATERIAL_BASE}/mythril_ingot.png`],
+  ["darksteel_ore", `${ITEM_MATERIAL_BASE}/darksteel_ore.png`],
+  ["darksteel_ingot", `${ITEM_MATERIAL_BASE}/darksteel_ingot.png`],
+  ["adamantite", `${ITEM_MATERIAL_BASE}/adamantite.png`],
+  ["orichalcum", `${ITEM_MATERIAL_BASE}/orichalcum.png`],
+  ["crystal_ore", `${ITEM_MATERIAL_BASE}/crystal_ore.png`],
+  ["crystal_ingot", `${ITEM_MATERIAL_BASE}/crystal_ingot.png`],
+  ["meteorite", `${ITEM_MATERIAL_BASE}/meteorite.png`],
+  ["ancient_coin", `${ITEM_MATERIAL_BASE}/ancient_coin.png`],
+  ["elemental_crystal", `${ITEM_MATERIAL_BASE}/elemental_crystal.png`],
+  ["wyvern_scale", `${ITEM_MATERIAL_BASE}/wyvern_scale.png`],
+  ["demon_horn", `${ITEM_MATERIAL_BASE}/demon_horn.png`],
+  ["tonberry_lantern", `${ITEM_MATERIAL_BASE}/tonberry_lantern.png`],
+  ["dragon_heart", `${ITEM_MATERIAL_BASE}/dragon_heart.png`],
+  ["holy_scale", `${ITEM_MATERIAL_BASE}/holy_scale.png`],
+  ["mimic_lock", `${ITEM_MATERIAL_BASE}/mimic_lock.png`],
+  ["archon_shard", `${ITEM_MATERIAL_BASE}/archon_shard.png`],
+  ["dark_matter", `${ITEM_MATERIAL_BASE}/dark_matter.png`],
+  ["omega_core", `${ITEM_MATERIAL_BASE}/omega_core.png`],
+  ["shinryu_scale", `${ITEM_MATERIAL_BASE}/shinryu_scale.png`],
+
+  // Existing shared material families remain in place for materials outside the current artwork waves.
   ["magitek_scrap", `${MATERIAL_METAL_BASE}/metal_scrap.webp`],
   ["iron_giant_plate", `${MATERIAL_METAL_BASE}/metal_bundle.webp`],
   ["ironclad_plate", `${MATERIAL_METAL_BASE}/darksteel_ore.webp`],
   ["warmech_component", `${MATERIAL_METAL_BASE}/metal_scrap.webp`],
   ["masamune_fragment", `${MATERIAL_METAL_BASE}/silver_ingots.webp`],
-  ["ancient_coin", `${ITEM_MATERIAL_BASE}/ancient_coin.webp`],
   ["genji_token", `${MATERIAL_METAL_BASE}/gold_ingots.webp`],
   ["goblin_medallion", `${MATERIAL_METAL_BASE}/copper_ingots.webp`],
   ["gigas_brace", `${MATERIAL_METAL_BASE}/metal_bundle.webp`],
-  ["mimic_lock", `${ITEM_MATERIAL_BASE}/mimic_lock.webp`],
-  ["wyvern_scale", `${ITEM_MATERIAL_BASE}/wyvern_scale.webp`],
-  ["demon_horn", `${ITEM_MATERIAL_BASE}/demon_horn.webp`],
-  ["tonberry_lantern", `${ITEM_MATERIAL_BASE}/tonberry_lantern.webp`],
-  ["dragon_heart", `${ITEM_MATERIAL_BASE}/dragon_heart.webp`],
-  ["holy_scale", `${ITEM_MATERIAL_BASE}/holy_scale.webp`],
-  ["shinryu_scale", `${ITEM_MATERIAL_BASE}/shinryu_scale.webp`],
-
-  ["bomb_fragment", `${ITEM_MATERIAL_BASE}/bomb_fragment.webp`],
   ["bomb_core", `${ELEMENTAL_CRYSTAL_BASE}/fire.webp`],
   ["summoners_ember", `${ELEMENTAL_CRYSTAL_BASE}/fire.webp`],
   ["glacial_crystal", `${ELEMENTAL_CRYSTAL_BASE}/ice.webp`],
@@ -79,21 +100,17 @@ const MATERIAL_ART_BY_ID = new Map([
   ["crystal_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
   ["crystal_core", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
   ["eidolon_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
-  ["elemental_crystal", `${ITEM_MATERIAL_BASE}/elemental_crystal.webp`],
   ["absolute_crystal", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
   ["magic_pot_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
   ["magitek_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
   ["mover_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
   ["ultima_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
-  ["omega_core", `${ITEM_MATERIAL_BASE}/omega_core.webp`],
   ["penance_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
   ["proto_babil_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
   ["rift_crystal", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
-  ["dark_matter", `${ITEM_MATERIAL_BASE}/dark_matter.webp`],
   ["void_essence", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
   ["demonolith_shard", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
   ["ozma_shard", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
-  ["archon_shard", `${ITEM_MATERIAL_BASE}/archon_shard.webp`],
 ]);
 
 function normalizeItemId(value = "") {
@@ -198,7 +215,7 @@ export function itemArtworkId(item = {}) {
 
 export function itemArtworkPath(item = {}) {
   const direct = itemArtworkId(item);
-  if (direct) return `${ITEM_ART_BASE}/${direct}.webp`;
+  if (direct) return `${ITEM_ART_BASE}/${direct}.png`;
   const type = itemType(item);
   if (type === "material") return materialArtworkPath(item);
   if (type === "weapon") return weaponArtworkPath(item);

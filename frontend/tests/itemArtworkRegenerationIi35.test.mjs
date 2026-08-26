@@ -9,42 +9,42 @@ const data = JSON.parse(fs.readFileSync(path.join(root, "public/guide-data.json"
 const source = fs.readFileSync(path.join(root, "src/utils/itemArtwork.js"), "utf8");
 
 const generatedMaterialIds = [
-  "bomb_fragment", "iron_ore", "mythril_ore", "adamantite", "ancient_coin", "elemental_crystal",
-  "wyvern_scale", "demon_horn", "tonberry_lantern", "dragon_heart", "holy_scale", "mimic_lock",
-  "archon_shard", "dark_matter", "omega_core", "shinryu_scale",
+  "bomb_fragment", "iron_ore", "copper_ore", "bronze_ingot", "iron_ingot", "steel_ingot",
+  "silver_ore", "silver_ingot", "gold_ore", "gold_ingot", "mythril_ore", "mythril_ingot",
+  "darksteel_ore", "darksteel_ingot", "adamantite", "orichalcum", "crystal_ore", "crystal_ingot",
+  "meteorite", "ancient_coin", "elemental_crystal", "wyvern_scale", "demon_horn", "tonberry_lantern",
+  "dragon_heart", "holy_scale", "mimic_lock", "archon_shard", "dark_matter", "omega_core", "shinryu_scale",
 ];
 
-test("ii35 uses regenerated item and material artwork paths", () => {
-  assert.match(source, /item-icons-v2/);
-  assert.match(source, /item-materials-v3/);
-  assert.doesNotMatch(source, /item-icons-v1/);
-  const itemFiles = fs.readdirSync(path.join(root, "public/retro-phase-ii/item-icons-v2")).filter((n) => n.endsWith(".webp"));
-  const materialFiles = fs.readdirSync(path.join(root, "public/retro-phase-ii/item-materials-v3")).filter((n) => n.endsWith(".webp"));
+test("ii36 uses individual PNG item and material artwork paths", () => {
+  assert.match(source, /item-icons-v3/);
+  assert.match(source, /item-materials-v4/);
+  assert.match(source, /\$\{direct\}\.png/);
+  const itemFiles = fs.readdirSync(path.join(root, "public/retro-phase-ii/item-icons-v3")).filter((n) => n.endsWith(".png"));
+  const materialFiles = fs.readdirSync(path.join(root, "public/retro-phase-ii/item-materials-v4")).filter((n) => n.endsWith(".png"));
   assert.equal(itemFiles.length, 32);
   assert.equal(materialFiles.length, 31);
 });
 
-test("ii35 canonical consumables resolve to regenerated item artwork", () => {
+test("ii36 canonical consumables resolve to individual PNG artwork", () => {
   const consumables = data.items.filter((entry) => entry.type === "consumable");
   assert.equal(consumables.length, 32);
   for (const item of consumables) {
     const art = itemArtworkPath(item);
-    assert.match(art, /item-icons-v2\//, `${item.id} should use v2 item art`);
+    assert.match(art, /item-icons-v3\/.+\.png$/, `${item.id} should use v3 PNG item art`);
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing ${item.id}: ${art}`);
   }
 });
 
-test("ii35 dedicated generated material identities override generic material families", () => {
+test("ii36 R03-R06 material identities resolve to packaged individual PNG artwork", () => {
   for (const id of generatedMaterialIds) {
-    const item = data.items.find((entry) => entry.id === id);
-    assert.ok(item, `missing live material ${id}`);
-    const art = itemArtworkPath(item);
-    assert.equal(art, `/retro-phase-ii/item-materials-v3/${id}.webp`);
+    const art = itemArtworkPath({ id, type: "material" });
+    assert.equal(art, `/retro-phase-ii/item-materials-v4/${id}.png`);
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing generated material art ${id}`);
   }
 });
 
-test("ii35 keeps existing Phase 2 equipment family artwork intact", () => {
+test("ii36 keeps existing Phase 2 equipment family artwork intact", () => {
   for (const item of data.items.filter((entry) => ["weapon", "armor", "accessory"].includes(entry.type))) {
     const art = itemArtworkPath(item);
     assert.ok(art, `missing art path: ${item.id}`);

@@ -1,6 +1,6 @@
-# Crystal Guild v1.1.18 — Inventory Identity Regeneration R01–R06 Validation
+# Crystal Guild v1.1.18 — Inventory PNG Regeneration R03–R06 Validation
 
-Frontend asset revision: `1.1.18-retro-phase-ii35`.
+Frontend asset revision: `1.1.18-retro-phase-ii36`.
 
 ## Automated regression
 
@@ -10,19 +10,18 @@ Frontend asset revision: `1.1.18-retro-phase-ii35`.
 
 ## Artwork validation
 
-- `item-icons-v2`: **32 / 32** packaged WebP assets, all exactly **256×256** and decodable.
-- `item-materials-v3`: **31 / 31** packaged WebP assets, all exactly **256×256** and decodable.
-- All 32 live consumables resolve to `item-icons-v2`.
-- **16 live materials** resolve to dedicated regenerated R03–R06 identities: Bomb Fragment, Iron Ore, Mythril Ore, Adamantite, Ancient Coin, Elemental Crystal, Wyvern Scale, Demon Horn, Tonberry Lantern, Dragon Heart, Holy Scale, Mimic Lock, Archon Shard, Dark Matter, Omega Core, and Shinryu Scale.
+- `item-icons-v3`: **32 / 32** packaged individual PNG assets; every file is decodable RGBA, has non-empty alpha content, and is exactly **512×512**.
+- `item-materials-v4`: **31 / 31** packaged individual PNG assets; every file is decodable RGBA, has non-empty alpha content, and is exactly **512×512**.
+- All 32 live consumables resolve to the cache-busted `item-icons-v3/*.png` library.
+- All 31 CG-ITEM-R03 through R06 material concepts resolve through `item-materials-v4/*.png` when addressed by their canonical item ID.
+- The live catalog receives dedicated PNG identities where those generated material IDs currently exist; future-use generated materials remain packaged without changing gameplay data.
 - Existing Phase 2 equipment mapping remains intact for **186 / 186 weapons**, **65 / 65 armor**, and **38 / 38 accessories**.
-- R01/R02 standalone sources are isolated on transparent 256×256 canvases.
-- R03–R06 card-source artwork is normalized with a contained dark backplate rather than aggressive alpha extraction. This intentionally avoids the fragmented/missing dark-pixel artifacts found in the earlier extraction pass.
-- No generated asset is stretched or cover-cropped; UI presentation continues to use `object-fit: contain`.
+- Artwork is normalized onto transparent square canvases with contained scaling; no source asset is stretched or cover-cropped.
 
 ## Compatibility
 
 - Hosted Web runtime: `1.1.18-retro-phase-ii`
-- Frontend asset revision: `1.1.18-retro-phase-ii35`
+- Frontend asset revision: `1.1.18-retro-phase-ii36`
 - Bot runtime compatibility: `1.1.18-recovery-h1`
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **14** unchanged

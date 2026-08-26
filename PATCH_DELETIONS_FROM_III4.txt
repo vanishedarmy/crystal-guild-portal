@@ -1,0 +1,3 @@
+# Remove interpreter cache files carried by the previous package if present.
+crystal_guild/__pycache__/
+tests/__pycache__/

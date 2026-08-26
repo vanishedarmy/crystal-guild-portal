@@ -1,20 +1,13 @@
 # Crystal Guild v1.1.19 — Retro Phase III
-## Accessory Family Refresh (iii4)
+## Boots & Rings Refresh (iii5)
 
-This build replaces the first batch of legacy accessory/armor family thumbnails with refreshed SNES/FF-style artwork.
+This build replaces the remaining accessory-family **boots t1–t6** and **rings t1–t6** with refreshed artwork.
 
-Updated files under `frontend/public/retro-phase-ii/accessory-families-v2/`:
-- armor_style_t1.webp
-- armor_style_t2.webp
-- armor_style_t3.webp
-- armor_style_t4.webp
-- armor_style_t5.webp
-- armor_style_t6.webp
-- belt_t1.webp
-- belt_t2.webp
-- belt_t3.webp
-- belt_t4.webp
+Updated production assets under `frontend/public/retro-phase-ii/accessory-families-v2/`:
+- boots_t1.webp through boots_t6.webp
+- ring_t1.webp through ring_t6.webp
 
-Notes:
-- New files replace the old filenames in place, so frontend paths remain unchanged.
-- This package supersedes the previous versions of these ten files.
+The filenames and frontend paths are unchanged, so the new artwork replaces the old files in place.
+
+Frontend asset revision: `1.1.19-retro-phase-iii5`.
+No database, OAuth, hosted-sync, or Portal Action protocol changes are included.

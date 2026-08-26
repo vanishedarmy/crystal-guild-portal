@@ -11,7 +11,7 @@ This Web build packages the latest Retro Phase III gear-art cleanup and fallback
 
 ## Technical identity
 - Hosted Web runtime: `1.1.19-retro-phase-iii`
-- Frontend asset revision: `1.1.19-retro-phase-iii3`
+- Frontend asset revision: `1.1.19-retro-phase-iii5`
 - Portal Action protocol: `14`
 - Hosted sync schema: `1`
 

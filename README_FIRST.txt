@@ -1,6 +1,7 @@
-Crystal Guild Web v1.1.18 — Retro Phase II
-Frontend asset revision: 1.1.18-retro-phase-ii31
+Crystal Guild v1.1.18 — Inventory Identity Phase 2
+Frontend asset revision: 1.1.18-retro-phase-ii32
+Bot runtime compatibility: 1.1.18-recovery-h1
 
-Inventory Identity Pass — Phase 1 packages all 32 consumable icons generated in Waves 1, 2, 3A, and 3B. Artwork is now used in Recovery, Inventory, Moogle Emporium, item details, and the Player Guide item catalog.
+This Web-only visual build keeps all Phase 1 consumable artwork and adds the generated material, elemental-crystal, weapon, armor, and accessory family/tier artwork. Forge Gear and recipe/material presentation now use the same shared item-art system.
 
-Deploy with Bot runtime 1.1.18-recovery-h1. No DB migration, protocol change, or player reset is required.
+No database migration, Portal Action protocol change, OAuth change, environment-variable change, or player reset is required.

@@ -1,11 +1,11 @@
-Crystal Guild Web v1.1.18 — Retro Phase II
+Crystal Guild v1.1.18 — Inventory Identity Phase 2
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii31
+Frontend asset revision: 1.1.18-retro-phase-ii32
+Compatible Bot runtime: 1.1.18-recovery-h1
+Local DB schema: 5
 Hosted sync schema: 1
 Portal Action protocol: 14
-Compatible Bot runtime: 1.1.18-recovery-h1
+Twitch prefix: !
 
-Current Web build: Inventory Identity Pass — Phase 1.
-- 32 canonical consumable icons in frontend/public/retro-phase-ii/item-icons-v1/
-- Recovery, Inventory, Moogle Emporium, item details, and Player Guide integration
-- Retains Passive Recovery, Forge Gear Priority, Hunt Board Timer, Cinzel typography, mobile readability, environment, monster, job, region, and boss artwork passes
+Current Web build: Inventory Identity Phase 2.
+Artwork library: 168 packaged item/equipment icons total (32 consumables + 136 new family/tier assets).

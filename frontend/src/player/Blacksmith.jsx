@@ -7,6 +7,7 @@ import {
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
+import ItemArtwork from "../components/ItemArtwork.jsx";
 
 function actionKey(kind, target = "blacksmith") {
   const suffix = globalThis.crypto?.randomUUID
@@ -266,6 +267,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                     <span className={`small-badge ${recipe.craftable ? "ready" : ""}`}>{recipe.craftable ? `Up to ${number(maximum)}` : "Missing requirements"}</span>
                   </div>
                   <div className="blacksmith-output">
+                    <ItemArtwork item={recipe.output} className="blacksmith-output-artwork" />
                     <span>Creates</span>
                     <strong className={`rarity-${recipe.output?.rarity || "common"}`}>{recipe.output?.name} x{number(recipe.output?.quantity || 1)}</strong>
                     <small>Owned {number(recipe.output?.owned || 0)} · {titleCase(recipe.output?.type)}</small>
@@ -279,7 +281,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                   <div className="blacksmith-material-list">
                     {(recipe.materials || []).length ? recipe.materials.map((material) => (
                       <div className={material.enough ? "enough" : "missing"} key={material.item_id}>
-                        <span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
+                        <ItemArtwork item={{ ...material, type: "material" }} className="blacksmith-material-artwork" /><span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
                       </div>
                     )) : <div className="enough"><span>No materials required</span><strong>Ready</strong></div>}
                   </div>
@@ -318,6 +320,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                     const busy = busyKey === `forge:${item.item_id}`;
                     return (
                       <article className="blacksmith-card forge-card" key={item.item_id}>
+                        <ItemArtwork item={item} className="blacksmith-forge-artwork" />
                         <div className="blacksmith-card-head">
                           <div><span className="slot-label">{titleCase(item.type)} · Lv.{number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span><h3 className={`rarity-${item.rarity || "common"}`}>{item.name} +{number(item.current_upgrade)}</h3></div>
                           <span className="small-badge">{item.maxed ? "MAX" : `Next +${number(item.next_upgrade)}`}</span>
@@ -334,7 +337,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                             <div className="blacksmith-material-list">
                               {(item.materials || []).map((material) => (
                                 <div className={material.enough ? "enough" : "missing"} key={material.item_id}>
-                                  <span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
+                                  <ItemArtwork item={{ ...material, type: "material" }} className="blacksmith-material-artwork" /><span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
                                 </div>
                               ))}
                             </div>

@@ -7832,3 +7832,41 @@ main h1,
   .recovery-quick-meta { grid-column: 2; }
   .detail-item-artwork { width: 112px; height: 112px; }
 }
+
+/* v1.1.18 ii32 — Inventory Identity Pass Phase 2 shared material/equipment artwork */
+.blacksmith-output:has(.blacksmith-output-artwork) {
+  position: relative;
+  padding-left: 68px;
+  min-height: 58px;
+}
+.blacksmith-output-artwork {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  transform: translateY(-50%);
+}
+.blacksmith-material-list > div:has(.blacksmith-material-artwork) {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .45rem;
+}
+.blacksmith-material-artwork { width: 28px; height: 28px; }
+.forge-card:has(.blacksmith-forge-artwork) {
+  position: relative;
+  padding-left: 104px;
+  min-height: 150px;
+}
+.blacksmith-forge-artwork {
+  position: absolute;
+  left: 18px;
+  top: 20px;
+  width: 72px;
+  height: 72px;
+}
+@media (max-width: 720px) {
+  .forge-card:has(.blacksmith-forge-artwork) { padding-left: 84px; }
+  .blacksmith-forge-artwork { left: 12px; top: 18px; width: 60px; height: 60px; }
+}

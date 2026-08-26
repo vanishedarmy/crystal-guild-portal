@@ -1,20 +1,11 @@
-# Inventory Identity Pass: Phase 1 — Validation Report
+# Inventory Identity Phase 2 — Validation Report
 
-## Automated validation
-- Frontend regression suite: **256/256 PASS**
-- Hosted Web/API suite: **46/46 PASS**
-- Consumable artwork contract: **32/32 mapped and packaged**
-- Artwork dimensions: **32/32 are 256×256**
-- Artwork alpha: **32/32 retain transparency**
-- ZIP integrity: verified during packaging
+Frontend asset revision: `1.1.18-retro-phase-ii32`
 
-## Production bundle check
-`npm run build` could not execute in this packaging container because the packaged source tree does not include installed frontend dependencies (`vite: not found`). This is an environment limitation, not a test failure. The source deployment remains configured to install its pinned frontend dependencies before the normal Vite build.
-
-## Compatibility
-- Bot runtime remains `1.1.18-recovery-h1`.
-- Local DB schema remains 5.
-- Hosted sync schema remains 1.
-- Portal Action protocol remains 14.
-- Twitch prefix remains `!`.
-- No migration or player reset is required.
+- Frontend unit/regression suite: **260 / 260 passed**.
+- Hosted Web/API pytest suite: **46 / 46 passed**.
+- Artwork packaging: **136 new family/tier WebP icons** added; **168 total Inventory Identity icons** including the existing 32 consumables.
+- Coverage: **186 / 186 weapons**, **65 / 65 armor**, **38 / 38 accessories**, and **39 / 84 materials** currently resolve to artwork. Remaining materials are primarily monster-part/organic families reserved for the later dedicated artwork wave.
+- Guild Blacksmith: Forge Gear, recipe outputs, and supported recipe materials use the shared ItemArtwork component.
+- Standalone local `npm run build`: **not executable in this source-only packaging environment** because frontend dependencies are not installed (`vite: not found`). Hosted deployment remains configured to install the pinned dependencies before building.
+- No database migration, hosted-sync schema change, Portal Action protocol change, OAuth change, environment-variable change, or player reset is required.

@@ -1,27 +1,11 @@
-# Crystal Guild v1.1.18 — Inventory Identity Phase 2
+# Crystal Guild v1.1.18 — Inventory Identity Asset Cleanup Hotfix
 
-This Web-only visual update advances the frontend asset revision to `1.1.18-retro-phase-ii32` and packages all artwork generated after the first consumables pass.
+This Web-only visual hotfix advances the frontend asset revision to `1.1.18-retro-phase-ii33`.
 
-## Artwork integrated
-- 20 ore/metal family icons.
-- 8 elemental/magical crystal icons.
-- 12 weapon-family base icons.
-- 36 generated weapon-tier variants, with matching Sword, Dagger, Axe, and Staff families using level-based variants now and the remaining generated variants retained for later family expansion.
-- 36 armor-tier variants.
-- 24 armor/accessory family variants.
-- Existing 32 consumable icons remain unchanged.
+The shared Phase 2 inventory/equipment artwork has been fully re-extracted from the generated source sheets using a safer transparency and cell-isolation process. The ii32 extraction could incorrectly erase dark armor surfaces, thin weapon details, and portions of paired equipment, producing fragmented-looking icons. The ii33 pass replaces all 136 shared Phase 2 assets while retaining the 32 previously validated consumable icons.
 
-The Web build therefore carries **168 item/equipment art assets**. All 186 weapons, all 65 armor pieces, and all 38 accessories now resolve to shared family/tier artwork. 39 of 84 current materials are illustrated through the ore/metal/crystal/core families; monster-part materials remain deliberately unassigned until the dedicated monster-parts artwork wave.
+The build still contains **168 Inventory Identity assets** and keeps the same item-to-art mappings: all 186 weapons, 65 armor pieces, and 38 accessories resolve to shared artwork, while 39 of 84 current materials use the existing ore/metal/crystal/core families.
 
-## UI integration
-Shared artwork remains active in Inventory, Recovery, Moogle Emporium, item detail dialogs, and the Player Guide. This pass also adds it to Guild Blacksmith Forge Gear, recipe outputs, and supported recipe materials.
+Compatibility remains unchanged: Bot runtime `1.1.18-recovery-h1`, local DB schema 5, hosted sync schema 1, Portal Action protocol 14, Twitch prefix `!`.
 
-## Compatibility
-- Frontend asset revision: `1.1.18-retro-phase-ii32`
-- Compatible Bot runtime: `1.1.18-recovery-h1`
-- Local DB schema: 5 unchanged
-- Hosted sync schema: 1 unchanged
-- Portal Action protocol: 14 unchanged
-- Twitch prefix: `!` unchanged
-
-No database migration, OAuth change, environment-variable change, or player reset is required.
+No database migration, Bot update, OAuth change, environment-variable change, or player reset is required.

@@ -8,7 +8,7 @@ test("Retro Phase II public web identity is centralized and omits the Beta marke
   assert.equal(WEB_BUILD, "Retro Phase II");
   assert.equal(WEB_RELEASE, "v1.1.18 — Retro Phase II");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.1.18 — Retro Phase II");
-  assert.equal(WEB_ASSET_REVISION, "1.1.18-retro-phase-ii32");
+  assert.equal(WEB_ASSET_REVISION, "1.1.18-retro-phase-ii33");
   assert.doesNotMatch(WEB_RELEASE, /Beta/i);
 });
 

@@ -1,11 +1,11 @@
-Crystal Guild v1.1.18 — Inventory Identity Phase 2
+Crystal Guild v1.1.18 — Inventory Identity Asset Cleanup Hotfix
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii32
+Frontend asset revision: 1.1.18-retro-phase-ii33
 Compatible Bot runtime: 1.1.18-recovery-h1
 Local DB schema: 5
 Hosted sync schema: 1
 Portal Action protocol: 14
 Twitch prefix: !
 
-Current Web build: Inventory Identity Phase 2.
-Artwork library: 168 packaged item/equipment icons total (32 consumables + 136 new family/tier assets).
+Current Web build: Inventory Identity Asset Cleanup Hotfix.
+Artwork library: 168 packaged item/equipment icons total (32 consumables + 136 corrected shared Phase 2 assets).

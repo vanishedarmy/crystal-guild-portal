@@ -4,8 +4,7 @@ const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
 const WEAPON_ITEM_BASE = "/retro-phase-iii/weapon-icons-v1";
 const WEAPON_FAMILY_BASE = "/retro-phase-iii/weapon-families-v1";
-const ARMOR_TIER_BASE = "/retro-phase-ii/armor-tiers-v2";
-const ACCESSORY_FAMILY_BASE = "/retro-phase-ii/accessory-families-v2";
+const EQUIPMENT_FAMILY_BASE = "/retro-phase-iii/equipment-families-v1";
 
 export const ITEM_ART_IDS = new Set([
   "potion",
@@ -404,26 +403,29 @@ function inferArmorFamily(item = {}) {
 
 function armorArtworkPath(item = {}) {
   const family = inferArmorFamily(item);
-  const tier = itemArtworkTier(item);
-  if (family === "heavy") return `${ARMOR_TIER_BASE}/plate_t${tier}.webp`;
-  if (family === "robe") return `${ARMOR_TIER_BASE}/robe_t${tier}.webp`;
-  if (family === "coat") return `${ACCESSORY_FAMILY_BASE}/armor_style_t6.webp`;
-  if (family === "light") return `${ACCESSORY_FAMILY_BASE}/armor_style_t1.webp`;
-  return `${ACCESSORY_FAMILY_BASE}/armor_style_t3.webp`;
+  const id = normalizeItemId(item.id || item.item_id || item.name || "");
+  if (family === "heavy") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t2.webp`;
+  if (family === "robe") {
+    const healerStyle = /white|novice|cotton|linen|aether|scholar|oracle|sage/.test(id);
+    return `${EQUIPMENT_FAMILY_BASE}/armor_style_t${healerStyle ? 4 : 5}.webp`;
+  }
+  if (family === "coat") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t6.webp`;
+  if (family === "light") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t1.webp`;
+  return `${EQUIPMENT_FAMILY_BASE}/armor_style_t3.webp`;
 }
 
 function accessoryArtworkPath(item = {}) {
   const id = normalizeItemId(item.id || item.item_id || item.name || "");
   const tier = itemArtworkTier(item);
-  if (/boot|sandal/.test(id)) return `${ACCESSORY_FAMILY_BASE}/boots_t${tier}.webp`;
-  if (/belt|band|wrist/.test(id)) return `${ACCESSORY_FAMILY_BASE}/belt_t${tier}.webp`;
-  if (/gauntlet|glove/.test(id)) return `${ARMOR_TIER_BASE}/gauntlets_t${tier}.webp`;
-  if (/crown/.test(id)) return `${ARMOR_TIER_BASE}/helm_t${tier}.webp`;
+  if (/boot|sandal/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/boots_t${tier}.webp`;
+  if (/belt|band|wrist/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/belt_t${Math.min(tier, 4)}.webp`;
+  if (/gauntlet|glove/.test(id)) return `${WEAPON_FAMILY_BASE}/knuckles.png`;
+  if (/crown/.test(id)) return `${WEAPON_ITEM_BASE}/${tier >= 5 ? "ice_crown" : "sapphire_circlet"}.png`;
   if (/hammer/.test(id)) return `${WEAPON_ITEM_BASE}/steel_warhammer.png`;
-  if (/ring|pendant|charm|crest|emblem|focus|guard|eye/.test(id)) return `${ACCESSORY_FAMILY_BASE}/ring_t${tier}.webp`;
-  if (/goggle|blindfold/.test(id)) return `${ARMOR_TIER_BASE}/helm_t1.webp`;
-  if (/ribbon/.test(id)) return `${ACCESSORY_FAMILY_BASE}/belt_t4.webp`;
-  return `${ACCESSORY_FAMILY_BASE}/ring_t${tier}.webp`;
+  if (/ring|pendant|charm|crest|emblem|focus|guard|eye/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/ring_t${tier}.webp`;
+  if (/goggle|blindfold/.test(id)) return `${WEAPON_ITEM_BASE}/rogue_hood.png`;
+  if (/ribbon/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/belt_t4.webp`;
+  return `${EQUIPMENT_FAMILY_BASE}/ring_t${tier}.webp`;
 }
 
 export function itemArtworkId(item = {}) {

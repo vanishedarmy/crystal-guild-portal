@@ -1,6 +1,6 @@
 Package: Crystal Guild v1.1.19 — Retro Phase III
 Hosted Web runtime: 1.1.19-retro-phase-iii
-Frontend asset revision: 1.1.19-retro-phase-iii5
+Frontend asset revision: 1.1.19-retro-phase-iii6
 
 Included content:
 - Application source and frontend runtime files
@@ -12,3 +12,6 @@ Removed from the clean full package:
 - frontend/public/retro-phase-ii/weapon-families-v2/
 - frontend/public/retro-phase-ii/weapon-tiers-v2/
 - Obsolete prior checkpoint deletion manifest
+
+- frontend/public/retro-phase-iii/equipment-families-v1/ — active refreshed armor/accessory family artwork (22 WEBP files)
+- retired Phase II accessory-families-v2 and armor-tiers-v2 directories removed

@@ -1,0 +1,7 @@
+Delete these retired directories when applying the iii5 → iii6 patch:
+frontend/public/retro-phase-ii/accessory-families-v2/
+frontend/public/retro-phase-ii/armor-tiers-v2/
+
+Also remove obsolete root manifests if present:
+ACCESSORY_FAMILY_REFRESH_MANIFEST.json
+ACCESSORY_FAMILY_REFRESH_MANIFEST.txt

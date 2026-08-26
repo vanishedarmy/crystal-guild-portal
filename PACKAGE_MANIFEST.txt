@@ -1,11 +1,12 @@
-Crystal Guild v1.1.18 — Inventory Identity Asset Cleanup Hotfix
+Crystal Guild v1.1.18 — Inventory Identity Cache-Bust Hotfix
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii33
+Frontend asset revision: 1.1.18-retro-phase-ii34
 Compatible Bot runtime: 1.1.18-recovery-h1
 Local DB schema: 5
 Hosted sync schema: 1
 Portal Action protocol: 14
 Twitch prefix: !
 
-Current Web build: Inventory Identity Asset Cleanup Hotfix.
+Current Web build: Inventory Identity Cache-Bust Hotfix.
 Artwork library: 168 packaged item/equipment icons total (32 consumables + 136 corrected shared Phase 2 assets).
+Shared Phase 2 art now resolves from new -v2 public URLs so stale ii32/ii33 cached image responses cannot be reused.

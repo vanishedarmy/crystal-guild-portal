@@ -42,12 +42,12 @@ test("ores, metals, cores, and elemental crystal materials use Phase 2 material 
 
 test("generated family and tier sets are packaged and Blacksmith consumes shared ItemArtwork", () => {
   const expectedCounts = new Map([
-    ["material-metals-v1", 20],
-    ["elemental-crystals-v1", 8],
-    ["weapon-families-v1", 12],
-    ["weapon-tiers-v1", 36],
-    ["armor-tiers-v1", 36],
-    ["accessory-families-v1", 24],
+    ["material-metals-v2", 20],
+    ["elemental-crystals-v2", 8],
+    ["weapon-families-v2", 12],
+    ["weapon-tiers-v2", 36],
+    ["armor-tiers-v2", 36],
+    ["accessory-families-v2", 24],
   ]);
   for (const [folder, count] of expectedCounts) {
     const files = fs.readdirSync(path.join(root, "public/retro-phase-ii", folder)).filter((name) => name.endsWith(".webp"));

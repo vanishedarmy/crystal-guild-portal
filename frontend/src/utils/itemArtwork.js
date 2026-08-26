@@ -1,10 +1,10 @@
 const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v1";
-const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v1";
-const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v1";
-const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v1";
-const WEAPON_TIER_BASE = "/retro-phase-ii/weapon-tiers-v1";
-const ARMOR_TIER_BASE = "/retro-phase-ii/armor-tiers-v1";
-const ACCESSORY_FAMILY_BASE = "/retro-phase-ii/accessory-families-v1";
+const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
+const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
+const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v2";
+const WEAPON_TIER_BASE = "/retro-phase-ii/weapon-tiers-v2";
+const ARMOR_TIER_BASE = "/retro-phase-ii/armor-tiers-v2";
+const ACCESSORY_FAMILY_BASE = "/retro-phase-ii/accessory-families-v2";
 
 export const ITEM_ART_IDS = new Set([
   "potion",

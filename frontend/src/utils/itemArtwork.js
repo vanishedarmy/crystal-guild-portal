@@ -1,5 +1,5 @@
-const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v3";
-const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v4";
+const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v4";
+const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
 const WEAPON_FAMILY_BASE = "/retro-phase-ii/weapon-families-v2";
@@ -48,7 +48,7 @@ const WEAPON_FAMILIES = new Set([
 const TIERED_WEAPON_FAMILIES = new Set(["sword", "dagger", "axe", "staff"]);
 
 const MATERIAL_ART_BY_ID = new Map([
-  // CG-ITEM-R03 through R06: dedicated individual PNG identities.
+  // CG-ITEM-R03 through R06: regenerated SNES-style individual PNG identities.
   ["bomb_fragment", `${ITEM_MATERIAL_BASE}/bomb_fragment.png`],
   ["iron_ore", `${ITEM_MATERIAL_BASE}/iron_ore.png`],
   ["copper_ore", `${ITEM_MATERIAL_BASE}/copper_ore.png`],

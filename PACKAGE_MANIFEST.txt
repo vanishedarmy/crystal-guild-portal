@@ -1,12 +1,18 @@
-Crystal Guild v1.1.18 — Inventory PNG Regeneration R03–R06
+Crystal Guild v1.1.18 — SNES Item Regeneration R01–R06
 Hosted Web runtime: 1.1.18-retro-phase-ii
-Frontend asset revision: 1.1.18-retro-phase-ii36
+Frontend asset revision: 1.1.18-retro-phase-ii37
 Hosted sync schema: 1
 Portal Action protocol: 14
 Bot compatibility: 1.1.18-recovery-h1
 
-New cache-busted art directories:
-- frontend/public/retro-phase-ii/item-icons-v3/ — 32 individual PNG assets, 512×512
-- frontend/public/retro-phase-ii/item-materials-v4/ — 31 individual PNG assets, 512×512
+Current inventory art directories:
+- frontend/public/retro-phase-ii/item-icons-v4/ — 32 individual transparent PNG assets, 512×512
+- frontend/public/retro-phase-ii/item-materials-v5/ — 31 individual transparent PNG assets, 512×512
+
+Removed superseded inventory art directories:
+- item-icons-v2
+- item-icons-v3
+- item-materials-v3
+- item-materials-v4
 
 Existing Phase 2 equipment art directories remain unchanged.

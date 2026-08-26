@@ -1,5 +1,6 @@
 const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v4";
 const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
+const MATERIAL_ITEM_BASE = "/retro-phase-iii/material-icons-v1";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
 const WEAPON_ITEM_BASE = "/retro-phase-iii/weapon-icons-v1";
@@ -266,6 +267,29 @@ const WEAPON_ART_BY_ID = new Map([
 ]);
 
 const MATERIAL_ART_BY_ID = new Map([
+  // CG-MAT-R01 — verified monster-drop material identities.
+  ["wolf_fang", `${MATERIAL_ITEM_BASE}/wolf_fang.png`],
+  ["cactuar_needle", `${MATERIAL_ITEM_BASE}/cactuar_needle.png`],
+  ["bone_chip", `${MATERIAL_ITEM_BASE}/bone_chip.png`],
+  ["fish_scale", `${MATERIAL_ITEM_BASE}/fish_scale.png`],
+  ["coeurl_whisker", `${MATERIAL_ITEM_BASE}/coeurl_whisker.png`],
+  ["chimera_scale", `${MATERIAL_ITEM_BASE}/chimera_scale.png`],
+  ["malboro_tendril", `${MATERIAL_ITEM_BASE}/malboro_tendril.png`],
+  ["behemoth_horn", `${MATERIAL_ITEM_BASE}/behemoth_horn.png`],
+  ["bomb_kings_fuse", `${MATERIAL_ITEM_BASE}/bomb_kings_fuse.png`],
+  ["morbol_bulb", `${MATERIAL_ITEM_BASE}/morbol_bulb.png`],
+
+  // CG-MAT-R03 — verified hunt and boss material identities.
+  ["antlion_mandible", `${MATERIAL_ITEM_BASE}/antlion_mandible.png`],
+  ["sandworm_fang", `${MATERIAL_ITEM_BASE}/sandworm_fang.png`],
+  ["garuda_feather", `${MATERIAL_ITEM_BASE}/garuda_feather.png`],
+  ["death_claw_pincer", `${MATERIAL_ITEM_BASE}/death_claw_pincer.png`],
+  ["dragon_fang", `${MATERIAL_ITEM_BASE}/dragon_fang.png`],
+  ["ultros_tentacle", `${MATERIAL_ITEM_BASE}/ultros_tentacle.png`],
+  ["demon_wall_fragment", `${MATERIAL_ITEM_BASE}/demon_wall_fragment.png`],
+  ["deathgaze_plume", `${MATERIAL_ITEM_BASE}/deathgaze_plume.png`],
+  ["earth_harp", `${MATERIAL_ITEM_BASE}/earth_harp.png`],
+  ["desert_rose", `${MATERIAL_ITEM_BASE}/desert_rose.png`],
   // CG-ITEM-R03 through R06: regenerated SNES-style individual PNG identities.
   ["bomb_fragment", `${ITEM_MATERIAL_BASE}/bomb_fragment.png`],
   ["iron_ore", `${ITEM_MATERIAL_BASE}/iron_ore.png`],

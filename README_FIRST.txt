@@ -1,7 +1,4 @@
 Crystal Guild v1.1.19 — Retro Phase III
+Current Web asset revision: 1.1.19-retro-phase-iii7
 
-Current Web asset revision: 1.1.19-retro-phase-iii6
-
-This build includes the refreshed accessory-family armor/belt pass from iii4 plus new boots t1–t6 and rings t1–t6 replacements. Paths are preserved so the refreshed files overwrite the legacy artwork directly.
-
-No database migration or player reset is required.
+This checkpoint adds 20 verified material sprites from CG-MAT-R01 and CG-MAT-R03. Read MATERIAL_ARTWORK_QA_REPORT.md before assuming R02/R04 are live; those two generated batches failed the identity QA pass and remain unrouted.

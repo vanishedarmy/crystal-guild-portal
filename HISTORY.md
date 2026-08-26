@@ -19,3 +19,9 @@
 ## v1.1.19 — Retro Phase III iii5
 - Refreshed accessory-family boots t1–t6 and rings t1–t6.
 - Replaced legacy files in place while preserving production URLs.
+
+## v1.1.19 — Retro Phase III (iii7)
+- Added 20 verified material sprites from CG-MAT-R01 and CG-MAT-R03.
+- Added a Phase III material asset path and live routing for those identities.
+- Increased material artwork coverage from 45/84 to 65/84.
+- Added QA gating so mismatched CG-MAT-R02/R04 output is not silently routed to incorrect item identities.

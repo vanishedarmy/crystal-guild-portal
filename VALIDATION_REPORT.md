@@ -1,14 +1,21 @@
-# Validation Report — Equipment Artwork Routing Cleanup (iii6)
+# Validation Report — Material Artwork QA Checkpoint (iii7)
 
-Audit scope:
-- 65 live armor entries
-- 38 live accessory entries
-- 103 armor/accessory mappings total
+## Routing audit
+- 405 catalog entries checked.
+- Consumables: 32/32 valid art.
+- Weapons: 186/186 valid art.
+- Armor: 65/65 valid art.
+- Accessories: 38/38 valid art.
+- Materials: 65/84 valid art.
+- Broken non-empty artwork paths: 0.
+- Material entries still without dedicated artwork: 19.
 
-Results:
-- 103/103 resolve to existing packaged artwork.
-- 0 live armor/accessory paths point to `retro-phase-ii/accessory-families-v2/`.
-- 0 live armor/accessory paths point to `retro-phase-ii/armor-tiers-v2/`.
-- Refreshed armor/belt/boots/ring family art now resolves through `retro-phase-iii/equipment-families-v1/`.
-- Retired Phase II accessory/armor family directories are removed from the build.
-- Frontend asset revision is `1.1.19-retro-phase-iii6`.
+## New material assets
+- CG-MAT-R01: 10/10 verified and routed.
+- CG-MAT-R03: 10/10 verified and routed.
+- All 20 new production files are normalized 512×512 PNGs.
+
+## QA hold
+CG-MAT-R02 and CG-MAT-R04 are excluded from live routing because their generated output did not match the planned item identities. This prevents incorrect art from being assigned merely to force 84/84 coverage.
+
+Frontend asset revision: `1.1.19-retro-phase-iii7`.

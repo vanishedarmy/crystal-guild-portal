@@ -1,6 +1,6 @@
 Crystal Guild Gear Artwork Manifest
 Release: v1.1.19 — Retro Phase III
-Frontend asset revision: 1.1.19-retro-phase-iii6
+Frontend asset revision: 1.1.19-retro-phase-iii7
 Directory: frontend/public/retro-phase-iii/weapon-icons-v1/
 Format: PNG RGBA
 Dimensions: 512x512

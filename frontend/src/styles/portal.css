@@ -7979,8 +7979,9 @@ main h1,
   .chocobo-portrait-picker-actions .equipment-action-button { width: 100%; }
 }
 
-/* v1.1.19 Retro Phase III RC1 — scenic panel backgrounds.
-   These are deliberately subtle so the art adds atmosphere without reducing UI readability. */
+/* v1.1.19 Retro Phase III RC1 Hotfix 1 — scenic panel backgrounds.
+   Use ::after for scenic art so it does not collide with the shared .panel::before
+   decorative rule, which intentionally remains a 1px accent line. */
 .adventure-camp-panel,
 .blacksmith-panel,
 .chocobo-stable-panel,
@@ -7990,19 +7991,23 @@ main h1,
   isolation: isolate;
 }
 
-.adventure-camp-panel::before,
-.blacksmith-panel::before,
-.chocobo-stable-panel::before,
-.moogle-panel::before {
+/* The artwork lives in a dedicated upper scene band. A dark fade at the bottom
+   carries the scene back into the normal panel surface so long workspaces stay readable. */
+.adventure-camp-panel::after,
+.blacksmith-panel::after,
+.chocobo-stable-panel::after,
+.moogle-panel::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto 0;
   z-index: 0;
+  width: 100%;
+  height: clamp(320px, 48vw, 560px);
   pointer-events: none;
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center top;
-  opacity: .46;
+  background-position: center;
+  opacity: 1;
 }
 
 .adventure-camp-panel > *,
@@ -8013,65 +8018,72 @@ main h1,
   z-index: 1;
 }
 
-.adventure-camp-panel::before {
+.adventure-camp-panel::after {
   background-image:
-    linear-gradient(180deg, rgba(5, 14, 24, .30) 0%, rgba(5, 14, 24, .76) 46%, rgba(5, 14, 24, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v1/camp.png');
-  background-position: center 46%;
+    linear-gradient(180deg, rgba(5, 14, 24, .12) 0%, rgba(5, 14, 24, .38) 48%, rgba(5, 14, 24, .95) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/camp.png');
+  background-position: center 52%;
 }
 
-.blacksmith-panel::before {
+.blacksmith-panel::after {
   background-image:
-    linear-gradient(180deg, rgba(9, 8, 10, .34) 0%, rgba(9, 12, 18, .78) 44%, rgba(8, 17, 26, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v1/blacksmith.png');
-  background-position: center 42%;
+    linear-gradient(180deg, rgba(9, 8, 10, .12) 0%, rgba(9, 12, 18, .40) 48%, rgba(8, 17, 26, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/blacksmith.png');
+  background-position: center 50%;
 }
 
-.chocobo-stable-panel::before {
+.chocobo-stable-panel::after {
   background-image:
-    linear-gradient(180deg, rgba(6, 14, 20, .32) 0%, rgba(6, 18, 26, .78) 46%, rgba(7, 18, 28, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v1/chocobo_stable.png');
-  background-position: center 40%;
+    linear-gradient(180deg, rgba(6, 14, 20, .10) 0%, rgba(6, 18, 26, .38) 48%, rgba(7, 18, 28, .95) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/chocobo_stable.png');
+  background-position: center 44%;
 }
 
-.moogle-panel::before {
+.moogle-panel::after {
   background-image:
-    linear-gradient(180deg, rgba(7, 10, 18, .31) 0%, rgba(9, 16, 27, .80) 46%, rgba(8, 18, 29, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v1/emporium.png');
-  background-position: center 46%;
+    linear-gradient(180deg, rgba(7, 10, 18, .10) 0%, rgba(9, 16, 27, .40) 48%, rgba(8, 18, 29, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/emporium.png');
+  background-position: center 48%;
 }
 
-/* Keep dense content cards legible over the scenic layer. */
+/* Give the first layer of functional UI its own translucent surface so text and
+   controls remain readable while the artwork is visibly present around them. */
 .blacksmith-panel .blacksmith-card,
+.blacksmith-panel .blacksmith-summary-row,
+.blacksmith-panel .blacksmith-toolbar,
 .chocobo-stable-panel .chocobo-companion-card,
 .chocobo-stable-panel .chocobo-side-card,
 .chocobo-stable-panel .chocobo-step-card,
+.chocobo-stable-panel .chocobo-stable-status,
 .moogle-panel .moogle-item-card,
 .moogle-panel .moogle-sell-panel,
+.moogle-panel .moogle-toolbar,
 .adventure-camp-panel .adventure-camp-grid > div {
-  backdrop-filter: blur(1.5px);
+  background-color: rgba(4, 15, 25, .76);
+  backdrop-filter: blur(2px);
 }
 
 @media (max-width: 720px) {
-  .adventure-camp-panel::before,
-  .blacksmith-panel::before,
-  .chocobo-stable-panel::before,
-  .moogle-panel::before {
-    opacity: .34;
+  .adventure-camp-panel::after,
+  .blacksmith-panel::after,
+  .chocobo-stable-panel::after,
+  .moogle-panel::after {
+    height: 360px;
     background-position: center top;
   }
 }
 
 @media (prefers-contrast: more) {
-  .adventure-camp-panel::before,
-  .blacksmith-panel::before,
-  .chocobo-stable-panel::before,
-  .moogle-panel::before {
-    opacity: .22;
+  .adventure-camp-panel::after,
+  .blacksmith-panel::after,
+  .chocobo-stable-panel::after,
+  .moogle-panel::after {
+    opacity: .42;
   }
 }
 
-/* Camp art also carries through the Recovery workspace so both Camp entry points share one visual identity. */
+/* Camp art also carries through the Recovery workspace so both Camp entry points
+   share one visual identity. Recovery is not a .panel, so ::before is safe here. */
 .recovery-dashboard {
   position: relative;
   overflow: hidden;
@@ -8083,13 +8095,13 @@ main h1,
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: .30;
   background-image:
-    linear-gradient(180deg, rgba(5, 14, 24, .46) 0%, rgba(5, 14, 24, .88) 62%, rgba(5, 14, 24, .97) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v1/camp.png');
+    linear-gradient(180deg, rgba(5, 14, 24, .16) 0%, rgba(5, 14, 24, .50) 52%, rgba(5, 14, 24, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/camp.png');
+  background-repeat: no-repeat;
   background-size: cover;
-  background-position: center 48%;
+  background-position: center 52%;
 }
 .recovery-dashboard > * { position: relative; z-index: 1; }
-@media (max-width: 720px) { .recovery-dashboard::before { opacity: .22; } }
-@media (prefers-contrast: more) { .recovery-dashboard::before { opacity: .14; } }
+@media (max-width: 720px) { .recovery-dashboard::before { opacity: .72; background-position: center top; } }
+@media (prefers-contrast: more) { .recovery-dashboard::before { opacity: .38; } }

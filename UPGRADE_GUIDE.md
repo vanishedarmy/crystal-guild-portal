@@ -1,15 +1,15 @@
-# Upgrade Guide — v1.1.19 Retro Phase III RC1
+# Upgrade Guide — v1.1.19 Retro Phase III RC1 Hotfix 1
 
-Baseline: **v1.1.19 Retro Phase III / Chocobo Portraits + Facility Supply Balance**.
+Baseline: **v1.1.19 Retro Phase III RC1 / frontend iii14-rc1**.
 
-1. Stop the Bot cleanly.
-2. Preserve `.env`, Twitch token storage, the live `crystal_guild.db`, and any persistent-disk paths.
-3. Back up the database as usual.
-4. Apply the RC1 Bot patch or replace the Bot source with the RC1 full Bot package.
-5. Apply the matching RC1 Web patch/full Web package and redeploy the hosted Web service.
-6. Restart the Bot.
-7. Verify `!cgversion` reports `1.1.19-retro-phase-iii-rc1`.
-8. Verify `/api/health` reports Web runtime `1.1.19-retro-phase-iii-rc1`, frontend revision `1.1.19-retro-phase-iii14-rc1`, and Portal Action protocol `15`.
-9. Open Camp, Blacksmith, Chocobo Stable, and Moogle Emporium and confirm the scenic background art is visible but controls remain readable.
+This is a **Web-only** correction.
 
-No database migration is required from the Chocobo Portrait checkpoint; schema 6 remains current. No player reset, OAuth change, or new environment variable is required.
+1. Leave the RC1 Bot deployment unchanged.
+2. Replace the hosted Web source with the RC1 Hotfix 1 Web package, or apply the `iii14-rc1 -> iii14-rc1h1` Web patch.
+3. If applying the patch as an overlay, remove `frontend/public/retro-phase-iii/scene-backgrounds-v1/` as listed in `DELETE_PATHS.txt`.
+4. Push/redeploy the hosted Web service.
+5. Verify `/api/health` still reports runtime `1.1.19-retro-phase-iii-rc1` and now reports frontend revision `1.1.19-retro-phase-iii14-rc1h1`.
+6. Open Camp & Recovery, Blacksmith, Chocobo Stable, and Moogle Emporium and confirm each has a visibly rendered scene behind the upper workspace.
+7. Check one phone-width layout and confirm the scene does not stretch through the entire tall page.
+
+No schema migration or player-data change is required.

@@ -46,3 +46,8 @@ Finalization checkpoint: four scenic Portal backgrounds, final artwork-path and 
 - Added a Phase III material asset path and live routing for those identities.
 - Increased material artwork coverage from 45/84 to 65/84.
 - Added QA gating so mismatched CG-MAT-R02/R04 output is not silently routed to incorrect item identities.
+
+## v1.1.19 — Retro Phase III RC1 Hotfix 1
+- Fixed RC1 scenic backgrounds that were collapsed to the shared panel 1px pseudo-element.
+- Camp, Blacksmith, Chocobo Stable, and Moogle Emporium now use independent cache-busted `scene-backgrounds-v2` scene layers.
+- Frontend revision: `1.1.19-retro-phase-iii14-rc1h1`.

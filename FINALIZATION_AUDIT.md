@@ -85,3 +85,10 @@
 ## Result
 
 **PASS**
+
+## RC1 Hotfix 1 scenic-background correction
+- Root cause: shared `.panel::before` retained a 1px height and collapsed the RC1 scene artwork.
+- Correction: panel scenes moved to independent `::after` layers; Recovery retains its independent non-panel `::before` layer.
+- Scene routes cache-busted to `scene-backgrounds-v2`.
+- Full Web package removes the retired v1 scene directory.
+- Regression coverage now checks both production asset existence and live component class bindings.

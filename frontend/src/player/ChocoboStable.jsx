@@ -5,6 +5,7 @@ import {
   submitPurchaseChocoboWrit,
   submitRegisterChocobo,
   submitRenameChocobo,
+  submitSetChocoboPortrait,
   waitForPortalAction,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -16,6 +17,27 @@ function actionKey(kind, target = "chocobo") {
     ? globalThis.crypto.randomUUID()
     : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
   return `${kind}:${target}:${suffix}`;
+}
+
+
+const CHOCOBO_PORTRAITS = [
+  ["classic_gold", "Classic Gold"],
+  ["midnight_black", "Midnight"],
+  ["celestial_white", "Celestial"],
+  ["ember_red", "Ember"],
+  ["verdant_green", "Verdant"],
+  ["cobalt_blue", "Cobalt"],
+  ["arcane_violet", "Arcane"],
+  ["desert_gold", "Sandrunner"],
+  ["frost_silver", "Frost"],
+  ["rose_pink", "Rose"],
+].map(([id, name]) => ({ id, name, src: `/retro-phase-iii/chocobo-portraits-v1/${id}.png` }));
+
+const CHOCOBO_PORTRAIT_MAP = new Map(CHOCOBO_PORTRAITS.map((portrait) => [portrait.id, portrait]));
+const DEFAULT_CHOCOBO_PORTRAIT = CHOCOBO_PORTRAIT_MAP.get("classic_gold");
+
+function portraitFor(id) {
+  return CHOCOBO_PORTRAIT_MAP.get(String(id || "")) || DEFAULT_CHOCOBO_PORTRAIT;
 }
 
 async function finishedAction(response) {
@@ -32,6 +54,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [rename, setRename] = useState("");
+  const [portraitChoice, setPortraitChoice] = useState("classic_gold");
   const [clock, setClock] = useState(() => Date.now());
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
@@ -50,6 +73,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
     "PURCHASE_CHOCOBO_WRIT",
     "REGISTER_CHOCOBO",
     "RENAME_CHOCOBO",
+    "SET_CHOCOBO_PORTRAIT",
   ];
   const actionsAvailable = Boolean(
     isOwnProfile
@@ -78,6 +102,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
       const next = finished.result?.data?.chocobo_state || null;
       if (next) {
         setState(next);
+        setPortraitChoice(portraitFor(next.companion?.portrait_id).id);
         setClock(Date.now());
       }
       if (!quiet) setMessage("Chocobo Stable refreshed.");
@@ -129,6 +154,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
       const next = finished.result?.data?.chocobo_state;
       if (next) {
         setState(next);
+        setPortraitChoice(portraitFor(next.companion?.portrait_id).id);
         setClock(Date.now());
         if (next.companion?.registered) {
           setName("");
@@ -158,7 +184,9 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         </div>
         {publicChocobo ? (
           <div className="chocobo-companion-card">
-            <div className="chocobo-portrait" aria-hidden="true">♞</div>
+            <div className="chocobo-portrait">
+              <img src={portraitFor(publicChocobo.portrait_id).src} alt={`${publicChocobo.name} Chocobo portrait`} />
+            </div>
             <div>
               <span className="slot-label">Registered Companion</span>
               <h3>{publicChocobo.name}</h3>
@@ -202,9 +230,12 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
       {!state ? (
         <div className="state-message">{actionsAvailable ? "Loading Chocobo Stable…" : "Crystal Guild must be online to manage your Chocobo."}</div>
       ) : companion?.registered ? (
+        <>
         <div className="chocobo-owned-layout">
           <div className="chocobo-companion-card featured">
-            <div className="chocobo-portrait" aria-hidden="true">♞</div>
+            <div className="chocobo-portrait">
+              <img src={portraitFor(companion.portrait_id).src} alt={`${companion.name} Chocobo portrait`} />
+            </div>
             <div className="chocobo-companion-copy">
               <span className="slot-label">Registered Companion</span>
               <h3>{companion.name}</h3>
@@ -236,6 +267,52 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
             <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || rename.trim().length < 2} onClick={() => runMutation("rename", () => submitRenameChocobo(rename, csrfToken, actionKey("rename-chocobo")), "Renaming companion…")}>{busy === "rename" ? "Renaming…" : "Rename Chocobo"}</button>
           </div>
         </div>
+        <section className="chocobo-portrait-picker" aria-labelledby="chocobo-portrait-picker-title">
+          <div className="chocobo-portrait-picker-heading">
+            <div>
+              <span className="slot-label">Companion Portrait</span>
+              <h3 id="chocobo-portrait-picker-title">Choose {companion.name}'s portrait</h3>
+              <p className="muted">Portraits are cosmetic only. Choose any style and apply it to your registered Chocobo.</p>
+            </div>
+            <span className="small-badge">10 PORTRAITS</span>
+          </div>
+          <div className="chocobo-portrait-grid" role="group" aria-label="Chocobo portrait choices">
+            {CHOCOBO_PORTRAITS.map((portrait) => {
+              const selected = portraitChoice === portrait.id;
+              const applied = companion.portrait_id === portrait.id;
+              return (
+                <button
+                  key={portrait.id}
+                  type="button"
+                  className={`chocobo-portrait-option ${selected ? "selected" : ""} ${applied ? "applied" : ""}`}
+                  aria-pressed={selected}
+                  onClick={() => setPortraitChoice(portrait.id)}
+                  disabled={Boolean(busy)}
+                >
+                  <img src={portrait.src} alt="" aria-hidden="true" />
+                  <span>{portrait.name}</span>
+                  {applied ? <small>Applied</small> : null}
+                </button>
+              );
+            })}
+          </div>
+          <div className="chocobo-portrait-picker-actions">
+            <span className="muted">Selected: <strong>{portraitFor(portraitChoice).name}</strong></span>
+            <button
+              type="button"
+              className="equipment-action-button"
+              disabled={!actionsAvailable || Boolean(busy) || portraitChoice === companion.portrait_id}
+              onClick={() => runMutation(
+                "portrait",
+                () => submitSetChocoboPortrait(portraitChoice, csrfToken, actionKey("chocobo-portrait", portraitChoice)),
+                "Applying Chocobo portrait…",
+              )}
+            >
+              {busy === "portrait" ? "Applying…" : portraitChoice === companion.portrait_id ? "Portrait Applied" : "Apply Portrait"}
+            </button>
+          </div>
+        </section>
+        </>
       ) : (
         <div className="chocobo-acquisition-grid">
           <article className={`chocobo-step-card ${stable?.unlocked ? "complete" : ""}`}>

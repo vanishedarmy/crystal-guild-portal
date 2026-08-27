@@ -11,6 +11,7 @@ export const MAJOR_UPDATES = [
       { title: "Library stays consolidated", description: "All currently packaged Retro Phase III gear art remains in one active transparent PNG library for easier maintenance and future mapping work." },
       { title: "Material artwork complete", description: "All 84 current materials now resolve to valid inventory artwork, including the final 19 dedicated SNES-style PNG identities added in this checkpoint." },
       { title: "Facility supplies rebalanced", description: "Ancient Coin, Hi-Potion, Mythril Ore, Wyvern Scale, Elemental Crystal, and Demon Horn now have multiple level-appropriate monster sources instead of late single-source progression gates." },
+      { title: "Choose your Chocobo portrait", description: "Registered Chocobos can now use one of ten SNES-style companion portraits. Your choice is saved to the Guild and shown when other adventurers view your Stable." },
     ],
     action: { tab: "inventory", label: "View Equipment & Inventory" },
   },

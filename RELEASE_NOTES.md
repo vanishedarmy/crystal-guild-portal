@@ -1,20 +1,28 @@
-# Crystal Guild v1.1.19 — Retro Phase III Facility Supply Balance (iii12)
+# Crystal Guild v1.1.19 — Retro Phase III Chocobo Portraits (iii13)
 
-This paired Bot + Web balance checkpoint removes Fellowship facility-material bottlenecks while keeping existing project IDs and contribution progress intact.
+This paired Bot + Web checkpoint adds persistent, player-selectable Chocobo portraits while preserving the Retro Phase III artwork and Facility Supply Balance changes from iii12.
 
-## Bestiary supply update
+## Chocobo portrait feature
+- Registered Chocobos now have a persistent `portrait_id` stored by the authoritative Bot.
+- The Chocobo Stable includes a portrait gallery with **10 SNES/FF-style head-and-bust portraits**.
+- Players can preview any portrait and use **Apply Portrait** to save it to their registered companion.
+- The selected portrait appears on the owner’s Stable card and on the read-only Chocobo card when another adventurer views that profile.
+- Portrait selection is cosmetic only and does not change Bond, traits, stats, Expeditions, or combat.
+- Existing registered Chocobos are migrated safely to **Classic Gold** as the default portrait.
 
-The Player Guide now publishes the authoritative rebalanced monster drops for the six recurring Fellowship facility materials:
+## Portrait catalog
+Classic Gold · Midnight · Celestial · Ember · Verdant · Cobalt · Arcane · Sandrunner · Frost · Rose.
 
-- Ancient Coin — Ossuary Knight, Mimic, Magic Pot, Ancient Mimic.
-- Hi-Potion — Goblin Chieftain, Mimic, Tonberry; crafting/shop routes remain unchanged.
-- Mythril Ore — Spriggan, Gigas, Mimic, Iron Giant, Ancient Adamantoise.
-- Wyvern Scale — Cockatrice, Basilisk, Sea Serpent, Red Dragon, Blue Dragon, Wyrm.
-- Elemental Crystal — Flan, Bomb, Black Flan, Magic Pot, Crystal Wolf, Crystal Golem, Elemental Archon, Dark Element.
-- Demon Horn — Imp, Gargoyle, Piscodemon, Abaddon, Archeodemon, Demonolith.
+Assets live under:
+`frontend/public/retro-phase-iii/chocobo-portraits-v1/`
 
-Every recurring facility material now has at least three monster sources and an early practical source at Lv.11 or below. Higher-level monsters retain stronger rates so later regions remain better farming destinations.
+## Technical changes
+- Bot runtime: `1.1.19-retro-phase-iii-chocobo1`
+- Hosted Web runtime: `1.1.19-retro-phase-iii-chocobo1`
+- Frontend asset revision: `1.1.19-retro-phase-iii13`
+- Local DB schema: **6** (`player_chocobos.portrait_id`)
+- Hosted sync schema: **1** unchanged
+- Portal Action protocol: **15** (`SET_CHOCOBO_PORTRAIT`)
+- Twitch command prefix: `!` unchanged
 
-Frontend asset revision: `1.1.19-retro-phase-iii12`.
-
-No player-data, schema, hosted-sync, Portal Action, OAuth, or environment migration is required.
+No player reset, OAuth change, or new environment variable is required.

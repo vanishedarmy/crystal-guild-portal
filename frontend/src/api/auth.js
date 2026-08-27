@@ -193,3 +193,7 @@ export function submitRegisterChocobo(name, csrfToken, idempotencyKey) {
 export function submitRenameChocobo(name, csrfToken, idempotencyKey) {
   return submitPortalAction("RENAME_CHOCOBO", { name }, csrfToken, idempotencyKey);
 }
+
+export function submitSetChocoboPortrait(portraitId, csrfToken, idempotencyKey) {
+  return submitPortalAction("SET_CHOCOBO_PORTRAIT", { portrait_id: portraitId }, csrfToken, idempotencyKey);
+}

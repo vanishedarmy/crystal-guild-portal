@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii"
-FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii12"
+HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-chocobo1"
+FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii13"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 14
+ACTION_PROTOCOL_VERSION = 15
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -34,7 +34,11 @@ ALLOWED_PORTAL_ACTIONS = {
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
-    "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO",
+    "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
+}
+CHOCOBO_PORTRAIT_IDS = {
+    "classic_gold", "midnight_black", "celestial_white", "ember_red", "verdant_green",
+    "cobalt_blue", "arcane_violet", "desert_gold", "frost_silver", "rose_pink",
 }
 MAX_ACTION_BYTES = 16 * 1024
 MAX_ACTION_RESULT_BYTES = 64 * 1024
@@ -685,6 +689,13 @@ class HostedPortalStore:
             if not 2 <= len(name) <= 20 or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 '\-]{1,19}", name):
                 raise ValueError("Invalid Chocobo name. Use 2–20 letters, numbers, spaces, apostrophes, or hyphens.")
             payload = {"name": name}
+        elif kind == "SET_CHOCOBO_PORTRAIT":
+            if set(payload) != {"portrait_id"}:
+                raise ValueError("SET_CHOCOBO_PORTRAIT requires only portrait_id.")
+            portrait_id = str(payload.get("portrait_id") or "").strip().lower()
+            if portrait_id not in CHOCOBO_PORTRAIT_IDS:
+                raise ValueError("Invalid Chocobo portrait ID.")
+            payload = {"portrait_id": portrait_id}
         elif kind in {"ADVENTURE_STATE", "SOLO_VENTURE", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")

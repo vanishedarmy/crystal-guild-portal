@@ -1,6 +1,20 @@
-# Crystal Guild v1.1.19 — Retro Phase III / Facility Supply Balance
+# Crystal Guild v1.1.19 — Retro Phase III / Chocobo Portraits
 
-This Web checkpoint keeps the completed Retro Phase III visual rollout intact and adds the public Bestiary side of the Fellowship facility-material rebalance.
+This paired Web checkpoint adds persistent player-selectable Chocobo portraits while retaining the completed Retro Phase III artwork and the iii12 Facility Supply Balance.
+
+## Chocobo portraits
+- Registered Chocobos can choose from 10 SNES/FF-style portrait options in the Chocobo Stable.
+- Portrait choice is saved by the authoritative Bot through `SET_CHOCOBO_PORTRAIT`.
+- The selected portrait is visible on both the owner Stable and read-only public Chocobo cards.
+- Existing Chocobos migrate to Classic Gold automatically; Bond, traits, names, and progression are untouched.
+
+## Technical identity
+- Hosted Web runtime: `1.1.19-retro-phase-iii-chocobo1`
+- Frontend asset revision: `1.1.19-retro-phase-iii13`
+- Portal Action protocol: `15`
+- Hosted sync schema: `1`
+- Paired Bot runtime: `1.1.19-retro-phase-iii-chocobo1`
+- Local Bot DB schema: `6`
 
 ## Facility supply balance
 - **Ancient Coin** now appears on Ossuary Knight, Mimic, Magic Pot, and Ancient Mimic.
@@ -16,12 +30,3 @@ The Player Guide Bestiary reads these percentages directly from `guide-data.json
 - All prior iii11 item/weapon artwork remains in place.
 - Current material artwork coverage remains complete.
 - No retired artwork path is restored by this balance checkpoint.
-
-## Technical identity
-- Web runtime: `1.1.19-retro-phase-iii`
-- Frontend asset revision: `1.1.19-retro-phase-iii12`
-- Portal Action protocol: `14`
-- Hosted sync schema: `1`
-- Paired Bot runtime: `1.1.19-retro-phase-iii-balance1`
-
-No database migration, player reset, OAuth change, new environment variable, or Portal protocol migration is required.

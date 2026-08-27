@@ -17,7 +17,7 @@ test("v1.1.10 adds Chocobo Stable profile navigation and Overview shortcut", asy
 
 test("Chocobo Stable exposes quest, one-hour Writ, registration, Bond and Expedition readiness", async () => {
   const source = await read("src/player/ChocoboStable.jsx");
-  for (const token of ["CHOCOBO_STATE", "Complete Quest", "Chocobo Registration Writ", "one hour", "Register Chocobo", "Bond XP", "Expedition Preparation", "RENAME_CHOCOBO"]) {
+  for (const token of ["CHOCOBO_STATE", "Complete Quest", "Chocobo Registration Writ", "one hour", "Register Chocobo", "Bond XP", "Expedition Preparation", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT", "Apply Portrait", "10 PORTRAITS"]) {
     assert.match(source, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
   }
   assert.match(source, /ready_at/);
@@ -27,7 +27,7 @@ test("Chocobo Stable exposes quest, one-hour Writ, registration, Bond and Expedi
 
 test("Portal auth exports strict Chocobo action helpers", async () => {
   const source = await read("src/api/auth.js");
-  for (const action of ["CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO"]) {
+  for (const action of ["CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT"]) {
     assert.match(source, new RegExp(action));
   }
 });
@@ -38,4 +38,21 @@ test("Chocobo Stable keeps responsive Phase 8 touch-friendly layout", async () =
   assert.match(css, /\.chocobo-acquisition-grid/);
   assert.match(css, /@media\(max-width:900px\)/);
   assert.match(css, /\.chocobo-name-field input\{[^}]*min-height:44px/);
+});
+
+
+test("Retro Phase III ships ten selectable Chocobo portrait assets", async () => {
+  const stable = await read("src/player/ChocoboStable.jsx");
+  const ids = [
+    "classic_gold", "midnight_black", "celestial_white", "ember_red", "verdant_green",
+    "cobalt_blue", "arcane_violet", "desert_gold", "frost_silver", "rose_pink",
+  ];
+  for (const id of ids) {
+    assert.match(stable, new RegExp(id));
+    const bytes = await readFile(new URL(`public/retro-phase-iii/chocobo-portraits-v1/${id}.png`, root));
+    assert.ok(bytes.length > 1000, `${id} portrait asset should not be empty`);
+  }
+  const css = await read("src/styles/portal.css");
+  assert.match(css, /\.chocobo-portrait-grid/);
+  assert.match(css, /image-rendering:\s*pixelated/);
 });

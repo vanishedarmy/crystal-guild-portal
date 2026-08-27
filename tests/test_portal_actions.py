@@ -501,6 +501,7 @@ class PortalActionServerCase(unittest.TestCase):
             ("PURCHASE_CHOCOBO_WRIT", {}, "chocobo-writ"),
             ("REGISTER_CHOCOBO", {"name": "Biscuit"}, "chocobo-register"),
             ("RENAME_CHOCOBO", {"name": "Drumstick"}, "chocobo-rename"),
+            ("SET_CHOCOBO_PORTRAIT", {"portrait_id": "arcane_violet"}, "chocobo-portrait"),
         ):
             status, response, _ = self.request(
                 "/api/actions", method="POST",
@@ -522,6 +523,10 @@ class PortalActionServerCase(unittest.TestCase):
             ("REGISTER_CHOCOBO", {"name": "Biscuit", "command": "!readyall"}),
             ("RENAME_CHOCOBO", {"name": "x"}),
             ("RENAME_CHOCOBO", {"name": "Bird/One"}),
+            ("SET_CHOCOBO_PORTRAIT", {}),
+            ("SET_CHOCOBO_PORTRAIT", {"portrait_id": "Arcane Violet"}),
+            ("SET_CHOCOBO_PORTRAIT", {"portrait_id": "not_real"}),
+            ("SET_CHOCOBO_PORTRAIT", {"portrait_id": "arcane_violet", "command": "!readyall"}),
         )
         for index, (action_type, payload) in enumerate(invalid):
             with self.assertRaises(urllib.error.HTTPError) as caught:

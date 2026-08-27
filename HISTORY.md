@@ -1,5 +1,11 @@
 # History
 
+## v1.1.19 — Retro Phase III Chocobo Portraits (iii13)
+- Added 10 SNES/FF-style Chocobo bust portraits to the Stable.
+- Added persistent player portrait selection through the authoritative Bot.
+- Public/read-only Chocobo cards now display the owner-selected portrait.
+- Advanced local DB schema 5 → 6 and Portal Action protocol 14 → 15 without resetting progression.
+
 ## v1.1.19 — Retro Phase III Facility Supply Balance (iii12)
 - Rebalanced all six recurring Fellowship facility materials across multiple level-appropriate monster sources.
 - Added early practical sources at Lv.11 or below while preserving stronger late-game farming targets.

@@ -1,11 +1,12 @@
-Package: Crystal Guild v1.1.19 — Retro Phase III / Facility Supply Balance
-Web runtime: 1.1.19-retro-phase-iii
-Frontend asset revision: 1.1.19-retro-phase-iii12
+Package: Crystal Guild v1.1.19 — Retro Phase III / Chocobo Portraits
+Hosted Web runtime: 1.1.19-retro-phase-iii-chocobo1
+Frontend asset revision: 1.1.19-retro-phase-iii13
 Hosted sync schema: 1
-Portal Action protocol: 14
+Portal Action protocol: 15
 
-Current checkpoint:
-- Bestiary data aligned with the authoritative Facility Supply Balance Bot drop tables.
-- Six recurring Fellowship facility materials each have at least three monster sources.
-- Every recurring facility material has an early practical source at Lv.11 or below.
-- Retro Phase III artwork and prior iii11 item/weapon refresh remain intact.
+Feature payload:
+- 10 Chocobo portrait PNG assets in retro-phase-iii/chocobo-portraits-v1
+- Chocobo Stable portrait gallery and Apply Portrait control
+- Public profile rendering of the selected Chocobo portrait
+- Typed SET_CHOCOBO_PORTRAIT Portal action
+- Existing Retro Phase III / Facility Supply Balance Web content retained

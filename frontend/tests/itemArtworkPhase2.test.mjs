@@ -46,12 +46,12 @@ test("generated shared equipment sets are packaged and Blacksmith consumes share
     ["elemental-crystals-v2", 8],
   ]);
   for (const [folder, count] of phase2Counts) {
-    const files = fs.readdirSync(path.join(root, "public/retro-phase-ii", folder)).filter((name) => name.endsWith(".webp"));
+    const files = fs.readdirSync(path.join(root, "public/retro-phase-ii", folder)).filter((name) => name.endsWith(".png"));
     assert.equal(files.length, count, `${folder} count`);
   }
   const equipmentDir = path.join(root, "public/retro-phase-iii/equipment-families-v1");
-  const equipment = fs.readdirSync(equipmentDir).filter((name) => name.endsWith(".webp"));
-  assert.equal(equipment.length, 22, "Retro Phase III equipment family WEBP count");
+  const equipment = fs.readdirSync(equipmentDir).filter((name) => name.endsWith(".png"));
+  assert.equal(equipment.length, 22, "Retro Phase III equipment family PNG count");
   assert.equal(fs.existsSync(path.join(root, "public/retro-phase-ii/accessory-families-v2")), false);
   assert.equal(fs.existsSync(path.join(root, "public/retro-phase-ii/armor-tiers-v2")), false);
   const familyDir = path.join(root, "public/retro-phase-iii/weapon-families-v1");

@@ -1,5 +1,5 @@
 Crystal Guild v1.1.19 — Retro Phase III
-Current Web asset revision: 1.1.19-retro-phase-iii8
+Current Web asset revision: 1.1.19-retro-phase-iii11
 
 This checkpoint completes the current material-art pass.
 

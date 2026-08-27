@@ -22,10 +22,10 @@ function pngSize(file) {
   return [b.readUInt32BE(16), b.readUInt32BE(20)];
 }
 
-test("ii37 uses clean SNES PNG item and material artwork directories", () => {
-  assert.match(source, /item-icons-v4/);
+test("Retro Phase III keeps clean typed PNG item and material artwork directories", () => {
+  assert.match(source, /item-icons-v1/);
   assert.match(source, /item-materials-v5/);
-  const itemDir = path.join(root, "public/retro-phase-ii/item-icons-v4");
+  const itemDir = path.join(root, "public/retro-phase-iii/item-icons-v1");
   const materialDir = path.join(root, "public/retro-phase-ii/item-materials-v5");
   const itemFiles = fs.readdirSync(itemDir).filter((n) => n.endsWith(".png"));
   const materialFiles = fs.readdirSync(materialDir).filter((n) => n.endsWith(".png"));
@@ -42,12 +42,12 @@ test("ii37 removes superseded inventory artwork directories", () => {
   }
 });
 
-test("ii37 canonical consumables resolve to item-icons-v4 PNG artwork", () => {
+test("Retro Phase III canonical consumables resolve to item-icons-v1 PNG artwork", () => {
   const consumables = data.items.filter((entry) => entry.type === "consumable");
   assert.equal(consumables.length, 32);
   for (const item of consumables) {
     const art = itemArtworkPath(item);
-    assert.match(art, /item-icons-v4\/.+\.png$/, `${item.id} should use v4 PNG item art`);
+    assert.match(art, /item-icons-v1\/.+\.png$/, `${item.id} should use v4 PNG item art`);
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing ${item.id}: ${art}`);
   }
 });
@@ -60,14 +60,14 @@ test("ii37 R03-R06 material identities resolve to item-materials-v5 PNG artwork"
   }
 });
 
-test("ii37 shared Phase 2 equipment fallbacks remain packaged after later identity overrides", () => {
+test("Retro Phase III shared equipment fallbacks remain packaged after later identity overrides", () => {
   for (const item of data.items.filter((entry) => ["weapon", "armor", "accessory"].includes(entry.type))) {
     const art = itemArtworkPath(item);
     assert.ok(art, `missing art path: ${item.id}`);
     if (item.type === "weapon") {
-      assert.match(art, /(?:-v2|weapon-icons-v1|weapon-families-v1)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
+      assert.match(art, /(?:-v2|weapon-icons-v2|weapon-families-v1)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
     } else {
-      assert.match(art, /(?:-v2|weapon-icons-v1|weapon-families-v1|equipment-families-v1)\//, `expected packaged equipment art for ${item.id}: ${art}`);
+      assert.match(art, /(?:-v2|weapon-icons-v2|weapon-families-v1|equipment-families-v1)\//, `expected packaged equipment art for ${item.id}: ${art}`);
     }
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing packaged art: ${item.id} -> ${art}`);
   }

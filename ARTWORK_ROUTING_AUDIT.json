@@ -1,26 +1,590 @@
 {
-  "checked_reference_count": 242,
-  "missing_references": [],
-  "metal_dir_files": [
-    "aether_ingots.png",
-    "copper_ingots.png",
-    "copper_ore.png",
-    "dark_ore.png",
-    "darksteel_ore.png",
-    "gold_ingots.png",
-    "gold_ore.png",
-    "iron_ore.png",
-    "metal_bundle.png",
-    "metal_scrap.png",
-    "meteor_fragment.png",
-    "mining_pick.png",
-    "mixed_ingots.png",
-    "mythril_ingots.png",
-    "mythril_ore.png",
-    "ore_sack.png",
-    "rare_ore_cluster.png",
-    "silver_ingots.png",
-    "silver_ore.png",
-    "star_crystal.png"
-  ]
+  "frontend_asset_revision": "1.1.19-retro-phase-iii11",
+  "catalog": {
+    "catalog_items": 405,
+    "counts": {
+      "consumable": 32,
+      "weapon": 186,
+      "armor": 65,
+      "accessory": 38,
+      "material": 84
+    },
+    "mapped": 405,
+    "no_art": [],
+    "missing": []
+  },
+  "explicit_image_url_count": 132,
+  "missing_explicit_image_urls": [],
+  "refreshed_asset_validation": [
+    {
+      "path": "/retro-phase-iii/item-icons-v1/phoenix_down.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/item-icons-v1/antidote.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/item-icons-v1/tent.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/artemis_bow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/assassins_dagger.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/dagger.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/dragon_lance.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/elven_bow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/great_bow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/gungnir.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/holy_lance.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/hunting_rifle.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/ice_lance.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/javelin.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/killer_bow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/knife.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/longbow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/longinus.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/mage_masher.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/magitek_rifle.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/main_gauche.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/mythril_knife.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/mythril_spear.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/partisan.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/poison_fang.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/rapier.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/rune_blade.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/rune_bow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/shortbow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/spear.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        253
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/trident.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/ultima_blade.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/retro-phase-iii/weapon-icons-v2/yoichi_bow.png",
+      "size": [
+        512,
+        512
+      ],
+      "transparent_corners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  ],
+  "packaging_checks": {
+    "typed_item_dir": "frontend/public/retro-phase-iii/item-icons-v1",
+    "typed_weapon_dir": "frontend/public/retro-phase-iii/weapon-icons-v2",
+    "retired_item_dir_absent": true,
+    "retired_weapon_dir_absent": true,
+    "equipment_webp_duplicates": 0,
+    "item_png_count": 32,
+    "weapon_png_count": 180
+  }
 }

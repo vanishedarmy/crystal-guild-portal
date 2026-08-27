@@ -11,6 +11,6 @@ This Web build completes the current Retro Phase III material-art rollout.
 
 ## Technical identity
 - Web runtime: `1.1.19-retro-phase-iii`
-- Frontend asset revision: `1.1.19-retro-phase-iii8`
+- Frontend asset revision: `1.1.19-retro-phase-iii11`
 - Portal Action protocol: `14`
 - Hosted sync schema: `1`

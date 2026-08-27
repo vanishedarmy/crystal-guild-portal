@@ -1,6 +1,6 @@
 Package: Crystal Guild v1.1.19 — Retro Phase III
 Web runtime: 1.1.19-retro-phase-iii
-Frontend asset revision: 1.1.19-retro-phase-iii8
+Frontend asset revision: 1.1.19-retro-phase-iii11
 
 Current checkpoint:
 - Complete material artwork coverage: 84 / 84

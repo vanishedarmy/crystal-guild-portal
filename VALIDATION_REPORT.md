@@ -1,6 +1,15 @@
-# Validation Report
+# Validation Report — iii11 Item & Weapon Refresh
 
-- Replaced all 20 `material-metals-v2` assets with regenerated PNG files.
-- Removed obsolete `.webp` files from `frontend/public/retro-phase-ii/material-metals-v2`.
-- Added `.png` copies for equipment-family assets referenced by `itemArtwork.js` and restored `weapon-families-v1/unrestricted.png`.
-- Static routing audit checked 242 referenced artwork paths. Missing references found: 0.
+- Refreshed assets normalized: **33/33**.
+- Refreshed assets are 512×512 transparent PNGs with transparent canvas corners: **PASS**.
+- Catalog items checked: **405**.
+- Catalog artwork paths missing on disk: **0**.
+- Explicit non-dynamic frontend image URLs checked: **132**.
+- Explicit non-dynamic frontend image URLs missing on disk: **0**.
+- Typed consumable library contains **32 PNGs**.
+- Typed weapon library contains **180 PNGs**.
+- Retired item path removed: **PASS**.
+- Retired weapon path removed: **PASS**.
+- Equipment-family WEBP duplicates remaining: **0**.
+- Frontend unit tests: **276/276 passed**.
+- Python Web/API tests: **46/46 passed**.

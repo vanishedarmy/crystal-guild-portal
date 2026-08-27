@@ -5,7 +5,7 @@ import path from "node:path";
 import { itemArtworkPath } from "../src/utils/itemArtwork.js";
 
 const root = path.resolve(import.meta.dirname, "..");
-const artDir = path.join(root, "public/retro-phase-iii/weapon-icons-v1");
+const artDir = path.join(root, "public/retro-phase-iii/weapon-icons-v2");
 
 const waves = {
   r11: [
@@ -50,8 +50,8 @@ test("CG-GEAR-R11 through R13 are separate 512x512 RGBA PNG assets", () => {
 });
 
 test("Retro Phase III maps R11 live and future identities to named artwork", () => {
-  assert.equal(itemArtworkPath({ id:"morbol_lash", type:"weapon" }), "/retro-phase-iii/weapon-icons-v1/venom_whip.png");
-  assert.equal(itemArtworkPath({ id:"dragonfire_whip", type:"weapon" }), "/retro-phase-iii/weapon-icons-v1/dragonfire_whip.png");
+  assert.equal(itemArtworkPath({ id:"morbol_lash", type:"weapon" }), "/retro-phase-iii/weapon-icons-v2/venom_whip.png");
+  assert.equal(itemArtworkPath({ id:"dragonfire_whip", type:"weapon" }), "/retro-phase-iii/weapon-icons-v2/dragonfire_whip.png");
 });
 
 test("Retro Phase III replaces shared firearm placeholders with exact R12 artwork", () => {
@@ -68,13 +68,13 @@ test("Retro Phase III replaces shared firearm placeholders with exact R12 artwor
     ["magitek_cannon","magitek_hand_cannon.png"],
   ]);
   for (const [id,file] of cases) {
-    assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v1/${file}`, id);
+    assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v2/${file}`, id);
   }
 });
 
 test("Retro Phase III packages direct R13 grimoire identities for caster expansion", () => {
   for (const id of waves.r13) {
-    assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v1/${id}.png`);
+    assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v2/${id}.png`);
   }
 });
 

@@ -21,12 +21,12 @@ test("all live armor and accessories avoid retired Phase II family/tier artwork"
 
 test("refreshed equipment family art uses cache-busting Retro Phase III paths", () => {
   const cases = [
-    [{ id: "hermes_sandals", type: "accessory", min_level: 10 }, "/retro-phase-iii/equipment-families-v1/boots_t2.webp"],
-    [{ id: "magic_ring", type: "accessory", min_level: 10 }, "/retro-phase-iii/equipment-families-v1/ring_t2.webp"],
-    [{ id: "ribbon", type: "accessory", min_level: 25 }, "/retro-phase-iii/equipment-families-v1/belt_t4.webp"],
-    [{ id: "chain_mail", type: "armor", gear_family: "heavy", min_level: 1 }, "/retro-phase-iii/equipment-families-v1/armor_style_t2.webp"],
-    [{ id: "black_robe", type: "armor", gear_family: "robe", min_level: 25 }, "/retro-phase-iii/equipment-families-v1/armor_style_t5.webp"],
-    [{ id: "white_robe", type: "armor", gear_family: "robe", min_level: 25 }, "/retro-phase-iii/equipment-families-v1/armor_style_t4.webp"],
+    [{ id: "hermes_sandals", type: "accessory", min_level: 10 }, "/retro-phase-iii/equipment-families-v1/boots_t2.png"],
+    [{ id: "magic_ring", type: "accessory", min_level: 10 }, "/retro-phase-iii/equipment-families-v1/ring_t2.png"],
+    [{ id: "ribbon", type: "accessory", min_level: 25 }, "/retro-phase-iii/equipment-families-v1/belt_t4.png"],
+    [{ id: "chain_mail", type: "armor", gear_family: "heavy", min_level: 1 }, "/retro-phase-iii/equipment-families-v1/armor_style_t2.png"],
+    [{ id: "black_robe", type: "armor", gear_family: "robe", min_level: 25 }, "/retro-phase-iii/equipment-families-v1/armor_style_t5.png"],
+    [{ id: "white_robe", type: "armor", gear_family: "robe", min_level: 25 }, "/retro-phase-iii/equipment-families-v1/armor_style_t4.png"],
   ];
   for (const [item, expected] of cases) assert.equal(itemArtworkPath(item), expected);
 });

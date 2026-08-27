@@ -1,9 +1,9 @@
-const ITEM_ART_BASE = "/retro-phase-ii/item-icons-v4";
+const ITEM_ART_BASE = "/retro-phase-iii/item-icons-v1";
 const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
 const MATERIAL_ITEM_BASE = "/retro-phase-iii/material-icons-v1";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
-const WEAPON_ITEM_BASE = "/retro-phase-iii/weapon-icons-v1";
+const WEAPON_ITEM_BASE = "/retro-phase-iii/weapon-icons-v2";
 const WEAPON_FAMILY_BASE = "/retro-phase-iii/weapon-families-v1";
 const EQUIPMENT_FAMILY_BASE = "/retro-phase-iii/equipment-families-v1";
 

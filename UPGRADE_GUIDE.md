@@ -1,3 +1,8 @@
-# Upgrade Guide
+# Upgrade Guide — iii10 to iii11
 
-Apply this build over the prior iii9 web build. The metal-family artwork assets under `frontend/public/retro-phase-ii/material-metals-v2/` have been replaced with PNG files matching the existing code paths. No schema or runtime changes are required.
+1. Deploy the full iii11 package or apply the iii10→iii11 patch.
+2. No database, player-data, Portal Action, or hosted-sync migration is required.
+3. Consumable artwork now resolves from `/retro-phase-iii/item-icons-v1/`.
+4. Weapon artwork now resolves from `/retro-phase-iii/weapon-icons-v2/`.
+5. Equipment-family artwork remains `/retro-phase-iii/equipment-families-v1/` and is PNG-only.
+6. Hard-refresh once after deployment. The new asset paths also prevent the old images from being reused by browser/CDN caches.

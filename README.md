@@ -8,18 +8,18 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The selected portrait is visible on both the owner Stable and read-only public Chocobo cards.
 - Existing Chocobos migrate to Classic Gold automatically; Bond, traits, names, and progression are untouched.
 
-## RC1 Hotfix 3 — Relic Visuals
-- All eight Relic weapon lines now have a complete three-stage visual route: Dormant, Awakened, and Zenith.
-- Dedicated Relic art is surfaced in the Relic Arsenal, Relic detail dialog, Trophy Hall, Player Guide Relic cards/dossiers, and shared item-art locations.
-- 24 transparent PNG stage assets are packaged under `frontend/public/retro-phase-iii/relic-weapons-v1/`.
-- This remains a Web-only visual update; gameplay and persistent progression are unchanged.
+## RC1 Hotfix 4 — Relic Refresh + Dynamic Camp
+- All eight Relic weapon lines use the newly regenerated Tier 1 / Tier 2 / Tier 3 transparent PNG progression.
+- Dedicated Relic art remains surfaced in the Relic Arsenal, Relic detail dialog, Trophy Hall, Player Guide Relic cards/dossiers, and shared item-art locations.
+- Camp now uses a 15-minute base timer while Twitch is LIVE and a 1-hour base timer while OFFLINE; existing Fellowship Camp-time reductions remain in force.
+- The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
 - Hosted Web runtime: `1.1.19-retro-phase-iii-rc1`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h3`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h4`
 - Portal Action protocol: `15`
 - Hosted sync schema: `1`
-- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1`
+- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h4`
 - Local Bot DB schema: `6`
 
 ## Facility supply balance

@@ -1,6 +1,9 @@
+# RC1 Hotfix 4 — Relic Refresh + Dynamic Camp
+Regenerates all 24 Relic weapon stage visuals and updates Camp to a 15-minute LIVE / 1-hour OFFLINE base timer in the paired authoritative Bot runtime. Frontend revision `1.1.19-retro-phase-iii14-rc1h4`; hosted sync schema and Portal Action protocol remain unchanged.
+
 # v1.1.19 Retro Phase III RC1 Hotfix 3 — Relic Visuals
 
-Relic artwork integration pass. Adds 24 stage-aware Relic weapon PNG routes, builds them into the Portal Relic Arsenal, Relic details, Trophy Hall, Player Guide Relic catalog/dossiers, and shared item artwork. Frontend revision `1.1.19-retro-phase-iii14-rc1h3`. No gameplay/schema/protocol changes.
+Relic artwork integration pass. Adds 24 stage-aware Relic weapon PNG routes, builds them into the Portal Relic Arsenal, Relic details, Trophy Hall, Player Guide Relic catalog/dossiers, and shared item artwork. Frontend revision `1.1.19-retro-phase-iii14-rc1h4`. No gameplay/schema/protocol changes.
 
 # v1.1.19 Retro Phase III RC1 Hotfix 2 — Chocobo Portrait Refresh
 

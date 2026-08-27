@@ -1,8 +1,10 @@
-# Upgrade Guide — RC1 Hotfix 3 Relic Visuals
+# Upgrade Guide — RC1 Hotfix 4 Relic Refresh + Dynamic Camp
 
-1. Back up the currently deployed Web source.
-2. Replace it with the full RC1 Hotfix 3 Web package, or apply the included `rc1h2 -> rc1h3` Web patch.
-3. Redeploy normally. Render/Docker will install the pinned frontend dependencies and run the Vite production build during deployment.
-4. Hard-refresh the Portal once after deployment so the `1.1.19-retro-phase-iii14-rc1h3` asset revision is picked up.
-5. Verify the Relic Arsenal, one Relic detail dialog, the Trophy Hall, and Player Guide Relic section show weapon artwork without cropping.
-6. No database migration, Bot reset, OAuth change, or environment-variable change is required.
+1. Back up the current Web deployment and local Bot database/configuration.
+2. Deploy the full RC1H4 Web package, or apply the `rc1h3 -> rc1h4` Web patch.
+3. Apply the paired RC1H4 Bot package/patch. The Web UI can describe the new Camp rule, but the Bot is the authoritative timer owner.
+4. Restart/redeploy the Bot and Web normally. No migration command is required.
+5. Hard-refresh the Portal once so asset revision `1.1.19-retro-phase-iii14-rc1h4` is loaded.
+6. Verify one Relic at each stage, then test Camp while Twitch is OFFLINE (1-hour base) and LIVE (15-minute base). Existing Fellowship Camp-time reductions may shorten the displayed effective timer.
+
+No database reset, OAuth change, or new environment variable is required.

@@ -554,13 +554,13 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, clock))}` : "Set Up Camp"}</h2></div>
           <span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span>
         </div>
-        <p className="muted">Camp restores HP and your current Job’s MP/AP after the normal rest timer. You cannot adventure while resting.</p>
+        <p className="muted">Camp restores HP and your current Job’s MP/AP. Base time is 15 minutes while stream is LIVE and 1 hour while OFFLINE; Fellowship bonuses may shorten it. You cannot adventure while resting.</p>
         {state?.camp ? (
           <div className="adventure-camp-grid">
             <div><span>HP</span><strong>{number(state.camp.hp)} / {number(state.camp.max_hp)}</strong></div>
             {Number(state.camp.max_mp || 0) > 0 ? <div><span>MP</span><strong>{number(state.camp.mp)} / {number(state.camp.max_mp)}</strong></div> : null}
             {Number(state.camp.max_ap || 0) > 0 ? <div><span>AP</span><strong>{number(state.camp.ap)} / {number(state.camp.max_ap)}</strong></div> : null}
-            <div><span>Rest timer</span><strong>{duration(state.camp.duration_seconds)}</strong></div>
+            <div><span>{state.camp.stream_live ? "LIVE Camp" : "OFFLINE Camp"}</span><strong>{duration(state.camp.duration_seconds)}</strong></div>
           </div>
         ) : null}
         <div className="venture-action-row">

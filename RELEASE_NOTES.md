@@ -1,32 +1,26 @@
-# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 3 — Relic Visuals
+# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 4 — Relic Refresh + Dynamic Camp
 
-## Summary
-This web-only visual hotfix builds the three-stage Relic weapon artwork into the live Portal and Player Guide while preserving gameplay, progression, databases, and Portal Action behavior.
+## Relic artwork refresh
+All eight Relic questlines now use the newly regenerated three-tier weapon progression. Tier 1 is deliberately restrained, Tier 2 adds visible ornamentation, and Tier 3 is the fully legendary final form. Each stage remains a separate transparent PNG and keeps the existing stage-aware routing throughout the Portal and Player Guide.
 
-## Relic artwork
-- Adds a dedicated `relic-weapons-v1` artwork family for all eight Relic questlines: Gae Bolg, Excalibur, Apocalypse, Godhand, Masamune, Stardust Rod, Nirvana, and Last Knife.
-- Every Relic now has explicit Dormant, Awakened, and Zenith artwork routing (24 PNG assets total).
-- Awakened visuals use the completed Batch 2 weapon artwork.
-- Zenith visuals use the completed Batch 3 final-form artwork.
-- Dormant visuals retain restrained canonical weapon art so each progression path has a complete visual ladder without changing item identity.
+Relics covered: Gae Bolg, Excalibur, Apocalypse, Godhand, Masamune, Stardust Rod, Nirvana, and Last Knife.
 
-## Where Relic visuals now appear
-- Adventurer Portal Relic Arsenal cards, using the hero's current Relic stage.
-- Relic detail dialog.
-- Trophy Hall completed Relics and featured Relic trophies, fixed to Zenith artwork.
-- Player Guide Relic catalog cards, previewing the Zenith final form.
-- Player Guide Relic dossiers, showing the correct artwork beside every Dormant / Awakened / Zenith stage reward.
-- Shared item artwork routing, so Relic reward weapons display their dedicated art anywhere the standard item artwork component is used.
+## Stream-aware Camp
+Camp now uses a stream-aware base duration in the authoritative Bot runtime:
+- Twitch LIVE: 15 minutes.
+- Twitch OFFLINE: 1 hour.
+- Unknown/unconfirmed Twitch state fails closed to the OFFLINE timer.
+- Existing Fellowship/Infirmary Camp-time reductions remain applied to the selected base duration.
 
-## UI treatment
-Relic images use `object-fit: contain`, transparent PNG backgrounds, compact framed presentation, and responsive sizing so long weapons remain visible without cropping on desktop or mobile.
+The Adventure Board shows whether the currently quoted Camp timer is LIVE or OFFLINE, and the Player Guide/Recovery copy explains the new rule.
 
 ## Compatibility
-- Web-only hotfix.
-- Runtime identity remains `1.1.19-retro-phase-iii-rc1`.
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h3`.
-- Local DB schema: unchanged.
+- Web asset revision: `1.1.19-retro-phase-iii14-rc1h4`.
+- Bot runtime: `1.1.19-retro-phase-iii-rc1h4`.
+- Local database schema: unchanged.
 - Hosted sync schema: unchanged.
-- Portal Action protocol: unchanged.
+- Portal Action protocol: 15 unchanged.
 - Twitch command prefix: `!` unchanged.
-- No database migration, player reset, OAuth reauthorization, or new environment variables required.
+- No player reset, database migration, OAuth reauthorization, or new required environment variables.
+
+Because Camp timing is authoritative in the Bot, deploy both the Web and Bot Hotfix 4 packages.

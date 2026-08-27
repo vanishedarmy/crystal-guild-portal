@@ -1,13 +1,13 @@
-Package: Crystal Guild v1.1.19 — Retro Phase III / RC1 Hotfix 3 Relic Visuals Web
+Package: Crystal Guild v1.1.19 — Retro Phase III / RC1 Hotfix 4 Relic Refresh + Dynamic Camp Web
 Hosted Web runtime: 1.1.19-retro-phase-iii-rc1
-Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h3
+Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h4
 Hosted sync schema: 1
 Portal Action protocol: 15
 
-Hotfix 3 scope:
-- Preserves RC1 Hotfix 2 Chocobo portrait refresh and RC1 Hotfix 1 scenic backgrounds.
-- Adds dedicated three-stage visual routing for all eight Relic weapon questlines.
-- Packages 24 transparent Relic PNG assets under relic-weapons-v1.
-- Shows Relic artwork in Portal Relic cards, details, Trophy Hall, Player Guide Relic cards/dossiers, and shared item artwork locations.
-- Adds stage-aware Relic artwork utility/component and explicit reward-item artwork routing.
-- No gameplay, database schema, hosted sync schema, Portal Action protocol, OAuth, or environment-variable changes.
+Hotfix 4 Web scope:
+- Replaces all 24 Relic stage images with the newly regenerated Tier 1 / Tier 2 / Tier 3 transparent PNG set.
+- Keeps the existing stage-aware Relic routing across Arsenal cards, details, Trophy Hall, Player Guide, and shared item artwork.
+- Adventure Board now labels the current Camp mode and effective timer.
+- Player Guide and Recovery UI explain the 15-minute LIVE / 1-hour OFFLINE base Camp rule.
+- No database schema, hosted sync schema, Portal Action protocol, OAuth, or environment-variable migration.
+- Paired Bot RC1H4 deployment is required for the authoritative stream-aware Camp duration.

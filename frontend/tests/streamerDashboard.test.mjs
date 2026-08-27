@@ -27,7 +27,7 @@ test("Streamer dashboard uses the aggregate endpoint plus authenticated Portal c
   assert.doesNotMatch(css, /translateY\(|scale\(/);
 });
 
-test("Streamer dashboard exposes all thirteen allow-listed owner operations", async () => {
+test("Streamer dashboard exposes all fifteen allow-listed owner operations", async () => {
   const page = await readFile(new URL("pages/StreamerDashboard.jsx", SRC), "utf8");
   const commands = [
     "!health",
@@ -43,11 +43,17 @@ test("Streamer dashboard exposes all thirteen allow-listed owner operations", as
     "!clearencounter",
     "!spawnboss <boss name>",
     "!resolveboss",
+    "!additem <player> | <item> | [qty]",
+    "!removeitem <player> | <item> | [qty]",
   ];
   for (const command of commands) assert.equal(page.includes(command), true, `missing ${command}`);
-  assert.match(page, /13 verified owner actions/);
+  assert.match(page, /15 verified owner actions/);
   assert.doesNotMatch(page, /TWITCH_OWNER_ID/);
   assert.match(page, /Arbitrary chat commands cannot be relayed/);
+  assert.match(page, /streamer-inventory-admin-fields/);
+  assert.match(page, /Choose player…/);
+  assert.match(page, /Item name or ID/);
+  assert.match(page, /loadGuideData/);
 });
 
 test("Streamer force actions require an explicit second click", async () => {

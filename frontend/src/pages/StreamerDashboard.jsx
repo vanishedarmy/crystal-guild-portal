@@ -11,6 +11,7 @@ import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
+import { loadGuideData } from "../utils/itemCatalog.js";
 import { WEB_BUILD, WEB_RELEASE } from "../version.js";
 
 const STREAM_COMMAND_GROUPS = [
@@ -63,6 +64,14 @@ const OWNER_COMMAND_GROUPS = [
     description: "Choose which unlocked community project the Guild is currently building.",
     commands: [
       { id: "fellowshipproject", command: "!fellowshipproject <project>", label: "Set Fellowship Project", description: "Set the active unlocked Fellowship project", risk: "caution", argument: { type: "text", placeholder: "Project name", label: "Project" } },
+    ],
+  },
+  {
+    title: "Player Inventory",
+    description: "Add or remove an exact item stack from any registered adventurer. Inventory edits are written to the normal Guild ledger.",
+    commands: [
+      { id: "additem", command: "!additem <player> | <item> | [qty]", label: "Add Item", description: "Grant an item to a selected player without changing quest, Relic, or achievement progression", risk: "caution", argument: { type: "inventory", label: "Inventory adjustment" } },
+      { id: "removeitem", command: "!removeitem <player> | <item> | [qty]", label: "Remove Item", description: "Remove an owned item stack. Removing the last equipped copy automatically unequips it", risk: "danger", argument: { type: "inventory", label: "Inventory adjustment" } },
     ],
   },
   {
@@ -201,11 +210,14 @@ function actionKey(command) {
   return `streamer-${command}-${entropy}`;
 }
 
-function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
+function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players = [] }) {
   const initialInputs = useMemo(() => {
     const values = {};
     OWNER_COMMAND_GROUPS.forEach((group) => group.commands.forEach((item) => {
-      if (item.argument) values[item.id] = item.argument.defaultValue || "";
+      if (!item.argument) return;
+      values[item.id] = item.argument.type === "inventory"
+        ? { player: "", item: "", quantity: "1" }
+        : item.argument.defaultValue || "";
     }));
     return values;
   }, []);
@@ -213,6 +225,20 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
   const [running, setRunning] = useState("");
   const [confirming, setConfirming] = useState("");
   const [result, setResult] = useState(null);
+  const [catalogItems, setCatalogItems] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    loadGuideData()
+      .then((guide) => {
+        if (!active) return;
+        const items = Array.isArray(guide?.items) ? [...guide.items] : [];
+        items.sort((a, b) => String(a?.name || a?.id || "").localeCompare(String(b?.name || b?.id || "")));
+        setCatalogItems(items);
+      })
+      .catch(() => { if (active) setCatalogItems([]); });
+    return () => { active = false; };
+  }, []);
 
   const execute = async (item) => {
     if (running) return;
@@ -226,7 +252,11 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
     setRunning(item.id);
     setResult({ tone: "working", message: `${item.label} queued…` });
     try {
-      const argument = item.argument ? inputs[item.id] : "";
+      let argument = item.argument ? inputs[item.id] : "";
+      if (item.argument?.type === "inventory") {
+        const value = inputs[item.id] || {};
+        argument = `${String(value.player || "").trim()}|${String(value.item || "").trim()}|${String(value.quantity || "1").trim()}`;
+      }
       const queued = await submitStreamerCommand(item.id, argument, auth.csrf_token, actionKey(item.id));
       const actionId = queued?.action?.id;
       if (!actionId) throw new Error("Streamer Control did not return an action ID.");
@@ -263,7 +293,7 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
     <section className="streamer-panel streamer-control-panel" id="controls">
       <div className="streamer-panel-heading streamer-owner-heading">
         <div><span>Authenticated Backend</span><h2>Streamer Control Center</h2></div>
-        <small>13 verified owner actions</small>
+        <small>15 verified owner actions</small>
       </div>
 
       {accessState !== "ready" ? (
@@ -297,7 +327,15 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
                   {group.commands.map((item) => {
                     const needsArgument = Boolean(item.argument);
                     const argumentValue = inputs[item.id] || "";
-                    const missingArgument = needsArgument && item.argument.type !== "number" && !argumentValue.trim();
+                    const inventoryValue = item.argument?.type === "inventory" ? (argumentValue || {}) : null;
+                    const inventoryQuantity = inventoryValue ? Number(inventoryValue.quantity || 0) : 0;
+                    const missingArgument = item.argument?.type === "inventory"
+                      ? !String(inventoryValue?.player || "").trim()
+                        || !String(inventoryValue?.item || "").trim()
+                        || !Number.isInteger(inventoryQuantity)
+                        || inventoryQuantity < 1
+                        || inventoryQuantity > 999
+                      : needsArgument && item.argument.type !== "number" && !String(argumentValue).trim();
                     const isRunning = running === item.id;
                     const confirmingThis = confirming === item.id;
                     return (
@@ -308,7 +346,59 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
                         </div>
                         <strong>{item.label}</strong>
                         <p>{item.description}</p>
-                        {needsArgument ? (
+                        {item.argument?.type === "inventory" ? (
+                          <div className="streamer-inventory-admin-fields">
+                            <label>
+                              <span>Adventurer</span>
+                              <select
+                                value={inventoryValue?.player || ""}
+                                onChange={(event) => setInputs((current) => ({
+                                  ...current,
+                                  [item.id]: { ...(current[item.id] || {}), player: event.target.value },
+                                }))}
+                              >
+                                <option value="">Choose player…</option>
+                                {players.map((player) => (
+                                  <option key={`${item.id}-${player.username}`} value={player.username}>
+                                    {player.display_name} (@{player.username})
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
+                            <label>
+                              <span>Item</span>
+                              <input
+                                list={`streamer-item-catalog-${item.id}`}
+                                value={inventoryValue?.item || ""}
+                                placeholder="Item name or ID"
+                                onChange={(event) => setInputs((current) => ({
+                                  ...current,
+                                  [item.id]: { ...(current[item.id] || {}), item: event.target.value },
+                                }))}
+                              />
+                              <datalist id={`streamer-item-catalog-${item.id}`}>
+                                {catalogItems.map((catalogItem) => (
+                                  <option key={`${item.id}-${catalogItem.id}`} value={catalogItem.id}>
+                                    {catalogItem.name} · {catalogItem.type}
+                                  </option>
+                                ))}
+                              </datalist>
+                            </label>
+                            <label>
+                              <span>Quantity</span>
+                              <input
+                                type="number"
+                                min="1"
+                                max="999"
+                                value={inventoryValue?.quantity || "1"}
+                                onChange={(event) => setInputs((current) => ({
+                                  ...current,
+                                  [item.id]: { ...(current[item.id] || {}), quantity: event.target.value },
+                                }))}
+                              />
+                            </label>
+                          </div>
+                        ) : needsArgument ? (
                           <label>
                             <span>{item.argument.label}</span>
                             <input
@@ -416,7 +506,7 @@ export default function StreamerDashboard() {
 
         {dashboard ? (
           <div className="streamer-flow-layout">
-            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} />
+            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} players={players} />
 
             <section className="streamer-panel streamer-roster-panel" id="roster">
               <div className="streamer-panel-heading">

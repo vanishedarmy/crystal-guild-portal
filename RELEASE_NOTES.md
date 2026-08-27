@@ -1,26 +1,30 @@
-# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 6 — Persistent Adventure Results
+# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 7 — Streamer Inventory Admin
 
-## Adventure results no longer disappear while you are away
-Portal-origin Adventure Board outcomes now use a durable, player-specific result inbox owned by the authoritative Bot database. A completed Solo Venture or timed Hunt remains available when the player leaves the page, returns later, changes tabs, refreshes the browser, or the Bot process restarts.
+## Streamer inventory controls
+- Adds **Player Inventory** to the authenticated Streamer Control Center.
+- Select a registered adventurer, enter/select an exact item name or ID, choose quantity 1–999, then use **Add Item** or **Remove Item**.
+- Remove Item is treated as a force action and requires the existing second-click confirmation.
+- The item selector is backed by the public Guide catalog but still accepts exact item IDs/names manually.
+- All adjustments are written to the normal item transaction ledger so Streamer activity remains auditable.
 
-Result cards no longer expire on a short timer. Each durable Solo/Hunt result includes a **Confirm Result** action. The result remains visible until the player explicitly confirms it. Multiple unconfirmed results are retained and presented newest-first; confirmation only clears the selected result.
+## Owner-only chat commands
+- `!additem <player> | <item> | [quantity]` (alias `!giveitem`)
+- `!removeitem <player> | <item> | [quantity]` (alias `!takeitem`)
+- Exact Twitch username is recommended for the player field; exact item name or item ID is accepted.
+- Removing more than the player owns is rejected rather than silently clamped.
+- Removing the final copy of currently equipped gear automatically unequips that slot and normalizes character resources.
 
-This resolves the case where a timed Hunt finished while the player was away from the Portal and its outcome was gone by the time they returned.
-
-## Streamer Dashboard + backend controls retained
-Hotfix 5's Streamer Dashboard redesign remains intact: normal responsive document flow replaces the obstructive locked workspace, broadcaster authorization is compact, and the Streamer Control Center provides owner-authenticated buttons for approved backend commands.
-
-## LIVE-only Portal announcements retained
-Portal-origin notable Solo results, Hunt results, and newly unlocked Titles may post to Twitch chat only when the stream is confirmed LIVE. Portal acceptance/intermediate noise remains silent. Chat-origin commands continue using their native chat response behavior.
+## Safety / authority
+- Web authorization still verifies the broadcaster account from the signed Bot manifest.
+- The Bot independently verifies `TWITCH_OWNER_ID`; the public Web cannot execute these actions for non-streamers.
+- Portal item adjustments are replay-safe: the inventory mutation and Portal replay record commit atomically, preventing duplicate grants/removals after an acknowledgement retry.
+- No arbitrary chat-command relay was added.
 
 ## Compatibility
-- Web runtime: `1.1.19-retro-phase-iii-rc1h6`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h6`
-- Bot runtime: `1.1.19-retro-phase-iii-rc1h6`
-- Local database schema: **7** (automatic additive migration from schema 6 with verified pre-migration backup)
-- Hosted sync schema: **1** unchanged
-- Portal Action protocol: **17** (paired Web + Bot deployment required)
-- Twitch command prefix: `!` unchanged
-- Relic Tier 1/2/3 visual refresh remains intact
-- Camp remains 15-minute base while LIVE / 1-hour base while OFFLINE
-- No player reset, OAuth reauthorization, or new required environment variable
+- Web runtime: `1.1.19-retro-phase-iii-rc1h7`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h7`
+- Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
+- Local DB schema: **7** (unchanged)
+- Hosted sync schema: **1** (unchanged)
+- Portal Action protocol: **18**
+- Twitch prefix: `!`

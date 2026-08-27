@@ -1491,3 +1491,37 @@ body.streamer-page {
 @media (max-width: 560px) {
   .streamer-jumpbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* v1.1.19 RC1 Hotfix 7 — streamer inventory administration */
+.streamer-inventory-admin-fields {
+  display: grid;
+  gap: 0.42rem;
+}
+.streamer-inventory-admin-fields label {
+  display: grid;
+  gap: 0.22rem;
+}
+.streamer-inventory-admin-fields select,
+.streamer-inventory-admin-fields input {
+  width: 100%;
+  min-height: 36px;
+  box-sizing: border-box;
+  padding: 0.42rem 0.5rem;
+  border: 1px solid rgba(139, 208, 255, 0.18);
+  border-radius: 5px;
+  background: rgba(3, 8, 20, 0.72);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.68rem;
+}
+.streamer-inventory-admin-fields select:focus-visible,
+.streamer-inventory-admin-fields input:focus-visible {
+  outline: 2px solid rgba(139, 208, 255, 0.7);
+  outline-offset: -2px;
+}
+.streamer-control-card:has(.streamer-inventory-admin-fields) {
+  min-height: 260px;
+}
+@media (max-width: 680px) {
+  .streamer-control-card:has(.streamer-inventory-admin-fields) { min-height: 0; }
+}

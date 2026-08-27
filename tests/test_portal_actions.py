@@ -194,6 +194,25 @@ class PortalActionServerCase(unittest.TestCase):
         self.assertEqual(claimed[0]["payload"], {"command": "health"})
         self.assertTrue(self.store.complete_action(claimed[0]["id"], claimed[0]["lease_token"], True, "ok"))
 
+        status, queued, _ = self.request(
+            "/api/actions", method="POST",
+            payload={"type": "STREAMER_COMMAND", "payload": {"command": "additem", "argument": "van|potion|3"}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "streamer-additem-001"},
+        )
+        self.assertEqual(status, 202)
+        claimed = self.store.claim_actions("bot:test", limit=1)
+        self.assertEqual(claimed[0]["payload"], {"command": "additem", "argument": "van|potion|3"})
+        self.assertTrue(self.store.complete_action(claimed[0]["id"], claimed[0]["lease_token"], True, "ok"))
+
+        for bad_argument in ("van", "van|potion|0", "van|potion|1000", "|potion|1"):
+            with self.assertRaises(urllib.error.HTTPError) as bad_inventory:
+                self.request(
+                    "/api/actions", method="POST",
+                    payload={"type": "STREAMER_COMMAND", "payload": {"command": "removeitem", "argument": bad_argument}},
+                    headers={**self.user_headers(csrf=True), "Idempotency-Key": f"streamer-bad-inv-{abs(hash(bad_argument))}"},
+                )
+            self.assertEqual(bad_inventory.exception.code, 400)
+
         with self.assertRaises(urllib.error.HTTPError) as caught:
             self.request(
                 "/api/actions", method="POST",

@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1h6"
-FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h6"
+HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1h7"
+FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h7"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 17
+ACTION_PROTOCOL_VERSION = 18
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -52,6 +52,8 @@ STREAMER_COMMAND_SPECS = {
     "clearencounter": "none",
     "spawnboss": "text",
     "resolveboss": "none",
+    "additem": "inventory",
+    "removeitem": "inventory",
 }
 
 CHOCOBO_PORTRAIT_IDS = {
@@ -748,6 +750,20 @@ class HostedPortalStore:
                 if days < 1 or days > 90:
                     raise ValueError("Economy days must be between 1 and 90.")
                 payload = {"command": command, "argument": days}
+            elif mode == "inventory":
+                parts = [part.strip() for part in str(argument or "").split("|")]
+                if len(parts) not in {2, 3} or not parts[0] or not parts[1]:
+                    raise ValueError(f"{command} requires player | item | quantity.")
+                target, item = parts[0], parts[1]
+                if len(target) > 50 or len(item) > 100:
+                    raise ValueError("Streamer inventory target or item is too long.")
+                try:
+                    quantity = int(parts[2]) if len(parts) == 3 and parts[2] else 1
+                except (TypeError, ValueError):
+                    raise ValueError("Streamer inventory quantity must be a whole number.") from None
+                if quantity < 1 or quantity > 999:
+                    raise ValueError("Streamer inventory quantity must be between 1 and 999.")
+                payload = {"command": command, "argument": f"{target}|{item}|{quantity}"}
             else:
                 text = " ".join(str(argument or "").strip().split())
                 if not text or len(text) > 120:

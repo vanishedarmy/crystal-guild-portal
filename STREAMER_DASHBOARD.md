@@ -16,11 +16,20 @@ The access state is intentionally compact. Signed-out users get a small sign-in 
 
 ## Streamer Control Center
 
-The verified Twitch owner can execute a strict set of backend actions through Portal Actions. These are typed operations, not a generic command box. The allowlist is: `health`, `economy`, `cgversion`, `encounterdebug`, `directtest`, `fellowshipproject`, `readyall`, `resettimers`, `clearadventures`, `resolveencounter`, `clearencounter`, `spawnboss`, and `resolveboss`.
+The verified Twitch owner can execute a strict set of backend actions through Portal Actions. These are typed operations, not a generic command box. The allowlist is: `health`, `economy`, `cgversion`, `encounterdebug`, `directtest`, `fellowshipproject`, `additem`, `removeitem`, `readyall`, `resettimers`, `clearadventures`, `resolveencounter`, `clearencounter`, `spawnboss`, and `resolveboss`.
 
-`economy` accepts a 1–90 day window, `fellowshipproject` accepts the intended project text, and `spawnboss` accepts a boss name. High-impact recovery/force actions use a second-click confirmation before submission. Results are shown directly in the dashboard.
+`economy` accepts a 1–90 day window, `fellowshipproject` accepts the intended project text, and `spawnboss` accepts a boss name. `additem` and `removeitem` use player + item + quantity controls backed by the Guide item catalog; the Bot remains authoritative and logs every item delta. Removing the last equipped copy automatically unequips it. High-impact recovery/force actions—including Remove Item—use a second-click confirmation before submission. Results are shown directly in the dashboard.
 
 The Chat Command Reference below the controls is still copy-only and remains useful during a live broadcast. Native Twitch owner commands remain supported.
+
+## Owner inventory commands
+
+The same inventory administrator is available directly in Twitch chat for the configured owner:
+
+- `!additem <player> | <item> | [quantity]` (alias `!giveitem`)
+- `!removeitem <player> | <item> | [quantity]` (alias `!takeitem`)
+
+Use an exact Twitch username for the player and an exact item name or item ID. Quantity defaults to 1 and is limited to 1–999. Removal fails if the player does not own the requested quantity. Portal-origin inventory edits are transactionally replay-safe.
 
 ## Security boundary
 

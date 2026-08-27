@@ -15,11 +15,11 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h6`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h6`
-- Portal Action protocol: `17`
+- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h7`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h7`
+- Portal Action protocol: `18`
 - Hosted sync schema: `1`
-- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h6`
+- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
 - Local Bot DB schema: `7`
 
 ## Facility supply balance
@@ -36,6 +36,9 @@ The Player Guide Bestiary reads these percentages directly from `guide-data.json
 - All prior iii11 item/weapon artwork remains in place.
 - Current material artwork coverage remains complete.
 - No retired artwork path is restored by this balance checkpoint.
+
+## RC1 Hotfix 7 — Streamer Inventory Admin
+The authenticated Streamer Control Center now includes player inventory administration. The broadcaster can select a player, specify an exact item name/ID and quantity, then add or remove the stack through the Portal. Matching owner-only `!additem` / `!removeitem` Twitch commands use the same authoritative Bot path. Portal retries are replay-safe and all item deltas are written to the normal transaction ledger. Local DB schema remains 7; paired Web/Bot deployments use Portal Action protocol 18.
 
 ## RC1 Hotfix 6 — Persistent Adventure Results
 The Streamer Dashboard remains in normal responsive page flow with owner-authenticated backend controls and LIVE-only notable Portal Solo/Hunt/Title announcements. Adventure Board Solo and timed Hunt result cards are now stored durably by the paired Bot and remain visible until the player explicitly selects **Confirm Result**. Deploy the matching Bot because DB schema 7 and Portal Action protocol 17 are required.

@@ -1,5 +1,6 @@
 import BossArtwork from "./BossArtwork.jsx";
 import ItemArtwork from "./ItemArtwork.jsx";
+import RelicArtwork from "./RelicArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useEffect, useRef } from "react";
 import {
@@ -166,6 +167,7 @@ function DetailBody({ detail }) {
       <div className="detail-body">
         <p className="eyebrow">{relic.job} Relic</p>
         <h2>{relic.name}</h2>
+        <RelicArtwork relic={relic} className="detail-relic-artwork" eager decorative={false} />
         <section className="detail-section"><div className="data-label">Progress</div><p>Stage {number(relic.stage)} of {number(relic.total_stages)}</p></section>
         <section className="detail-section"><div className="data-label">Relic Path</div><div className="data-list">
           {relic.stages.map((stage, index) => <div key={stage}>{index < relic.stage ? "✓" : "◇"} {stage}</div>)}

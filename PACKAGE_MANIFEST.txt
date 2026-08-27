@@ -1,11 +1,13 @@
-Package: Crystal Guild v1.1.19 — Retro Phase III / Release Candidate 1 Web
+Package: Crystal Guild v1.1.19 — Retro Phase III / RC1 Hotfix 3 Relic Visuals Web
 Hosted Web runtime: 1.1.19-retro-phase-iii-rc1
-Frontend asset revision: 1.1.19-retro-phase-iii14-rc1
+Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h3
 Hosted sync schema: 1
 Portal Action protocol: 15
 
-RC1 scope:
-- Carries forward all Retro Phase III item, material, gear, monster, Job, character, and Chocobo artwork.
-- Adds four optimized 1440×810 scenic backgrounds for Camp/Recovery, Blacksmith, Chocobo Stable, and Moogle Emporium.
-- Scenic art is layered behind existing content with dark readability gradients, reduced mobile opacity, and prefers-contrast safeguards.
-- Final explicit artwork-path audit and release-tree cleanup.
+Hotfix 3 scope:
+- Preserves RC1 Hotfix 2 Chocobo portrait refresh and RC1 Hotfix 1 scenic backgrounds.
+- Adds dedicated three-stage visual routing for all eight Relic weapon questlines.
+- Packages 24 transparent Relic PNG assets under relic-weapons-v1.
+- Shows Relic artwork in Portal Relic cards, details, Trophy Hall, Player Guide Relic cards/dossiers, and shared item artwork locations.
+- Adds stage-aware Relic artwork utility/component and explicit reward-item artwork routing.
+- No gameplay, database schema, hosted sync schema, Portal Action protocol, OAuth, or environment-variable changes.

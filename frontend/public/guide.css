@@ -2307,3 +2307,14 @@ body{
 @media(max-width:700px){
   .guide-item-thumb{width:52px;height:52px;flex-basis:52px}
 }
+
+
+/* v1.1.19 RC1 Hotfix 3 — Relic Visuals */
+.relic-art-frame{height:136px;margin:-17px -17px 14px;overflow:hidden;border-bottom:2px solid #53658f;background:radial-gradient(circle at 50% 45%,rgba(112,178,255,.13),#070c25 66%)}
+.relic-art-frame img{display:block;width:100%;height:100%;object-fit:contain;padding:8px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.42));transition:transform .2s ease}
+.relic-overview:hover .relic-art-frame img{transform:scale(1.03)}
+.info-stage:has(.info-stage-art){display:grid;grid-template-columns:124px minmax(0,1fr);gap:14px;align-items:stretch}
+.info-stage-art{display:grid;place-items:center;min-height:132px;border:1px solid #405982;background:radial-gradient(circle at 50% 45%,rgba(112,178,255,.13),#070c25 68%);overflow:hidden}
+.info-stage-art img{display:block;width:100%;height:100%;max-height:150px;object-fit:contain;padding:8px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.38))}
+.info-stage-content{min-width:0}
+@media(max-width:720px){.info-stage:has(.info-stage-art){grid-template-columns:1fr}.info-stage-art{min-height:118px;height:130px}}

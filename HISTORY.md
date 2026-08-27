@@ -1,3 +1,11 @@
+# v1.1.19 Retro Phase III RC1 Hotfix 3 — Relic Visuals
+
+Relic artwork integration pass. Adds 24 stage-aware Relic weapon PNG routes, builds them into the Portal Relic Arsenal, Relic details, Trophy Hall, Player Guide Relic catalog/dossiers, and shared item artwork. Frontend revision `1.1.19-retro-phase-iii14-rc1h3`. No gameplay/schema/protocol changes.
+
+# v1.1.19 Retro Phase III RC1 Hotfix 2 — Chocobo Portrait Refresh
+
+Replaced the ten Chocobo portrait assets with the regenerated transparent PNG bust set and compacted portrait selection into a less obtrusive toggleable gallery. Existing portrait IDs and selection behavior remain compatible.
+
 # v1.1.19 — Retro Phase III / Release Candidate 1
 
 Finalization checkpoint: four scenic Portal backgrounds, final artwork-path and progression audits, Chocobo portrait continuity, facility-material balance continuity, and release-tree cleanup. Runtime `1.1.19-retro-phase-iii-rc1`; frontend `1.1.19-retro-phase-iii14-rc1`.

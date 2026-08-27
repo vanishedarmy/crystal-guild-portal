@@ -4,6 +4,7 @@ const MATERIAL_ITEM_BASE = "/retro-phase-iii/material-icons-v1";
 const MATERIAL_METAL_BASE = "/retro-phase-ii/material-metals-v2";
 const ELEMENTAL_CRYSTAL_BASE = "/retro-phase-ii/elemental-crystals-v2";
 const WEAPON_ITEM_BASE = "/retro-phase-iii/weapon-icons-v2";
+const RELIC_WEAPON_BASE = "/retro-phase-iii/relic-weapons-v1";
 const WEAPON_FAMILY_BASE = "/retro-phase-iii/weapon-families-v1";
 const EQUIPMENT_FAMILY_BASE = "/retro-phase-iii/equipment-families-v1";
 
@@ -61,10 +62,21 @@ const WEAPON_ART_BY_ID = new Map([
   ["defender", `${WEAPON_ITEM_BASE}/defender.png`],
   ["defender_blade", `${WEAPON_ITEM_BASE}/defender.png`],
   ["excalibur", `${WEAPON_ITEM_BASE}/excalibur.png`],
-  ["excalibur_dormant", `${WEAPON_ITEM_BASE}/excalibur.png`],
-  ["excalibur_awakened", `${WEAPON_ITEM_BASE}/excalibur.png`],
-  ["excalibur_zenith", `${WEAPON_ITEM_BASE}/excalibur.png`],
+  ["excalibur_dormant", `${RELIC_WEAPON_BASE}/excalibur_dormant.png`],
+  ["excalibur_awakened", `${RELIC_WEAPON_BASE}/excalibur_awakened.png`],
+  ["excalibur_zenith", `${RELIC_WEAPON_BASE}/excalibur_zenith.png`],
   ["ragnarok", `${WEAPON_ITEM_BASE}/ragnarok.png`],
+
+  // Relic weapon stage identity — dedicated SNES/FF visual progression.
+  ["gae_bolg_dormant", `${RELIC_WEAPON_BASE}/gae_bolg_dormant.png`],
+  ["gae_bolg_awakened", `${RELIC_WEAPON_BASE}/gae_bolg_awakened.png`],
+  ["gae_bolg_zenith", `${RELIC_WEAPON_BASE}/gae_bolg_zenith.png`],
+  ["apocalypse_dormant", `${RELIC_WEAPON_BASE}/apocalypse_dormant.png`],
+  ["apocalypse_awakened", `${RELIC_WEAPON_BASE}/apocalypse_awakened.png`],
+  ["apocalypse_zenith", `${RELIC_WEAPON_BASE}/apocalypse_zenith.png`],
+  ["last_knife_dormant", `${RELIC_WEAPON_BASE}/last_knife_dormant.png`],
+  ["last_knife_awakened", `${RELIC_WEAPON_BASE}/last_knife_awakened.png`],
+  ["last_knife_zenith", `${RELIC_WEAPON_BASE}/last_knife_zenith.png`],
 
   // CG-GEAR-R02 — Daggers, Rapiers & Rogue Weapons.
   ["knife", `${WEAPON_ITEM_BASE}/knife.png`],
@@ -138,12 +150,12 @@ const WEAPON_ART_BY_ID = new Map([
   ["sage_staff", `${WEAPON_ITEM_BASE}/priests_staff.png`],
   ["sage_rod", `${WEAPON_ITEM_BASE}/priests_staff.png`],
   ["astral_rod", `${WEAPON_ITEM_BASE}/astral_staff.png`],
-  ["nirvana_dormant", `${WEAPON_ITEM_BASE}/priests_staff.png`],
-  ["nirvana_awakened", `${WEAPON_ITEM_BASE}/astral_staff.png`],
-  ["nirvana_zenith", `${WEAPON_ITEM_BASE}/astral_staff.png`],
-  ["stardust_rod_dormant", `${WEAPON_ITEM_BASE}/rune_staff.png`],
-  ["stardust_rod_awakened", `${WEAPON_ITEM_BASE}/elemental_staff.png`],
-  ["stardust_rod_zenith", `${WEAPON_ITEM_BASE}/astral_staff.png`],
+  ["nirvana_dormant", `${RELIC_WEAPON_BASE}/nirvana_dormant.png`],
+  ["nirvana_awakened", `${RELIC_WEAPON_BASE}/nirvana_awakened.png`],
+  ["nirvana_zenith", `${RELIC_WEAPON_BASE}/nirvana_zenith.png`],
+  ["stardust_rod_dormant", `${RELIC_WEAPON_BASE}/stardust_rod_dormant.png`],
+  ["stardust_rod_awakened", `${RELIC_WEAPON_BASE}/stardust_rod_awakened.png`],
+  ["stardust_rod_zenith", `${RELIC_WEAPON_BASE}/stardust_rod_zenith.png`],
 
   // CG-GEAR-R06 — Bows & Ranged Weapons.
   ["shortbow", `${WEAPON_ITEM_BASE}/shortbow.png`],
@@ -172,9 +184,9 @@ const WEAPON_ART_BY_ID = new Map([
   ["murasame", `${WEAPON_ITEM_BASE}/osafune.png`],
   ["murakumo", `${WEAPON_ITEM_BASE}/heavens_cloud.png`],
   ["ame_no_murakumo", `${WEAPON_ITEM_BASE}/heavens_cloud.png`],
-  ["masamune_dormant", `${WEAPON_ITEM_BASE}/kiyomori.png`],
-  ["masamune_awakened", `${WEAPON_ITEM_BASE}/genji_katana.png`],
-  ["masamune_zenith", `${WEAPON_ITEM_BASE}/heavens_cloud.png`],
+  ["masamune_dormant", `${RELIC_WEAPON_BASE}/masamune_dormant.png`],
+  ["masamune_awakened", `${RELIC_WEAPON_BASE}/masamune_awakened.png`],
+  ["masamune_zenith", `${RELIC_WEAPON_BASE}/masamune_zenith.png`],
 
   // CG-GEAR-R08 — Knuckles, Cesti & Claws.
   ["leather_knuckles", `${WEAPON_ITEM_BASE}/leather_knuckles.png`],
@@ -191,9 +203,9 @@ const WEAPON_ART_BY_ID = new Map([
   ["hell_claws", `${WEAPON_ITEM_BASE}/demon_claws.png`],
   ["dragon_claws", `${WEAPON_ITEM_BASE}/wyvern_claws.png`],
   ["kaiser_knuckles", `${WEAPON_ITEM_BASE}/godhand.png`],
-  ["godhand_dormant", `${WEAPON_ITEM_BASE}/godhand.png`],
-  ["godhand_awakened", `${WEAPON_ITEM_BASE}/godhand.png`],
-  ["godhand_zenith", `${WEAPON_ITEM_BASE}/godhand.png`],
+  ["godhand_dormant", `${RELIC_WEAPON_BASE}/godhand_dormant.png`],
+  ["godhand_awakened", `${RELIC_WEAPON_BASE}/godhand_awakened.png`],
+  ["godhand_zenith", `${RELIC_WEAPON_BASE}/godhand_zenith.png`],
 
   // CG-GEAR-R09 — Wands, Scepters & Focuses.
   ["ash_wand", `${WEAPON_ITEM_BASE}/ash_wand.png`],

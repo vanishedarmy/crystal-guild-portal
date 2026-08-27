@@ -1,4 +1,5 @@
 import BossArtwork from "../components/BossArtwork.jsx";
+import RelicArtwork from "../components/RelicArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -24,6 +25,7 @@ function detailFor(trophy) {
 function FeaturedTrophy({ trophy, onDetail }) {
   const content = (
     <>
+      {trophy.type === "relic" && trophy.relic ? <RelicArtwork relic={trophy.relic} stage={3} className="featured-relic-artwork" /> : null}
       <div className="trophy-glyph" aria-hidden="true">{GLYPHS[trophy.type] || "◇"}</div>
       <div className="slot-label">{trophy.eyebrow}</div>
       <strong>{trophy.name}</strong>
@@ -109,7 +111,8 @@ export default function TrophyHall({ data, onDetail }) {
       <CollectionPanel badge={`${relics.length} complete`} title="Completed Relic Weapons">
         <div className="trophy-card-grid">
           {relics.length ? relics.map((relic) => (
-            <ClickableCard className="trophy-record-card" detail={{ type: "relic", relic }} key={relic.id || relic.name} onOpen={onDetail}>
+            <ClickableCard className="trophy-record-card trophy-relic-card" detail={{ type: "relic", relic }} key={relic.id || relic.name} onOpen={onDetail}>
+              <RelicArtwork relic={relic} stage={3} className="trophy-relic-artwork" />
               <div className="slot-label">{relic.job} Relic</div>
               <strong>{relic.name}</strong>
               <span>Zenith Complete{relic.completed_at ? ` · ${relic.completed_at}` : ""}</span>

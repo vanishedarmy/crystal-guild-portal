@@ -1,32 +1,32 @@
-# Crystal Guild v1.1.19 — Retro Phase III RC1 Hotfix 1
+# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 3 — Relic Visuals
 
-## Scenic Background Implementation Fix
+## Summary
+This web-only visual hotfix builds the three-stage Relic weapon artwork into the live Portal and Player Guide while preserving gameplay, progression, databases, and Portal Action behavior.
 
-This is a **Web-only RC hotfix** for the scenic background pass introduced in RC1. The Bot/runtime gameplay build remains unchanged.
+## Relic artwork
+- Adds a dedicated `relic-weapons-v1` artwork family for all eight Relic questlines: Gae Bolg, Excalibur, Apocalypse, Godhand, Masamune, Stardust Rod, Nirvana, and Last Knife.
+- Every Relic now has explicit Dormant, Awakened, and Zenith artwork routing (24 PNG assets total).
+- Awakened visuals use the completed Batch 2 weapon artwork.
+- Zenith visuals use the completed Batch 3 final-form artwork.
+- Dormant visuals retain restrained canonical weapon art so each progression path has a complete visual ladder without changing item identity.
 
-### Fixed
-- Camp & Recovery scenic artwork now renders as an actual visible scene layer.
-- Guild Blacksmith scenic artwork now renders behind the workspace header/top content.
-- Chocobo Stable scenic artwork now renders behind the Stable workspace.
-- Moogle Emporium scenic artwork now renders behind the shop workspace.
-- The scene assets moved from `scene-backgrounds-v1` to cache-busted `scene-backgrounds-v2` routes.
-- The retired `scene-backgrounds-v1` directory is removed from the full hotfix Web package.
+## Where Relic visuals now appear
+- Adventurer Portal Relic Arsenal cards, using the hero's current Relic stage.
+- Relic detail dialog.
+- Trophy Hall completed Relics and featured Relic trophies, fixed to Zenith artwork.
+- Player Guide Relic catalog cards, previewing the Zenith final form.
+- Player Guide Relic dossiers, showing the correct artwork beside every Dormant / Awakened / Zenith stage reward.
+- Shared item artwork routing, so Relic reward weapons display their dedicated art anywhere the standard item artwork component is used.
 
-### Root cause
-RC1 attached scene artwork to the same `::before` pseudo-element used by the shared `.panel` chrome. The shared rule sets that pseudo-element to a 1px accent line. Although RC1 overrode the inset and background image, the inherited 1px height remained, so the scene was effectively reduced to a thin line.
+## UI treatment
+Relic images use `object-fit: contain`, transparent PNG backgrounds, compact framed presentation, and responsive sizing so long weapons remain visible without cropping on desktop or mobile.
 
-Hotfix 1 moves scenic panel artwork to an independent `::after` layer and leaves the shared `::before` accent rule untouched.
-
-### Presentation
-- Scenic art uses a visible upper scene band with a dark fade into the normal panel surface.
-- Functional cards/toolbars receive translucent backing where needed for readability.
-- Mobile uses a fixed compact scene band rather than stretching a landscape image through a tall single-column page.
-- High-contrast preferences continue to reduce decorative artwork.
-
-### Compatibility
-- Hosted runtime: `1.1.19-retro-phase-iii-rc1` unchanged
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h1`
-- Local DB schema: **6** unchanged
-- Hosted sync schema: **1** unchanged
-- Portal Action protocol: **15** unchanged
-- No Bot redeploy, database migration, player reset, OAuth change, or new environment variable is required.
+## Compatibility
+- Web-only hotfix.
+- Runtime identity remains `1.1.19-retro-phase-iii-rc1`.
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h3`.
+- Local DB schema: unchanged.
+- Hosted sync schema: unchanged.
+- Portal Action protocol: unchanged.
+- Twitch command prefix: `!` unchanged.
+- No database migration, player reset, OAuth reauthorization, or new environment variables required.

@@ -1,5 +1,6 @@
 import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
+import RelicArtwork from "../components/RelicArtwork.jsx";
 import { number, pct } from "../utils/formatters.js";
 
 export default function Relics({ data, onDetail }) {
@@ -9,6 +10,7 @@ export default function Relics({ data, onDetail }) {
       <div className="relic-grid">
         {data.relics.map((relic) => (
           <ClickableCard className="relic-card" key={relic.id || relic.name} detail={{ type: "relic", relic }} onOpen={onDetail}>
+            <RelicArtwork relic={relic} className="relic-card-artwork" />
             <div className="slot-label">{relic.job} Relic</div>
             <div className="relic-name">{relic.name}</div>
             <div className="card-meta">Stage {number(relic.stage)} / {number(relic.total_stages)}{relic.current_reward ? ` · ${relic.current_reward}` : ""}</div>

@@ -8,9 +8,15 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The selected portrait is visible on both the owner Stable and read-only public Chocobo cards.
 - Existing Chocobos migrate to Classic Gold automatically; Bond, traits, names, and progression are untouched.
 
+## RC1 Hotfix 3 — Relic Visuals
+- All eight Relic weapon lines now have a complete three-stage visual route: Dormant, Awakened, and Zenith.
+- Dedicated Relic art is surfaced in the Relic Arsenal, Relic detail dialog, Trophy Hall, Player Guide Relic cards/dossiers, and shared item-art locations.
+- 24 transparent PNG stage assets are packaged under `frontend/public/retro-phase-iii/relic-weapons-v1/`.
+- This remains a Web-only visual update; gameplay and persistent progression are unchanged.
+
 ## Technical identity
 - Hosted Web runtime: `1.1.19-retro-phase-iii-rc1`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h3`
 - Portal Action protocol: `15`
 - Hosted sync schema: `1`
 - Paired Bot runtime: `1.1.19-retro-phase-iii-rc1`

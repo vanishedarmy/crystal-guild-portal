@@ -1,0 +1,280 @@
+{
+  "release": "Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 3 \u2014 Relic Visuals",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h3",
+  "asset_family": "relic-weapons-v1",
+  "relic_count": 8,
+  "stages_per_relic": 3,
+  "asset_count": 24,
+  "notes": {
+    "dormant": "Uses existing canonical weapon-family art as the restrained first-stage visual.",
+    "awakened": "Uses Batch 2 dedicated Relic artwork.",
+    "zenith": "Uses Batch 3 final-stage dedicated Relic artwork.",
+    "routing": "All Relic reward item IDs route to this dedicated asset family."
+  },
+  "entries": [
+    {
+      "relic_id": "gae_bolg",
+      "relic_name": "Gae Bolg",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/gae_bolg_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "2970551a73ef17e37f6eb40ffcd8388fdf86a37224103785bc5ff4f54a1b57f0"
+    },
+    {
+      "relic_id": "gae_bolg",
+      "relic_name": "Gae Bolg",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/gae_bolg_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "7a38543dce7ae6196d98fea4082af69bac9202a2806f691ba6a258153b279b2f"
+    },
+    {
+      "relic_id": "gae_bolg",
+      "relic_name": "Gae Bolg",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/gae_bolg_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "2e8da8a75fe82e1321803c2b71c2c9fd67563b9bf927f3ef534bee3447c0bfb4"
+    },
+    {
+      "relic_id": "excalibur",
+      "relic_name": "Excalibur",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/excalibur_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "da07d9ee750e43b8f72f58dfd68e27f13f0e604d4abfd86a7094e60c721cd5c9"
+    },
+    {
+      "relic_id": "excalibur",
+      "relic_name": "Excalibur",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/excalibur_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "e2bd25d44fae4dc1e342620478ef2c21ea606383fbf2450829809f59ce1c0b2f"
+    },
+    {
+      "relic_id": "excalibur",
+      "relic_name": "Excalibur",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/excalibur_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "0ee86d68cf4e600a2e37023b25f84d703f5298f4d2acbeba7bbdd768085a61e4"
+    },
+    {
+      "relic_id": "apocalypse",
+      "relic_name": "Apocalypse",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/apocalypse_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "627d34f5c4a2350d7f6579dc4550877b440cce94862fb5267471a2d1c361b580"
+    },
+    {
+      "relic_id": "apocalypse",
+      "relic_name": "Apocalypse",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/apocalypse_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "fc0c97403a7066e5b7e3c09fd92909f0c65aeaff6aa15632cd245ecc1809f822"
+    },
+    {
+      "relic_id": "apocalypse",
+      "relic_name": "Apocalypse",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/apocalypse_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "3dd1e393853b388c313c01bb8594d6d5e7c749ccfb11b6c3d88671f2919133a9"
+    },
+    {
+      "relic_id": "godhand",
+      "relic_name": "Godhand",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/godhand_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "68dece3bc6b6bfe3af9e5558f39dbd656c4e86f9cfad5182f3227fa344cd27ee"
+    },
+    {
+      "relic_id": "godhand",
+      "relic_name": "Godhand",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/godhand_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "90c1318d319dfc0e3f9cdffb1de0dd28de80ac4f7b414d07f22a66b0dec9a3c1"
+    },
+    {
+      "relic_id": "godhand",
+      "relic_name": "Godhand",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/godhand_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "0b0f22f6d68d70ec6b2ce50a340f8c19f7d6aa1766f974c815d357172a6a9d7a"
+    },
+    {
+      "relic_id": "masamune",
+      "relic_name": "Masamune",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/masamune_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "d74b0fada509828af7dece2cb42019e97957a4397dd866d9aebaf74fbbe39400"
+    },
+    {
+      "relic_id": "masamune",
+      "relic_name": "Masamune",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/masamune_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "f4775820ebaf1782cbe3c36923a2caacd3906622ea1c981c52996540cf74509d"
+    },
+    {
+      "relic_id": "masamune",
+      "relic_name": "Masamune",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/masamune_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "6f60c6950082efbc30c48345998474ee01f2a96a50f05df836b6a378e698fbbe"
+    },
+    {
+      "relic_id": "stardust_rod",
+      "relic_name": "Stardust Rod",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/stardust_rod_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "565d55ccf9429035b11b225b0369992f05aed226f90b21bf6315f6f9a8ee35e6"
+    },
+    {
+      "relic_id": "stardust_rod",
+      "relic_name": "Stardust Rod",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/stardust_rod_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "1ac622dae4afb13acab6397b3523dca5aa5b56545eea6753c0c331e9bc99bd2c"
+    },
+    {
+      "relic_id": "stardust_rod",
+      "relic_name": "Stardust Rod",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/stardust_rod_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "70fe82c84392b9e38e9c01cec7bd131680cb7f6a28211c17095cfbb05edf2b0d"
+    },
+    {
+      "relic_id": "nirvana",
+      "relic_name": "Nirvana",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/nirvana_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "35b09ce81a47a91e8819ce3dba01086d4043bde681435a3c7d2600e967a1fd57"
+    },
+    {
+      "relic_id": "nirvana",
+      "relic_name": "Nirvana",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/nirvana_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "d1d2ee5ae2d4788a0a68a259f9bf843534874cf5c6c400ed215d604c54b4148c"
+    },
+    {
+      "relic_id": "nirvana",
+      "relic_name": "Nirvana",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/nirvana_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "aa6816161c3db1b06c0ba7b85aa24c86406f3d0308b4fab1db966b176e741c52"
+    },
+    {
+      "relic_id": "last_knife",
+      "relic_name": "Last Knife",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/last_knife_dormant.png",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "0ad20be2246143c73fb82fc4ce6095bebbd989384434773605608f87ad864590"
+    },
+    {
+      "relic_id": "last_knife",
+      "relic_name": "Last Knife",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/last_knife_awakened.png",
+      "width": 1254,
+      "height": 1254,
+      "transparent_background": true,
+      "sha256": "627d3445de92eef619fd214677fa6f5346bb220471610abb088866b60c8d50c8"
+    },
+    {
+      "relic_id": "last_knife",
+      "relic_name": "Last Knife",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/last_knife_zenith.png",
+      "width": 768,
+      "height": 768,
+      "transparent_background": true,
+      "sha256": "755ddb24ed7f2875997ff812e804d499491a39b888cbf0e4cb3b1787759e82b0"
+    }
+  ]
+}

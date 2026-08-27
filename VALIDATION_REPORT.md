@@ -1,33 +1,22 @@
-# Validation Report — v1.1.19 Retro Phase III RC1 Hotfix 1
+# Validation Report — RC1 Hotfix 3 Relic Visuals
 
-## Root-cause verification
-PASS — RC1's scenic layer shared `.panel::before`, whose common chrome rule retained `height: 1px`.
+## Result
+PASS
 
-PASS — Hotfix 1 moves all four panel scenes to `::after`, eliminating that pseudo-element collision while preserving the normal panel accent line.
+## Verified
+- 8 canonical Relic questlines are represented.
+- 3 stage visuals are packaged for each Relic: Dormant, Awakened, Zenith.
+- 24/24 Relic PNG assets exist, use RGBA transparency, and resolve through the dedicated artwork routes.
+- All Relic stage reward item IDs resolve to `/retro-phase-iii/relic-weapons-v1/<item_id>.png`.
+- Relic Arsenal cards use stage-aware artwork.
+- Trophy Hall completed/featured Relics use Zenith artwork.
+- Relic detail dialog displays stage-aware artwork.
+- Player Guide Relic cards preview Zenith art and stage dossiers show each stage reward art.
+- Responsive CSS uses contained artwork rather than crop/cover behavior.
+- Frontend revision is `1.1.19-retro-phase-iii14-rc1h3` in the shared frontend version source and hosted health response.
 
-## Scene routing
-PASS — Camp -> `/retro-phase-iii/scene-backgrounds-v2/camp.png`
-
-PASS — Blacksmith -> `/retro-phase-iii/scene-backgrounds-v2/blacksmith.png`
-
-PASS — Chocobo Stable -> `/retro-phase-iii/scene-backgrounds-v2/chocobo_stable.png`
-
-PASS — Moogle Emporium -> `/retro-phase-iii/scene-backgrounds-v2/emporium.png`
-
-PASS — Inventory Recovery reuses the Camp scene through its independent `recovery-dashboard::before` layer.
-
-PASS — all five live component class bindings are covered by the scenic regression test.
-
-PASS — retired `scene-backgrounds-v1` is absent from the full hotfix Web tree.
-
-## Automated validation
-- Frontend Node tests: **283 / 283 PASS**
-- Hosted Web/API tests: **46 / 46 PASS**
-- Dedicated scenic routing/binding regression: **PASS**
-- Frontend revision: `1.1.19-retro-phase-iii14-rc1h1`
-
-## Compatibility
-- Runtime remains `1.1.19-retro-phase-iii-rc1`
-- DB schema 6 unchanged
-- Hosted sync schema 1 unchanged
-- Portal protocol 15 unchanged
+## Automated checks
+- Frontend Node unit suite: 286 passed, 0 failed.
+- Python hosted Portal/action suite: 46 passed, 0 failed (with project root on `PYTHONPATH`).
+- JavaScript syntax checks for non-JSX modified modules: PASS.
+- Local Vite production compilation was not executed in this environment because frontend npm dependencies are intentionally not vendored in the Web package and network dependency installation was unavailable. The package Dockerfile continues to install pinned dependencies and run `npm run build` during deployment.

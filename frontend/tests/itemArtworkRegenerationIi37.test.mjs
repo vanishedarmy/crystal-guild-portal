@@ -65,7 +65,7 @@ test("Retro Phase III shared equipment fallbacks remain packaged after later ide
     const art = itemArtworkPath(item);
     assert.ok(art, `missing art path: ${item.id}`);
     if (item.type === "weapon") {
-      assert.match(art, /(?:-v2|weapon-icons-v2|weapon-families-v1)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
+      assert.match(art, /(?:-v2|weapon-icons-v2|weapon-families-v1|relic-weapons-v1)\//, `unexpected weapon artwork path for ${item.id}: ${art}`);
     } else {
       assert.match(art, /(?:-v2|weapon-icons-v2|weapon-families-v1|equipment-families-v1)\//, `expected packaged equipment art for ${item.id}: ${art}`);
     }

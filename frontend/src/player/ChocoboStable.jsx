@@ -55,6 +55,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
   const [name, setName] = useState("");
   const [rename, setRename] = useState("");
   const [portraitChoice, setPortraitChoice] = useState("classic_gold");
+  const [showPortraitPicker, setShowPortraitPicker] = useState(false);
   const [clock, setClock] = useState(() => Date.now());
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
@@ -267,50 +268,75 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
             <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || rename.trim().length < 2} onClick={() => runMutation("rename", () => submitRenameChocobo(rename, csrfToken, actionKey("rename-chocobo")), "Renaming companion…")}>{busy === "rename" ? "Renaming…" : "Rename Chocobo"}</button>
           </div>
         </div>
-        <section className="chocobo-portrait-picker" aria-labelledby="chocobo-portrait-picker-title">
+        <section className={`chocobo-portrait-picker ${showPortraitPicker ? "expanded" : "collapsed"}`} aria-labelledby="chocobo-portrait-picker-title">
           <div className="chocobo-portrait-picker-heading">
             <div>
               <span className="slot-label">Companion Portrait</span>
               <h3 id="chocobo-portrait-picker-title">Choose {companion.name}'s portrait</h3>
               <p className="muted">Portraits are cosmetic only. Choose any style and apply it to your registered Chocobo.</p>
             </div>
-            <span className="small-badge">10 PORTRAITS</span>
+            <div className="chocobo-portrait-heading-actions">
+              <span className="small-badge">10 PORTRAITS</span>
+              <button
+                type="button"
+                className="equipment-action-button secondary chocobo-portrait-toggle"
+                aria-expanded={showPortraitPicker}
+                aria-controls="chocobo-portrait-gallery"
+                onClick={() => setShowPortraitPicker((current) => !current)}
+              >
+                {showPortraitPicker ? "Hide Portrait Gallery" : "Show Portrait Gallery"}
+              </button>
+            </div>
           </div>
-          <div className="chocobo-portrait-grid" role="group" aria-label="Chocobo portrait choices">
-            {CHOCOBO_PORTRAITS.map((portrait) => {
-              const selected = portraitChoice === portrait.id;
-              const applied = companion.portrait_id === portrait.id;
-              return (
+          <div className="chocobo-portrait-picker-summary">
+            <div className="chocobo-portrait-picker-current">
+              <span className="slot-label">Current Portrait</span>
+              <strong>{portraitFor(companion.portrait_id).name}</strong>
+            </div>
+            <div className="chocobo-portrait-picker-current">
+              <span className="slot-label">Selected</span>
+              <strong>{portraitFor(portraitChoice).name}</strong>
+            </div>
+          </div>
+          {showPortraitPicker ? (
+            <>
+              <div id="chocobo-portrait-gallery" className="chocobo-portrait-grid" role="group" aria-label="Chocobo portrait choices">
+                {CHOCOBO_PORTRAITS.map((portrait) => {
+                  const selected = portraitChoice === portrait.id;
+                  const applied = companion.portrait_id === portrait.id;
+                  return (
+                    <button
+                      key={portrait.id}
+                      type="button"
+                      className={`chocobo-portrait-option ${selected ? "selected" : ""} ${applied ? "applied" : ""}`}
+                      aria-pressed={selected}
+                      onClick={() => setPortraitChoice(portrait.id)}
+                      disabled={Boolean(busy)}
+                    >
+                      <img src={portrait.src} alt="" aria-hidden="true" />
+                      <span>{portrait.name}</span>
+                      {applied ? <small>Applied</small> : null}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="chocobo-portrait-picker-actions">
+                <span className="muted">Selected: <strong>{portraitFor(portraitChoice).name}</strong></span>
                 <button
-                  key={portrait.id}
                   type="button"
-                  className={`chocobo-portrait-option ${selected ? "selected" : ""} ${applied ? "applied" : ""}`}
-                  aria-pressed={selected}
-                  onClick={() => setPortraitChoice(portrait.id)}
-                  disabled={Boolean(busy)}
+                  className="equipment-action-button"
+                  disabled={!actionsAvailable || Boolean(busy) || portraitChoice === companion.portrait_id}
+                  onClick={() => runMutation(
+                    "portrait",
+                    () => submitSetChocoboPortrait(portraitChoice, csrfToken, actionKey("chocobo-portrait", portraitChoice)),
+                    "Applying Chocobo portrait…",
+                  )}
                 >
-                  <img src={portrait.src} alt="" aria-hidden="true" />
-                  <span>{portrait.name}</span>
-                  {applied ? <small>Applied</small> : null}
+                  {busy === "portrait" ? "Applying…" : portraitChoice === companion.portrait_id ? "Portrait Applied" : "Apply Portrait"}
                 </button>
-              );
-            })}
-          </div>
-          <div className="chocobo-portrait-picker-actions">
-            <span className="muted">Selected: <strong>{portraitFor(portraitChoice).name}</strong></span>
-            <button
-              type="button"
-              className="equipment-action-button"
-              disabled={!actionsAvailable || Boolean(busy) || portraitChoice === companion.portrait_id}
-              onClick={() => runMutation(
-                "portrait",
-                () => submitSetChocoboPortrait(portraitChoice, csrfToken, actionKey("chocobo-portrait", portraitChoice)),
-                "Applying Chocobo portrait…",
-              )}
-            >
-              {busy === "portrait" ? "Applying…" : portraitChoice === companion.portrait_id ? "Portrait Applied" : "Apply Portrait"}
-            </button>
-          </div>
+              </div>
+            </>
+          ) : null}
         </section>
         </>
       ) : (

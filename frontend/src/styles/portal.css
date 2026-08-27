@@ -7890,37 +7890,59 @@ main h1,
 }
 .chocobo-portrait-picker {
   display: grid;
-  gap: 14px;
-  padding: 16px;
+  gap: 12px;
+  padding: 14px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: linear-gradient(145deg, rgba(255,214,98,.035), rgba(102,177,223,.025));
+  background: linear-gradient(145deg, rgba(255,214,98,.03), rgba(102,177,223,.02));
 }
 .chocobo-portrait-picker-heading,
-.chocobo-portrait-picker-actions {
+.chocobo-portrait-picker-actions,
+.chocobo-portrait-heading-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .chocobo-portrait-picker-heading h3 { margin: 2px 0 4px; }
 .chocobo-portrait-picker-heading p { margin: 0; }
+.chocobo-portrait-toggle { min-width: 190px; }
+.chocobo-portrait-picker-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.chocobo-portrait-picker-current {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.03);
+}
+.chocobo-portrait-picker-current strong {
+  color: var(--text);
+  font-size: .96rem;
+}
+.chocobo-portrait-picker.collapsed {
+  gap: 10px;
+}
 .chocobo-portrait-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 .chocobo-portrait-option {
   position: relative;
   display: grid;
-  gap: 7px;
+  gap: 6px;
   justify-items: center;
   min-width: 0;
-  padding: 9px;
+  padding: 8px;
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 13px;
-  background: rgba(0,0,0,.18);
+  background: rgba(0,0,0,.16);
   color: var(--text);
   font: inherit;
   cursor: pointer;
@@ -7928,7 +7950,7 @@ main h1,
 .chocobo-portrait-option:hover:not(:disabled),
 .chocobo-portrait-option.selected {
   border-color: rgba(143,219,255,.52);
-  background: rgba(143,219,255,.07);
+  background: rgba(143,219,255,.06);
 }
 .chocobo-portrait-option.applied {
   box-shadow: inset 0 0 0 1px rgba(255,214,98,.24);
@@ -7940,7 +7962,7 @@ main h1,
 .chocobo-portrait-option:disabled { cursor: default; }
 .chocobo-portrait-option img {
   display: block;
-  width: min(100%, 116px);
+  width: min(100%, 84px);
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 10px;
@@ -7951,32 +7973,40 @@ main h1,
   width: 100%;
   overflow-wrap: anywhere;
   text-align: center;
-  font-size: .83rem;
+  font-size: .77rem;
   font-weight: 700;
+  line-height: 1.2;
 }
 .chocobo-portrait-option small {
   position: absolute;
-  top: 13px;
-  right: 13px;
-  padding: 3px 6px;
+  top: 10px;
+  right: 10px;
+  padding: 2px 6px;
   border: 1px solid rgba(255,214,98,.28);
   border-radius: 999px;
-  background: rgba(4,10,18,.88);
+  background: rgba(4,10,18,.9);
   color: var(--gold);
-  font-size: .62rem;
+  font-size: .58rem;
   letter-spacing: .06em;
   text-transform: uppercase;
 }
 .chocobo-portrait-picker-actions .muted strong { color: var(--text); }
 @media (max-width: 900px) {
+  .chocobo-portrait-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .chocobo-portrait-picker-summary { grid-template-columns: 1fr; }
   .chocobo-portrait-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
   .chocobo-portrait { width: 76px; height: 76px; }
   .chocobo-portrait-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .chocobo-portrait-picker { padding: 12px; }
-  .chocobo-portrait-picker-actions { align-items: stretch; }
-  .chocobo-portrait-picker-actions .equipment-action-button { width: 100%; }
+  .chocobo-portrait-picker-actions,
+  .chocobo-portrait-heading-actions { align-items: stretch; }
+  .chocobo-portrait-picker-actions .equipment-action-button,
+  .chocobo-portrait-heading-actions .equipment-action-button,
+  .chocobo-portrait-toggle { width: 100%; min-width: 0; }
 }
 
 /* v1.1.19 Retro Phase III RC1 Hotfix 1 — scenic panel backgrounds.

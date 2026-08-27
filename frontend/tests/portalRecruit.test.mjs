@@ -11,7 +11,7 @@ const authHook = fs.readFileSync(new URL("../src/hooks/usePortalAuth.js", import
 test("Portal exposes a strict first-time RECRUIT action", () => {
   assert.match(authApi, /submitPortalAction\("RECRUIT", \{\}/);
   assert.match(hosted, /"RECRUIT", "PING"/);
-  assert.match(hosted, /action_type != "RECRUIT"/);
+  assert.match(hosted, /action_type not in \{"RECRUIT", "STREAMER_COMMAND"\}/);
 });
 
 test("Guild directory offers website recruitment to Twitch users without a character", () => {

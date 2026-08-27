@@ -19,7 +19,7 @@ test("Portal Phase 4 action client exposes character management plus equipment a
   }
   assert.match(api, /X-Crystal-Guild-CSRF/);
   assert.match(api, /Idempotency-Key/);
-  assert.doesNotMatch(api, /COMMAND|READYALL|ATTACK|RAID_ACTION/);
+  assert.doesNotMatch(api, /submitPortalAction\(.*(?:READYALL|ATTACK|RAID_ACTION)/);
 });
 
 test("Portal action controls render only on the signed-in player's own profile", async () => {

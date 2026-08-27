@@ -1,26 +1,26 @@
-# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 4 — Relic Refresh + Dynamic Camp
+# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 6 — Persistent Adventure Results
 
-## Relic artwork refresh
-All eight Relic questlines now use the newly regenerated three-tier weapon progression. Tier 1 is deliberately restrained, Tier 2 adds visible ornamentation, and Tier 3 is the fully legendary final form. Each stage remains a separate transparent PNG and keeps the existing stage-aware routing throughout the Portal and Player Guide.
+## Adventure results no longer disappear while you are away
+Portal-origin Adventure Board outcomes now use a durable, player-specific result inbox owned by the authoritative Bot database. A completed Solo Venture or timed Hunt remains available when the player leaves the page, returns later, changes tabs, refreshes the browser, or the Bot process restarts.
 
-Relics covered: Gae Bolg, Excalibur, Apocalypse, Godhand, Masamune, Stardust Rod, Nirvana, and Last Knife.
+Result cards no longer expire on a short timer. Each durable Solo/Hunt result includes a **Confirm Result** action. The result remains visible until the player explicitly confirms it. Multiple unconfirmed results are retained and presented newest-first; confirmation only clears the selected result.
 
-## Stream-aware Camp
-Camp now uses a stream-aware base duration in the authoritative Bot runtime:
-- Twitch LIVE: 15 minutes.
-- Twitch OFFLINE: 1 hour.
-- Unknown/unconfirmed Twitch state fails closed to the OFFLINE timer.
-- Existing Fellowship/Infirmary Camp-time reductions remain applied to the selected base duration.
+This resolves the case where a timed Hunt finished while the player was away from the Portal and its outcome was gone by the time they returned.
 
-The Adventure Board shows whether the currently quoted Camp timer is LIVE or OFFLINE, and the Player Guide/Recovery copy explains the new rule.
+## Streamer Dashboard + backend controls retained
+Hotfix 5's Streamer Dashboard redesign remains intact: normal responsive document flow replaces the obstructive locked workspace, broadcaster authorization is compact, and the Streamer Control Center provides owner-authenticated buttons for approved backend commands.
+
+## LIVE-only Portal announcements retained
+Portal-origin notable Solo results, Hunt results, and newly unlocked Titles may post to Twitch chat only when the stream is confirmed LIVE. Portal acceptance/intermediate noise remains silent. Chat-origin commands continue using their native chat response behavior.
 
 ## Compatibility
-- Web asset revision: `1.1.19-retro-phase-iii14-rc1h4`.
-- Bot runtime: `1.1.19-retro-phase-iii-rc1h4`.
-- Local database schema: unchanged.
-- Hosted sync schema: unchanged.
-- Portal Action protocol: 15 unchanged.
-- Twitch command prefix: `!` unchanged.
-- No player reset, database migration, OAuth reauthorization, or new required environment variables.
-
-Because Camp timing is authoritative in the Bot, deploy both the Web and Bot Hotfix 4 packages.
+- Web runtime: `1.1.19-retro-phase-iii-rc1h6`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h6`
+- Bot runtime: `1.1.19-retro-phase-iii-rc1h6`
+- Local database schema: **7** (automatic additive migration from schema 6 with verified pre-migration backup)
+- Hosted sync schema: **1** unchanged
+- Portal Action protocol: **17** (paired Web + Bot deployment required)
+- Twitch command prefix: `!` unchanged
+- Relic Tier 1/2/3 visual refresh remains intact
+- Camp remains 15-minute base while LIVE / 1-hour base while OFFLINE
+- No player reset, OAuth reauthorization, or new required environment variable

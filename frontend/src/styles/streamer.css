@@ -1223,3 +1223,271 @@ body.streamer-page {
 @media (min-width: 980px) {
   .streamer-overlay-card { position: static; }
 }
+
+/* v1.1.19 RC1 Hotfix 5 — Streamer Control Center + unlocked page flow.
+ * The dashboard now uses normal document scrolling at every breakpoint. No
+ * section owns the viewport and no broadcaster panel can cover other content. */
+.streamer-flow-layout {
+  display: grid;
+  gap: 0.8rem;
+}
+.streamer-pulse-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 0.8rem;
+  align-items: start;
+}
+.streamer-pulse-grid .streamer-leader-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.streamer-pulse-grid .streamer-activity-list {
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+}
+
+.streamer-control-panel {
+  overflow: visible;
+}
+.streamer-control-access {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.72rem 0.8rem;
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(139, 208, 255, 0.14);
+  background: rgba(7, 14, 32, 0.52);
+}
+.streamer-control-access > div { min-width: 0; }
+.streamer-control-access strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.78rem;
+}
+.streamer-control-access p {
+  margin: 0.22rem 0 0;
+  color: var(--muted);
+  font-size: 0.69rem;
+  line-height: 1.45;
+}
+.streamer-control-access.ready {
+  border-color: rgba(114, 221, 169, 0.24);
+}
+.streamer-control-access.offline,
+.streamer-control-access.unauthorized {
+  border-color: rgba(230, 203, 136, 0.18);
+}
+.streamer-control-ready {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(114, 221, 169, 0.35);
+  color: #b8f4d4;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.streamer-control-access .primary-button,
+.streamer-control-card .ghost-button,
+.streamer-control-card .danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.48rem 0.7rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.67rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+.streamer-control-access .primary-button {
+  flex: 0 0 auto;
+  border: 1px solid rgba(139, 208, 255, 0.28);
+  background: rgba(65, 139, 215, 0.18);
+  color: var(--text);
+}
+.streamer-control-card .danger-button {
+  border: 1px solid rgba(236, 105, 105, 0.38);
+  background: rgba(151, 48, 58, 0.16);
+  color: #ffd0d0;
+}
+.streamer-control-card button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.streamer-control-result {
+  margin: -0.1rem 0 0.72rem;
+  padding: 0.6rem 0.72rem;
+  border: 1px solid rgba(139, 208, 255, 0.14);
+  background: rgba(7, 14, 32, 0.62);
+  color: var(--text);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+.streamer-control-result.good { border-color: rgba(114, 221, 169, 0.28); }
+.streamer-control-result.warning { border-color: rgba(230, 203, 136, 0.28); }
+.streamer-control-result.danger { border-color: rgba(236, 105, 105, 0.32); }
+
+.streamer-control-groups,
+.streamer-command-groups {
+  display: grid;
+  gap: 0.55rem;
+}
+.streamer-control-group,
+.streamer-reference-group {
+  border: 1px solid rgba(139, 208, 255, 0.12);
+  background: rgba(4, 10, 24, 0.38);
+}
+.streamer-control-group > summary,
+.streamer-reference-group > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.68rem 0.75rem;
+  cursor: pointer;
+  list-style: none;
+}
+.streamer-control-group > summary::-webkit-details-marker,
+.streamer-reference-group > summary::-webkit-details-marker { display: none; }
+.streamer-control-group > summary span,
+.streamer-reference-group > summary span {
+  display: grid;
+  gap: 0.14rem;
+  min-width: 0;
+}
+.streamer-control-group > summary strong,
+.streamer-reference-group > summary strong {
+  color: var(--gold);
+  font-size: 0.76rem;
+}
+.streamer-control-group > summary small,
+.streamer-reference-group > summary small {
+  color: var(--muted);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+.streamer-control-group > summary b {
+  flex: 0 0 auto;
+  min-width: 25px;
+  padding: 0.2rem 0.35rem;
+  border: 1px solid rgba(230, 203, 136, 0.16);
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.62rem;
+}
+.streamer-control-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  padding: 0 0.65rem 0.65rem;
+}
+.streamer-control-card {
+  display: flex;
+  min-width: 0;
+  min-height: 180px;
+  flex-direction: column;
+  gap: 0.42rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(139, 208, 255, 0.10);
+  background: rgba(12, 20, 42, 0.52);
+}
+.streamer-control-card.risk-caution { border-color: rgba(230, 203, 136, 0.18); }
+.streamer-control-card.risk-danger { border-color: rgba(236, 105, 105, 0.22); }
+.streamer-control-card-copy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+.streamer-control-card-copy code {
+  color: #b8ddff;
+  font-size: 0.61rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.streamer-control-card-copy span {
+  flex: 0 0 auto;
+  color: #e9c77d;
+  font-size: 0.54rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.streamer-control-card > strong {
+  color: var(--text);
+  font-size: 0.78rem;
+}
+.streamer-control-card > p {
+  flex: 1 1 auto;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1.4;
+}
+.streamer-control-card label {
+  display: grid;
+  gap: 0.22rem;
+}
+.streamer-control-card label > span {
+  color: var(--muted);
+  font-size: 0.57rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.streamer-control-card input {
+  width: 100%;
+  min-height: 34px;
+  box-sizing: border-box;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(139, 208, 255, 0.18);
+  border-radius: 5px;
+  background: rgba(3, 8, 20, 0.72);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.68rem;
+}
+.streamer-control-card button { width: 100%; }
+
+.streamer-reference-group .streamer-command-list {
+  padding: 0 0.65rem 0.65rem;
+}
+
+@media (min-width: 1181px) {
+  body.streamer-page { overflow: auto; }
+  .streamer-shell {
+    display: block;
+    height: auto;
+    min-height: calc(100vh - 64px);
+    overflow: visible;
+    padding: 0.9rem 0 2rem;
+  }
+  .streamer-footer { display: flex; }
+  .streamer-hero p:not(.eyebrow) { display: block; }
+}
+
+@media (max-width: 1040px) {
+  .streamer-pulse-grid { grid-template-columns: 1fr; }
+  .streamer-control-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .streamer-control-access { align-items: stretch; flex-direction: column; }
+  .streamer-control-grid { grid-template-columns: 1fr; }
+  .streamer-control-card { min-height: 0; }
+  .streamer-pulse-grid .streamer-leader-grid { grid-template-columns: 1fr; }
+  .streamer-control-group > summary { align-items: flex-start; }
+}
+
+
+/* H5 five-section jumpbar */
+.streamer-jumpbar {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+@media (max-width: 760px) {
+  .streamer-jumpbar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .streamer-jumpbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

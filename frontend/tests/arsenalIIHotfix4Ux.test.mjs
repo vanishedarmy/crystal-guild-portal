@@ -22,7 +22,8 @@ test("Hotfix 4 renders Hunt resolutions as structured results instead of raw cha
   assert.match(hunts, /hunt-result-reward-grid/);
   assert.match(hunts, /Mark remaining HP/);
   assert.match(hunts, /Auto plan/);
-  assert.match(hunts, /state\?\.recent_result\?\.kind === "hunt" \? <HuntResult/);
+  assert.match(hunts, /pendingHuntResults\.map/);
+  assert.match(hunts, /<HuntResult/);
 });
 
 test("Hotfix 4 reduces redundant Adventure Board copy and improves accessibility", () => {

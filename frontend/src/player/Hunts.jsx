@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   submitAdventureState,
   submitChallengeHunt,
+  submitAcknowledgeAdventureResult,
   submitTravelRegion,
   submitSoloVenture,
   submitSoloExpeditionAction,
@@ -101,7 +102,27 @@ function soloVentureSummary(summary) {
   return `Solo Venture: Defeated by ${enemyLabel}.`;
 }
 
-function SoloVentureResult({ summary, cooldownRemaining }) {
+function ResultConfirmation({ resultId, onConfirm, confirming, label = "Confirm Result" }) {
+  if (!resultId || typeof onConfirm !== "function") return null;
+  return (
+    <div className="adventure-result-confirmation">
+      <div>
+        <strong>Saved until you confirm</strong>
+        <span>This result will remain on your Adventure Board even if you leave the Portal.</span>
+      </div>
+      <button
+        type="button"
+        className="equipment-action-button secondary"
+        disabled={Boolean(confirming)}
+        onClick={() => onConfirm(resultId)}
+      >
+        {confirming ? "Confirming…" : label}
+      </button>
+    </div>
+  );
+}
+
+function SoloVentureResult({ summary, cooldownRemaining, resultId, onConfirm, confirming }) {
   if (!summary) return null;
   if (summary.type === "expedition") {
     const rewards = summary.rewards || {};
@@ -121,6 +142,7 @@ function SoloVentureResult({ summary, cooldownRemaining }) {
         {Array.isArray(rewards.loot) && rewards.loot.length ? <p className="solo-result-loot"><strong>Banked spoils:</strong> {rewards.loot.join(" · ")}</p> : null}
         {summary.lost_spoils?.gil || summary.lost_spoils?.items?.length ? <p className="solo-result-loot"><strong>Lost on the road:</strong> {number(summary.lost_spoils?.gil || 0)} Gil{summary.lost_spoils?.items?.length ? ` · ${summary.lost_spoils.items.join(" · ")}` : ""}</p> : null}
         <div className="adventure-combat-note"><strong>{cooldownRemaining > 0 ? `Next Solo Venture in ${duration(cooldownRemaining)}` : "Solo Venture ready again"}</strong><span>{soloVentureSummary(summary)}</span></div>
+        <ResultConfirmation resultId={resultId} onConfirm={onConfirm} confirming={confirming} />
       </div>
     );
   }
@@ -185,11 +207,12 @@ function SoloVentureResult({ summary, cooldownRemaining }) {
         <strong>{cooldownRemaining > 0 ? `Next Solo Venture in ${duration(cooldownRemaining)}` : "Solo Venture ready again"}</strong>
         <span>{soloVentureSummary(summary)}</span>
       </div>
+      <ResultConfirmation resultId={resultId} onConfirm={onConfirm} confirming={confirming} />
     </div>
   );
 }
 
-function HuntResult({ result }) {
+function HuntResult({ result, onConfirm, confirming }) {
   const summary = result?.summary || null;
   if (!summary) {
     return (
@@ -199,6 +222,7 @@ function HuntResult({ result }) {
           <span className={`small-badge ${result?.won ? "success" : ""}`}>{result?.won ? "Victory" : "Failed"}</span>
         </div>
         {(result?.messages || []).slice(0, 2).map((line, index) => <p className="hunt-result-legacy-line" key={`${index}:${line}`}>{line}</p>)}
+        <ResultConfirmation resultId={result?.result_id} onConfirm={onConfirm} confirming={confirming} />
       </section>
     );
   }
@@ -265,6 +289,7 @@ function HuntResult({ result }) {
           <span>{number(autoPlan.abilities)} abilities · {number(autoPlan.items)} items · {number(autoPlan.defends)} defends</span>
         </div>
       ) : null}
+      <ResultConfirmation resultId={result?.result_id} onConfirm={onConfirm} confirming={confirming} />
     </section>
   );
 }
@@ -313,7 +338,7 @@ export default function Hunts({ data, overview, onRefresh }) {
     () => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []),
     [auth.action_capabilities],
   );
-  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "START_REST"];
+  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT", "START_REST"];
   const actionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
@@ -459,6 +484,14 @@ export default function Hunts({ data, overview, onRefresh }) {
     }
   };
 
+  const confirmAdventureResult = (resultId) => runRequest(
+    `ack-result:${resultId}`,
+    "ack-result",
+    String(resultId),
+    (idem) => submitAcknowledgeAdventureResult(resultId, csrfToken, idem),
+    "Adventure result confirmed.",
+  );
+
   if (!isOwnProfile) return <HuntRecord data={data} />;
 
   const boardStateReady = Boolean(state);
@@ -480,7 +513,9 @@ export default function Hunts({ data, overview, onRefresh }) {
   const huntRanks = ["ALL", "C", "B", "A", "S", ...((state?.hunts || []).some((hunt) => hunt.rank === "S+") ? ["S+"] : [])];
   const expedition = state?.solo_venture?.expedition || null;
   const availableSoloAbilities = (expedition?.combat?.abilities || []).filter((ability) => ability.usable);
-  const recentSoloResult = state?.recent_result?.kind === "solo_venture" ? state.recent_result.summary : null;
+  const pendingResults = Array.isArray(state?.pending_results) ? state.pending_results : [];
+  const pendingSoloResults = pendingResults.filter((result) => result?.kind === "solo_venture");
+  const pendingHuntResults = pendingResults.filter((result) => result?.kind === "hunt");
   const soloEncounterChance = Number(state?.solo_venture?.encounter_chance_percent ?? 80);
   const soloTreasureChance = Number(state?.solo_venture?.treasure_chance_percent ?? 20);
 
@@ -544,7 +579,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
         <div className={`equipment-action-status compact-status ${actionsAvailable ? "ready" : "offline"}`} role="status">
           <strong>{actionsAvailable ? "Online" : "Offline"}</strong>
-          <span>{actionsAvailable ? "Adventure actions are ready." : "Actions return when Crystal Guild reconnects."}</span>
+          <span>{actionsAvailable ? `Adventure actions are ready.${pendingResults.length ? ` ${pendingResults.length} saved result${pendingResults.length === 1 ? "" : "s"} awaiting confirmation.` : ""}` : "Actions return when Crystal Guild reconnects."}</span>
           {message ? <small aria-live="polite">{message}</small> : null}
         </div>
       </section>
@@ -704,9 +739,18 @@ export default function Hunts({ data, overview, onRefresh }) {
           </div>
         )}
 
-        {!expedition && recentSoloResult ? (
-          <div className="solo-result-wrap" aria-live="polite">
-            <SoloVentureResult summary={recentSoloResult} cooldownRemaining={soloRemaining} />
+        {!expedition && pendingSoloResults.length ? (
+          <div className="solo-result-wrap adventure-pending-result-stack" aria-live="polite">
+            {pendingSoloResults.map((result) => (
+              <SoloVentureResult
+                key={`solo-result:${result.result_id}`}
+                summary={result.summary}
+                cooldownRemaining={soloRemaining}
+                resultId={result.result_id}
+                onConfirm={confirmAdventureResult}
+                confirming={busy === `ack-result:${result.result_id}`}
+              />
+            ))}
           </div>
         ) : null}
       </section>
@@ -768,7 +812,18 @@ export default function Hunts({ data, overview, onRefresh }) {
 
       {encounter && encounter.kind !== "venture" ? renderActiveEncounter(false) : null}
 
-      {state?.recent_result?.kind === "hunt" ? <HuntResult result={state.recent_result} /> : null}
+      {pendingHuntResults.length ? (
+        <div className="adventure-pending-result-stack" aria-label="Pending Hunt results">
+          {pendingHuntResults.map((result) => (
+            <HuntResult
+              key={`hunt-result:${result.result_id}`}
+              result={result}
+              onConfirm={confirmAdventureResult}
+              confirming={busy === `ack-result:${result.result_id}`}
+            />
+          ))}
+        </div>
+      ) : null}
       {state?.recent_result && !["solo_venture", "hunt"].includes(state.recent_result.kind) ? (
         <section className={`panel adventure-result-panel compact-result ${state.recent_result.won ? "won" : "lost"}`} aria-live="polite">
           <div className="panel-title-row"><div><p className="eyebrow">Recent Adventure</p><h2>{state.recent_result.won ? "Complete" : "Ended"}</h2></div><span className={`small-badge ${state.recent_result.won ? "success" : ""}`}>{state.recent_result.won ? "Victory" : "Defeat"}</span></div>

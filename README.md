@@ -15,12 +15,12 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h4`
-- Portal Action protocol: `15`
+- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h6`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h6`
+- Portal Action protocol: `17`
 - Hosted sync schema: `1`
-- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h4`
-- Local Bot DB schema: `6`
+- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h6`
+- Local Bot DB schema: `7`
 
 ## Facility supply balance
 - **Ancient Coin** now appears on Ossuary Knight, Mimic, Magic Pot, and Ancient Mimic.
@@ -36,3 +36,6 @@ The Player Guide Bestiary reads these percentages directly from `guide-data.json
 - All prior iii11 item/weapon artwork remains in place.
 - Current material artwork coverage remains complete.
 - No retired artwork path is restored by this balance checkpoint.
+
+## RC1 Hotfix 6 — Persistent Adventure Results
+The Streamer Dashboard remains in normal responsive page flow with owner-authenticated backend controls and LIVE-only notable Portal Solo/Hunt/Title announcements. Adventure Board Solo and timed Hunt result cards are now stored durably by the paired Bot and remain visible until the player explicitly selects **Confirm Result**. Deploy the matching Bot because DB schema 7 and Portal Action protocol 17 are required.

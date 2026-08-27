@@ -86,6 +86,7 @@ class PortalActionServerCase(unittest.TestCase):
         self.thread.start()
         self.base = f"http://127.0.0.1:{self.server.server_address[1]}"
         self.store.upsert_player(snapshot_payload())
+        self.store.apply_manifest(["van"], TWITCH_ID)
         self.session_token, self.csrf = self.store.create_session(
             {"twitch_id": TWITCH_ID, "login": "van", "display_name": "Van"},
             3600,
@@ -174,6 +175,49 @@ class PortalActionServerCase(unittest.TestCase):
         self.assertEqual(claimed[0]["twitch_id"], new_id)
         self.assertEqual(claimed[0]["username"], "newhero")
         self.assertEqual(claimed[0]["payload"], {"display_name": "New Hero"})
+
+    def test_streamer_command_requires_manifest_owner_and_strict_allowlist(self):
+        status, auth, _ = self.request("/api/auth/status", headers=self.user_headers())
+        self.assertEqual(status, 200)
+        self.assertTrue(auth["streamer_authorized"])
+        self.assertIn("STREAMER_COMMAND", auth["action_capabilities"])
+
+        status, queued, _ = self.request(
+            "/api/actions", method="POST",
+            payload={"type": "STREAMER_COMMAND", "payload": {"command": "health"}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "streamer-health-001"},
+        )
+        self.assertEqual(status, 202)
+        self.assertEqual(queued["action"]["type"], "STREAMER_COMMAND")
+        claimed = self.store.claim_actions("bot:test", limit=1)
+        self.assertEqual(claimed[0]["type"], "STREAMER_COMMAND")
+        self.assertEqual(claimed[0]["payload"], {"command": "health"})
+        self.assertTrue(self.store.complete_action(claimed[0]["id"], claimed[0]["lease_token"], True, "ok"))
+
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            self.request(
+                "/api/actions", method="POST",
+                payload={"type": "STREAMER_COMMAND", "payload": {"command": "say", "argument": "hello"}},
+                headers={**self.user_headers(csrf=True), "Idempotency-Key": "streamer-arbitrary-001"},
+            )
+        self.assertEqual(caught.exception.code, 400)
+
+        other_id = "111222333"
+        token, csrf = self.store.create_session(
+            {"twitch_id": other_id, "login": "viewer", "display_name": "Viewer"}, 3600
+        )
+        other_headers = {"Cookie": f"cg_session={token}", "X-Crystal-Guild-CSRF": csrf}
+        status, other_auth, _ = self.request("/api/auth/status", headers={"Cookie": f"cg_session={token}"})
+        self.assertEqual(status, 200)
+        self.assertFalse(other_auth["streamer_authorized"])
+        self.assertNotIn("STREAMER_COMMAND", other_auth["action_capabilities"])
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            self.request(
+                "/api/actions", method="POST",
+                payload={"type": "STREAMER_COMMAND", "payload": {"command": "health"}},
+                headers={**other_headers, "Idempotency-Key": "viewer-streamer-001"},
+            )
+        self.assertEqual(caught.exception.code, 403)
 
     def test_set_title_action_is_strictly_validated_and_queued(self):
         status, auth, _ = self.request("/api/auth/status", headers=self.user_headers())
@@ -547,6 +591,7 @@ class PortalActionServerCase(unittest.TestCase):
             ("SOLO_EXPEDITION_RETURN", {}, "solo-return"),
             ("SOLO_EXPEDITION_RETREAT", {}, "solo-retreat"),
             ("CHALLENGE_HUNT", {"hunt_id": "red_hot_problem"}, "hunt-red-hot"),
+            ("ACK_ADVENTURE_RESULT", {"result_id": 42}, "ack-adventure-result"),
         ):
             status, response, _ = self.request(
                 "/api/actions",
@@ -579,6 +624,10 @@ class PortalActionServerCase(unittest.TestCase):
             ("CHALLENGE_HUNT", {}),
             ("CHALLENGE_HUNT", {"hunt_id": "Red Hot Problem"}),
             ("CHALLENGE_HUNT", {"hunt_id": "red_hot_problem", "command": "!hunt"}),
+            ("ACK_ADVENTURE_RESULT", {}),
+            ("ACK_ADVENTURE_RESULT", {"result_id": 0}),
+            ("ACK_ADVENTURE_RESULT", {"result_id": "result-one"}),
+            ("ACK_ADVENTURE_RESULT", {"result_id": 1, "command": "!clear"}),
             ("ATTACK", {}),
             ("ABILITY", {"name": "Provoke"}),
             ("RAID", {}),

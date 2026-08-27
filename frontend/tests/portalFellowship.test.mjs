@@ -9,7 +9,7 @@ test("Portal Phase 6 exposes only typed Fellowship state and contribution action
   for (const token of ["FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "submitFellowshipState", "submitFellowshipGil", "submitFellowshipItem"]) {
     assert.match(api, new RegExp(token));
   }
-  assert.doesNotMatch(api, /submit.*COMMAND|submit.*READYALL|submit.*ATTACK|submit.*RAID/);
+  assert.doesNotMatch(api, /submit(?:ReadyAll|Attack|Raid)|submitPortalAction\(.*(?:READYALL|ATTACK|RAID_ACTION)/);
 });
 
 test("signed-in owners get a live Fellowship contribution workspace", async () => {

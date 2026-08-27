@@ -1,15 +1,18 @@
-import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchStreamerDashboard } from "../api/streamer.js";
+import {
+  loginUrl,
+  submitStreamerCommand,
+  waitForPortalAction,
+} from "../api/auth.js";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
+import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
 import { WEB_BUILD, WEB_RELEASE } from "../version.js";
 
-// General-purpose commands that are useful while running a stream. These are
-// intentionally separate from OWNER_COMMAND_GROUPS so destructive owner tools
-// never visually blend into normal player-facing reference material.
 const STREAM_COMMAND_GROUPS = [
   {
     title: "Battle Watch",
@@ -40,51 +43,51 @@ const STREAM_COMMAND_GROUPS = [
   },
 ];
 
-// Keep this list synchronized with the explicit owner-id gates in twitch_bot.py.
-// The dashboard is read-only: these buttons copy text only and never execute a
-// command from the hosted site.
+// Every Portal control maps to one explicit Bot-side owner operation. The Web
+// never accepts arbitrary chat text, and the Bot re-checks the configured owner identity
+// before executing anything in this list.
 const OWNER_COMMAND_GROUPS = [
   {
     title: "Diagnostics",
-    description: "Check bot status, economy, and active battles.",
+    description: "Inspect runtime state without changing player progression.",
     commands: [
-      { command: "!health", description: "Check bot, database, chat, combat, and timer status" },
-      { command: "!economy [days]", description: "See gil earned, spent, and circulating" },
-      { command: "!cgversion", description: "Show the currently running bot version" },
-      { command: "!encounterdebug", description: "Detailed status for the current battle" },
-      { command: "!directtest", description: "Test whether the bot can send a Twitch chat message" },
+      { id: "health", command: "!health", label: "Health Check", description: "Check Bot, database, Portal action, stream, and combat state" },
+      { id: "economy", command: "!economy [days]", label: "Economy Report", description: "See gil earned, spent, and circulating", argument: { type: "number", placeholder: "7", defaultValue: "7", min: 1, max: 90, label: "Days" } },
+      { id: "cgversion", command: "!cgversion", label: "Version Status", description: "Show the currently running Bot and Portal Action versions" },
+      { id: "encounterdebug", command: "!encounterdebug", label: "Encounter Debug", description: "Inspect the current field encounter" },
+      { id: "directtest", command: "!directtest", label: "Direct Chat Test", description: "Send a direct Twitch test message only if the stream is LIVE" },
     ],
   },
   {
     title: "Fellowship Control",
     description: "Choose which unlocked community project the Guild is currently building.",
     commands: [
-      { command: "!fellowshipproject <project>", description: "Set the active unlocked Fellowship project", risk: "caution" },
+      { id: "fellowshipproject", command: "!fellowshipproject <project>", label: "Set Fellowship Project", description: "Set the active unlocked Fellowship project", risk: "caution", argument: { type: "text", placeholder: "Project name", label: "Project" } },
     ],
   },
   {
     title: "Player Recovery",
-    description: "Global recovery tools for resetting the Guild between tests, events, or stream sessions.",
+    description: "Global recovery tools for testing, events, and stream-session resets.",
     commands: [
-      { command: "!readyall", description: "Make every player READY and restore full HP plus applicable MP/AP", risk: "caution" },
-      { command: "!resettimers", description: "Clear all player cooldowns, camp timers, and shop refresh timers", risk: "danger" },
-      { command: "!clearadventures", description: "Emergency-clear all active field adventures, timed Hunts, and Solo Ventures without touching raids or player progression", risk: "danger" },
+      { id: "readyall", command: "!readyall", label: "Ready All", description: "Make every player READY and restore full HP plus applicable MP/AP", risk: "caution" },
+      { id: "resettimers", command: "!resettimers", label: "Reset Timers", description: "Clear gameplay cooldowns, camp timers, and shop refresh timers", risk: "danger" },
+      { id: "clearadventures", command: "!clearadventures", label: "Clear Adventures", description: "Emergency-clear field encounters, timed Hunts, and Solo Ventures", risk: "danger" },
     ],
   },
   {
     title: "Encounter Recovery",
-    description: "Use only if a field battle is stuck or failed to recover normally.",
+    description: "Use when a field battle is genuinely stuck or failed to recover normally.",
     commands: [
-      { command: "!resolveencounter", description: "Force the current field battle to resolve", risk: "caution" },
-      { command: "!clearencounter", description: "Cancel and clear the current field battle", risk: "danger" },
+      { id: "resolveencounter", command: "!resolveencounter", label: "Resolve Encounter", description: "Force the current field battle to resolve", risk: "caution" },
+      { id: "clearencounter", command: "!clearencounter", label: "Clear Encounter", description: "Cancel and clear the current field battle", risk: "danger" },
     ],
   },
   {
     title: "Raid Control",
-    description: "Start a raid manually or recover a stuck raid.",
+    description: "Open a raid manually or recover a stuck raid.",
     commands: [
-      { command: "!spawnboss <boss name>", description: "Force-spawn the named raid boss", risk: "caution" },
-      { command: "!resolveboss", description: "Force resolution of the active boss or raid", risk: "danger" },
+      { id: "spawnboss", command: "!spawnboss <boss name>", label: "Spawn Boss", description: "Force-spawn the named raid boss", risk: "caution", argument: { type: "text", placeholder: "Boss name", label: "Boss" } },
+      { id: "resolveboss", command: "!resolveboss", label: "Resolve Boss", description: "Force resolution of the active boss or raid", risk: "danger" },
     ],
   },
 ];
@@ -152,19 +155,10 @@ function LeaderCard({ label, leader, suffix = "" }) {
   );
 }
 
-function CopyCommand({ item, copied, onCopy, owner = false }) {
-  const risk = item.risk || "safe";
+function CopyCommand({ item, copied, onCopy }) {
   return (
-    <button
-      className={`streamer-command ${owner ? "owner-command" : ""} risk-${risk}`}
-      onClick={() => onCopy(item.command)}
-      type="button"
-    >
-      <span className="streamer-command-main">
-        <code>{item.command}</code>
-        {owner ? <b className="streamer-owner-badge">Owner only</b> : null}
-        {item.risk === "danger" ? <b className="streamer-risk-badge">Force action</b> : null}
-      </span>
+    <button className="streamer-command risk-safe" onClick={() => onCopy(item.command)} type="button">
+      <span className="streamer-command-main"><code>{item.command}</code></span>
       <span className="streamer-command-copy">{copied === item.command ? "Copied" : "Copy"}</span>
       <span className="streamer-command-description">{item.description}</span>
       {item.aliases ? <small>{item.aliases}</small> : null}
@@ -172,7 +166,7 @@ function CopyCommand({ item, copied, onCopy, owner = false }) {
   );
 }
 
-function CommandGroups({ groups, owner = false }) {
+function CommandGroups({ groups }) {
   const [copied, setCopied] = useState("");
   const copy = async (command) => {
     try {
@@ -185,32 +179,173 @@ function CommandGroups({ groups, owner = false }) {
   };
 
   return (
-    <div className={`streamer-command-groups ${owner ? "streamer-owner-command-groups" : ""}`}>
+    <div className="streamer-command-groups">
       {groups.map((group) => (
-        <section className="streamer-command-group" key={group.title}>
-          <header className="streamer-command-group-heading">
-            <h3>{group.title}</h3>
-            {group.description ? <p>{group.description}</p> : null}
-          </header>
+        <details className="streamer-command-group streamer-reference-group" key={group.title}>
+          <summary className="streamer-command-group-heading">
+            <span><strong>{group.title}</strong><small>{group.commands.length} commands</small></span>
+          </summary>
           <div className="streamer-command-list">
-            {group.commands.map((item) => (
-              <CopyCommand item={item} copied={copied} key={item.command} onCopy={copy} owner={owner} />
-            ))}
+            {group.commands.map((item) => <CopyCommand item={item} copied={copied} key={item.command} onCopy={copy} />)}
           </div>
-        </section>
+        </details>
       ))}
     </div>
+  );
+}
+
+function actionKey(command) {
+  const entropy = typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  return `streamer-${command}-${entropy}`;
+}
+
+function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh }) {
+  const initialInputs = useMemo(() => {
+    const values = {};
+    OWNER_COMMAND_GROUPS.forEach((group) => group.commands.forEach((item) => {
+      if (item.argument) values[item.id] = item.argument.defaultValue || "";
+    }));
+    return values;
+  }, []);
+  const [inputs, setInputs] = useState(initialInputs);
+  const [running, setRunning] = useState("");
+  const [confirming, setConfirming] = useState("");
+  const [result, setResult] = useState(null);
+
+  const execute = async (item) => {
+    if (running) return;
+    if (item.risk === "danger" && confirming !== item.id) {
+      setConfirming(item.id);
+      setResult({ tone: "warning", message: `Confirm ${item.label} by pressing the button again.` });
+      window.setTimeout(() => setConfirming((value) => value === item.id ? "" : value), 5000);
+      return;
+    }
+    setConfirming("");
+    setRunning(item.id);
+    setResult({ tone: "working", message: `${item.label} queued…` });
+    try {
+      const argument = item.argument ? inputs[item.id] : "";
+      const queued = await submitStreamerCommand(item.id, argument, auth.csrf_token, actionKey(item.id));
+      const actionId = queued?.action?.id;
+      if (!actionId) throw new Error("Streamer Control did not return an action ID.");
+      const finished = await waitForPortalAction(actionId, { attempts: 32, delayMs: 650 });
+      if (!finished) {
+        setResult({ tone: "warning", message: `${item.label} is still processing. Check again shortly.` });
+      } else {
+        const actionResult = finished.result || {};
+        setResult({
+          tone: actionResult.ok ? "good" : "danger",
+          message: actionResult.message || (actionResult.ok ? `${item.label} completed.` : `${item.label} failed.`),
+        });
+      }
+      refreshAuth?.();
+      onDashboardRefresh?.();
+    } catch (error) {
+      setResult({ tone: "danger", message: error?.message || `${item.label} failed.` });
+    } finally {
+      setRunning("");
+    }
+  };
+
+  const accessState = auth.loading
+    ? "checking"
+    : !auth.authenticated
+      ? "signed-out"
+      : !auth.streamer_authorized
+        ? "unauthorized"
+        : auth.actions_enabled
+          ? "ready"
+          : "offline";
+
+  return (
+    <section className="streamer-panel streamer-control-panel" id="controls">
+      <div className="streamer-panel-heading streamer-owner-heading">
+        <div><span>Authenticated Backend</span><h2>Streamer Control Center</h2></div>
+        <small>13 verified owner actions</small>
+      </div>
+
+      {accessState !== "ready" ? (
+        <div className={`streamer-control-access ${accessState}`}>
+          <div>
+            <strong>{accessState === "checking" ? "Checking streamer access…" : accessState === "signed-out" ? "Streamer controls are locked" : accessState === "unauthorized" ? "Read-only dashboard" : "Bot connection required"}</strong>
+            <p>
+              {accessState === "checking" ? "Verifying your Twitch session and Bot manifest." :
+                accessState === "signed-out" ? "Sign in with Twitch to verify the configured broadcaster account. The public dashboard remains visible without signing in." :
+                  accessState === "unauthorized" ? "This Twitch account can view the dashboard, but it is not the broadcaster account configured on the Bot." :
+                    "Your broadcaster identity is verified, but Portal actions stay disabled until the Bot heartbeat reconnects."}
+            </p>
+          </div>
+          {accessState === "signed-out" ? <a className="primary-button" href={loginUrl("/streamer")}>Sign in with Twitch</a> : null}
+        </div>
+      ) : (
+        <>
+          <div className="streamer-control-access ready">
+            <div><strong>Streamer authority verified</strong><p>Buttons below run the same allow-listed backend operations as their owner-only chat commands. Arbitrary chat commands cannot be relayed from the Web.</p></div>
+            <span className="streamer-control-ready">READY</span>
+          </div>
+          {result ? <div className={`streamer-control-result ${result.tone}`} aria-live="polite">{result.message}</div> : null}
+          <div className="streamer-control-groups">
+            {OWNER_COMMAND_GROUPS.map((group, index) => (
+              <details className="streamer-control-group" key={group.title} defaultOpen={index === 0}>
+                <summary>
+                  <span><strong>{group.title}</strong><small>{group.description}</small></span>
+                  <b>{group.commands.length}</b>
+                </summary>
+                <div className="streamer-control-grid">
+                  {group.commands.map((item) => {
+                    const needsArgument = Boolean(item.argument);
+                    const argumentValue = inputs[item.id] || "";
+                    const missingArgument = needsArgument && item.argument.type !== "number" && !argumentValue.trim();
+                    const isRunning = running === item.id;
+                    const confirmingThis = confirming === item.id;
+                    return (
+                      <article className={`streamer-control-card risk-${item.risk || "safe"}`} key={item.id}>
+                        <div className="streamer-control-card-copy">
+                          <code>{item.command}</code>
+                          {item.risk === "danger" ? <span>Force action</span> : item.risk === "caution" ? <span>Caution</span> : null}
+                        </div>
+                        <strong>{item.label}</strong>
+                        <p>{item.description}</p>
+                        {needsArgument ? (
+                          <label>
+                            <span>{item.argument.label}</span>
+                            <input
+                              type={item.argument.type}
+                              value={argumentValue}
+                              placeholder={item.argument.placeholder}
+                              min={item.argument.min}
+                              max={item.argument.max}
+                              onChange={(event) => setInputs((current) => ({ ...current, [item.id]: event.target.value }))}
+                            />
+                          </label>
+                        ) : null}
+                        <button
+                          className={item.risk === "danger" ? "danger-button" : "ghost-button"}
+                          type="button"
+                          disabled={Boolean(running) || missingArgument}
+                          onClick={() => execute(item)}
+                        >
+                          {isRunning ? "Running…" : confirmingThis ? `Confirm ${item.label}` : item.label}
+                        </button>
+                      </article>
+                    );
+                  })}
+                </div>
+              </details>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
   );
 }
 
 function RosterHeader() {
   return (
     <div className="streamer-roster-header" aria-hidden="true">
-      <span />
-      <span>Adventurer</span>
-      <span>Job / Region</span>
-      <span>Health</span>
-      <span>Bosses</span>
+      <span /><span>Adventurer</span><span>Job / Region</span><span>Health</span><span>Bosses</span>
     </div>
   );
 }
@@ -223,30 +358,19 @@ export default function StreamerDashboard() {
   const [loading, setLoading] = useState(true);
   const [refreshToken, setRefreshToken] = useState(0);
   const deferredSearch = useDeferredValue(search);
+  const { auth, refreshAuth } = usePortalAuth();
 
   const refresh = useCallback(() => setRefreshToken((value) => value + 1), []);
   const liveStatus = useLiveUpdates(refresh);
-
-  useEffect(() => {
-    document.body.classList.add("streamer-page");
-    return () => document.body.classList.remove("streamer-page");
-  }, []);
 
   useEffect(() => {
     document.title = `Crystal Guild Streamer Dashboard — ${WEB_BUILD}`;
     const controller = new AbortController();
     if (!dashboard) setLoading(true);
     fetchStreamerDashboard(controller.signal)
-      .then((payload) => {
-        setDashboard(payload);
-        setError("");
-      })
-      .catch((reason) => {
-        if (reason.name !== "AbortError") setError(reason.message);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
-      });
+      .then((payload) => { setDashboard(payload); setError(""); })
+      .catch((reason) => { if (reason.name !== "AbortError") setError(reason.message); })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
   }, [refreshToken]);
 
@@ -262,9 +386,7 @@ export default function StreamerDashboard() {
   }, [players, deferredSearch, statusFilter]);
 
   const summary = dashboard?.summary || { total: 0, ready: 0, resting: 0, ko: 0, average_level: 0 };
-  const lastSync = dashboard?.last_sync
-    ? timeAgo(new Date(Number(dashboard.last_sync) * 1000).toISOString())
-    : "No update yet";
+  const lastSync = dashboard?.last_sync ? timeAgo(new Date(Number(dashboard.last_sync) * 1000).toISOString()) : "No update yet";
 
   return (
     <>
@@ -273,24 +395,12 @@ export default function StreamerDashboard() {
       <SiteHeader liveStatus={liveStatus} sectionTitle="Streamer Dashboard" brandHref="/streamer" includeStreamer />
       <main id="main-content" className="streamer-shell" tabIndex="-1">
         <section className="streamer-hero">
-          <div>
-            <p className="eyebrow">Streamer Tools</p>
-            <h1>Streamer Dashboard</h1>
-            <p>Guild status, player health, recent activity, and useful commands at a glance.</p>
-          </div>
-          <div className="streamer-sync-card">
-            <span>Dashboard Status</span>
-            <strong>{dashboard?.degraded ? "STALE" : liveStatus === "connected" ? "LIVE" : humanizeLabel(liveStatus)}</strong>
-            <small>{dashboard?.degraded ? "Showing saved data · " : ""}Last updated {lastSync}</small>
-          </div>
+          <div><p className="eyebrow">Streamer Tools</p><h1>Streamer Dashboard</h1><p>Guild pulse, player health, authenticated backend controls, and broadcast references without a locked viewport.</p></div>
+          <div className="streamer-sync-card"><span>Dashboard Status</span><strong>{dashboard?.degraded ? "STALE" : liveStatus === "connected" ? "LIVE" : humanizeLabel(liveStatus)}</strong><small>{dashboard?.degraded ? "Showing saved data · " : ""}Last updated {lastSync}</small></div>
         </section>
 
         <nav className="streamer-jumpbar" aria-label="Streamer dashboard sections">
-          <a href="#roster">Roster</a>
-          <a href="#commands">Stream Commands</a>
-          <a href="#owner-commands">Owner Commands</a>
-          <a href="#activity">Ledger</a>
-          <a href="#overlay">OBS Overlay</a>
+          <a href="#controls">Controls</a><a href="#roster">Roster</a><a href="#pulse">Guild Pulse</a><a href="#commands">Chat Reference</a><a href="#overlay">OBS Overlay</a>
         </nav>
 
         <section className="streamer-summary-grid" aria-label="Guild summary">
@@ -305,126 +415,63 @@ export default function StreamerDashboard() {
         {error ? <div className="state-message compact-state">{error}</div> : null}
 
         {dashboard ? (
-          <div className="streamer-dashboard-frame">
-            <section className="streamer-ops-strip" aria-label="Stationary streamer reference panel">
+          <div className="streamer-flow-layout">
+            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} />
+
+            <section className="streamer-panel streamer-roster-panel" id="roster">
+              <div className="streamer-panel-heading">
+                <div><span>Roster Watch</span><h2>Adventurers</h2></div>
+                <div className="streamer-heading-tools"><small>{number(shownPlayers.length)} of {number(players.length)} shown</small><button className="ghost-button" type="button" onClick={refresh}>Refresh</button></div>
+              </div>
+              <div className="streamer-toolbar">
+                <input aria-label="Search streamer roster" onChange={(event) => setSearch(event.target.value)} placeholder="Search hero, Job, title, region..." type="search" value={search} />
+                <select aria-label="Filter by status" onChange={(event) => setStatusFilter(event.target.value)} value={statusFilter}><option value="all">All statuses</option><option value="ready">Ready</option><option value="resting">Resting</option><option value="ko">KO</option></select>
+              </div>
+              <RosterHeader />
+              <div className="streamer-roster" aria-live="polite">
+                {shownPlayers.map((player) => {
+                  const hpPercent = Math.round(clampPct(player.hp_current, player.hp_max));
+                  return (
+                    <Link className="streamer-player-row" key={player.username} to={`/player/${encodeURIComponent(player.username)}`}>
+                      <span className={`streamer-status-dot ${player.status}`} aria-label={player.status_label} />
+                      <span className="streamer-player-identity"><strong>{player.display_name}</strong><small>@{player.username} · {player.title}</small></span>
+                      <span className="streamer-player-job"><strong>{player.job_name}</strong><small>Lv.{number(player.level)} · JLv.{number(player.job_level)} · {player.region}</small></span>
+                      <span className={`streamer-hp ${hpTone(player)}`}><span className="streamer-hp-line"><strong>{number(player.hp_current)} / {number(player.hp_max)}</strong><small>{hpPercent}%</small></span><span className="streamer-hp-track"><span style={{ width: `${hpPercent}%` }} /></span></span>
+                      <span className="streamer-player-record"><strong>{number(player.boss_clears)}</strong><small>Clears</small></span>
+                    </Link>
+                  );
+                })}
+                {!shownPlayers.length ? <div className="streamer-empty">No adventurers match the current filters.</div> : null}
+              </div>
+            </section>
+
+            <section className="streamer-pulse-grid" id="pulse" aria-label="Guild pulse">
               <section className="streamer-panel streamer-leaders-panel" id="leaders">
-                <div className="streamer-panel-heading">
-                  <div><span>Guild Leaders</span><h2>At a Glance</h2></div>
-                  <small>Current leaders</small>
-                </div>
-                <div className="streamer-leader-grid">
-                  <LeaderCard label="Highest Level" leader={dashboard.leaders?.level} />
-                  <LeaderCard label="Boss Clears" leader={dashboard.leaders?.boss_clears} />
-                  <LeaderCard label="Jobs Mastered" leader={dashboard.leaders?.mastered_jobs} />
-                  <LeaderCard label="Achievements" leader={dashboard.leaders?.achievements} />
+                <div className="streamer-panel-heading"><div><span>Guild Leaders</span><h2>At a Glance</h2></div><small>Current leaders</small></div>
+                <div className="streamer-leader-grid"><LeaderCard label="Highest Level" leader={dashboard.leaders?.level} /><LeaderCard label="Boss Clears" leader={dashboard.leaders?.boss_clears} /><LeaderCard label="Jobs Mastered" leader={dashboard.leaders?.mastered_jobs} /><LeaderCard label="Achievements" leader={dashboard.leaders?.achievements} /></div>
+              </section>
+
+              <section className="streamer-panel streamer-ledger-panel" id="activity">
+                <div className="streamer-panel-heading"><div><span>Live Ledger</span><h2>Recent Activity</h2></div><small>Recent gil and item changes</small></div>
+                <div className="streamer-activity-list">
+                  {(dashboard.activity || []).slice(0, 8).map((item, index) => (
+                    <div className="streamer-activity" key={`${item.username}-${item.created_at}-${index}`}><span className="streamer-activity-glyph">{item.kind === "item" ? "◇" : "G"}</span><span><strong>{item.display_name}</strong><small>{item.kind === "item" ? item.asset : humanizeLabel(item.asset)} · {activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</small></span><b className={item.amount >= 0 ? "good-text" : "danger-text"}>{item.amount >= 0 ? "+" : ""}{number(item.amount)}</b></div>
+                  ))}
+                  {!dashboard.activity?.length ? <div className="streamer-empty">No recent Guild activity.</div> : null}
                 </div>
               </section>
             </section>
 
-            <div className="streamer-workspace">
-              <div className="streamer-layout">
-                <section className="streamer-panel streamer-roster-panel" id="roster">
-                  <div className="streamer-panel-heading">
-                    <div><span>Roster Watch</span><h2>Adventurers</h2></div>
-                    <div className="streamer-heading-tools">
-                      <small>{number(shownPlayers.length)} of {number(players.length)} shown</small>
-                      <button className="ghost-button" type="button" onClick={refresh}>Refresh</button>
-                    </div>
-                  </div>
-                  <div className="streamer-toolbar">
-                    <input
-                      aria-label="Search streamer roster"
-                      onChange={(event) => setSearch(event.target.value)}
-                      placeholder="Search hero, Job, title, region..."
-                      type="search"
-                      value={search}
-                    />
-                    <select aria-label="Filter by status" onChange={(event) => setStatusFilter(event.target.value)} value={statusFilter}>
-                      <option value="all">All statuses</option>
-                      <option value="ready">Ready</option>
-                      <option value="resting">Resting</option>
-                      <option value="ko">KO</option>
-                    </select>
-                  </div>
-                  <RosterHeader />
-                  <div className="streamer-roster" aria-live="polite">
-                    {shownPlayers.map((player) => {
-                      const hpPercent = Math.round(clampPct(player.hp_current, player.hp_max));
-                      return (
-                        <Link className="streamer-player-row" key={player.username} to={`/player/${encodeURIComponent(player.username)}`}>
-                          <span className={`streamer-status-dot ${player.status}`} aria-label={player.status_label} />
-                          <span className="streamer-player-identity">
-                            <strong>{player.display_name}</strong>
-                            <small>@{player.username} · {player.title}</small>
-                          </span>
-                          <span className="streamer-player-job">
-                            <strong>{player.job_name}</strong>
-                            <small>Lv.{number(player.level)} · JLv.{number(player.job_level)} · {player.region}</small>
-                          </span>
-                          <span className={`streamer-hp ${hpTone(player)}`}>
-                            <span className="streamer-hp-line"><strong>{number(player.hp_current)} / {number(player.hp_max)}</strong><small>{hpPercent}%</small></span>
-                            <span className="streamer-hp-track"><span style={{ width: `${hpPercent}%` }} /></span>
-                          </span>
-                          <span className="streamer-player-record">
-                            <strong>{number(player.boss_clears)}</strong>
-                            <small>Clears</small>
-                          </span>
-                        </Link>
-                      );
-                    })}
-                    {!shownPlayers.length ? <div className="streamer-empty">No adventurers match the current filters.</div> : null}
-                  </div>
-                </section>
-
-                <section className="streamer-panel streamer-command-panel" id="commands">
-                  <div className="streamer-panel-heading">
-                    <div><span>On-stream Reference</span><h2>Stream Commands</h2></div>
-                    <small>Click any command to copy it.</small>
-                  </div>
-                  <CommandGroups groups={STREAM_COMMAND_GROUPS} />
-                </section>
-
-                <section className="streamer-panel streamer-owner-panel" id="owner-commands">
-                  <div className="streamer-panel-heading streamer-owner-heading">
-                    <div><span>Streamer Tools</span><h2>All Streamer-Only Commands</h2></div>
-                    <small>13 streamer-only commands · click to copy</small>
-                  </div>
-                  <div className="streamer-owner-notice">
-                    Only the configured streamer account can run these commands. Use recovery and force-action commands only when a battle is genuinely stuck.
-                  </div>
-                  <CommandGroups groups={OWNER_COMMAND_GROUPS} owner />
-                </section>
-
-                <section className="streamer-panel streamer-ledger-panel" id="activity">
-                  <div className="streamer-panel-heading">
-                    <div><span>Live Ledger</span><h2>Recent Activity</h2></div>
-                    <small>Recent gil and item changes</small>
-                  </div>
-                  <div className="streamer-activity-list">
-                    {(dashboard.activity || []).slice(0, 8).map((item, index) => (
-                      <div className="streamer-activity" key={`${item.username}-${item.created_at}-${index}`}>
-                        <span className="streamer-activity-glyph">{item.kind === "item" ? "◇" : "G"}</span>
-                        <span>
-                          <strong>{item.display_name}</strong>
-                          <small>{item.kind === "item" ? item.asset : humanizeLabel(item.asset)} · {activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</small>
-                        </span>
-                        <b className={item.amount >= 0 ? "good-text" : "danger-text"}>{item.amount >= 0 ? "+" : ""}{number(item.amount)}</b>
-                      </div>
-                    ))}
-                    {!dashboard.activity?.length ? <div className="streamer-empty">No recent Guild activity.</div> : null}
-                  </div>
-                </section>
-              </div>
-            </div>
+            <section className="streamer-panel streamer-command-panel" id="commands">
+              <div className="streamer-panel-heading"><div><span>On-stream Reference</span><h2>Chat Command Reference</h2></div><small>Collapsed by default · click a group to browse</small></div>
+              <CommandGroups groups={STREAM_COMMAND_GROUPS} />
+            </section>
           </div>
         ) : null}
 
         <HostedOverlayCard />
       </main>
-      <footer className="site-footer streamer-footer">
-        <span>Crystal Guild Streamer Dashboard · {WEB_RELEASE}</span>
-        <span><Link to="/privacy">Privacy Policy</Link> · Command buttons copy text only; run commands in Twitch chat</span>
-      </footer>
+      <footer className="site-footer streamer-footer"><span>Crystal Guild Streamer Dashboard · {WEB_RELEASE}</span><span><Link to="/privacy">Privacy Policy</Link> · Streamer Controls execute verified backend actions; Chat Reference only copies commands</span></footer>
     </>
   );
 }

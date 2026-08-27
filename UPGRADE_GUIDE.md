@@ -1,10 +1,12 @@
-# Upgrade Guide — RC1 Hotfix 4 Relic Refresh + Dynamic Camp
+# Upgrade Guide — RC1 Hotfix 6 Persistent Adventure Results
 
-1. Back up the current Web deployment and local Bot database/configuration.
-2. Deploy the full RC1H4 Web package, or apply the `rc1h3 -> rc1h4` Web patch.
-3. Apply the paired RC1H4 Bot package/patch. The Web UI can describe the new Camp rule, but the Bot is the authoritative timer owner.
-4. Restart/redeploy the Bot and Web normally. No migration command is required.
-5. Hard-refresh the Portal once so asset revision `1.1.19-retro-phase-iii14-rc1h4` is loaded.
-6. Verify one Relic at each stage, then test Camp while Twitch is OFFLINE (1-hour base) and LIVE (15-minute base). Existing Fellowship Camp-time reductions may shorten the displayed effective timer.
+1. Back up the existing Crystal Guild local database before deployment as normal. The Bot also creates and verifies an automatic `pre_schema_7_*.db` backup before the additive schema migration.
+2. Deploy the RC1H6 Web package or apply the Web H5 → H6 patch.
+3. Deploy the paired RC1H6 Bot package or Bot patch. Both sides must use Portal Action protocol **17**.
+4. Start the Bot and verify the local database reports schema **7**. Existing player data is migrated in place; no reset is required.
+5. Verify `/api/health` reports Web runtime `1.1.19-retro-phase-iii-rc1h6`, frontend revision `1.1.19-retro-phase-iii14-rc1h6`, hosted sync schema 1, and action protocol 17.
+6. Open the Adventure Board. Complete a Portal Solo Venture or Portal-origin Hunt, leave the page, and return. The result should still be visible with **Confirm Result**.
+7. Confirm the result. Only that selected card should clear; other pending results remain.
+8. Verify `/streamer` still shows the compact Streamer Control Center and that LIVE-only Portal result announcements behave as expected.
 
-No database reset, OAuth change, or new environment variable is required.
+No OAuth reauthorization or new environment variable is required.

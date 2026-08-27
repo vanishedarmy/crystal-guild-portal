@@ -174,6 +174,10 @@ export function submitChallengeHunt(huntId, csrfToken, idempotencyKey) {
   return submitPortalAction("CHALLENGE_HUNT", { hunt_id: huntId }, csrfToken, idempotencyKey);
 }
 
+export function submitAcknowledgeAdventureResult(resultId, csrfToken, idempotencyKey) {
+  return submitPortalAction("ACK_ADVENTURE_RESULT", { result_id: Number(resultId) }, csrfToken, idempotencyKey);
+}
+
 export function submitChocoboState(csrfToken, idempotencyKey) {
   return submitPortalAction("CHOCOBO_STATE", {}, csrfToken, idempotencyKey);
 }
@@ -196,4 +200,10 @@ export function submitRenameChocobo(name, csrfToken, idempotencyKey) {
 
 export function submitSetChocoboPortrait(portraitId, csrfToken, idempotencyKey) {
   return submitPortalAction("SET_CHOCOBO_PORTRAIT", { portrait_id: portraitId }, csrfToken, idempotencyKey);
+}
+
+export function submitStreamerCommand(command, argument, csrfToken, idempotencyKey) {
+  const payload = { command };
+  if (argument !== undefined && argument !== null && String(argument).trim() !== "") payload.argument = argument;
+  return submitPortalAction("STREAMER_COMMAND", payload, csrfToken, idempotencyKey);
 }

@@ -23,19 +23,37 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1"
-FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h4"
+HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1h6"
+FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h6"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 15
+ACTION_PROTOCOL_VERSION = 17
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
-    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
+    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
+    "STREAMER_COMMAND",
 }
+
+STREAMER_COMMAND_SPECS = {
+    "health": "none",
+    "economy": "days",
+    "cgversion": "none",
+    "encounterdebug": "none",
+    "directtest": "none",
+    "fellowshipproject": "text",
+    "readyall": "none",
+    "resettimers": "none",
+    "clearadventures": "none",
+    "resolveencounter": "none",
+    "clearencounter": "none",
+    "spawnboss": "text",
+    "resolveboss": "none",
+}
+
 CHOCOBO_PORTRAIT_IDS = {
     "classic_gold", "midnight_black", "celestial_white", "ember_red", "verdant_green",
     "cobalt_blue", "arcane_violet", "desert_gold", "frost_silver", "rose_pink",
@@ -63,7 +81,7 @@ READ_ONLY_STATE_ACTIONS = {
 COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "CLAIM_DAILY", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
     "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN",
-    "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
+    "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -150,6 +168,9 @@ class HostedPortalStore:
         self._streamer_cache: dict[str, Any] | None = None
         self._streamer_cache_revision = -1
         self._last_sync = 0
+        # Broadcaster authority is supplied by the authenticated Bot manifest.
+        # It is intentionally not configurable on the public Web process.
+        self._streamer_twitch_id = ""
         self._initialize()
         self._reload_directory_cache()
 
@@ -328,6 +349,12 @@ class HostedPortalStore:
             "sync_connected": bool(last_sync and sync_age is not None and sync_age <= PORTAL_SYNC_STALE_SECONDS),
             "sync_stale_after_seconds": PORTAL_SYNC_STALE_SECONDS,
         }
+
+    def is_streamer(self, twitch_id: str | None) -> bool:
+        candidate = str(twitch_id or "").strip()
+        with self._lock:
+            owner = self._streamer_twitch_id
+        return bool(owner and candidate and hmac.compare_digest(candidate, owner))
 
     def health(self) -> dict[str, Any]:
         with self._lock:
@@ -699,6 +726,33 @@ class HostedPortalStore:
         elif kind in {"ADVENTURE_STATE", "SOLO_VENTURE", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "STREAMER_COMMAND":
+            if set(payload) - {"command", "argument"} or "command" not in payload:
+                raise ValueError("STREAMER_COMMAND requires command and, when needed, argument.")
+            command = str(payload.get("command") or "").strip().lower().lstrip("!")
+            mode = STREAMER_COMMAND_SPECS.get(command)
+            if not mode:
+                raise ValueError("That streamer command is not available through the Portal.")
+            argument = payload.get("argument", "")
+            if mode == "none":
+                if str(argument or "").strip():
+                    raise ValueError(f"{command} does not accept a Portal argument.")
+                payload = {"command": command}
+            elif mode == "days":
+                if isinstance(argument, bool):
+                    raise ValueError("Economy days must be a number between 1 and 90.")
+                try:
+                    days = int(argument or 7)
+                except (TypeError, ValueError):
+                    raise ValueError("Economy days must be a number between 1 and 90.") from None
+                if days < 1 or days > 90:
+                    raise ValueError("Economy days must be between 1 and 90.")
+                payload = {"command": command, "argument": days}
+            else:
+                text = " ".join(str(argument or "").strip().split())
+                if not text or len(text) > 120:
+                    raise ValueError(f"{command} requires a short argument.")
+                payload = {"command": command, "argument": text}
         elif kind == "SOLO_EXPEDITION_ACTION":
             if set(payload) != {"action"}:
                 raise ValueError("SOLO_EXPEDITION_ACTION requires only action.")
@@ -720,6 +774,18 @@ class HostedPortalStore:
             if not hunt_id or len(hunt_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", hunt_id):
                 raise ValueError("Invalid Hunt ID.")
             payload = {"hunt_id": hunt_id}
+        elif kind == "ACK_ADVENTURE_RESULT":
+            if set(payload) != {"result_id"}:
+                raise ValueError("ACK_ADVENTURE_RESULT requires only result_id.")
+            if isinstance(payload.get("result_id"), bool):
+                raise ValueError("Invalid Adventure result ID.")
+            try:
+                result_id = int(payload.get("result_id") or 0)
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Adventure result ID.") from None
+            if result_id <= 0:
+                raise ValueError("Invalid Adventure result ID.")
+            payload = {"result_id": result_id}
         encoded = json.dumps(payload, separators=(",", ":"), sort_keys=True, ensure_ascii=False)
         if len(encoded.encode("utf-8")) > MAX_ACTION_BYTES:
             raise ValueError("Action payload is too large.")
@@ -821,7 +887,7 @@ class HostedPortalStore:
                 "SELECT username FROM portal_players WHERE twitch_id=?",
                 (twitch_id,),
             ).fetchone()
-            if not player and kind != "RECRUIT":
+            if not player and kind not in {"RECRUIT", "STREAMER_COMMAND"}:
                 raise ValueError("Your Twitch account is not linked to a synced Crystal Guild adventurer.")
             action_username = str(player["username"] if player else trusted_username or "").strip().lower()
             if not USERNAME_RE.fullmatch(action_username):
@@ -892,7 +958,7 @@ class HostedPortalStore:
                 f"""
                 SELECT a.* FROM portal_actions a
                 LEFT JOIN portal_players p ON p.twitch_id=a.twitch_id AND lower(p.username)=lower(a.username)
-                WHERE a.status='pending' AND (a.action_type='RECRUIT' OR p.username IS NOT NULL)
+                WHERE a.status='pending' AND (a.action_type IN ('RECRUIT','STREAMER_COMMAND') OR p.username IS NOT NULL)
                 ORDER BY CASE WHEN a.action_type IN ({state_placeholders}) THEN 1 ELSE 0 END,
                          a.created_at ASC,a.action_id ASC
                 LIMIT ?
@@ -1101,10 +1167,12 @@ class HostedPortalStore:
             self._last_sync = max(self._last_sync, int(row["synced_at"] or 0))
         return dict(snapshot)
 
-    def apply_manifest(self, usernames: list[str]) -> tuple[int, list[str]]:
+    def apply_manifest(self, usernames: list[str], owner_twitch_id: str = "") -> tuple[int, list[str]]:
         normalized = {str(name).strip().lower() for name in usernames if str(name).strip()}
+        owner = str(owner_twitch_id or "").strip()
         heartbeat_at = int(time.time())
         with self._condition, self._connect() as conn:
+            self._streamer_twitch_id = owner if owner.isdigit() else ""
             rows = conn.execute("SELECT username FROM portal_players").fetchall()
             existing = {row["username"].lower() for row in rows}
             stale = sorted(existing - normalized)
@@ -1422,7 +1490,7 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
             raise ValueError("Overlay top-damage entry is invalid.")
 
 
-def validate_manifest_payload(payload: dict[str, Any]) -> list[str]:
+def validate_manifest_payload(payload: dict[str, Any]) -> tuple[list[str], str]:
     schema = payload.get("schema_version")
     if schema is not None and int(schema) != SCHEMA_VERSION:
         raise ValueError("Unsupported hosted portal manifest schema.")
@@ -1440,7 +1508,10 @@ def validate_manifest_payload(payload: dict[str, Any]) -> list[str]:
         if username not in seen:
             normalized.append(username)
             seen.add(username)
-    return normalized
+    owner_twitch_id = str(payload.get("owner_twitch_id") or "").strip()
+    if owner_twitch_id and not owner_twitch_id.isdigit():
+        raise ValueError("Manifest owner Twitch ID is invalid.")
+    return normalized, owner_twitch_id
 
 
 def _normalized_key(key: Any) -> str:
@@ -1648,8 +1719,8 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                 changed, digest = self.portal.store.upsert_overlay(payload)
                 self._json({"ok": True, "changed": changed, "hash": digest})
             else:
-                usernames = validate_manifest_payload(payload)
-                removed, missing = self.portal.store.apply_manifest(usernames)
+                usernames, owner_twitch_id = validate_manifest_payload(payload)
+                removed, missing = self.portal.store.apply_manifest(usernames, owner_twitch_id)
                 self._json({"ok": True, "removed": removed, "missing": missing})
         except (ValueError, json.JSONDecodeError) as exc:
             self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
@@ -1795,7 +1866,8 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                     "authenticated": False,
                     "actions_enabled": False,
                     "action_protocol_version": ACTION_PROTOCOL_VERSION,
-                    "action_capabilities": sorted(ALLOWED_PORTAL_ACTIONS),
+                    "action_capabilities": sorted(ALLOWED_PORTAL_ACTIONS - {"STREAMER_COMMAND"}),
+                    "streamer_authorized": False,
                     **sync,
                 }
             )
@@ -1806,6 +1878,10 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             and self.portal.actions_enabled
             and sync.get("sync_connected")
         )
+        streamer_authorized = self.portal.store.is_streamer(session.get("twitch_id"))
+        capabilities = set(ALLOWED_PORTAL_ACTIONS)
+        if not streamer_authorized:
+            capabilities.discard("STREAMER_COMMAND")
         self._json(
             {
                 "configured": configured,
@@ -1819,8 +1895,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                 "expires_at": session["expires_at"],
                 "actions_enabled": actions_enabled,
                 "can_recruit": bool(actions_enabled and not player),
+                "streamer_authorized": streamer_authorized,
                 "action_protocol_version": ACTION_PROTOCOL_VERSION,
-                "action_capabilities": sorted(ALLOWED_PORTAL_ACTIONS),
+                "action_capabilities": sorted(capabilities),
                 **sync,
             }
         )
@@ -1854,7 +1931,10 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         try:
             payload = self._read_json(MAX_ACTION_BYTES)
             action_type = str(payload.get("type") or "").strip().upper()
-            if not session.get("player") and action_type != "RECRUIT":
+            if action_type == "STREAMER_COMMAND" and not self.portal.store.is_streamer(session.get("twitch_id")):
+                self._json({"error": "This Twitch account is not authorized for Streamer Controls."}, HTTPStatus.FORBIDDEN)
+                return
+            if not session.get("player") and action_type not in {"RECRUIT", "STREAMER_COMMAND"}:
                 self._json({"error": "Create your Crystal Guild adventurer before using other Portal actions."}, HTTPStatus.FORBIDDEN)
                 return
             action = self.portal.store.create_action(

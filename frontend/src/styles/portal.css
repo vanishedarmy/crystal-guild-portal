@@ -8181,3 +8181,47 @@ main h1,
   .featured-relic-artwork{height:94px}
   .detail-relic-artwork{height:165px}
 }
+
+/* v1.1.19 RC1 Hotfix 6 — durable Adventure Board result confirmation */
+.adventure-pending-result-stack {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.adventure-result-confirmation {
+  margin-top: .85rem;
+  padding-top: .8rem;
+  border-top: 1px solid rgba(230, 203, 136, .18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .85rem;
+}
+.adventure-result-confirmation > div {
+  display: grid;
+  gap: .15rem;
+  min-width: 0;
+}
+.adventure-result-confirmation strong {
+  color: var(--gold-bright, var(--gold));
+  font-size: .88rem;
+}
+.adventure-result-confirmation span {
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.4;
+}
+.adventure-result-confirmation .equipment-action-button {
+  flex: 0 0 auto;
+  min-width: 9.5rem;
+}
+@media (max-width: 640px) {
+  .adventure-result-confirmation {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .adventure-result-confirmation .equipment-action-button {
+    width: 100%;
+    min-width: 0;
+  }
+}

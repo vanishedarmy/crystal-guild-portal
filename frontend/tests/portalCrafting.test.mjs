@@ -10,7 +10,7 @@ test("Portal Phase 7 exposes typed Blacksmith and Daily actions without arbitrar
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "submitCraftingState", "submitCraftRecipe", "submitForgeItem", "submitDailyState", "submitClaimDaily",
   ]) assert.match(api, new RegExp(token));
-  assert.doesNotMatch(api, /submit.*COMMAND|submit.*READYALL|submit.*ATTACK|submit.*RAID/);
+  assert.doesNotMatch(api, /submit(?:ReadyAll|Attack|Raid)|submitPortalAction\(.*(?:READYALL|ATTACK|RAID_ACTION)/);
 });
 
 test("signed-in owners get a visual Blacksmith workspace with recipe and forge comparisons", async () => {

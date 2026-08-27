@@ -50,9 +50,9 @@ test("mobile header is compact while preserving scroll-away behavior", async () 
   assert.match(css, /\.site-header \.brand-mark \{[\s\S]*?width: 40px;[\s\S]*?height: 40px/);
 });
 
-test("Hosted Raid Overlay is rendered after the dashboard frame", async () => {
+test("Hosted Raid Overlay is rendered after the normal dashboard flow", async () => {
   const source = await readFile(new URL("pages/StreamerDashboard.jsx", SRC), "utf8");
-  const frame = source.indexOf("streamer-dashboard-frame");
+  const frame = source.indexOf("streamer-flow-layout");
   const overlay = source.lastIndexOf("<HostedOverlayCard />");
   assert.ok(frame >= 0 && overlay > frame);
 });

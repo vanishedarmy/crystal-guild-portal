@@ -26,7 +26,8 @@ test("Streamer and guild directory keep guild help without development-build jar
   assert.match(dashboard, /Aliases: !cghelp, !cgcommands, !rpghelp/);
   assert.doesNotMatch(dashboard, /Alias: !version/);
   assert.match(directory, /<strong>!guild<\/strong>/);
-  assert.match(dashboard, /streamer-ops-strip/);
-  assert.match(dashboard, /streamer-workspace/);
+  assert.match(dashboard, /streamer-flow-layout/);
+  assert.match(dashboard, /Streamer Control Center/);
   assert.match(dashboard, /streamer-ledger-panel/);
+  assert.doesNotMatch(dashboard, /streamer-ops-strip|streamer-workspace|streamer-dashboard-frame/);
 });

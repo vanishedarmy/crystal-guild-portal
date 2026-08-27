@@ -35,7 +35,7 @@ test("Streamer dashboard narrows without horizontal summary rails or text ellips
   assert.match(css, /\.streamer-shell\s*\{[\s\S]*?var\(--hub-gutter/);
   assert.match(css, /@media \(max-width: 1180px\)[\s\S]*?\.streamer-summary-grid\s*\{[\s\S]*?repeat\(3, minmax\(0, 1fr\)\)[\s\S]*?overflow:\s*visible/);
   assert.match(css, /@media \(max-width: 560px\)[\s\S]*?\.streamer-summary-grid\s*\{\s*grid-template-columns:\s*1fr/);
-  assert.match(css, /\.streamer-jumpbar\s*\{[\s\S]*?display:\s*grid[\s\S]*?repeat\(4, minmax\(0, 1fr\)\)[\s\S]*?overflow-x:\s*visible/);
+  assert.match(css, /\.streamer-jumpbar\s*\{[\s\S]*?display:\s*grid[\s\S]*?repeat\(5, minmax\(0, 1fr\)\)[\s\S]*?overflow-x:\s*visible/);
   assert.match(css, /@media \(max-width: 560px\)[\s\S]*?\.streamer-jumpbar\s*\{\s*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(css, /text-overflow:\s*ellipsis/);
 });

@@ -35,9 +35,9 @@ test("public portal shows build identity but hides backend terminology from play
 
 test("streamer dashboard explains tools in plain language while preserving its layout", async () => {
   const dashboard = await readFile(new URL("pages/StreamerDashboard.jsx", SRC), "utf8");
-  assert.match(dashboard, /Check bot status, economy, and active battles/);
+  assert.match(dashboard, /authenticated backend controls/);
   assert.match(dashboard, /Live Ledger/);
-  assert.match(dashboard, /Command buttons copy text only/);
+  assert.match(dashboard, /Chat Reference only copies commands/);
   assert.match(dashboard, /WEB_RELEASE/);
   assert.match(dashboard, /<SiteHeader liveStatus=\{liveStatus\}/);
   assert.doesNotMatch(dashboard, /Hosted Mirror|sanitized mirror|Bot authority|runtime services|direct Twitch REST|daemon, notifier|Gold Saucer gil/i);

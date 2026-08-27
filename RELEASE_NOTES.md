@@ -1,14 +1,15 @@
-# Crystal Guild v1.1.19 — Retro Phase III
-## Material Artwork Completion (iii8)
+# Crystal Guild v1.1.19 — Retro Phase III Elemental Icon Refresh (iii9)
 
-Frontend asset revision: `1.1.19-retro-phase-iii8`.
+This build refreshes the 8 elemental crystal/material icons used by routed item artwork:
+Dark, Earth, Fire, Ice, Light, Lightning, Water, and Wind.
 
-### Added
-- Activated the final **19** missing material artwork identities.
-- Material coverage is now **84 / 84** with **0 missing artwork paths**.
-- Dedicated Phase III material library expanded from 20 to **39 transparent 512×512 PNG files**.
+## Included changes
+- Replaced legacy elemental crystal WEBP assets with refreshed transparent PNG icons.
+- Updated item artwork routing to point to the new PNG files.
+- Removed superseded elemental WEBP files from the elemental-crystals-v2 directory.
+- Updated artwork routing audit entries for the elemental crystal family.
 
-### Routing / cleanup
-- The final CG-MAT-R02 and CG-MAT-R04 identities now route directly through `/retro-phase-iii/material-icons-v1/`.
-- Previously rejected/mismatched QA-hold images are not routed or shipped as production material assets.
-- No schema, protocol, OAuth, environment-variable, or player-data changes.
+## Asset family updated
+- `frontend/public/retro-phase-ii/elemental-crystals-v2/`
+- `frontend/src/utils/itemArtwork.js`
+- `ARTWORK_ROUTING_AUDIT.json`

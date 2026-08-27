@@ -1814,7 +1814,7 @@
       "id": "bomb_core",
       "name": "Bomb Core",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/fire.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/fire.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -1982,7 +1982,7 @@
       "id": "crystal_shard",
       "name": "Crystal Shard",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -1990,7 +1990,7 @@
       "id": "crystal_core",
       "name": "Crystal Core",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -1998,7 +1998,7 @@
       "id": "rift_crystal",
       "name": "Rift Crystal",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2022,7 +2022,7 @@
       "id": "eidolon_shard",
       "name": "Eidolon Shard",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2038,7 +2038,7 @@
       "id": "void_essence",
       "name": "Void Essence",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2190,7 +2190,7 @@
       "id": "magic_pot_shard",
       "name": "Magic Pot Shard",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2206,7 +2206,7 @@
       "id": "demonolith_shard",
       "name": "Demonolith Shard",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2214,7 +2214,7 @@
       "id": "summoners_ember",
       "name": "Summoner's Ember",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/fire.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/fire.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2222,7 +2222,7 @@
       "id": "glacial_crystal",
       "name": "Glacial Crystal",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/ice.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/ice.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2230,7 +2230,7 @@
       "id": "judgment_spark",
       "name": "Judgment Spark",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/lightning.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/lightning.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2238,7 +2238,7 @@
       "id": "gale_feather",
       "name": "Gale Feather",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/wind.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/wind.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2246,7 +2246,7 @@
       "id": "tidal_scale",
       "name": "Tidal Scale",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/water.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/water.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2254,7 +2254,7 @@
       "id": "earth_heart",
       "name": "Earth Heart",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/earth.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/earth.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2334,7 +2334,7 @@
       "id": "ozma_shard",
       "name": "Ozma Shard",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/dark.png",
       "file_exists": true,
       "retired_path": false
     },
@@ -2398,7 +2398,7 @@
       "id": "absolute_crystal",
       "name": "Absolute Crystal",
       "type": "material",
-      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.webp",
+      "art_path": "/retro-phase-ii/elemental-crystals-v2/light.png",
       "file_exists": true,
       "retired_path": false
     },

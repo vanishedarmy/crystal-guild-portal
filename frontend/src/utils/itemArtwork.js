@@ -347,35 +347,35 @@ const MATERIAL_ART_BY_ID = new Map([
   ["shinryu_scale", `${ITEM_MATERIAL_BASE}/shinryu_scale.png`],
 
   // Existing shared material families remain in place for materials outside the current artwork waves.
-  ["magitek_scrap", `${MATERIAL_METAL_BASE}/metal_scrap.webp`],
-  ["iron_giant_plate", `${MATERIAL_METAL_BASE}/metal_bundle.webp`],
-  ["ironclad_plate", `${MATERIAL_METAL_BASE}/darksteel_ore.webp`],
-  ["warmech_component", `${MATERIAL_METAL_BASE}/metal_scrap.webp`],
-  ["masamune_fragment", `${MATERIAL_METAL_BASE}/silver_ingots.webp`],
-  ["genji_token", `${MATERIAL_METAL_BASE}/gold_ingots.webp`],
-  ["goblin_medallion", `${MATERIAL_METAL_BASE}/copper_ingots.webp`],
-  ["gigas_brace", `${MATERIAL_METAL_BASE}/metal_bundle.webp`],
-  ["bomb_core", `${ELEMENTAL_CRYSTAL_BASE}/fire.webp`],
-  ["summoners_ember", `${ELEMENTAL_CRYSTAL_BASE}/fire.webp`],
-  ["glacial_crystal", `${ELEMENTAL_CRYSTAL_BASE}/ice.webp`],
-  ["judgment_spark", `${ELEMENTAL_CRYSTAL_BASE}/lightning.webp`],
-  ["earth_heart", `${ELEMENTAL_CRYSTAL_BASE}/earth.webp`],
-  ["gale_feather", `${ELEMENTAL_CRYSTAL_BASE}/wind.webp`],
-  ["tidal_scale", `${ELEMENTAL_CRYSTAL_BASE}/water.webp`],
-  ["crystal_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
-  ["crystal_core", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
-  ["eidolon_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
-  ["absolute_crystal", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
-  ["magic_pot_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.webp`],
-  ["magitek_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
-  ["mover_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
-  ["ultima_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
-  ["penance_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
-  ["proto_babil_core", `${MATERIAL_METAL_BASE}/star_crystal.webp`],
-  ["rift_crystal", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
-  ["void_essence", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
-  ["demonolith_shard", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
-  ["ozma_shard", `${ELEMENTAL_CRYSTAL_BASE}/dark.webp`],
+  ["magitek_scrap", `${MATERIAL_METAL_BASE}/metal_scrap.png`],
+  ["iron_giant_plate", `${MATERIAL_METAL_BASE}/metal_bundle.png`],
+  ["ironclad_plate", `${MATERIAL_METAL_BASE}/darksteel_ore.png`],
+  ["warmech_component", `${MATERIAL_METAL_BASE}/metal_scrap.png`],
+  ["masamune_fragment", `${MATERIAL_METAL_BASE}/silver_ingots.png`],
+  ["genji_token", `${MATERIAL_METAL_BASE}/gold_ingots.png`],
+  ["goblin_medallion", `${MATERIAL_METAL_BASE}/copper_ingots.png`],
+  ["gigas_brace", `${MATERIAL_METAL_BASE}/metal_bundle.png`],
+  ["bomb_core", `${ELEMENTAL_CRYSTAL_BASE}/fire.png`],
+  ["summoners_ember", `${ELEMENTAL_CRYSTAL_BASE}/fire.png`],
+  ["glacial_crystal", `${ELEMENTAL_CRYSTAL_BASE}/ice.png`],
+  ["judgment_spark", `${ELEMENTAL_CRYSTAL_BASE}/lightning.png`],
+  ["earth_heart", `${ELEMENTAL_CRYSTAL_BASE}/earth.png`],
+  ["gale_feather", `${ELEMENTAL_CRYSTAL_BASE}/wind.png`],
+  ["tidal_scale", `${ELEMENTAL_CRYSTAL_BASE}/water.png`],
+  ["crystal_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.png`],
+  ["crystal_core", `${ELEMENTAL_CRYSTAL_BASE}/light.png`],
+  ["eidolon_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.png`],
+  ["absolute_crystal", `${ELEMENTAL_CRYSTAL_BASE}/light.png`],
+  ["magic_pot_shard", `${ELEMENTAL_CRYSTAL_BASE}/light.png`],
+  ["magitek_core", `${MATERIAL_METAL_BASE}/star_crystal.png`],
+  ["mover_core", `${MATERIAL_METAL_BASE}/star_crystal.png`],
+  ["ultima_core", `${MATERIAL_METAL_BASE}/star_crystal.png`],
+  ["penance_core", `${MATERIAL_METAL_BASE}/star_crystal.png`],
+  ["proto_babil_core", `${MATERIAL_METAL_BASE}/star_crystal.png`],
+  ["rift_crystal", `${ELEMENTAL_CRYSTAL_BASE}/dark.png`],
+  ["void_essence", `${ELEMENTAL_CRYSTAL_BASE}/dark.png`],
+  ["demonolith_shard", `${ELEMENTAL_CRYSTAL_BASE}/dark.png`],
+  ["ozma_shard", `${ELEMENTAL_CRYSTAL_BASE}/dark.png`],
 ]);
 
 function normalizeItemId(value = "") {
@@ -451,28 +451,28 @@ function inferArmorFamily(item = {}) {
 function armorArtworkPath(item = {}) {
   const family = inferArmorFamily(item);
   const id = normalizeItemId(item.id || item.item_id || item.name || "");
-  if (family === "heavy") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t2.webp`;
+  if (family === "heavy") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t2.png`;
   if (family === "robe") {
     const healerStyle = /white|novice|cotton|linen|aether|scholar|oracle|sage/.test(id);
-    return `${EQUIPMENT_FAMILY_BASE}/armor_style_t${healerStyle ? 4 : 5}.webp`;
+    return `${EQUIPMENT_FAMILY_BASE}/armor_style_t${healerStyle ? 4 : 5}.png`;
   }
-  if (family === "coat") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t6.webp`;
-  if (family === "light") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t1.webp`;
-  return `${EQUIPMENT_FAMILY_BASE}/armor_style_t3.webp`;
+  if (family === "coat") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t6.png`;
+  if (family === "light") return `${EQUIPMENT_FAMILY_BASE}/armor_style_t1.png`;
+  return `${EQUIPMENT_FAMILY_BASE}/armor_style_t3.png`;
 }
 
 function accessoryArtworkPath(item = {}) {
   const id = normalizeItemId(item.id || item.item_id || item.name || "");
   const tier = itemArtworkTier(item);
-  if (/boot|sandal/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/boots_t${tier}.webp`;
-  if (/belt|band|wrist/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/belt_t${Math.min(tier, 4)}.webp`;
+  if (/boot|sandal/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/boots_t${tier}.png`;
+  if (/belt|band|wrist/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/belt_t${Math.min(tier, 4)}.png`;
   if (/gauntlet|glove/.test(id)) return `${WEAPON_FAMILY_BASE}/knuckles.png`;
   if (/crown/.test(id)) return `${WEAPON_ITEM_BASE}/${tier >= 5 ? "ice_crown" : "sapphire_circlet"}.png`;
   if (/hammer/.test(id)) return `${WEAPON_ITEM_BASE}/steel_warhammer.png`;
-  if (/ring|pendant|charm|crest|emblem|focus|guard|eye/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/ring_t${tier}.webp`;
+  if (/ring|pendant|charm|crest|emblem|focus|guard|eye/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/ring_t${tier}.png`;
   if (/goggle|blindfold/.test(id)) return `${WEAPON_ITEM_BASE}/rogue_hood.png`;
-  if (/ribbon/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/belt_t4.webp`;
-  return `${EQUIPMENT_FAMILY_BASE}/ring_t${tier}.webp`;
+  if (/ribbon/.test(id)) return `${EQUIPMENT_FAMILY_BASE}/belt_t4.png`;
+  return `${EQUIPMENT_FAMILY_BASE}/ring_t${tier}.png`;
 }
 
 export function itemArtworkId(item = {}) {

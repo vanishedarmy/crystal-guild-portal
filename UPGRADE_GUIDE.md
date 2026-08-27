@@ -1,7 +1,15 @@
-# Upgrade Guide — iii7 to iii8
+# Upgrade Guide — iii8 to iii9
 
-1. Deploy the iii8 full Web build or apply the iii7 → iii8 patch.
-2. No database migration or player reset is required.
-3. No OAuth or environment-variable changes are required.
-4. Hard-refresh the Portal after deployment so the new material sprites are fetched.
-5. Verify `/api/health` reports frontend asset revision `1.1.19-retro-phase-iii8`.
+1. Replace the web build with the iii9 package, or apply the iii8→iii9 patch.
+2. Ensure the following files now exist under `frontend/public/retro-phase-ii/elemental-crystals-v2/`:
+   - dark.png
+   - earth.png
+   - fire.png
+   - ice.png
+   - light.png
+   - lightning.png
+   - water.png
+   - wind.png
+3. Confirm that the old `.webp` files are no longer present in that folder.
+4. Confirm `frontend/src/utils/itemArtwork.js` routes elemental assets to `.png` files.
+5. Rebuild/redeploy the frontend so cached artwork references are refreshed.

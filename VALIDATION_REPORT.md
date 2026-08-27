@@ -1,7 +1,6 @@
-# Validation Report — Retro Phase III Elemental Icon Refresh (iii9)
+# Validation Report
 
-Validated:
-- New elemental icon assets copied into the build.
-- Legacy elemental WEBP assets removed from the elemental-crystals-v2 directory.
-- Routing file updated from `.webp` to `.png` for elemental crystal references.
-- Artwork audit JSON updated to match new PNG paths.
+- Replaced all 20 `material-metals-v2` assets with regenerated PNG files.
+- Removed obsolete `.webp` files from `frontend/public/retro-phase-ii/material-metals-v2`.
+- Added `.png` copies for equipment-family assets referenced by `itemArtwork.js` and restored `weapon-families-v1/unrestricted.png`.
+- Static routing audit checked 242 referenced artwork paths. Missing references found: 0.

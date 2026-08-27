@@ -1,18 +1,20 @@
-# Crystal Guild v1.1.19 — Retro Phase III Item & Weapon Refresh (iii11)
+# Crystal Guild v1.1.19 — Retro Phase III Facility Supply Balance (iii12)
 
-This checkpoint replaces 33 inventory assets with regenerated transparent PNG artwork and reorganizes the production files by asset type.
+This paired Bot + Web balance checkpoint removes Fellowship facility-material bottlenecks while keeping existing project IDs and contribution progress intact.
 
-## Typed production libraries
-- Consumables: `frontend/public/retro-phase-iii/item-icons-v1/`
-- Weapons: `frontend/public/retro-phase-iii/weapon-icons-v2/`
-- Equipment families: `frontend/public/retro-phase-iii/equipment-families-v1/` (PNG-only)
+## Bestiary supply update
 
-The new library paths are intentionally cache-busted so browsers/CDNs cannot continue serving superseded artwork from the previous URLs.
+The Player Guide now publishes the authoritative rebalanced monster drops for the six recurring Fellowship facility materials:
 
-## Refreshed assets
-- 3 consumables: Phoenix Down, Antidote, Tent
-- 30 weapons from Batches 1–4
+- Ancient Coin — Ossuary Knight, Mimic, Magic Pot, Ancient Mimic.
+- Hi-Potion — Goblin Chieftain, Mimic, Tonberry; crafting/shop routes remain unchanged.
+- Mythril Ore — Spriggan, Gigas, Mimic, Iron Giant, Ancient Adamantoise.
+- Wyvern Scale — Cockatrice, Basilisk, Sea Serpent, Red Dragon, Blue Dragon, Wyrm.
+- Elemental Crystal — Flan, Bomb, Black Flan, Magic Pot, Crystal Wolf, Crystal Golem, Elemental Archon, Dark Element.
+- Demon Horn — Imp, Gargoyle, Piscodemon, Abaddon, Archeodemon, Demonolith.
 
-All 33 refreshed files are normalized to 512×512 transparent PNGs. Old `item-icons-v4`, `weapon-icons-v1`, and equipment-family WEBP duplicates are not retained in the production build.
+Every recurring facility material now has at least three monster sources and an early practical source at Lv.11 or below. Higher-level monsters retain stronger rates so later regions remain better farming destinations.
 
-Frontend asset revision: `1.1.19-retro-phase-iii11`.
+Frontend asset revision: `1.1.19-retro-phase-iii12`.
+
+No player-data, schema, hosted-sync, Portal Action, OAuth, or environment migration is required.

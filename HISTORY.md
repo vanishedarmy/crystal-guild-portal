@@ -1,5 +1,11 @@
 # History
 
+## v1.1.19 — Retro Phase III Facility Supply Balance (iii12)
+- Rebalanced all six recurring Fellowship facility materials across multiple level-appropriate monster sources.
+- Added early practical sources at Lv.11 or below while preserving stronger late-game farming targets.
+- Updated Player Guide Bestiary drop data to match the paired authoritative Bot tables.
+- Preserved existing facility/project progress with no schema or protocol migration.
+
 ## v1.1.19 — Retro Phase III (iii8)
 - Completed current material artwork coverage at 84/84.
 - Added the final 19 material identities and expanded material-icons-v1 to 39 transparent PNGs.

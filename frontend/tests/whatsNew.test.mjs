@@ -78,4 +78,5 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
   assert.match(data, /Whips through headgear/);
   assert.match(data, /Expanded late-wave coverage/);
   assert.match(data, /Library stays consolidated/);
+  assert.match(data, /Facility supplies rebalanced/);
 });

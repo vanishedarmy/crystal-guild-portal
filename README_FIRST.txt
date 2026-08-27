@@ -1,11 +1,11 @@
-Crystal Guild v1.1.19 — Retro Phase III
-Current Web asset revision: 1.1.19-retro-phase-iii11
+Crystal Guild v1.1.19 — Retro Phase III / Facility Supply Balance
+Current Web asset revision: 1.1.19-retro-phase-iii12
 
-This checkpoint completes the current material-art pass.
+Paired Bot + Web balance checkpoint.
 
-- 84 / 84 materials now resolve to valid artwork.
-- 39 dedicated Phase III material PNGs are packaged in material-icons-v1.
-- The final 19 missing material identities are now routed.
+- Fellowship facility materials now have multiple level-appropriate monster sources.
+- The Player Guide Bestiary publishes the matching updated drop tables and percentages.
+- Existing facility tiers, project IDs, contributions, inventory, and player progression are preserved.
 - No database migration, player reset, OAuth change, environment-variable change, hosted sync schema change, or Portal Action protocol change is required.
 
-Read README.md and UPGRADE_GUIDE.md before deployment.
+Read RELEASE_NOTES.md and UPGRADE_GUIDE.md before deployment.

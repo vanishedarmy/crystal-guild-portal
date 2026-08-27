@@ -1,30 +1,32 @@
-# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 7 — Streamer Inventory Admin
+# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 8 — Raid Overlay Visual Rework
 
-## Streamer inventory controls
-- Adds **Player Inventory** to the authenticated Streamer Control Center.
-- Select a registered adventurer, enter/select an exact item name or ID, choose quantity 1–999, then use **Add Item** or **Remove Item**.
-- Remove Item is treated as a force action and requires the existing second-click confirmation.
-- The item selector is backed by the public Guide catalog but still accepts exact item IDs/names manually.
-- All adjustments are written to the normal item transaction ledger so Streamer activity remains auditable.
+Hotfix 8 is a Web-only visual update focused on the hosted OBS raid overlay.
 
-## Owner-only chat commands
-- `!additem <player> | <item> | [quantity]` (alias `!giveitem`)
-- `!removeitem <player> | <item> | [quantity]` (alias `!takeitem`)
-- Exact Twitch username is recommended for the player field; exact item name or item ID is accepted.
-- Removing more than the player owns is rejected rather than silently clamped.
-- Removing the final copy of currently equipped gear automatically unequips that slot and normalizes character resources.
+## New Raid HUD
+- Replaces the plain rounded status card with a compact SNES/Final-Fantasy-inspired raid HUD.
+- Boss artwork now lives in a dedicated framed art panel instead of functioning only as a faint full-card backdrop.
+- Boss name, raid tier, living raiders, round, and phase have clearer visual hierarchy.
+- Boss HP receives a stronger segmented bar treatment with exact HP, percentage, and a low-health pulse below 25%.
+- Summon Gauge has its own compact crystal-blue progress meter.
+- The top three damage leaders are rendered as individual scoreboard chips instead of one long text ticker.
+- ENRAGED, VICTORY, and WIPE each receive distinct visual states.
+- The overlay remains transparent outside the raid HUD and remains hidden when there is no current/still-fresh raid snapshot.
+- Responsive rules keep the overlay readable in smaller OBS browser-source canvases.
+- Reduced-motion preferences disable the low-HP pulse and meter transitions.
 
-## Safety / authority
-- Web authorization still verifies the broadcaster account from the signed Bot manifest.
-- The Bot independently verifies `TWITCH_OWNER_ID`; the public Web cannot execute these actions for non-streamers.
-- Portal item adjustments are replay-safe: the inventory mutation and Portal replay record commit atomically, preventing duplicate grants/removals after an acknowledgement retry.
-- No arbitrary chat-command relay was added.
+## Continuity
+- RC1 Hotfix 7 Streamer Inventory Admin remains intact.
+- Persistent Adventure results and explicit Confirm Result behavior remain intact.
+- LIVE-only notable Portal Solo/Hunt/Title announcements remain intact.
+- Dynamic Camp remains 15 minutes LIVE / 1 hour OFFLINE before existing Fellowship reductions.
+- All 24 regenerated Relic Tier 1/2/3 visuals remain packaged.
 
-## Compatibility
-- Web runtime: `1.1.19-retro-phase-iii-rc1h7`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h7`
-- Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
-- Local DB schema: **7** (unchanged)
-- Hosted sync schema: **1** (unchanged)
-- Portal Action protocol: **18**
-- Twitch prefix: `!`
+## Technical identity
+- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h8`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h8`
+- Compatible Bot runtime: RC1 Hotfix 7
+- Portal Action protocol: `18` (unchanged)
+- Hosted sync schema: `1` (unchanged)
+- Local Bot DB schema: `7` (unchanged)
+
+No Bot update or database migration is required for this Web-only hotfix.

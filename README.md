@@ -2,6 +2,13 @@
 
 RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portraits, Facility Supply Balance, and the completed artwork catalog. It adds scenic backgrounds to Camp/Recovery, Blacksmith, Chocobo Stable, and Moogle Emporium, plus a final routing/cleanup audit.
 
+## RC1 Hotfix 8 — Raid Overlay Visual Rework
+- `/overlay` now uses a compact Final Fantasy-inspired raid HUD with a framed boss-art panel.
+- Raid tier, living raiders, round, phase, exact HP, HP percentage, Summon gauge, and the top three damage leaders are visually separated for faster stream readability.
+- Low boss HP, ENRAGED, VICTORY, and WIPE receive distinct treatments.
+- The surrounding Browser Source remains transparent and the HUD continues to self-hide when raid state is missing or stale.
+- This is a Web-only hotfix: Portal Action protocol remains 18 and the existing RC1H7 Bot remains compatible.
+
 ## Chocobo portraits
 - Registered Chocobos can choose from 10 SNES/FF-style portrait options in the Chocobo Stable.
 - Portrait choice is saved by the authoritative Bot through `SET_CHOCOBO_PORTRAIT`.
@@ -15,11 +22,11 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h7`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h7`
+- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h8`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h8`
 - Portal Action protocol: `18`
 - Hosted sync schema: `1`
-- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
+- Compatible Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
 - Local Bot DB schema: `7`
 
 ## Facility supply balance

@@ -1,26 +1,30 @@
-# Validation Report — RC1 Hotfix 7 Streamer Inventory Admin
+# Validation Report — RC1 Hotfix 8 Raid Overlay Visual Rework
 
 ## Identity
-- Web runtime: `1.1.19-retro-phase-iii-rc1h7`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h7`
-- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
-- Local DB schema: 7 (unchanged)
-- Hosted sync schema: 1 (unchanged)
-- Portal Action protocol: 18
+- Web runtime: `1.1.19-retro-phase-iii-rc1h8`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h8`
+- Compatible Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
+- Portal Action protocol: `18` unchanged
+- Hosted sync schema: `1` unchanged
+- Local Bot DB schema: `7` unchanged
 
 ## Automated validation
-- Frontend Node unit/source suite: **291 / 291 passed**.
-- Hosted Web Python suite: **47 / 47 passed**.
-- Python syntax compilation passed for `hosted_portal.py` and paired changed Bot modules.
+- Frontend unit/static regression suite: **291 / 291 passed**.
+- Hosted Portal Python suite: **47 / 47 passed**.
+- `raid-overlay.js` passes `node --check` syntax validation.
 
-## Hotfix 7 coverage
-- Streamer Dashboard exposes 15 allow-listed owner operations, including Add Item and Remove Item.
-- Player selector is populated from the Streamer roster; item entry is assisted by the Guide catalog and accepts exact names/IDs.
-- Remove Item uses the existing force-action second-click confirmation.
-- Hosted Web strictly validates `player | item | quantity` and rejects malformed/out-of-range requests.
-- Non-owner sessions cannot queue `STREAMER_COMMAND` actions.
-- Arbitrary chat relay remains unavailable.
-- Protocol 18 is enforced by both Web and Bot.
+## Overlay-specific coverage
+- Hosted `/overlay` remains wired to `/api/overlay/state`.
+- Overlay script remains external; no inline executable script was introduced.
+- Boss-art routing remains connected to the canonical packaged world/raid boss artwork set.
+- Revised markup includes the dedicated boss art panel, boss HP track, Summon meter, and Damage Leaders area.
+- Overlay JavaScript renders structured top-damage chips and applies critical-HP, ENRAGED, VICTORY, and WIPE presentation states.
+- Reduced-motion CSS remains present.
+- Stale/unavailable overlay snapshots still hide the entire HUD.
 
-## Build note
-The source package intentionally does not vendor `node_modules`. Render/Docker installs the pinned frontend dependencies and runs the normal Vite production build during deployment.
+## Regression continuity
+- No action protocol or allowed Portal action change.
+- No persistence/database change.
+- No Twitch OAuth or environment-variable change.
+- RC1H7 Streamer Inventory Admin remains compatible.
+- Persistent Adventure results, dynamic Camp, LIVE-only notable Portal announcements, and the regenerated Relic artwork remain packaged unchanged.

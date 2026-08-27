@@ -1,6 +1,16 @@
-Crystal Guild Web — v1.1.19 Retro Phase III RC1 Hotfix 7
-Hosted runtime: 1.1.19-retro-phase-iii-rc1h7
-Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h7
+Crystal Guild Web — v1.1.19 Retro Phase III RC1 Hotfix 8
+Hosted runtime: 1.1.19-retro-phase-iii-rc1h8
+Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h8
 Hosted sync schema: 1
 Portal Action protocol: 18
-Primary change: authenticated Streamer Dashboard add/remove player inventory controls.
+Compatible Bot: RC1 Hotfix 7 / protocol 18 / local DB schema 7
+
+Primary Hotfix 8 files:
+- frontend/public/raid-overlay.html
+- frontend/public/raid-overlay.js
+- frontend/src/version.js
+- crystal_guild/hosted_portal.py
+- README_FIRST.txt
+- RELEASE_NOTES.md
+- UPGRADE_GUIDE.md
+- VALIDATION_REPORT.md

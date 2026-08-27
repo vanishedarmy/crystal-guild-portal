@@ -1,6 +1,6 @@
 {
   "feature": "Chocobo Portraits",
-  "frontend_asset_revision": "1.1.19-retro-phase-iii13",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1",
   "default_portrait_id": "classic_gold",
   "count": 10,
   "assets": [

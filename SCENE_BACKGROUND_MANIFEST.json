@@ -1,0 +1,47 @@
+{
+  "release": "v1.1.19 \u2014 Retro Phase III / RC1",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1",
+  "scene_backgrounds": [
+    {
+      "file": "camp.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v1/camp.png",
+      "width": 1440,
+      "height": 810,
+      "bytes": 659480,
+      "usage": [
+        "Adventure Board \u2014 Camp & Recovery",
+        "Inventory \u2014 Recovery"
+      ]
+    },
+    {
+      "file": "blacksmith.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v1/blacksmith.png",
+      "width": 1440,
+      "height": 810,
+      "bytes": 773577,
+      "usage": [
+        "Blacksmith"
+      ]
+    },
+    {
+      "file": "chocobo_stable.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v1/chocobo_stable.png",
+      "width": 1440,
+      "height": 810,
+      "bytes": 794542,
+      "usage": [
+        "Chocobo Stable"
+      ]
+    },
+    {
+      "file": "emporium.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v1/emporium.png",
+      "width": 1440,
+      "height": 810,
+      "bytes": 720135,
+      "usage": [
+        "Moogle Emporium"
+      ]
+    }
+  ]
+}

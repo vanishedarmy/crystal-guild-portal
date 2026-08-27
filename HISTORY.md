@@ -1,3 +1,7 @@
+# v1.1.19 — Retro Phase III / Release Candidate 1
+
+Finalization checkpoint: four scenic Portal backgrounds, final artwork-path and progression audits, Chocobo portrait continuity, facility-material balance continuity, and release-tree cleanup. Runtime `1.1.19-retro-phase-iii-rc1`; frontend `1.1.19-retro-phase-iii14-rc1`.
+
 # History
 
 ## v1.1.19 — Retro Phase III Chocobo Portraits (iii13)

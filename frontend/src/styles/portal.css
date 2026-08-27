@@ -7978,3 +7978,118 @@ main h1,
   .chocobo-portrait-picker-actions { align-items: stretch; }
   .chocobo-portrait-picker-actions .equipment-action-button { width: 100%; }
 }
+
+/* v1.1.19 Retro Phase III RC1 — scenic panel backgrounds.
+   These are deliberately subtle so the art adds atmosphere without reducing UI readability. */
+.adventure-camp-panel,
+.blacksmith-panel,
+.chocobo-stable-panel,
+.moogle-panel {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.adventure-camp-panel::before,
+.blacksmith-panel::before,
+.chocobo-stable-panel::before,
+.moogle-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  opacity: .46;
+}
+
+.adventure-camp-panel > *,
+.blacksmith-panel > *,
+.chocobo-stable-panel > *,
+.moogle-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.adventure-camp-panel::before {
+  background-image:
+    linear-gradient(180deg, rgba(5, 14, 24, .30) 0%, rgba(5, 14, 24, .76) 46%, rgba(5, 14, 24, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v1/camp.png');
+  background-position: center 46%;
+}
+
+.blacksmith-panel::before {
+  background-image:
+    linear-gradient(180deg, rgba(9, 8, 10, .34) 0%, rgba(9, 12, 18, .78) 44%, rgba(8, 17, 26, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v1/blacksmith.png');
+  background-position: center 42%;
+}
+
+.chocobo-stable-panel::before {
+  background-image:
+    linear-gradient(180deg, rgba(6, 14, 20, .32) 0%, rgba(6, 18, 26, .78) 46%, rgba(7, 18, 28, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v1/chocobo_stable.png');
+  background-position: center 40%;
+}
+
+.moogle-panel::before {
+  background-image:
+    linear-gradient(180deg, rgba(7, 10, 18, .31) 0%, rgba(9, 16, 27, .80) 46%, rgba(8, 18, 29, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v1/emporium.png');
+  background-position: center 46%;
+}
+
+/* Keep dense content cards legible over the scenic layer. */
+.blacksmith-panel .blacksmith-card,
+.chocobo-stable-panel .chocobo-companion-card,
+.chocobo-stable-panel .chocobo-side-card,
+.chocobo-stable-panel .chocobo-step-card,
+.moogle-panel .moogle-item-card,
+.moogle-panel .moogle-sell-panel,
+.adventure-camp-panel .adventure-camp-grid > div {
+  backdrop-filter: blur(1.5px);
+}
+
+@media (max-width: 720px) {
+  .adventure-camp-panel::before,
+  .blacksmith-panel::before,
+  .chocobo-stable-panel::before,
+  .moogle-panel::before {
+    opacity: .34;
+    background-position: center top;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .adventure-camp-panel::before,
+  .blacksmith-panel::before,
+  .chocobo-stable-panel::before,
+  .moogle-panel::before {
+    opacity: .22;
+  }
+}
+
+/* Camp art also carries through the Recovery workspace so both Camp entry points share one visual identity. */
+.recovery-dashboard {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.recovery-dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .30;
+  background-image:
+    linear-gradient(180deg, rgba(5, 14, 24, .46) 0%, rgba(5, 14, 24, .88) 62%, rgba(5, 14, 24, .97) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v1/camp.png');
+  background-size: cover;
+  background-position: center 48%;
+}
+.recovery-dashboard > * { position: relative; z-index: 1; }
+@media (max-width: 720px) { .recovery-dashboard::before { opacity: .22; } }
+@media (prefers-contrast: more) { .recovery-dashboard::before { opacity: .14; } }

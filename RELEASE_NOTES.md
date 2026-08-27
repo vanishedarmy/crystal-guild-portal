@@ -1,28 +1,33 @@
-# Crystal Guild v1.1.19 — Retro Phase III Chocobo Portraits (iii13)
+# Crystal Guild v1.1.19 — Retro Phase III / Release Candidate 1
 
-This paired Bot + Web checkpoint adds persistent, player-selectable Chocobo portraits while preserving the Retro Phase III artwork and Facility Supply Balance changes from iii12.
+RC1 closes out the Retro Phase III visual program and prepares Crystal Guild for the v1.2 Expeditions branch.
 
-## Chocobo portrait feature
-- Registered Chocobos now have a persistent `portrait_id` stored by the authoritative Bot.
-- The Chocobo Stable includes a portrait gallery with **10 SNES/FF-style head-and-bust portraits**.
-- Players can preview any portrait and use **Apply Portrait** to save it to their registered companion.
-- The selected portrait appears on the owner’s Stable card and on the read-only Chocobo card when another adventurer views that profile.
-- Portrait selection is cosmetic only and does not change Bond, traits, stats, Expeditions, or combat.
-- Existing registered Chocobos are migrated safely to **Classic Gold** as the default portrait.
+## Scenic background pass
+Four new SNES/FF-style scene backgrounds add atmosphere to high-value Portal spaces without replacing their existing controls:
+- **Camp & Recovery** — twilight crystal-forest campsite; shared by Adventure Board Camp and Inventory Recovery.
+- **Blacksmith** — ember-lit medieval forge.
+- **Chocobo Stable** — bright countryside stable.
+- **Moogle Emporium** — stocked fantasy apothecary/merchant interior.
 
-## Portrait catalog
-Classic Gold · Midnight · Celestial · Ember · Verdant · Cobalt · Arcane · Sandrunner · Frost · Rose.
+The scenes are stored under `frontend/public/retro-phase-iii/scene-backgrounds-v1/` as optimized 1440×810 PNGs. Dark gradient overlays preserve contrast, mobile opacity is reduced, and `prefers-contrast: more` further suppresses the artwork.
 
-Assets live under:
-`frontend/public/retro-phase-iii/chocobo-portraits-v1/`
+## Final artwork/path audit
+- Explicit `/retro-phase-*` image routes were checked against the packaged public tree.
+- No broken explicit routed assets were found.
+- Chocobo portraits, item/weapon art, material art, gear families, monster art, regions, bosses, Jobs, and character portraits remain in place.
 
-## Technical changes
-- Bot runtime: `1.1.19-retro-phase-iii-chocobo1`
-- Hosted Web runtime: `1.1.19-retro-phase-iii-chocobo1`
-- Frontend asset revision: `1.1.19-retro-phase-iii13`
-- Local DB schema: **6** (`player_chocobos.portrait_id`)
-- Hosted sync schema: **1** unchanged
-- Portal Action protocol: **15** (`SET_CHOCOBO_PORTRAIT`)
-- Twitch command prefix: `!` unchanged
+## Cleanup
+- Removed obsolete prior patch-deletion manifests from the Web root.
+- Removed the redundant text copy of the gear-art manifest while retaining the JSON audit/manifests.
+- Removed runtime/build caches from the shipping tree.
 
-No player reset, OAuth change, or new environment variable is required.
+## Compatibility
+- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1`
+- Paired Bot runtime: `1.1.19-retro-phase-iii-rc1`
+- Local DB schema: **6**
+- Hosted sync schema: **1**
+- Portal Action protocol: **15**
+- Player reset: **none**
+- OAuth change: **none**
+- New environment variables: **none**

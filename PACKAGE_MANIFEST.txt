@@ -1,12 +1,11 @@
-Package: Crystal Guild v1.1.19 — Retro Phase III / Chocobo Portraits
-Hosted Web runtime: 1.1.19-retro-phase-iii-chocobo1
-Frontend asset revision: 1.1.19-retro-phase-iii13
+Package: Crystal Guild v1.1.19 — Retro Phase III / Release Candidate 1 Web
+Hosted Web runtime: 1.1.19-retro-phase-iii-rc1
+Frontend asset revision: 1.1.19-retro-phase-iii14-rc1
 Hosted sync schema: 1
 Portal Action protocol: 15
 
-Feature payload:
-- 10 Chocobo portrait PNG assets in retro-phase-iii/chocobo-portraits-v1
-- Chocobo Stable portrait gallery and Apply Portrait control
-- Public profile rendering of the selected Chocobo portrait
-- Typed SET_CHOCOBO_PORTRAIT Portal action
-- Existing Retro Phase III / Facility Supply Balance Web content retained
+RC1 scope:
+- Carries forward all Retro Phase III item, material, gear, monster, Job, character, and Chocobo artwork.
+- Adds four optimized 1440×810 scenic backgrounds for Camp/Recovery, Blacksmith, Chocobo Stable, and Moogle Emporium.
+- Scenic art is layered behind existing content with dark readability gradients, reduced mobile opacity, and prefers-contrast safeguards.
+- Final explicit artwork-path audit and release-tree cleanup.

@@ -18972,7 +18972,7 @@
     "solo_venture_encounter_chance": 60,
     "solo_venture_treasure_chance": 40,
     "solo_venture_max_stages": 3,
-    "release": "1.2.0-expeditions-a2",
+    "release": "1.2.0-expeditions-a2h1",
     "camp_rest_online": 900,
     "camp_rest_offline": 3600
   },

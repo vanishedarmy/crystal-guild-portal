@@ -1,3 +1,14 @@
+# Crystal Guild v1.2.0 — Expeditions Alpha 2 Hotfix 1
+
+## Overview & Board Collapse
+
+- Moves **Daily Guild Provisions** above **What's New** on the Adventurer Overview.
+- Updates **What's New** to summarize Expeditions Alpha 2 regional objectives, boss contracts, rare encounters, and Region Mastery.
+- Makes **What's New** collapsible and remembers the browser preference; narrow/mobile layouts default collapsed when no preference exists.
+- Makes the **Distant Expedition Board** collapsible with the same remembered preference behavior. Active Expeditions still open the board on a fresh Portal visit so current state is not hidden by a previously collapsed idle board.
+- Keeps Travel Regions and Hunt Board collapse behavior unchanged.
+- Web-only presentation hotfix. DB schema 8, hosted sync schema 1, and Portal Action protocol 20 are unchanged.
+
 # Crystal Guild v1.2.0 — Expeditions Alpha 2
 
 ## Region Progress

@@ -1,3 +1,10 @@
+# v1.2.0 — Expeditions Alpha 2 Hotfix 1
+
+- Daily Guild Provisions now appears before What's New on Adventurer Overview.
+- What's New summarizes Alpha 2 and is collapsible with a remembered browser preference.
+- Distant Expedition Board is collapsible with the same remembered preference behavior.
+- Frontend asset revision advances to `1.2.0-expeditions-a2h1`; protocol/schema remain unchanged.
+
 # v1.2.0 — Expeditions Alpha 2
 Adds five regional objective chains, 25/50/75/100% exploration milestone presentation, Regional Boss Contracts, persistent boss-clear/Mastery status, five Mastery achievements/titles, rare late-region encounters, and LIVE-only notable Portal Expedition announcements. Hosted runtime `1.2.0-expeditions-alpha2`; frontend revision `1.2.0-expeditions-a2`; protocol 20 and DB schema 8 unchanged.
 

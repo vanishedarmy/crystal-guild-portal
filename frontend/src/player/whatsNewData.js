@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
-    name: "Expeditions Alpha 1",
-    title: "The Guild road opens beyond the Adventure Board",
-    summary: "Expeditions introduce five persistent Chocobo-led regions with multi-stage travel, route choices, resource pressure, field combat, exploration progress, and a cache you must bring home.",
+    name: "Expeditions Alpha 2",
+    title: "Regional objectives and boss contracts arrive",
+    summary: "Expeditions now grow with each region: exploration milestones unlock new challenges, regional bosses, and permanent Mastery rewards while your progress remains saved between visits.",
     highlights: [
-      { title: "Five distant regions", description: "Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, and the Astral Scar each use their own level band, encounter pool, hazards, materials, and exploration identity." },
-      { title: "Scout, Journey, or Deep", description: "Choose a 3-, 5-, or 8-stage base route, then push up to two bonus stages beyond the planned objective if you want more risk and reward." },
-      { title: "Your Chocobo matters", description: "Fleet Feet, Steady Strider, Keen Eye, Forager, and Lucky Plume now directly modify Expedition travel, hazards, discoveries, resources, treasure, and rescue recovery." },
-      { title: "Persistent journeys", description: "Travel timers, active combat, cache contents, stage history, and route state are stored authoritatively and wait for you when you return to the Portal." },
-      { title: "Bring the cache home", description: "A safe return banks the full Expedition Cache. Defeat or combat retreat triggers Chocobo rescue and preserves most of it rather than wiping the run." },
+      { title: "Milestones at 25 / 50 / 75 / 100%", description: "Each region now tracks named exploration objectives, with the next milestone shown directly on the Expedition Board." },
+      { title: "Five Regional Boss Contracts", description: "Challenge Elder Ochu, Inferno Drake, Malboro Sovereign, Frost Behemoth, and Rift Wyrm once their regions are sufficiently explored." },
+      { title: "Permanent Region Mastery", description: "Reach 100% exploration to Master a region and earn its achievement, title, and a modest region-specific Expedition bonus." },
+      { title: "Rare encounters open deeper in", description: "Higher exploration unlocks tougher regional encounters and better opportunities without replacing the normal Expedition routes." },
+      { title: "Major Expedition moments can reach chat", description: "While the stream is LIVE, major discoveries, Mastery, and Regional Boss victories from Portal Expeditions can be announced without routine stage spam." },
     ],
     action: { tab: "hunts", label: "Open Expedition Board" },
   },

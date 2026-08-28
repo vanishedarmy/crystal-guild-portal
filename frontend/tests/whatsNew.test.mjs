@@ -10,8 +10,12 @@ test("Overview surfaces a reusable player-facing What's New section", async () =
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
 
   assert.match(overview, /<WhatsNew onNavigate=\{onNavigate\}/);
+  assert.ok(overview.indexOf("<DailyReward") < overview.indexOf("<WhatsNew"), "Daily Guild Provisions should appear before What's New");
   assert.match(component, /What's New/);
   assert.match(component, /Previous major updates/);
+  assert.match(component, /crystal-guild:overview:whats-new/);
+  assert.match(component, /section-collapse-button/);
+  assert.match(component, /aria-expanded=\{open\}/);
   assert.match(component, /onNavigate\?\.\(latest\.action\.tab\)/);
   assert.match(data, /v1\.1\.15/);
   assert.match(data, /Wayfarer/);
@@ -79,4 +83,14 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
   assert.match(data, /Expanded late-wave coverage/);
   assert.match(data, /Library stays consolidated/);
   assert.match(data, /Facility supplies rebalanced/);
+});
+
+
+test("What's New is updated for Expeditions Alpha 2", async () => {
+  const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
+  const latest = data.slice(0, data.indexOf('version: "v1.1.19"'));
+  assert.match(latest, /Expeditions Alpha 2/);
+  assert.match(latest, /Regional objectives and boss contracts arrive/);
+  assert.match(latest, /Elder Ochu/);
+  assert.match(latest, /Permanent Region Mastery/);
 });

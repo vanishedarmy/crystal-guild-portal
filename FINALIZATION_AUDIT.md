@@ -1,3 +1,7 @@
+# Expeditions Alpha 2 Hotfix 1 Finalization
+
+PASS — Web-only Overview ordering and collapsible board pass. Daily Guild Provisions precedes What's New; What's New is updated for Alpha 2 and collapsible; Distant Expedition Board is collapsible. No DB, hosted sync, or Portal Action protocol changes.
+
 # Finalization Audit — RC1 Hotfix 3 Relic Visuals
 
 ## Integration coverage

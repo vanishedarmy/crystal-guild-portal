@@ -1,6 +1,6 @@
-Crystal Guild v1.2.0 Expeditions Alpha 2 — Web Package Manifest
+Crystal Guild v1.2.0 Expeditions Alpha 2 Hotfix 1 — Web Package Manifest
 Hosted runtime: 1.2.0-expeditions-alpha2
-Frontend asset revision: 1.2.0-expeditions-a2
+Frontend asset revision: 1.2.0-expeditions-a2h1
 Hosted sync schema: 1
 Portal Action protocol: 20
 Required Bot: 1.2.0-expeditions-a2 / local DB schema 8
@@ -10,15 +10,32 @@ Files (775):
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
 CHOCOBO_PORTRAIT_MANIFEST.json
+Dockerfile
+EQUIPMENT_ARTWORK_ROUTING_MANIFEST.json
+EXPEDITION_ARTWORK_MANIFEST.json
+FINALIZATION_AUDIT.md
+GEAR_ARTWORK_MANIFEST.json
+HISTORY.md
+HOSTING_GUIDE.md
+ITEM_WEAPON_REFRESH_MANIFEST.json
+MATERIAL_ARTWORK_MANIFEST.json
+MATERIAL_ARTWORK_QA_REPORT.md
+PACKAGE_MANIFEST.txt
+PORTAL_ACTIONS_SETUP.md
+README.md
+README_FIRST.txt
+RELEASE_NOTES.md
+RELIC_ARTWORK_MANIFEST.json
+SCENE_BACKGROUND_MANIFEST.json
+STREAMER_DASHBOARD.md
+UPGRADE_GUIDE.md
+VALIDATION_REPORT.md
+VERSION.txt
 crystal_guild/__init__.py
 crystal_guild/config.py
 crystal_guild/hosted_portal.py
 crystal_guild/portal_auth.py
 crystal_guild/trophy_hall.py
-Dockerfile
-EQUIPMENT_ARTWORK_ROUTING_MANIFEST.json
-EXPEDITION_ARTWORK_MANIFEST.json
-FINALIZATION_AUDIT.md
 frontend/.env.example
 frontend/index.html
 frontend/package.json
@@ -591,12 +608,12 @@ frontend/public/retro-phase-iii/weapon-icons-v2/wyvern_claws.png
 frontend/public/retro-phase-iii/weapon-icons-v2/yew_wand.png
 frontend/public/retro-phase-iii/weapon-icons-v2/yoichi_bow.png
 frontend/public/retro-phase-iii/weapon-icons-v2/zweihander.png
+frontend/src/App.jsx
 frontend/src/api/auth.js
 frontend/src/api/client.js
 frontend/src/api/fellowship.js
 frontend/src/api/players.js
 frontend/src/api/streamer.js
-frontend/src/App.jsx
 frontend/src/components/BossArtwork.jsx
 frontend/src/components/ClickableCard.jsx
 frontend/src/components/DetailDialog.jsx
@@ -611,8 +628,8 @@ frontend/src/components/RelicArtwork.jsx
 frontend/src/components/SectionErrorBoundary.jsx
 frontend/src/components/SiteHeader.jsx
 frontend/src/components/StatCard.jsx
-frontend/src/guide/guideCompletionUtils.js
 frontend/src/guide/GuidePage.jsx
+frontend/src/guide/guideCompletionUtils.js
 frontend/src/guide/guideRuntime.js
 frontend/src/guide/guideTabUtils.js
 frontend/src/hooks/useLiveUpdates.js
@@ -625,7 +642,6 @@ frontend/src/pages/PrivacyPolicy.jsx
 frontend/src/pages/StreamerDashboard.jsx
 frontend/src/player/Achievements.jsx
 frontend/src/player/Bestiary.jsx
-frontend/src/player/bestiarySort.js
 frontend/src/player/Blacksmith.jsx
 frontend/src/player/ChocoboStable.jsx
 frontend/src/player/DailyReward.jsx
@@ -640,6 +656,7 @@ frontend/src/player/Records.jsx
 frontend/src/player/Relics.jsx
 frontend/src/player/TrophyHall.jsx
 frontend/src/player/WhatsNew.jsx
+frontend/src/player/bestiarySort.js
 frontend/src/player/whatsNewData.js
 frontend/src/styles/character-identity.css
 frontend/src/styles/environment-pass.css
@@ -758,26 +775,9 @@ frontend/tests/version.test.mjs
 frontend/tests/whatsNew.test.mjs
 frontend/tests/worldRaidBossArtwork.test.mjs
 frontend/vite.config.js
-GEAR_ARTWORK_MANIFEST.json
-HISTORY.md
 hosted.env.example
-HOSTING_GUIDE.md
-ITEM_WEAPON_REFRESH_MANIFEST.json
-MATERIAL_ARTWORK_MANIFEST.json
-MATERIAL_ARTWORK_QA_REPORT.md
-PACKAGE_MANIFEST.txt
-PORTAL_ACTIONS_SETUP.md
-README.md
-README_FIRST.txt
-RELEASE_NOTES.md
-RELIC_ARTWORK_MANIFEST.json
 render.yaml
 requirements.txt
 run_hosted_portal.py
-SCENE_BACKGROUND_MANIFEST.json
-STREAMER_DASHBOARD.md
 tests/test_hosted_portal.py
 tests/test_portal_actions.py
-UPGRADE_GUIDE.md
-VALIDATION_REPORT.md
-VERSION.txt

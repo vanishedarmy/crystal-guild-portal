@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   submitExpeditionStart,
   submitExpeditionResolveStage,
@@ -33,6 +33,17 @@ const MASTERY_COPY = {
 
 function remainingUntil(timestamp, nowMs) {
   return Math.max(0, Number(timestamp || 0) - Math.floor(Number(nowMs || Date.now()) / 1000));
+}
+
+function defaultBoardOpen() {
+  try {
+    const stored = window.localStorage?.getItem("crystal-guild:adventure:expedition-board");
+    if (stored === "open") return true;
+    if (stored === "closed") return false;
+    return !window.matchMedia?.("(max-width: 760px)")?.matches;
+  } catch {
+    return true;
+  }
 }
 
 function cacheItemCount(cache) {
@@ -95,6 +106,7 @@ export default function Expeditions({
 }) {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedDepth, setSelectedDepth] = useState("scout");
+  const [boardOpen, setBoardOpen] = useState(() => data?.active ? true : defaultBoardOpen());
   const active = data?.active || null;
   const regions = useMemo(() => [...(data?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1)), [data?.regions]);
   const depths = data?.depths || [];
@@ -103,21 +115,28 @@ export default function Expeditions({
   const travelRemaining = remainingUntil(active?.travel_ready_at, authoritativeClock);
   const fieldResults = pendingResults.filter((result) => result?.kind === "expedition");
 
+  useEffect(() => {
+    try { window.localStorage?.setItem("crystal-guild:adventure:expedition-board", boardOpen ? "open" : "closed"); } catch {}
+  }, [boardOpen]);
+
   const doRequest = (key, kind, target, submit, fallback) => runRequest?.(key, kind, target, submit, fallback);
 
   return (
     <>
-      <section className={`panel expedition-board-panel ${active ? "active" : ""}`} data-region={active?.region?.id || ""}>
-        <div className="panel-title-row">
+      <section className={`panel expedition-board-panel collapsible-board-section ${boardOpen ? "open" : "collapsed"} ${active ? "active" : ""}`} data-region={active?.region?.id || ""}>
+        <div className="panel-title-row section-collapsible-title-row">
           <div>
             <p className="eyebrow">v1.2 · Chocobo Expeditions</p>
             <h2>{active ? `${active.region?.name} · Stage ${number(active.stage)} / ${number(active.max_stages)}` : "Distant Expedition Board"}</h2>
-            <p className="muted">Choose a region and route, then bring your Expedition Cache home safely.</p>
+            {boardOpen ? <p className="muted">Choose a region and route, then bring your Expedition Cache home safely.</p> : null}
           </div>
-          <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
+          <div className="section-collapse-actions">
+            <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
+            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} onClick={() => setBoardOpen((open) => !open)}>{boardOpen ? "Collapse" : "Expand"}</button>
+          </div>
         </div>
 
-        {!active ? (
+        {boardOpen ? (!active ? (
           <>
             <div className="expedition-readiness-grid">
               <article className={data?.board_ready ? "complete" : ""}><span>Guild Gate</span><strong>{data?.board_ready ? "✓ Expedition Board" : "○ Expedition Board"}</strong><small>Shared unlock</small></article>
@@ -242,7 +261,7 @@ export default function Expeditions({
               </div>
             ) : null}
           </div>
-        )}
+        )) : null}
       </section>
 
       {fieldResults.length ? <div className="adventure-pending-result-stack" aria-label="Pending Expedition results">{fieldResults.map((result) => <ExpeditionResult key={`expedition-result:${result.result_id}`} result={result} onConfirm={onConfirmResult} confirming={busy === `ack-result:${result.result_id}`} />)}</div> : null}

@@ -1,7 +1,7 @@
-# Upgrade Guide — v1.2.0 Expeditions Alpha 2
+# Crystal Guild v1.2.0 — Expeditions Alpha 2 Hotfix 1 Upgrade Guide
 
-Baseline: **Alpha 1 Hotfix 3 Web + Alpha 1 Hotfix 1 Bot**.
+This is a **Web-only** update from Expeditions Alpha 2. Deploy the A2H1 Web package or apply the A2 → A2H1 Web patch. The existing Alpha 2 Bot remains compatible.
 
-Deploy the matching Alpha 2 Web and Bot packages together. The protocol number remains 20, but Alpha 2 adds the new `boss` Expedition depth and Region Progress payload/UI semantics.
+No database migration, player reset, environment-variable change, or OAuth reconfiguration is required.
 
-No database migration, OAuth change, environment-variable change, or player reset is required. Existing Expedition progress is preserved. After deployment, hard-refresh the Portal once so frontend revision `1.2.0-expeditions-a2` is loaded.
+After deployment, refresh the browser once if an older frontend asset remains cached.

@@ -8612,3 +8612,22 @@ main h1,
   .expedition-boss-contract-row { align-items: stretch; flex-direction: column; }
   .expedition-boss-contract-row .equipment-action-button { width: 100%; }
 }
+
+
+/* v1.2 Expeditions Alpha 2 Hotfix 1 — Overview order + collapsible update/Expedition board */
+.whats-new-panel.collapsed .whats-new-heading,
+.expedition-board-panel.collapsed .section-collapsible-title-row {
+  margin-bottom: 0;
+}
+.whats-new-panel.collapsed::after {
+  opacity: .35;
+}
+@media (max-width: 720px) {
+  .whats-new-heading.section-collapsible-title-row {
+    align-items: stretch;
+  }
+  .whats-new-heading .section-collapse-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

@@ -49,8 +49,8 @@ export default function Overview({ data, onDetail, onRefresh, onNavigate }) {
           ))}
         </div>
       </section>
-      <WhatsNew onNavigate={onNavigate} />
       <DailyReward username={data.identity?.username} onRefresh={onRefresh} />
+      <WhatsNew onNavigate={onNavigate} />
       <section className="panel span-7">
         <div className="panel-title-row"><h2>Battle Profile</h2><span className="small-badge">{data.region.name}</span></div>
         <div className="stat-grid">

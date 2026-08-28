@@ -16,3 +16,12 @@ test("Expeditions Alpha 2 exposes regional milestones, mastery and boss contract
   assert.match(css, /expedition-milestone-grid/);
   assert.match(css, /expedition-boss-contract-row/);
 });
+
+
+test("Expedition Board is independently collapsible and persists its preference", async () => {
+  const component = await readFile(new URL("src/player/Expeditions.jsx", ROOT), "utf8");
+  assert.match(component, /crystal-guild:adventure:expedition-board/);
+  assert.match(component, /collapsible-board-section/);
+  assert.match(component, /aria-expanded=\{boardOpen\}/);
+  assert.match(component, /boardOpen \? \(!active/);
+});

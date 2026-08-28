@@ -1,6 +1,6 @@
-# Crystal Guild v1.2.0 — Expeditions Alpha 5
+# Crystal Guild v1.2.0 — Expeditions Beta 1
 
-Expeditions Alpha 5 adds Chocobo Expedition Specialization, Bond-scaled specialty tiers, Expedition accomplishment records, and visible Hunt Seal completion stipends. Alpha 4 Regional Discovery, the Expedition Atlas, Legendary Regional Contracts, and the scenic presentation remain intact.
+Beta 1 freezes the v1.2 feature set for balance and release stabilization. The Expedition Board now states the real Safe/Unknown/Push Deeper pressure differences, while the paired Bot supplies the tuned route pressure, slightly smoothed Legendary final-boss scaling, and reproducible 3,000-run balance matrix. Alpha 5 Chocobo specialization and reward systems remain intact.
 
 ## RC1 Hotfix 9 — Raid Timing & Field Support
 - Raid rally/round defaults are now **90s / 60s**; Rally Venture rally/round defaults are **60s / 30s**.
@@ -30,11 +30,11 @@ Expeditions Alpha 5 adds Chocobo Expedition Specialization, Bond-scaled specialt
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha5`
-- Frontend asset revision: `1.2.0-expeditions-a5`
+- Hosted Web runtime: `1.2.0-expeditions-beta1`
+- Frontend asset revision: `1.2.0-expeditions-b1`
 - Portal Action protocol: `20`
 - Hosted sync schema: `1`
-- Compatible Bot runtime: `1.2.0-expeditions-a5`
+- Compatible Bot runtime: `1.2.0-expeditions-b1`
 - Local Bot DB schema: `8`
 
 ## Facility supply balance

@@ -1,4 +1,4 @@
-Crystal Guild v1.2.0 Expeditions Alpha 5 — Web Package Manifest
-Hosted runtime: 1.2.0-expeditions-alpha5
-Frontend asset revision: 1.2.0-expeditions-a5
-Required Bot: 1.2.0-expeditions-a5 / local DB schema 8 / protocol 20
+Crystal Guild v1.2.0 Expeditions Beta 1 — Web Package Manifest
+Hosted runtime: 1.2.0-expeditions-beta1
+Frontend asset revision: 1.2.0-expeditions-b1
+Required Bot: 1.2.0-expeditions-b1 / local DB schema 8 / protocol 20

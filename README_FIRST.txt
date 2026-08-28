@@ -1,7 +1,7 @@
-Crystal Guild v1.2.0 — Expeditions Alpha 5 Web
-Hosted Web runtime: 1.2.0-expeditions-alpha5
-Frontend asset revision: 1.2.0-expeditions-a5
-Required Bot runtime: 1.2.0-expeditions-a5 (local DB schema 8)
-Protocol: 20
+Crystal Guild v1.2.0 — Expeditions Beta 1 Web
+Hosted runtime: 1.2.0-expeditions-beta1
+Frontend asset revision: 1.2.0-expeditions-b1
+Required Bot runtime: 1.2.0-expeditions-b1 (local DB schema 8)
+Portal Action protocol: 20
 
-Alpha 5 adds Chocobo Expedition specialties and Bond tiers, Expedition accomplishment records, and visible Guild Hunt Seal completion stipends while retaining Alpha 4 Regional Discovery.
+Beta 1 publishes clearer real route-risk language and the balance/simulation release identity while preserving Alpha 5 Chocobo specialties, accomplishments, and completion stipends. No migration or player reset is required.

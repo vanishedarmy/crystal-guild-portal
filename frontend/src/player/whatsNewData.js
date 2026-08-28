@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
+    name: "Expeditions Beta 1",
+    title: "Expeditions enters balance and simulation",
+    summary: "The feature set is frozen while route risk, Legendary Contract difficulty, and reward pacing are validated through reproducible simulation and targeted balance changes.",
+    highlights: [
+      { title: "Safe routes are mechanically safer", description: "Safe now reduces actual combat pressure and hazard damage instead of relying only on a friendlier event mix." },
+      { title: "Push Deeper earns its risk label", description: "Enemy pressure and hazard damage now increase alongside the existing reward multiplier, rare-event odds, and rare-monster weighting." },
+      { title: "Legendary difficulty smoothed", description: "Legendary bosses remain elite, but their HP/pressure stack is slightly eased so the extra contract stage does not create an unnecessary difficulty cliff." },
+      { title: "3,000-run balance matrix", description: "Beta 1 validates five level bands, all standard depths, all three routes, Regional Boss Contracts, and Legendary Contracts with fixed-seed simulation." },
+      { title: "Hunt Seals remain Hunt-first", description: "Expedition completion stipends stay unchanged after the economy audit; dedicated Hunts retain the stronger Hunt Seal rate." },
+    ],
+    action: { tab: "hunts", label: "Open Expedition Board" },
+  },
+  {
+    version: "v1.2.0",
     name: "Expeditions Alpha 5",
     title: "Chocobos grow into true Expedition partners",
     summary: "Bond levels now strengthen each Chocobo's natural Expedition specialty, while completed routes earn a modest Guild stipend in existing Hunt Seals and the Stable records your shared Expedition accomplishments.",

@@ -4,10 +4,9 @@ import test from "node:test";
 
 const PUBLIC = new URL("../public/", import.meta.url);
 
-test("lazy guide data is valid and versioned for v1.2.0 Expeditions Alpha 5", async () => {
+test("lazy guide data is valid and versioned for v1.2.0 Expeditions Beta 1", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.2.0 — Expeditions Alpha 5");
-  assert.doesNotMatch(data.meta.version, /Beta/i);
+  assert.equal(data.meta.version, "v1.2.0 — Expeditions Beta 1");
   assert.equal(data.meta.encounter_round, 20);
   assert.ok(data.jobs.length > 0);
   assert.ok(data.achievements.length > 0);
@@ -31,7 +30,7 @@ test("lazy guide markup documents Active Battle and keeps the organized guide sh
   assert.match(markup, /Trophy Hall/);
   assert.doesNotMatch(markup, /class="guide-site-header"/);
   assert.match(page, /<SiteHeader liveStatus=\{liveStatus\}/);
-  assert.doesNotMatch(markup, /development build|Beta|production baseline/i);
+  assert.doesNotMatch(markup, /development build|production baseline/i);
   assert.doesNotMatch(markup, /v0\.9\.8 Beta/i);
   assert.match(markup, /id="guideNav"/);
   assert.match(markup, /!attack/);
@@ -69,7 +68,7 @@ test("GuidePage cache-busts lazy assets and uses the shared release label", asyn
   assert.match(legacy, /releaseLabel/);
   assert.match(legacy, /activeAbilityBlock/);
   assert.match(version, /1\.2\.0/);
-  assert.match(version, /Expeditions Alpha 5/);
+  assert.match(version, /Expeditions Beta 1/);
 });
 
 

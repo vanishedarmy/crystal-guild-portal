@@ -13,7 +13,7 @@ test("Player Guide keeps battle-mastery mechanics without development-build jarg
   assert.match(markup, /Repeat rewards/i);
   assert.match(markup, /one hero/i);
   assert.match(markup, /ten levels/i);
-  assert.doesNotMatch(markup, /development build|Beta|internal balance jargon/i);
+  assert.doesNotMatch(markup, /development build|internal balance jargon/i);
 });
 
 test("Summoner guide ability data matches the tuned resource rule", async () => {

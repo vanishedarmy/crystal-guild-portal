@@ -19,17 +19,17 @@ const DEPTH_COPY = {
   deep: "8 stages · high-risk journey",
 };
 const ROUTE_COPY = {
-  safe: "Lower combat and hazard pressure.",
+  safe: "Lower combat damage and softer hazards.",
   unknown: "Balanced risk and reward.",
-  deep: "More danger, stronger rewards.",
+  deep: "Harder combat and hazards for stronger rewards.",
 };
 const REGION_LANDMARK_COUNT = 4;
 const STIPEND_SEALS = { scout: 2, journey: 4, deep: 7, boss: 10, legendary: 15 };
 const ROUTE_RISK = { safe: "Low", unknown: "Balanced", deep: "High" };
 const ROUTE_SIGNALS = {
-  safe: ["Less combat", "Fewer hazards", "Steadier discoveries"],
+  safe: ["Less combat", "Reduced combat damage", "Softer hazards"],
   unknown: ["Balanced encounters", "Balanced rewards", "Unpredictable events"],
-  deep: ["More combat", "More hazards", "Better rare-event odds"],
+  deep: ["More combat", "Harder enemy pressure", "Stronger hazards"],
 };
 const MASTERY_COPY = {
   emerald_wilds: "Discovery events +5% in Emerald Wilds",

@@ -15,7 +15,7 @@ test("guild remains the canonical help front door while preserving aliases", asy
   assert.doesNotMatch(guild.aliases, /!commands(?:,|$)/);
   assert.match(guild.aliases, /!rpghelp/);
   const markup = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
-  assert.doesNotMatch(markup, /development build|Beta/);
+  assert.doesNotMatch(markup, /development build/);
   assert.match(markup, /<code>!guild<\/code>/);
 });
 

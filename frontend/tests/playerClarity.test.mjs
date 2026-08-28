@@ -12,7 +12,7 @@ test("player guide keeps mechanics but removes development and backend jargon", 
   assert.match(markup, /!venture/);
   assert.match(markup, /Combat Style/);
   assert.match(markup, /Repeat rewards/);
-  assert.doesNotMatch(markup, /development build|Beta|production baseline|production data|autonomous scheduler|timer ownership|combat semantics|bounded stat curve|responsive dossier|raid dossier/i);
+  assert.doesNotMatch(markup, /development build|production baseline|production data|autonomous scheduler|timer ownership|combat semantics|bounded stat curve|responsive dossier|raid dossier/i);
 });
 
 test("public portal shows build identity but hides backend terminology from players", async () => {

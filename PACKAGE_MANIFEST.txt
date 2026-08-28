@@ -1,11 +1,11 @@
-Crystal Guild v1.2.0 Expeditions Alpha 2 Hotfix 1 — Web Package Manifest
-Hosted runtime: 1.2.0-expeditions-alpha2
-Frontend asset revision: 1.2.0-expeditions-a2h1
+Crystal Guild v1.2.0 Expeditions Alpha 3 — Web Package Manifest
+Hosted runtime: 1.2.0-expeditions-alpha3
+Frontend asset revision: 1.2.0-expeditions-a3
 Hosted sync schema: 1
 Portal Action protocol: 20
-Required Bot: 1.2.0-expeditions-a2 / local DB schema 8
+Required Bot: 1.2.0-expeditions-a3 / local DB schema 8
 
-Files (775):
+Files (779):
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -417,6 +417,8 @@ frontend/public/retro-phase-iii/scene-backgrounds-v2/blacksmith.png
 frontend/public/retro-phase-iii/scene-backgrounds-v2/camp.png
 frontend/public/retro-phase-iii/scene-backgrounds-v2/chocobo_stable.png
 frontend/public/retro-phase-iii/scene-backgrounds-v2/emporium.png
+frontend/public/retro-phase-iii/scene-backgrounds-v2/relic_arsenal.png
+frontend/public/retro-phase-iii/scene-backgrounds-v2/solo_venture.png
 frontend/public/retro-phase-iii/weapon-families-v1/axe.png
 frontend/public/retro-phase-iii/weapon-families-v1/dagger.png
 frontend/public/retro-phase-iii/weapon-families-v1/firearm.png
@@ -705,6 +707,7 @@ frontend/tests/expeditionsAlpha1.test.mjs
 frontend/tests/expeditionsAlpha1Hotfix2Presentation.test.mjs
 frontend/tests/expeditionsAlpha1Hotfix3BoardBackdrop.test.mjs
 frontend/tests/expeditionsAlpha2.test.mjs
+frontend/tests/expeditionsAlpha3.test.mjs
 frontend/tests/facilityMaterialBalance.test.mjs
 frontend/tests/facilitySupplyBalance.test.mjs
 frontend/tests/fellowshipPage.test.mjs
@@ -715,6 +718,7 @@ frontend/tests/guideAccordion.test.mjs
 frontend/tests/guideAssets.test.mjs
 frontend/tests/guideCommandCopy.test.mjs
 frontend/tests/guideCompletionUtils.test.mjs
+frontend/tests/guideExpeditionsAlpha2.test.mjs
 frontend/tests/guideFellowshipReference.test.mjs
 frontend/tests/guideInlineCommandCoverage.test.mjs
 frontend/tests/guideStatsReference.test.mjs

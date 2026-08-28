@@ -613,6 +613,7 @@ class PortalActionServerCase(unittest.TestCase):
             ("ACK_ADVENTURE_RESULT", {"result_id": 42}, "ack-adventure-result"),
             ("EXPEDITION_START", {"region_id": "emerald_wilds", "depth": "scout"}, "expedition-start"),
             ("EXPEDITION_START", {"region_id": "emerald_wilds", "depth": "boss"}, "expedition-boss"),
+            ("EXPEDITION_START", {"region_id": "emerald_wilds", "depth": "legendary"}, "expedition-legendary"),
             ("EXPEDITION_RESOLVE_STAGE", {}, "expedition-resolve"),
             ("EXPEDITION_ACTION", {"action": "attack"}, "expedition-attack"),
             ("EXPEDITION_CONTINUE", {"route": "deep"}, "expedition-continue"),

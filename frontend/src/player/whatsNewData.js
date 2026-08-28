@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
+    name: "Expeditions Alpha 3",
+    title: "The Expedition Atlas opens legendary routes",
+    summary: "Regional exploration now rolls up into one permanent Expedition Atlas. Mastered regions can unlock repeatable Legendary Contracts, and completing all five regions earns the Guild's top cartography distinction.",
+    highlights: [
+      { title: "One Atlas for all five regions", description: "Overall exploration, mastered regions, stages, completed runs, boss clears, and Legendary routes now appear together on the Expedition Board." },
+      { title: "Cartography ranks", description: "Your Atlas advances from Guild Scout through Trailblazer, Pathfinder, Surveyor, Cartographer, and finally Master Cartographer." },
+      { title: "Legendary Regional Contracts", description: "Master a region and defeat its Regional Boss once to unlock a repeatable five-stage elite contract with a stronger boss, higher rewards, and doubled guaranteed regional boss materials." },
+      { title: "Master Cartographer reward", description: "Master all five Expedition regions to unlock the No Blank Spots Left achievement and the Master Cartographer title." },
+      { title: "No progression reset", description: "Atlas ranks and Legendary unlocks are derived from the exploration and boss-clear records you already earned in Alpha 2." },
+    ],
+    action: { tab: "hunts", label: "Open Expedition Atlas" },
+  },
+  {
+    version: "v1.2.0",
     name: "Expeditions Alpha 2",
     title: "Regional objectives and boss contracts arrive",
     summary: "Expeditions now grow with each region: exploration milestones unlock new challenges, regional bosses, and permanent Mastery rewards while your progress remains saved between visits.",

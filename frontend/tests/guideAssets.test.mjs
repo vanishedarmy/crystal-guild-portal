@@ -4,9 +4,9 @@ import test from "node:test";
 
 const PUBLIC = new URL("../public/", import.meta.url);
 
-test("lazy guide data is valid and versioned for v1.2.0 Expeditions Alpha 2", async () => {
+test("lazy guide data is valid and versioned for v1.2.0 Expeditions Alpha 3", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.2.0 — Expeditions Alpha 2");
+  assert.equal(data.meta.version, "v1.2.0 — Expeditions Alpha 3");
   assert.doesNotMatch(data.meta.version, /Beta/i);
   assert.equal(data.meta.encounter_round, 20);
   assert.ok(data.jobs.length > 0);
@@ -69,7 +69,7 @@ test("GuidePage cache-busts lazy assets and uses the shared release label", asyn
   assert.match(legacy, /releaseLabel/);
   assert.match(legacy, /activeAbilityBlock/);
   assert.match(version, /1\.2\.0/);
-  assert.match(version, /Expeditions Alpha 2/);
+  assert.match(version, /Expeditions Alpha 3/);
 });
 
 

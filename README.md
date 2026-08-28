@@ -1,6 +1,6 @@
-# Crystal Guild v1.2.0 — Expeditions Alpha 1
+# Crystal Guild v1.2.0 — Expeditions Alpha 3
 
-Expeditions Alpha 1 adds the five-region interactive Expedition experience while retaining the complete Retro Phase III visual and gameplay foundation.
+Expeditions Alpha 3 adds the Expedition Atlas, repeatable Legendary Regional Contracts, and all-region Master Cartographer progression while retaining the complete Alpha 2 Hotfix 3 scenic presentation.
 
 ## RC1 Hotfix 9 — Raid Timing & Field Support
 - Raid rally/round defaults are now **90s / 60s**; Rally Venture rally/round defaults are **60s / 30s**.
@@ -30,11 +30,11 @@ Expeditions Alpha 1 adds the five-region interactive Expedition experience while
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha2`
-- Frontend asset revision: `1.2.0-expeditions-a1`
+- Hosted Web runtime: `1.2.0-expeditions-alpha3`
+- Frontend asset revision: `1.2.0-expeditions-a3`
 - Portal Action protocol: `20`
 - Hosted sync schema: `1`
-- Compatible Bot runtime: `1.2.0-expeditions-a1`
+- Compatible Bot runtime: `1.2.0-expeditions-a3`
 - Local Bot DB schema: `8`
 
 ## Facility supply balance

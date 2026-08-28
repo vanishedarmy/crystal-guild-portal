@@ -41,14 +41,16 @@ test("Adventure Board uses clearer player-facing wording", async () => {
   assert.match(board, /private, player-paced Solo Venture/);
 });
 
-test("Adventure Board uses local timers and polls while a live encounter, Solo Venture, or timed Hunt is active", async () => {
+test("Adventure Board uses Bot-synchronized local timers and polls while a live encounter, Solo Venture, or timed Hunt is active", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(board, /window\.setInterval\(\(\) => setClock\(Date\.now\(\)\), 1000\)/);
   assert.match(board, /const expeditionActive = Boolean\(state\?\.solo_venture\?\.expedition\)/);
   assert.match(board, /!state\?\.encounter && !state\?\.active_hunt && !expeditionActive/);
   assert.match(board, /window\.setInterval\(refreshActive, state\?\.active_hunt \? 10000 : expeditionActive \? 5000 : 4000\)/);
   assert.match(board, /window\.setTimeout\(\(\) => void loadState\(\{ quiet: true \}\), waitMs\)/);
-  assert.match(board, /const ventureRemaining = remainingUntil\(state\?\.venture\?\.available_at, clock\)/);
+  assert.match(board, /const authoritativeClock = clock \+ serverOffsetMs/);
+  assert.match(board, /setServerOffsetMs\(Number\(next\.server_now \|\| 0\) > 0/);
+  assert.match(board, /const ventureRemaining = remainingUntil\(state\?\.venture\?\.available_at, authoritativeClock\)/);
   assert.match(board, /Number\(state\.active_hunt\?\.resolves_at \|\| 0\)/);
   assert.match(board, /Ready in \$\{duration\(ventureRemaining\)\}/);
 });
@@ -66,7 +68,7 @@ test("Adventure Board styles Solo and Rally cards responsively", async () => {
 test("Solo Venture cooldown participates in the Adventure Board local deadline refresh", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(board, /Number\(state\.solo_venture\?\.available_at \|\| 0\)/);
-  assert.match(board, /const soloRemaining = remainingUntil\(state\?\.solo_venture\?\.available_at, clock\)/);
+  assert.match(board, /const soloRemaining = remainingUntil\(state\?\.solo_venture\?\.available_at, authoritativeClock\)/);
   assert.match(board, /`Solo Venture ready in \$\{duration\(soloRemaining\)\}\.`/);
 });
 

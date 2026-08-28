@@ -167,7 +167,7 @@
        Use
        <code>
         !venture
-       </code>. A Venture can produce an <b>ENCOUNTER</b> or a <b>TREASURE CHEST</b>. Encounter Ventures open a rally window so others can use <code>!join</code>; treasure Ventures immediately award a level-appropriate item. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only, player-paced mode with its own 7-minute cooldown. Each stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, enemies stay roughly within <b>Lv.-2 through Lv.+3</b>, and a run can continue for up to <b>three stages</b>. Encounter rounds wait for your Attack, Ability, Item, or Defend choice and never post automatic Twitch chat announcements.
+       </code>. A Venture can produce an <b>ENCOUNTER</b> or a <b>TREASURE CHEST</b>. Encounter Ventures open a rally window so others can use <code>!join</code>; treasure Ventures immediately award a level-appropriate item. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only, player-paced mode with its own 7-minute cooldown. Each stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, enemies stay roughly within <b>Lv.-2 through Lv.+5</b>, and a run can continue for up to <b>three stages</b>. Encounter rounds wait for your Attack, Ability, Item, or Defend choice and never post automatic Twitch chat announcements.
       </div>
       <div class="step">
        <b>
@@ -443,9 +443,9 @@
        <div class="card"><h3>Attack</h3><p><code>!attack</code> queues your Job's basic attack, including your stance, critical chance, signature attack chance and any double-strike effects.</p></div>
        <div class="card"><h3>Ability</h3><p><code>!ability &lt;name&gt; [target]</code> spends MP for magical techniques or AP for physical techniques. Current resources carry between battles. <code>!skill</code> and <code>!cast</code> are aliases.</p></div>
        <div class="card"><h3>Defend</h3><p><code>!defend</code> reduces incoming damage for the round and restores battle resources: 6% MP for magic users and 8% AP for physical users. Dual-resource Jobs recover both. <code>!guard</code> works too.</p></div>
-       <div class="card"><h3>Item</h3><p><code>!use &lt;item&gt; [target]</code> can queue supported healing, MP/AP recovery, cleanse, damage, or revival items. Ether-family and AP recovery supplies can also be used outside battle. The item is consumed only when its effect resolves.</p></div>
+       <div class="card"><h3>Item</h3><p><code>!use &lt;item&gt; [target]</code> can queue supported healing, MP/AP recovery, cleanse, damage, or revival items. Outside battle, field recovery items can be used on yourself normally; while the stream is LIVE you can support another adventurer with <code>!use &lt;item&gt; | &lt;username&gt;</code> or the Portal target field. The item is consumed only when its effect resolves.</p></div>
       </div>
-      <div class="callout"><b>Round timer:</b> 20 seconds by default. You may replace your queued action before resolution. If you submit nothing, your hero automatically uses <b>Attack</b> so one AFK player cannot stall the fight.</div>
+      <div class="callout"><b>Venture round timer:</b> 30 seconds by default. You may replace your queued action before resolution. If you submit nothing, your hero automatically uses <b>Attack</b> so one AFK player cannot stall the fight.</div>
       <div class="grid">
        <div class="card"><h3>Battle Status</h3><p><code>!encounter</code> shows enemy HP, combat style and statuses, the round timer, queued actions, and party HP/MP/AP.</p></div>
        <div class="card"><h3>Recent Round Log</h3><p><code>!battlelog</code> (aliases <code>!roundlog</code> and <code>!combatlog</code>) shows the latest resolved rounds on demand. Automatic round announcements stay short instead of flooding chat.</p></div>
@@ -478,7 +478,7 @@
        <div class="card"><h3>Rally Venture Roll</h3><p><code>!venture</code> is a Twitch-chat activity and currently resolves as <b>70% ENCOUNTER</b> or <b>30% TREASURE CHEST</b>.</p></div>
        <div class="card"><h3>Treasure Chest</h3><p>Chest loot is selected from roughly <b>5 levels below through 2 levels above</b> the venturing hero. Consumables, weapons, armor and accessories are eligible; Relic-progression weapons are not.</p></div>
       </div>
-      <div class="callout"><b>Portal-only Solo Venture — Wayfarer:</b> the Adventure Board has a private, player-paced run on a separate <b>7-minute</b> cooldown. Every stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, with enemy selection roughly <b>two levels below through three levels above</b> the hero. A run lasts up to <b>three stages</b>. After Stage I or II, choose <b>Return to Guild</b> to bank your expedition spoils or <b>Press On</b> for a deeper reward multiplier. Stage II adds <b>+15% XP/JP/Gil</b>; Stage III adds <b>+30%</b> and improves chest rarity weighting. XP/JP earned from defeated enemies is secured immediately, while Gil and ordinary item spoils remain at risk until you return. Defeat recovers 50% of unbanked Gil but loses loose item spoils; Retreat preserves secured progression but abandons all unbanked spoils. Fellowship Renown scales modestly with depth and remains below Rally Venture value.</div>
+      <div class="callout"><b>Portal-only Solo Venture — Wayfarer:</b> the Adventure Board has a private, player-paced run on a separate <b>7-minute</b> cooldown. Every stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, with enemy selection roughly <b>two levels below through five levels above</b> the hero. A run lasts up to <b>three stages</b>. After Stage I or II, choose <b>Return to Guild</b> to bank your expedition spoils or <b>Press On</b> for a deeper reward multiplier. Stage II adds <b>+15% XP/JP/Gil</b>; Stage III adds <b>+30%</b> and improves chest rarity weighting. XP/JP earned from defeated enemies is secured immediately, while Gil and ordinary item spoils remain at risk until you return. Defeat recovers 50% of unbanked Gil but loses loose item spoils; Retreat preserves secured progression but abandons all unbanked spoils. Fellowship Renown scales modestly with depth and remains below Rally Venture value.</div>
       <div class="grid">
        <div class="card"><h3>Solo Battle Controls</h3><p><b>Attack</b> is free and reliable. <b>Ability</b> opens learned Job techniques with their MP/AP costs. <b>Use Item</b> shows eligible battle supplies and quantities. <b>Defend</b> reduces incoming damage for the round and restores a small amount of battle resource.</p></div>
        <div class="card"><h3>Enemy Intent</h3><p>Solo battles telegraph the enemy's prepared action before you commit your turn. A dangerous named technique may make Defend, healing, control, or an aggressive finishing attempt the better choice.</p></div>
@@ -486,7 +486,7 @@
       </div>
       <div class="callout"><b>Rally reward bonus:</b> Rally Venture encounter victories reward each participant with <b>+5% XP, JP, and Gil per enemy level above that hero</b>, capped at <b>+50%</b>. The bonus is personal to each hero's risk. Equal- or lower-level enemies give no Rally bonus, and treasure rewards are unchanged.</div>
       <div class="grid">
-       <div class="card"><h3>1. Rally</h3><p>If <code>!venture</code> rolls an ENCOUNTER, it selects a monster and opens a <b>45-second</b> rally in Twitch chat. The initiator joins automatically, and the rolled monster can be no more than <b>ten levels above</b> that initiating hero.</p></div>
+       <div class="card"><h3>1. Rally</h3><p>If <code>!venture</code> rolls an ENCOUNTER, it selects a monster and opens a <b>60-second</b> rally in Twitch chat. The initiator joins automatically, and the rolled monster can be no more than <b>ten levels above</b> that initiating hero.</p></div>
        <div class="card"><h3>2. Join</h3><p>Other eligible viewers use <code>!join</code> or <code>!venture</code> in Twitch chat. Joining consumes that hero's normal Venture cooldown.</p></div>
        <div class="card"><h3>3. Choose</h3><p>Once combat starts, each living hero queues Attack, Ability, Defend, or Item. Every round resolves on its scheduled timer; queued actions never shorten the deadline.</p></div>
        <div class="card"><h3>4. Resolve &amp; Reward</h3><p>The party and monster act, HP/statuses persist to the next round, and victory awards each participant their own XP, JP, gil, Bestiary credit and loot roll.</p></div>
@@ -564,7 +564,7 @@
        </div>
       </div>
       <div class="callout">
-       <b>Adventurer Portal:</b> Sign in with Twitch on your own profile and open <b>Equipment &amp; Inventory</b> to use eligible field recovery items or start Camp. The Portal shows a live recovery countdown without needing a page refresh. Active Battle status cures remain battle actions through <code>!use &lt;item&gt;</code>.
+       <b>Adventurer Portal:</b> Sign in with Twitch on your own profile and open <b>Equipment &amp; Inventory</b> to use eligible field recovery items or start Camp. The Portal shows a live recovery countdown without needing a page refresh. While the stream is LIVE, the Field item target control can apply eligible out-of-battle recovery items to another adventurer. Active Battle status cures remain battle actions through <code>!use &lt;item&gt;</code>.
       </div>
      </section>
      <section class="section searchable" id="jobs">
@@ -941,7 +941,7 @@
         <p>
          The streamer spawns a boss; the raid rally lasts
          <b>
-          60 seconds
+          90 seconds
          </b>. Type
          <code>
           !raid
@@ -956,7 +956,7 @@
         <p>
          A new round begins every
          <b>
-          15 seconds
+          60 seconds
          </b>. While the timer is open, queue <code>!attack</code>, <code>!ability &lt;name&gt; [target]</code>, <code>!defend</code>, or <code>!use &lt;item&gt; [target]</code>. Your latest choice replaces the earlier one; no input defaults to Attack.
         </p>
        </div>

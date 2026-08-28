@@ -12,10 +12,12 @@ test("ii27 keeps Cinzel profile names on one line at all viewport widths", async
   assert.match(css, /font-size:\s*clamp\(2rem,\s*4\.2vw,\s*4rem\)/);
 });
 
-test("ii27 recovery area renders only currently usable field-item buttons", async () => {
+test("recovery area stays concise for self-use and exposes LIVE field support targeting", async () => {
   const inventory = await readFile(new URL("player/Inventory.jsx", SRC), "utf8");
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
-  assert.match(inventory, /filter\(\(item\) => item\.usable_now && item\.field_usable\)/);
+  assert.match(inventory, /filter\(\(item\) => item\.field_usable && \(targetingOther \|\| item\.usable_now\)\)/);
+  assert.match(inventory, /const \[recoveryTarget, setRecoveryTarget\]/);
+  assert.match(inventory, /Use on @\$\{target\}/);
   assert.match(inventory, /quickRecoveryText/);
   assert.match(inventory, /recovery-quick-action/);
   assert.doesNotMatch(inventory, /Show usable now/);

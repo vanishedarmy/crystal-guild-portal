@@ -121,7 +121,7 @@ export const MAJOR_UPDATES = [
     summary: "Solo Venture introduced a separate Portal-only adventure cooldown, lower enemy ceiling, half Fellowship Renown, and no rally requirement or automatic Twitch chatter.",
     highlights: [
       { title: "Portal only", description: "Solo Venture became its own authenticated web action rather than another chat command." },
-      { title: "Separate risk profile", description: "A +3 enemy ceiling and independent cooldown created a lower-pressure alternative to live Rally Ventures." },
+      { title: "Separate risk profile", description: "A tighter enemy ceiling and independent cooldown created a lower-pressure alternative to live Rally Ventures." },
     ],
   },
   {

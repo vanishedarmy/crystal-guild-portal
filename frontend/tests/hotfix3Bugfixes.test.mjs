@@ -24,7 +24,7 @@ test("selectable controls expose stronger active states and descriptive action l
   assert.match(css, /hunt-rank-filters button\[aria-pressed="true"\]/);
   assert.match(hunts, /`Travel to \$\{region\.name\}`/);
   assert.match(hunts, /"All Hunts"/);
-  assert.match(inventory, /`Use \$\{item\.name\}`/);
+  assert.match(inventory, /aria-label=\{`Use \$\{item\.name\}\$\{target \? ` on \$\{target\}` : ""\}`\}/);
   assert.match(inventory, /`Equip \$\{item\.name\}`/);
   assert.match(jobs, /`View \$\{job\.name\} Details`/);
   assert.match(jobs, /"Apply Mastery"/);

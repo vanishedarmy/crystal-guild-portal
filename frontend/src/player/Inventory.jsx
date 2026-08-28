@@ -58,6 +58,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const [actionMessage, setActionMessage] = useState("");
   const [recoveryState, setRecoveryState] = useState(null);
   const [recoveryMessage, setRecoveryMessage] = useState("");
+  const [recoveryTarget, setRecoveryTarget] = useState("");
   const [clockNow, setClockNow] = useState(() => Date.now());
   const recoveryLoadedFor = useRef("");
   const expiryRefreshFor = useRef(0);
@@ -126,8 +127,10 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const equip = (item) => runQueuedAction(`equip:${item.id}`, () => submitEquipItem(item.id, auth.csrf_token, actionKey("equip", item.id)), "Equipment updated.", (finished, message) => { setActionMessage(message); if (finished?.status === "completed") onRefresh?.(); });
   const unequip = (slot) => runQueuedAction(`unequip:${slot}`, () => submitUnequipSlot(slot, auth.csrf_token, actionKey("unequip", slot)), "Equipment updated.", (finished, message) => { setActionMessage(message); if (finished?.status === "completed") onRefresh?.(); });
   const useRecoveryItem = async (item) => {
-    if (item.confirm && !window.confirm(`Use ${item.name} now?`)) return;
-    await runQueuedAction(`use:${item.id}`, () => submitUseFieldItem(item.id, auth.csrf_token, actionKey("use-item", item.id)), `${item.name} used.`, (finished, message) => {
+    const target = String(recoveryTarget || "").trim().replace(/^@/, "");
+    const targetLabel = target ? ` on @${target}` : "";
+    if (item.confirm && !window.confirm(`Use ${item.name}${targetLabel} now?`)) return;
+    await runQueuedAction(`use:${item.id}:${target || "self"}`, () => submitUseFieldItem(item.id, auth.csrf_token, actionKey("use-item", `${item.id}:${target || "self"}`), target), `${item.name} used.`, (finished, message) => {
       setRecoveryMessage(message); const state = finished?.result?.data?.recovery_state; if (state) setRecoveryState(state); if (finished?.status === "completed") onRefresh?.();
     });
   };
@@ -135,7 +138,8 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
     setRecoveryMessage(message); const state = finished?.result?.data?.recovery_state; if (state) setRecoveryState(state); if (finished?.status === "completed") onRefresh?.();
   });
 
-  const recoveryItems = (recoveryState?.items || []).filter((item) => item.usable_now && item.field_usable);
+  const targetingOther = Boolean(String(recoveryTarget || "").trim());
+  const recoveryItems = (recoveryState?.items || []).filter((item) => item.field_usable && (targetingOther || item.usable_now));
   const stateLabel = recoveryState?.state_label || (overview?.status?.label || "READY");
 
   return (
@@ -155,12 +159,16 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
           </div>
           {recoveryState?.state === "resting" ? <div className="recovery-callout"><strong>Camp recovery in {duration(campRemaining)}</strong><span>Recovery time stays accurate even if you leave the page and come back.</span></div> : null}
           {recoveryState?.active_statuses?.length ? <div className="recovery-callout"><strong>Active Battle status</strong><span>{recoveryState.active_statuses.map((status) => `${status.name} (${status.turns}r)`).join(" · ")} — use status-curing items during battle.</span></div> : null}
+          <label className="recovery-target-control">
+            <span><strong>Field item target</strong><small>Leave blank for yourself. While the stream is LIVE, enter another adventurer's Twitch username to use recovery items on them outside battle.</small></span>
+            <input type="text" inputMode="text" autoComplete="off" placeholder="Self · or Twitch username" value={recoveryTarget} onChange={(event) => setRecoveryTarget(event.target.value.replace(/^@/, ""))} />
+          </label>
           <div className="recovery-actions-row">
             <button type="button" className="equipment-action-button" disabled={!recoveryActionsAvailable || Boolean(busyKey) || recoveryState?.state === "in_battle" || recoveryState?.state === "resting"} onClick={startRest}>{busyKey === "start-rest" ? "Starting…" : recoveryState?.state === "resting" ? "Already Resting" : "Start Camp"}</button>
             <span className="recovery-usable-summary">Camp: 15m LIVE · 1h OFFLINE · {recoveryItems.length ? `${recoveryItems.length} recovery ${recoveryItems.length === 1 ? "item" : "items"} ready` : "no item recovery needed"}</span>
           </div>
           {recoveryMessage ? <div className="recovery-result" aria-live="polite">{recoveryMessage}</div> : null}
-          {recoveryItems.length ? <div className="recovery-quick-grid">{recoveryItems.map((item) => <button type="button" className="recovery-quick-action" key={item.id} aria-label={`Use ${item.name}`} disabled={!recoveryActionsAvailable || Boolean(busyKey)} onClick={() => useRecoveryItem(item)}><ItemArtwork item={item} className="recovery-item-artwork" /><span className="recovery-quick-copy"><strong className={`item-name rarity-${item.rarity}`}>{item.name}</strong><small>{quickRecoveryText(item)}</small></span><span className="recovery-quick-meta">Owned {number(item.quantity)} · {busyKey === `use:${item.id}` ? "Using…" : "Use"}</span></button>)}</div> : <div className="muted recovery-empty">{recoveryState ? "No recovery item can be used right now." : "Recovery options will appear here when available."}</div>}
+          {recoveryItems.length ? <div className="recovery-quick-grid">{recoveryItems.map((item) => { const target = String(recoveryTarget || "").trim().replace(/^@/, ""); const busy = busyKey === `use:${item.id}:${target || "self"}`; return <button type="button" className="recovery-quick-action" key={item.id} aria-label={`Use ${item.name}${target ? ` on ${target}` : ""}`} disabled={!recoveryActionsAvailable || Boolean(busyKey)} onClick={() => useRecoveryItem(item)}><ItemArtwork item={item} className="recovery-item-artwork" /><span className="recovery-quick-copy"><strong className={`item-name rarity-${item.rarity}`}>{item.name}</strong><small>{target ? (item.description || "Field recovery item") : quickRecoveryText(item)}</small></span><span className="recovery-quick-meta">Owned {number(item.quantity)} · {busy ? "Using…" : target ? `Use on @${target}` : "Use"}</span></button>; })}</div> : <div className="muted recovery-empty">{recoveryState ? "No recovery item can be used right now." : "Recovery options will appear here when available."}</div>}
         </section>
       ) : null}
 

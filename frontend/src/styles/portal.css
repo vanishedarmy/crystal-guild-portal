@@ -8225,3 +8225,23 @@ main h1,
     min-width: 0;
   }
 }
+
+/* RC1 H9 — LIVE field-support targeting */
+.recovery-target-control{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(220px,320px);
+  gap:12px;
+  align-items:center;
+  margin:12px 0;
+  padding:11px 12px;
+  border:1px solid var(--line-soft);
+  border-radius:12px;
+  background:rgba(255,255,255,.025);
+}
+.recovery-target-control>span{display:grid;gap:3px;min-width:0}
+.recovery-target-control small{color:var(--muted);line-height:1.45}
+.recovery-target-control input{
+  width:100%;min-width:0;padding:10px 11px;border-radius:9px;
+  border:1px solid var(--line);background:rgba(4,8,17,.7);color:var(--text);
+}
+@media(max-width:720px){.recovery-target-control{grid-template-columns:1fr}}

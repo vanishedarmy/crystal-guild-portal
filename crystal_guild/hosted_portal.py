@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1h8"
-FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h8"
+HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1h9"
+FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h9"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 18
+ACTION_PROTOCOL_VERSION = 19
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -641,12 +641,17 @@ class HostedPortalStore:
             if payload:
                 raise ValueError("RECOVERY_STATE does not accept parameters.")
         elif kind == "USE_FIELD_ITEM":
-            if set(payload) != {"item_id"}:
-                raise ValueError("USE_FIELD_ITEM requires only item_id.")
+            if set(payload) - {"item_id", "target_username"} or "item_id" not in payload:
+                raise ValueError("USE_FIELD_ITEM accepts item_id and optional target_username.")
             item_id = str(payload.get("item_id") or "").strip()
             if not item_id or len(item_id) > 100 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", item_id):
                 raise ValueError("Invalid recovery item ID.")
+            target_username = str(payload.get("target_username") or "").strip().lstrip("@").lower()
+            if target_username and (len(target_username) > 25 or not re.fullmatch(r"[A-Za-z0-9_]+", target_username)):
+                raise ValueError("Invalid field-item target username.")
             payload = {"item_id": item_id}
+            if target_username:
+                payload["target_username"] = target_username
         elif kind == "START_REST":
             if payload:
                 raise ValueError("START_REST does not accept parameters.")

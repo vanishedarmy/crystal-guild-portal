@@ -1,16 +1,18 @@
-Crystal Guild Web — v1.1.19 Retro Phase III RC1 Hotfix 8
-Hosted runtime: 1.1.19-retro-phase-iii-rc1h8
-Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h8
+Crystal Guild Web — v1.1.19 Retro Phase III RC1 Hotfix 9
+Hosted runtime: 1.1.19-retro-phase-iii-rc1h9
+Frontend asset revision: 1.1.19-retro-phase-iii14-rc1h9
 Hosted sync schema: 1
-Portal Action protocol: 18
-Compatible Bot: RC1 Hotfix 7 / protocol 18 / local DB schema 7
+Portal Action protocol: 19
+Required Bot: RC1 Hotfix 9 / protocol 19 / local DB schema 7
 
-Primary Hotfix 8 files:
-- frontend/public/raid-overlay.html
+Primary H9 changes:
 - frontend/public/raid-overlay.js
+- frontend/public/raid-overlay.html
+- frontend/public/guide-body.html
+- frontend/src/player/Hunts.jsx
+- frontend/src/player/Inventory.jsx
+- frontend/src/api/auth.js
+- frontend/src/styles/portal.css
 - frontend/src/version.js
 - crystal_guild/hosted_portal.py
-- README_FIRST.txt
-- RELEASE_NOTES.md
-- UPGRADE_GUIDE.md
-- VALIDATION_REPORT.md
+- Solo Venture enemy ceiling: player level +5

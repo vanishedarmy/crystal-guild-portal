@@ -2,6 +2,14 @@
 
 RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portraits, Facility Supply Balance, and the completed artwork catalog. It adds scenic backgrounds to Camp/Recovery, Blacksmith, Chocobo Stable, and Moogle Emporium, plus a final routing/cleanup audit.
 
+## RC1 Hotfix 9 — Raid Timing & Field Support
+- Raid rally/round defaults are now **90s / 60s**; Rally Venture rally/round defaults are **60s / 30s**.
+- Portal Adventure countdowns synchronize to Bot server time instead of the viewer device clock.
+- Streamer Portal boss spawns publish the raid rally to Twitch while LIVE.
+- The OBS overlay clears as soon as the raid snapshot becomes inactive, including after victory.
+- Inventory & Recovery supports LIVE out-of-battle field-item targeting of another adventurer.
+- Paired Web/Bot protocol advances to **19**; DB schema remains **7**.
+
 ## RC1 Hotfix 8 — Raid Overlay Visual Rework
 - `/overlay` now uses a compact Final Fantasy-inspired raid HUD with a framed boss-art panel.
 - Raid tier, living raiders, round, phase, exact HP, HP percentage, Summon gauge, and the top three damage leaders are visually separated for faster stream readability.
@@ -22,11 +30,11 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h8`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h8`
-- Portal Action protocol: `18`
+- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h9`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h9`
+- Portal Action protocol: `19`
 - Hosted sync schema: `1`
-- Compatible Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
+- Compatible Bot runtime: `1.1.19-retro-phase-iii-rc1h9`
 - Local Bot DB schema: `7`
 
 ## Facility supply balance

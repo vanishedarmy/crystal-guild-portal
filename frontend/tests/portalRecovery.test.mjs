@@ -12,7 +12,10 @@ test("Portal Phase 5 exposes live Inventory and Recovery actions without combat 
   assert.match(api, /USE_FIELD_ITEM/);
   assert.match(api, /START_REST/);
   assert.match(inventory, /Start Camp/);
-  assert.match(inventory, /item\.usable_now && item\.field_usable/);
+  assert.match(inventory, /item\.field_usable && \(targetingOther \|\| item\.usable_now\)/);
+  assert.match(inventory, /Field item target/);
+  assert.match(inventory, /use recovery items on them outside battle/);
+  assert.match(api, /target_username/);
   assert.match(inventory, /recovery-quick-action/);
   assert.doesNotMatch(inventory, /Show usable now/);
   assert.doesNotMatch(inventory, />Battle only</);

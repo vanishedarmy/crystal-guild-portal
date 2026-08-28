@@ -102,8 +102,11 @@ export function submitRecoveryState(csrfToken, idempotencyKey) {
   return submitPortalAction("RECOVERY_STATE", {}, csrfToken, idempotencyKey);
 }
 
-export function submitUseFieldItem(itemId, csrfToken, idempotencyKey) {
-  return submitPortalAction("USE_FIELD_ITEM", { item_id: itemId }, csrfToken, idempotencyKey);
+export function submitUseFieldItem(itemId, csrfToken, idempotencyKey, targetUsername = "") {
+  const payload = { item_id: itemId };
+  const target = String(targetUsername || "").trim().replace(/^@/, "").toLowerCase();
+  if (target) payload.target_username = target;
+  return submitPortalAction("USE_FIELD_ITEM", payload, csrfToken, idempotencyKey);
 }
 
 export function submitStartRest(csrfToken, idempotencyKey) {

@@ -74,7 +74,7 @@ async function refresh(){
     const synced=Number(s.synced_at||0);
     if(!s.available||(synced&&Date.now()/1000-synced>120)){hide();return}
     const state=safeStatus(s.status);
-    if(!s.active&&!['VICTORY','WIPE'].includes(state)){hide();return}
+    if(!s.active){hide();return}
 
     wrap.style.display='grid';
     wrap.dataset.state=state;

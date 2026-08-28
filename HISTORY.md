@@ -1,3 +1,6 @@
+# RC1 Hotfix 9 — Raid Timing & Field Support
+Paired Web/Bot timing and support pass: Raid 90s rally / 60s rounds, Rally Venture 60s rally / 30s rounds, Bot-synchronized Portal clocks, LIVE Portal raid-rally chat announcements, immediate overlay clear on inactive victory/wipe state, and LIVE out-of-battle field-item support targeting. Protocol 19; DB schema 7 unchanged.
+
 # RC1 Hotfix 8 — Raid Overlay Visual Rework
 Web-only hosted OBS overlay redesign with dedicated boss-art framing, Final Fantasy-inspired HUD treatment, HP percentage/critical styling, Summon meter, damage-leader chips, and distinct ENRAGED/VICTORY/WIPE states. Portal Action protocol remains 18 and the RC1H7 Bot remains compatible. Frontend revision `1.1.19-retro-phase-iii14-rc1h8`.
 

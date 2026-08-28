@@ -1,30 +1,33 @@
-# Validation Report — RC1 Hotfix 8 Raid Overlay Visual Rework
+# Validation Report — RC1 Hotfix 9 Raid Timing & Field Support
 
 ## Identity
-- Web runtime: `1.1.19-retro-phase-iii-rc1h8`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h8`
-- Compatible Bot runtime: `1.1.19-retro-phase-iii-rc1h7`
-- Portal Action protocol: `18` unchanged
-- Hosted sync schema: `1` unchanged
-- Local Bot DB schema: `7` unchanged
+- Web runtime: `1.1.19-retro-phase-iii-rc1h9`
+- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h9`
+- Bot runtime: `1.1.19-retro-phase-iii-rc1h9`
+- Portal Action protocol: **19**
+- Hosted sync schema: **1**
+- Local Bot DB schema: **7**
 
 ## Automated validation
-- Frontend unit/static regression suite: **291 / 291 passed**.
+- Frontend Node regression suite: **291 / 291 passed**.
 - Hosted Portal Python suite: **47 / 47 passed**.
-- `raid-overlay.js` passes `node --check` syntax validation.
+- Bot suite: **408 tests plus 30 subtests passed**.
+- Changed Python modules pass `py_compile`.
+- `raid-overlay.js` passes `node --check`.
 
-## Overlay-specific coverage
-- Hosted `/overlay` remains wired to `/api/overlay/state`.
-- Overlay script remains external; no inline executable script was introduced.
-- Boss-art routing remains connected to the canonical packaged world/raid boss artwork set.
-- Revised markup includes the dedicated boss art panel, boss HP track, Summon meter, and Damage Leaders area.
-- Overlay JavaScript renders structured top-damage chips and applies critical-HP, ENRAGED, VICTORY, and WIPE presentation states.
-- Reduced-motion CSS remains present.
-- Stale/unavailable overlay snapshots still hide the entire HUD.
+## H9-specific coverage
+- Overlay source explicitly hides on any inactive raid state.
+- Portal Adventure timers use a Bot `server_now` offset and include round deadlines in authoritative refresh scheduling.
+- Portal `USE_FIELD_ITEM` accepts only an optional sanitized Twitch target username in addition to item ID.
+- Bot field-item support tests verify another player can be healed while LIVE and that the same cross-player action fails closed OFFLINE without consuming the item.
+- Bot timer tests verify Venture rally/round defaults 60s/30s and Raid rally/round defaults 90s/60s.
+- Portal boss-spawn regression verifies the LIVE owner Portal path publishes the rally announcement after hosted acknowledgement and remains silent when OFFLINE.
+- Upgrade-helper regression verifies only the prior stock timer values are rewritten; unrelated/custom values remain intact.
+- Solo Venture state and selection now expose/enforce a **+5 maximum enemy level offset**.
 
-## Regression continuity
-- No action protocol or allowed Portal action change.
-- No persistence/database change.
-- No Twitch OAuth or environment-variable change.
-- RC1H7 Streamer Inventory Admin remains compatible.
-- Persistent Adventure results, dynamic Camp, LIVE-only notable Portal announcements, and the regenerated Relic artwork remain packaged unchanged.
+## Continuity
+- No DB schema migration.
+- Persistent Solo/Hunt result inbox remains intact.
+- Streamer inventory admin remains intact.
+- Dynamic Camp and Relic visuals remain intact.
+- Solo Venture max enemy offset is **+5**.

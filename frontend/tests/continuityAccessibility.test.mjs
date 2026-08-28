@@ -58,4 +58,5 @@ test("Streamer Dashboard exposes the hosted OBS overlay and shared roundel", asy
   assert.match(overlayJs, /renderLeaders/);
   assert.match(overlayJs, /classList\.toggle\('critical'/);
   assert.match(overlayJs, /Victory/);
+  assert.match(overlayJs, /if\(!s\.active\)\{hide\(\);return\}/);
 });

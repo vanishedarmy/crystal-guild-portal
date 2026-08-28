@@ -325,6 +325,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const [rank, setRank] = useState("ALL");
   const [soloPicker, setSoloPicker] = useState("");
   const [clock, setClock] = useState(() => Date.now());
+  const [serverOffsetMs, setServerOffsetMs] = useState(0);
   const completionRefresh = useRef(0);
   const stateInflight = useRef(false);
 
@@ -368,8 +369,10 @@ export default function Hunts({ data, overview, onRefresh }) {
       }
       const next = finished.result?.data?.adventure_state || null;
       if (next) {
+        const receivedAt = Date.now();
         setState(next);
-        setClock(Date.now());
+        setServerOffsetMs(Number(next.server_now || 0) > 0 ? Number(next.server_now) * 1000 - receivedAt : 0);
+        setClock(receivedAt);
       }
       if (!quiet) setMessage("Adventure Board refreshed.");
       return next;
@@ -421,15 +424,18 @@ export default function Hunts({ data, overview, onRefresh }) {
       Number(state.solo_venture?.available_at || 0),
       ...((state.hunts || []).map((hunt) => Number(hunt.cooldown_available_at || 0))),
       Number(state.encounter?.rally_closes_at || 0),
+      Number(state.encounter?.next_round_at || 0),
       Number(state.active_hunt?.resolves_at || 0),
       Number(state.camp?.until || 0),
-    ].filter((value) => value > Math.floor(Date.now() / 1000));
-    if (!deadlines.length) return undefined;
-    const nearest = Math.min(...deadlines);
-    const waitMs = Math.max(250, nearest * 1000 - Date.now() + 250);
+    ];
+    const authoritativeNow = Date.now() + serverOffsetMs;
+    const futureDeadlines = deadlines.filter((value) => value > Math.floor(authoritativeNow / 1000));
+    if (!futureDeadlines.length) return undefined;
+    const nearest = Math.min(...futureDeadlines);
+    const waitMs = Math.max(250, nearest * 1000 - authoritativeNow + 250);
     const timer = window.setTimeout(() => void loadState({ quiet: true }), waitMs);
     return () => window.clearTimeout(timer);
-  }, [actionsAvailable, state, loadState]);
+  }, [actionsAvailable, state, serverOffsetMs, loadState]);
 
   useEffect(() => {
     if (!actionsAvailable) return undefined;
@@ -463,8 +469,10 @@ export default function Hunts({ data, overview, onRefresh }) {
       setMessage(soloResult ? soloVentureSummary(soloResult) : (finished.result?.message || fallback));
       const next = finished.result?.data?.adventure_state;
       if (next) {
+        const receivedAt = Date.now();
         setState(next);
-        setClock(Date.now());
+        setServerOffsetMs(Number(next.server_now || 0) > 0 ? Number(next.server_now) * 1000 - receivedAt : 0);
+        setClock(receivedAt);
       } else if (finished.status === "completed" && finished.result?.ok !== false) {
         await loadState({ quiet: true });
       }
@@ -495,8 +503,9 @@ export default function Hunts({ data, overview, onRefresh }) {
   if (!isOwnProfile) return <HuntRecord data={data} />;
 
   const boardStateReady = Boolean(state);
-  const ventureRemaining = remainingUntil(state?.venture?.available_at, clock);
-  const soloRemaining = remainingUntil(state?.solo_venture?.available_at, clock);
+  const authoritativeClock = clock + serverOffsetMs;
+  const ventureRemaining = remainingUntil(state?.venture?.available_at, authoritativeClock);
+  const soloRemaining = remainingUntil(state?.solo_venture?.available_at, authoritativeClock);
   const soloReason = !boardStateReady
     ? "Checking Crystal Guild for your current Solo Venture…"
     : soloRemaining > 0
@@ -504,9 +513,9 @@ export default function Hunts({ data, overview, onRefresh }) {
       : String(state?.solo_venture?.reason || "");
   const encounter = state?.encounter || null;
   const activeHunt = state?.active_hunt || null;
-  const activeHuntRemaining = remainingUntil(activeHunt?.resolves_at, clock);
-  const rallyRemaining = remainingUntil(encounter?.rally_closes_at, clock);
-  const roundRemaining = remainingUntil(encounter?.next_round_at, clock);
+  const activeHuntRemaining = remainingUntil(activeHunt?.resolves_at, authoritativeClock);
+  const rallyRemaining = remainingUntil(encounter?.rally_closes_at, authoritativeClock);
+  const roundRemaining = remainingUntil(encounter?.next_round_at, authoritativeClock);
   const currentRegion = state?.current_region || { name: overview?.region?.name || "Unknown Region" };
   const regions = [...(state?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
   const hunts = (state?.hunts || []).filter((hunt) => rank === "ALL" || hunt.rank === rank).sort(compareByLevel);
@@ -586,7 +595,7 @@ export default function Hunts({ data, overview, onRefresh }) {
 
       <section className={`panel adventure-camp-panel ${state?.camp?.resting ? "camp-active" : ""}`}>
         <div className="panel-title-row">
-          <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, clock))}` : "Set Up Camp"}</h2></div>
+          <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, authoritativeClock))}` : "Set Up Camp"}</h2></div>
           <span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span>
         </div>
         <p className="muted">Camp restores HP and your current Job’s MP/AP. Base time is 15 minutes while stream is LIVE and 1 hour while OFFLINE; Fellowship bonuses may shorten it. You cannot adventure while resting.</p>
@@ -621,7 +630,7 @@ export default function Hunts({ data, overview, onRefresh }) {
             <div className="solo-venture-rules" aria-label="Solo Venture rules">
               <span><strong>{soloEncounterChance} / {soloTreasureChance}</strong>Encounter / Treasure</span>
               <span><strong>3 stages</strong>Maximum depth</span>
-              <span><strong>+3</strong>Enemy level ceiling</span>
+              <span><strong>+{Number(state?.solo_venture?.max_enemy_levels_above_player ?? 5)}</strong>Enemy level ceiling</span>
               <span><strong>7m</strong>Separate cooldown</span>
             </div>
             <div className="venture-action-row">
@@ -873,7 +882,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
         <div className="hunt-board-grid">
           {hunts.map((hunt) => {
-            const cooldown = remainingUntil(hunt.cooldown_available_at, clock);
+            const cooldown = remainingUntil(hunt.cooldown_available_at, authoritativeClock);
             const available = Boolean(hunt.challengeable && cooldown <= 0);
             return (
               <article className={`adventure-hunt-card rank-${String(hunt.rank || "c").toLowerCase()} ${available ? "available" : ""}`} key={hunt.id}>

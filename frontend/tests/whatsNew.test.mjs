@@ -86,14 +86,15 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
 });
 
 
-test("What's New is updated for Expeditions Alpha 3 while retaining Alpha 2 history", async () => {
+test("What's New is updated for Expeditions Alpha 4 while retaining Alpha 3 and Alpha 2 history", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  const latest = data.slice(0, data.indexOf('name: "Expeditions Alpha 2"'));
-  assert.match(latest, /Expeditions Alpha 3/);
-  assert.match(latest, /Expedition Atlas opens legendary routes/);
-  assert.match(latest, /Legendary Regional Contracts/);
-  assert.match(latest, /Master Cartographer/);
+  const latest = data.slice(0, data.indexOf('name: "Expeditions Alpha 3"'));
+  assert.match(latest, /Expeditions Alpha 4/);
+  assert.match(latest, /Regional Discovery makes every road feel different/);
+  assert.match(latest, /20 permanent landmarks/);
+  assert.match(latest, /Expedition Journal/);
+  assert.match(data, /Expeditions Alpha 3/);
+  assert.match(data, /Legendary Regional Contracts/);
   assert.match(data, /Expeditions Alpha 2/);
   assert.match(data, /Elder Ochu/);
-  assert.match(data, /Permanent Region Mastery/);
 });

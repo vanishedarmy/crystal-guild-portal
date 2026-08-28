@@ -23,6 +23,13 @@ const ROUTE_COPY = {
   unknown: "Balanced risk and reward.",
   deep: "More danger, stronger rewards.",
 };
+const REGION_LANDMARK_COUNT = 4;
+const ROUTE_RISK = { safe: "Low", unknown: "Balanced", deep: "High" };
+const ROUTE_SIGNALS = {
+  safe: ["Less combat", "Fewer hazards", "Steadier discoveries"],
+  unknown: ["Balanced encounters", "Balanced rewards", "Unpredictable events"],
+  deep: ["More combat", "More hazards", "Better rare-event odds"],
+};
 const MASTERY_COPY = {
   emerald_wilds: "Discovery events +5% in Emerald Wilds",
   ashen_highlands: "Resource events +5% in Ashen Highlands",
@@ -57,6 +64,24 @@ function ExpeditionCache({ cache }) {
       <div><span>JP carried</span><strong>{number(cache?.jp || 0)}</strong></div>
       <div><span>Gil carried</span><strong>{number(cache?.gil || 0)}</strong></div>
       <div><span>Items carried</span><strong>{number(cacheItemCount(cache))}</strong></div>
+    </div>
+  );
+}
+
+function ExpeditionJournal({ history = [] }) {
+  const entries = [...history].slice(-6).reverse();
+  if (!entries.length) return null;
+  return (
+    <div className="expedition-journal" aria-label="Expedition Journal">
+      <div className="expedition-journal-title"><span className="slot-label">Expedition Journal</span><small>Latest route events</small></div>
+      <div className="expedition-journal-list">
+        {entries.map((entry, index) => (
+          <div key={`${entry?.stage || 0}:${entry?.type || "event"}:${index}`} className={`expedition-journal-entry ${entry?.type === "rare" ? "rare" : ""}`}>
+            <span>Stage {number(entry?.stage || 0)}</span>
+            <strong>{entry?.type === "rare" ? "RARE · " : ""}{entry?.label || "Route event"}</strong>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -159,6 +184,7 @@ export default function Expeditions({
                 <div className="expedition-atlas-stats">
                   <div><span>Overall survey</span><strong>{number(data.atlas?.overall_progress || 0)}%</strong></div>
                   <div><span>Regions mastered</span><strong>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)}</strong></div>
+                  <div><span>Landmarks charted</span><strong>{number(data.atlas?.landmarks_found || 0)} / {number(data.atlas?.landmark_count || 0)}</strong></div>
                   <div><span>Boss clears</span><strong>{number(data.atlas?.total_boss_clears || 0)}</strong></div>
                   <div><span>Legendary routes</span><strong>{number(data.atlas?.legendary_contracts_unlocked || 0)}</strong></div>
                 </div>
@@ -175,6 +201,7 @@ export default function Expeditions({
                     <div className="expedition-region-card-head"><span>Lv.{number(region.min_level)}{Number(region.recommended_max_level || 99) < 99 ? `–${number(region.recommended_max_level)}` : "+"}</span><b>{number(progress.progress || 0)}%</b></div>
                     <strong>{region.name}</strong>
                     <small>{region.identity} · {region.hazard}</small>
+                    <small>{number(progress.landmarks_found || 0)} / {number(REGION_LANDMARK_COUNT)} landmarks charted</small>
                     <span className={`small-badge ${region.unlocked ? "success" : "locked"}`}>{region.unlocked ? "Available" : region.reason}</span>
                   </button>
                 );
@@ -193,15 +220,36 @@ export default function Expeditions({
                   </div>
                   <ProgressBar value={Number(pickedRegion.progress?.progress || 0)} />
                   <div className="expedition-milestone-grid">
-                    {(pickedRegion.progress?.objectives || []).map((objective) => (
-                      <div key={`${pickedRegion.id}:${objective.threshold}`} className={Number(pickedRegion.progress?.progress || 0) >= Number(objective.threshold || 0) ? "complete" : ""}>
-                        <span>{number(objective.threshold)}%</span>
-                        <strong>{objective.name}</strong>
-                        <small>{Number(pickedRegion.progress?.progress || 0) >= Number(objective.threshold || 0) ? "Complete" : "Locked"}</small>
+                    {(pickedRegion.progress?.milestones || []).map(([threshold, name]) => (
+                      <div key={`${pickedRegion.id}:${threshold}`} className={Number(pickedRegion.progress?.progress || 0) >= Number(threshold || 0) ? "complete" : ""}>
+                        <span>{number(threshold)}%</span>
+                        <strong>{name}</strong>
+                        <small>{Number(pickedRegion.progress?.progress || 0) >= Number(threshold || 0) ? "Complete" : "Locked"}</small>
                       </div>
                     ))}
                   </div>
-                  {(pickedRegion.progress?.objectives || []).find((objective) => Number(pickedRegion.progress?.progress || 0) < Number(objective.threshold || 0)) ? <p className="muted expedition-next-objective"><strong>Next:</strong> {(pickedRegion.progress.objectives || []).find((objective) => Number(pickedRegion.progress?.progress || 0) < Number(objective.threshold || 0))?.name} at {number((pickedRegion.progress.objectives || []).find((objective) => Number(pickedRegion.progress?.progress || 0) < Number(objective.threshold || 0))?.threshold)}%</p> : <p className="muted expedition-next-objective"><strong>Mastery bonus:</strong> {MASTERY_COPY[pickedRegion.id] || "Region mastered"}</p>}
+                  {REGION_LANDMARK_COUNT > 0 ? (
+                    <div className="expedition-landmarks-panel">
+                      <div className="expedition-landmarks-heading"><span className="slot-label">Regional Landmarks</span><strong>{number(pickedRegion.progress?.landmarks_found || 0)} / {number(REGION_LANDMARK_COUNT)} charted</strong></div>
+                      <div className="expedition-landmark-grid">
+                        {(pickedRegion.progress?.landmarks || []).map((landmark) => (
+                          <div key={`${pickedRegion.id}:${landmark.name}`} className="discovered">
+                            <span>CHARTED · {number(landmark.unlock_progress)}%</span>
+                            <strong>{landmark.name}</strong>
+                            <small>Added permanently to your Expedition Atlas.</small>
+                          </div>
+                        ))}
+                        {Number(pickedRegion.progress?.landmarks_found || 0) < REGION_LANDMARK_COUNT ? (
+                          <div className="locked">
+                            <span>{pickedRegion.progress?.next_landmark_progress != null ? `${number(pickedRegion.progress.next_landmark_progress)}%` : "UNCHARTED"}</span>
+                            <strong>{number(REGION_LANDMARK_COUNT - Number(pickedRegion.progress?.landmarks_found || 0))} landmark{REGION_LANDMARK_COUNT - Number(pickedRegion.progress?.landmarks_found || 0) === 1 ? "" : "s"} remain</strong>
+                            <small>Continue surveying {pickedRegion.name} to reveal the next location.</small>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  ) : null}
+                  {(pickedRegion.progress?.milestones || []).find(([threshold]) => Number(pickedRegion.progress?.progress || 0) < Number(threshold || 0)) ? <p className="muted expedition-next-objective"><strong>Next:</strong> {(pickedRegion.progress.milestones || []).find(([threshold]) => Number(pickedRegion.progress?.progress || 0) < Number(threshold || 0))?.[1]} at {number((pickedRegion.progress.milestones || []).find(([threshold]) => Number(pickedRegion.progress?.progress || 0) < Number(threshold || 0))?.[0])}%</p> : <p className="muted expedition-next-objective"><strong>Mastery bonus:</strong> {MASTERY_COPY[pickedRegion.id] || "Region mastered"}</p>}
                   <div className="expedition-boss-contract-row">
                     <div><span className="slot-label">Regional Boss</span><strong>{pickedRegion.boss_name || "Regional Boss"}</strong><small>{pickedRegion.progress?.boss_unlocked ? `${number(pickedRegion.progress?.boss_clears || 0)} clear${Number(pickedRegion.progress?.boss_clears || 0) === 1 ? "" : "s"}` : `Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}%`}</small></div>
                     <div className="expedition-contract-actions">
@@ -235,6 +283,7 @@ export default function Expeditions({
             </div>
             <ExpeditionCache cache={active.cache} />
             {(active.cache?.items || []).length ? <p className="expedition-loot-line"><strong>Cache:</strong> {active.cache.items.map((row) => `${row.name || row.id} x${number(row.quantity)}`).join(" · ")}</p> : null}
+            <ExpeditionJournal history={active.history || []} />
 
             {active.status === "travel" ? (
               <div className="expedition-travel-card">
@@ -280,7 +329,7 @@ export default function Expeditions({
                   <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => doRequest("expedition:return", "expedition-return", String(active.stage), (idem) => submitExpeditionReturn(csrfToken, idem), "Expedition Cache secured.")}>{active.objective_complete ? "Complete Expedition · Bank Cache" : "Return to Guild · Bank Cache"}</button>
                   {active.can_camp ? <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => doRequest("expedition:camp", "expedition-camp", String(active.stage), (idem) => submitExpeditionCamp(csrfToken, idem), "Expedition Camp established.")}>Make Camp · Recover</button> : null}
                 </div>
-                {active.can_continue ? <div className="expedition-route-grid">{routes.map((route) => <button type="button" key={route.id} className={`expedition-route-option ${route.id}`} disabled={Boolean(busy)} onClick={() => doRequest(`expedition:continue:${route.id}`, "expedition-continue", `${active.stage}:${route.id}`, (idem) => submitExpeditionContinue(route.id, csrfToken, idem), `Taking the ${route.name}.`)}><strong>{route.name}</strong><span>{ROUTE_COPY[route.id]}</span><small>×{Number(route.reward_mult || 1).toFixed(2)} reward modifier</small></button>)}</div> : <p className="adventure-disabled-reason">Maximum Expedition depth reached. Return to the Guild to secure the cache.</p>}
+                {active.can_continue ? <div className="expedition-route-grid">{routes.map((route) => <button type="button" key={route.id} className={`expedition-route-option ${route.id}`} disabled={Boolean(busy)} onClick={() => doRequest(`expedition:continue:${route.id}`, "expedition-continue", `${active.stage}:${route.id}`, (idem) => submitExpeditionContinue(route.id, csrfToken, idem), `Taking the ${route.name}.`)}><div className="expedition-route-heading"><strong>{route.name}</strong><span className={`small-badge route-risk ${route.id}`}>{ROUTE_RISK[route.id] || "Balanced"} risk</span></div><span>{ROUTE_COPY[route.id]}</span><div className="expedition-route-signals">{(ROUTE_SIGNALS[route.id] || []).map((signal) => <small key={`${route.id}:${signal}`}>{signal}</small>)}</div><small>Rare event chance ~{number(Math.round(Number(route.rare_event_chance || 0) * 100))}% · ×{Number(route.reward_mult || 1).toFixed(2)} rewards</small></button>)}</div> : <p className="adventure-disabled-reason">Maximum Expedition depth reached. Return to the Guild to secure the cache.</p>}
               </div>
             ) : null}
           </div>

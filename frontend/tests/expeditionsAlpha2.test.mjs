@@ -11,7 +11,7 @@ test("Expeditions Alpha 2 exposes regional milestones, mastery and boss contract
   assert.match(component, /BOSS UNLOCKED/);
   assert.match(component, /Regional Boss/);
   assert.match(component, /submitExpeditionStart\(pickedRegion\.id, "boss"/);
-  assert.match(component, /25%|objective\.threshold/);
+  assert.match(component, /25%|milestones/);
   assert.match(component, /MASTERY_COPY/);
   assert.match(css, /expedition-milestone-grid/);
   assert.match(css, /expedition-boss-contract-row/);

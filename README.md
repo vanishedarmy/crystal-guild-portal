@@ -1,4 +1,6 @@
-# Crystal Guild v1.2.0 — Expeditions Alpha 3
+# Crystal Guild v1.2.0 — Expeditions Alpha 4
+
+Expeditions Alpha 4 adds Regional Discovery: permanent landmarks, region-specific events, rare discoveries, route-risk signals, and a saved Expedition Journal.
 
 Expeditions Alpha 3 adds the Expedition Atlas, repeatable Legendary Regional Contracts, and all-region Master Cartographer progression while retaining the complete Alpha 2 Hotfix 3 scenic presentation.
 
@@ -30,11 +32,11 @@ Expeditions Alpha 3 adds the Expedition Atlas, repeatable Legendary Regional Con
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha3`
-- Frontend asset revision: `1.2.0-expeditions-a3`
+- Hosted Web runtime: `1.2.0-expeditions-alpha4`
+- Frontend asset revision: `1.2.0-expeditions-a4`
 - Portal Action protocol: `20`
 - Hosted sync schema: `1`
-- Compatible Bot runtime: `1.2.0-expeditions-a3`
+- Compatible Bot runtime: `1.2.0-expeditions-a4`
 - Local Bot DB schema: `8`
 
 ## Facility supply balance

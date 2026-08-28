@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
+    name: "Expeditions Alpha 4",
+    title: "Regional Discovery makes every road feel different",
+    summary: "Expedition regions now have permanent landmarks, region-specific journey events, rare discoveries, clearer route risk signals, and a compact Expedition Journal that remembers the story of the current run.",
+    highlights: [
+      { title: "20 permanent landmarks", description: "Each launch region now charts four named landmarks as exploration advances. The Atlas tracks how many have been revealed without adding a new progression reset or database migration." },
+      { title: "Regional event identity", description: "Resources, treasure, hazards, travelers, and Chocobo moments now pull from region-specific event pools instead of reading like the same journey with a different backdrop." },
+      { title: "Rare regional discoveries", description: "Fifteen new rare events can interrupt ordinary stage rolls with treasure, resources, recovery, Chocobo moments, or unusually strong survey progress." },
+      { title: "Routes explain the gamble", description: "Safe, Unknown, and Push Deeper now show risk, event tendencies, approximate rare-event odds, and reward modifiers before you commit." },
+      { title: "Expedition Journal", description: "The active Board keeps the latest route events together in a compact journal so the run remains readable after travel, combat, camps, and discoveries." },
+    ],
+    action: { tab: "hunts", label: "Explore Regional Discovery" },
+  },
+  {
+    version: "v1.2.0",
     name: "Expeditions Alpha 3",
     title: "The Expedition Atlas opens legendary routes",
     summary: "Regional exploration now rolls up into one permanent Expedition Atlas. Mastered regions can unlock repeatable Legendary Contracts, and completing all five regions earns the Guild's top cartography distinction.",

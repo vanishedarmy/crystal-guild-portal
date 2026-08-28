@@ -8740,3 +8740,112 @@ main h1,
   .expedition-contract-actions { width: 100%; }
   .expedition-contract-actions .equipment-action-button { width: 100%; }
 }
+
+/* v1.2 Expeditions Alpha 4 — Regional Discovery */
+.expedition-landmarks-panel {
+  margin-top: .8rem;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+.expedition-landmarks-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .55rem;
+}
+.expedition-landmark-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+}
+.expedition-landmark-grid > div {
+  min-width: 0;
+  border: 1px solid rgba(157,172,209,.16);
+  border-radius: 9px;
+  padding: .62rem;
+  background: rgba(5,10,22,.67);
+}
+.expedition-landmark-grid > div.discovered {
+  border-color: rgba(229,197,111,.35);
+  background: linear-gradient(135deg, rgba(40,34,18,.58), rgba(8,16,31,.76));
+}
+.expedition-landmark-grid > div.locked { opacity: .56; }
+.expedition-landmark-grid span,
+.expedition-landmark-grid strong,
+.expedition-landmark-grid small { display: block; }
+.expedition-landmark-grid span {
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .74;
+}
+.expedition-landmark-grid strong { margin-top: .22rem; line-height: 1.25; }
+.expedition-landmark-grid small { margin-top: .24rem; line-height: 1.35; opacity: .74; }
+
+.expedition-journal {
+  margin: .75rem 0;
+  border: 1px solid rgba(157,172,209,.16);
+  border-radius: 10px;
+  background: rgba(5,10,22,.66);
+  overflow: hidden;
+}
+.expedition-journal-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .55rem .7rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.expedition-journal-title small { opacity: .64; }
+.expedition-journal-list { display: grid; }
+.expedition-journal-entry {
+  display: grid;
+  grid-template-columns: 72px minmax(0,1fr);
+  gap: .65rem;
+  align-items: start;
+  padding: .5rem .7rem;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.expedition-journal-entry:first-child { border-top: 0; }
+.expedition-journal-entry span {
+  font-size: .7rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  opacity: .62;
+}
+.expedition-journal-entry strong { font-size: .82rem; line-height: 1.35; font-weight: 600; }
+.expedition-journal-entry.rare {
+  background: linear-gradient(90deg, rgba(229,197,111,.10), transparent);
+  border-left: 2px solid rgba(229,197,111,.58);
+}
+
+.expedition-route-option { text-align: left; }
+.expedition-route-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+}
+.expedition-route-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .32rem;
+  margin: .5rem 0;
+}
+.expedition-route-signals small {
+  border: 1px solid rgba(157,172,209,.15);
+  border-radius: 999px;
+  padding: .18rem .4rem;
+  background: rgba(5,10,22,.48);
+  opacity: .82;
+}
+.small-badge.route-risk.safe { border-color: rgba(116,208,155,.42); }
+.small-badge.route-risk.unknown { border-color: rgba(137,176,235,.42); }
+.small-badge.route-risk.deep { border-color: rgba(222,113,113,.46); }
+
+@media (max-width: 760px) {
+  .expedition-landmark-grid { grid-template-columns: 1fr; }
+  .expedition-journal-entry { grid-template-columns: 58px minmax(0,1fr); }
+}

@@ -102,3 +102,9 @@ Finalization checkpoint: four scenic Portal backgrounds, final artwork-path and 
 - Fixed RC1 scenic backgrounds that were collapsed to the shared panel 1px pseudo-element.
 - Camp, Blacksmith, Chocobo Stable, and Moogle Emporium now use independent cache-busted `scene-backgrounds-v2` scene layers.
 - Frontend revision: `1.1.19-retro-phase-iii14-rc1h1`.
+
+## v1.2.0 Expeditions Alpha 2 Hotfix 3
+- Added Solo Venture scenic backdrop.
+- Added Relics Arsenal scenic backdrop.
+- Updated web asset revision to 1.2.0-expeditions-a2h3.
+

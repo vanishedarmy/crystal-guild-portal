@@ -1,6 +1,6 @@
 {
-  "release": "v1.1.19 \u2014 Retro Phase III / RC1",
-  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h9",
+  "release": "v1.2.0 \u2014 Expeditions Alpha 2 Hotfix 3",
+  "frontend_asset_revision": "1.2.0-expeditions-a2h3",
   "scene_backgrounds": [
     {
       "file": "camp.png",
@@ -41,6 +41,26 @@
       "bytes": 720135,
       "usage": [
         "Moogle Emporium"
+      ]
+    },
+    {
+      "file": "solo_venture.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v2/solo_venture.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2650092,
+      "usage": [
+        "Adventure Board \u2014 Solo Venture"
+      ]
+    },
+    {
+      "file": "relic_arsenal.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v2/relic_arsenal.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2933274,
+      "usage": [
+        "Relics Arsenal"
       ]
     }
   ]

@@ -1,11 +1,13 @@
-# Upgrade Guide — Expeditions Alpha 2 Hotfix 2
+# Upgrade Guide — v1.2.0 Expeditions Alpha 2 Hotfix 3
 
-This is a **Web-only** update. The existing Expeditions Alpha 2 Bot remains compatible.
+## Scope
+Web-only presentation hotfix.
 
-## Patch upgrade
-1. Back up the current Web deployment.
-2. Apply the A2H1 → A2H2 Web patch over the existing A2H1 Web tree.
-3. Deploy the updated Web files.
-4. Refresh the site/browser cache if the Player Guide remains stale.
+## What to deploy
+Replace the web package with this Hotfix 3 build.
 
-No database migration, Bot deployment, Portal protocol change, OAuth change, or player reset is required.
+## Bot impact
+None. Keep the existing Alpha 2 bot package.
+
+## Migration
+No schema migration, no reset, and no player-impacting data changes.

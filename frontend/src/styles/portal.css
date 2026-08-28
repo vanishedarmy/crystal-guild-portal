@@ -8631,3 +8631,68 @@ main h1,
     justify-content: space-between;
   }
 }
+
+
+/* v1.2 Expeditions Alpha 2 Hotfix 3 — Solo Venture + Relic Arsenal scenic backdrops */
+.solo-venture-panel,
+.relic-arsenal-panel {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.solo-venture-panel::after,
+.relic-arsenal-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 0;
+  width: 100%;
+  height: clamp(300px, 46vw, 540px);
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+}
+
+.solo-venture-panel > *,
+.relic-arsenal-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.solo-venture-panel::after {
+  background-image:
+    linear-gradient(180deg, rgba(6, 12, 24, .12) 0%, rgba(7, 14, 26, .38) 48%, rgba(6, 12, 24, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/solo_venture.png');
+  background-position: center 46%;
+}
+
+.relic-arsenal-panel::after {
+  background-image:
+    linear-gradient(180deg, rgba(8, 11, 20, .10) 0%, rgba(10, 16, 28, .38) 48%, rgba(6, 11, 21, .96) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v2/relic_arsenal.png');
+  background-position: center 38%;
+}
+
+.solo-venture-panel .solo-venture-rules span,
+.solo-venture-panel .solo-expedition-ledger > div,
+.relic-arsenal-panel .relic-card {
+  background-color: rgba(4, 15, 25, .76);
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 720px) {
+  .solo-venture-panel::after,
+  .relic-arsenal-panel::after {
+    height: 340px;
+    background-position: center top;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .solo-venture-panel::after,
+  .relic-arsenal-panel::after {
+    opacity: .45;
+  }
+}

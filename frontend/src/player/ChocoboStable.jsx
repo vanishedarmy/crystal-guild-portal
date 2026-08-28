@@ -214,7 +214,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         <div>
           <p className="eyebrow">v1.1.10 · Chocobo Companions</p>
           <h2>Chocobo Stable</h2>
-          <p className="muted">Prepare a companion now; Expeditions will require a registered Chocobo.</p>
+          <p className="muted">A registered Chocobo is required to launch Expeditions from the Adventure Board.</p>
         </div>
         <div className="chocobo-stable-status">
           <span className={`small-badge ${stable?.unlocked ? "ready" : "locked"}`}>{stable?.unlocked ? "STABLE OPEN" : "STABLE LOCKED"}</span>
@@ -372,7 +372,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
           <article className={`chocobo-step-card ${writActive ? "ready-step" : ""}`}>
             <span className="chocobo-step-number">4</span>
             <div className="chocobo-step-content">
-              <span className="slot-label">Companion Registration</span><h3>Name your Chocobo</h3><p className="muted">Once the Writ is active, choose a name and the Stable will assign one starter trait. The trait is persistent and will matter when Expeditions arrive.</p>
+              <span className="slot-label">Companion Registration</span><h3>Name your Chocobo</h3><p className="muted">Once the Writ is active, choose a name and the Stable will assign one persistent Expedition trait.</p>
               <label className="chocobo-name-field"><span>Chocobo name</span><input value={name} maxLength={20} onChange={(event) => setName(event.target.value)} placeholder="e.g. Biscuit" /></label>
               <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !writActive || name.trim().length < 2} onClick={() => runMutation("register", () => submitRegisterChocobo(name, csrfToken, actionKey("register-chocobo")), "Registering your Chocobo…")}>{busy === "register" ? "Registering…" : "Register Chocobo"}</button>
             </div>
@@ -380,22 +380,22 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         </div>
       )}
 
-      <section className="chocobo-expedition-preview" aria-label="Expeditions coming soon">
+      <section className="chocobo-expedition-preview" aria-label="Expedition readiness">
         <div className="panel-title-row">
-          <div><span className="panel-kicker">Coming Soon · v1.2</span><h3>Expeditions</h3></div>
-          <span className="small-badge">PREPARATION OPEN</span>
+          <div><span className="panel-kicker">v1.2 · Active</span><h3>Expeditions</h3></div>
+          <span className="small-badge success">EXPEDITIONS OPEN</span>
         </div>
-        <p className="muted">The Stable is your first step toward Expeditions. There are no Expedition action buttons in v1.1.10; this board only tracks the requirements you can prepare today.</p>
+        <p className="muted">The Stable is your first step toward Expeditions. Once your Chocobo is registered and the Fellowship Expedition Board is complete, launch distant contracts from the Adventure Board.</p>
         <div className="chocobo-expedition-notes">
-          <article className={companion?.registered ? "complete" : ""}><strong>{companion?.registered ? "✓" : "○"} Register a Chocobo</strong><span>Every adventurer will need a registered companion.</span></article>
+          <article className={companion?.registered ? "complete" : ""}><strong>{companion?.registered ? "✓" : "○"} Register a Chocobo</strong><span>Every adventurer needs a registered companion to launch.</span></article>
           <article className={expedition?.board_ready ? "complete" : ""}><strong>{expedition?.board_ready ? "✓" : "○"} Prepare the Guild Board</strong><span>The Fellowship Expedition Board is the shared Guild gate.</span></article>
-          <article><strong>Bond &amp; Traits</strong><span>Keep building Bond and your persistent starter trait while the Expedition system is being prepared.</span></article>
+          <article><strong>Bond &amp; Traits</strong><span>Your persistent trait now modifies travel, discoveries, hazards, materials, treasure, or rescue recovery during Expeditions.</span></article>
         </div>
       </section>
 
       <div className="chocobo-footer-actions">
         <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Refreshing…" : "Refresh Stable"}</button>
-        <span className="muted">Registered Chocobos gain Bond XP from successful Ventures, Venture treasure, and Hunts. No combat bonuses are added in v1.1.10.</span>
+        <span className="muted">Registered Chocobos gain Bond XP from Ventures, treasure, Hunts, and Expeditions. Their traits now provide travel, discovery, hazard, material, treasure, and rescue bonuses during Expeditions.</span>
       </div>
     </section>
   );

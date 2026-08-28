@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.1.19-retro-phase-iii-rc1h9"
-FRONTEND_ASSET_REVISION = "1.1.19-retro-phase-iii14-rc1h9"
+HOSTED_PORTAL_VERSION = "1.2.0-expeditions-alpha1"
+FRONTEND_ASSET_REVISION = "1.2.0-expeditions-a1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 19
+ACTION_PROTOCOL_VERSION = 20
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -34,6 +34,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
+    "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
     "STREAMER_COMMAND",
 }
@@ -84,6 +85,8 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "CLAIM_DAILY", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
     "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN",
     "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
+    "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
+    "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -781,6 +784,33 @@ class HostedPortalStore:
             if not re.fullmatch(r"(?:attack|defend|ability:[a-z0-9_.-]+|item:[a-z0-9_.-]+)", action):
                 raise ValueError("Invalid Solo Venture battle action.")
             payload = {"action": action}
+        elif kind == "EXPEDITION_START":
+            if set(payload) != {"region_id", "depth"}:
+                raise ValueError("EXPEDITION_START requires only region_id and depth.")
+            region_id = str(payload.get("region_id") or "").strip().lower()
+            depth = str(payload.get("depth") or "").strip().lower()
+            if not region_id or len(region_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", region_id):
+                raise ValueError("Invalid Expedition region ID.")
+            if depth not in {"scout", "journey", "deep"}:
+                raise ValueError("Invalid Expedition depth.")
+            payload = {"region_id": region_id, "depth": depth}
+        elif kind in {"EXPEDITION_RESOLVE_STAGE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT"}:
+            if payload:
+                raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "EXPEDITION_ACTION":
+            if set(payload) != {"action"}:
+                raise ValueError("EXPEDITION_ACTION requires only action.")
+            action = str(payload.get("action") or "").strip().lower()
+            if not re.fullmatch(r"(?:attack|defend|ability:[a-z0-9_.-]+|item:[a-z0-9_.-]+)", action):
+                raise ValueError("Invalid Expedition battle action.")
+            payload = {"action": action}
+        elif kind == "EXPEDITION_CONTINUE":
+            if set(payload) != {"route"}:
+                raise ValueError("EXPEDITION_CONTINUE requires only route.")
+            route = str(payload.get("route") or "").strip().lower()
+            if route not in {"safe", "unknown", "deep"}:
+                raise ValueError("Invalid Expedition route.")
+            payload = {"route": route}
         elif kind == "TRAVEL_REGION":
             if set(payload) != {"region_id"}:
                 raise ValueError("TRAVEL_REGION requires only region_id.")

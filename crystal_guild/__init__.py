@@ -1,3 +1,3 @@
-"""Crystal Guild hosted web package."""
+"""Crystal Guild Web package."""
 
-__version__ = "1.1.19-retro-phase-iii"
+__version__ = "1.2.0-expeditions-alpha1"

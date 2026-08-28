@@ -1,3 +1,6 @@
+# v1.2.0 — Expeditions Alpha 1
+Adds the five-region Expedition Adventure Board, Chocobo trait integration, Scout/Journey/Deep routes, authoritative persistent stage timers, Expedition combat/choices/camp/cache/return/rescue, regional exploration progress, persistent result cards, and matching protocol 20 Portal actions. Paired Bot local DB schema advances 7 → 8.
+
 # RC1 Hotfix 9 — Raid Timing & Field Support
 Paired Web/Bot timing and support pass: Raid 90s rally / 60s rounds, Rally Venture 60s rally / 30s rounds, Bot-synchronized Portal clocks, LIVE Portal raid-rally chat announcements, immediate overlay clear on inactive victory/wipe state, and LIVE out-of-battle field-item support targeting. Protocol 19; DB schema 7 unchanged.
 

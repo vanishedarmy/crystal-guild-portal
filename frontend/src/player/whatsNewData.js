@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.2.0",
+    name: "Expeditions Alpha 1",
+    title: "The Guild road opens beyond the Adventure Board",
+    summary: "Expeditions introduce five persistent Chocobo-led regions with multi-stage travel, route choices, resource pressure, field combat, exploration progress, and a cache you must bring home.",
+    highlights: [
+      { title: "Five distant regions", description: "Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, and the Astral Scar each use their own level band, encounter pool, hazards, materials, and exploration identity." },
+      { title: "Scout, Journey, or Deep", description: "Choose a 3-, 5-, or 8-stage base route, then push up to two bonus stages beyond the planned objective if you want more risk and reward." },
+      { title: "Your Chocobo matters", description: "Fleet Feet, Steady Strider, Keen Eye, Forager, and Lucky Plume now directly modify Expedition travel, hazards, discoveries, resources, treasure, and rescue recovery." },
+      { title: "Persistent journeys", description: "Travel timers, active combat, cache contents, stage history, and route state are stored authoritatively and wait for you when you return to the Portal." },
+      { title: "Bring the cache home", description: "A safe return banks the full Expedition Cache. Defeat or combat retreat triggers Chocobo rescue and preserves most of it rather than wiping the run." },
+    ],
+    action: { tab: "hunts", label: "Open Expedition Board" },
+  },
+  {
     version: "v1.1.19",
     name: "Retro Phase III",
     title: "The Arsenal gets a complete 16-bit identity pass",

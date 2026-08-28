@@ -8245,3 +8245,196 @@ main h1,
   border:1px solid var(--line);background:rgba(4,8,17,.7);color:var(--text);
 }
 @media(max-width:720px){.recovery-target-control{grid-template-columns:1fr}}
+
+/* v1.2 Expeditions Alpha 1 */
+.expedition-board-panel {
+  position: relative;
+  overflow: hidden;
+}
+.expedition-board-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(126, 170, 255, .06), transparent 42%, rgba(231, 194, 103, .05));
+}
+.expedition-readiness-grid,
+.expedition-active-meta,
+.expedition-cache-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .7rem;
+  margin: 1rem 0;
+}
+.expedition-readiness-grid article,
+.expedition-active-meta > div,
+.expedition-cache-grid > div {
+  border: 1px solid var(--line, rgba(255,255,255,.12));
+  background: rgba(7, 11, 23, .58);
+  border-radius: 10px;
+  padding: .75rem .85rem;
+  min-width: 0;
+}
+.expedition-readiness-grid article.complete { border-color: rgba(116, 208, 155, .42); }
+.expedition-readiness-grid span,
+.expedition-active-meta span,
+.expedition-cache-grid span {
+  display: block;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  opacity: .7;
+}
+.expedition-readiness-grid strong,
+.expedition-active-meta strong,
+.expedition-cache-grid strong {
+  display: block;
+  margin-top: .2rem;
+}
+.expedition-readiness-grid small { display: block; margin-top: .25rem; opacity: .72; }
+.expedition-region-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .7rem;
+  margin: 1rem 0;
+}
+.expedition-region-card {
+  appearance: none;
+  color: inherit;
+  text-align: left;
+  border: 1px solid rgba(157, 172, 209, .22);
+  background: linear-gradient(180deg, rgba(19, 27, 48, .92), rgba(9, 14, 28, .88));
+  border-radius: 12px;
+  padding: .9rem;
+  min-height: 195px;
+  cursor: pointer;
+  transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+.expedition-region-card:hover:not(:disabled),
+.expedition-region-card.selected {
+  transform: translateY(-2px);
+  border-color: rgba(229, 197, 111, .62);
+  box-shadow: 0 9px 25px rgba(0,0,0,.22), inset 0 0 0 1px rgba(229,197,111,.12);
+}
+.expedition-region-card.selected { background: linear-gradient(180deg, rgba(30, 42, 68, .96), rgba(12, 18, 33, .9)); }
+.expedition-region-card.locked { opacity: .48; cursor: not-allowed; }
+.expedition-region-card-head { display: flex; justify-content: space-between; gap: .5rem; font-size: .76rem; opacity: .78; }
+.expedition-region-card > strong { display: block; margin: .5rem 0 .2rem; font-size: 1rem; }
+.expedition-region-card > small { display: block; min-height: 2.1em; opacity: .72; }
+.expedition-region-card p { font-size: .78rem; line-height: 1.45; opacity: .78; margin: .55rem 0 .7rem; }
+.expedition-launch-panel,
+.expedition-travel-card,
+.expedition-choice-card,
+.expedition-combat-shell {
+  position: relative;
+  border: 1px solid rgba(229, 197, 111, .24);
+  background: rgba(8, 13, 27, .72);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+.expedition-depth-grid,
+.expedition-route-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .65rem;
+  margin: .8rem 0;
+}
+.expedition-depth-option,
+.expedition-route-option,
+.expedition-combat-option {
+  color: inherit;
+  text-align: left;
+  border: 1px solid rgba(157, 172, 209, .22);
+  background: rgba(17, 25, 44, .76);
+  border-radius: 9px;
+  padding: .75rem;
+  cursor: pointer;
+}
+.expedition-depth-option.selected { border-color: rgba(229,197,111,.7); box-shadow: inset 0 0 0 1px rgba(229,197,111,.16); }
+.expedition-depth-option strong,
+.expedition-depth-option span,
+.expedition-depth-option small,
+.expedition-route-option strong,
+.expedition-route-option span,
+.expedition-route-option small,
+.expedition-combat-option strong,
+.expedition-combat-option small,
+.expedition-combat-option span { display: block; }
+.expedition-depth-option span,
+.expedition-route-option span { margin-top: .25rem; font-size: .82rem; }
+.expedition-depth-option small,
+.expedition-route-option small,
+.expedition-combat-option small { margin-top: .25rem; opacity: .67; }
+.expedition-route-option.safe { border-color: rgba(116,208,155,.28); }
+.expedition-route-option.deep { border-color: rgba(222,113,113,.34); }
+.expedition-launch-button { margin-top: .35rem; }
+.expedition-gate-note { margin: .75rem 0; }
+.expedition-loot-line {
+  margin: .7rem 0 0;
+  padding: .65rem .75rem;
+  border-left: 3px solid rgba(229,197,111,.48);
+  background: rgba(229,197,111,.05);
+  font-size: .84rem;
+}
+.expedition-loot-line.danger { border-left-color: rgba(222,113,113,.6); }
+.expedition-travel-card > strong {
+  display: block;
+  margin: .25rem 0 .65rem;
+  font-size: clamp(1.5rem, 4vw, 2.35rem);
+  letter-spacing: .02em;
+}
+.expedition-travel-card p { opacity: .75; }
+.expedition-combatants {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+}
+.expedition-combatants article {
+  display: grid;
+  grid-template-columns: minmax(92px, 125px) 1fr;
+  gap: .8rem;
+  align-items: center;
+  border: 1px solid rgba(157,172,209,.18);
+  background: rgba(10,16,31,.72);
+  border-radius: 10px;
+  padding: .75rem;
+}
+.expedition-combatants h3 { margin: .15rem 0 .55rem; }
+.expedition-round-log { margin: .8rem 0; display: grid; gap: .2rem; }
+.expedition-action-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin: .8rem 0; }
+.expedition-option-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; margin: .7rem 0; }
+.expedition-combat-option:disabled { opacity: .48; cursor: not-allowed; }
+.expedition-combat-option span { margin-top: .35rem; font-size: .78rem; }
+.expedition-event-highlight {
+  border-left: 3px solid rgba(229,197,111,.58);
+  padding: .65rem .8rem;
+  background: rgba(229,197,111,.05);
+}
+.expedition-event-highlight span,
+.expedition-event-highlight strong,
+.expedition-event-highlight small { display: block; }
+.expedition-event-highlight strong { margin: .22rem 0; }
+.expedition-event-highlight small { opacity: .72; }
+.expedition-choice-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: .9rem; }
+.expedition-result-panel { border-color: rgba(116,208,155,.34); }
+.expedition-result-panel.lost { border-color: rgba(222,113,113,.34); }
+
+@media (max-width: 1100px) {
+  .expedition-region-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .expedition-readiness-grid, .expedition-active-meta, .expedition-cache-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .expedition-region-grid,
+  .expedition-depth-grid,
+  .expedition-route-grid,
+  .expedition-combatants,
+  .expedition-option-grid { grid-template-columns: 1fr; }
+  .expedition-region-card { min-height: 0; }
+  .expedition-combatants article { grid-template-columns: 82px 1fr; }
+}
+@media (max-width: 520px) {
+  .expedition-readiness-grid, .expedition-active-meta, .expedition-cache-grid { grid-template-columns: 1fr 1fr; gap: .45rem; }
+  .expedition-action-grid { grid-template-columns: 1fr; }
+  .expedition-combatants article { grid-template-columns: 1fr; }
+}

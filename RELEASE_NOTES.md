@@ -1,42 +1,29 @@
-# Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 9 — Raid Timing & Field Support
+# Crystal Guild v1.2.0 — Expeditions Alpha 1 Web
 
-## Raid / overlay fixes
-- The hosted OBS raid overlay now hides whenever `active=false`, so a completed VICTORY/WIPE snapshot cannot remain stuck on stream after the raid ends.
-- A boss spawned from the authenticated Streamer Portal now stages the same boss/rally Twitch announcement as the owner chat command, but only when Twitch is confirmed LIVE.
-- Raid join window default: **90 seconds**.
-- Raid round window default: **60 seconds**.
+## Adventure Board — Expeditions
+- Adds a full Expedition interface for the five launch regions: Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, and The Astral Scar.
+- Region cards show level bands, regional identity/hazard, featured materials, and persistent exploration progress.
+- Players choose Scout, Journey, or Deep Expedition and launch only when both the Fellowship Expedition Board and a registered Chocobo are ready.
+- Active Expedition cards show stage/depth/route, authoritative travel countdown, carried cache, recent journey history, event state, combat state, current exploration progress, and Chocobo information.
 
-## Rally Venture timing
-- Venture rally default: **60 seconds**.
-- Venture combat round default: **30 seconds**.
-- Existing explicit environment overrides are still honored. The Bot upgrade helper rewrites only the exact prior stock defaults; custom operator values remain untouched.
-
-## Portal timer synchronization
-- Adventure Board countdowns now calculate against the Bot-provided `server_now` clock instead of trusting the browser's local wall clock.
-- Venture cooldowns, Solo Venture cooldowns, Hunts, Camp, rally closes, and round deadlines therefore remain aligned with Twitch/Bot timing even when the viewer machine clock is ahead or behind.
-- The Portal schedules an authoritative refresh at the active encounter round deadline as well as rally/cooldown deadlines.
-
-## LIVE field support
-- Eligible field recovery items can target another adventurer outside battle while Twitch is LIVE.
-- The Portal Inventory & Recovery panel adds a target username field. Blank remains self-targeted.
-- Chat supports `!use <item> | <username>`, `!use <item> on @username`, or `!use <item> @username` outside battle.
-- The Bot independently enforces LIVE status for another-player field targeting, verifies the target, blocks recipients currently in battle/Hunt/Solo Venture, and consumes the item from the user only after a useful effect succeeds.
-- Active Battle item behavior remains on the existing queued combat-action path.
+## Interactive journey flow
+- Resolve travel stages when the Bot deadline is ready.
+- Choose Safe / Unknown / Push Deeper routes between stages.
+- Resolve Expedition combat with Attack, Defend, available abilities, and eligible inventory items.
+- Establish internal Expedition Camp after a cleared stage.
+- Return safely to bank the cache, or retreat from combat using Chocobo rescue.
+- Optional bonus stages allow a successful Expedition to push deeper before returning.
+- Expedition result cards persist until **Confirm Result**.
 
 ## Continuity
-- Persistent Adventure results and Confirm Result behavior remain intact.
-- Streamer inventory administration remains intact.
-- Dynamic Camp remains 15 minutes LIVE / 1 hour OFFLINE before Fellowship reductions.
-- All 24 regenerated Relic stage PNGs and the H8 raid-HUD visual redesign remain packaged.
-- Solo Venture enemy ceiling is now **player level +5**; the lower edge remains roughly player level -2.
+- Adventure timers continue using Bot `server_now` synchronization.
+- H9 raid/venture timing, LIVE field support, Streamer Inventory Admin, H8 raid overlay styling/final-state cleanup, dynamic Camp, Relic artwork, and persistent Solo/Hunt results remain present.
+- Streamer **Clear Adventures** copy now includes Expeditions.
 
 ## Technical identity
-- Web runtime: `1.1.19-retro-phase-iii-rc1h9`
-- Frontend revision: `1.1.19-retro-phase-iii14-rc1h9`
-- Bot runtime: `1.1.19-retro-phase-iii-rc1h9`
-- Portal Action protocol: **19**
+- Hosted Web runtime: `1.2.0-expeditions-alpha1`
+- Frontend asset revision: `1.2.0-expeditions-a1`
+- Portal Action protocol: **20**
 - Hosted sync schema: **1**
-- Local Bot DB schema: **7**
-- Twitch prefix: `!`
-
-No database migration or player reset is required. H9 Web and H9 Bot should be deployed together.
+- Required Bot runtime: `1.2.0-expeditions-a1`
+- Local Bot DB schema: **8**

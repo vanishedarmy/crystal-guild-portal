@@ -16,6 +16,7 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
+import Expeditions from "./Expeditions.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 
@@ -339,7 +340,7 @@ export default function Hunts({ data, overview, onRefresh }) {
     () => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []),
     [auth.action_capabilities],
   );
-  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT", "START_REST"];
+  const requiredCapabilities = ["ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT", "START_REST", "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT"];
   const actionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
@@ -409,13 +410,14 @@ export default function Hunts({ data, overview, onRefresh }) {
 
   useEffect(() => {
     const expeditionActive = Boolean(state?.solo_venture?.expedition);
-    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt && !expeditionActive)) return undefined;
+    const fieldExpeditionActive = Boolean(state?.expeditions?.active);
+    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt && !expeditionActive && !fieldExpeditionActive)) return undefined;
     const refreshActive = () => {
       if (document.visibilityState === "visible") void loadState({ quiet: true });
     };
-    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : expeditionActive ? 5000 : 4000);
+    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : fieldExpeditionActive ? 8000 : expeditionActive ? 5000 : 4000);
     return () => window.clearInterval(timer);
-  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, state?.solo_venture?.expedition?.updated_at, loadState]);
+  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, state?.solo_venture?.expedition?.updated_at, state?.expeditions?.active?.travel_ready_at, state?.expeditions?.active?.status, loadState]);
 
   useEffect(() => {
     if (!actionsAvailable || !state) return undefined;
@@ -427,6 +429,7 @@ export default function Hunts({ data, overview, onRefresh }) {
       Number(state.encounter?.next_round_at || 0),
       Number(state.active_hunt?.resolves_at || 0),
       Number(state.camp?.until || 0),
+      Number(state.expeditions?.active?.travel_ready_at || 0),
     ];
     const authoritativeNow = Date.now() + serverOffsetMs;
     const futureDeadlines = deadlines.filter((value) => value > Math.floor(authoritativeNow / 1000));
@@ -525,6 +528,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const pendingResults = Array.isArray(state?.pending_results) ? state.pending_results : [];
   const pendingSoloResults = pendingResults.filter((result) => result?.kind === "solo_venture");
   const pendingHuntResults = pendingResults.filter((result) => result?.kind === "hunt");
+  const pendingExpeditionResults = pendingResults.filter((result) => result?.kind === "expedition");
   const soloEncounterChance = Number(state?.solo_venture?.encounter_chance_percent ?? 80);
   const soloTreasureChance = Number(state?.solo_venture?.treasure_chance_percent ?? 20);
 
@@ -612,6 +616,17 @@ export default function Hunts({ data, overview, onRefresh }) {
           {state?.camp?.reason ? <span className="adventure-disabled-reason">{state.camp.reason}</span> : null}
         </div>
       </section>
+
+      <Expeditions
+        data={state?.expeditions}
+        csrfToken={csrfToken}
+        actionsAvailable={actionsAvailable}
+        busy={busy}
+        runRequest={runRequest}
+        authoritativeClock={authoritativeClock}
+        pendingResults={pendingExpeditionResults}
+        onConfirmResult={confirmAdventureResult}
+      />
 
       <section className={`panel venture-panel solo-venture-panel ${expedition ? "expedition-active" : ""}`}>
         <div className="panel-title-row">
@@ -833,7 +848,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           ))}
         </div>
       ) : null}
-      {state?.recent_result && !["solo_venture", "hunt"].includes(state.recent_result.kind) ? (
+      {state?.recent_result && !["solo_venture", "hunt", "expedition"].includes(state.recent_result.kind) ? (
         <section className={`panel adventure-result-panel compact-result ${state.recent_result.won ? "won" : "lost"}`} aria-live="polite">
           <div className="panel-title-row"><div><p className="eyebrow">Recent Adventure</p><h2>{state.recent_result.won ? "Complete" : "Ended"}</h2></div><span className={`small-badge ${state.recent_result.won ? "success" : ""}`}>{state.recent_result.won ? "Victory" : "Defeat"}</span></div>
           <strong>{state.recent_result.monster_name}</strong>

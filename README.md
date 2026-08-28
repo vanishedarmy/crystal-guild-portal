@@ -1,6 +1,6 @@
-# Crystal Guild v1.1.19 — Retro Phase III / Release Candidate 1
+# Crystal Guild v1.2.0 — Expeditions Alpha 1
 
-RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portraits, Facility Supply Balance, and the completed artwork catalog. It adds scenic backgrounds to Camp/Recovery, Blacksmith, Chocobo Stable, and Moogle Emporium, plus a final routing/cleanup audit.
+Expeditions Alpha 1 adds the five-region interactive Expedition experience while retaining the complete Retro Phase III visual and gameplay foundation.
 
 ## RC1 Hotfix 9 — Raid Timing & Field Support
 - Raid rally/round defaults are now **90s / 60s**; Rally Venture rally/round defaults are **60s / 30s**.
@@ -30,12 +30,12 @@ RC1 finalizes the Retro Phase III Web presentation while retaining Chocobo portr
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.1.19-retro-phase-iii-rc1h9`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h9`
-- Portal Action protocol: `19`
+- Hosted Web runtime: `1.2.0-expeditions-alpha1`
+- Frontend asset revision: `1.2.0-expeditions-a1`
+- Portal Action protocol: `20`
 - Hosted sync schema: `1`
-- Compatible Bot runtime: `1.1.19-retro-phase-iii-rc1h9`
-- Local Bot DB schema: `7`
+- Compatible Bot runtime: `1.2.0-expeditions-a1`
+- Local Bot DB schema: `8`
 
 ## Facility supply balance
 - **Ancient Coin** now appears on Ossuary Knight, Mimic, Magic Pot, and Ancient Mimic.

@@ -181,6 +181,34 @@ export function submitAcknowledgeAdventureResult(resultId, csrfToken, idempotenc
   return submitPortalAction("ACK_ADVENTURE_RESULT", { result_id: Number(resultId) }, csrfToken, idempotencyKey);
 }
 
+export function submitExpeditionStart(regionId, depth, csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_START", { region_id: regionId, depth }, csrfToken, idempotencyKey);
+}
+
+export function submitExpeditionResolveStage(csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_RESOLVE_STAGE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitExpeditionAction(action, csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_ACTION", { action }, csrfToken, idempotencyKey);
+}
+
+export function submitExpeditionContinue(route, csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_CONTINUE", { route }, csrfToken, idempotencyKey);
+}
+
+export function submitExpeditionCamp(csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_CAMP", {}, csrfToken, idempotencyKey);
+}
+
+export function submitExpeditionReturn(csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_RETURN", {}, csrfToken, idempotencyKey);
+}
+
+export function submitExpeditionRetreat(csrfToken, idempotencyKey) {
+  return submitPortalAction("EXPEDITION_RETREAT", {}, csrfToken, idempotencyKey);
+}
+
 export function submitChocoboState(csrfToken, idempotencyKey) {
   return submitPortalAction("CHOCOBO_STATE", {}, csrfToken, idempotencyKey);
 }

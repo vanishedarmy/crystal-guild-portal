@@ -5,11 +5,11 @@ import { readFile } from "node:fs/promises";
 const SRC = new URL("../src/", import.meta.url);
 const PUBLIC = new URL("../public/", import.meta.url);
 
-test("Phase 8 UI/UX layer remains intact under the v1.1.19 release identity", async () => {
+test("Phase 8 UI/UX layer remains intact under the v1.2.0 release identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
-  assert.match(version, /WEB_VERSION = "v1\.1\.19"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.1\.19-retro-phase-iii14-rc1h9"/);
+  assert.match(version, /WEB_VERSION = "v1\.2\.0"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.2\.0-expeditions-a1"/);
   assert.match(css, /v1\.1\.8 — Phase 8 UI\/UX Pass & Polish/);
 });
 

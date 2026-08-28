@@ -31,7 +31,7 @@ export default function Overview({ data, onDetail, onRefresh, onNavigate }) {
     ["blacksmith", "Guild Blacksmith", "Craft recipes and forge equipment."],
     ["hunts", "Adventure Board", "Interactive Solo Venture, travel, and challenge Hunts. Rally Ventures use Twitch chat."],
     ["fellowship", "Fellowship", "Review Guild Rank, projects, and contributions."],
-    ["chocobo", "Chocobo Stable", "Register and train your companion for future Expeditions."],
+    ["chocobo", "Chocobo Stable", "Register and train your companion for Expeditions."],
   ];
   return (
     <div className="dashboard-grid overview-dashboard">

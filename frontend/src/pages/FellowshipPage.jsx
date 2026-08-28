@@ -122,9 +122,9 @@ export default function FellowshipPage() {
             <ProjectCard project={data.active_project} />
 
             <details className="panel fellowship-details fellowship-expedition-board">
-              <summary><span><strong>Expeditions — Coming Soon</strong><small>Guild Board preparation and launch requirements</small></span><span className="small-badge">{expeditionStatus}</span></summary>
+              <summary><span><strong>Expeditions — Guild Board</strong><small>Shared Expedition launch requirements</small></span><span className="small-badge">{expeditionStatus}</span></summary>
               <div className="fellowship-expedition-body">
-              <p className="muted fellowship-expedition-copy">Distant contracts are being prepared for a future Crystal Guild expansion. The Guild Board and Chocobo prerequisites can be completed now; Expedition gameplay itself is not active yet.</p>
+              <p className="muted fellowship-expedition-copy">Distant contracts are now active. Complete the shared Guild Board, then each adventurer can launch Expeditions with a registered Chocobo from the Adventure Board.</p>
               <div className="fellowship-expedition-grid">
                 <article>
                   <span>Guild Requirement</span>
@@ -138,11 +138,11 @@ export default function FellowshipPage() {
                 </article>
                 <article>
                   <span>Launch Status</span>
-                  <strong>Coming in v1.2</strong>
-                  <small>Bond, traits, and Chocobo preparation can begin now. No Expedition action is enabled early.</small>
+                  <strong>Active in v1.2</strong>
+                  <small>Five regions and Scout, Journey, and Deep Expedition routes are available from the Adventure Board.</small>
                 </article>
               </div>
-              <div className="fellowship-expedition-note"><strong>Guild Board Note:</strong> Build the Stable, prepare your Chocobo, and complete the Expedition Board when it becomes available. More distant contracts will be posted here when Expeditions launch.</div>
+              <div className="fellowship-expedition-note"><strong>Guild Board Note:</strong> Complete the Expedition Board to open distant contracts Guild-wide. Individual adventurers still need their own registered Chocobo.</div>
               </div>
             </details>
 

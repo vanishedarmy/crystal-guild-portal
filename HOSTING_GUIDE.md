@@ -1,9 +1,7 @@
-# Hosting Guide — RC1 Hotfix 9
+# Crystal Guild v1.2.0 Expeditions Alpha 1 — Hosting Guide
 
-Deploy the H9 Web and H9 Bot together because Portal Action protocol is **19**. Hosted sync schema remains **1** and the Bot database schema remains **7**.
+Deploy the Web and Bot as a matched pair.
 
-After deployment, `/api/health` should report Web runtime `1.1.19-retro-phase-iii-rc1h9`, frontend asset revision `1.1.19-retro-phase-iii14-rc1h9`, hosted sync schema 1, and Portal Action protocol 19.
+After deployment, `/api/health` should report Web runtime `1.2.0-expeditions-alpha1`, frontend asset revision `1.2.0-expeditions-a1`, hosted sync schema **1**, and Portal Action protocol **20**.
 
-If Render Environment explicitly defines the combat timers, set `ENCOUNTER_JOIN_SECONDS=60`, `ENCOUNTER_ROUND_SECONDS=30`, `RAID_JOIN_SECONDS=90`, and `RAID_ROUND_SECONDS=60`. If those variables are absent, H9 code defaults apply automatically.
-
-OBS continues to use the hosted `/overlay` Browser Source. H9 retains the H8 visual redesign and hides the entire HUD as soon as the raid state becomes inactive.
+The Bot should report runtime `1.2.0-expeditions-a1`, local DB schema **8**, hosted sync schema **1**, and Portal Action protocol **20**. Preserve all existing Render environment values unless intentionally changing them; H9 combat timing defaults remain compatible.

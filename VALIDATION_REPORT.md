@@ -1,33 +1,29 @@
-# Validation Report — RC1 Hotfix 9 Raid Timing & Field Support
+# Validation Report — v1.2.0 Expeditions Alpha 1 Web
 
 ## Identity
-- Web runtime: `1.1.19-retro-phase-iii-rc1h9`
-- Frontend asset revision: `1.1.19-retro-phase-iii14-rc1h9`
-- Bot runtime: `1.1.19-retro-phase-iii-rc1h9`
-- Portal Action protocol: **19**
+- Hosted Web runtime: `1.2.0-expeditions-alpha1`
+- Frontend asset revision: `1.2.0-expeditions-a1`
+- Required Bot runtime: `1.2.0-expeditions-a1`
+- Portal Action protocol: **20**
 - Hosted sync schema: **1**
-- Local Bot DB schema: **7**
+- Local Bot DB schema: **8**
 
 ## Automated validation
-- Frontend Node regression suite: **291 / 291 passed**.
+- Frontend Node regression suite: **294 / 294 passed**.
 - Hosted Portal Python suite: **47 / 47 passed**.
-- Bot suite: **408 tests plus 30 subtests passed**.
-- Changed Python modules pass `py_compile`.
-- `raid-overlay.js` passes `node --check`.
+- Paired Bot suite: **417 tests + 30 subtests passed**.
+- Python modules compile successfully.
+- Changed plain JavaScript modules and the hosted raid-overlay script pass `node --check`.
 
-## H9-specific coverage
-- Overlay source explicitly hides on any inactive raid state.
-- Portal Adventure timers use a Bot `server_now` offset and include round deadlines in authoritative refresh scheduling.
-- Portal `USE_FIELD_ITEM` accepts only an optional sanitized Twitch target username in addition to item ID.
-- Bot field-item support tests verify another player can be healed while LIVE and that the same cross-player action fails closed OFFLINE without consuming the item.
-- Bot timer tests verify Venture rally/round defaults 60s/30s and Raid rally/round defaults 90s/60s.
-- Portal boss-spawn regression verifies the LIVE owner Portal path publishes the rally announcement after hosted acknowledgement and remains silent when OFFLINE.
-- Upgrade-helper regression verifies only the prior stock timer values are rewritten; unrelated/custom values remain intact.
-- Solo Venture state and selection now expose/enforce a **+5 maximum enemy level offset**.
+## Expedition UI / protocol coverage
+- Five region cards and Scout/Journey/Deep depth selectors are present on the Adventure Board.
+- Typed actions exist for start, stage resolution, combat action, route continue, Expedition Camp, safe return, and combat retreat.
+- Countdown presentation uses authoritative Bot `server_now` timing.
+- Active Expedition presentation includes route/stage state, cache, event/history, combat controls, Camp/return/retreat, and exploration progress.
+- Persistent Expedition result cards share the explicit Confirm Result flow.
+- Streamer Clear Adventures copy includes Expeditions.
+- Chocobo Stable copy now reflects active Expedition trait bonuses rather than the old pre-v1.2 coming-soon state.
 
 ## Continuity
-- No DB schema migration.
-- Persistent Solo/Hunt result inbox remains intact.
-- Streamer inventory admin remains intact.
-- Dynamic Camp and Relic visuals remain intact.
-- Solo Venture max enemy offset is **+5**.
+- H9 Raid/Rally timing and server-clock synchronization remain present.
+- LIVE field support, Streamer Inventory Admin, H8 raid overlay styling/cleanup, dynamic Camp, Relic visuals, and persistent Solo/Hunt result behavior remain covered by the unchanged regression suite.

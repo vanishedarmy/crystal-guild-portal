@@ -1,7 +1,5 @@
-# Portal Actions Setup — RC1 Hotfix 9
+# Portal Actions Setup — v1.2.0 Expeditions Alpha 1
 
-Portal Action protocol is **19**. Deploy Web runtime `1.1.19-retro-phase-iii-rc1h9` together with Bot runtime `1.1.19-retro-phase-iii-rc1h9`. Hosted sync schema remains **1** and local DB schema remains **7**.
+Portal Action protocol is **20**. Deploy Web runtime `1.2.0-expeditions-alpha1` together with Bot runtime `1.2.0-expeditions-a1`. Hosted sync schema remains **1** and local Bot DB schema is **8**.
 
-Existing Portal relay secrets, Twitch OAuth configuration, numeric Twitch identity binding, lease/idempotency behavior, and CSRF protections are unchanged. No new secret is required.
-
-H9 extends `USE_FIELD_ITEM` with an optional sanitized target Twitch username and keeps Streamer Portal `spawnboss` owner-only. The Bot independently verifies LIVE state before cross-player field support or Portal-origin raid-rally chat output.
+v1.2 adds typed Expedition actions: `EXPEDITION_START`, `EXPEDITION_RESOLVE_STAGE`, `EXPEDITION_ACTION`, `EXPEDITION_CONTINUE`, `EXPEDITION_CAMP`, `EXPEDITION_RETURN`, and `EXPEDITION_RETREAT`. Existing Portal actions retain their prior security, CSRF, idempotency, lease, and Twitch-ID binding behavior.

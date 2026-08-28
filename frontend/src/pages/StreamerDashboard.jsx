@@ -80,7 +80,7 @@ const OWNER_COMMAND_GROUPS = [
     commands: [
       { id: "readyall", command: "!readyall", label: "Ready All", description: "Make every player READY and restore full HP plus applicable MP/AP", risk: "caution" },
       { id: "resettimers", command: "!resettimers", label: "Reset Timers", description: "Clear gameplay cooldowns, camp timers, and shop refresh timers", risk: "danger" },
-      { id: "clearadventures", command: "!clearadventures", label: "Clear Adventures", description: "Emergency-clear field encounters, timed Hunts, and Solo Ventures", risk: "danger" },
+      { id: "clearadventures", command: "!clearadventures", label: "Clear Adventures", description: "Emergency-clear field encounters, timed Hunts, Solo Ventures, and Expeditions", risk: "danger" },
     ],
   },
   {

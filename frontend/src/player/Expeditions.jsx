@@ -100,12 +100,12 @@ export default function Expeditions({
 
   return (
     <>
-      <section className={`panel expedition-board-panel ${active ? "active" : ""}`}>
+      <section className={`panel expedition-board-panel ${active ? "active" : ""}`} data-region={active?.region?.id || ""}>
         <div className="panel-title-row">
           <div>
             <p className="eyebrow">v1.2 · Chocobo Expeditions</p>
             <h2>{active ? `${active.region?.name} · Stage ${number(active.stage)} / ${number(active.max_stages)}` : "Distant Expedition Board"}</h2>
-            <p className="muted">Persistent multi-stage journeys. Explore, gather, fight, camp, and decide when to bring your Expedition Cache home.</p>
+            <p className="muted">Choose a region and route, then bring your Expedition Cache home safely.</p>
           </div>
           <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
         </div>
@@ -113,9 +113,9 @@ export default function Expeditions({
         {!active ? (
           <>
             <div className="expedition-readiness-grid">
-              <article className={data?.board_ready ? "complete" : ""}><span>Guild Gate</span><strong>{data?.board_ready ? "✓ Expedition Board" : "○ Expedition Board"}</strong><small>Fellowship-wide requirement</small></article>
-              <article className={data?.chocobo_ready ? "complete" : ""}><span>Companion</span><strong>{data?.chocobo?.name || (data?.chocobo_ready ? "✓ Registered Chocobo" : "○ Registered Chocobo")}</strong><small>{(data?.traits_active || []).length ? `${data.traits_active.length} active trait${data.traits_active.length === 1 ? "" : "s"}` : "Required to travel"}</small></article>
-              <article><span>Cache Rule</span><strong>Bank on return</strong><small>Safe return keeps 100%; rescue protects most.</small></article>
+              <article className={data?.board_ready ? "complete" : ""}><span>Guild Gate</span><strong>{data?.board_ready ? "✓ Expedition Board" : "○ Expedition Board"}</strong><small>Shared unlock</small></article>
+              <article className={data?.chocobo_ready ? "complete" : ""}><span>Companion</span><strong>{data?.chocobo?.name || (data?.chocobo_ready ? "✓ Registered Chocobo" : "○ Registered Chocobo")}</strong><small>{(data?.traits_active || []).length ? `${data.traits_active.length} active trait${data.traits_active.length === 1 ? "" : "s"}` : "Required"}</small></article>
+              <article><span>Cache</span><strong>Bank on return</strong><small>Safe return keeps all</small></article>
             </div>
 
             {!data?.ready ? <p className="adventure-disabled-reason expedition-gate-note">{data?.reason || "Complete the Expedition Board and register a Chocobo first."}</p> : null}
@@ -125,11 +125,10 @@ export default function Expeditions({
                 const selected = pickedRegion?.id === region.id;
                 const progress = region?.progress || {};
                 return (
-                  <button type="button" key={region.id} className={`expedition-region-card ${selected ? "selected" : ""} ${!region.unlocked ? "locked" : ""}`} onClick={() => setSelectedRegion(region.id)} disabled={!region.unlocked}>
+                  <button type="button" key={region.id} data-region={region.id} className={`expedition-region-card ${selected ? "selected" : ""} ${!region.unlocked ? "locked" : ""}`} onClick={() => setSelectedRegion(region.id)} disabled={!region.unlocked}>
                     <div className="expedition-region-card-head"><span>Lv.{number(region.min_level)}{Number(region.recommended_max_level || 99) < 99 ? `–${number(region.recommended_max_level)}` : "+"}</span><b>{number(progress.progress || 0)}%</b></div>
                     <strong>{region.name}</strong>
                     <small>{region.identity} · {region.hazard}</small>
-                    <p>{region.description}</p>
                     <span className={`small-badge ${region.unlocked ? "success" : "locked"}`}>{region.unlocked ? "Available" : region.reason}</span>
                   </button>
                 );
@@ -170,7 +169,7 @@ export default function Expeditions({
                 <span className="slot-label">Traveling · Stage {number(active.stage)}</span>
                 <strong>{travelRemaining > 0 ? duration(travelRemaining) : "Stage ready"}</strong>
                 <ProgressBar value={travelRemaining > 0 ? Math.max(2, 100 - (travelRemaining / Math.max(1, Number((depths.find((row) => row.id === active.depth?.id)?.travel_seconds) || travelRemaining))) * 100) : 100} />
-                <p>Your Chocobo is carrying the expedition toward the next event. You may leave the Portal; this run is saved by the Guild.</p>
+                <p>Progress is saved if you leave the Portal.</p>
                 <button type="button" className="equipment-action-button" disabled={!active.travel_ready || Boolean(busy)} onClick={() => doRequest("expedition:resolve", "expedition-resolve", String(active.stage), (idem) => submitExpeditionResolveStage(csrfToken, idem), "Expedition stage resolved.")}>{busy === "expedition:resolve" ? "Resolving…" : active.travel_ready ? "Resolve Stage" : `Ready in ${duration(travelRemaining)}`}</button>
               </div>
             ) : null}
@@ -203,7 +202,7 @@ export default function Expeditions({
                 <div className="expedition-event-highlight">
                   <span>Stage {number(active.stage)} cleared</span>
                   <strong>{active.event?.label || "The road ahead is open."}</strong>
-                  <small>{active.objective_complete ? "Primary objective complete — return safely or push beyond the planned route." : "Choose the next route, make camp, or return to the Guild with your cache."}</small>
+                  <small>{active.objective_complete ? "Objective complete — bank the cache or push deeper." : "Choose a route, camp, or return."}</small>
                 </div>
                 <div className="expedition-choice-actions">
                   <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => doRequest("expedition:return", "expedition-return", String(active.stage), (idem) => submitExpeditionReturn(csrfToken, idem), "Expedition Cache secured.")}>{active.objective_complete ? "Complete Expedition · Bank Cache" : "Return to Guild · Bank Cache"}</button>

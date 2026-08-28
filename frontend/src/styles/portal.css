@@ -8438,3 +8438,117 @@ main h1,
   .expedition-action-grid { grid-template-columns: 1fr; }
   .expedition-combatants article { grid-template-columns: 1fr; }
 }
+
+/* v1.2 Expeditions Alpha 1 Hotfix 2 — expedition presentation + collapsible boards */
+.expedition-board-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.expedition-board-panel::before {
+  background-image:
+    linear-gradient(90deg, rgba(5, 9, 20, .88) 0%, rgba(7, 12, 26, .76) 48%, rgba(7, 12, 26, .58) 100%),
+    url('/expeditions/expedition-board.webp');
+  background-size: cover;
+  background-position: center;
+  opacity: .78;
+}
+.expedition-board-panel[data-region="emerald_wilds"]::before {
+  background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/emerald-wilds.webp');
+}
+.expedition-board-panel[data-region="ashen_highlands"]::before {
+  background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/ashen-highlands.webp');
+}
+.expedition-board-panel[data-region="mistfen_marshes"]::before {
+  background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/mistfen-marshes.webp');
+}
+.expedition-board-panel[data-region="frostveil_reach"]::before {
+  background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/frostveil-reach.webp');
+}
+.expedition-board-panel[data-region="astral_scar"]::before {
+  background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/astral-scar.webp');
+}
+.expedition-region-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(8, 13, 27, .94);
+}
+.expedition-region-card::before,
+.expedition-region-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.expedition-region-card::before {
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  opacity: .72;
+}
+.expedition-region-card::after {
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(5, 9, 19, .32) 0%, rgba(5, 9, 19, .72) 48%, rgba(5, 9, 19, .95) 100%);
+}
+.expedition-region-card[data-region="emerald_wilds"]::before { background-image: url('/expeditions/emerald-wilds.webp'); }
+.expedition-region-card[data-region="ashen_highlands"]::before { background-image: url('/expeditions/ashen-highlands.webp'); }
+.expedition-region-card[data-region="mistfen_marshes"]::before { background-image: url('/expeditions/mistfen-marshes.webp'); }
+.expedition-region-card[data-region="frostveil_reach"]::before { background-image: url('/expeditions/frostveil-reach.webp'); }
+.expedition-region-card[data-region="astral_scar"]::before { background-image: url('/expeditions/astral-scar.webp'); }
+.expedition-region-card.selected::before { opacity: .84; }
+.expedition-region-card > strong { text-shadow: 0 2px 8px rgba(0,0,0,.86); }
+.expedition-region-card > small,
+.expedition-region-card-head { text-shadow: 0 1px 5px rgba(0,0,0,.92); }
+
+.section-collapsible-title-row {
+  align-items: center;
+}
+.section-collapse-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .65rem;
+  min-width: 0;
+}
+.section-collapse-button {
+  appearance: none;
+  border: 1px solid rgba(157, 172, 209, .28);
+  border-radius: 8px;
+  background: rgba(7, 12, 25, .72);
+  color: var(--text);
+  min-height: 34px;
+  padding: .38rem .68rem;
+  font: inherit;
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .025em;
+  cursor: pointer;
+}
+.section-collapse-button::before {
+  content: "▾";
+  display: inline-block;
+  margin-right: .38rem;
+  transform: translateY(-1px);
+  transition: transform .14s ease;
+}
+.section-collapse-button[aria-expanded="false"]::before { transform: rotate(-90deg) translateX(1px); }
+.section-collapse-button:hover { border-color: rgba(229, 197, 111, .58); }
+.collapsible-board-section.collapsed {
+  padding-bottom: .9rem;
+}
+.collapsible-board-section.collapsed .panel-title-row {
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .section-collapsible-title-row {
+    align-items: stretch;
+  }
+  .section-collapse-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .section-collapse-button { min-width: 92px; }
+  .expedition-board-panel::before { background-position: 58% center; }
+}

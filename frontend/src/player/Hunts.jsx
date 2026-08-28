@@ -80,6 +80,17 @@ function compareByLevel(left, right) {
   return levelValue(left) - levelValue(right) || String(left?.name || "").localeCompare(String(right?.name || ""));
 }
 
+function defaultSectionOpen(storageKey) {
+  try {
+    const stored = window.localStorage?.getItem(storageKey);
+    if (stored === "open") return true;
+    if (stored === "closed") return false;
+    return !window.matchMedia?.("(max-width: 760px)")?.matches;
+  } catch {
+    return true;
+  }
+}
+
 function soloVentureSummary(summary) {
   if (!summary) return "";
   if (summary.type === "expedition") {
@@ -327,8 +338,17 @@ export default function Hunts({ data, overview, onRefresh }) {
   const [soloPicker, setSoloPicker] = useState("");
   const [clock, setClock] = useState(() => Date.now());
   const [serverOffsetMs, setServerOffsetMs] = useState(0);
+  const [regionsOpen, setRegionsOpen] = useState(() => defaultSectionOpen("crystal-guild:adventure:travel-regions"));
+  const [huntBoardOpen, setHuntBoardOpen] = useState(() => defaultSectionOpen("crystal-guild:adventure:hunt-board"));
   const completionRefresh = useRef(0);
   const stateInflight = useRef(false);
+
+  useEffect(() => {
+    try { window.localStorage?.setItem("crystal-guild:adventure:travel-regions", regionsOpen ? "open" : "closed"); } catch {}
+  }, [regionsOpen]);
+  useEffect(() => {
+    try { window.localStorage?.setItem("crystal-guild:adventure:hunt-board", huntBoardOpen ? "open" : "closed"); } catch {}
+  }, [huntBoardOpen]);
 
   const username = String(overview?.identity?.username || data?.player?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -584,7 +604,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div>
             <p className="eyebrow">Adventure Board</p>
             <h2>Choose Your Next Adventure</h2>
-            <p className="muted">Solo Venture, travel, recovery, and Hunts in one place. Rally Ventures stay in Twitch chat.</p>
+            <p className="muted">Solo Venture, Expeditions, Hunts, travel, and recovery. Rally Ventures stay in chat.</p>
           </div>
           <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
             {busy === "state" ? "Refreshing…" : "Refresh Board"}
@@ -592,7 +612,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
         <div className={`equipment-action-status compact-status ${actionsAvailable ? "ready" : "offline"}`} role="status">
           <strong>{actionsAvailable ? "Online" : "Offline"}</strong>
-          <span>{actionsAvailable ? `Adventure actions are ready.${pendingResults.length ? ` ${pendingResults.length} saved result${pendingResults.length === 1 ? "" : "s"} awaiting confirmation.` : ""}` : "Actions return when Crystal Guild reconnects."}</span>
+          <span>{actionsAvailable ? `Adventure actions ready.${pendingResults.length ? ` ${pendingResults.length} saved result${pendingResults.length === 1 ? "" : "s"} awaiting confirmation.` : ""}` : "Actions return when Crystal Guild reconnects."}</span>
           {message ? <small aria-live="polite">{message}</small> : null}
         </div>
       </section>
@@ -602,7 +622,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, authoritativeClock))}` : "Set Up Camp"}</h2></div>
           <span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span>
         </div>
-        <p className="muted">Camp restores HP and your current Job’s MP/AP. Base time is 15 minutes while stream is LIVE and 1 hour while OFFLINE; Fellowship bonuses may shorten it. You cannot adventure while resting.</p>
+        <p className="muted">Restores HP and current Job MP/AP. Base time: 15m LIVE · 1h OFFLINE, before Fellowship bonuses.</p>
         {state?.camp ? (
           <div className="adventure-camp-grid">
             <div><span>HP</span><strong>{number(state.camp.hp)} / {number(state.camp.max_hp)}</strong></div>
@@ -641,7 +661,7 @@ export default function Hunts({ data, overview, onRefresh }) {
 
         {!expedition ? (
           <>
-            <p className="muted">A private, player-paced Solo Venture of up to three stages. Each stage can reveal an Encounter or Treasure Chest; after a clear, return safely or press deeper for stronger rewards.</p>
+            <p className="muted">Up to three private stages. Return safely after a clear or press deeper for stronger rewards.</p>
             <div className="solo-venture-rules" aria-label="Solo Venture rules">
               <span><strong>{soloEncounterChance} / {soloTreasureChance}</strong>Encounter / Treasure</span>
               <span><strong>3 stages</strong>Maximum depth</span>
@@ -784,7 +804,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
           <span className="small-badge">Live Stream</span>
         </div>
-        <p className="muted">Start with <code>!venture</code> and join an open rally with <code>!join</code>.</p>
+        <p className="muted">Use <code>!venture</code>; join an open rally with <code>!join</code>.</p>
         <div className="solo-venture-rules rally-venture-rules" aria-label="Rally Venture rules">
           <span><strong>70 / 30</strong>Encounter / Treasure</span>
           <span><strong>+10</strong>Enemy level cap</span>
@@ -798,12 +818,15 @@ export default function Hunts({ data, overview, onRefresh }) {
         {encounter?.kind === "venture" ? renderActiveEncounter(true) : null}
       </section>
 
-      <section className="panel adventure-region-panel">
-        <div className="panel-title-row">
-          <div><p className="eyebrow">Travel</p><h2>Regions</h2></div>
-          <span className="small-badge success">Current · {currentRegion.name}</span>
+      <section className={`panel adventure-region-panel collapsible-board-section ${regionsOpen ? "open" : "collapsed"}`}>
+        <div className="panel-title-row section-collapsible-title-row">
+          <div><p className="eyebrow">World Map</p><h2>Travel Regions</h2></div>
+          <div className="section-collapse-actions">
+            <span className="small-badge success">Current · {currentRegion.name}</span>
+            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} onClick={() => setRegionsOpen((open) => !open)}>{regionsOpen ? "Collapse" : "Expand"}</button>
+          </div>
         </div>
-        <div className="adventure-region-grid">
+        {regionsOpen ? <div className="adventure-region-grid">
           {regions.map((region) => (
             <article className={`adventure-region-card ${region.current ? "current" : ""} ${!region.unlocked ? "locked" : ""}`} key={region.id}>
               <div className="adventure-region-art" aria-hidden="true">
@@ -831,7 +854,7 @@ export default function Hunts({ data, overview, onRefresh }) {
               {region.reason && !region.current ? <small className="adventure-disabled-reason">{region.reason}</small> : null}
             </article>
           ))}
-        </div>
+        </div> : null}
       </section>
 
       {encounter && encounter.kind !== "venture" ? renderActiveEncounter(false) : null}
@@ -881,17 +904,21 @@ export default function Hunts({ data, overview, onRefresh }) {
           </div>
           <ProgressBar value={Number(activeHunt.progress_percent || 0)} />
           <div className="adventure-combat-note timed-hunt-note">
-            <strong>No chat combat required.</strong>
-            <span>Your hero handles the mark automatically, using learned abilities and Defend when useful and only a small number of survival consumables when the situation warrants it. The final result is announced when the timer expires.</span>
+            <strong>Automatic Hunt.</strong>
+            <span>Resolves when the assignment timer ends.</span>
           </div>
         </section>
       ) : null}
 
-      <section className="panel hunt-board-panel">
-        <div className="panel-title-row hunt-board-title-row">
+      <section className={`panel hunt-board-panel collapsible-board-section ${huntBoardOpen ? "open" : "collapsed"}`}>
+        <div className="panel-title-row hunt-board-title-row section-collapsible-title-row">
           <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
-          <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
+          <div className="section-collapse-actions">
+            <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
+            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} onClick={() => setHuntBoardOpen((open) => !open)}>{huntBoardOpen ? "Collapse" : "Expand"}</button>
+          </div>
         </div>
+        {huntBoardOpen ? <>
         <div className="hunt-rank-filters" role="group" aria-label="Filter Hunts by rank">
           {huntRanks.map((value) => <button key={value} type="button" className={rank === value ? "active" : ""} aria-pressed={rank === value} onClick={() => setRank(value)}>{value === "ALL" ? "All Hunts" : `${value}-Rank Hunts`}</button>)}
         </div>
@@ -935,6 +962,7 @@ export default function Hunts({ data, overview, onRefresh }) {
             );
           })}
         </div>
+        </> : null}
       </section>
     </section>
   );

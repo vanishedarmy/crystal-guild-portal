@@ -1,0 +1,98 @@
+{
+  "feature": "Chocobo Portraits",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h9",
+  "default_portrait_id": "classic_gold",
+  "count": 10,
+  "assets": [
+    {
+      "id": "classic_gold",
+      "name": "Classic Gold",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/classic_gold.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "ed7c475512c666e2e313407aa2c6b04bf294d78cc5ee9c3130ca47bc93eca8ea"
+    },
+    {
+      "id": "midnight_black",
+      "name": "Midnight",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/midnight_black.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "caf07b61e2b19ea3545b5cf210ba8e2ad000f22e82a16848aebd55be81ece103"
+    },
+    {
+      "id": "celestial_white",
+      "name": "Celestial",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/celestial_white.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "96555e44ffde10330fa369a7339975cbb67092da762cf2d3f8e4148542cc8035"
+    },
+    {
+      "id": "ember_red",
+      "name": "Ember",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/ember_red.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "aa0fa9637eb52f4151a1e1d90ef1f3c83d15549dfba2703869cd7f056f5f76c4"
+    },
+    {
+      "id": "verdant_green",
+      "name": "Verdant",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/verdant_green.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "21e9dd830b393e6d07c196aeef18e1e262668b5089287ea434f6b4085f828b10"
+    },
+    {
+      "id": "cobalt_blue",
+      "name": "Cobalt",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/cobalt_blue.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "107ff491231a5ed02631d9e0648d25476ac61490d62e5edbcbac18e303491205"
+    },
+    {
+      "id": "arcane_violet",
+      "name": "Arcane",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/arcane_violet.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "04ed494d22e2e3838972856a6e08732b78ad5e06cd317dd50f8772ed9f02a50e"
+    },
+    {
+      "id": "desert_gold",
+      "name": "Sandrunner",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/desert_gold.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "574b78d91b980ed03351de5d2849aecefeec6c3d7f93f808ed7c9affd1b7911e"
+    },
+    {
+      "id": "frost_silver",
+      "name": "Frost",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/frost_silver.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "cfd4c002bddc62ac1d0012ab33f421c25044240c3e0281cd2546aefede049569"
+    },
+    {
+      "id": "rose_pink",
+      "name": "Rose",
+      "path": "/retro-phase-iii/chocobo-portraits-v1/rose_pink.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "sha256": "8d8f2b4afdddac7c98b294761611233638aaf97e9aef100ae772798e4f2dbdc0"
+    }
+  ]
+}

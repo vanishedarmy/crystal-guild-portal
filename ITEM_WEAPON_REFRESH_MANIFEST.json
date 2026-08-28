@@ -1,0 +1,43 @@
+{
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h9",
+  "consumable_base": "/retro-phase-iii/item-icons-v1",
+  "weapon_base": "/retro-phase-iii/weapon-icons-v2",
+  "refreshed_consumables": [
+    "/retro-phase-iii/item-icons-v1/phoenix_down.png",
+    "/retro-phase-iii/item-icons-v1/antidote.png",
+    "/retro-phase-iii/item-icons-v1/tent.png"
+  ],
+  "refreshed_weapons": [
+    "/retro-phase-iii/weapon-icons-v2/artemis_bow.png",
+    "/retro-phase-iii/weapon-icons-v2/assassins_dagger.png",
+    "/retro-phase-iii/weapon-icons-v2/dagger.png",
+    "/retro-phase-iii/weapon-icons-v2/dragon_lance.png",
+    "/retro-phase-iii/weapon-icons-v2/elven_bow.png",
+    "/retro-phase-iii/weapon-icons-v2/great_bow.png",
+    "/retro-phase-iii/weapon-icons-v2/gungnir.png",
+    "/retro-phase-iii/weapon-icons-v2/holy_lance.png",
+    "/retro-phase-iii/weapon-icons-v2/hunting_rifle.png",
+    "/retro-phase-iii/weapon-icons-v2/ice_lance.png",
+    "/retro-phase-iii/weapon-icons-v2/javelin.png",
+    "/retro-phase-iii/weapon-icons-v2/killer_bow.png",
+    "/retro-phase-iii/weapon-icons-v2/knife.png",
+    "/retro-phase-iii/weapon-icons-v2/longbow.png",
+    "/retro-phase-iii/weapon-icons-v2/longinus.png",
+    "/retro-phase-iii/weapon-icons-v2/mage_masher.png",
+    "/retro-phase-iii/weapon-icons-v2/magitek_rifle.png",
+    "/retro-phase-iii/weapon-icons-v2/main_gauche.png",
+    "/retro-phase-iii/weapon-icons-v2/mythril_knife.png",
+    "/retro-phase-iii/weapon-icons-v2/mythril_spear.png",
+    "/retro-phase-iii/weapon-icons-v2/partisan.png",
+    "/retro-phase-iii/weapon-icons-v2/poison_fang.png",
+    "/retro-phase-iii/weapon-icons-v2/rapier.png",
+    "/retro-phase-iii/weapon-icons-v2/rune_blade.png",
+    "/retro-phase-iii/weapon-icons-v2/rune_bow.png",
+    "/retro-phase-iii/weapon-icons-v2/shortbow.png",
+    "/retro-phase-iii/weapon-icons-v2/spear.png",
+    "/retro-phase-iii/weapon-icons-v2/trident.png",
+    "/retro-phase-iii/weapon-icons-v2/ultima_blade.png",
+    "/retro-phase-iii/weapon-icons-v2/yoichi_bow.png"
+  ],
+  "normalization": "512x512 transparent RGBA PNG"
+}

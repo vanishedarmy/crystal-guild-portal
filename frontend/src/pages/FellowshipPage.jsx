@@ -129,7 +129,7 @@ export default function FellowshipPage() {
                 <article>
                   <span>Guild Requirement</span>
                   <strong>Expedition Board</strong>
-                  <small>{data.expedition_board_complete ? "Complete — the Guild Board is prepared." : expeditionProject ? `${number((expeditionProject.requirements || []).filter((requirement) => !requirement.complete).length)} Board goals remain.` : "Unlock after Guild Hall Tier 5 and Fellowship LVL 10."}</small>
+                  <small>{data.expedition_board_complete ? "Complete — the Guild Board is prepared." : expeditionProject ? `${number((expeditionProject.requirements || []).filter((requirement) => !requirement.complete).length)} Board goals remain.` : "Unlock at Guild Hall Tier 1 and Fellowship LVL 6."}</small>
                 </article>
                 <article>
                   <span>Adventurer Requirement</span>
@@ -154,7 +154,7 @@ export default function FellowshipPage() {
                     <article key={project.id}>
                       <strong>{project.name}</strong>
                       <span>{project.description}</span>
-                      <small>{project.teaser ? "Future Expedition preparation" : `Tier ${number(project.tier)} · Requires ${project.requirements?.length || 0} goals`}</small>
+                      <small>{project.teaser ? "Expedition launch project" : `Tier ${number(project.tier)} · Requires ${project.requirements?.length || 0} goals`}</small>
                     </article>
                   ))}
                 </div>

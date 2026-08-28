@@ -18842,7 +18842,7 @@
     }
   ],
   "meta": {
-    "version": "v1.2.0 — Expeditions Alpha 1",
+    "version": "v1.2.0 — Expeditions Alpha 1 · Hotfix 1",
     "venture_cooldown": 600,
     "encounter_rally": 45,
     "camp_rest": 3600,
@@ -18857,7 +18857,7 @@
     "solo_venture_encounter_chance": 60,
     "solo_venture_treasure_chance": 40,
     "solo_venture_max_stages": 3,
-    "release": "1.2.0-expeditions-a1",
+    "release": "1.2.0-expeditions-a1h1",
     "camp_rest_online": 900,
     "camp_rest_offline": 3600
   },

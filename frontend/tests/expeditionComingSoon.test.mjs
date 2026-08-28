@@ -10,6 +10,8 @@ test("Fellowship page presents the active Expedition Board gate", async () => {
   assert.match(page, /Registered Chocobo/);
   assert.match(page, /Active in v1\.2/);
   assert.match(page, /Five regions and Scout, Journey, and Deep Expedition/);
+  assert.match(page, /Unlock at Guild Hall Tier 1 and Fellowship LVL 6/);
+  assert.match(page, /Expedition launch project/);
 });
 
 test("Chocobo Stable presents live Expedition readiness and active trait effects", async () => {

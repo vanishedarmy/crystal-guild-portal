@@ -22,7 +22,7 @@ test("Chocobo Stable exposes quest, one-hour Writ, registration, Bond and Expedi
   }
   assert.match(source, /ready_at/);
   assert.match(source, /setInterval\(tick, 1000\)/);
-  assert.match(source, /traits now provide travel, discovery, hazard, material, treasure, and rescue bonuses during Expeditions/i);
+  assert.match(source, /Alpha 5 turns each persistent trait into a scaling Expedition specialty and records your adventures together/i);
 });
 
 test("Portal auth exports strict Chocobo action helpers", async () => {

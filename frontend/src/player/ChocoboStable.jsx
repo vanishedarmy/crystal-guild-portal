@@ -191,7 +191,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
             <div>
               <span className="slot-label">Registered Companion</span>
               <h3>{publicChocobo.name}</h3>
-              <p className="muted">Lv.{number(publicChocobo.level)} · {(publicChocobo.traits || []).map((trait) => trait.name).join(" · ") || "No trait listed"}</p>
+              <p className="muted">Lv.{number(publicChocobo.level)} · {(publicChocobo.traits || []).map((trait) => trait.name).join(" · ") || "No trait listed"}{publicChocobo.specialization ? ` · ${publicChocobo.specialization.name} Tier ${number(publicChocobo.specialization.tier)}` : ""}</p>
               {Number(publicChocobo.xp_next || 0) > 0 ? <ProgressBar value={pct(publicChocobo.xp_current, publicChocobo.xp_next)} /> : null}
             </div>
           </div>
@@ -268,6 +268,22 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
             <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || rename.trim().length < 2} onClick={() => runMutation("rename", () => submitRenameChocobo(rename, csrfToken, actionKey("rename-chocobo")), "Renaming companion…")}>{busy === "rename" ? "Renaming…" : "Rename Chocobo"}</button>
           </div>
         </div>
+        {companion.specialization ? (
+          <section className="chocobo-specialization-panel" aria-label="Chocobo Expedition specialization">
+            <div className="panel-title-row compact">
+              <div><span className="slot-label">Expedition Specialty</span><h3>{companion.specialization.name} · Tier {number(companion.specialization.tier)}</h3><p className="muted">{companion.specialization.tier_name} · {companion.specialization.summary}</p></div>
+              <span className={`small-badge ${companion.specialization.maxed ? "success" : ""}`}>{companion.specialization.maxed ? "MAX BOND TIER" : `NEXT · LV.${number(companion.specialization.next_tier_level)}`}</span>
+            </div>
+            <div className="chocobo-specialization-effects">{(companion.specialization.effects || []).map((effect) => <span key={effect}>{effect}</span>)}</div>
+            <div className="chocobo-expedition-records">
+              <div><span>Expeditions</span><strong>{number(companion.accomplishments?.completed || 0)}</strong></div>
+              <div><span>Boss clears</span><strong>{number(companion.accomplishments?.boss_clears || 0)}</strong></div>
+              <div><span>Rare finds</span><strong>{number(companion.accomplishments?.rare_events || 0)}</strong></div>
+              <div><span>Rescues</span><strong>{number(companion.accomplishments?.rescues || 0)}</strong></div>
+              <div><span>Legendary</span><strong>{number(companion.accomplishments?.legendary_contracts || 0)}</strong></div>
+            </div>
+          </section>
+        ) : null}
         <section className={`chocobo-portrait-picker ${showPortraitPicker ? "expanded" : "collapsed"}`} aria-labelledby="chocobo-portrait-picker-title">
           <div className="chocobo-portrait-picker-heading">
             <div>
@@ -389,13 +405,13 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         <div className="chocobo-expedition-notes">
           <article className={companion?.registered ? "complete" : ""}><strong>{companion?.registered ? "✓" : "○"} Register a Chocobo</strong><span>Every adventurer needs a registered companion to launch.</span></article>
           <article className={expedition?.board_ready ? "complete" : ""}><strong>{expedition?.board_ready ? "✓" : "○"} Prepare the Guild Board</strong><span>The Fellowship Expedition Board is the shared Guild gate.</span></article>
-          <article><strong>Bond &amp; Traits</strong><span>Your persistent trait now modifies travel, discoveries, hazards, materials, treasure, or rescue recovery during Expeditions.</span></article>
+          <article><strong>Bond Specialization</strong><span>Your persistent trait becomes a Guardian, Scout, Pathfinder, Forager, or Treasure Hunter specialty whose Expedition bonuses improve with Bond level.</span></article>
         </div>
       </section>
 
       <div className="chocobo-footer-actions">
         <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Refreshing…" : "Refresh Stable"}</button>
-        <span className="muted">Registered Chocobos gain Bond XP from Ventures, treasure, Hunts, and Expeditions. Their traits now provide travel, discovery, hazard, material, treasure, and rescue bonuses during Expeditions.</span>
+        <span className="muted">Registered Chocobos gain Bond XP from Ventures, treasure, Hunts, and Expeditions. Alpha 5 turns each persistent trait into a scaling Expedition specialty and records your adventures together.</span>
       </div>
     </section>
   );

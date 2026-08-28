@@ -86,10 +86,10 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
 });
 
 
-test("What's New is updated for Expeditions Alpha 4 while retaining Alpha 3 and Alpha 2 history", async () => {
+test("What's New is updated for Expeditions Alpha 5 while retaining Alpha 4, Alpha 3 and Alpha 2 history", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const latest = data.slice(0, data.indexOf('name: "Expeditions Alpha 3"'));
-  assert.match(latest, /Expeditions Alpha 4/);
+  assert.match(latest, /Expeditions Alpha 5/);
   assert.match(latest, /Regional Discovery makes every road feel different/);
   assert.match(latest, /20 permanent landmarks/);
   assert.match(latest, /Expedition Journal/);

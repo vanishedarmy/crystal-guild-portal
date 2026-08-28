@@ -1,8 +1,6 @@
-# Crystal Guild v1.2.0 — Expeditions Alpha 4
+# Crystal Guild v1.2.0 — Expeditions Alpha 5
 
-Expeditions Alpha 4 adds Regional Discovery: permanent landmarks, region-specific events, rare discoveries, route-risk signals, and a saved Expedition Journal.
-
-Expeditions Alpha 3 adds the Expedition Atlas, repeatable Legendary Regional Contracts, and all-region Master Cartographer progression while retaining the complete Alpha 2 Hotfix 3 scenic presentation.
+Expeditions Alpha 5 adds Chocobo Expedition Specialization, Bond-scaled specialty tiers, Expedition accomplishment records, and visible Hunt Seal completion stipends. Alpha 4 Regional Discovery, the Expedition Atlas, Legendary Regional Contracts, and the scenic presentation remain intact.
 
 ## RC1 Hotfix 9 — Raid Timing & Field Support
 - Raid rally/round defaults are now **90s / 60s**; Rally Venture rally/round defaults are **60s / 30s**.
@@ -32,11 +30,11 @@ Expeditions Alpha 3 adds the Expedition Atlas, repeatable Legendary Regional Con
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha4`
-- Frontend asset revision: `1.2.0-expeditions-a4`
+- Hosted Web runtime: `1.2.0-expeditions-alpha5`
+- Frontend asset revision: `1.2.0-expeditions-a5`
 - Portal Action protocol: `20`
 - Hosted sync schema: `1`
-- Compatible Bot runtime: `1.2.0-expeditions-a4`
+- Compatible Bot runtime: `1.2.0-expeditions-a5`
 - Local Bot DB schema: `8`
 
 ## Facility supply balance

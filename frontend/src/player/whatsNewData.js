@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
+    name: "Expeditions Alpha 5",
+    title: "Chocobos grow into true Expedition partners",
+    summary: "Bond levels now strengthen each Chocobo's natural Expedition specialty, while completed routes earn a modest Guild stipend in existing Hunt Seals and the Stable records your shared Expedition accomplishments.",
+    highlights: [
+      { title: "Five Expedition specialties", description: "Steady Strider becomes Guardian, Keen Eye becomes Scout, Fleet Feet becomes Pathfinder, Forager keeps its gathering identity, and Lucky Plume becomes Treasure Hunter." },
+      { title: "Bond milestones matter", description: "Specialty bonuses scale through Bond tiers at levels 1, 5, 10, 15, and 20 without adding stat allocation, respec costs, or another progression reset." },
+      { title: "Expedition accomplishments", description: "The Chocobo Stable now tracks completed Expeditions, rescues, rare discoveries, Regional Boss activity, and Legendary Contract completions." },
+      { title: "Completion stipends", description: "Finished Scout, Journey, Deep, Regional Boss, and Legendary routes award small Hunt Seal stipends. No new currency or wallet is introduced." },
+      { title: "Existing progression carries forward", description: "Specializations derive from the Chocobo trait and Bond XP you already have, so Alpha 5 requires no database migration or companion reset." },
+    ],
+    action: { tab: "chocobo", label: "Visit Chocobo Stable" },
+  },
+  {
+    version: "v1.2.0",
     name: "Expeditions Alpha 4",
     title: "Regional Discovery makes every road feel different",
     summary: "Expedition regions now have permanent landmarks, region-specific journey events, rare discoveries, clearer route risk signals, and a compact Expedition Journal that remembers the story of the current run.",

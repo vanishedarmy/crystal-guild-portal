@@ -8849,3 +8849,21 @@ main h1,
   .expedition-landmark-grid { grid-template-columns: 1fr; }
   .expedition-journal-entry { grid-template-columns: 58px minmax(0,1fr); }
 }
+
+
+/* v1.2 Expeditions Alpha 5 — Chocobo specialization + completion stipends */
+.expedition-specialization-card, .chocobo-specialization-panel {
+  border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: rgba(10, 17, 29, .74); margin: 12px 0;
+}
+.expedition-specialization-card { display: flex; gap: 14px; align-items: center; justify-content: space-between; }
+.expedition-specialization-card h3, .chocobo-specialization-panel h3 { margin: 3px 0 0; }
+.expedition-specialization-effects, .chocobo-specialization-effects { display: flex; flex-wrap: wrap; gap: 8px; }
+.expedition-specialization-effects span, .chocobo-specialization-effects span { border: 1px solid rgba(218, 190, 104, .28); border-radius: 999px; padding: 5px 9px; font-size: .82rem; background: rgba(218, 190, 104, .08); }
+.chocobo-expedition-records { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.chocobo-expedition-records div { border: 1px solid var(--border); border-radius: 9px; padding: 9px; display: grid; gap: 2px; }
+.chocobo-expedition-records span { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; opacity: .72; }
+.chocobo-expedition-records strong { font-size: 1.05rem; }
+@media (max-width: 760px) {
+  .expedition-specialization-card { align-items: flex-start; flex-direction: column; }
+  .chocobo-expedition-records { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -24,6 +24,7 @@ const ROUTE_COPY = {
   deep: "More danger, stronger rewards.",
 };
 const REGION_LANDMARK_COUNT = 4;
+const STIPEND_SEALS = { scout: 2, journey: 4, deep: 7, boss: 10, legendary: 15 };
 const ROUTE_RISK = { safe: "Low", unknown: "Balanced", deep: "High" };
 const ROUTE_SIGNALS = {
   safe: ["Less combat", "Fewer hazards", "Steadier discoveries"],
@@ -105,6 +106,7 @@ function ExpeditionResult({ result, onConfirm, confirming }) {
         <div><span>XP banked</span><strong>+{number(rewards?.xp || 0)}</strong></div>
         <div><span>JP banked</span><strong>+{number(rewards?.jp || 0)}</strong></div>
         <div><span>Gil banked</span><strong>{number(rewards?.gil || 0)}</strong></div>
+        <div><span>Guild stipend</span><strong>{Number(rewards?.seals || summary?.stipend_seals || 0) > 0 ? `+${number(rewards?.seals || summary?.stipend_seals)} Seals` : "—"}</strong></div>
         <div><span>Loot</span><strong>{number((rewards?.loot || []).length)}</strong></div>
       </div>
       {(rewards?.loot || []).length ? <p className="expedition-loot-line"><strong>Secured:</strong> {rewards.loot.join(" · ")}</p> : null}
@@ -165,11 +167,18 @@ export default function Expeditions({
           <>
             <div className="expedition-readiness-grid">
               <article className={data?.board_ready ? "complete" : ""}><span>Guild Gate</span><strong>{data?.board_ready ? "✓ Expedition Board" : "○ Expedition Board"}</strong><small>Shared unlock</small></article>
-              <article className={data?.chocobo_ready ? "complete" : ""}><span>Companion</span><strong>{data?.chocobo?.name || (data?.chocobo_ready ? "✓ Registered Chocobo" : "○ Registered Chocobo")}</strong><small>{(data?.traits_active || []).length ? `${data.traits_active.length} active trait${data.traits_active.length === 1 ? "" : "s"}` : "Required"}</small></article>
+              <article className={data?.chocobo_ready ? "complete" : ""}><span>Companion</span><strong>{data?.chocobo?.name || (data?.chocobo_ready ? "✓ Registered Chocobo" : "○ Registered Chocobo")}</strong><small>{data?.chocobo?.specialization ? `${data.chocobo.specialization.name} · Bond Tier ${number(data.chocobo.specialization.tier)}` : (data?.traits_active || []).length ? `${data.traits_active.length} active trait${data.traits_active.length === 1 ? "" : "s"}` : "Required"}</small></article>
               <article><span>Cache</span><strong>Bank on return</strong><small>Safe return keeps all</small></article>
             </div>
 
             {!data?.ready ? <p className="adventure-disabled-reason expedition-gate-note">{data?.reason || "Complete the Expedition Board and register a Chocobo first."}</p> : null}
+
+            {data?.chocobo?.specialization ? (
+              <div className="expedition-specialization-card">
+                <div><span className="slot-label">Chocobo Expedition Specialty</span><h3>{data.chocobo.specialization.name} · Tier {number(data.chocobo.specialization.tier)}</h3></div>
+                <div className="expedition-specialization-effects">{(data.chocobo.specialization.effects || []).map((effect) => <span key={effect}>{effect}</span>)}</div>
+              </div>
+            ) : null}
 
             {data?.atlas ? (
               <div className={`expedition-atlas-panel ${data.atlas?.all_mastered ? "mastered" : ""}`}>
@@ -251,10 +260,10 @@ export default function Expeditions({
                   ) : null}
                   {(pickedRegion.progress?.milestones || []).find(([threshold]) => Number(pickedRegion.progress?.progress || 0) < Number(threshold || 0)) ? <p className="muted expedition-next-objective"><strong>Next:</strong> {(pickedRegion.progress.milestones || []).find(([threshold]) => Number(pickedRegion.progress?.progress || 0) < Number(threshold || 0))?.[1]} at {number((pickedRegion.progress.milestones || []).find(([threshold]) => Number(pickedRegion.progress?.progress || 0) < Number(threshold || 0))?.[0])}%</p> : <p className="muted expedition-next-objective"><strong>Mastery bonus:</strong> {MASTERY_COPY[pickedRegion.id] || "Region mastered"}</p>}
                   <div className="expedition-boss-contract-row">
-                    <div><span className="slot-label">Regional Boss</span><strong>{pickedRegion.boss_name || "Regional Boss"}</strong><small>{pickedRegion.progress?.boss_unlocked ? `${number(pickedRegion.progress?.boss_clears || 0)} clear${Number(pickedRegion.progress?.boss_clears || 0) === 1 ? "" : "s"}` : `Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}%`}</small></div>
+                    <div><span className="slot-label">Regional Boss</span><strong>{pickedRegion.boss_name || "Regional Boss"}</strong><small>{pickedRegion.progress?.boss_unlocked ? `${number(pickedRegion.progress?.boss_clears || 0)} clear${Number(pickedRegion.progress?.boss_clears || 0) === 1 ? "" : "s"} · +${STIPEND_SEALS.boss} Seals on completion` : `Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}%`}</small></div>
                     <div className="expedition-contract-actions">
                       <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.boss_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:boss", "expedition-start", `${pickedRegion.id}:boss`, (idem) => submitExpeditionStart(pickedRegion.id, "boss", csrfToken, idem), "Regional Boss Expedition launched.")}>{busy === "expedition:boss" ? "Preparing Contract…" : pickedRegion.progress?.boss_unlocked ? `Challenge ${pickedRegion.boss_name}` : "Boss Locked"}</button>
-                      {pickedRegion.progress?.mastered ? <button type="button" className="equipment-action-button legendary-contract-button" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.legendary_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:legendary", "expedition-start", `${pickedRegion.id}:legendary`, (idem) => submitExpeditionStart(pickedRegion.id, "legendary", csrfToken, idem), "Legendary Regional Contract launched.")}>{busy === "expedition:legendary" ? "Preparing Legendary Route…" : pickedRegion.progress?.legendary_unlocked ? "Launch Legendary Contract" : "Clear Boss to Unlock"}</button> : null}
+                      {pickedRegion.progress?.mastered ? <button type="button" className="equipment-action-button legendary-contract-button" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.legendary_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:legendary", "expedition-start", `${pickedRegion.id}:legendary`, (idem) => submitExpeditionStart(pickedRegion.id, "legendary", csrfToken, idem), "Legendary Regional Contract launched.")}>{busy === "expedition:legendary" ? "Preparing Legendary Route…" : pickedRegion.progress?.legendary_unlocked ? `Launch Legendary Contract · +${STIPEND_SEALS.legendary} Seals` : "Clear Boss to Unlock"}</button> : null}
                     </div>
                   </div>
                 </div>
@@ -265,7 +274,7 @@ export default function Expeditions({
                 <div className="expedition-depth-grid" role="group" aria-label="Expedition depth">
                   {depths.map((depth) => (
                     <button key={depth.id} type="button" className={`expedition-depth-option ${selectedDepth === depth.id ? "selected" : ""}`} onClick={() => setSelectedDepth(depth.id)}>
-                      <strong>{depth.name}</strong><span>{DEPTH_COPY[depth.id] || `${number(depth.stages)} stages`}</span><small>Base travel {duration(depth.travel_seconds)} · ×{Number(depth.reward_mult || 1).toFixed(2)} rewards</small>
+                      <strong>{depth.name}</strong><span>{DEPTH_COPY[depth.id] || `${number(depth.stages)} stages`}</span><small>Base travel {duration(depth.travel_seconds)} · ×{Number(depth.reward_mult || 1).toFixed(2)} rewards · +{number(STIPEND_SEALS[depth.id] || 0)} Seals</small>
                     </button>
                   ))}
                 </div>
@@ -280,6 +289,7 @@ export default function Expeditions({
               <div><span>Current route</span><strong>{active.route?.name}</strong></div>
               <div><span>Regional survey</span><strong>{number(active.progress?.progress || 0)}%</strong></div>
               <div><span>Stage</span><strong>{number(active.stage)} / {number(active.base_stages)}{active.legendary_contract ? " · LEGENDARY" : active.boss_contract ? " · BOSS CONTRACT" : active.bonus_stage ? " · BONUS" : ""}</strong></div>
+              <div><span>Completion stipend</span><strong>+{number(active.legendary_contract ? STIPEND_SEALS.legendary : active.boss_contract ? STIPEND_SEALS.boss : STIPEND_SEALS[active.depth?.id] || 0)} Seals</strong></div>
             </div>
             <ExpeditionCache cache={active.cache} />
             {(active.cache?.items || []).length ? <p className="expedition-loot-line"><strong>Cache:</strong> {active.cache.items.map((row) => `${row.name || row.id} x${number(row.quantity)}`).join(" · ")}</p> : null}

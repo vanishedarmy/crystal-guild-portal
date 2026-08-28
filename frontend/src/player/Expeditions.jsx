@@ -23,6 +23,13 @@ const ROUTE_COPY = {
   unknown: "Balanced risk and reward.",
   deep: "More danger, stronger rewards.",
 };
+const MASTERY_COPY = {
+  emerald_wilds: "Discovery events +5% in Emerald Wilds",
+  ashen_highlands: "Resource events +5% in Ashen Highlands",
+  mistfen_marshes: "Hazard damage -5% in Mistfen Marshes",
+  frostveil_reach: "Expedition Camp recovery +5% in Frostveil Reach",
+  astral_scar: "Treasure events +5% in the Astral Scar",
+};
 
 function remainingUntil(timestamp, nowMs) {
   return Math.max(0, Number(timestamp || 0) - Math.floor(Number(nowMs || Date.now()) / 1000));
@@ -137,10 +144,33 @@ export default function Expeditions({
 
             {pickedRegion ? (
               <div className="expedition-launch-panel">
+                <div className="expedition-region-progress-panel">
+                  <div className="panel-title-row compact">
+                    <div>
+                      <span className="slot-label">Region Progress</span>
+                      <h3>{pickedRegion.name} · {number(pickedRegion.progress?.progress || 0)}%</h3>
+                    </div>
+                    <span className={`small-badge ${pickedRegion.progress?.mastered ? "success" : pickedRegion.progress?.boss_unlocked ? "warning" : ""}`}>{pickedRegion.progress?.mastered ? "MASTERED" : pickedRegion.progress?.boss_unlocked ? "BOSS UNLOCKED" : "SURVEYING"}</span>
+                  </div>
+                  <ProgressBar value={Number(pickedRegion.progress?.progress || 0)} />
+                  <div className="expedition-milestone-grid">
+                    {(pickedRegion.progress?.objectives || []).map((objective) => (
+                      <div key={`${pickedRegion.id}:${objective.threshold}`} className={objective.complete ? "complete" : ""}>
+                        <span>{number(objective.threshold)}%</span>
+                        <strong>{objective.name}</strong>
+                        <small>{objective.complete ? "Complete" : "Locked"}</small>
+                      </div>
+                    ))}
+                  </div>
+                  {(pickedRegion.progress?.objectives || []).find((objective) => !objective.complete) ? <p className="muted expedition-next-objective"><strong>Next:</strong> {(pickedRegion.progress.objectives || []).find((objective) => !objective.complete)?.name} at {number((pickedRegion.progress.objectives || []).find((objective) => !objective.complete)?.threshold)}%</p> : <p className="muted expedition-next-objective"><strong>Mastery bonus:</strong> {MASTERY_COPY[pickedRegion.id] || "Region mastered"}</p>}
+                  <div className="expedition-boss-contract-row">
+                    <div><span className="slot-label">Regional Boss</span><strong>{pickedRegion.boss_name || "Regional Boss"}</strong><small>{pickedRegion.progress?.boss_unlocked ? `${number(pickedRegion.progress?.boss_clears || 0)} clear${Number(pickedRegion.progress?.boss_clears || 0) === 1 ? "" : "s"}` : `Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}%`}</small></div>
+                    <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.boss_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:boss", "expedition-start", `${pickedRegion.id}:boss`, (idem) => submitExpeditionStart(pickedRegion.id, "boss", csrfToken, idem), "Regional Boss Expedition launched.")}>{busy === "expedition:boss" ? "Preparing Contract…" : pickedRegion.progress?.boss_unlocked ? `Challenge ${pickedRegion.boss_name}` : "Boss Locked"}</button>
+                  </div>
+                </div>
                 <div>
-                  <span className="slot-label">Selected Region</span>
-                  <h3>{pickedRegion.name}</h3>
-                  <p className="muted">Primary finds: {(pickedRegion.materials || []).map((item) => item.name).join(" · ") || "Regional materials"}</p>
+                  <span className="slot-label">Standard Expedition</span>
+                  <p className="muted">Primary finds: {(pickedRegion.materials || []).join(" · ") || "Regional materials"}</p>
                 </div>
                 <div className="expedition-depth-grid" role="group" aria-label="Expedition depth">
                   {depths.map((depth) => (
@@ -156,10 +186,10 @@ export default function Expeditions({
         ) : (
           <div className="expedition-active-shell">
             <div className="expedition-active-meta">
-              <div><span>Depth</span><strong>{active.depth?.name}</strong></div>
+              <div><span>{active.boss_contract ? "Contract" : "Depth"}</span><strong>{active.depth?.name}</strong></div>
               <div><span>Current route</span><strong>{active.route?.name}</strong></div>
               <div><span>Regional survey</span><strong>{number(active.progress?.progress || 0)}%</strong></div>
-              <div><span>Stage</span><strong>{number(active.stage)} / {number(active.base_stages)} objective{active.bonus_stage ? " · BONUS" : ""}</strong></div>
+              <div><span>Stage</span><strong>{number(active.stage)} / {number(active.base_stages)}{active.boss_contract ? " · BOSS CONTRACT" : active.bonus_stage ? " · BONUS" : ""}</strong></div>
             </div>
             <ExpeditionCache cache={active.cache} />
             {(active.cache?.items || []).length ? <p className="expedition-loot-line"><strong>Cache:</strong> {active.cache.items.map((row) => `${row.name || row.id} x${number(row.quantity)}`).join(" · ")}</p> : null}
@@ -179,7 +209,7 @@ export default function Expeditions({
                 <div className="expedition-combatants">
                   <article>
                     <MonsterPortrait monster={active.combat.enemy} name={active.combat.enemy?.name} className="solo-enemy-portrait" eager />
-                    <div><span className="slot-label">Enemy · Round {number(active.combat.round)}</span><h3>{active.combat.enemy?.name} · Lv.{number(active.combat.enemy?.level)}</h3><div className="vital-label"><span>HP</span><span>{number(active.combat.enemy?.hp)} / {number(active.combat.enemy?.max_hp)}</span></div><ProgressBar value={pct(active.combat.enemy?.hp, active.combat.enemy?.max_hp)} className="hp" /><small>Intent: {active.combat.enemy?.intent}</small></div>
+                    <div><span className="slot-label">{active.combat.boss ? "REGIONAL BOSS" : "Enemy"} · Round {number(active.combat.round)}</span><h3>{active.combat.enemy?.name} · Lv.{number(active.combat.enemy?.level)}</h3><div className="vital-label"><span>HP</span><span>{number(active.combat.enemy?.hp)} / {number(active.combat.enemy?.max_hp)}</span></div><ProgressBar value={pct(active.combat.enemy?.hp, active.combat.enemy?.max_hp)} className="hp" /><small>Intent: {active.combat.enemy?.intent}</small></div>
                   </article>
                   <article>
                     <JobPortrait jobName={active.combat.player?.job_name} className="solo-hero-portrait" />

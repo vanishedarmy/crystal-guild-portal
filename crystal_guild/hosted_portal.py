@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.2.0-expeditions-alpha1"
-FRONTEND_ASSET_REVISION = "1.2.0-expeditions-a1h3"
+HOSTED_PORTAL_VERSION = "1.2.0-expeditions-alpha2"
+FRONTEND_ASSET_REVISION = "1.2.0-expeditions-a2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 20
 ALLOWED_PORTAL_ACTIONS = {
@@ -791,7 +791,7 @@ class HostedPortalStore:
             depth = str(payload.get("depth") or "").strip().lower()
             if not region_id or len(region_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", region_id):
                 raise ValueError("Invalid Expedition region ID.")
-            if depth not in {"scout", "journey", "deep"}:
+            if depth not in {"scout", "journey", "deep", "boss"}:
                 raise ValueError("Invalid Expedition depth.")
             payload = {"region_id": region_id, "depth": depth}
         elif kind in {"EXPEDITION_RESOLVE_STAGE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT"}:

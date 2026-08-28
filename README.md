@@ -30,7 +30,7 @@ Expeditions Alpha 1 adds the five-region interactive Expedition experience while
 - The Camp rule is authoritative in the paired RC1H4 Bot runtime, so deploy the Web and Bot updates together.
 
 ## Technical identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha1`
+- Hosted Web runtime: `1.2.0-expeditions-alpha2`
 - Frontend asset revision: `1.2.0-expeditions-a1`
 - Portal Action protocol: `20`
 - Hosted sync schema: `1`

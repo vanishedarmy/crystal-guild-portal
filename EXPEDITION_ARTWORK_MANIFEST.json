@@ -1,12 +1,41 @@
 {
-  "release": "1.2.0-expeditions-a1h3",
+  "release": "1.2.0-expeditions-a2",
   "style": "SNES-era Final Fantasy-inspired pixel-art environment backdrops",
   "assets": [
-    {"surface":"Expedition Board","path":"/expeditions/expedition-board.webp","source":"fantasy_guild_map_room.png"},
-    {"surface":"Emerald Wilds","region_id":"emerald_wilds","path":"/expeditions/emerald-wilds.webp","source":"misty_pixel_art_valley_ruins.png"},
-    {"surface":"Ashen Highlands","region_id":"ashen_highlands","path":"/expeditions/ashen-highlands.webp","source":"sunset_lava_canyon_ruins.png"},
-    {"surface":"Mistfen Marshes","region_id":"mistfen_marshes","path":"/expeditions/mistfen-marshes.webp","source":"misty_bioluminescent_swamp_ruins.png"},
-    {"surface":"Frostveil Reach","region_id":"frostveil_reach","path":"/expeditions/frostveil-reach.webp","source":"snowy_ruins_in_the_frozen_valley.png"},
-    {"surface":"The Astral Scar","region_id":"astral_scar","path":"/expeditions/astral-scar.webp","source":"crystalline_rift_wasteland.png"}
+    {
+      "surface": "Expedition Board",
+      "path": "/expeditions/expedition-board.webp",
+      "source": "fantasy_guild_map_room.png"
+    },
+    {
+      "surface": "Emerald Wilds",
+      "region_id": "emerald_wilds",
+      "path": "/expeditions/emerald-wilds.webp",
+      "source": "misty_pixel_art_valley_ruins.png"
+    },
+    {
+      "surface": "Ashen Highlands",
+      "region_id": "ashen_highlands",
+      "path": "/expeditions/ashen-highlands.webp",
+      "source": "sunset_lava_canyon_ruins.png"
+    },
+    {
+      "surface": "Mistfen Marshes",
+      "region_id": "mistfen_marshes",
+      "path": "/expeditions/mistfen-marshes.webp",
+      "source": "misty_bioluminescent_swamp_ruins.png"
+    },
+    {
+      "surface": "Frostveil Reach",
+      "region_id": "frostveil_reach",
+      "path": "/expeditions/frostveil-reach.webp",
+      "source": "snowy_ruins_in_the_frozen_valley.png"
+    },
+    {
+      "surface": "The Astral Scar",
+      "region_id": "astral_scar",
+      "path": "/expeditions/astral-scar.webp",
+      "source": "crystalline_rift_wasteland.png"
+    }
   ]
 }

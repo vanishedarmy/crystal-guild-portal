@@ -1,3 +1,6 @@
+# v1.2.0 — Expeditions Alpha 2
+Adds five regional objective chains, 25/50/75/100% exploration milestone presentation, Regional Boss Contracts, persistent boss-clear/Mastery status, five Mastery achievements/titles, rare late-region encounters, and LIVE-only notable Portal Expedition announcements. Hosted runtime `1.2.0-expeditions-alpha2`; frontend revision `1.2.0-expeditions-a2`; protocol 20 and DB schema 8 unchanged.
+
 # v1.2.0 — Expeditions Alpha 1 Hotfix 3
 Web-only Expedition Board artwork visibility fix. Resets the inherited shared-panel 1px pseudo-element height so the map-room backdrop fills the full Distant Expedition Board, with a lighter readability gradient. Frontend asset revision `1.2.0-expeditions-a1h3`; protocol 20 and DB schema 8 unchanged.
 

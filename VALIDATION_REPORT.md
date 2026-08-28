@@ -1,18 +1,18 @@
-# Validation Report — v1.2.0 Expeditions Alpha 1 Hotfix 3
+# Validation Report — v1.2.0 Expeditions Alpha 2
 
 ## Identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha1`
-- Frontend asset revision: `1.2.0-expeditions-a1h3`
-- Compatible Bot runtime: `1.2.0-expeditions-a1h1`
+- Hosted Web runtime: `1.2.0-expeditions-alpha2`
+- Frontend asset revision: `1.2.0-expeditions-a2`
+- Matching Bot runtime: `1.2.0-expeditions-a2`
 - Portal Action protocol: **20**
 - Hosted sync schema: **1**
 - Local Bot DB schema: **8**
 
-## Hotfix 3 validation
-- Frontend Node regression suite: **298 / 298 passed**.
+## Automated validation
+- Frontend Node regression suite: **299 / 299 passed**.
 - Hosted Portal Python suite: **47 / 47 passed**.
-- Regression coverage verifies the Expedition Board pseudo-element resets the shared 1px panel accent height before applying the map-room backdrop.
-- The packaged `/expeditions/expedition-board.webp` is the generated map-room artwork and remains routed to the Distant Expedition Board.
-- The Board overlay was lightened while retaining a dark readability gradient behind player controls.
-- Region artwork, Travel Regions collapse behavior, Hunt Board collapse behavior, and Hotfix 2 readability cleanup remain unchanged.
-- No Bot, database, hosted schema, Portal protocol, OAuth, or environment-variable changes are required.
+- Alpha 2 coverage verifies Region Progress presentation, Regional Boss Contract launch controls, Mastery copy, and hosted validation of the `boss` Expedition depth.
+- Alpha 1 Hotfix 3 Board artwork and prior regional-art/collapse/readability regressions remain covered.
+
+## Production bundle note
+- The Vite production bundle was not executed in this environment because package dependencies / the local `vite` binary are not installed. Source regression and hosted API suites are fully passing.

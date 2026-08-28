@@ -1,19 +1,14 @@
-# Validation Report — v1.2.0 Expeditions Alpha 2 Hotfix 1
+# Validation Report — Expeditions Alpha 2 Hotfix 2
 
-## Identity
-- Hosted Web runtime: `1.2.0-expeditions-alpha2`
-- Frontend asset revision: `1.2.0-expeditions-a2h1`
-- Matching Bot runtime: `1.2.0-expeditions-a2`
-- Portal Action protocol: **20**
-- Hosted sync schema: **1**
-- Local Bot DB schema: **8**
+## Result
+PASS — Player Guide Expeditions chapter validated.
 
-## Automated validation
-- Frontend Node regression suite: **301 / 301 passed**.
-- Hosted Portal Python suite: **47 / 47 passed**.
-- Python compilation: **PASS**.
-- New coverage verifies Daily Provisions appears before What's New, Alpha 2 What's New copy, remembered collapsible What's New state, and remembered collapsible Expedition Board state.
-- Existing Region Progress, Regional Boss Contract, Mastery, artwork, Travel Regions, Hunt Board, and responsive presentation regressions remain passing.
+## Automated checks
+- Frontend source/unit/regression tests: **303 / 303 PASS**
+- New dedicated Expeditions Guide regression coverage: PASS
+- Guide navigation anchor and searchable section: PASS
+- Expedition unlock, five regions, route lengths, Cache/rescue, milestones, Boss Contracts, and Mastery copy: PASS
+- Frontend asset revision: `1.2.0-expeditions-a2h2`
 
-## Production bundle note
-- The Vite production bundle was not executed because frontend dependencies / the local `vite` binary are not installed in this environment. Source regressions and hosted API suites are fully passing.
+## Compatibility
+Web-only change. Local DB schema 8, hosted sync schema 1, and Portal Action protocol 20 remain unchanged. Existing Alpha 2 Bot is compatible.

@@ -1,3 +1,9 @@
+# v1.2.0 — Expeditions Alpha 2 Hotfix 2
+
+- Adds a dedicated Player Guide Expeditions chapter covering regions, route depths, persistent travel, Cache/rescue, exploration milestones, Regional Boss Contracts, and Mastery.
+- Updates Chocobo Guide copy for active v1.2 Expedition usage.
+- Frontend asset revision `1.2.0-expeditions-a2h2`; no Bot/schema/protocol change.
+
 # v1.2.0 — Expeditions Alpha 2 Hotfix 1
 
 - Daily Guild Provisions now appears before What's New on Adventurer Overview.

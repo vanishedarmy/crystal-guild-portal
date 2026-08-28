@@ -1,30 +1,27 @@
-# Crystal Guild v1.2.0 — Expeditions Alpha 2 Hotfix 1
+# Crystal Guild v1.2.0 — Expeditions Alpha 2 Hotfix 2 — Player Guide Expeditions
 
-## Overview & Board Collapse
+This Web-only hotfix adds a dedicated **Expeditions** chapter to the Player Guide and updates the Chocobo chapter so its expedition-readiness copy matches the active v1.2 system.
 
-- Moves **Daily Guild Provisions** above **What's New** on the Adventurer Overview.
-- Updates **What's New** to summarize Expeditions Alpha 2 regional objectives, boss contracts, rare encounters, and Region Mastery.
-- Makes **What's New** collapsible and remembers the browser preference; narrow/mobile layouts default collapsed when no preference exists.
-- Makes the **Distant Expedition Board** collapsible with the same remembered preference behavior. Active Expeditions still open the board on a fresh Portal visit so current state is not hidden by a previously collapsed idle board.
-- Keeps Travel Regions and Hunt Board collapse behavior unchanged.
-- Web-only presentation hotfix. DB schema 8, hosted sync schema 1, and Portal Action protocol 20 are unchanged.
+## Player Guide
 
-# Crystal Guild v1.2.0 — Expeditions Alpha 2
+The new Expeditions chapter covers:
+- Fellowship LVL 6 + Guild Hall Tier 1 Expedition Board availability and the registered-Chocobo requirement;
+- all five Expedition regions and their level bands;
+- Scout, Journey, and Deep Expedition route lengths;
+- persistent travel, stage events, route choices, HP/MP/AP persistence, and Expedition Camp;
+- Expedition Cache, safe return, Chocobo rescue, and push-deeper bonus stages;
+- 25% / 50% / 75% / 100% regional exploration milestones;
+- Elder Ochu, Inferno Drake, Malboro Sovereign, Frost Behemoth, and Rift Wyrm Boss Contracts;
+- rare encounters, Region Mastery, and LIVE-only notable Portal milestone announcements.
 
-## Region Progress
-- Adds a dedicated **Region Progress** panel to the selected Expedition region.
-- Shows exploration percentage, 25/50/75/100% objective milestones, the next objective, boss unlock status, Regional Boss clear count, and Region Mastery status.
-- Adds player-facing Mastery benefit summaries for all five regions.
+The Guide sidebar now links directly to **Expeditions**, and the Chocobo chapter points players to the full travel guide instead of repeating older pre-v1.2 preview copy.
 
-## Regional Boss Contracts
-- Adds an explicit Regional Boss Contract launch control once a region reaches 75% exploration.
-- Boss Contracts are available for Elder Ochu, Inferno Drake, Malboro Sovereign, Frost Behemoth, and Rift Wyrm.
-- Active Expedition presentation clearly labels Regional Boss encounters/contracts.
+## Compatibility
 
-## Continuity
-- Keeps the Alpha 1 Hotfix 3 Expedition Board map-room artwork, five regional backdrops, collapsible Travel Regions/Hunt Board, and concise copy pass.
-- Hosted Web runtime: `1.2.0-expeditions-alpha2`
-- Frontend asset revision: `1.2.0-expeditions-a2`
-- Portal Action protocol: **20** (unchanged)
-- Hosted sync schema: **1** (unchanged)
-- Matching Bot runtime: `1.2.0-expeditions-a2` / local DB schema **8**
+- Product version: v1.2.0 — Expeditions Alpha 2
+- Frontend asset revision: `1.2.0-expeditions-a2h2`
+- Local DB schema: 8 (unchanged)
+- Hosted sync schema: 1 (unchanged)
+- Portal Action protocol: 20 (unchanged)
+- Bot changes: none
+- Player reset: none

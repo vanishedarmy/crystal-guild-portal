@@ -4,7 +4,7 @@
    </button>
    <div class="mobile-title">
     <b>Guide Sections</b>
-    <span>Commands, Fellowship, Jobs, Hunts, gear, raids and more</span>
+    <span>Commands, Expeditions, Fellowship, Jobs, Hunts, gear, raids and more</span>
    </div>
   </div>
   <div class="layout">
@@ -39,6 +39,9 @@
      </a>
      <a href="#chocobos">
       Chocobo Companions
+     </a>
+     <a href="#expeditions">
+      Expeditions
      </a>
      <a href="#combat">
       Combat &amp; Stances
@@ -424,17 +427,72 @@
 
      <section class="section searchable" id="chocobos">
       <h2>Chocobo Companions</h2>
-      <p class="lead">Prepare a persistent companion before the Expedition era begins.</p>
-      <div class="callout"><b>Acquisition path:</b> the Fellowship must construct the Chocobo Stable, then you complete <b>A Chocobo of Your Own</b>, purchase a 500 Gil Chocobo Registration Writ, and wait one hour for the Writ to activate before naming and registering your bird.</div>
+      <p class="lead">Your registered Chocobo is your companion for distant Expeditions.</p>
+      <div class="callout"><b>Acquisition path:</b> the Fellowship constructs the Chocobo Stable, then you complete <b>A Chocobo of Your Own</b>, purchase a 500 Gil Chocobo Registration Writ, wait one hour for it to activate, and register your bird.</div>
       <div class="grid two">
-       <div class="card"><h3>Shared Stable</h3><p>The Chocobo Stable is a modest Fellowship LVL 2 project requiring 5,000 Gil and 10 completed Ventures. Once built, it is available Guild-wide.</p></div>
+       <div class="card"><h3>Shared Stable</h3><p>The Chocobo Stable is a Fellowship LVL 2 project requiring 5,000 Gil and 10 completed Ventures. Once built, it is available Guild-wide.</p></div>
        <div class="card"><h3>Personal Quest</h3><p>Reach Character Lv.10, complete 10 Ventures, and record at least one C-Rank Hunt clear. Completing the quest awards 250 Gil.</p></div>
-       <div class="card"><h3>Registration Writ</h3><p>The Writ costs 500 Gil and takes exactly one hour to validate. The timer is authoritative and survives restarts; the Portal shows a local countdown from that timestamp.</p></div>
-       <div class="card"><h3>Bond &amp; Traits</h3><p>Registered Chocobos gain Bond XP from successful Ventures, Venture treasure, and Hunts. v1.1.10 caps Chocobo Level at 20 and assigns one persistent starter trait. Traits do not change combat in this release.</p></div>
+       <div class="card"><h3>Registration Writ</h3><p>The Writ costs 500 Gil and takes one hour to validate. Its authoritative timer survives Portal refreshes and Bot restarts.</p></div>
+       <div class="card"><h3>Bond &amp; Traits</h3><p>Registered Chocobos gain Bond XP and have a persistent Expedition trait. Traits can modify travel, hazards, discoveries, resources, treasure, or rescue recovery depending on the bird.</p></div>
       </div>
-      <p><b>Expedition readiness:</b> Expeditions require both a registered Chocobo and the completed Fellowship Expedition Board. Once both are ready, launch one of five distant regions from the Adventure Board.</p>
-      <div class="callout"><b>Expeditions — v1.2 Alpha:</b> choose Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, or the Astral Scar; then choose Scout, Journey, or Deep Expedition. Travel and stage state persist while you are away, HP/MP/AP carry through encounters, and rewards remain in your Expedition Cache until you return safely or require a Chocobo rescue.</div>
-      <p>Use <code>!chocobo</code>, <code>!chocoboquest</code>, <code>!chocobowrit</code>, <code>!registerchocobo &lt;name&gt;</code>, and <code>!chocoboname &lt;name&gt;</code>, or manage the same steps from your authenticated Adventurer Portal Chocobo Stable tab.</p>
+      <p><b>Expedition readiness:</b> you need a registered Chocobo and the completed Fellowship Expedition Board. See <a href="#expeditions">Expeditions</a> for the full travel guide.</p>
+      <p>Use <code>!chocobo</code>, <code>!chocoboquest</code>, <code>!chocobowrit</code>, <code>!registerchocobo &lt;name&gt;</code>, and <code>!chocoboname &lt;name&gt;</code>, or use the Adventurer Portal Chocobo Stable.</p>
+     </section>
+
+     <section class="section searchable" id="expeditions">
+      <h2>Expeditions</h2>
+      <div class="kicker">Expeditions — v1.2 Alpha 2</div>
+      <p class="lead">Take your Chocobo beyond the normal Adventure Board on persistent, multi-stage journeys where resources, choices, exploration, and the Expedition Cache carry from stage to stage.</p>
+      <div class="callout"><b>Unlock:</b> the Guild must complete the <b>Expedition Board</b>, which becomes available at <b>Fellowship LVL 6 + Guild Hall Tier 1</b>. Each adventurer also needs their own registered Chocobo.</div>
+      <p><b>Regions:</b> Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, or the Astral Scar.</p>
+
+      <h3>Choose a Region</h3>
+      <div class="grid">
+       <div class="card"><h3>Emerald Wilds · Lv.1–12</h3><p>Exploration-focused forests, rivers, ruins, and overgrown trails. Primary finds include Ochu Vine, Cockatrice Pinion, and Ancient Cloth.</p></div>
+       <div class="card"><h3>Ashen Highlands · Lv.8–20</h3><p>Combat and material gathering across mines, volcanic ravines, and old fortifications. Expect unstable terrain and harder fights.</p></div>
+       <div class="card"><h3>Mistfen Marshes · Lv.15–28</h3><p>Hazard-heavy wetlands and sunken ruins where route risk, status pressure, and preparation matter more.</p></div>
+       <div class="card"><h3>Frostveil Reach · Lv.22–38</h3><p>An endurance region of frozen passes, abandoned strongholds, and bitter conditions that put recovery resources under pressure.</p></div>
+       <div class="card"><h3>The Astral Scar · Lv.30+</h3><p>Late-game dimensional ruins, crystal fractures, rare encounters, and unpredictable Astral instability.</p></div>
+      </div>
+
+      <h3>Choose a Route</h3>
+      <div class="grid three">
+       <div class="card"><h3>Scout</h3><p><b>3 stages.</b> Shorter commitment with lower overall risk and a reduced reward multiplier.</p></div>
+       <div class="card"><h3>Journey</h3><p><b>5 stages.</b> The balanced standard route for exploration and rewards.</p></div>
+       <div class="card"><h3>Deep Expedition</h3><p><b>8 stages.</b> Longer and more dangerous, with the strongest base reward multiplier.</p></div>
+      </div>
+      <p>After completing the planned route, some Expeditions let you <b>push deeper</b> for up to two bonus stages. Returning instead secures what you have already earned.</p>
+
+      <h3>What Happens During a Journey</h3>
+      <div class="grid two">
+       <div class="card"><h3>Persistent Travel</h3><p>Travel timers and stage state are authoritative. You can leave the Portal and return later without losing the Expedition or its pending decision.</p></div>
+       <div class="card"><h3>Stage Events</h3><p>Stages may become combat, treasure, resource nodes, hazards, discoveries, travelers, Chocobo events, camp opportunities, or rare encounters.</p></div>
+       <div class="card"><h3>Resources Carry Forward</h3><p>Your HP, MP, AP, and consumed supplies persist across the run. Expedition Camp opportunities help you recover before deciding whether to continue.</p></div>
+       <div class="card"><h3>Route Choices</h3><p>Some stages ask you to choose a path or response. Choices can alter danger, rewards, discoveries, and the next stage rather than acting as flavor-only prompts.</p></div>
+      </div>
+
+      <h3>Expedition Cache, Return &amp; Defeat</h3>
+      <div class="grid three">
+       <div class="card"><h3>Expedition Cache</h3><p>Gil, materials, and other Expedition rewards stay in a temporary Cache while you travel. They are not permanently banked until you make it home.</p></div>
+       <div class="card"><h3>Safe Return</h3><p>You may return to the Guild early when offered the option. A normal safe return banks the full current Expedition Cache.</p></div>
+       <div class="card"><h3>Chocobo Rescue</h3><p>If the run ends in defeat or combat retreat, your Chocobo brings you home and preserves most of the Cache instead of wiping the entire journey.</p></div>
+      </div>
+
+      <h3>Exploration, Objectives &amp; Regional Bosses</h3>
+      <p>Each region tracks persistent exploration. Reaching <b>25%, 50%, 75%, and 100%</b> advances its objective chain and opens progressively deeper regional content.</p>
+      <div class="grid two">
+       <div class="card"><h3>25% / 50%</h3><p>Early and mid-region objectives establish landmarks, routes, and discoveries. Progress remains permanently recorded even between separate Expeditions.</p></div>
+       <div class="card"><h3>75% · Boss Contract</h3><p>The region's special Boss Expedition unlocks: <b>Elder Ochu</b>, <b>Inferno Drake</b>, <b>Malboro Sovereign</b>, <b>Frost Behemoth</b>, or <b>Rift Wyrm</b>.</p></div>
+       <div class="card"><h3>Rare Encounters</h3><p>Higher exploration can add dangerous regional variants and rarer opportunities to the normal event pool.</p></div>
+       <div class="card"><h3>100% · Region Mastery</h3><p>Mastery is permanent and awards the region's achievement/title plus a small regional Expedition bonus. Mastered regions remain fully playable.</p></div>
+      </div>
+
+      <h3>Important Rules</h3>
+      <div class="grid two">
+       <div class="card"><h3>One Active Adventure</h3><p>An active Expedition locks conflicting adventure activity and equipment changes until you return, are rescued, or the streamer uses an emergency clear.</p></div>
+       <div class="card"><h3>Portal First</h3><p>Expeditions are managed from <b>Adventurer Portal → Adventure Board → Distant Expedition Board</b>. Significant Portal milestones may post to Twitch only while the stream is LIVE; routine stages stay quiet.</p></div>
+      </div>
+      <div class="callout"><b>Quick flow:</b> choose region → choose Scout, Journey, or Deep → travel → resolve stages and route decisions → manage HP/MP/AP and Cache → return safely or push deeper → gain exploration → unlock objectives, Regional Bosses, and Mastery.</div>
      </section>
      <section class="section searchable" id="combat">
       <h2>Combat &amp; Stances</h2>

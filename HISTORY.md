@@ -108,3 +108,7 @@ Finalization checkpoint: four scenic Portal backgrounds, final artwork-path and 
 - Added Relics Arsenal scenic backdrop.
 - Updated web asset revision to 1.2.0-expeditions-a2h3.
 
+## v1.2.0 Expeditions Alpha 2 Hotfix 4
+- Fixed scenic background fit for Relic Arsenal and Solo Venture tabs.
+- Scenic backdrops now fill full panel height.
+- Updated web asset revision to 1.2.0-expeditions-a2h4.

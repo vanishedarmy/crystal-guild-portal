@@ -8445,12 +8445,15 @@ main h1,
   z-index: 1;
 }
 .expedition-board-panel::before {
+  /* Reset the shared .panel::before 1px accent-line height so the artwork
+     actually fills the Expedition Board instead of rendering as a thin strip. */
+  height: auto;
   background-image:
-    linear-gradient(90deg, rgba(5, 9, 20, .88) 0%, rgba(7, 12, 26, .76) 48%, rgba(7, 12, 26, .58) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, .68) 0%, rgba(7, 12, 26, .58) 48%, rgba(7, 12, 26, .50) 100%),
     url('/expeditions/expedition-board.webp');
   background-size: cover;
-  background-position: center;
-  opacity: .78;
+  background-position: center 42%;
+  opacity: .95;
 }
 .expedition-board-panel[data-region="emerald_wilds"]::before {
   background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/emerald-wilds.webp');

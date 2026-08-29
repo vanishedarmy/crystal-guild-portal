@@ -1,5 +1,8 @@
 # Crystal Guild Web History
 
+## v1.4.0 — Dungeons & Delves Alpha 2 Web Hotfix 1
+Web-only Dungeon Board presentation fix. Adds the wide crystal-dungeon board background as a real DOM image layer, normalizes the Dungeon Board collapse control to the shared 38px board button, and preserves right-closed/down-open pointer state. Hosted runtime/Bot remain `1.4.0-dungeons-a2`; frontend revision advances to `1.4.0-dungeons-a2-h1`; schema 10 / sync 1 / protocol 24 unchanged.
+
 ## v1.4.0 — Dungeons & Delves Alpha 2
 - Adds The Emberglass Foundry as the second persistent Dungeon and adds Crossroads route decisions/discoveries to both current delves.
 - Preserves schema 10; Portal Action protocol advances 23 → 24 for `DUNGEON_CHOICE`.

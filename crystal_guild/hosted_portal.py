@@ -24,7 +24,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.4.0-dungeons-a2"
-FRONTEND_ASSET_REVISION = "1.4.0-dungeons-a2"
+FRONTEND_ASSET_REVISION = "1.4.0-dungeons-a2-h1"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 24
 ALLOWED_PORTAL_ACTIONS = {

@@ -1,6 +1,6 @@
 {
   "release": "v1.4.0 — Dungeons & Delves Alpha 2",
-  "frontend_asset_revision": "1.4.0-dungeons-a2",
+  "frontend_asset_revision": "1.4.0-dungeons-a2-h1",
   "scene_backgrounds": [
     {
       "file": "camp.webp",
@@ -87,6 +87,17 @@
       "bytes": 147704,
       "usage": [
         "Adventure Board — Rally Venture"
+      ],
+      "format": "wide"
+    },
+    {
+      "file": "dungeon_board.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 183336,
+      "usage": [
+        "Adventure Board — Dungeon Board"
       ],
       "format": "wide"
     }

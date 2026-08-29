@@ -1,25 +1,17 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 2 Release Audit
+# Crystal Guild v1.4.0 — Alpha 2 Web Hotfix 1 Finalization Audit
 
-## Scope
-Dungeon content/choice expansion on the validated Alpha 1 foundation.
-
-## Current-package identity
-- Bot runtime: `1.4.0-dungeons-a2`
-- Hosted Web/runtime: `1.4.0-dungeons-a2`
-- Frontend asset revision: `1.4.0-dungeons-a2`
+- Release type: **Web-only presentation hotfix**
+- Hosted Web runtime: `1.4.0-dungeons-a2` unchanged
+- Frontend asset revision: `1.4.0-dungeons-a2-h1`
+- Compatible Bot: `1.4.0-dungeons-a2` unchanged
 - Local DB schema: **10**
 - Hosted sync schema: **1**
 - Portal Action protocol: **24**
 - Twitch prefix: `!`
 
-## Audit targets
-- Add a second persistent Dungeon without requiring another schema migration.
-- Add replay-safe, run/chamber-bound Crossroads actions and preserve stale-tab failure behavior.
-- Preserve Alpha 1 HP/MP/AP, Cache, restart persistence, Bestiary integration, retreat/defeat/clear settlement, and Dungeon records.
-- Keep Portal Adventure state beneath the existing bounded-payload regression ceiling.
-- Normalize collapse-pointer rendered size while keeping right/closed and down/open state behavior.
-- Preserve v1.3 Guild Expansion, v1.2 Expeditions, optimized WebP assets, and UI4 behavior.
-- No player reset, OAuth change, or new environment variable.
-
-## Result
-**PASS** once full automated validation, exact patch reconstruction, archive integrity/hygiene, and SHA-256 verification complete.
+## Scope
+- Dungeon Board uses the shared compact disclosure control.
+- Closed/open pointer state remains right/down respectively.
+- New Dungeon Board art is a real DOM layer and cannot be replaced by the global panel background.
+- New art ships only as optimized WebP; no PNG artwork is reintroduced.
+- No Dungeon logic, rewards, combat, route choice, persistence, or economy behavior changes.

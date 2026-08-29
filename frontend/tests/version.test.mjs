@@ -8,7 +8,7 @@ test("Dungeons & Delves public web identity is centralized", () => {
   assert.equal(WEB_BUILD, "Dungeons & Delves Alpha 2");
   assert.equal(WEB_RELEASE, "v1.4.0 — Dungeons & Delves Alpha 2");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.4.0 — Dungeons & Delves Alpha 2");
-  assert.equal(WEB_ASSET_REVISION, "1.4.0-dungeons-a2");
+  assert.equal(WEB_ASSET_REVISION, "1.4.0-dungeons-a2-h1");
 });
 
 

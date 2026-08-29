@@ -111,13 +111,14 @@ export default function Dungeons({
     <>
       {results.map((result) => <DungeonResult key={result.result_id} result={result} onConfirm={onConfirmResult} confirming={busy === `ack-result:${result.result_id}`} />)}
       <section className={`panel dungeon-board-panel ${active ? "dungeon-active" : ""}`}>
+        <img className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
         <div className="panel-title-row dungeon-board-title-row">
           <div>
             <p className="eyebrow">Dungeons & Delves · Alpha 2</p>
             <h2>{active ? active.name : "Dungeon Board"}</h2>
             <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
           </div>
-          <button type="button" className="adventure-collapse-toggle icon-only" aria-label={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} title={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} aria-expanded={open} onClick={toggleBoard}><CollapsePointer open={open} /></button>
+          <button type="button" className="section-collapse-button dungeon-board-collapse-toggle" aria-label={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} title={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} aria-expanded={open} onClick={toggleBoard}><CollapsePointer open={open} /></button>
         </div>
 
         {open ? (

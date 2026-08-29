@@ -66,5 +66,5 @@ test("Player Guide release identity comes from the shared header and uses Expedi
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
   assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
-  assert.match(version, /1\.4\.0-dungeons-a2/);
+  assert.match(version, /1\.4\.0-dungeons-a2-h1/);
 });

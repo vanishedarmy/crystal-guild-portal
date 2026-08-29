@@ -18,11 +18,11 @@ function fellowshipSection(html) {
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
   assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a2-h1"/);
   assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Alpha 2");
   assert.equal(guideData.meta.release, "1.4.0-dungeons-a2");
   assert.equal(manifest.release, "v1.4.0 — Dungeons & Delves Alpha 2");
-  assert.equal(manifest.frontend_asset_revision, "1.4.0-dungeons-a2");
+  assert.equal(manifest.frontend_asset_revision, "1.4.0-dungeons-a2-h1");
 });
 
 test("Final What's New is player-facing and feature complete", () => {

@@ -27,7 +27,7 @@ test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a2-h1"/);
   assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Alpha 2");
   assert.equal(guideData.meta.release, "1.4.0-dungeons-a2");
 });

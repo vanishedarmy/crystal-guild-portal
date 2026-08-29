@@ -9,7 +9,7 @@ test("Expeditions carries forward Beta 4 hardening in player-facing language", a
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
-  assert.match(version, /1\.4\.0-dungeons-a2/);
+  assert.match(version, /1\.4\.0-dungeons-a2-h1/);
   assert.match(news, /Journeys stay saved/);
   assert.match(news, /Active Expeditions keep their current stage/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));

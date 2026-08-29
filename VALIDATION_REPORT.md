@@ -1,58 +1,41 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 2 Validation Report
+# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 2 Web Hotfix 1 Validation Report
 
 ## Result
 **PASS**
 
 ## Automated suites
-- Bot Python unittest suite: **504 / 504 PASS**.
-- Frontend Node regression suite: **376 / 376 PASS**.
+- Frontend Node regression suite: **378 / 378 PASS**.
 - Hosted Web/API Python unittest suite: **47 / 47 PASS**.
+- Compatible Bot remains unchanged at the Alpha 2 shipping baseline.
 
-The Bot suite includes intentional simulated acknowledgement loss, temporary Twitch/live-status failures, corrupt checkpoint recovery, restart recovery, database recovery drills, and synthetic stress scenarios. Their warning/error log lines are expected test fixtures.
+## Source validation
+- Hosted Web Python compile sweep: **8 / 8 PASS**.
+- Frontend JS/JSX/MJS TypeScript-parser sweep: **191 / 191 PASS**.
+- Plain JS/MJS `node --check`: **151 / 151 PASS**.
+- Literal frontend image-route audit: **159 routes / 0 missing**.
+- Public artwork state: **0 PNG / 576 WebP**.
 
-## Alpha 2 Dungeon coverage
-- Local schema remains **10**; Alpha 1 persistent Dungeon tables and migration path remain covered.
-- Portal Action protocol advances **23 → 24** for typed `DUNGEON_CHOICE` mutations.
-- The Dungeon Board exposes **2 Dungeons**, both with **8 chambers** and one Crossroads route decision.
-- **The Forgotten Ossuary** retains its Lv.10 + 25% Emerald Wilds unlock and gains the Forked Crypt Crossroads.
-- **The Emberglass Foundry** unlocks at Lv.18 + 35% Ashen Highlands and carries its own combat, treasure, Crossroads, hazard, miniboss, sanctuary, boss, completion bonus, and scene art.
-- Crossroads effects cover HP damage/healing, MP/AP recovery, Cache Gil/material rewards, and named discoveries.
-- Route choices are replay-safe and remain bound to the exact run/chamber shown in the browser.
-- Alpha 1 HP/MP/AP persistence, item consumption, Bestiary credit, Cache settlement, retreat/defeat rules, restart recovery, stale-tab protection, and `!clearadventures` continuity remain green.
-- Adventure-state serialization remains below the existing **16 KiB** guardrail with the expanded Dungeon catalog.
-
-## Shared collapse-pointer correction
-- Closed controls render the **right-pointing hand**; open controls render the **down-pointing hand**.
-- Portal collapse controls use one canonical **1.35rem** pointer box.
-- Player Guide disclosure hands use the matching **22px** rendered size.
-- The What’s New control is regression-covered by the same shared sizing rule rather than inheriting a larger local icon size.
-- Obsolete pre-Alpha-2 pointer files are removed from the final Web tree; the cache-busted `-a2.webp` pair is authoritative.
-
-## Source / asset validation
-- Python compilation sweep: **93 / 93 PASS** across Bot + Web Python source/tests/tools.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **190 / 190 PASS**.
-- Plain JS/MJS `node --check`: **150 / 150 PASS**.
-- Game data validation: **0 errors**; **2 Dungeons** loaded.
-- New/current Dungeon scene routes and collapse-pointer assets resolve in the full frontend regression suite.
-- Public artwork remains **0 PNG / 575 WebP**.
+## Focused Hotfix 1 coverage
+- Dungeon Board renders the shared `section-collapse-button` rather than the oversized local generic control.
+- Shared board button remains a **38px** box with the canonical shared pointer icon sizing.
+- `CollapsePointer` continues to choose right-hand art when closed and down-hand art when open.
+- Dungeon Board contains a real `<img class="dungeon-board-background-art">` using `/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp`.
+- Background art is positioned independently beneath the board content; global `.panel` background rules cannot suppress it.
+- New Dungeon Board WebP is **2172×724 / 183,336 bytes**; the 1,964,168-byte PNG source is not shipped.
 
 ## Continuity
-- v1.3.1 Asset Optimization and UI4 behavior remain covered.
-- v1.3 Guild Expansion shared-state, Fellowship, Airship, Workshop, Weekly Order, Legacy, and recovery protections remain covered by the full suites.
-- v1.2 Expedition behavior remains covered.
-- Public Previous major updates remains stable-release-only beneath the current Alpha 2 What’s New card.
-- Existing non-Dungeon gameplay/economy balance is unchanged.
-- Bot/Web/frontend runtime: `1.4.0-dungeons-a2`.
-- Local DB schema: **10** unchanged.
-- Hosted sync schema: **1** unchanged.
-- Portal Action protocol: **24**.
-- Twitch prefix: `!`.
-- Database migration from Alpha 1: **none**.
-- Player reset: **none**.
-- OAuth change: **none**.
-- New environment variables: **none**.
+- Hosted Web runtime: `1.4.0-dungeons-a2` unchanged.
+- Frontend asset revision: `1.4.0-dungeons-a2-h1`.
+- Compatible Bot: `1.4.0-dungeons-a2` unchanged.
+- Local DB schema **10**, hosted sync schema **1**, Portal Action protocol **24**, Twitch prefix `!` unchanged.
+- No Bot update, DB migration, reset, OAuth/environment, gameplay/economy/balance change.
 
-## Packaging verification
-- Alpha 1 → Alpha 2 Bot patch: **25 changed/new files, 0 deletions**; reconstructs **148 / 148** shipping Bot files exactly.
-- Alpha 1 → Alpha 2 Web patch: **58 changed/new files, 2 obsolete pointer deletions**; reconstructs **817 / 817** shipping Web files exactly.
-- Final ZIP CRC/integrity, runtime/private-artifact hygiene, exact reconstruction, and SHA-256 verification: **PASS**.
+## Package verification
+- Alpha 2 → Web Hotfix 1 patch: **40 changed/new files, 0 deletions**.
+- Baseline Web tree: **818 files**.
+- Final Web tree: **820 files**.
+- Full Web ZIP CRC/integrity: **PASS**.
+- Patch ZIP CRC/integrity: **PASS**.
+- A2 patch reconstruction: **820 / 820 exact files PASS**.
+- Runtime/private-artifact hygiene: **0 violations**.
+

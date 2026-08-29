@@ -21,7 +21,7 @@ test("Chocobo Stable presents live Expedition readiness and active trait effects
   assert.match(stable, /EXPEDITIONS OPEN/);
   assert.match(stable, /Adventure Board/);
   assert.match(stable, /persistent trait now modifies travel|persistent trait becomes a Guardian/);
-  assert.match(guide, /Expeditions — v1\.2 Beta 2/);
+  assert.match(guide, /Expeditions — v1\.2 Beta 3/);
   assert.match(guide, /Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, or the Astral Scar/);
 });
 

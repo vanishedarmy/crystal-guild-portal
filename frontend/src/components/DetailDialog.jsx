@@ -210,6 +210,15 @@ function abilityTraitLabels(ability = {}) {
   return [...new Set(labels)];
 }
 
+
+function detailDialogLabel(detail) {
+  if (!detail) return "Crystal Guild details";
+  if (detail.type === "job") return `${detail.job?.name || "Job"} details`;
+  if (detail.type === "relic") return `${detail.relic?.name || "Relic"} details`;
+  if (detail.type === "boss") return `${detail.boss?.name || "Boss"} details`;
+  return `${detail.item?.name || "Item"} details`;
+}
+
 export default function DetailDialog({ detail, onClose }) {
   const ref = useRef(null);
   const viewportRef = useRef(null);
@@ -242,6 +251,8 @@ export default function DetailDialog({ detail, onClose }) {
     <dialog
       ref={ref}
       className="detail-dialog"
+      aria-label={detailDialogLabel(detail)}
+      onCancel={(event) => { event.preventDefault(); restoreAndClose(); }}
       onClose={handleNativeClose}
       onClick={(event) => event.target === ref.current && restoreAndClose()}
     >

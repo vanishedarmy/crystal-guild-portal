@@ -1,3 +1,7 @@
+# v1.2.0 — Expeditions Beta 3
+
+Feature-frozen Mobile & Accessibility Polish: stronger phone layouts, 44px coarse-pointer touch targets, safe-area and dynamic-viewport handling, Arrow/Home/End keyboard tab navigation, explicit dialog/menu focus behavior, and increased-contrast/forced-colors/reduced-motion support. Beta 2 Hotfix 2 portrait backdrops and Beta 1 gameplay balance remain unchanged.
+
 # v1.2.0 — Expeditions Beta 2 Hotfix 2
 Web-only portrait scenic-background fit pass and duplicate-airship cleanup. Hosted runtime remains `1.2.0-expeditions-beta2`; frontend revision `1.2.0-expeditions-b2h2`; compatible Bot `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
 

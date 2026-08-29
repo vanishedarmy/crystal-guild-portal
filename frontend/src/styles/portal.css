@@ -8966,3 +8966,304 @@ html:has(.detail-dialog[open]) { overflow-anchor: none; }
   .adventure-priority-item span { grid-column: 1 / -1; }
   .adventure-priority-item small { text-align: right; }
 }
+
+/* v1.2 Expeditions Beta 3 — Mobile & Accessibility Polish
+   Feature-frozen responsive/accessibility pass: predictable touch targets, safe-area
+   support, keyboard-visible focus, compact mobile information density, and modal
+   behavior that remains usable at 320px widths and in phone landscape. */
+:root {
+  --beta3-touch-target: 44px;
+  --beta3-mobile-gutter: clamp(10px, 3.6vw, 16px);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+#root,
+.shell,
+.view,
+.profile-content,
+.panel,
+.player-card,
+.detail-body {
+  min-width: 0;
+}
+
+body { overflow-x: clip; }
+img, svg, video, canvas { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+
+/* Clear focus treatment on every interactive surface, including custom cards. */
+:where(
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  summary,
+  [role="button"],
+  [role="tab"],
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: 3px solid rgba(143, 219, 255, .82);
+  outline-offset: 3px;
+}
+
+[role="tabpanel"]:focus-visible {
+  outline: 2px solid rgba(143, 219, 255, .42);
+  outline-offset: 4px;
+}
+
+/* Roving tab controls: keyboard focus is explicit, active state is not color-only. */
+[role="tab"][aria-selected="true"] {
+  text-decoration-thickness: 2px;
+  text-underline-offset: .22em;
+}
+.profile-tabs [role="tab"][aria-selected="true"],
+.moogle-commerce-tabs [role="tab"][aria-selected="true"],
+.moogle-category-tabs [role="tab"][aria-selected="true"],
+.blacksmith-view-switch [role="tab"][aria-selected="true"] {
+  text-decoration-line: underline;
+  text-decoration-color: rgba(230, 203, 136, .72);
+}
+
+/* Primary controls should remain practical on touch hardware even in landscape. */
+@media (pointer: coarse) {
+  :where(
+    button,
+    select,
+    input:not([type="checkbox"]):not([type="radio"]),
+    .site-nav-link,
+    .portal-auth-button,
+    .primary-link,
+    .ghost-button,
+    .filter-chip,
+    .inventory-card-detail,
+    .current-loadout-detail,
+    .section-collapse-button,
+    .mobile-site-menu nav a
+  ) {
+    min-height: var(--beta3-touch-target);
+  }
+
+  :where(button, a, [role="button"], [role="tab"]) { touch-action: manipulation; }
+  .dialog-close,
+  .mobile-site-menu-toggle {
+    width: var(--beta3-touch-target);
+    height: var(--beta3-touch-target);
+    min-width: var(--beta3-touch-target);
+    min-height: var(--beta3-touch-target);
+  }
+}
+
+/* Detail cards: fit the visible screen, respect device cutouts, and scroll internally. */
+.detail-dialog {
+  max-width: min(720px, calc(100vw - 2 * var(--beta3-mobile-gutter)));
+  max-height: min(86dvh, 850px);
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.dialog-close {
+  min-width: var(--beta3-touch-target);
+  min-height: var(--beta3-touch-target);
+}
+
+@media (max-width: 720px), (max-width: 1180px) and (max-height: 620px) and (orientation: landscape) and (pointer: coarse) {
+  .site-header {
+    padding-top: max(.34rem, env(safe-area-inset-top));
+    padding-left: max(.55rem, env(safe-area-inset-left));
+    padding-right: max(.55rem, env(safe-area-inset-right));
+  }
+
+  .mobile-site-menu {
+    right: max(.55rem, env(safe-area-inset-right));
+    max-height: calc(100dvh - 58px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    padding-bottom: max(.58rem, env(safe-area-inset-bottom));
+    overscroll-behavior: contain;
+  }
+
+  .shell {
+    width: calc(100% - (2 * var(--beta3-mobile-gutter)));
+    max-width: var(--hub-page-max);
+  }
+
+  .profile-topbar,
+  .panel-title-row,
+  .adventure-title-row,
+  .hunt-board-title-row,
+  .timed-hunt-title-row,
+  .moogle-title-row,
+  .chocobo-title-row {
+    min-width: 0;
+  }
+
+  .profile-topbar,
+  .panel-title-row {
+    flex-wrap: wrap;
+  }
+
+  .profile-header {
+    gap: .9rem;
+    padding: clamp(.82rem, 3vw, 1rem);
+  }
+
+  .profile-identity,
+  .profile-vitals,
+  .profile-jobline,
+  .currency-row,
+  .adventure-board-stack,
+  .blacksmith-grid,
+  .moogle-stock-grid,
+  .moogle-sell-grid,
+  .chocobo-stable-panel,
+  .fellowship-profile-shell {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Prevent iOS form zoom and keep short form controls finger-friendly. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .profile-tab-select select,
+  .blacksmith-search input,
+  .moogle-quantity input,
+  .chocobo-name-field input {
+    min-height: var(--beta3-touch-target);
+  }
+
+  /* Grids collapse before content becomes compressed. */
+  .moogle-category-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .moogle-commerce-tabs,
+  .blacksmith-view-switch { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .moogle-commerce-tabs button,
+  .blacksmith-view-switch button,
+  .moogle-category-tabs button {
+    min-width: 0;
+    min-height: var(--beta3-touch-target);
+    overflow-wrap: anywhere;
+  }
+
+  .detail-dialog {
+    width: calc(100vw - max(0px, env(safe-area-inset-left)) - max(0px, env(safe-area-inset-right)));
+    max-width: none;
+    max-height: calc(88dvh - env(safe-area-inset-top));
+    margin: auto 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-radius: 18px 18px 0 0;
+  }
+  .detail-body { padding: 1.1rem var(--beta3-mobile-gutter) calc(1.2rem + env(safe-area-inset-bottom)); }
+  .dialog-close {
+    top: max(.55rem, env(safe-area-inset-top));
+    margin-top: .55rem;
+    margin-right: max(.55rem, env(safe-area-inset-right));
+  }
+
+  .site-footer {
+    padding-left: max(var(--beta3-mobile-gutter), env(safe-area-inset-left));
+    padding-right: max(var(--beta3-mobile-gutter), env(safe-area-inset-right));
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 560px) {
+  .panel { padding: .85rem; }
+  .profile-topbar { align-items: flex-start; gap: .5rem; }
+  .last-update { width: 100%; }
+
+  .profile-jobline { gap: .42rem; }
+  .profile-jobline > span { max-width: 100%; overflow-wrap: anywhere; }
+
+  .currency-row,
+  .expedition-readiness-grid,
+  .expedition-active-meta,
+  .expedition-cache-grid,
+  .hunt-result-reward-grid,
+  .hunt-result-combat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-collapse-actions { align-items: stretch; flex-wrap: wrap; }
+  .section-collapse-button,
+  .section-collapse-button.compact {
+    min-height: var(--beta3-touch-target);
+    min-width: 0;
+  }
+
+  .moogle-category-tabs { grid-template-columns: 1fr 1fr 1fr; }
+  .moogle-commerce-tabs button small,
+  .blacksmith-view-switch button small { font-size: .78rem; }
+
+  .data-table-wrap,
+  .table-wrap {
+    max-width: 100%;
+    overflow: auto hidden;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 390px) {
+  :root { --beta3-mobile-gutter: 10px; }
+  .panel { padding: .75rem; }
+  .moogle-commerce-tabs,
+  .blacksmith-view-switch { grid-template-columns: 1fr; }
+  .moogle-category-tabs { grid-template-columns: 1fr; }
+  .moogle-commerce-tabs button,
+  .blacksmith-view-switch button,
+  .moogle-category-tabs button { text-align: left; }
+  .adventure-priority-item { grid-template-columns: 1fr; }
+  .adventure-priority-item span,
+  .adventure-priority-item small { grid-column: auto; text-align: left; }
+  .detail-body h2 { font-size: clamp(1.45rem, 9vw, 2rem); }
+}
+
+/* Increased contrast mode: states remain legible without relying on subtle transparency. */
+@media (prefers-contrast: more) {
+  :root {
+    --muted: #d0dce5;
+    --line: rgba(229, 241, 249, .56);
+    --line-bright: rgba(229, 241, 249, .78);
+  }
+  .panel,
+  .player-card,
+  .detail-dialog,
+  .equipment-action-button,
+  .section-collapse-button,
+  [role="tab"] {
+    border-width: 2px;
+  }
+  .equipment-action-button:disabled { opacity: 1; }
+}
+
+@media (forced-colors: active) {
+  .ambient,
+  .panel::before,
+  .panel::after,
+  .scenic-panel::before,
+  .scenic-panel::after { display: none !important; }
+  :where(button, a, input, select, textarea, summary, [role="button"], [role="tab"]):focus-visible {
+    outline: 3px solid Highlight;
+  }
+  [role="tab"][aria-selected="true"],
+  .small-badge,
+  .status-badge { border: 2px solid currentColor; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .site-header { will-change: auto; }
+}

@@ -7,6 +7,7 @@ import {
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, formatBonuses, number } from "../utils/formatters.js";
+import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 
@@ -282,18 +283,18 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           {shop.combat_locked ? (
             <div className="moogle-combat-lock">Transactions are locked while this adventurer is committed to an active encounter or raid.</div>
           ) : null}
-          <div className="moogle-commerce-tabs" role="tablist" aria-label="Moogle Emporium transaction mode">
-            <button type="button" role="tab" aria-selected={mode === "buy"} className={mode === "buy" ? "active" : ""} onClick={() => setMode("buy")}><span>Buy</span><small>Current Moogle stock</small></button>
-            <button type="button" role="tab" aria-selected={mode === "sell"} className={mode === "sell" ? "active" : ""} onClick={() => setMode("sell")}><span>Sell</span><small>Your eligible inventory</small></button>
+          <div className="moogle-commerce-tabs" role="tablist" aria-label="Moogle Emporium transaction mode" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setMode)}>
+            <button type="button" role="tab" id="moogle-mode-buy" data-tab-value="buy" tabIndex={mode === "buy" ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={mode === "buy"} className={mode === "buy" ? "active" : ""} onClick={() => setMode("buy")}><span>Buy</span><small>Current Moogle stock</small></button>
+            <button type="button" role="tab" id="moogle-mode-sell" data-tab-value="sell" tabIndex={mode === "sell" ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={mode === "sell"} className={mode === "sell" ? "active" : ""} onClick={() => setMode("sell")}><span>Sell</span><small>Your eligible inventory</small></button>
           </div>
-          <div className="moogle-category-tabs" role="tablist" aria-label={`${mode === "buy" ? "Buy" : "Sell"} category`}>
+          <div className="moogle-category-tabs" role="tablist" aria-label={`${mode === "buy" ? "Buy" : "Sell"} category`} aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setCategory)}>
             {[["weapons", "Weapons"], ["armor", "Armor"], ["items", "Items"]].map(([value, label]) => (
-              <button key={value} type="button" role="tab" aria-selected={category === value} className={category === value ? "active" : ""} onClick={() => setCategory(value)}>{label}</button>
+              <button key={value} type="button" role="tab" id={`moogle-category-${value}`} data-tab-value={value} tabIndex={category === value ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={category === value} className={category === value ? "active" : ""} onClick={() => setCategory(value)}>{label}</button>
             ))}
           </div>
 
           {mode === "buy" ? (
-            <div className="moogle-stock-grid" role="tabpanel" aria-label={`Buy ${category}`}>
+            <div id="moogle-mode-panel" className="moogle-stock-grid" role="tabpanel" tabIndex="0" aria-labelledby={`moogle-mode-${mode} moogle-category-${category}`}>
               {filteredStock.length ? filteredStock.map((item) => {
                 const max = item.equipment ? 1 : 99;
                 const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] || 1, max);
@@ -334,7 +335,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
               }) : <div className="state-message compact-state moogle-empty-category">No {category} are available in this rotation.</div>}
             </div>
           ) : (
-            <div className="moogle-sell-grid moogle-sell-panel" role="tabpanel" aria-label={`Sell ${category}`}>
+            <div id="moogle-mode-panel" className="moogle-sell-grid moogle-sell-panel" role="tabpanel" tabIndex="0" aria-labelledby={`moogle-mode-${mode} moogle-category-${category}`}>
               {filteredSellableItems.length ? filteredSellableItems.map((item) => {
                 const max = Number(item.max_sell_quantity || 0);
                 const quantity = clampQuantity(sellQty[item.id] || 1, Math.max(1, max));

@@ -1,10 +1,18 @@
-Crystal Guild v1.2.0 Expeditions Beta 2 Hotfix 2 — Web Package Manifest
-Hosted runtime: 1.2.0-expeditions-beta2
-Frontend asset revision: 1.2.0-expeditions-b2h2
-Compatible Bot: 1.2.0-expeditions-b1
-DB schema: 8
-Hosted sync schema: 1
-Portal Action protocol: 20
+Crystal Guild v1.2.0 — Expeditions Beta 3 Web
 
-Web-only portrait scenic-background fit + duplicate-airship cleanup.
-New portrait assets: Solo Venture, Relics Arsenal, Blacksmith, Chocobo Stable, Moogle Emporium.
+Runtime identity
+- Hosted Web: 1.2.0-expeditions-beta3
+- Frontend assets: 1.2.0-expeditions-b3
+- Compatible Bot: 1.2.0-expeditions-b1
+- Local DB schema: 8
+- Hosted sync schema: 1
+- Portal Action protocol: 20
+
+Release focus
+- Mobile & Accessibility Polish
+- 44px coarse-pointer touch targets
+- safe-area/dynamic-viewport support
+- roving keyboard tab navigation
+- visible focus, increased contrast, forced colors, reduced motion
+- Beta 2 Hotfix 2 portrait backdrops retained
+- no gameplay/migration/reset changes

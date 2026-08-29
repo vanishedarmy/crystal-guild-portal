@@ -2317,3 +2317,62 @@ body{
 .info-stage-art img{display:block;width:100%;height:100%;max-height:150px;object-fit:contain;padding:8px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.38))}
 .info-stage-content{min-width:0}
 @media(max-width:720px){.info-stage:has(.info-stage-art){grid-template-columns:1fr}.info-stage-art{min-height:118px;height:130px}}
+
+/* v1.2 Expeditions Beta 3 — Player Guide mobile/accessibility polish */
+:root { --guide-beta3-touch: 44px; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-x: clip; }
+img, svg, video, canvas { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+
+:where(button, a, input, select, textarea, summary, [role="button"], [role="tab"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--crystal);
+  outline-offset: 3px;
+}
+
+@media (pointer: coarse) {
+  :where(button, select, input:not([type="checkbox"]):not([type="radio"]), .nav a, .catalog-launch, .catalog-close, .group-filter, .tab, .job-view-tab, .copy) {
+    min-height: var(--guide-beta3-touch);
+  }
+  :where(button, a, [role="button"], [role="tab"]) { touch-action: manipulation; }
+}
+
+@media (max-width:720px), (max-width:1180px) and (max-height:620px) and (orientation:landscape) and (pointer:coarse) {
+  .mobile-top {
+    padding-left: max(var(--guide-gutter), env(safe-area-inset-left));
+    padding-right: max(var(--guide-gutter), env(safe-area-inset-right));
+  }
+  .side {
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior: contain;
+  }
+  .topsearch,
+  .content,
+  .hero {
+    padding-left: max(var(--guide-gutter), env(safe-area-inset-left));
+    padding-right: max(var(--guide-gutter), env(safe-area-inset-right));
+  }
+  input, select, textarea { font-size: 16px; }
+  .tablewrap, .catalog-table-wrap { overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width:390px) {
+  .tabs, .job-view-tabs, .completion-view-tabs, .command-group-nav { gap: 7px; }
+  .tabs > *, .job-view-tabs > *, .completion-view-tabs > *, .command-group-nav > * { flex-basis: 100%; }
+  .catalog-panel-top, .item-catalog-toolbar, .toolbar, .command-toolbar { align-items: stretch; }
+}
+
+@media (prefers-contrast: more) {
+  :root { --muted:#d6deef; --line:#8093bd; --line-soft:#6d81ad; }
+  .card, .command, .guide-section-summary, .tablewrap, .catalog-panel, .info-card { border-width: 2px; }
+}
+
+@media (forced-colors: active) {
+  .hero::after, .ambient-airship, .ambient-portal, .guide-environment-art { display:none!important; }
+  :where(button,a,input,select,textarea,summary,[tabindex]):focus-visible { outline:3px solid Highlight; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto!important; }
+  *, *::before, *::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; scroll-behavior:auto!important; }
+}

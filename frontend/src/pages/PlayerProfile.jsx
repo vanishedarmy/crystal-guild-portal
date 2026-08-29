@@ -11,6 +11,7 @@ import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import Overview from "../player/Overview.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
 import { campDeadlineMs, campRemainingSeconds } from "../utils/campCountdown.js";
+import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 
 const MODULES = {
   overview: Overview,
@@ -229,7 +230,7 @@ export default function PlayerProfile() {
                 ))}
               </select>
             </label>
-            <nav className="profile-tabs" aria-label="Adventurer profile sections" role="tablist">
+            <nav className="profile-tabs" aria-label="Adventurer profile sections" role="tablist" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setActiveTab)}>
               {TABS.map(([id, label, glyph]) => (
                 <button
                   key={id}
@@ -237,6 +238,9 @@ export default function PlayerProfile() {
                   role="tab"
                   aria-selected={activeTab === id}
                   aria-controls="profile-active-panel"
+                  id={`profile-tab-${id}`}
+                  data-tab-value={id}
+                  tabIndex={activeTab === id ? 0 : -1}
                   className={activeTab === id ? "active" : ""}
                   onClick={() => setActiveTab(id)}
                 >
@@ -246,7 +250,7 @@ export default function PlayerProfile() {
             </nav>
           </div>
 
-          <div id="profile-active-panel" className="profile-content" role="tabpanel" aria-busy={overviewLoading || tabLoading}>
+          <div id="profile-active-panel" className="profile-content" role="tabpanel" aria-labelledby={`profile-tab-${activeTab}`} tabIndex="0" aria-busy={overviewLoading || tabLoading}>
             <SectionErrorBoundary resetKey={`${username}:${activeTab}:${refreshToken}`}>
               <Suspense fallback={<div className="state-message">Opening {activeTab}...</div>}>
                 {!moduleData || !ActiveModule

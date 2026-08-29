@@ -7,6 +7,7 @@ import {
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
+import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 
 function actionKey(kind, target = "blacksmith") {
@@ -235,9 +236,9 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       </div>
 
       <div className="blacksmith-toolbar">
-        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith views">
-          <button type="button" role="tab" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Recipes</span><small>{view === "recipes" ? "Active · Craft items" : "Craft items"}</small></button>
-          <button type="button" role="tab" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}><span>Forge Gear</span><small>{view === "forge" ? "Active · Upgrade equipment" : "Upgrade equipment"}</small></button>
+        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith views" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setView)}>
+          <button type="button" role="tab" id="blacksmith-tab-recipes" data-tab-value="recipes" tabIndex={view === "recipes" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Recipes</span><small>{view === "recipes" ? "Active · Craft items" : "Craft items"}</small></button>
+          <button type="button" role="tab" id="blacksmith-tab-forge" data-tab-value="forge" tabIndex={view === "forge" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}><span>Forge Gear</span><small>{view === "forge" ? "Active · Upgrade equipment" : "Upgrade equipment"}</small></button>
         </div>
         <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : "Equipment…"} /></label>
         <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busyKey)} onClick={() => loadState()}>
@@ -255,7 +256,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             <span><strong>{number(state.known_recipe_count)}</strong> / {number(state.recipe_total)} recipes discovered</span>
             <span>Craft quantity is capped at 20 per action.</span>
           </div>
-          <div className="blacksmith-grid">
+          <div id="blacksmith-active-panel" className="blacksmith-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-recipes">
             {recipes.map((recipe) => {
               const maximum = Math.max(0, Number(recipe.max_quantity || 0));
               const quantity = clampQuantity(quantities[recipe.id] || 1, Math.max(1, maximum));
@@ -305,7 +306,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             <span>Owned forgeable equipment · maximum +{number(state.forge_max)}</span>
             <span>Workshop facility discounts are already included.</span>
           </div>
-          <div className="blacksmith-grid forge-grid">
+          <div id="blacksmith-active-panel" className="blacksmith-grid forge-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-forge">
             {forgeGroups.map((group) => group.items.length ? (
               <section className="forge-group" key={group.id} aria-labelledby={`forge-group-${group.id}`}>
                 <div className="forge-group-heading">

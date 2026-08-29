@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
+    name: "Expeditions Beta 3",
+    title: "The Portal is easier to use everywhere",
+    summary: "Beta 3 keeps the feature set frozen while tightening mobile layouts, touch ergonomics, keyboard navigation, focus visibility, contrast support, and motion preferences across the Portal and Player Guide.",
+    highlights: [
+      { title: "Phone-safe layouts", description: "Adventure, commerce, crafting, Chocobo, tables, and detail-card layouts collapse before they overflow, with dedicated handling for narrow phones and landscape touch screens." },
+      { title: "Stronger touch targets", description: "Primary buttons, filters, collapse controls, menus, and form fields maintain practical touch sizes on coarse-pointer devices." },
+      { title: "Keyboard-friendly tabs", description: "Profile, Moogle Emporium, and Blacksmith tab groups now support Arrow keys, Home, and End using a roving keyboard focus pattern." },
+      { title: "Device preferences respected", description: "Reduced motion, increased contrast, forced-colors mode, safe-area insets, and mobile form text sizing receive explicit support." },
+      { title: "Gameplay remains frozen", description: "Beta 1 balance, Beta 2 UX behavior, Alpha 5 Chocobo specialization, Expeditions, Hunts, rewards, and progression are mechanically unchanged." },
+    ],
+    action: { tab: "hunts", label: "Open Adventure Board" },
+  },
+  {
+    version: "v1.2.0",
     name: "Expeditions Beta 2",
     title: "The Portal stays where you are",
     summary: "Beta 2 consolidates the v1.2 interface around current activity and player decisions, removes avoidable visual noise, and prevents expandable cards or catalogs from snapping the page away from the place you opened them.",

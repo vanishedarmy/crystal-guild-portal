@@ -1525,3 +1525,23 @@ body.streamer-page {
 @media (max-width: 680px) {
   .streamer-control-card:has(.streamer-inventory-admin-fields) { min-height: 0; }
 }
+
+/* v1.2 Expeditions Beta 3 — Streamer mobile/accessibility parity */
+@media (pointer: coarse) {
+  .streamer-page :where(button, select, input:not([type="checkbox"]):not([type="radio"]), a) { min-height:44px; }
+  .streamer-page :where(button, a) { touch-action: manipulation; }
+}
+@media (max-width:680px) {
+  .streamer-page input, .streamer-page select, .streamer-page textarea { font-size:16px; }
+  .streamer-shell { padding-left:max(var(--hub-gutter, 12px), env(safe-area-inset-left)); padding-right:max(var(--hub-gutter, 12px), env(safe-area-inset-right)); }
+  .streamer-footer { padding-bottom:max(1rem, env(safe-area-inset-bottom)); }
+}
+@media (prefers-contrast: more) {
+  .streamer-control-card, .streamer-control-group, .streamer-card { border-width:2px; }
+}
+@media (forced-colors: active) {
+  .streamer-page :where(button,a,input,select,textarea,summary):focus-visible { outline:3px solid Highlight; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .streamer-page *, .streamer-page *::before, .streamer-page *::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+}

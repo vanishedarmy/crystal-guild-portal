@@ -18,6 +18,7 @@ export default function SiteHeader({
   const [mobileHeaderHidden, setMobileHeaderHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef(null);
+  const mobileMenuToggleRef = useRef(null);
   const lastScrollY = useRef(0);
   const heroesActive = location.pathname === "/players" || location.pathname.startsWith("/player/");
   const fellowshipActive = location.pathname.startsWith("/fellowship");
@@ -58,7 +59,10 @@ export default function SiteHeader({
     };
 
     const onKeyDown = (event) => {
-      if (event.key === "Escape") setMobileMenuOpen(false);
+      if (event.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+        mobileMenuToggleRef.current?.focus?.({ preventScroll: true });
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -134,6 +138,7 @@ export default function SiteHeader({
           {liveStatus ? <LiveStatus status={liveStatus} /> : null}
           <button
             type="button"
+            ref={mobileMenuToggleRef}
             className="mobile-site-menu-toggle"
             aria-label={mobileMenuOpen ? "Close page menu" : "Open page menu"}
             aria-controls="mobile-site-menu"
@@ -149,7 +154,7 @@ export default function SiteHeader({
           </button>
         </div>
 
-        <div className={`mobile-site-menu ${mobileMenuOpen ? "open" : ""}`} id="mobile-site-menu">
+        <div className={`mobile-site-menu ${mobileMenuOpen ? "open" : ""}`} id="mobile-site-menu" aria-hidden={!mobileMenuOpen}>
           <nav aria-label="Crystal Guild page selection">
             {navLinks.map((link) => (
               <a key={link.href} className={link.active ? "active" : ""} href={link.href} aria-current={link.active ? "page" : undefined}>

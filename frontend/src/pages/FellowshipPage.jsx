@@ -147,6 +147,19 @@ export default function FellowshipPage() {
               </div>
             </section>
 
+            <section className="panel fellowship-section fellowship-services">
+              <div className="panel-title-row">
+                <div><span className="panel-kicker">Guild Services &amp; Workshop</span><h2>Facility Services</h2></div>
+                <span className="small-badge">Alpha 3</span>
+              </div>
+              <p className="muted">Facility levels now provide practical Guild services without replacing normal character progression.</p>
+              <div className="fellowship-service-grid">
+                <article><span>Workshop</span><strong>{number(data.services?.workshop?.forge_discount * 100)}% lower forge fees</strong><small>{number(data.services?.workshop?.level) >= 2 ? "Material refining available from the signed-in Fellowship tab." : "Material refining unlocks at Workshop Lv. 2."}</small></article>
+                <article><span>Chocobo Stables</span><strong>+{number(data.services?.chocobo_stable?.xp_bonus * 100)}% Bond XP</strong><small>Applies automatically whenever your registered Chocobo earns XP.</small></article>
+                <article><span>Guild Archive</span><strong>+{Number((data.services?.archive?.rare_event_bonus || 0) * 100).toFixed(1)}% rare events</strong><small>Archive research modestly improves rare Expedition event chances.</small></article>
+              </div>
+            </section>
+
             <details className="panel fellowship-details fellowship-expedition-board">
               <summary><span><strong>Expeditions — Guild Board</strong><small>Existing Guild-wide Expedition access</small></span><span className="small-badge">{expeditionStatus}</span></summary>
               <div className="fellowship-expedition-body">

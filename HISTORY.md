@@ -1,6 +1,10 @@
+# Crystal Guild v1.3.0 — Guild Expansion Alpha 3
+
+Adds Guild Services & Workshop: Workshop material refining, Chocobo Stable XP training bonuses, Guild Archive rare-Expedition-event research, Portal Fellowship service controls, and matching player Guide updates. Runtime/frontend `1.3.0-guild-expansion-a3`; schema 8, hosted sync 1; Portal protocol advances **20 → 21** for `WORKSHOP_EXCHANGE`.
+
 # Crystal Guild v1.3.0 — Guild Expansion Alpha 2
 
-Adds Guild Projects II presentation, Supply Drive / Guild Objective categories, weekly Order contributor rewards, and the matching player-facing Guide updates. Runtime/frontend `1.3.0-guild-expansion-a2`; schema 8, hosted sync 1, protocol 20 unchanged.
+Adds Guild Projects II presentation, Supply Drive / Guild Objective categories, Weekly Order contributor rewards, and matching player-facing Guide updates. Runtime/frontend `1.3.0-guild-expansion-a2`; schema 8, hosted sync 1, protocol 20 unchanged.
 
 # Crystal Guild v1.3.0 — Guild Expansion Alpha 1
 

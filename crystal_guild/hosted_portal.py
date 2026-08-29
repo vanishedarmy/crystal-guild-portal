@@ -23,15 +23,15 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-a2"
-FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-a2"
+HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-a3"
+FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-a3"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 20
+ACTION_PROTOCOL_VERSION = 21
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
-    "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM",
+    "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "WORKSHOP_EXCHANGE",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
@@ -690,6 +690,22 @@ class HostedPortalStore:
             if quantity < 1 or quantity > 999:
                 raise ValueError("Fellowship item quantity must be between 1 and 999.")
             payload = {"item_id": item_id, "quantity": quantity}
+        elif kind == "WORKSHOP_EXCHANGE":
+            if set(payload) != {"exchange_id", "batches"}:
+                raise ValueError("WORKSHOP_EXCHANGE requires only exchange_id and batches.")
+            exchange_id = str(payload.get("exchange_id") or "").strip().lower()
+            if not exchange_id or len(exchange_id) > 80 or not re.fullmatch(r"[a-z0-9_]+", exchange_id):
+                raise ValueError("Invalid Workshop exchange ID.")
+            batches = payload.get("batches")
+            if isinstance(batches, bool):
+                raise ValueError("Invalid Workshop batch quantity.")
+            try:
+                batches = int(batches)
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Workshop batch quantity.") from None
+            if batches < 1 or batches > 20:
+                raise ValueError("Workshop batches must be between 1 and 20.")
+            payload = {"exchange_id": exchange_id, "batches": batches}
         elif kind in {"CRAFTING_STATE", "DAILY_STATE", "CLAIM_DAILY"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")

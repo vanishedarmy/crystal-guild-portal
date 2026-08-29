@@ -481,6 +481,7 @@ class PortalActionServerCase(unittest.TestCase):
             ("FELLOWSHIP_STATE", {}, "fellowship-state"),
             ("CONTRIBUTE_GIL", {"amount": 5000}, "fellowship-gil"),
             ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 3}, "fellowship-item"),
+            ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 2}, "workshop-exchange"),
         ):
             status, response, _ = self.request(
                 "/api/actions",
@@ -504,6 +505,10 @@ class PortalActionServerCase(unittest.TestCase):
             ("CONTRIBUTE_ITEM", {"item_id": "hi potion", "quantity": 1}),
             ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1000}),
             ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1, "command": "!readyall"}),
+            ("WORKSHOP_EXCHANGE", {"exchange_id": "refine mythril", "batches": 1}),
+            ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 0}),
+            ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 21}),
+            ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 1, "command": "!readyall"}),
         )
         for index, (action_type, payload) in enumerate(invalid):
             with self.assertRaises(urllib.error.HTTPError) as caught:

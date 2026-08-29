@@ -125,6 +125,10 @@ export function submitFellowshipItem(itemId, quantity, csrfToken, idempotencyKey
   return submitPortalAction("CONTRIBUTE_ITEM", { item_id: itemId, quantity }, csrfToken, idempotencyKey);
 }
 
+export function submitWorkshopExchange(exchangeId, batches, csrfToken, idempotencyKey) {
+  return submitPortalAction("WORKSHOP_EXCHANGE", { exchange_id: exchangeId, batches }, csrfToken, idempotencyKey);
+}
+
 export function submitCraftingState(csrfToken, idempotencyKey) {
   return submitPortalAction("CRAFTING_STATE", {}, csrfToken, idempotencyKey);
 }

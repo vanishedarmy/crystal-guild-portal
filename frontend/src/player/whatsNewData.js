@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
+    name: "Guild Expansion Alpha 3",
+    title: "Guild facilities now provide real services",
+    summary: "Workshop refining, Chocobo training, and Guild Archive research turn facility levels into useful everyday Guild benefits.",
+    highlights: [
+      { title: "Workshop refining", description: "Workshop Lv. 2 converts surplus Iron Ore and Wyvern Scales into stronger materials; Lv. 3 adds Adamantite and Dark Matter refining at intentionally lossy ratios." },
+      { title: "Stable training", description: "Chocobo Stables now increase Bond XP earned by registered companions by 5% per facility level." },
+      { title: "Archive research", description: "Guild Archive Lv. 2 and Lv. 3 add a small bonus to rare Expedition event chances without replacing route risk or Chocobo specialties." },
+      { title: "Portal Guild services", description: "Signed-in adventurers can use unlocked Workshop refining directly from their Fellowship tab, with the same services also available through chat." },
+      { title: "Utility, not power creep", description: "Guild services improve convenience and progression support rather than adding large permanent combat-stat bonuses." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+  {
+    version: "v1.3.0",
     name: "Guild Expansion Alpha 2",
     title: "Guild work goes beyond construction",
     summary: "The Fellowship now has shorter Supply Drives, gameplay-driven Guild Objectives, and direct participation rewards for Weekly Orders.",

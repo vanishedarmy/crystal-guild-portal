@@ -11,8 +11,8 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 2"/);
-  assert.match(version, /1\.3\.0-guild-expansion-a2/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 3"/);
+  assert.match(version, /1\.3\.0-guild-expansion-a3/);
   assert.match(news, /Keyboard-friendly tabs/);
   assert.doesNotMatch(guide, /Beta 3 Mobile &amp; Accessibility Pass/);
 });

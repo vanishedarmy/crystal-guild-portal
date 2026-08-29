@@ -1,5 +1,5 @@
 export const WEB_VERSION = "v1.3.0";
-export const WEB_BUILD = "Guild Expansion Beta 3";
+export const WEB_BUILD = "Guild Expansion RC1";
 export const WEB_RELEASE = `${WEB_VERSION} — ${WEB_BUILD}`;
 export const WEB_PRODUCT = `Crystal Guild Web ${WEB_RELEASE}`;
-export const WEB_ASSET_REVISION = "1.3.0-guild-expansion-b3";
+export const WEB_ASSET_REVISION = "1.3.0-guild-expansion-rc1";

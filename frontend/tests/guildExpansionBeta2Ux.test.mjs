@@ -7,7 +7,7 @@ const css = fs.readFileSync(new URL("../src/styles/portal.css", import.meta.url)
 const news = fs.readFileSync(new URL("../src/player/whatsNewData.js", import.meta.url), "utf8");
 const version = fs.readFileSync(new URL("../src/version.js", import.meta.url), "utf8");
 
-test("Guild Expansion Beta 3 prioritizes current Fellowship activity", () => {
+test("Guild Expansion RC1 prioritizes current Fellowship activity", () => {
   assert.match(page, /Current Guild priorities/);
   assert.match(page, /Current Project/);
   assert.match(page, /Guild Airship/);
@@ -29,8 +29,8 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 });
 
 test("Beta 2 stays feature frozen", () => {
-  assert.match(version, /WEB_BUILD = "Guild Expansion Beta 3"/);
-  assert.match(version, /1\.3\.0-guild-expansion-b3/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion RC1"/);
+  assert.match(version, /1\.3\.0-guild-expansion-rc1/);
   assert.match(news, /No balance changes/);
-  assert.match(news, /Beta 1 economy tuning/);
+  assert.match(news, /No balance changes/);
 });

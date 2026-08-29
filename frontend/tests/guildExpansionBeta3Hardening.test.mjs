@@ -17,11 +17,11 @@ test("Beta 3 binds Fellowship contributions to the rendered project", () => {
   assert.match(fellowship, /submitFellowshipItem\(req\.asset_id, amount, project\.id/);
 });
 
-test("Beta 3 player-facing release copy explains reliability without backend jargon", () => {
-  assert.match(version, /WEB_BUILD = "Guild Expansion Beta 3"/);
-  assert.match(version, /1\.3\.0-guild-expansion-b3/);
-  assert.match(news, /Contributions stay with the intended project/);
-  assert.match(news, /Double submissions pay once/);
-  assert.match(news, /Airship orders stay consistent/);
-  assert.doesNotMatch(news.split('name: "Guild Expansion Beta 3"')[1].split('\n  },')[0], /SQLite|transaction|mutex|schema|protocol|replay receipt/i);
+test("RC1 player-facing release copy keeps the hardening summary without backend jargon", () => {
+  assert.match(version, /WEB_BUILD = "Guild Expansion RC1"/);
+  assert.match(version, /1\.3\.0-guild-expansion-rc1/);
+  assert.match(news, /Guild Expansion enters final testing/);
+  assert.match(news, /Shared actions stay protected/);
+  assert.match(news, /No balance changes/);
+  assert.doesNotMatch(news.split('name: "Guild Expansion RC1"')[1].split('\n  },')[0], /SQLite|transaction|mutex|schema|protocol|replay receipt/i);
 });

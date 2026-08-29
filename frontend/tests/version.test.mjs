@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
-test("Guild Expansion Beta 3 public web identity is centralized", () => {
+test("Guild Expansion RC1 public web identity is centralized", () => {
   assert.equal(WEB_VERSION, "v1.3.0");
-  assert.equal(WEB_BUILD, "Guild Expansion Beta 3");
-  assert.equal(WEB_RELEASE, "v1.3.0 — Guild Expansion Beta 3");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.3.0 — Guild Expansion Beta 3");
-  assert.equal(WEB_ASSET_REVISION, "1.3.0-guild-expansion-b3");
+  assert.equal(WEB_BUILD, "Guild Expansion RC1");
+  assert.equal(WEB_RELEASE, "v1.3.0 — Guild Expansion RC1");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.3.0 — Guild Expansion RC1");
+  assert.equal(WEB_ASSET_REVISION, "1.3.0-guild-expansion-rc1");
 });
 
 

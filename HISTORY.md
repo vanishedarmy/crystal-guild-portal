@@ -1,8 +1,13 @@
 # Crystal Guild Web History
 
+## v1.3.0 — Guild Expansion RC1
+- Feature-frozen release candidate for the complete Guild Expansion line.
+- Normalizes release identity and Player Guide major-facility terminology while preserving all Beta behavior.
+- Pairs with the RC1 Bot; schema 9 / sync 1 / Portal protocol 22 remain unchanged.
+
 ## v1.3.0 — Guild Expansion Beta 3
 - Pairs with the Beta 3 Bot for shared Fellowship/Airship hardening.
-- Fellowship contribution actions now carry the rendered project ID so stale tabs cannot donate to a newly selected project.
+- Fellowship contribution actions carry the rendered project ID so stale tabs cannot donate to a newly selected project.
 - Preserves the Beta 2 priority/mobile Fellowship layout and Beta 1 economy; schema 9 / sync 1 unchanged, Portal protocol advances to 22.
 
 ## v1.3.0 — Guild Expansion Beta 2

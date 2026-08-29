@@ -9,6 +9,8 @@ import { number, pct, timeAgo } from "../utils/formatters.js";
 function projectTypeLabel(project) {
   if (project?.project_type === "supply_drive") return "Supply Drive";
   if (project?.project_type === "guild_objective") return "Guild Objective";
+  if (project?.project_type === "airship_construction") return "Airship Construction";
+  if (project?.project_type === "airship_upgrade") return "Airship Upgrade";
   return project?.teaser ? "Guild Project" : "Construction";
 }
 
@@ -117,7 +119,7 @@ export default function FellowshipPage() {
               <div>
                 <p className="eyebrow">Crystal Guild Fellowship</p>
                 <h1>The Fellowship</h1>
-                <p className="lede">One Guild, built by the entire community. Complete Guild projects, raise shared facilities, and work toward the future Airship Dock while every hero builds their own Guild standing.</p>
+                <p className="lede">One Guild, built by the entire community. Raise shared facilities, complete Guild projects, and send the Fellowship Airship on missions powered by normal play.</p>
               </div>
               <aside className="fellowship-level-card" aria-label="Fellowship level">
                 <span>Fellowship</span>
@@ -131,7 +133,7 @@ export default function FellowshipPage() {
               <div className="fellowship-summary"><span>Members</span><strong>{number(data.member_count)}</strong><small>registered Fellowship heroes</small></div>
               <div className="fellowship-summary"><span>Guild Facilities</span><strong>{number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 5)}</strong><small>major facilities established</small></div>
               <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)}</strong><small>community objectives</small></div>
-              <div className="fellowship-summary"><span>Contributed</span><strong>{number(data.totals?.gil_donated)}g</strong><small>{number(data.totals?.materials_donated)} materials</small></div>
+              <div className="fellowship-summary"><span>Guild Airship</span><strong>{data.airship?.built ? (data.airship?.active_mission ? "Away" : "Ready") : "Building"}</strong><small>{data.airship?.built ? `${number(data.airship?.missions_completed)} missions completed` : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</small></div>
             </div>
 
             <ProjectCard project={data.active_project} />
@@ -150,7 +152,7 @@ export default function FellowshipPage() {
             <section className="panel fellowship-section fellowship-services">
               <div className="panel-title-row">
                 <div><span className="panel-kicker">Guild Services &amp; Workshop</span><h2>Facility Services</h2></div>
-                <span className="small-badge">Alpha 3</span>
+                <span className="small-badge">Guild Services</span>
               </div>
               <p className="muted">Facility levels now provide practical Guild services without replacing normal character progression.</p>
               <div className="fellowship-service-grid">
@@ -158,6 +160,72 @@ export default function FellowshipPage() {
                 <article><span>Chocobo Stables</span><strong>+{number(data.services?.chocobo_stable?.xp_bonus * 100)}% Bond XP</strong><small>Applies automatically whenever your registered Chocobo earns XP.</small></article>
                 <article><span>Guild Archive</span><strong>+{Number((data.services?.archive?.rare_event_bonus || 0) * 100).toFixed(1)}% rare events</strong><small>Archive research modestly improves rare Expedition event chances.</small></article>
               </div>
+            </section>
+
+            <section className="panel fellowship-section fellowship-airship" aria-labelledby="guild-airship-title">
+              <div className="panel-title-row">
+                <div><span className="panel-kicker">Guild Airship</span><h2 id="guild-airship-title">{data.airship?.built ? "Crystal Guild Airship" : "Airship Construction"}</h2></div>
+                <span className="small-badge">{data.airship?.built ? (data.airship?.active_mission ? "MISSION ACTIVE" : "READY") : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</span>
+              </div>
+              {!data.airship?.built ? (
+                <div className="fellowship-airship-empty">
+                  <div>
+                    <strong>Build the Guild&apos;s shared Airship</strong>
+                    <p>Complete <b>Airship Dock Lv. 1</b>, then finish the <b>Crystal Guild Airship</b> Fellowship project. Once launched, normal Ventures, Hunts, Expeditions, crafting, and raids can support shared Airship missions.</p>
+                  </div>
+                  <span className="small-badge">Future missions unlock after construction</span>
+                </div>
+              ) : (
+                <>
+                  {data.airship?.active_mission ? (
+                    <article className={`fellowship-airship-active ${data.airship.active_mission.ready ? "ready" : ""}`}>
+                      <div>
+                        <span className="panel-kicker">Current Mission</span>
+                        <h3>{data.airship.active_mission.name}</h3>
+                        <p>{data.airship.active_mission.description}</p>
+                      </div>
+                      <div className="fellowship-airship-mission-status">
+                        <strong>{data.airship.active_mission.ready ? "Mission goal secured" : `${number(data.airship.active_mission.progress)} / ${number(data.airship.active_mission.target)} progress`}</strong>
+                        <ProgressBar value={pct(data.airship.active_mission.progress, data.airship.active_mission.target)} />
+                        <small>Returns in {data.airship.active_mission.duration_label} · {number(data.airship.active_mission.participant_count)} contributors</small>
+                      </div>
+                    </article>
+                  ) : (
+                    <div className="fellowship-airship-ready"><strong>Airship ready for deployment.</strong><span>The streamer can launch any unlocked mission from the Streamer Control Center or with <code>!airshipmission &lt;mission&gt;</code>.</span></div>
+                  )}
+
+                  <div className="fellowship-airship-grid">
+                    {(data.airship?.missions || []).map((mission) => (
+                      <article className={`fellowship-airship-mission ${mission.unlocked ? "" : "locked"}`} key={mission.id}>
+                        <span className="panel-kicker">{mission.unlocked ? "Mission" : `Crystal Core Tier ${number(mission.required_core)} Required`}</span>
+                        <h3>{mission.name}</h3>
+                        <p>{mission.description}</p>
+                        <small>{number(mission.target_effective)} progress · about {Math.max(1, Math.round(Number(mission.duration_seconds || 0) / 3600))}h · +{number(mission.guild_renown)} base Guild Renown</small>
+                      </article>
+                    ))}
+                  </div>
+
+                  <div className="fellowship-airship-upgrades">
+                    <div className="panel-title-row compact"><h3>Airship Upgrades</h3><span className="small-badge">Dock-gated · Tier 0–3</span></div>
+                    <div className="fellowship-airship-upgrade-grid">
+                      {(data.airship?.upgrades || []).map((upgrade) => (
+                        <article key={upgrade.id}><span>{upgrade.name}</span><strong>Tier {number(upgrade.tier)} / {number(upgrade.max_tier)}</strong><small>{upgrade.description}</small></article>
+                      ))}
+                    </div>
+                  </div>
+
+                  {(data.airship?.history || []).length ? (
+                    <details className="fellowship-airship-history">
+                      <summary><span><strong>Recent Airship Missions</strong><small>Last five resolved deployments</small></span></summary>
+                      <div>
+                        {data.airship.history.map((mission) => (
+                          <p key={mission.run_id}><strong>{mission.name}</strong> · {mission.outcome === "success" ? "Success" : "Failed"} · {number(mission.progress)}/{number(mission.target)} · {number(mission.participant_count)} contributors · {timeAgo(new Date(Number(mission.ended_at) * 1000).toISOString())}</p>
+                        ))}
+                      </div>
+                    </details>
+                  ) : null}
+                </>
+              )}
             </section>
 
             <details className="panel fellowship-details fellowship-expedition-board">

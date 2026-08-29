@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-a3"
-FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-a3"
+HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-a4"
+FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-a4"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 21
 ALLOWED_PORTAL_ACTIONS = {
@@ -46,6 +46,7 @@ STREAMER_COMMAND_SPECS = {
     "encounterdebug": "none",
     "directtest": "none",
     "fellowshipproject": "text",
+    "airshipmission": "text",
     "readyall": "none",
     "resettimers": "none",
     "clearadventures": "none",

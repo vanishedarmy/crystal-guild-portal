@@ -1,3 +1,7 @@
+# Crystal Guild v1.3.0 — Guild Expansion Alpha 4
+
+Adds the persistent Guild Airship: live Airship Dock construction, one-time Airship build project, six shared timed missions, five upgrade tracks, contributor rewards/history, streamer launch control, Fellowship/Guide surfaces, and schema-9 persistence. Runtime/frontend `1.3.0-guild-expansion-a4`; local DB schema 9, hosted sync 1, Portal protocol 21.
+
 # Crystal Guild v1.3.0 — Guild Expansion Alpha 3
 
 Adds Guild Services & Workshop: Workshop material refining, Chocobo Stable XP training bonuses, Guild Archive rare-Expedition-event research, Portal Fellowship service controls, and matching player Guide updates. Runtime/frontend `1.3.0-guild-expansion-a3`; schema 8, hosted sync 1; Portal protocol advances **20 → 21** for `WORKSHOP_EXCHANGE`.

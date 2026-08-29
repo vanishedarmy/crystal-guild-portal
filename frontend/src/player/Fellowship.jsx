@@ -78,6 +78,7 @@ export default function Fellowship({ data, onRefresh }) {
   const hasContributableRequirements = requirements.some((req) => Boolean(req.contributable));
   const services = liveState?.services || null;
   const workshop = services?.workshop || null;
+  const airship = liveState?.airship || null;
   const workshopExchanges = Array.isArray(workshop?.exchanges) ? workshop.exchanges : [];
 
   const loadState = useCallback(async ({ quiet = false } = {}) => {
@@ -374,6 +375,28 @@ export default function Fellowship({ data, onRefresh }) {
               })}
             </div>
           )}
+        </section>
+      ) : null}
+
+      {isOwnProfile && airship ? (
+        <section className="panel fellowship-member-airship span-12">
+          <div className="panel-title-row">
+            <div><span className="panel-kicker">Shared Guild Activity</span><h2>Guild Airship</h2></div>
+            <span className="small-badge">{airship.built ? (airship.active_mission ? "MISSION ACTIVE" : "READY") : `Dock Lv. ${number(airship.dock_level || 0)} / 3`}</span>
+          </div>
+          {!airship.built ? (
+            <p className="muted">The Fellowship is still constructing its Airship. Airship Dock Lv. 1 opens the Crystal Guild Airship project.</p>
+          ) : airship.active_mission ? (
+            <div className="fellowship-member-airship-active">
+              <div><span className="slot-label">Current Mission</span><h3>{airship.active_mission.name}</h3><p>{airship.active_mission.description}</p></div>
+              <div><div className="vital-label"><span>{airship.active_mission.ready ? "Goal secured" : "Mission progress"}</span><span>{number(airship.active_mission.progress)} / {number(airship.active_mission.target)}</span></div><ProgressBar value={pct(airship.active_mission.progress, airship.active_mission.target)} /><small>Returns in {airship.active_mission.duration_label} · {number(airship.active_mission.participant_count)} contributors</small></div>
+            </div>
+          ) : (
+            <p className="muted">The Airship is ready. Normal Guild play contributes automatically once the streamer launches an unlocked mission.</p>
+          )}
+          <div className="fellowship-member-airship-upgrades">
+            {(airship.upgrades || []).map((upgrade) => <span key={upgrade.id}><b>{upgrade.name}</b> T{number(upgrade.tier)}</span>)}
+          </div>
         </section>
       ) : null}
 

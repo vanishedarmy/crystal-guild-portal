@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
+    name: "Guild Expansion Alpha 4",
+    title: "The Crystal Guild Airship takes flight",
+    summary: "Build the shared Airship, launch Guild-scale missions, and improve it through five Dock-gated upgrade tracks powered by normal community play.",
+    highlights: [
+      { title: "Build the Airship", description: "Airship Dock Lv. 1 opens the Crystal Guild Airship construction project; higher Dock levels enable stronger upgrade tiers." },
+      { title: "Shared Airship Missions", description: "Merchant Escort, Monster Suppression, Aether Survey, and advanced missions draw progress from Ventures, Hunts, Expeditions, crafting, treasure, and raids while the Airship is away." },
+      { title: "Mission rewards", description: "Successful returns grant shared Fellowship Renown and modest personal Gil/Renown rewards to heroes who contributed mission progress." },
+      { title: "Five upgrade tracks", description: "Hull, Engine, Cargo Hold, Survey Array, and Crystal Core improve mission pressure, travel time, rewards, or advanced mission access." },
+      { title: "One Guild system", description: "The Airship connects existing Crystal Guild activities instead of creating a separate sky-Expedition minigame." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+  {
+    version: "v1.3.0",
     name: "Guild Expansion Alpha 3",
     title: "Guild facilities now provide real services",
     summary: "Workshop refining, Chocobo training, and Guild Archive research turn facility levels into useful everyday Guild benefits.",

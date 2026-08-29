@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("Arsenal II publishes the expanded ability curve to the shared Guide catalog", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.3.0 — Guild Expansion Alpha 3");
+  assert.equal(data.meta.version, "v1.3.0 — Guild Expansion Alpha 4");
   assert.equal(data.active_abilities.blackmage.length, 12);
   assert.equal(data.active_abilities.whitemage.length, 12);
   assert.equal(data.active_abilities.warrior.length, 8);
@@ -65,6 +65,6 @@ test("Player Guide release identity comes from the shared header and uses Expedi
   assert.doesNotMatch(guide, /Cloud Continuity/);
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
-  assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 3"/);
-  assert.match(version, /1\.3\.0-guild-expansion-a3/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 4"/);
+  assert.match(version, /1\.3\.0-guild-expansion-a4/);
 });

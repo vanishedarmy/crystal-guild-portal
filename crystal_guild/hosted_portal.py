@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-b2"
-FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-b2"
+HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-b3"
+FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-b3"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 21
+ACTION_PROTOCOL_VERSION = 22
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -663,8 +663,11 @@ class HostedPortalStore:
             if payload:
                 raise ValueError("FELLOWSHIP_STATE does not accept parameters.")
         elif kind == "CONTRIBUTE_GIL":
-            if set(payload) != {"amount"}:
-                raise ValueError("CONTRIBUTE_GIL requires only amount.")
+            if set(payload) != {"amount", "project_id"}:
+                raise ValueError("CONTRIBUTE_GIL requires amount and project_id.")
+            project_id = str(payload.get("project_id") or "").strip()
+            if not project_id or len(project_id) > 96 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", project_id):
+                raise ValueError("CONTRIBUTE_GIL project_id is invalid.")
             amount = payload.get("amount")
             if isinstance(amount, bool):
                 raise ValueError("Invalid Fellowship Gil amount.")
@@ -674,10 +677,13 @@ class HostedPortalStore:
                 raise ValueError("Invalid Fellowship Gil amount.") from None
             if amount < 1 or amount > 1_000_000:
                 raise ValueError("Fellowship Gil amount must be between 1 and 1,000,000.")
-            payload = {"amount": amount}
+            payload = {"amount": amount, "project_id": project_id}
         elif kind == "CONTRIBUTE_ITEM":
-            if set(payload) != {"item_id", "quantity"}:
-                raise ValueError("CONTRIBUTE_ITEM requires only item_id and quantity.")
+            if set(payload) != {"item_id", "quantity", "project_id"}:
+                raise ValueError("CONTRIBUTE_ITEM requires item_id, quantity, and project_id.")
+            project_id = str(payload.get("project_id") or "").strip()
+            if not project_id or len(project_id) > 96 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", project_id):
+                raise ValueError("CONTRIBUTE_ITEM project_id is invalid.")
             item_id = str(payload.get("item_id") or "").strip()
             if not item_id or len(item_id) > 100 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", item_id):
                 raise ValueError("Invalid Fellowship item ID.")
@@ -690,7 +696,7 @@ class HostedPortalStore:
                 raise ValueError("Invalid Fellowship item quantity.") from None
             if quantity < 1 or quantity > 999:
                 raise ValueError("Fellowship item quantity must be between 1 and 999.")
-            payload = {"item_id": item_id, "quantity": quantity}
+            payload = {"item_id": item_id, "quantity": quantity, "project_id": project_id}
         elif kind == "WORKSHOP_EXCHANGE":
             if set(payload) != {"exchange_id", "batches"}:
                 raise ValueError("WORKSHOP_EXCHANGE requires only exchange_id and batches.")

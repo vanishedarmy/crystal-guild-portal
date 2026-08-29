@@ -1,51 +1,39 @@
-# Crystal Guild v1.3.0 — Guild Expansion Beta 2
-## Fellowship UX & Mobile Consolidation
+# Crystal Guild v1.3.0 — Guild Expansion Beta 3
 
-Beta 2 keeps the v1.3 feature set and Beta 1 balance frozen while making the expanded Fellowship substantially easier to scan on desktop and mobile.
+## Shared-State Hardening & Stability
 
-## Current Guild priorities first
-The top Fellowship snapshot now answers the four questions players are most likely to have:
-- What Guild project is active?
-- What is the Airship doing?
-- How many Weekly Orders are complete?
-- What Legacy stage has the Guild reached?
+Beta 3 keeps the v1.3 feature set and Beta 1 balance frozen while hardening the shared Fellowship/Airship mutation paths used by multiple players, browser tabs, reconnects, and the streamer controls.
 
-The full active project, live Airship state, and Weekly Orders remain high in the page flow. Facilities and long-term reference ledgers no longer push current activity down the page.
+### Fellowship contribution safety
+- Guild contributions now recompute the live remaining requirement while holding the authoritative Guild write lock. Simultaneous contributors cannot overfill a requirement or lose more Gil/materials than the project still needs.
+- The final contribution, contribution Renown, project completion, facility/Airship upgrade, shared reward, Fellowship level synchronization, Orders/Deeds, and Legacy settlement complete beneath one outer transaction.
+- Active-project selection is validated and changed under the same serialized Guild lock, preventing a project switch from splitting a just-completed requirement from its upgrade/reward.
+- Portal contribution actions now carry the `project_id` that was visible in the player's Fellowship tab. If the streamer changed projects before the action arrives, the contribution fails closed and returns refreshed Fellowship state instead of donating to the wrong project.
 
-## Remembered Fellowship disclosures
-The following secondary areas can stay open or closed independently, with that choice remembered in the browser:
-- Guild Facilities
-- Facility Services
-- Airship mission catalog / upgrade tracks / recent history
-- Expedition Guild Board
-- Available Guild Work
-- Legacy Goals
-- Fellowship Deeds
+### Multi-tab / replay safety
+- Fellowship Portal mutations re-check the bounded Portal replay receipt after obtaining the write lock. Two tabs/retries that arrive before the first acknowledgement commits can no longer both execute the same mutation.
+- Existing replay-safe Workshop actions inherit the same stronger locked re-check.
 
-On narrow phone layouts, secondary information starts compact by default unless that browser already has a saved preference.
+### Airship hardening
+- Airship mission launch is serialized and conditionally starts only while no other run is active. Concurrent streamer launch requests cannot overwrite one another.
+- Due mission settlement re-reads the active run inside the write transaction and scopes cleanup to that exact run ID.
+- Guild Renown, contributor Gil/personal Renown, mission history, completion counters, and replay receipts settle together.
+- Restart/reconnect settlement remains automatic and cannot duplicate contributor rewards or clear a newer mission.
 
-## Airship and Legacy consolidation
-- Current Airship mission/ready/building state remains visible.
-- Mission catalog, upgrade tracks, and mission history move behind one Airship detail control.
-- Current Guild Hall Legacy stage and earned trophy shelf remain visible.
-- The full permanent accomplishment ledger moves behind a Legacy Goals disclosure.
+### Player-facing behavior
+- What's New explains the reliability changes without exposing internal database/transaction terminology.
+- The Beta 2 Fellowship priority layout, remembered disclosures, Founding Hall portrait art, collapsible Equipment inventory groups, Beta 1 economy tuning, Alpha 3 services, Airship formulas, Weekly Order payouts, and Guild Legacy targets are unchanged.
 
-## Mobile & accessibility
-- Priority cards stack cleanly through tablet and narrow-phone widths.
-- Fellowship disclosure summaries retain at least 44px interaction targets and 48px on coarse-pointer devices.
-- Keyboard focus is clearly visible on expandable areas.
-- Long labels, badges, and Guild status text wrap instead of causing horizontal overflow.
-
-## Feature freeze
-No Guild economy, Weekly Order reward, Workshop service, facility requirement, Airship mission, Airship upgrade, Legacy threshold, Expedition, or combat value changes are included.
-
-## Compatibility
-- Hosted Web runtime: `1.3.0-guild-expansion-b2`
-- Frontend asset revision: `1.3.0-guild-expansion-b2`
-- Compatible Bot runtime: `1.3.0-guild-expansion-b1`
-- Local DB schema: **9**
-- Hosted sync schema: **1**
-- Portal Action protocol: **21**
+### Compatibility
+- Bot runtime: `1.3.0-guild-expansion-b3`
+- Hosted Web runtime: `1.3.0-guild-expansion-b3`
+- Frontend asset revision: `1.3.0-guild-expansion-b3`
+- Local DB schema: **9** unchanged
+- Hosted sync schema: **1** unchanged
+- Portal Action protocol: **22** (advanced from 21 for project-bound Fellowship contributions)
 - Twitch prefix: `!`
 - Player reset: **none**
-- Database migration: **none**
+- New environment variables: **none**
+- OAuth changes: **none**
+
+Because the Portal Action protocol advances, deploy the Beta 3 Web and Bot together.

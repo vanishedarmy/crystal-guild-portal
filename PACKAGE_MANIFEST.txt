@@ -1,19 +1,19 @@
-Crystal Guild v1.3.0 — Guild Expansion Beta 2 Web
+Crystal Guild v1.3.0 — Guild Expansion Beta 3 Web
 
 Runtime identity
-- Hosted Web: 1.3.0-guild-expansion-b2
-- Frontend assets: 1.3.0-guild-expansion-b2
-- Compatible Bot: 1.3.0-guild-expansion-b1
+- Hosted Web: 1.3.0-guild-expansion-b3
+- Frontend assets: 1.3.0-guild-expansion-b3
+- Compatible Bot: 1.3.0-guild-expansion-b3
 - Local DB schema: 9
 - Hosted sync schema: 1
-- Portal Action protocol: 21
+- Portal Action protocol: 22
 - Twitch prefix: !
 
 Scope
-- Fellowship action-first priority hierarchy
-- Browser-persistent Fellowship secondary disclosures
-- Consolidated Airship mission/upgrade/history detail
-- Collapsible Legacy goal ledger while trophy shelf remains visible
-- Narrow-phone/touch/keyboard Fellowship polish
+- Serialized simultaneous Fellowship contribution handling
+- Project-bound contribution requests that fail closed from stale tabs
+- Locked Portal replay re-checks for multi-tab/retry safety
+- Serialized Airship mission launch and exact-run return settlement
+- Beta 1 economy tuning and Beta 2 Fellowship UX preserved unchanged
 
 No gameplay balance change, schema migration, or player reset.

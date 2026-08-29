@@ -6,7 +6,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
 
-test("Guild Expansion Beta 2 exposes Supply Drives, Guild Objectives, and Order rewards", () => {
+test("Guild Expansion Beta 3 exposes Supply Drives, Guild Objectives, and Order rewards", () => {
   const page = read("src/pages/FellowshipPage.jsx");
   const guide = read("public/guide-body.html");
   const whatsNew = read("src/player/whatsNewData.js");
@@ -20,14 +20,14 @@ test("Guild Expansion Beta 2 exposes Supply Drives, Guild Objectives, and Order 
   assert.match(guide, /Supply Drives/);
   assert.match(guide, /Guild Objectives/);
   assert.match(guide, /personal Gil and Fellowship Renown reward/);
-  assert.match(whatsNew, /name: "Guild Expansion Beta 2"/);
+  assert.match(whatsNew, /name: "Guild Expansion Beta 3"/);
 });
 
 test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
-  assert.match(version, /WEB_BUILD = "Guild Expansion Beta 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-b2"/);
-  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion Beta 2");
-  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-b2");
+  assert.match(version, /WEB_BUILD = "Guild Expansion Beta 3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-b3"/);
+  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion Beta 3");
+  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-b3");
 });

@@ -160,7 +160,7 @@ export default function Fellowship({ data, onRefresh }) {
     }
     runMutation(
       "contribute:gil",
-      () => submitFellowshipGil(amount, csrfToken, actionKey("fellowship-gil", amount)),
+      () => submitFellowshipGil(amount, project.id, csrfToken, actionKey("fellowship-gil", `${project.id}:${amount}`)),
       `Contributed ${number(amount)} Gil.`,
     );
   };
@@ -174,7 +174,7 @@ export default function Fellowship({ data, onRefresh }) {
     }
     runMutation(
       `contribute:item:${req.asset_id}`,
-      () => submitFellowshipItem(req.asset_id, amount, csrfToken, actionKey("fellowship-item", `${req.asset_id}:${amount}`)),
+      () => submitFellowshipItem(req.asset_id, amount, project.id, csrfToken, actionKey("fellowship-item", `${project.id}:${req.asset_id}:${amount}`)),
       `Contributed ${req.label} x${number(amount)}.`,
     );
   };

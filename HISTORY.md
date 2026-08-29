@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.3.0 — Guild Expansion Beta 3
+- Pairs with the Beta 3 Bot for shared Fellowship/Airship hardening.
+- Fellowship contribution actions now carry the rendered project ID so stale tabs cannot donate to a newly selected project.
+- Preserves the Beta 2 priority/mobile Fellowship layout and Beta 1 economy; schema 9 / sync 1 unchanged, Portal protocol advances to 22.
+
 ## v1.3.0 — Guild Expansion Beta 2
 - Web-only Fellowship UX & Mobile Consolidation pass.
 - Reorders the public Fellowship page around Current Project, Airship status, Weekly Orders, and Guild Legacy before secondary reference detail.

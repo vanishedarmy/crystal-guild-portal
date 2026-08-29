@@ -1,48 +1,47 @@
-# Crystal Guild v1.3.0 — Guild Expansion Beta 2 Validation Report
+# Crystal Guild v1.3.0 — Guild Expansion Beta 3 Validation Report
 
 ## Result
 **PASS**
 
 ## Automated suites
-- Frontend Node regression suite: **352 / 352 PASS**.
-- Hosted Web/API Python suite: **47 / 47 PASS**.
-- Compatible Beta 1 Bot Python suite: **475 / 475 PASS**.
-- New Beta 2 Fellowship UX regressions: **3 / 3 PASS** (included in frontend total).
+- Bot Python unittest suite: **482 / 482 PASS**.
+- Frontend Node regression suite: **354 / 354 PASS**.
+- Hosted Web/API Python unittest suite: **47 / 47 PASS**.
+- Focused Beta 3 shared-state hardening suite: **7 / 7 PASS** (included in Bot total).
 
-The compatible Bot test log includes intentional simulated Twitch outages, acknowledgement-loss recovery, temporary live/subscription lookup failures, and runtime-checkpoint recovery scenarios. Those tests pass and are not Beta 2 failures.
+The Bot log includes intentional simulated acknowledgement loss, temporary Twitch/live-status failures, and runtime-checkpoint recovery cases. Those scenarios pass and are not Beta 3 failures.
 
-## Beta 2 UX coverage
-- Current Project, Guild Airship, Weekly Orders, and Guild Legacy are the first Fellowship status cards.
-- CSS reading order keeps the detailed active project, live Airship state, and Weekly Orders above secondary Guild reference sections.
-- Guild Facilities and Facility Services are browser-persistent disclosures.
-- Expedition Guild Board, Available Guild Work, Airship catalog/upgrades/history, Legacy Goals, and Fellowship Deeds preserve their disclosure state in local storage.
-- Current Airship mission/ready state remains visible even when deep Airship reference detail is collapsed.
-- Current Legacy Hall stage and trophy shelf remain visible even when the accomplishment ledger is collapsed.
-- Narrow-phone layouts collapse secondary content, stack priority cards, and wrap long Guild labels without horizontal overflow.
-- Fellowship disclosure controls retain visible keyboard focus and minimum 44px / coarse-pointer 48px interaction targets.
+## Beta 3 hardening coverage
+- Simultaneous Guild contributions recompute the live remaining requirement under the serialized Guild mutation lock, preventing overfill and excess resource deduction.
+- Near-simultaneous executions of the same Portal action ID re-check replay state after obtaining the write lock and mutate Fellowship state once.
+- Fellowship contribution actions carry the project ID the player actually had open. If the streamer has changed projects, the stale action fails closed instead of donating to the replacement project.
+- Project selection and project-completion finalization are serialized so facility/reward settlement cannot split from the completed requirement.
+- Concurrent Airship mission launch requests create only one active run.
+- Due Airship missions survive restart/reconnect, settle exactly once, and cannot duplicate contributor rewards.
+- Airship settlement cleanup is scoped to the exact active run ID so stale work cannot clear a newer mission.
 
 ## Source validation
-- Python source compilation: **88 / 88 PASS** across Web + compatible Bot source trees.
-- Frontend JS/JSX TypeScript-parser sweep: **65 / 65 PASS**.
-- Plain JS/MJS `node --check`: **142 / 142 PASS**.
-- Literal static/artwork route audit: **154 routes checked / 0 missing**.
+- Python source compilation: **89 / 89 PASS** across Beta 3 Web + Bot source trees.
+- Frontend JS/JSX TypeScript-parser sweep: **67 / 67 PASS**.
+- Plain JS/MJS `node --check`: **145 / 145 PASS**.
+- Explicit literal image/font route audit: **145 routes checked / 0 missing**. Dynamic template routes are covered by the existing frontend artwork regression suites.
 
-## Compatibility
-- Hosted Web runtime: `1.3.0-guild-expansion-b2`
-- Frontend asset revision: `1.3.0-guild-expansion-b2`
-- Compatible Bot runtime: `1.3.0-guild-expansion-b1`
-- Local DB schema: **9**
-- Hosted sync schema: **1**
-- Portal Action protocol: **21**
-- Twitch prefix: `!`
-- Database migration: **none**
-- Player reset: **none**
-- OAuth change: **none**
-- New environment variables: **none**
+## Continuity
+- Beta 1 Guild economy tuning remains unchanged.
+- Beta 2 Fellowship UX/mobile consolidation remains unchanged.
+- Alpha 5 Hotfix 1 Founding Hall portrait and collapsible Equipment inventory groups remain intact.
+- Local DB schema: **9** unchanged.
+- Hosted sync schema: **1** unchanged.
+- Portal Action protocol: **22** (advanced from 21 only for project-bound Fellowship contribution safety).
+- Twitch prefix: `!`.
+- Database migration: **none**.
+- Player reset: **none**.
+- OAuth change: **none**.
+- New environment variables: **none**.
 
 ## Final package verification
-- Beta 1 → Beta 2 Web patch: **39 changed/new files, 0 deletions**; reconstructs **804 / 804** final Web files exactly.
-- Compatible Beta 1 Bot tree: **145 / 145 files unchanged byte-for-byte** from Beta 1.
-- ZIP CRC/integrity: **4 / 4 PASS**.
+- Beta 1 Bot → Beta 3 Bot patch: **21 changed/new files, 0 deletions**; reconstructs **146 / 146** final Bot files exactly.
+- Beta 2 Web → Beta 3 Web patch: **38 changed/new files, 0 deletions**; reconstructs **805 / 805** final Web files exactly.
+- ZIP CRC/integrity: **6 / 6 PASS**.
 - Runtime/private-artifact hygiene: **0 violations** across all release archives.
 - SHA-256 checksum verification: **PASS**.

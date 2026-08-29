@@ -117,12 +117,12 @@ export function submitFellowshipState(csrfToken, idempotencyKey) {
   return submitPortalAction("FELLOWSHIP_STATE", {}, csrfToken, idempotencyKey);
 }
 
-export function submitFellowshipGil(amount, csrfToken, idempotencyKey) {
-  return submitPortalAction("CONTRIBUTE_GIL", { amount }, csrfToken, idempotencyKey);
+export function submitFellowshipGil(amount, projectId, csrfToken, idempotencyKey) {
+  return submitPortalAction("CONTRIBUTE_GIL", { amount, project_id: projectId }, csrfToken, idempotencyKey);
 }
 
-export function submitFellowshipItem(itemId, quantity, csrfToken, idempotencyKey) {
-  return submitPortalAction("CONTRIBUTE_ITEM", { item_id: itemId, quantity }, csrfToken, idempotencyKey);
+export function submitFellowshipItem(itemId, quantity, projectId, csrfToken, idempotencyKey) {
+  return submitPortalAction("CONTRIBUTE_ITEM", { item_id: itemId, quantity, project_id: projectId }, csrfToken, idempotencyKey);
 }
 
 export function submitWorkshopExchange(exchangeId, batches, csrfToken, idempotencyKey) {

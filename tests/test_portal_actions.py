@@ -479,8 +479,8 @@ class PortalActionServerCase(unittest.TestCase):
     def test_phase_six_accepts_only_typed_fellowship_contribution_actions(self):
         for action_type, payload, key in (
             ("FELLOWSHIP_STATE", {}, "fellowship-state"),
-            ("CONTRIBUTE_GIL", {"amount": 5000}, "fellowship-gil"),
-            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 3}, "fellowship-item"),
+            ("CONTRIBUTE_GIL", {"amount": 5000, "project_id": "guild_hall_t2"}, "fellowship-gil"),
+            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 3, "project_id": "guild_hall_t2"}, "fellowship-item"),
             ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 2}, "workshop-exchange"),
         ):
             status, response, _ = self.request(
@@ -498,13 +498,15 @@ class PortalActionServerCase(unittest.TestCase):
         invalid = (
             ("FELLOWSHIP_STATE", {"unexpected": True}),
             ("CONTRIBUTE_GIL", {}),
-            ("CONTRIBUTE_GIL", {"amount": 0}),
-            ("CONTRIBUTE_GIL", {"amount": 1000001}),
-            ("CONTRIBUTE_GIL", {"amount": 100, "command": "!readyall"}),
-            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 0}),
-            ("CONTRIBUTE_ITEM", {"item_id": "hi potion", "quantity": 1}),
-            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1000}),
-            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1, "command": "!readyall"}),
+            ("CONTRIBUTE_GIL", {"amount": 0, "project_id": "guild_hall_t2"}),
+            ("CONTRIBUTE_GIL", {"amount": 1000001, "project_id": "guild_hall_t2"}),
+            ("CONTRIBUTE_GIL", {"amount": 100, "project_id": "guild hall"}),
+            ("CONTRIBUTE_GIL", {"amount": 100, "project_id": "guild_hall_t2", "command": "!readyall"}),
+            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 0, "project_id": "guild_hall_t2"}),
+            ("CONTRIBUTE_ITEM", {"item_id": "hi potion", "quantity": 1, "project_id": "guild_hall_t2"}),
+            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1000, "project_id": "guild_hall_t2"}),
+            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1, "project_id": "guild hall"}),
+            ("CONTRIBUTE_ITEM", {"item_id": "hi_potion", "quantity": 1, "project_id": "guild_hall_t2", "command": "!readyall"}),
             ("WORKSHOP_EXCHANGE", {"exchange_id": "refine mythril", "batches": 1}),
             ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 0}),
             ("WORKSHOP_EXCHANGE", {"exchange_id": "refine_mythril", "batches": 21}),

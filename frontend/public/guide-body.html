@@ -539,6 +539,14 @@
        <div class="card"><h3>Respect Device Preferences</h3><p>Reduced motion, increased contrast, forced-colors mode, device safe areas, and 16px mobile form text are handled directly without changing gameplay.</p></div>
       </div>
 
+      <h3>Beta 4 Release Hardening</h3>
+      <div class="grid two">
+       <div class="card"><h3>Persistent Runs Stay Authoritative</h3><p>Long Rest and stream-start refreshes do not restore HP, MP, or AP through an active Wayfarer or distant Expedition. Leaving the Portal or restarting the Bot does not bypass the run's resource pressure.</p></div>
+       <div class="card"><h3>Replay-Safe Adventure Mutations</h3><p>Persistent Expedition Portal actions commit the gameplay change and replay receipt together, preventing a lost acknowledgement or browser retry from duplicating stage progress, cache banking, Hunt Seals, or rewards.</p></div>
+       <div class="card"><h3>Restart Recovery</h3><p>Expedition stage, route, cache, Journal, and saved run state remain database-authoritative across reconnects and Bot restarts.</p></div>
+       <div class="card"><h3>Upgrade Continuity</h3><p>The pre-v1.2 schema-7 path is validated into schema 8 with player progression, inventory, resources, Chocobo data, and the verified migration backup preserved.</p></div>
+      </div>
+
       <h3>Important Rules</h3>
       <div class="grid two">
        <div class="card"><h3>One Active Adventure</h3><p>An active Expedition locks conflicting adventure activity and equipment changes until you return, are rescued, or the streamer uses an emergency clear.</p></div>

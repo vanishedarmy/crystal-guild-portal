@@ -86,10 +86,10 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
 });
 
 
-test("What's New is updated for Expeditions Beta 3 while retaining Beta 1 through Alpha 2 history", async () => {
+test("What's New is updated for Expeditions Beta 4 while retaining Beta 1 through Alpha 2 history", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const latest = data.slice(0, data.indexOf('name: "Expeditions Alpha 5"'));
-  assert.match(latest, /Expeditions Beta 3/);
+  assert.match(latest, /Expeditions Beta 4/);
   assert.match(data, /Expeditions Beta 1/);
   assert.match(latest, /Safe routes are mechanically safer/);
   assert.match(latest, /Push Deeper earns its risk label/);

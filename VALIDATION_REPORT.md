@@ -1,40 +1,38 @@
-# Validation Report — Crystal Guild v1.2.0 Expeditions Beta 3
+# Validation Report — Crystal Guild v1.2.0 Expeditions Beta 4
 
-## Result
-**PASS — Mobile & Accessibility Polish validated.**
+## Automated suites
+- Bot Python unittest suite: **443 / 443 PASS**
+- Hosted Web/API Python suite: **47 / 47 PASS**
+- Frontend Node regression suite: **324 / 324 PASS**
+- Python compile sweep: **PASS**
+- JS/JSX source parse sweep: **PASS**
 
-## Automated validation
-- Frontend Node regression suite: **321 / 321 PASS**.
-- Hosted Web/API Python suite: **47 / 47 PASS**.
-- Compatible Beta 1 Bot suite: **437 / 437 PASS**.
-- Python compilation: **PASS**.
-- TypeScript parser: **65 / 65 JS/JSX source files PASS**.
-- PostCSS parse: **Portal, Player Guide, and Streamer CSS PASS**.
-- Dedicated Beta 3 mobile/accessibility regression: **PASS**.
-
-## Beta 3 coverage
-- 44px coarse-pointer touch targets and `touch-action: manipulation`.
-- Dynamic-viewport detail-dialog sizing and safe-area insets.
-- Mobile form text at 16px and small-phone/landscape responsive rules.
-- Profile, Moogle Emporium, and Blacksmith roving keyboard tab navigation using Arrow/Home/End.
-- Explicit tabpanel labelling and visible focus treatment.
-- Detail-dialog content labels and Escape close path.
-- Mobile menu Escape focus return.
-- `prefers-contrast: more`, `forced-colors: active`, and `prefers-reduced-motion: reduce` support across Portal, Guide, and Streamer surfaces.
-- Beta 2 current-viewport detail behavior, portrait backgrounds, and duplicate-airship cleanup retained.
-
-## Patch / package validation
-- Beta 2 Hotfix 2 → Beta 3 Web patch: **36 changed/new files, 0 deletions**.
-- Patch reproduction against the clean Beta 2 Hotfix 2 Web tree: **PASS — 793 final files matched exactly**.
-- Runtime/secret hygiene: **PASS after packaging exclusions**; no live `.env`, token stores, SQLite runtime files, logs, bytecode, caches, or `node_modules` are included. Example environment templates remain documentation.
-- A local Vite production bundle is not run because release packages intentionally omit `node_modules`; source parsing and the complete frontend regression suite are clean.
+## Beta 4 hardening coverage
+- Active persistent Expedition blocks direct Long Rest refresh.
+- Long Rest daemon sweep skips active persistent runs.
+- Twitch stream-start roster refresh skips active persistent runs and remains once-per-stream idempotent.
+- Expedition state/cache/Journal survive full Database + Engine restart.
+- Forced Portal replay-receipt failure rolls back an Expedition stage mutation.
+- Forced replay-receipt failure during Expedition completion rolls back cache banking, rewards, Hunt Seals, result persistence, and run deletion.
+- Retrying the same completed Portal action returns the stored result without duplicating progression/rewards.
+- Representative schema-7 player progression migrates to schema 8 with verified pre-schema-8 backup.
+- Player Guide metadata matches authoritative 60/30 Venture and 90/60 Raid timing defaults.
+- Existing simulated Twitch outage, acknowledgement-loss, token failure, reconnect/runtime checkpoint, database-integrity, and synthetic stress regressions remain passing.
 
 ## Compatibility
-- Public product: **v1.2.0 — Expeditions Beta 3**
-- Hosted Web runtime: `1.2.0-expeditions-beta3`
-- Frontend asset revision: `1.2.0-expeditions-b3`
-- Compatible Bot runtime: `1.2.0-expeditions-b1`
-- Local DB schema: **8**
-- Hosted sync schema: **1**
-- Portal Action protocol: **20**
-- Migration/player reset: **none**
+- Bot runtime `1.2.0-expeditions-b4`
+- Hosted Web runtime `1.2.0-expeditions-beta4`
+- Frontend revision `1.2.0-expeditions-b4`
+- Local DB schema **8**
+- Hosted sync schema **1**
+- Portal Action protocol **20**
+- No player reset or new environment variable
+
+## Production bundle note
+The clean shipping Web source intentionally does not vendor `node_modules`; a local Vite production bundle is therefore not part of this release-environment validation. Hosted deployment installs the pinned dependencies normally. Source-level Node regressions, JS/JSX parsing, hosted Python tests, and package reproduction provide the release checks here.
+
+## Patch/package scope
+- Beta 1 Bot → Beta 4 Bot: **13 changed/new files, 0 deleted**; final Bot tree **136 files**.
+- Beta 3 Web → Beta 4 Web: **27 changed/new files, 0 deleted**; final Web tree **794 files**.
+- Direct patch reproduction is verified against clean Beta 1 Bot / Beta 3 Web baselines before release.
+- Runtime/private-artifact hygiene excludes live `.env`, token stores, SQLite runtime files, logs, Python bytecode/cache directories, and `node_modules`; documented `.env.example` templates remain included.

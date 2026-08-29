@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
+    name: "Expeditions Beta 4",
+    title: "Release hardening before RC1",
+    summary: "Beta 4 keeps the feature set frozen while hardening persistent Adventure state, replay safety, reconnect behavior, upgrade continuity, and release validation for the v1.2 candidate.",
+    highlights: [
+      { title: "Persistent runs keep their pressure", description: "Long Rest and stream-start roster refreshes no longer restore HP/MP/AP through an active Wayfarer or distant Expedition, including after reconnects or Bot restarts." },
+      { title: "Rewards and replay receipts commit together", description: "Persistent Adventure Portal mutations now commit stage/cache/reward writes and their replay receipt in one SQLite transaction, closing the acknowledgement-loss duplication window." },
+      { title: "Restart and reconnect recovery", description: "Saved Expedition stage, route, cache, Journal, and resource-pressure state are validated across a full database/engine restart." },
+      { title: "Old progression migrates forward", description: "The direct schema-7 pre-v1.2 path is smoke-tested into schema 8 with player level, XP, Gil, resources, inventory, Chocobo data, and verified backup continuity preserved." },
+      { title: "Feature freeze remains in force", description: "Beta 4 adds no new Expedition content, reward tier, currency, or balance layer; it is a stability checkpoint on the road to RC1." },
+    ],
+    action: { tab: "hunts", label: "Open Adventure Board" },
+  },
+  {
+    version: "v1.2.0",
     name: "Expeditions Beta 3",
     title: "The Portal is easier to use everywhere",
     summary: "Beta 3 keeps the feature set frozen while tightening mobile layouts, touch ergonomics, keyboard navigation, focus visibility, contrast support, and motion preferences across the Portal and Player Guide.",

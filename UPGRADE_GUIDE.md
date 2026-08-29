@@ -1,13 +1,17 @@
-# Upgrade Guide — Expeditions Beta 2 Hotfix 2 → Beta 3
+# Upgrade Guide — Crystal Guild v1.2.0 Expeditions Beta 4
 
-Beta 3 is a **Web-only** Mobile & Accessibility Polish release. The existing Beta 1 Bot remains compatible.
+## Recommended path from Beta 3
+Beta 3 used the Beta 1 Bot, so Beta 4 is a paired Web + Bot update.
 
-1. Back up the deployed Web tree as normal.
-2. Apply `CrystalGuild-v1.2.0-Expeditions-Beta3-Web-Patch-B2H2-to-B3.zip` over the current Beta 2 Hotfix 2 Web deployment, or deploy the full Beta 3 Web package.
-3. Redeploy the hosted Web service.
-4. Keep the existing `1.2.0-expeditions-b1` Bot running.
-5. Hard-refresh once so frontend asset revision `1.2.0-expeditions-b3` is loaded.
-6. On a phone/narrow browser, verify the compact header, Profile section selector, Adventure Board actions, detail dialog, Moogle/Blacksmith tabs, and Player Guide controls.
-7. With a keyboard, verify Arrow/Home/End navigation in desktop Profile tabs and the Moogle/Blacksmith tab controls.
+1. Back up the live database and persistent Twitch/token storage.
+2. Stop the Bot.
+3. Apply the **B1 → B4 Bot patch** or replace application files with the full Beta 4 Bot package, preserving `.env`, databases, and token storage.
+4. Apply the **B3 → B4 Web patch** or deploy the full Beta 4 Web package.
+5. Start the Bot and verify `!cgversion` reports `1.2.0-expeditions-b4`, schema 8, protocol 20.
+6. Verify `/api/health` reports Web `1.2.0-expeditions-beta4`, frontend `1.2.0-expeditions-b4`, hosted sync schema 1, protocol 20.
+7. Hard-refresh the Portal once so the Beta 4 release identity/Guide metadata is loaded.
 
-No database migration, player reset, OAuth reconfiguration, new environment variable, hosted sync change, or Portal protocol change is required.
+No migration is required from any v1.2 Alpha/Beta build already on schema 8.
+
+## Direct upgrade from v1.1.19 RC1 Hotfix 9
+The established v1.2 migration path remains supported. Preserve the H9 schema-7 database, replace the Bot/Web application files with the Beta 4 full packages, and start the Beta 4 Bot. Opening the schema-7 database applies migration 8 and creates/verifies a `pre_schema_8_<timestamp>.db` backup before structural migration. No player reset is required. H9's existing combat timing values remain valid.

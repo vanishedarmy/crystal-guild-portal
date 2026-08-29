@@ -1,0 +1,33 @@
+{
+  "release": "v1.3.1 — Asset Optimization UI Hotfix 1",
+  "frontend_asset_revision": "1.3.1-asset-optimization-ui1",
+  "assets": [
+    {
+      "file": "collapse-pointer-right.webp",
+      "path": "/ui/collapse-pointer-right.webp",
+      "width": 96,
+      "height": 96,
+      "bytes": 3162,
+      "usage": "Collapsed disclosure indicator"
+    },
+    {
+      "file": "collapse-pointer-down.webp",
+      "path": "/ui/collapse-pointer-down.webp",
+      "width": 96,
+      "height": 96,
+      "bytes": 4924,
+      "usage": "Expanded disclosure indicator"
+    },
+    {
+      "file": "rally_venture.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 147704,
+      "usage": [
+        "Adventure Board — Rally Venture"
+      ],
+      "format": "wide"
+    }
+  ]
+}

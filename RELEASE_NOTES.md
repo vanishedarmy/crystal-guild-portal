@@ -1,34 +1,32 @@
-# Crystal Guild v1.3.1 — Asset Optimization
+# Crystal Guild v1.3.1 — UI Shared Assets Hotfix 1
 
-## Maintenance Release
+## Web-only UI polish
 
-v1.3.1 reduces the shipped Crystal Guild footprint without changing gameplay, balance, progression, schemas, or Portal behavior.
+This Web-only hotfix builds on **v1.3.1 Asset Optimization**. It adds shared collapse-pointer artwork and the Rally Venture scene background without changing gameplay, balance, progression, schemas, Portal actions, or the compatible Bot.
 
-### Artwork optimization
-- Audited all **390** remaining PNG files in the shipped Web public asset tree.
-- Converted an asset only when **lossless WebP** was smaller than its PNG source. All 390 qualified.
-- PNG artwork total: **144.21 MiB**.
-- Replacement WebP total: **112.27 MiB**.
-- Raw artwork savings: **31.93 MiB (22.1%)** for the converted set.
-- Every conversion preserves dimensions, transparency, and decoded RGBA pixels exactly.
-- Existing WebP assets were also audited; they were left unchanged when repacking did not provide a meaningful reduction.
+### Shared collapsible controls
+- Adds a retro pixel pointer-hand pair for expanded and collapsed states.
+- Uses the shared pointers across Adventure Board section buttons, Fellowship disclosures, Moogle sell details, Job unlock requirements, What's New history, Streamer Dashboard groups, and Player Guide expandable sections.
+- Replaces text-chevron-only indicators where custom collapse controls were already present while keeping keyboard/focus behavior intact.
 
-### Runtime/reference cleanup
-- All active artwork mappings, manifests, CSS/HTML references, and frontend regression expectations now point to the optimized WebP assets.
-- The hosted static server already supports `image/webp`; PNG MIME support remains available for future/third-party assets.
-- Corrects two stale current-package version surfaces discovered during the audit: the Web package `__version__` and raid-overlay cache-busting revision.
-- Adds release regression coverage that fails if shipped public PNG artwork or stale current runtime identities return.
+### Rally Venture presentation
+- Adds a dedicated wide Rally Venture background to the Adventure Board.
+- Uses a dark readability treatment above the art so live status, rules, reward information, and active encounter content remain legible.
+
+### Asset discipline
+- New pointer PNG sources were cropped, reduced to 96×96 UI assets, and stored as lossless WebP.
+- Rally Venture artwork is stored as WebP; the shipping public tree remains **0 PNG**.
+- Frontend asset revision advances to `1.3.1-asset-optimization-ui1` for cache busting.
 
 ### Compatibility
-- Bot runtime: `1.3.1-asset-optimization`
+- Compatible Bot runtime: `1.3.1-asset-optimization`
 - Hosted Web runtime: `1.3.1-asset-optimization`
-- Frontend asset revision: `1.3.1-asset-optimization`
+- Frontend asset revision: `1.3.1-asset-optimization-ui1`
 - Local DB schema: **9** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **22** unchanged
 - Twitch prefix: `!`
 - Database migration: **none**
 - Player reset: **none**
-- OAuth changes: **none**
-- New environment variables: **none**
+- OAuth/environment changes: **none**
 - Gameplay/economy changes: **none**

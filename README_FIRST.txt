@@ -1,6 +1,6 @@
-Crystal Guild Web v1.3.1 — Asset Optimization
+Crystal Guild Web v1.3.1 — Asset Optimization UI Hotfix 1
 Hosted runtime: 1.3.1-asset-optimization
-Frontend asset revision: 1.3.1-asset-optimization
+Frontend asset revision: 1.3.1-asset-optimization-ui1
 Compatible Bot: 1.3.1-asset-optimization
 Local DB schema: 9
 Hosted sync schema: 1

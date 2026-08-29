@@ -18,11 +18,11 @@ function fellowshipSection(html) {
 
 test("Guild Expansion publishes one consistent final-release identity", () => {
   assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization-ui1"/);
   assert.equal(guideData.meta.version, "v1.3.1 — Guild Expansion");
   assert.equal(guideData.meta.release, "1.3.1-asset-optimization");
   assert.equal(manifest.release, "v1.3.1 — Guild Expansion");
-  assert.equal(manifest.frontend_asset_revision, "1.3.1-asset-optimization");
+  assert.equal(manifest.frontend_asset_revision, "1.3.1-asset-optimization-ui1");
 });
 
 test("Final What's New is player-facing and feature complete", () => {

@@ -1,8 +1,9 @@
-# Crystal Guild Web v1.3.1 — Asset Optimization
+# Crystal Guild Web v1.3.1 — Asset Optimization UI Hotfix 1
 
 Final v1.3.0 production Web release.
 
-Hosted runtime/frontend revision: `1.3.1-asset-optimization`  
+Hosted runtime: `1.3.1-asset-optimization`  
+Frontend asset revision: `1.3.1-asset-optimization-ui1`  
 Paired Bot runtime: `1.3.1-asset-optimization`  
 Local DB schema: **9** · hosted sync schema: **1** · Portal Action protocol: **22**
 

@@ -5697,8 +5697,29 @@ body { font-size: 15px; line-height: 1.54; }
 
 /* v1.1.12 — Adventure Board rework / Twitch-only Rally Venture */
 .rally-venture-notice {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   border-color: rgba(111, 171, 205, .28);
-  background: linear-gradient(145deg, rgba(10, 31, 47, .76), rgba(7, 21, 33, .82));
+  background: linear-gradient(145deg, rgba(10, 31, 47, .88), rgba(7, 21, 33, .94));
+}
+.rally-venture-notice::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(90deg, rgba(4, 10, 24, .88) 0%, rgba(4, 10, 24, .60) 34%, rgba(4, 10, 24, .48) 66%, rgba(4, 10, 24, .82) 100%),
+    linear-gradient(180deg, rgba(4, 10, 24, .15), rgba(4, 10, 24, .76)),
+    url('/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp');
+  background-size: cover;
+  background-position: center center;
+  opacity: .78;
+}
+.rally-venture-notice > * {
+  position: relative;
+  z-index: 1;
 }
 .rally-venture-notice code {
   display: inline-block;
@@ -8579,13 +8600,19 @@ main h1,
   cursor: pointer;
 }
 .section-collapse-button::before {
-  content: "▾";
+  content: "";
   display: inline-block;
-  margin-right: .38rem;
-  transform: translateY(-1px);
-  transition: transform .14s ease;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-right: .36rem;
+  flex: 0 0 auto;
+  vertical-align: middle;
+  background: url('/ui/collapse-pointer-down.webp') center / contain no-repeat;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
-.section-collapse-button[aria-expanded="false"]::before { transform: rotate(-90deg) translateX(1px); }
+.section-collapse-button[aria-expanded="false"]::before {
+  background-image: url('/ui/collapse-pointer-right.webp');
+}
 .section-collapse-button:hover { border-color: rgba(229, 197, 111, .58); }
 .collapsible-board-section.collapsed {
   padding-bottom: .9rem;
@@ -9620,18 +9647,21 @@ button, input, select, textarea { font: inherit; }
 .fellowship-expedition-board > summary::after,
 .fellowship-available-projects > summary::after,
 .fellowship-deeds > summary::after {
-  content: "▾";
-  flex: 0 0 auto;
-  color: var(--gold);
-  font-size: 1rem;
-  transition: transform .16s ease;
+  content: "";
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: 0 0 1.45rem;
+  background: url('/ui/collapse-pointer-down.webp') center / contain no-repeat;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
 .fellowship-dashboard-disclosure:not([open]) > summary::after,
 .fellowship-airship-details:not([open]) > summary::after,
 .fellowship-legacy-goals:not([open]) > summary::after,
 .fellowship-expedition-board:not([open]) > summary::after,
 .fellowship-available-projects:not([open]) > summary::after,
-.fellowship-deeds:not([open]) > summary::after { transform: rotate(-90deg); }
+.fellowship-deeds:not([open]) > summary::after {
+  background-image: url('/ui/collapse-pointer-right.webp');
+}
 .fellowship-dashboard-disclosure > summary > span:first-child,
 .fellowship-airship-details > summary > span:first-child,
 .fellowship-legacy-goals > summary > span:first-child,
@@ -9737,4 +9767,46 @@ button, input, select, textarea { font: inherit; }
   .fellowship-expedition-board > summary,
   .fellowship-available-projects > summary,
   .fellowship-deeds > summary { min-height: 48px; }
+}
+
+
+/* v1.3.1 UI hotfix — shared collapse-pointer language */
+:where(.moogle-sell-disclosure, .job-requirements, .whats-new-history) > summary {
+  list-style: none;
+}
+:where(.moogle-sell-disclosure, .job-requirements, .whats-new-history) > summary::-webkit-details-marker {
+  display: none;
+}
+:where(.moogle-sell-disclosure, .job-requirements, .whats-new-history) > summary::after {
+  content: "";
+  display: inline-block;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-left: .4rem;
+  flex: 0 0 1.3rem;
+  vertical-align: middle;
+  background: url('/ui/collapse-pointer-down.webp') center / contain no-repeat;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
+}
+:where(.moogle-sell-disclosure, .job-requirements, .whats-new-history):not([open]) > summary::after {
+  background-image: url('/ui/collapse-pointer-right.webp');
+}
+
+/* The simple Guild Rank ladder disclosure uses the same shared pointer. */
+.fellowship-details:not(.fellowship-airship-details):not(.fellowship-legacy-goals):not(.fellowship-expedition-board):not(.fellowship-available-projects):not(.fellowship-deeds) > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+.fellowship-details:not(.fellowship-airship-details):not(.fellowship-legacy-goals):not(.fellowship-expedition-board):not(.fellowship-available-projects):not(.fellowship-deeds) > summary::-webkit-details-marker { display: none; }
+.fellowship-details:not(.fellowship-airship-details):not(.fellowship-legacy-goals):not(.fellowship-expedition-board):not(.fellowship-available-projects):not(.fellowship-deeds) > summary::after {
+  content: "";
+  width: 1.3rem;
+  height: 1.3rem;
+  flex: 0 0 1.3rem;
+  background: url('/ui/collapse-pointer-down.webp') center / contain no-repeat;
+}
+.fellowship-details:not(.fellowship-airship-details):not(.fellowship-legacy-goals):not(.fellowship-expedition-board):not(.fellowship-available-projects):not(.fellowship-deeds):not([open]) > summary::after {
+  background-image: url('/ui/collapse-pointer-right.webp');
 }

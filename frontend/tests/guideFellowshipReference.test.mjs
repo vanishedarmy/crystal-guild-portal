@@ -27,7 +27,7 @@ test("Fellowship Guide documents the complete player command set", async () => {
 
 test("Fellowship Guide includes facilities, Orders, Deeds, Founding Members, and Portal discovery", async () => {
   const body = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
-  assert.match(body, /Guild Hall, Infirmary, Workshop, Training Hall, Archives/);
+  assert.match(body, /Guild Hall, Workshop, Chocobo Stables, Guild Archive/);
   assert.match(body, /<b>Orders<\/b>/);
   assert.match(body, /<b>Deeds<\/b>/);
   assert.match(body, /Founding Members/);
@@ -40,6 +40,6 @@ test("Fellowship Guide stays player-only and cache-busts the corrected Guide", a
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const runtime = await readFile(new URL("guide/guideRuntime.js", SRC), "utf8");
   assert.doesNotMatch(body, /!fellowshipproject|Streamer-only:/);
-  assert.match(version, /1\.2\.0-expeditions(?!-)/);
+  assert.match(version, /1\.3\.0-guild-expansion-a1/);
   assert.match(runtime, /'fellowship-guide':'Begin'/);
 });

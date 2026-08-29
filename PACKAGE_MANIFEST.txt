@@ -1,10 +1,10 @@
-Crystal Guild v1.2.0 — Expeditions Web
+Crystal Guild v1.3.0 — Guild Expansion Alpha 1 Web
 
 Runtime identity
-- Hosted Web: 1.2.0-expeditions
-- Frontend assets: 1.2.0-expeditions
-- Paired Bot: 1.2.0-expeditions
+- Hosted Web: 1.3.0-guild-expansion-a1
+- Frontend assets: 1.3.0-guild-expansion-a1
+- Paired Bot: 1.3.0-guild-expansion-a1
 - Hosted sync schema: 1
 - Portal Action protocol: 20
 
-Release state: final v1.2.0.
+Release state: Guild Hall Foundation Alpha 1.

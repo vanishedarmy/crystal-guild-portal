@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.3.0",
+    name: "Guild Expansion Alpha 1",
+    title: "The Guild Hall starts growing",
+    summary: "The Fellowship now has a clearer Guild Board built around five major facilities and shared construction goals.",
+    highlights: [
+      { title: "Five major facilities", description: "Guild Hall, Workshop, Chocobo Stables, Guild Archive, and the future Airship Dock now form the Fellowship's main construction path." },
+      { title: "Simple Lv. 0–3 growth", description: "Major facilities use a compact three-level progression so Guild upgrades stay readable instead of becoming another long grind ladder." },
+      { title: "Build by playing together", description: "Construction can combine Gil, materials, and gameplay milestones. Normal Guild activity advances gameplay requirements automatically." },
+      { title: "Airship Dock on the horizon", description: "The future Airship Dock is visible on the Guild Board from day one, but its construction remains locked until the Guild is ready for the next expansion phase." },
+      { title: "Existing Guild progress stays intact", description: "Fellowship Renown, prior facility upgrades, Chocobos, Expeditions, contributions, Orders, Deeds, and personal Guild Rank all carry forward." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+  {
     version: "v1.2.0",
     name: "Expeditions",
     title: "Expeditions has arrived",

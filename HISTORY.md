@@ -1,3 +1,7 @@
+# Crystal Guild v1.3.0 — Guild Expansion Alpha 1
+
+Begins Guild Expansion with a five-facility Guild Board, Lv. 0–3 major-facility presentation, shared construction requirements, and a visible but locked Airship Dock. Existing v1.2 facility tiers and benefits are preserved. Runtime/frontend `1.3.0-guild-expansion-a1`; schema 8, hosted sync 1, protocol 20 unchanged.
+
 # Crystal Guild v1.2.0 — Expeditions
 
 Final release promoted from the validated RC1 baseline with no gameplay changes. Expeditions, regional progression, Legendary Contracts, Chocobo specialization, balance tuning, UX/mobile/accessibility polish, and release hardening are now the v1.2 production baseline.

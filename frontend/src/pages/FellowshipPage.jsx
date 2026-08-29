@@ -19,7 +19,7 @@ function ProjectCard({ project }) {
     <section className="panel fellowship-project">
       <div className="panel-title-row">
         <div><span className="panel-kicker">Active Project</span><h2>{project.name}</h2></div>
-        <span className="small-badge">Tier {number(project.tier)}</span>
+        <span className="small-badge">{project.teaser ? "Guild Project" : `Lv. ${number(project.level || project.tier)}`}</span>
       </div>
       <p className="muted fellowship-project-copy">{project.description}</p>
       <div className="fellowship-requirements">
@@ -36,15 +36,20 @@ function ProjectCard({ project }) {
 }
 
 function FacilityCard({ facility }) {
+  const level = number(facility.level ?? facility.tier);
+  const maxLevel = number(facility.max_level ?? facility.max_tier);
   return (
-    <article className="fellowship-facility">
+    <article className={`fellowship-facility ${facility.locked ? "locked" : ""}`}>
       <div className="fellowship-facility-heading">
-        <h3>{facility.name}</h3>
-        <span className="small-badge">T{number(facility.tier)} / {number(facility.max_tier)}</span>
+        <div>
+          <span className="panel-kicker">{facility.locked ? "Future Construction" : "Guild Facility"}</span>
+          <h3>{facility.name}</h3>
+        </div>
+        <span className="small-badge">{facility.locked ? "LOCKED" : `Lv. ${level} / ${maxLevel}`}</span>
       </div>
       <p>{facility.description}</p>
       <strong>{facility.current_benefit}</strong>
-      {facility.next_benefit ? <small>Next: {facility.next_benefit}</small> : <small>Facility complete.</small>}
+      {facility.next_benefit ? <small>{facility.locked ? facility.next_benefit : `Next: ${facility.next_benefit}`}</small> : <small>Facility construction complete.</small>}
     </article>
   );
 }
@@ -102,7 +107,7 @@ export default function FellowshipPage() {
               <div>
                 <p className="eyebrow">Crystal Guild Fellowship</p>
                 <h1>The Fellowship</h1>
-                <p className="lede">One Guild, built by the entire community. Adventures earn Renown, projects turn contributions into permanent facilities, and every hero can rise through the Guild ranks.</p>
+                <p className="lede">One Guild, built by the entire community. Complete Guild projects, raise shared facilities, and work toward the future Airship Dock while every hero builds their own Guild standing.</p>
               </div>
               <aside className="fellowship-level-card" aria-label="Fellowship level">
                 <span>Fellowship</span>
@@ -114,15 +119,26 @@ export default function FellowshipPage() {
 
             <div className="fellowship-summary-grid">
               <div className="fellowship-summary"><span>Members</span><strong>{number(data.member_count)}</strong><small>registered Fellowship heroes</small></div>
-              <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)}</strong><small>{data.orders?.period}</small></div>
-              <div className="fellowship-summary"><span>Deeds</span><strong>{number(data.deeds_complete)} / {number(data.deeds?.length)}</strong><small>permanent milestones</small></div>
+              <div className="fellowship-summary"><span>Guild Facilities</span><strong>{number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 5)}</strong><small>major facilities established</small></div>
+              <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)}</strong><small>community objectives</small></div>
               <div className="fellowship-summary"><span>Contributed</span><strong>{number(data.totals?.gil_donated)}g</strong><small>{number(data.totals?.materials_donated)} materials</small></div>
             </div>
 
             <ProjectCard project={data.active_project} />
 
+            <section className="panel fellowship-section fellowship-guild-board">
+              <div className="panel-title-row">
+                <div><span className="panel-kicker">Guild Hall Foundation</span><h2>Guild Facilities</h2></div>
+                <span className="small-badge">Lv. 0–3</span>
+              </div>
+              <p className="muted fellowship-board-copy">Major facilities grow through shared construction projects. Gil and requested materials can be donated voluntarily; gameplay milestones advance automatically.</p>
+              <div className="fellowship-facility-grid">
+                {(data.facilities || []).map((facility) => <FacilityCard key={facility.id} facility={facility} />)}
+              </div>
+            </section>
+
             <details className="panel fellowship-details fellowship-expedition-board">
-              <summary><span><strong>Expeditions — Guild Board</strong><small>Shared Expedition launch requirements</small></span><span className="small-badge">{expeditionStatus}</span></summary>
+              <summary><span><strong>Expeditions — Guild Board</strong><small>Existing Guild-wide Expedition access</small></span><span className="small-badge">{expeditionStatus}</span></summary>
               <div className="fellowship-expedition-body">
               <p className="muted fellowship-expedition-copy">Distant contracts are now active. Complete the shared Guild Board, then each adventurer can launch Expeditions with a registered Chocobo from the Adventure Board.</p>
               <div className="fellowship-expedition-grid">
@@ -138,8 +154,8 @@ export default function FellowshipPage() {
                 </article>
                 <article>
                   <span>Launch Status</span>
-                  <strong>Active in v1.2</strong>
-                  <small>Five regions and Scout, Journey, and Deep Expedition routes are available from the Adventure Board.</small>
+                  <strong>Open</strong>
+                  <small>Five regions and Scout, Journey, and Deep routes are available from the Adventure Board once unlocked.</small>
                 </article>
               </div>
               <div className="fellowship-expedition-note"><strong>Guild Board Note:</strong> Complete the Expedition Board to open distant contracts Guild-wide. Individual adventurers still need their own registered Chocobo.</div>
@@ -148,25 +164,18 @@ export default function FellowshipPage() {
 
             {(data.available_projects || []).length ? (
               <details className="panel fellowship-details fellowship-available-projects">
-                <summary><span><strong>Available Projects</strong><small>Unlocked alternatives — kept collapsed to keep the Fellowship page focused.</small></span><span>{number(data.available_projects.length)} Unlocked</span></summary>
+                <summary><span><strong>Available Projects</strong><small>Construction projects the Guild can begin next.</small></span><span>{number(data.available_projects.length)} Unlocked</span></summary>
                 <div className="fellowship-project-options">
                   {data.available_projects.map((project) => (
                     <article key={project.id}>
                       <strong>{project.name}</strong>
                       <span>{project.description}</span>
-                      <small>{project.teaser ? "Expedition launch project" : `Tier ${number(project.tier)} · Requires ${project.requirements?.length || 0} goals`}</small>
+                      <small>{project.teaser ? "Expedition launch project" : `Lv. ${number(project.level || project.tier)} · ${project.requirements?.length || 0} goals`}</small>
                     </article>
                   ))}
                 </div>
               </details>
             ) : null}
-
-            <section className="panel fellowship-section">
-              <div className="panel-title-row"><div><span className="panel-kicker">Permanent Upgrades</span><h2>Guild Facilities</h2></div><span className="small-badge">Shared Benefits</span></div>
-              <div className="fellowship-facility-grid">
-                {(data.facilities || []).map((facility) => <FacilityCard key={facility.id} facility={facility} />)}
-              </div>
-            </section>
 
             <section className="panel fellowship-section">
               <div className="panel-title-row"><div><span className="panel-kicker">This Week</span><h2>Fellowship Orders</h2></div><span className="small-badge">{number(data.orders?.completed)} / {number(data.orders?.total)} Complete</span></div>

@@ -8,8 +8,8 @@ test("Fellowship page presents the active Expedition Board gate", async () => {
   assert.match(page, /Expeditions — Guild Board/);
   assert.match(page, /<details className="panel fellowship-details fellowship-expedition-board">/);
   assert.match(page, /Registered Chocobo/);
-  assert.match(page, /Active in v1\.2/);
-  assert.match(page, /Five regions and Scout, Journey, and Deep Expedition/);
+  assert.match(page, /<strong>Open<\/strong>/);
+  assert.match(page, /Five regions and Scout, Journey, and Deep routes/);
   assert.match(page, /Unlock at Guild Hall Tier 1 and Fellowship LVL 6/);
   assert.match(page, /Expedition launch project/);
 });

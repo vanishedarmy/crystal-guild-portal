@@ -1,7 +1,8 @@
-Crystal Guild v1.2.0 — Expeditions Web
-Hosted runtime: 1.2.0-expeditions
-Frontend asset revision: 1.2.0-expeditions
-Compatible Bot: 1.2.0-expeditions
-Schema: 8 · Hosted sync: 1 · Portal protocol: 20
+Crystal Guild v1.3.0 — Guild Expansion Alpha 1 Web
+Hosted runtime: 1.3.0-guild-expansion-a1
+Frontend asset revision: 1.3.0-guild-expansion-a1
+Compatible Bot: 1.3.0-guild-expansion-a1
+Hosted sync schema: 1
+Portal Action protocol: 20
 
-Final v1.2 Web release. The Player Guide is player-facing, the mobile/accessibility and viewport-card polish are included, and the Expedition feature set is unchanged from the validated RC1 baseline.
+Deploy with the existing hosted environment configuration; no new variables or OAuth changes are required.

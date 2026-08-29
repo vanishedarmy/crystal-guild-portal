@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.2.0-expeditions"
-FRONTEND_ASSET_REVISION = "1.2.0-expeditions"
+HOSTED_PORTAL_VERSION = "1.3.0-guild-expansion-a1"
+FRONTEND_ASSET_REVISION = "1.3.0-guild-expansion-a1"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 20
 ALLOWED_PORTAL_ACTIONS = {

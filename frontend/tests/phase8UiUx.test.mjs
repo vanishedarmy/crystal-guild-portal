@@ -8,8 +8,8 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("Phase 8 UI/UX layer remains intact under the v1.2.0 release identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
-  assert.match(version, /WEB_VERSION = "v1\.2\.0"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.2\.0-expeditions"/);
+  assert.match(version, /WEB_VERSION = "v1\.3\.0"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a1"/);
   assert.match(css, /v1\.1\.8 — Phase 8 UI\/UX Pass & Polish/);
 });
 

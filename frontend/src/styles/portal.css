@@ -9267,3 +9267,30 @@ button, input, select, textarea { font: inherit; }
   }
   .site-header { will-change: auto; }
 }
+
+/* v1.3 Guild Expansion Alpha 1 — Guild Hall Foundation */
+.fellowship-guild-board .fellowship-board-copy {
+  max-width: 74ch;
+  margin: 0 0 0.9rem;
+}
+.fellowship-facility.locked {
+  border-style: dashed;
+  opacity: 0.86;
+}
+.fellowship-facility.locked > strong {
+  color: var(--muted);
+}
+.fellowship-facility .panel-kicker {
+  display: block;
+  margin-bottom: 0.18rem;
+}
+@media (max-width: 760px) {
+  .fellowship-guild-board .fellowship-facility-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .fellowship-guild-board .fellowship-facility-grid {
+    grid-template-columns: 1fr;
+  }
+}

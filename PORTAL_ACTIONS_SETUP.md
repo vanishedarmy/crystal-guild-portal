@@ -1,5 +1,3 @@
-# Portal Actions Setup — v1.2.0 Expeditions Alpha 1
+# Portal Actions Setup — v1.3.0 Guild Expansion Alpha 1
 
-Portal Action protocol is **20**. Deploy Web runtime `1.2.0-expeditions-alpha2` together with Bot runtime `1.2.0-expeditions-a2`. Hosted sync schema remains **1** and local Bot DB schema is **8**.
-
-v1.2 adds typed Expedition actions: `EXPEDITION_START`, `EXPEDITION_RESOLVE_STAGE`, `EXPEDITION_ACTION`, `EXPEDITION_CONTINUE`, `EXPEDITION_CAMP`, `EXPEDITION_RETURN`, and `EXPEDITION_RETREAT`. Existing Portal actions retain their prior security, CSRF, idempotency, lease, and Twitch-ID binding behavior.
+Portal Action protocol remains **20**. Deploy Web and Bot runtime `1.3.0-guild-expansion-a1` together. Hosted sync schema remains **1** and local Bot DB schema remains **8**. No OAuth or environment-variable changes are required.

@@ -13,6 +13,7 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { pct } from "../utils/formatters.js";
 import { loadGuideData, mergeJobsWithCatalog } from "../utils/itemCatalog.js";
+import { DetailsPointer } from "../components/CollapsePointer.jsx";
 
 const STANCES = [
   { id: "balanced", name: "Balanced", description: "Neutral offense and defense. A dependable default for any Job." },
@@ -281,7 +282,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                   </div>
                   {!unlocked && Array.isArray(job.requirements) && job.requirements.length ? (
                     <details className="job-requirements">
-                      <summary>How to unlock</summary>
+                      <summary>How to unlock<DetailsPointer /></summary>
                       <ul>{job.requirements.map((req, index) => <li className={req.met ? "met" : "missing"} key={`${job.id}-req-${index}`}>{req.met ? "✓" : "○"} {req.text}</li>)}</ul>
                     </details>
                   ) : null}

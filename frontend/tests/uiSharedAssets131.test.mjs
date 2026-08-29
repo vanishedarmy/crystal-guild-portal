@@ -6,37 +6,49 @@ import path from "node:path";
 const root = path.resolve(process.cwd());
 const read = (rel) => fs.readFileSync(path.join(root, rel), "utf8");
 
-test("shared collapse pointer ships as a lightweight optimized WebP", () => {
-  const rel = "public/ui/collapse-pointer-right.webp";
-  const stat = fs.statSync(path.join(root, rel));
-  assert.ok(stat.size > 0 && stat.size < 10000, `${rel} should stay lightweight`);
+test("shared pointer assets ship as distinct optimized WebP images", () => {
+  const right = path.join(root, "public/ui/collapse-pointer-right.webp");
+  const down = path.join(root, "public/ui/collapse-pointer-down.webp");
+  for (const p of [right, down]) {
+    const stat = fs.statSync(p);
+    assert.ok(stat.size > 0 && stat.size < 10000);
+  }
+  assert.notDeepEqual(fs.readFileSync(right), fs.readFileSync(down), "right and down pointers must be different image files");
 });
 
-test("Rally Venture applies the dedicated scene directly to the panel", () => {
-  const rel = "public/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp";
-  assert.ok(fs.existsSync(path.join(root, rel)));
-  const css = read("src/styles/portal.css");
-  assert.match(css, /\.rally-venture-notice \{[\s\S]*rally_venture\.webp/);
-  assert.doesNotMatch(css, /\.rally-venture-notice::before[\s\S]{0,700}rally_venture\.webp/);
+test("controlled collapsibles render a real state-selected pointer image", () => {
+  const component = read("src/components/CollapsePointer.jsx");
+  assert.ok(component.includes('open ? "/ui/collapse-pointer-down.webp" : "/ui/collapse-pointer-right.webp"'));
+  for (const rel of ["src/player/Hunts.jsx", "src/player/Expeditions.jsx", "src/player/WhatsNew.jsx", "src/player/Inventory.jsx"]) {
+    assert.match(read(rel), /<CollapsePointer open=\{/);
+  }
+  assert.ok(read("src/styles/portal.css").includes('.section-collapse-button::before { content: none !important; display: none !important; }'));
 });
 
-test("player collapsibles use one graphic with no visible Expand Collapse labels", () => {
+test("native details use actual right/down pointer image elements", () => {
+  const component = read("src/components/CollapsePointer.jsx");
+  assert.ok(component.includes('className="details-collapse-pointer-closed" src="/ui/collapse-pointer-right.webp"'));
+  assert.ok(component.includes('className="details-collapse-pointer-open" src="/ui/collapse-pointer-down.webp"'));
   const css = read("src/styles/portal.css");
-  assert.match(css, /section-collapse-button::before[\s\S]*collapse-pointer-right\.webp/);
-  assert.doesNotMatch(css, /collapse-pointer-down\.webp/);
-  for (const rel of ["src/player/Hunts.jsx", "src/player/Expeditions.jsx", "src/player/WhatsNew.jsx"]) {
-    const source = read(rel);
-    assert.doesNotMatch(source, />\{[^}]*\? \"Collapse\" : \"Expand\"\}\<\/button>/);
-    assert.match(source, /aria-label=/);
+  assert.ok(css.includes('details[open] > summary .details-collapse-pointer-closed { display: none; }'));
+  assert.ok(css.includes('details[open] > summary .details-collapse-pointer-open { display: block; }'));
+  for (const rel of ["src/pages/FellowshipPage.jsx", "src/pages/StreamerDashboard.jsx", "src/player/WhatsNew.jsx", "src/player/Jobs.jsx"]) {
+    assert.ok(read(rel).includes('<DetailsPointer />'));
   }
 });
 
-test("streamer and guide disclosures use the same shared pointer", () => {
-  const streamer = read("src/styles/streamer.css");
-  const guide = read("public/guide.css");
-  assert.match(streamer, /collapse-pointer-right\.webp/);
-  assert.doesNotMatch(streamer, /collapse-pointer-down\.webp/);
-  assert.match(guide, /collapse-pointer-right\.webp/);
-  assert.doesNotMatch(guide, /collapse-pointer-down\.webp/);
-  assert.doesNotMatch(read("src/guide/guideRuntime.js"), />⌄</);
+test("Rally Venture uses a real DOM image layer rather than a CSS background URL", () => {
+  const rel = "public/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp";
+  assert.ok(fs.existsSync(path.join(root, rel)));
+  const hunts = read("src/player/Hunts.jsx");
+  assert.ok(hunts.includes('<img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp"'));
+  const portal = read("src/styles/portal.css");
+  assert.match(portal, /\.rally-venture-background-art \{[\s\S]*position: absolute;[\s\S]*object-fit: cover;/);
+  assert.doesNotMatch(read("src/styles/environment-pass.css"), /rally_venture\.webp/);
+});
+
+test("public tree remains PNG-free after UI4", () => {
+  const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? walk(path.join(dir, entry.name)) : [path.join(dir, entry.name)]);
+  const png = walk(path.join(root, "public")).filter((p) => p.toLowerCase().endsWith(".png"));
+  assert.equal(png.length, 0);
 });

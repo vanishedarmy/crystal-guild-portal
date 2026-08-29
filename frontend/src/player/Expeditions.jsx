@@ -13,6 +13,7 @@ import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
+import CollapsePointer from "../components/CollapsePointer.jsx";
 
 const DEPTH_COPY = {
   scout: "3 stages · short survey",
@@ -175,7 +176,7 @@ export default function Expeditions({
           </div>
           <div className="section-collapse-actions">
             <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
-            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} aria-label={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} title={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)} />
+            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} aria-label={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} title={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)}><CollapsePointer open={boardOpen} /></button>
           </div>
         </div>
 
@@ -205,7 +206,7 @@ export default function Expeditions({
                   </div>
                   <div className="section-collapse-actions">
                     <span className={`small-badge ${data.atlas?.all_mastered ? "success" : ""}`}>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)} MASTERED</span>
-                    <button type="button" className="section-collapse-button compact" aria-expanded={atlasOpen} aria-label={atlasOpen ? "Collapse Expedition Atlas" : "Expand Expedition Atlas"} title={atlasOpen ? "Collapse Expedition Atlas" : "Expand Expedition Atlas"} onClick={(event) => toggleWithViewportAnchor(event, setAtlasOpen)} />
+                    <button type="button" className="section-collapse-button compact" aria-expanded={atlasOpen} aria-label={atlasOpen ? "Collapse Expedition Atlas" : "Expand Expedition Atlas"} title={atlasOpen ? "Collapse Expedition Atlas" : "Expand Expedition Atlas"} onClick={(event) => toggleWithViewportAnchor(event, setAtlasOpen)}><CollapsePointer open={atlasOpen} /></button>
                   </div>
                 </div>
                 <ProgressBar value={Number(data.atlas?.overall_progress || 0)} />

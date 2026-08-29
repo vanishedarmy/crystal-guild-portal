@@ -20,6 +20,7 @@ import Expeditions from "./Expeditions.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
+import CollapsePointer from "../components/CollapsePointer.jsx";
 
 const volatileAdventureActionKeys = new Map();
 
@@ -835,6 +836,7 @@ export default function Hunts({ data, overview, onRefresh }) {
       </section>
 
       <section className="panel rally-venture-notice" data-active={encounter?.kind === "venture" ? "true" : "false"}>
+        <img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp" alt="" aria-hidden="true" loading="eager" decoding="async" />
         <div className="panel-title-row">
           <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
           <span className="small-badge">Live Stream</span>
@@ -858,7 +860,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">World Map</p><h2>Travel Regions</h2></div>
           <div className="section-collapse-actions">
             <span className="small-badge success">Current · {currentRegion.name}</span>
-            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} aria-label={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} title={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} onClick={(event) => toggleWithViewportAnchor(event, setRegionsOpen)} />
+            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} aria-label={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} title={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} onClick={(event) => toggleWithViewportAnchor(event, setRegionsOpen)}><CollapsePointer open={regionsOpen} /></button>
           </div>
         </div>
         {regionsOpen ? <div className="adventure-region-grid">
@@ -950,7 +952,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
           <div className="section-collapse-actions">
             <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
-            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} aria-label={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} title={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} onClick={(event) => toggleWithViewportAnchor(event, setHuntBoardOpen)} />
+            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} aria-label={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} title={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} onClick={(event) => toggleWithViewportAnchor(event, setHuntBoardOpen)}><CollapsePointer open={huntBoardOpen} /></button>
           </div>
         </div>
         {huntBoardOpen ? <>

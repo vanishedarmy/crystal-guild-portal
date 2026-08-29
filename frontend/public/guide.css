@@ -369,6 +369,9 @@ code,.cmd{font-family:Consolas,Monaco,monospace;background:#080d1c;border:1px so
   background: url('/ui/collapse-pointer-right.webp') center / 26px 26px no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,.72));
 }
+.data-collapse[open] .data-collapse-chevron {
+  background-image: url('/ui/collapse-pointer-down.webp');
+}
 
 .data-collapse[open] > summary {
   border-bottom: 1px solid rgba(132, 206, 255, 0.18);
@@ -1445,6 +1448,9 @@ table { font-size: 0.88rem; }
   background:url('/ui/collapse-pointer-right.webp') center / 28px 28px no-repeat;
   filter:drop-shadow(0 1px 2px rgba(0,0,0,.72));
 }
+.guide-section-accordion[open] .guide-section-chevron{
+  background-image:url('/ui/collapse-pointer-down.webp');
+}
 .guide-section-body{
   padding:28px clamp(16px,3vw,28px) 32px;
 }
@@ -2368,6 +2374,9 @@ button, input, select, textarea { font: inherit; }
   background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
+.catalog-disclosure[open] .catalog-launch-action::after {
+  background-image: url('/ui/collapse-pointer-down.webp');
+}
 .guide-content details:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary {
   list-style: none;
 }
@@ -2382,3 +2391,13 @@ button, input, select, textarea { font: inherit; }
   background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
+.guide-content details[open]:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after {
+  background-image: url('/ui/collapse-pointer-down.webp');
+}
+
+
+/* v1.3.1 UI4 — enforce stateful guide pointers after all earlier rules. */
+.data-collapse-chevron, .guide-section-chevron, .catalog-launch-action::after { background-image: url('/ui/collapse-pointer-right.webp') !important; }
+.data-collapse[open] .data-collapse-chevron, .guide-section-accordion[open] .guide-section-chevron, .catalog-disclosure[open] .catalog-launch-action::after { background-image: url('/ui/collapse-pointer-down.webp') !important; }
+.guide-content details:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-right.webp') !important; background: none !important; width: 1.3rem; height: 1.3rem; overflow: hidden; }
+.guide-content details[open]:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-down.webp') !important; }

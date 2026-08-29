@@ -9,7 +9,7 @@ test("locked Job state lives in the upper-right card header without duplicate Lo
   assert.match(jobs, /card-status-row management-job-head/);
   assert.match(jobs, /card-status-badges[\s\S]*?small-badge locked[\s\S]*?Locked/);
   assert.match(jobs, /Signature: \$\{job\.signature\}/);
-  assert.match(jobs, /<summary>How to unlock<\/summary>/);
+  assert.match(jobs, /<summary>How to unlock(?:<DetailsPointer \/>)?<\/summary>/);
   assert.doesNotMatch(jobs, /\(unlocked \? "Ready to learn" : "Locked"\)\} · \{job\.signature\}/);
 });
 

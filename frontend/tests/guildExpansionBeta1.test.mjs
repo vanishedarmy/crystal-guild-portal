@@ -15,7 +15,7 @@ test("Guild Expansion publishes the complete player-facing Guild summary", async
 test("Guild Expansion public identity is current", async () => {
   const version = await text("../src/version.js");
   assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization-ui2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization-ui4"/);
 });
 
 test("Player Guide stays focused on play instead of simulation internals", async () => {

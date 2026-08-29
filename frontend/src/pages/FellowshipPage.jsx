@@ -5,6 +5,7 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
+import { DetailsPointer } from "../components/CollapsePointer.jsx";
 
 function projectTypeLabel(project) {
   if (project?.project_type === "supply_drive") return "Supply Drive";
@@ -169,7 +170,7 @@ export default function FellowshipPage() {
             <ProjectCard project={data.active_project} />
 
             <details className="panel fellowship-section fellowship-guild-board fellowship-dashboard-disclosure" open={disclosures.facilities} onToggle={(event) => setDisclosure("facilities", event.currentTarget.open)}>
-              <summary><span><span className="panel-kicker">Guild Hall Foundation</span><strong>Guild Facilities</strong><small>Construction progress and current facility benefits</small></span><span className="small-badge">Lv. 0–3 · {number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 5)} Built</span></summary>
+              <summary><span><span className="panel-kicker">Guild Hall Foundation</span><strong>Guild Facilities</strong><small>Construction progress and current facility benefits</small></span><span className="small-badge">Lv. 0–3 · {number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 5)} Built</span><DetailsPointer /></summary>
               <div className="fellowship-disclosure-body">
                 <p className="muted fellowship-board-copy">Major facilities grow through shared construction projects. Gil and requested materials can be donated voluntarily; gameplay milestones advance automatically.</p>
                 <div className="fellowship-facility-grid">
@@ -179,7 +180,7 @@ export default function FellowshipPage() {
             </details>
 
             <details className="panel fellowship-section fellowship-services fellowship-dashboard-disclosure" open={disclosures.services} onToggle={(event) => setDisclosure("services", event.currentTarget.open)}>
-              <summary><span><span className="panel-kicker">Guild Services &amp; Workshop</span><strong>Facility Services</strong><small>Workshop, Stable, and Archive benefits</small></span><span className="small-badge">Guild Services</span></summary>
+              <summary><span><span className="panel-kicker">Guild Services &amp; Workshop</span><strong>Facility Services</strong><small>Workshop, Stable, and Archive benefits</small></span><span className="small-badge">Guild Services</span><DetailsPointer /></summary>
               <div className="fellowship-disclosure-body">
                 <p className="muted">Facility levels provide practical Guild services without replacing normal character progression.</p>
                 <div className="fellowship-service-grid">
@@ -223,7 +224,7 @@ export default function FellowshipPage() {
                   )}
 
                   <details className="fellowship-details fellowship-airship-details" open={disclosures.airshipDetails} onToggle={(event) => setDisclosure("airshipDetails", event.currentTarget.open)}>
-                    <summary><span><strong>Mission Catalog &amp; Airship Upgrades</strong><small>Browse unlocked missions, upgrade tracks, and recent deployments</small></span><span>{number(data.airship?.missions?.filter((mission) => mission.unlocked).length)} Missions</span></summary>
+                    <summary><span><strong>Mission Catalog &amp; Airship Upgrades</strong><small>Browse unlocked missions, upgrade tracks, and recent deployments</small></span><span>{number(data.airship?.missions?.filter((mission) => mission.unlocked).length)} Missions</span><DetailsPointer /></summary>
                     <div className="fellowship-airship-detail-body">
                   <div className="fellowship-airship-grid">
                     {(data.airship?.missions || []).map((mission) => (
@@ -262,7 +263,7 @@ export default function FellowshipPage() {
             </section>
 
             <details className="panel fellowship-details fellowship-expedition-board" open={disclosures.expeditions} onToggle={(event) => setDisclosure("expeditions", event.currentTarget.open)}>
-              <summary><span><strong>Expeditions — Guild Board</strong><small>Existing Guild-wide Expedition access</small></span><span className="small-badge">{expeditionStatus}</span></summary>
+              <summary><span><strong>Expeditions — Guild Board</strong><small>Existing Guild-wide Expedition access</small></span><span className="small-badge">{expeditionStatus}</span><DetailsPointer /></summary>
               <div className="fellowship-expedition-body">
               <p className="muted fellowship-expedition-copy">Distant contracts are now active. Complete the shared Guild Board, then each adventurer can launch Expeditions with a registered Chocobo from the Adventure Board.</p>
               <div className="fellowship-expedition-grid">
@@ -288,7 +289,7 @@ export default function FellowshipPage() {
 
             {(data.available_projects || []).length ? (
               <details className="panel fellowship-details fellowship-available-projects" open={disclosures.availableWork} onToggle={(event) => setDisclosure("availableWork", event.currentTarget.open)}>
-                <summary><span><strong>Available Guild Work</strong><small>Construction, Supply Drives, and gameplay Objectives the Guild can begin next.</small></span><span>{number(data.available_projects.length)} Unlocked</span></summary>
+                <summary><span><strong>Available Guild Work</strong><small>Construction, Supply Drives, and gameplay Objectives the Guild can begin next.</small></span><span>{number(data.available_projects.length)} Unlocked</span><DetailsPointer /></summary>
                 <div className="fellowship-project-options">
                   {data.available_projects.map((project) => (
                     <article key={project.id} data-project-type={project.project_type || "construction"}>
@@ -337,7 +338,7 @@ export default function FellowshipPage() {
                 {(data.legacy?.decorations || []).length ? (data.legacy.decorations || []).map((trophy) => <span key={trophy}>◆ {trophy}</span>) : <span className="muted">The first Guild trophy is still waiting to be earned.</span>}
               </div>
               <details className="fellowship-details fellowship-legacy-goals" open={disclosures.legacyGoals} onToggle={(event) => setDisclosure("legacyGoals", event.currentTarget.open)}>
-                <summary><span><strong>Legacy Goals</strong><small>Permanent accomplishments and trophy progress</small></span><span>{number(data.legacy?.completed)} / {number(data.legacy?.total)}</span></summary>
+                <summary><span><strong>Legacy Goals</strong><small>Permanent accomplishments and trophy progress</small></span><span>{number(data.legacy?.completed)} / {number(data.legacy?.total)}</span><DetailsPointer /></summary>
                 <div className="fellowship-legacy-grid">
                   {(data.legacy?.accomplishments || []).map((item) => (
                     <article className={item.complete ? "complete" : ""} key={item.id}>
@@ -365,7 +366,7 @@ export default function FellowshipPage() {
                   ))}
                 </div>
                 <details className="fellowship-details">
-                  <summary>View the Guild Rank ladder</summary>
+                  <summary>View the Guild Rank ladder<DetailsPointer /></summary>
                   <div className="fellowship-rank-ladder">
                     {(data.rank_ladder || []).map((rank, index) => (
                       <div key={rank.name}><span>{index + 1}</span><strong>{rank.name}</strong><em>{number(rank.renown)} Renown</em></div>
@@ -389,7 +390,7 @@ export default function FellowshipPage() {
             </div>
 
             <details className="panel fellowship-details fellowship-deeds" open={disclosures.deeds} onToggle={(event) => setDisclosure("deeds", event.currentTarget.open)}>
-              <summary><span><strong>Fellowship Deeds</strong><small>Permanent community milestones — expand to see the full ledger.</small></span><span>{number(data.deeds_complete)} / {number(data.deeds?.length)}</span></summary>
+              <summary><span><strong>Fellowship Deeds</strong><small>Permanent community milestones — expand to see the full ledger.</small></span><span>{number(data.deeds_complete)} / {number(data.deeds?.length)}</span><DetailsPointer /></summary>
               <div className="fellowship-deed-grid">
                 {(data.deeds || []).map((deed) => (
                   <article className={deed.complete ? "complete" : ""} key={deed.id}>

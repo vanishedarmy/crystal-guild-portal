@@ -1,9 +1,9 @@
-Crystal Guild v1.3.1 — UI Shared Assets Hotfix 2 Web
-Hosted Web: 1.3.1-asset-optimization
-Frontend assets: 1.3.1-asset-optimization-ui2
+Crystal Guild v1.3.1 — Asset Optimization UI Hotfix 4
+Hosted runtime: 1.3.1-asset-optimization
+Frontend assets: 1.3.1-asset-optimization-ui4
 Compatible Bot: 1.3.1-asset-optimization
-DB schema: 9
+Local DB schema: 9
 Hosted sync schema: 1
 Portal Action protocol: 22
-UI assets: shared collapse pointer pair + Rally Venture background
-Upgrade baseline: v1.3.1 Asset Optimization Web
+Twitch prefix: !
+Web-only UI correction; no database migration or player reset.

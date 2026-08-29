@@ -13,6 +13,7 @@ import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
 import { loadGuideData } from "../utils/itemCatalog.js";
 import { WEB_BUILD, WEB_RELEASE } from "../version.js";
+import { DetailsPointer } from "../components/CollapsePointer.jsx";
 
 const STREAM_COMMAND_GROUPS = [
   {
@@ -194,7 +195,7 @@ function CommandGroups({ groups }) {
       {groups.map((group) => (
         <details className="streamer-command-group streamer-reference-group" key={group.title}>
           <summary className="streamer-command-group-heading">
-            <span><strong>{group.title}</strong><small>{group.commands.length} commands</small></span>
+            <span><strong>{group.title}</strong><small>{group.commands.length} commands</small></span><DetailsPointer />
           </summary>
           <div className="streamer-command-list">
             {group.commands.map((item) => <CopyCommand item={item} copied={copied} key={item.command} onCopy={copy} />)}
@@ -323,7 +324,7 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
               <details className="streamer-control-group" key={group.title} defaultOpen={index === 0}>
                 <summary>
                   <span><strong>{group.title}</strong><small>{group.description}</small></span>
-                  <b>{group.commands.length}</b>
+                  <b>{group.commands.length}</b><DetailsPointer />
                 </summary>
                 <div className="streamer-control-grid">
                   {group.commands.map((item) => {

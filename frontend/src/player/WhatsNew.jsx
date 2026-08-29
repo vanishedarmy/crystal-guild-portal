@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { MAJOR_UPDATES } from "./whatsNewData.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
+import CollapsePointer from "../components/CollapsePointer.jsx";
+import { DetailsPointer } from "../components/CollapsePointer.jsx";
 
 function UpdateHighlights({ highlights }) {
   return (
@@ -48,7 +50,7 @@ export default function WhatsNew({ onNavigate }) {
         </div>
         <div className="section-collapse-actions">
           <span className="small-badge whats-new-version">{latest.version} · {latest.name}</span>
-          <button type="button" className="section-collapse-button" aria-expanded={open} aria-label={open ? "Collapse What’s New" : "Expand What’s New"} title={open ? "Collapse What’s New" : "Expand What’s New"} onClick={(event) => toggleWithViewportAnchor(event, setOpen)} />
+          <button type="button" className="section-collapse-button" aria-expanded={open} aria-label={open ? "Collapse What’s New" : "Expand What’s New"} title={open ? "Collapse What’s New" : "Expand What’s New"} onClick={(event) => toggleWithViewportAnchor(event, setOpen)}><CollapsePointer open={open} /></button>
         </div>
       </div>
 
@@ -72,7 +74,7 @@ export default function WhatsNew({ onNavigate }) {
 
           {previous.length ? (
             <details className="whats-new-history">
-              <summary>Previous major updates</summary>
+              <summary>Previous major updates<DetailsPointer /></summary>
               <div className="whats-new-history-list">
                 {previous.map((update) => (
                   <article key={`${update.version}-${update.name}`}>

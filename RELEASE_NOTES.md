@@ -1,28 +1,26 @@
-# Crystal Guild v1.3.1 — UI Shared Assets Hotfix 2
+# Crystal Guild v1.3.1 — UI Shared Assets Hotfix 4
 
-## Web-only collapse-control and Rally Venture fix
+## Render-path correction
 
-Hotfix 2 builds on **v1.3.1 UI Hotfix 1** and makes no gameplay, economy, progression, schema, Portal Action, or Bot changes.
+UI4 replaces the two fragile CSS-only mechanisms from UI1–UI3 with explicit rendered image elements. No gameplay, balance, progression, Bot, schema, or Portal Action behavior changes.
 
-### Collapse-control consistency
-- All shared collapsible surfaces now use the **same right-pointing retro hand** in both closed and open states.
-- Removes visible `Expand`, `Collapse`, `Show Atlas`, and `Hide Atlas` text from the small section-control buttons.
-- Buttons retain descriptive `aria-label` and `title` text for accessibility/tooltips.
-- Fellowship, Streamer Dashboard, Player Guide, Moogle/Jobs/What's New details, and Adventure Board controls share the same hand language.
-- Player Guide generated chevrons are replaced by the hand graphic instead of rotating glyphs.
+### Rally Venture background
+- Rally Venture now renders `rally_venture.webp` as a real absolutely positioned `<img>` inside the panel.
+- The standard `.panel` background may remain underneath it, but can no longer replace or suppress the Rally artwork.
+- Text and controls render above the artwork with the existing panel framing preserved.
 
-### Rally Venture background fix
-- Applies `rally_venture.webp` directly to the Rally Venture panel background instead of placing it on a pseudo-element.
-- This removes the stacking conflict that could leave the tab looking like a plain navy panel.
-- Readability gradients remain above the artwork, with the scene made more visible across wide and compact layouts.
+### Collapse pointers
+- React-controlled collapsibles now render the pointer as a real `<img>` selected directly from component state: **right when closed, down when open**.
+- Native `<details>` disclosures use explicit right/down image elements and CSS only to choose which element is visible from the actual `open` attribute.
+- Visible Expand/Collapse text remains removed; aria-label/title accessibility text remains.
+- Inventory groups are brought into the same pointer language.
 
 ### Compatibility
 - Compatible Bot runtime: `1.3.1-asset-optimization`
 - Hosted Web runtime: `1.3.1-asset-optimization`
-- Frontend asset revision: `1.3.1-asset-optimization-ui2`
-- Local DB schema: **9** unchanged
-- Hosted sync schema: **1** unchanged
-- Portal Action protocol: **22** unchanged
+- Frontend asset revision: `1.3.1-asset-optimization-ui4`
+- Local DB schema: **9**
+- Hosted sync schema: **1**
+- Portal Action protocol: **22**
 - Twitch prefix: `!`
-- Database migration / player reset / OAuth / environment changes: **none**
-- Gameplay/economy changes: **none**
+- Bot/database/OAuth/environment/gameplay changes: **none**

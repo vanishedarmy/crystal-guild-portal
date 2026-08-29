@@ -1,7 +1,7 @@
-Crystal Guild Web v1.3.0 — Guild Expansion RC1
-Hosted runtime: 1.3.0-guild-expansion-rc1
-Frontend asset revision: 1.3.0-guild-expansion-rc1
-Compatible Bot: 1.3.0-guild-expansion-rc1
+Crystal Guild Web v1.3.0 — Guild Expansion RC2
+Hosted runtime: 1.3.0-guild-expansion-rc2
+Frontend asset revision: 1.3.0-guild-expansion-rc2
+Compatible Bot: 1.3.0-guild-expansion-rc2
 DB schema: 9
 Hosted sync schema: 1
 Portal Action protocol: 22

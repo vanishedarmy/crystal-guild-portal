@@ -4,18 +4,18 @@ import { readFile } from "node:fs/promises";
 
 const text = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
-test("Guild Expansion RC1 publishes the player-facing balance summary", async () => {
+test("Guild Expansion RC2 publishes the player-facing balance summary", async () => {
   const news = await text("../src/player/whatsNewData.js");
-  assert.match(news, /name: "Guild Expansion RC1"/);
+  assert.match(news, /name: "Guild Expansion RC2"/);
   assert.match(news, /Airship arrives sooner/);
   assert.match(news, /Rare materials respect rarity/);
   assert.match(news, /Weekly rewards stay steady/);
 });
 
-test("Guild Expansion RC1 public identity is current", async () => {
+test("Guild Expansion RC2 public identity is current", async () => {
   const version = await text("../src/version.js");
-  assert.match(version, /WEB_BUILD = "Guild Expansion RC1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc1"/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion RC2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc2"/);
 });
 
 test("Player Guide stays focused on play instead of simulation internals", async () => {

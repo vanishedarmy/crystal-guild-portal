@@ -16,24 +16,24 @@ function fellowshipSection(html) {
   return html.slice(start, end);
 }
 
-test("Guild Expansion RC1 publishes one consistent release-candidate identity", () => {
-  assert.match(version, /WEB_BUILD = "Guild Expansion RC1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc1"/);
-  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion RC1");
-  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-rc1");
-  assert.equal(manifest.release, "v1.3.0 — Guild Expansion RC1");
-  assert.equal(manifest.frontend_asset_revision, "1.3.0-guild-expansion-rc1");
+test("Guild Expansion RC2 publishes one consistent release-candidate identity", () => {
+  assert.match(version, /WEB_BUILD = "Guild Expansion RC2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc2"/);
+  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion RC2");
+  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-rc2");
+  assert.equal(manifest.release, "v1.3.0 — Guild Expansion RC2");
+  assert.equal(manifest.frontend_asset_revision, "1.3.0-guild-expansion-rc2");
 });
 
-test("RC1 current What's New is player-facing and feature frozen", () => {
-  const current = news.split('name: "Guild Expansion RC1"')[1].split('\n  },')[0];
+test("RC2 current What's New is player-facing and feature frozen", () => {
+  const current = news.split('name: "Guild Expansion RC2"')[1].split('\n  },')[0];
   assert.match(current, /feature set is complete/i);
   assert.match(current, /No balance changes/);
   assert.match(current, /Progress stays intact/);
   assert.doesNotMatch(current, /SQLite|transaction|mutex|schema|protocol|migration|replay receipt|write lock/i);
 });
 
-test("RC1 Fellowship Guide uses player language and current facility terminology", () => {
+test("RC2 Fellowship Guide uses player language and current facility terminology", () => {
   const section = fellowshipSection(guide);
   assert.doesNotMatch(section, /SQLite|transaction|mutex|schema|protocol|migration|replay receipt|feature freeze/i);
   assert.match(guide, /Fellowship LVL 6 \+ Guild Hall Lv\. 1/);

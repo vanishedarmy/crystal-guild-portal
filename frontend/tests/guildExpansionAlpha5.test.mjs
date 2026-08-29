@@ -45,7 +45,7 @@ test("Player Guide explains Legacy in player-facing terms", async () => {
 test("Alpha 5 What's New and public version identity are current", async () => {
   const whatsNew = await text(whatsNewPath);
   const version = await text(versionPath);
-  assert.match(whatsNew, /name: "Guild Expansion RC1"/);
-  assert.match(version, /WEB_BUILD = "Guild Expansion RC1"/);
-  assert.match(version, /1\.3\.0-guild-expansion-rc1/);
+  assert.match(whatsNew, /name: "Guild Expansion RC2"/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion RC2"/);
+  assert.match(version, /1\.3\.0-guild-expansion-rc2/);
 });

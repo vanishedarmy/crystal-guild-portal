@@ -6,7 +6,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
 
-test("Guild Expansion RC1 exposes practical facility services", () => {
+test("Guild Expansion RC2 exposes practical facility services", () => {
   const publicPage = read("src/pages/FellowshipPage.jsx");
   const playerPage = read("src/player/Fellowship.jsx");
   const auth = read("src/api/auth.js");
@@ -19,17 +19,17 @@ test("Guild Expansion RC1 exposes practical facility services", () => {
   assert.match(auth, /submitWorkshopExchange/);
   assert.match(guide, /Workshop Lv\. 2/);
   assert.match(guide, /!refine/);
-  assert.match(whatsNew, /name: "Guild Expansion RC1"/);
+  assert.match(whatsNew, /name: "Guild Expansion RC2"/);
 });
 
 test("Alpha 3 public identity and protocol are current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Guild Expansion RC1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc1"/);
-  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion RC1");
-  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-rc1");
+  assert.match(version, /WEB_BUILD = "Guild Expansion RC2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc2"/);
+  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion RC2");
+  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-rc2");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 22/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

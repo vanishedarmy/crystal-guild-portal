@@ -1,9 +1,10 @@
-Crystal Guild v1.3.0 Guild Expansion RC1 — Web Patch
-Baseline: Guild Expansion Beta 3 Web
+Crystal Guild v1.3.0 Guild Expansion RC2 — Web Patch
+Baseline: Guild Expansion RC1 Web
 Changed/new files: 37
 Deletions: 0
 
 CHANGED/NEW:
+FINALIZATION_AUDIT.md
 HISTORY.md
 PACKAGE_MANIFEST.txt
 README.md
@@ -14,7 +15,6 @@ UPGRADE_GUIDE.md
 VALIDATION_REPORT.md
 VERSION.txt
 crystal_guild/hosted_portal.py
-frontend/public/guide-body.html
 frontend/public/guide-data.json
 frontend/src/player/whatsNewData.js
 frontend/src/version.js

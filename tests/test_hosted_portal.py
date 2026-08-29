@@ -175,7 +175,7 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
         self.assertIn("1.3.0", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.3.0-guild-expansion-rc1")
+        self.assertEqual(payload["frontend_asset_revision"], "1.3.0-guild-expansion-rc2")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

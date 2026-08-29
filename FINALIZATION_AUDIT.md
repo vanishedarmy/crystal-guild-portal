@@ -1,33 +1,24 @@
-# Expeditions Alpha 2 Hotfix 1 Finalization
+# Crystal Guild v1.3.0 — Guild Expansion RC2 Finalization Audit
 
-PASS — Web-only Overview ordering and collapsible board pass. Daily Guild Provisions precedes What's New; What's New is updated for Alpha 2 and collapsible; Distant Expedition Board is collapsible. No DB, hosted sync, or Portal Action protocol changes.
+## Scope
+RC2 is a final pre-release package and metadata hardening pass. Gameplay and economy values are frozen from RC1.
 
-# Finalization Audit — RC1 Hotfix 3 Relic Visuals
+## Current-package identity
+- Bot runtime: `1.3.0-guild-expansion-rc2`
+- Hosted Web/runtime: `1.3.0-guild-expansion-rc2`
+- Frontend asset revision: `1.3.0-guild-expansion-rc2`
+- Local DB schema: **9**
+- Hosted sync schema: **1**
+- Portal Action protocol: **22**
+- Twitch prefix: `!`
 
-## Integration coverage
-- Portal Relic Arsenal: stage-aware Relic artwork added.
-- Relic detail dialog: stage-aware Relic artwork added.
-- Trophy Hall completed Relics: Zenith artwork added.
-- Trophy Hall featured Relic trophies: Zenith artwork added.
-- Player Guide Relic catalog: Zenith final-form preview added.
-- Player Guide Relic stage dossier: Dormant, Awakened, and Zenith reward art added.
-- Shared item artwork: all 24 Relic reward-item IDs now route to dedicated Relic assets.
+## Audit targets
+- Current release/version/package surfaces use RC2 identity consistently.
+- Stale v1.1.19 and Expeditions Alpha-era headings are no longer presented as the current finalization audit.
+- Player-facing What's New remains concise and excludes database/transaction/release-engineering terminology.
+- Fellowship/Airship persistence and shared-state protections remain regression-covered.
+- Existing artwork, scenic backgrounds, Founding Hall presentation, and collapsible inventory groups remain packaged.
+- No schema migration, reset, OAuth change, environment change, or gameplay rebalance is introduced from RC1.
 
-## Asset audit
-- 8 Relic lines.
-- 3 stages per line.
-- 24 PNGs packaged.
-- All files are RGBA PNGs with transparent canvas pixels.
-- Portal and Guide presentation use `object-fit: contain` to avoid weapon cropping.
-
-## Compatibility audit
-- No gameplay logic changes.
-- No database migration.
-- No hosted sync schema change.
-- No Portal Action protocol change.
-- No Twitch OAuth/scope change.
-- No environment variable changes.
-
-## Test result
-- Frontend Node suite: 286 / 286 passing.
-- Hosted Portal Python suite: 46 / 46 passing.
+## Result
+**PASS**

@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.3.0 — Guild Expansion RC2
+- Final pre-release package/metadata hardening with no gameplay or balance changes.
+- Refreshes stale bundled finalization audit metadata and keeps public Guide/Web/package identity synchronized.
+- Pairs with the RC2 Bot; schema 9 / sync 1 / Portal protocol 22 remain unchanged.
+
 ## v1.3.0 — Guild Expansion RC1
 - Feature-frozen release candidate for the complete Guild Expansion line.
 - Normalizes release identity and Player Guide major-facility terminology while preserving all Beta behavior.

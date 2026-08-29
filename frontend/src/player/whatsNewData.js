@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
-    name: "Guild Expansion RC1",
+    name: "Guild Expansion RC2",
     title: "Guild Expansion enters final testing",
-    summary: "The Guild Expansion feature set is complete. RC1 keeps progression, rewards, Airship missions, Guild services, and Fellowship layouts unchanged while giving the full release one final reliability and presentation pass.",
+    summary: "The Guild Expansion feature set is complete. RC2 keeps gameplay and progression unchanged while tightening packaged documentation and final deployment checks before v1.3 ships.",
     highlights: [
-      { title: "Feature complete", description: "Guild facilities, Projects, Weekly Orders, Workshop services, the Crystal Guild Airship, Guild Legacy, and Service Records are all in their release-candidate form." },
-      { title: "Progress stays intact", description: "Existing Guild construction, Airship upgrades and mission history, Legacy trophies, player inventories, and character progression carry forward unchanged." },
-      { title: "Shared actions stay protected", description: "Contribution, project, Workshop, and Airship safeguards from the stability pass remain in place for retries, reconnects, and multiple open tabs." },
-      { title: "Player-facing cleanup", description: "Fellowship, Guide, mobile, accessibility, scenic backgrounds, and inventory collapse behavior are being checked as one complete release experience." },
-      { title: "No balance changes", description: "Guild economy tuning, Weekly Order payouts, facility costs, Airship formulas, Workshop exchange rates, and Legacy thresholds are unchanged." },
+      { title: "Feature set remains complete", description: "Guild facilities, Projects, Weekly Orders, Workshop services, the Crystal Guild Airship, Guild Legacy, Service Records, and Expeditions are unchanged from RC1." },
+      { title: "Progress stays intact", description: "Existing Guild construction, Airship upgrades and mission history, Legacy trophies, inventories, Chocobos, Expeditions, and character progression carry forward unchanged." },
+      { title: "Cleaner release package", description: "Current-version package audits, manifests, Guide metadata, Web identity, Bot identity, and deployment references now agree on the RC2 release candidate." },
+      { title: "Shared actions stay protected", description: "The simultaneous-contribution, stale-tab, replay, project-switch, Airship launch, restart, and exact-once settlement safeguards remain fully enabled." },
+      { title: "No balance changes", description: "Guild costs, rewards, Weekly Orders, Airship formulas, Workshop exchanges, Expeditions, combat, and character balance are unchanged." },
     ],
     action: { tab: "fellowship", label: "Open Fellowship" },
   },

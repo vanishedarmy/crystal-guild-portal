@@ -3,6 +3,7 @@ import {
   submitDungeonStart,
   submitDungeonAction,
   submitDungeonContinue,
+  submitDungeonChoice,
   submitDungeonRetreat,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -73,6 +74,7 @@ function DungeonResult({ result, onConfirm, confirming }) {
         <div><span>Loot</span><strong>{number((rewards?.loot || []).length)}</strong></div>
       </div>
       {(rewards?.loot || []).length ? <p className="expedition-loot-line"><strong>Banked:</strong> {rewards.loot.join(" · ")}</p> : null}
+      {(summary?.discoveries || []).length ? <p className="expedition-loot-line"><strong>Discovered:</strong> {summary.discoveries.join(" · ")}</p> : null}
       <div className="adventure-result-confirmation">
         <div><strong>Saved until you confirm</strong><span>This Dungeon report remains on your Adventure Board across refreshes.</span></div>
         <button type="button" className="equipment-action-button secondary" disabled={Boolean(confirming)} onClick={() => onConfirm?.(result?.result_id)}>{confirming ? "Confirming…" : "Confirm Result"}</button>
@@ -111,7 +113,7 @@ export default function Dungeons({
       <section className={`panel dungeon-board-panel ${active ? "dungeon-active" : ""}`}>
         <div className="panel-title-row dungeon-board-title-row">
           <div>
-            <p className="eyebrow">Dungeons & Delves · Alpha 1</p>
+            <p className="eyebrow">Dungeons & Delves · Alpha 2</p>
             <h2>{active ? active.name : "Dungeon Board"}</h2>
             <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
           </div>
@@ -121,12 +123,15 @@ export default function Dungeons({
         {open ? (
           active ? (
             <div className="dungeon-run-shell">
+              {active.art ? <img className="dungeon-run-art" src={active.art} alt="" aria-hidden="true" draggable="false" /> : null}
+              <div className="dungeon-room-content">
               <div className="dungeon-room-header">
                 <div><span className="slot-label">Room {number(active.room_number)} of {number(active.room_count)} · {active.room?.type_label}</span><h3>{active.room?.name}</h3><p className="muted">{active.room?.description}</p></div>
-                <span className={`small-badge ${active.status === "combat" ? "danger" : "success"}`}>{active.status === "combat" ? "In Battle" : "Room Cleared"}</span>
+                <span className={`small-badge ${active.status === "combat" ? "danger" : active.status === "decision" ? "warning" : "success"}`}>{active.status === "combat" ? "In Battle" : active.status === "decision" ? "Choose Route" : "Room Cleared"}</span>
               </div>
               <ProgressBar value={pct(active.room_number, active.room_count)} />
               <DungeonCache cache={active.cache} />
+              {active.discoveries?.length ? <div className="dungeon-discovery-strip"><span>Discoveries this delve</span><strong>{active.discoveries.join(" · ")}</strong></div> : null}
 
               {active.status === "combat" && combat ? (
                 <div className="solo-combat-panel dungeon-combat-panel">
@@ -165,9 +170,22 @@ export default function Dungeons({
                 </div>
               ) : null}
 
+              {active.status === "decision" ? (
+                <div className="dungeon-choice-panel dungeon-route-choice-panel">
+                  <div className="adventure-combat-note"><strong>{active.event?.name || active.room?.name}</strong><span>{active.event?.description || "Choose how you want to cross this chamber."}</span></div>
+                  <div className="dungeon-route-options">
+                    {(active.choices || []).map((choice) => (
+                      <button key={choice.id} type="button" className="dungeon-route-option" disabled={!actionsAvailable || Boolean(busy)} onClick={() => runRequest(`dungeon:choice:${choice.id}`, "dungeon-choice", choice.id, (idem) => submitDungeonChoice(active.run_id, active.room?.id, choice.id, csrfToken, idem), `${choice.label} chosen.`)}>
+                        <strong>{choice.label}</strong><span>{choice.description}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
               {active.status === "choice" ? (
                 <div className="dungeon-choice-panel">
-                  <div className="adventure-combat-note"><strong>{active.event?.name || active.room?.name}</strong><span>{active.event?.description || "The chamber is secure. Decide whether to press deeper."}</span></div>
+                  <div className="adventure-combat-note"><strong>{active.event?.name || active.room?.name}</strong><span>{active.event?.description || "The chamber is secure. Decide whether to press deeper."}</span>{active.event?.effects?.length ? <small>{active.event.effects.join(" · ")}</small> : null}</div>
                   <div className="venture-action-row">
                     {active.can_continue ? <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy)} onClick={() => runRequest("dungeon:continue", "dungeon-continue", active.run_id || "run", (idem) => submitDungeonContinue(active.run_id, active.room?.id, csrfToken, idem), "Moving deeper into the Dungeon.")}>{busy === "dungeon:continue" ? "Advancing…" : "Continue Deeper"}</button> : null}
                   </div>
@@ -176,15 +194,19 @@ export default function Dungeons({
 
               <DungeonHistory history={active.history} />
               {active.can_retreat ? <div className="solo-retreat-row"><button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Dungeon? Only part of the carried cache will be banked.")) runRequest("dungeon:retreat", "dungeon-retreat", active.run_id || "run", (idem) => submitDungeonRetreat(active.run_id, active.room?.id, csrfToken, idem), "Retreated from the Dungeon."); }}>{busy === "dungeon:retreat" ? "Retreating…" : "Retreat — Bank 50% of Cache"}</button></div> : null}
+              </div>
             </div>
           ) : (
             <div className="dungeon-card-grid">
               {dungeons.map((dungeon) => (
                 <article key={dungeon.id} className={`dungeon-card ${dungeon.unlocked ? "unlocked" : "locked"}`}>
-                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Rooms · Lv.{number(dungeon.min_level)}+</p><h3>{dungeon.name}</h3><p className="muted">A persistent multi-room delve with combat, hazards, treasure, and a final boss.</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
-                  <div className="dungeon-card-stats"><span><strong>Entry Level</strong> Lv.{number(dungeon.min_level)}</span><span><strong>Clears</strong> {number(dungeon.progress?.[0] || 0)}</span><span><strong>Best</strong> {number(dungeon.progress?.[1] || 0)} / {number(dungeon.rooms)}</span></div>
+                  {dungeon.art ? <img className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
+                  <div className="dungeon-card-content">
+                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · Lv.{number(dungeon.min_level)}+</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
+                  <div className="dungeon-card-stats"><span><strong>Entry Level</strong> Lv.{number(dungeon.min_level)}</span><span><strong>Recommended</strong> Lv.{number(dungeon.recommended_level || dungeon.min_level)}</span><span><strong>Route Choices</strong> {number(dungeon.choice_rooms || 0)}</span><span><strong>Clears</strong> {number(dungeon.progress?.[0] || 0)}</span><span><strong>Best</strong> {number(dungeon.progress?.[1] || 0)} / {number(dungeon.rooms)}</span></div>
                   {dungeon.missing?.length ? <p className="adventure-disabled-reason">{dungeon.missing.join(" · ")}</p> : null}
                   <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !dungeon.unlocked || Boolean(busy)} onClick={() => runRequest(`dungeon:start:${dungeon.id}`, "dungeon-start", dungeon.id, (idem) => submitDungeonStart(dungeon.id, csrfToken, idem), `${dungeon.name} begun.`)}>{busy === `dungeon:start:${dungeon.id}` ? "Entering…" : "Enter Dungeon"}</button>
+                  </div>
                 </article>
               ))}
               {!dungeons.length ? <p className="muted">No Dungeons are available yet.</p> : null}

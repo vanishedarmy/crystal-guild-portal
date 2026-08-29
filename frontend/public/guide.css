@@ -366,11 +366,11 @@ code,.cmd{font-family:Consolas,Monaco,monospace;background:#080d1c;border:1px so
   width: 32px;
   height: 32px;
   display: block;
-  background: url('/ui/collapse-pointer-right.webp') center / 26px 26px no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / 26px 26px no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,.72));
 }
 .data-collapse[open] .data-collapse-chevron {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 
 .data-collapse[open] > summary {
@@ -1445,11 +1445,11 @@ table { font-size: 0.88rem; }
   width:32px;
   height:32px;
   display:block;
-  background:url('/ui/collapse-pointer-right.webp') center / 28px 28px no-repeat;
+  background:url('/ui/collapse-pointer-right-a2.webp') center / 28px 28px no-repeat;
   filter:drop-shadow(0 1px 2px rgba(0,0,0,.72));
 }
 .guide-section-accordion[open] .guide-section-chevron{
-  background-image:url('/ui/collapse-pointer-down.webp');
+  background-image:url('/ui/collapse-pointer-down-a2.webp');
 }
 .guide-section-body{
   padding:28px clamp(16px,3vw,28px) 32px;
@@ -2371,11 +2371,11 @@ button, input, select, textarea { font: inherit; }
   width: 1.35rem;
   height: 1.35rem;
   flex: 0 0 1.35rem;
-  background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
 .catalog-disclosure[open] .catalog-launch-action::after {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 .guide-content details:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary {
   list-style: none;
@@ -2388,16 +2388,31 @@ button, input, select, textarea { font: inherit; }
   height: 1.3rem;
   margin-left: .4rem;
   vertical-align: middle;
-  background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
 .guide-content details[open]:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 
 
 /* v1.3.1 UI4 — enforce stateful guide pointers after all earlier rules. */
-.data-collapse-chevron, .guide-section-chevron, .catalog-launch-action::after { background-image: url('/ui/collapse-pointer-right.webp') !important; }
-.data-collapse[open] .data-collapse-chevron, .guide-section-accordion[open] .guide-section-chevron, .catalog-disclosure[open] .catalog-launch-action::after { background-image: url('/ui/collapse-pointer-down.webp') !important; }
-.guide-content details:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-right.webp') !important; background: none !important; width: 1.3rem; height: 1.3rem; overflow: hidden; }
-.guide-content details[open]:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-down.webp') !important; }
+.data-collapse-chevron, .guide-section-chevron, .catalog-launch-action::after { background-image: url('/ui/collapse-pointer-right-a2.webp') !important; }
+.data-collapse[open] .data-collapse-chevron, .guide-section-accordion[open] .guide-section-chevron, .catalog-disclosure[open] .catalog-launch-action::after { background-image: url('/ui/collapse-pointer-down-a2.webp') !important; }
+.guide-content details:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-right-a2.webp') !important; background: none !important; width: 1.3rem; height: 1.3rem; overflow: hidden; }
+.guide-content details[open]:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-down-a2.webp') !important; }
+
+
+/* v1.4 Alpha 2 — canonical 22px disclosure hand across the Player Guide. */
+.data-collapse-chevron,
+.guide-section-chevron,
+.catalog-launch-action::after {
+  width: 22px !important;
+  height: 22px !important;
+  background-size: 22px 22px !important;
+}
+.guide-content details:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after {
+  width: 22px !important;
+  height: 22px !important;
+  background-size: 22px 22px !important;
+}

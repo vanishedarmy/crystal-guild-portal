@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.4.0 — Dungeons & Delves Alpha 2
+- Adds The Emberglass Foundry as the second persistent Dungeon and adds Crossroads route decisions/discoveries to both current delves.
+- Preserves schema 10; Portal Action protocol advances 23 → 24 for `DUNGEON_CHOICE`.
+- Normalizes shared collapse-hand rendered size while preserving right/closed and down/open state behavior.
+
 ## v1.4.0 — Dungeons & Delves Alpha 1
 - Added the first persistent seven-room Dungeon and Adventure Board Dungeon controls.
 - Schema 10 / Portal Action protocol 23.

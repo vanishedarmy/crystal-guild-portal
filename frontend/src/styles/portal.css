@@ -9644,7 +9644,7 @@ button, input, select, textarea { font: inherit; }
   width: 1.45rem;
   height: 1.45rem;
   flex: 0 0 1.45rem;
-  background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
 .fellowship-dashboard-disclosure[open] > summary::after,
@@ -9653,7 +9653,7 @@ button, input, select, textarea { font: inherit; }
 .fellowship-expedition-board[open] > summary::after,
 .fellowship-available-projects[open] > summary::after,
 .fellowship-deeds[open] > summary::after {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 .fellowship-dashboard-disclosure > summary > span:first-child,
 .fellowship-airship-details > summary > span:first-child,
@@ -9784,11 +9784,11 @@ button, input, select, textarea { font: inherit; }
   margin-left: .4rem;
   flex: 0 0 1.3rem;
   vertical-align: middle;
-  background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
 :where(.moogle-sell-disclosure, .job-requirements, .whats-new-history)[open] > summary::after {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 
 /* The simple Guild Rank ladder disclosure uses the same shared pointer. */
@@ -9804,10 +9804,10 @@ button, input, select, textarea { font: inherit; }
   width: 1.3rem;
   height: 1.3rem;
   flex: 0 0 1.3rem;
-  background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / contain no-repeat;
 }
 .fellowship-details:not(.fellowship-airship-details):not(.fellowship-legacy-goals):not(.fellowship-expedition-board):not(.fellowship-available-projects):not(.fellowship-deeds)[open] > summary::after {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 
 
@@ -9819,7 +9819,7 @@ summary:has(> .details-collapse-pointer)::after { content: none !important; disp
 details[open] > summary .details-collapse-pointer-closed { display: none; }
 details[open] > summary .details-collapse-pointer-open { display: block; }
 
-/* v1.4.0 Dungeons & Delves Alpha 1 */
+/* v1.4.0 Dungeons & Delves Alpha 2 */
 .dungeon-board-panel { overflow: hidden; }
 .dungeon-board-panel.dungeon-active { border-color: rgba(142, 164, 214, .62); }
 .dungeon-board-title-row { align-items: flex-start; }
@@ -9846,4 +9846,80 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 @media (max-width: 620px) {
   .adventure-priority-strip { grid-template-columns: 1fr; }
   .dungeon-room-header { display: grid; }
+}
+
+/* v1.4.0 Dungeons & Delves Alpha 2 — route choices + dungeon scenes */
+.dungeon-card,
+.dungeon-run-shell { position: relative; overflow: hidden; isolation: isolate; }
+.dungeon-card-art,
+.dungeon-run-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .22;
+  filter: saturate(.85) brightness(.72);
+  pointer-events: none;
+  z-index: 0;
+}
+.dungeon-card::after,
+.dungeon-run-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(3, 12, 31, .96) 0%, rgba(3, 12, 31, .84) 54%, rgba(3, 12, 31, .66) 100%);
+}
+.dungeon-card-content,
+.dungeon-room-content { position: relative; z-index: 2; display: grid; gap: .8rem; }
+.dungeon-run-shell { padding: 1rem; border: 1px solid rgba(135, 159, 205, .26); border-radius: .78rem; background: rgba(3, 12, 31, .72); }
+.dungeon-route-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.dungeon-route-option {
+  appearance: none;
+  display: grid;
+  gap: .3rem;
+  min-height: 88px;
+  padding: .85rem .9rem;
+  text-align: left;
+  color: var(--text);
+  border: 1px solid rgba(147, 173, 222, .32);
+  border-radius: .65rem;
+  background: rgba(6, 20, 48, .82);
+  cursor: pointer;
+}
+.dungeon-route-option:hover:not(:disabled),
+.dungeon-route-option:focus-visible { border-color: rgba(229, 197, 111, .72); background: rgba(12, 31, 66, .92); }
+.dungeon-route-option strong { color: #f1d78f; }
+.dungeon-route-option span { color: var(--muted); font-size: .9rem; line-height: 1.45; }
+.dungeon-route-option:disabled { opacity: .58; cursor: not-allowed; }
+.dungeon-discovery-strip { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .7rem; padding: .6rem .75rem; border: 1px solid rgba(229, 197, 111, .22); border-radius: .58rem; background: rgba(31, 25, 13, .34); }
+.dungeon-discovery-strip span { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; }
+.dungeon-discovery-strip strong { color: #f1d78f; font-size: .88rem; }
+.dungeon-card-stats { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+@media (max-width: 720px) {
+  .dungeon-route-options { grid-template-columns: 1fr; }
+  .dungeon-card-art, .dungeon-run-art { opacity: .16; }
+}
+
+
+/* v1.4 Alpha 2 — canonical collapse-pointer sizing.
+   All disclosure hands share one rendered box so overview controls do not appear oversized. */
+:root { --cg-collapse-pointer-size: 1.35rem; }
+.section-collapse-button .collapse-pointer-icon,
+.section-collapse-button.compact .collapse-pointer-icon {
+  width: var(--cg-collapse-pointer-size) !important;
+  height: var(--cg-collapse-pointer-size) !important;
+}
+.details-collapse-pointer {
+  width: var(--cg-collapse-pointer-size) !important;
+  height: var(--cg-collapse-pointer-size) !important;
+  flex-basis: var(--cg-collapse-pointer-size) !important;
+}
+.fellowship-details:not(.fellowship-airship-details):not(.fellowship-legacy-goals):not(.fellowship-expedition-board):not(.fellowship-available-projects):not(.fellowship-deeds) > summary::after,
+:where(.moogle-sell-disclosure, .job-requirements, .whats-new-history) > summary::after {
+  width: var(--cg-collapse-pointer-size) !important;
+  height: var(--cg-collapse-pointer-size) !important;
+  flex-basis: var(--cg-collapse-pointer-size) !important;
 }

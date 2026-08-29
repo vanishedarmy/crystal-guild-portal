@@ -1,6 +1,6 @@
-# Dungeons & Delves Alpha 1 compatibility
+# Dungeons & Delves Alpha 2 compatibility
 
-Streamer Dashboard remains compatible with protocol 23. Clear All Adventures includes persistent Dungeon runs.
+Streamer Dashboard remains compatible with protocol 24. Clear All Adventures includes persistent Dungeon runs.
 
 # Crystal Guild — Streamer Dashboard
 

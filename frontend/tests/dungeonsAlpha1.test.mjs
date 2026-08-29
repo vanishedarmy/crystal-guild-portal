@@ -10,7 +10,7 @@ test("Dungeons Alpha 1 exposes typed Portal actions and Adventure Board integrat
   const api = read("src/api/auth.js");
   const board = read("src/player/Hunts.jsx");
   const dungeons = read("src/player/Dungeons.jsx");
-  for (const token of ["DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_RETREAT"]) assert.match(api, new RegExp(token));
+  for (const token of ["DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT"]) assert.match(api, new RegExp(token));
   assert.match(board, /import Dungeons from "\.\/Dungeons\.jsx"/);
   assert.match(board, /data=\{state\?\.dungeons\}/);
   assert.match(board, /Dungeon · \$\{dungeonRun\.name/);
@@ -32,25 +32,25 @@ test("Dungeon Board uses the existing shared collapse pointer and responsive lay
   const dungeons = read("src/player/Dungeons.jsx");
   const css = read("src/styles/portal.css");
   assert.match(dungeons, /<CollapsePointer open=\{open\}/);
-  assert.match(css, /v1\.4\.0 Dungeons & Delves Alpha 1/);
+  assert.match(css, /v1\.4\.0 Dungeons & Delves Alpha 2/);
   assert.match(css, /\.dungeon-card-grid/);
   assert.match(css, /\.dungeon-run-shell/);
   assert.match(css, /@media \(max-width: 620px\)/);
 });
 
-test("Player Guide documents The Forgotten Ossuary and Dungeon cache rules", () => {
+test("Player Guide preserves Dungeon cache rules alongside Alpha 2 expansion", () => {
   const guide = read("public/guide-body.html");
   assert.match(guide, /id="dungeons"/);
   assert.match(guide, /The Forgotten Ossuary/);
-  assert.match(guide, /25% of Emerald Wilds/);
+  assert.match(guide, /25% Emerald Wilds/);
   assert.match(guide, /voluntary retreat banks <b>50%<\/b>/);
   assert.match(guide, /defeat recovers <b>25%<\/b>/);
 });
 
-test("v1.4 Alpha 1 current entry does not repopulate prerelease history", () => {
+test("v1.4 Alpha 2 current entry does not repopulate prerelease history", () => {
   const whatsNew = read("src/player/whatsNewData.js");
-  assert.match(whatsNew, /name: "Dungeons & Delves Alpha 1"/);
-  const currentIndex = whatsNew.indexOf('name: "Dungeons & Delves Alpha 1"');
+  assert.match(whatsNew, /name: "Dungeons & Delves Alpha 2"/);
+  const currentIndex = whatsNew.indexOf('name: "Dungeons & Delves Alpha 2"');
   const stableIndex = whatsNew.indexOf('name: "Asset Optimization"');
   assert.ok(currentIndex > 0 && stableIndex > currentIndex);
 });

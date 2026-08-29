@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Alpha 1",
-    title: "The first Dungeon opens",
-    summary: "Enter The Forgotten Ossuary from the Adventure Board and work through a persistent sequence of chambers where your condition, carried cache, and combat choices matter from room to room.",
+    name: "Dungeons & Delves Alpha 2",
+    title: "Dungeon routes open up",
+    summary: "Dungeons now ask you to make meaningful route decisions, and a second persistent delve — The Emberglass Foundry — expands the Dungeon Board into a real progression path.",
     highlights: [
-      { title: "A real multi-room delve", description: "The Forgotten Ossuary is a seven-room proof dungeon with an entrance, combat, treasure, a hazard, a miniboss, a sanctuary, and a final boss." },
-      { title: "Your condition carries forward", description: "HP, MP, AP, status pressure, and consumed battle items persist as you move between Dungeon rooms." },
-      { title: "Choose every combat round", description: "Dungeon battles use the same player-paced Attack, Ability, Item, and Defend controls as interactive Solo Ventures." },
-      { title: "Carry a Dungeon Cache", description: "Enemy rewards and treasure remain in the delve cache until you clear the Dungeon or retreat. A normal retreat banks half; defeat recovers one quarter." },
-      { title: "Runs stay saved", description: "Dungeon progress survives refreshes and Bot restarts, so the delve waits safely for your next choice." },
+      { title: "A second Dungeon", description: "The Emberglass Foundry unlocks at Lv.18 after charting 35% of Ashen Highlands, with its own enemies, treasure, hazards, sanctuary, miniboss, and final boss." },
+      { title: "Choose your route", description: "Crossroads rooms stop the delve for a real decision: take the safer path to preserve resources or accept immediate danger for stronger cache rewards and discoveries." },
+      { title: "The Ossuary grows", description: "The Forgotten Ossuary now includes its own Crossroads chamber, bringing the proof dungeon to eight chambers without changing its original persistent-combat rules." },
+      { title: "Dungeon identity is clearer", description: "The Board now shows each delve’s scene art, recommended level, route count, unlock state, and discoveries while active." },
+      { title: "Collapse controls normalized", description: "The shared pointer hand now uses one consistent rendered size everywhere while retaining right-when-closed and down-when-open states." },
     ],
     action: { tab: "hunts", label: "Open Dungeon Board" },
   },

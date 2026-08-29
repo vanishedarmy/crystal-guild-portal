@@ -1553,15 +1553,24 @@ body.streamer-page {
   width: 1.35rem;
   height: 1.35rem;
   flex: 0 0 1.35rem;
-  background: url('/ui/collapse-pointer-right.webp') center / contain no-repeat;
+  background: url('/ui/collapse-pointer-right-a2.webp') center / contain no-repeat;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .72));
 }
 .streamer-control-group[open] > summary::after,
 .streamer-reference-group[open] > summary::after {
-  background-image: url('/ui/collapse-pointer-down.webp');
+  background-image: url('/ui/collapse-pointer-down-a2.webp');
 }
 
 
 /* v1.3.1 UI4 — actual DetailsPointer images replace pseudo background arrows. */
 summary:has(> .details-collapse-pointer)::after { content: none !important; display: none !important; background: none !important; }
 .streamer-control-group .details-collapse-pointer, .streamer-reference-group .details-collapse-pointer { width: 1.35rem; height: 1.35rem; flex-basis: 1.35rem; }
+
+
+/* v1.4 Alpha 2 — match the Portal's canonical disclosure-hand size. */
+.streamer-control-group .details-collapse-pointer,
+.streamer-reference-group .details-collapse-pointer {
+  width: 1.35rem !important;
+  height: 1.35rem !important;
+  flex-basis: 1.35rem !important;
+}

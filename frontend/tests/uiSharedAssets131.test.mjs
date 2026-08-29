@@ -7,8 +7,8 @@ const root = path.resolve(process.cwd());
 const read = (rel) => fs.readFileSync(path.join(root, rel), "utf8");
 
 test("shared pointer assets ship as distinct optimized WebP images", () => {
-  const right = path.join(root, "public/ui/collapse-pointer-right.webp");
-  const down = path.join(root, "public/ui/collapse-pointer-down.webp");
+  const right = path.join(root, "public/ui/collapse-pointer-right-a2.webp");
+  const down = path.join(root, "public/ui/collapse-pointer-down-a2.webp");
   for (const p of [right, down]) {
     const stat = fs.statSync(p);
     assert.ok(stat.size > 0 && stat.size < 10000);
@@ -18,7 +18,7 @@ test("shared pointer assets ship as distinct optimized WebP images", () => {
 
 test("controlled collapsibles render a real state-selected pointer image", () => {
   const component = read("src/components/CollapsePointer.jsx");
-  assert.ok(component.includes('open ? "/ui/collapse-pointer-down.webp" : "/ui/collapse-pointer-right.webp"'));
+  assert.ok(component.includes('open ? "/ui/collapse-pointer-down-a2.webp" : "/ui/collapse-pointer-right-a2.webp"'));
   for (const rel of ["src/player/Hunts.jsx", "src/player/Expeditions.jsx", "src/player/WhatsNew.jsx", "src/player/Inventory.jsx"]) {
     assert.match(read(rel), /<CollapsePointer open=\{/);
   }
@@ -27,8 +27,8 @@ test("controlled collapsibles render a real state-selected pointer image", () =>
 
 test("native details use actual right/down pointer image elements", () => {
   const component = read("src/components/CollapsePointer.jsx");
-  assert.ok(component.includes('className="details-collapse-pointer-closed" src="/ui/collapse-pointer-right.webp"'));
-  assert.ok(component.includes('className="details-collapse-pointer-open" src="/ui/collapse-pointer-down.webp"'));
+  assert.ok(component.includes('className="details-collapse-pointer-closed" src="/ui/collapse-pointer-right-a2.webp"'));
+  assert.ok(component.includes('className="details-collapse-pointer-open" src="/ui/collapse-pointer-down-a2.webp"'));
   const css = read("src/styles/portal.css");
   assert.ok(css.includes('details[open] > summary .details-collapse-pointer-closed { display: none; }'));
   assert.ok(css.includes('details[open] > summary .details-collapse-pointer-open { display: block; }'));

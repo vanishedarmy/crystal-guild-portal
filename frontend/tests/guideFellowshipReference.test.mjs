@@ -40,6 +40,6 @@ test("Fellowship Guide stays player-only and cache-busts the corrected Guide", a
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const runtime = await readFile(new URL("guide/guideRuntime.js", SRC), "utf8");
   assert.doesNotMatch(body, /!fellowshipproject|Streamer-only:/);
-  assert.match(version, /1\.4\.0-dungeons-a1/);
+  assert.match(version, /1\.4\.0-dungeons-a2/);
   assert.match(runtime, /'fellowship-guide':'Begin'/);
 });

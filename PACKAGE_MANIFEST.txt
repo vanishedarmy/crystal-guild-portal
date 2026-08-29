@@ -1,9 +1,10 @@
-Crystal Guild v1.4.0 — Dungeons & Delves Alpha 1 Web
-Hosted runtime: 1.4.0-dungeons-a1
-Frontend assets: 1.4.0-dungeons-a1
-Compatible Bot: 1.4.0-dungeons-a1
+Crystal Guild v1.4.0 — Dungeons & Delves Alpha 2 Web
+Hosted runtime: 1.4.0-dungeons-a2
+Frontend assets: 1.4.0-dungeons-a2
+Compatible Bot: 1.4.0-dungeons-a2
 Local DB schema: 10
 Hosted sync schema: 1
-Portal Action protocol: 23
+Portal Action protocol: 24
 Twitch prefix: !
-New system: persistent Dungeons & Delves foundation.
+Feature state: two persistent Dungeons, Crossroads route choices, shared pointer-size normalization.
+Upgrade baseline: v1.4.0 Dungeons & Delves Alpha 1 Web

@@ -193,6 +193,10 @@ export function submitDungeonContinue(runId, roomId, csrfToken, idempotencyKey) 
   return submitPortalAction("DUNGEON_CONTINUE", { run_id: runId, room_id: roomId }, csrfToken, idempotencyKey);
 }
 
+export function submitDungeonChoice(runId, roomId, choiceId, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_CHOICE", { run_id: runId, room_id: roomId, choice_id: choiceId }, csrfToken, idempotencyKey);
+}
+
 export function submitDungeonRetreat(runId, roomId, csrfToken, idempotencyKey) {
   return submitPortalAction("DUNGEON_RETREAT", { run_id: runId, room_id: roomId }, csrfToken, idempotencyKey);
 }

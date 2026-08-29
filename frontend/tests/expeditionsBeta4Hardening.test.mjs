@@ -8,8 +8,8 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("Expeditions carries forward Beta 4 hardening in player-facing language", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
-  assert.match(version, /1\.4\.0-dungeons-a1/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
+  assert.match(version, /1\.4\.0-dungeons-a2/);
   assert.match(news, /Journeys stay saved/);
   assert.match(news, /Active Expeditions keep their current stage/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
@@ -19,7 +19,7 @@ test("Expeditions carries forward Beta 4 hardening in player-facing language", a
 test("Player Guide is player-facing and omits release-engineering jargon", async () => {
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
   const expeditionStart = guide.indexOf('id="expeditions"');
-  const expeditionEnd = guide.indexOf('id="combat"', expeditionStart);
+  const expeditionEnd = guide.indexOf('id="dungeons"', expeditionStart);
   const expedition = guide.slice(expeditionStart, expeditionEnd);
   assert.match(expedition, /Your travel and current stage stay saved/);
   assert.match(expedition, /Route signals:/);
@@ -29,7 +29,7 @@ test("Player Guide is player-facing and omits release-engineering jargon", async
 
 test("Guide release metadata matches authoritative H9+ combat timings", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.release, "1.4.0-dungeons-a1");
+  assert.equal(data.meta.release, "1.4.0-dungeons-a2");
   assert.equal(data.meta.encounter_rally, 60);
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);

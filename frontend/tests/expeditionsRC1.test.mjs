@@ -8,15 +8,15 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("v1.2 publishes the final Expeditions identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
-  assert.match(version, /1\.4\.0-dungeons-a1/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
+  assert.match(version, /1\.4\.0-dungeons-a2/);
   assert.match(news, /Expeditions has arrived/);
 });
 
 test("Expeditions guide contains only play and usage guidance", async () => {
   const body = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
   const start = body.indexOf('id="expeditions"');
-  const end = body.indexOf('id="combat"', start);
+  const end = body.indexOf('id="dungeons"', start);
   const section = body.slice(start, end);
   for (const required of [
     "Choose a Region", "Choose a Route", "Expedition Cache", "Chocobo Rescue",

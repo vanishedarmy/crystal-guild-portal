@@ -9294,3 +9294,25 @@ button, input, select, textarea { font: inherit; }
     grid-template-columns: 1fr;
   }
 }
+
+/* v1.3 Guild Expansion Alpha 2 — Guild Projects II */
+.fellowship-order-reward-note {
+  margin: 0 0 14px;
+  padding: 11px 13px;
+  border: 1px solid rgba(232, 194, 105, 0.34);
+  border-radius: 10px;
+  background: rgba(13, 17, 29, 0.72);
+  line-height: 1.5;
+}
+.fellowship-order-reward {
+  display: block;
+  margin: 8px 0 10px;
+  color: var(--gold-soft, #e8c269);
+  line-height: 1.4;
+}
+.fellowship-project-options article[data-project-type="supply_drive"] {
+  border-color: rgba(92, 201, 155, 0.34);
+}
+.fellowship-project-options article[data-project-type="guild_objective"] {
+  border-color: rgba(113, 165, 233, 0.34);
+}

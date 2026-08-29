@@ -11,7 +11,7 @@ const whatsNew = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
 const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
 const version = await readFile(new URL("version.js", SRC), "utf8");
 
-test("Guild Expansion Alpha 1 presents the five-facility Guild Board", () => {
+test("Guild Expansion Alpha 2 presents the five-facility Guild Board", () => {
   assert.match(page, /Guild Hall Foundation/);
   assert.match(page, /Guild Facilities/);
   assert.match(page, /Lv\. 0–3/);
@@ -29,11 +29,11 @@ test("Player Guide explains facility play without backend implementation jargon"
   assert.doesNotMatch(chapter, /schema|protocol|SQLite|migration|transaction ledger|sync payload/i);
 });
 
-test("Alpha 1 release identity and launch summary are current", () => {
+test("Alpha 2 release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.3\.0"/);
-  assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a1"/);
-  assert.match(whatsNew, /name: "Guild Expansion Alpha 1"/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a2"/);
+  assert.match(whatsNew, /name: "Guild Expansion Alpha 2"/);
   assert.match(whatsNew, /Airship Dock on the horizon/);
-  assert.match(css, /v1\.3 Guild Expansion Alpha 1/);
+  assert.match(css, /v1\.3 Guild Expansion Alpha 2/);
 });

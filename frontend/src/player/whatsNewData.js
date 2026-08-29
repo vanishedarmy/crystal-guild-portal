@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
+    name: "Guild Expansion Alpha 2",
+    title: "Guild work goes beyond construction",
+    summary: "The Fellowship now has shorter Supply Drives, gameplay-driven Guild Objectives, and direct participation rewards for Weekly Orders.",
+    highlights: [
+      { title: "Supply Drives", description: "Shorter resource projects turn spare Gil and common materials into focused Guild progress without replacing permanent facility construction." },
+      { title: "Guild Objectives", description: "Hunts, Expeditions, and Raid victories can now become active Guild projects that advance automatically through normal play." },
+      { title: "Weekly Orders pay contributors", description: "Helping complete an Order now awards a modest personal Gil and Fellowship Renown payout in addition to the existing shared Guild Renown." },
+      { title: "Full-week participation bonus", description: "When all three Weekly Orders are completed, everyone who helped with at least one earns an extra weekly participation bonus." },
+      { title: "Construction remains permanent", description: "Guild Hall, Workshop, Chocobo Stables, Guild Archive, and the future Airship Dock remain the long-term facility path." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+  {
+    version: "v1.3.0",
     name: "Guild Expansion Alpha 1",
     title: "The Guild Hall starts growing",
     summary: "The Fellowship now has a clearer Guild Board built around five major facilities and shared construction goals.",

@@ -66,6 +66,8 @@ export default function Fellowship({ data, onRefresh }) {
   const remaining = rank.maxed ? 0 : Math.max(0, nextThreshold - renown);
   const project = liveState?.project || null;
   const requirements = Array.isArray(project?.requirements) ? project.requirements : [];
+  const projectType = String(project?.project_type || "construction");
+  const hasContributableRequirements = requirements.some((req) => Boolean(req.contributable));
 
   const loadState = useCallback(async ({ quiet = false } = {}) => {
     if (!contributionAvailable || busyKey) return null;
@@ -209,9 +211,13 @@ export default function Fellowship({ data, onRefresh }) {
           </div>
 
           <div className={`equipment-action-status ${contributionAvailable ? "ready" : "offline"}`}>
-            <strong>{contributionAvailable ? (liveState ? "Contribution controls ready" : "Loading Fellowship project…") : "Contribution controls unavailable"}</strong>
+            <strong>{contributionAvailable
+              ? (liveState ? (projectType === "guild_objective" ? "Guild Objective active" : hasContributableRequirements ? "Contribution controls ready" : "Guild project active") : "Loading Fellowship project…")
+              : "Contribution controls unavailable"}</strong>
             <span>{contributionAvailable
-              ? "Support the active Guild project with required Gil or materials. Gameplay requirements still advance through normal play."
+              ? (projectType === "guild_objective"
+                ? "This objective advances automatically from normal Guild activity; there is nothing to donate."
+                : "Support the active Guild project with requested Gil or materials. Gameplay requirements still advance through normal play.")
               : "Your Fellowship record remains available to view. Contributions return when Crystal Guild reconnects."}</span>
             {message ? <small aria-live="polite">{message}</small> : null}
           </div>

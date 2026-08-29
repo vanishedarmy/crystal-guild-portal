@@ -6,6 +6,12 @@ import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
 
+function projectTypeLabel(project) {
+  if (project?.project_type === "supply_drive") return "Supply Drive";
+  if (project?.project_type === "guild_objective") return "Guild Objective";
+  return project?.teaser ? "Guild Project" : "Construction";
+}
+
 function ProjectCard({ project }) {
   if (!project) {
     return (
@@ -19,7 +25,7 @@ function ProjectCard({ project }) {
     <section className="panel fellowship-project">
       <div className="panel-title-row">
         <div><span className="panel-kicker">Active Project</span><h2>{project.name}</h2></div>
-        <span className="small-badge">{project.teaser ? "Guild Project" : `Lv. ${number(project.level || project.tier)}`}</span>
+        <span className="small-badge">{projectTypeLabel(project)}{project.project_type === "construction" && !project.teaser ? ` · Lv. ${number(project.level || project.tier)}` : ""}</span>
       </div>
       <p className="muted fellowship-project-copy">{project.description}</p>
       <div className="fellowship-requirements">
@@ -30,7 +36,11 @@ function ProjectCard({ project }) {
           </div>
         ))}
       </div>
-      <p className="fellowship-command-hint">Donate with <strong>!contribute gil &lt;amount&gt;</strong> or <strong>!contribute &lt;amount&gt; &lt;item&gt;</strong>. Gameplay requirements advance automatically.</p>
+      <p className="fellowship-command-hint">
+        {project.project_type === "guild_objective"
+          ? "This Guild Objective advances automatically from normal play."
+          : <>Donate requested resources with <strong>!contribute gil &lt;amount&gt;</strong> or <strong>!contribute &lt;amount&gt; &lt;item&gt;</strong>. Gameplay requirements advance automatically.</>}
+      </p>
     </section>
   );
 }
@@ -164,13 +174,20 @@ export default function FellowshipPage() {
 
             {(data.available_projects || []).length ? (
               <details className="panel fellowship-details fellowship-available-projects">
-                <summary><span><strong>Available Projects</strong><small>Construction projects the Guild can begin next.</small></span><span>{number(data.available_projects.length)} Unlocked</span></summary>
+                <summary><span><strong>Available Guild Work</strong><small>Construction, Supply Drives, and gameplay Objectives the Guild can begin next.</small></span><span>{number(data.available_projects.length)} Unlocked</span></summary>
                 <div className="fellowship-project-options">
                   {data.available_projects.map((project) => (
-                    <article key={project.id}>
+                    <article key={project.id} data-project-type={project.project_type || "construction"}>
+                      <span className="panel-kicker">{projectTypeLabel(project)}</span>
                       <strong>{project.name}</strong>
                       <span>{project.description}</span>
-                      <small>{project.teaser ? "Expedition launch project" : `Lv. ${number(project.level || project.tier)} · ${project.requirements?.length || 0} goals`}</small>
+                      <small>
+                        {project.teaser
+                          ? "Expedition launch project"
+                          : project.project_type === "construction"
+                            ? `Lv. ${number(project.level || project.tier)} · ${project.requirements?.length || 0} goals`
+                            : `${project.requirements?.length || 0} goal${project.requirements?.length === 1 ? "" : "s"} · +${number(project.reward_renown || 0)} Guild Renown`}
+                      </small>
                     </article>
                   ))}
                 </div>
@@ -179,12 +196,16 @@ export default function FellowshipPage() {
 
             <section className="panel fellowship-section">
               <div className="panel-title-row"><div><span className="panel-kicker">This Week</span><h2>Fellowship Orders</h2></div><span className="small-badge">{number(data.orders?.completed)} / {number(data.orders?.total)} Complete</span></div>
+              <div className="fellowship-order-reward-note">
+                <strong>Help the Guild, get paid too.</strong> Contributors to a completed Order receive its listed personal reward. If all three Orders are cleared, everyone who helped with at least one receives an extra <b>{number(data.orders?.weekly_bonus?.personal_gil)}g +{number(data.orders?.weekly_bonus?.personal_renown)} personal Renown</b>; the Guild also earns +{number(data.orders?.weekly_bonus?.guild_renown)} shared Renown.
+              </div>
               <div className="fellowship-order-grid">
                 {(data.orders?.orders || []).map((order) => (
                   <article className={`fellowship-order ${order.complete ? "complete" : ""}`} key={order.id}>
                     <span>{order.complete ? "Complete" : "In Progress"}</span>
                     <h3>{order.name}</h3>
                     <p>{order.description}</p>
+                    <small className="fellowship-order-reward">Guild: +{number(order.renown)} Renown · Contributors: {number(order.personal_gil)}g +{number(order.personal_renown)} personal Renown</small>
                     <div className="vital-label"><span>Progress</span><span>{number(order.progress)} / {number(order.target)}</span></div>
                     <ProgressBar value={pct(order.progress, order.target)} />
                   </article>

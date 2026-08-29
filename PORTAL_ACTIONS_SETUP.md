@@ -1,4 +1,4 @@
-# Portal Actions Setup — v1.3.0 Guild Expansion Alpha 5
+# Portal Actions Setup — v1.3.0 Guild Expansion Beta 1
 
 Portal Action protocol remains **21**. Alpha 4 does not add a new public Portal action type: Airship construction/upgrades reuse Fellowship projects, while streamer mission launches use the existing allow-listed `STREAMER_COMMAND` path.
 

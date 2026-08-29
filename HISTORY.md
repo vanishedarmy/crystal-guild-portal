@@ -1,3 +1,10 @@
+# Crystal Guild Web History
+
+## v1.3.0 — Guild Expansion Beta 1
+- Advances the public Web identity and What's New summary to the v1.3 balance pass.
+- Preserves Alpha 5 Hotfix 1 Founding Hall artwork and collapsible Equipment & Inventory groups.
+- Pairs with the Beta 1 Bot for tuned authoritative Guild/Airship project requirements.
+
 # Crystal Guild v1.3.0 — Guild Expansion Alpha 5 Hotfix 1
 
 Web-only presentation hotfix. Adds the portrait Founding Hall backdrop to Guild Legacy Stage 1 and independently collapsible, browser-persistent Equipment & Inventory category groups. Hosted runtime/Bot remain `1.3.0-guild-expansion-a5`; frontend revision advances to `1.3.0-guild-expansion-a5h1`. Schema 9 / sync 1 / protocol 21 unchanged.

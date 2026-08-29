@@ -1,15 +1,14 @@
-# Upgrade Guide — Guild Expansion Alpha 5 Hotfix 1
+# Upgrade Guide — v1.3.0 Guild Expansion Beta 1
 
-Baseline: **v1.3.0 Guild Expansion Alpha 5**.
+Recommended baseline: **Alpha 5 Hotfix 1 Web + Alpha 5 Bot**.
 
-This is a **Web-only** update.
+1. Back up the live Crystal Guild database and persistent Twitch/token data.
+2. Stop the Bot.
+3. Apply the **Alpha 5 → Beta 1 Bot patch** or replace the Bot source with the full Beta 1 Bot package while preserving `.env`, database files, and token stores.
+4. Deploy the **Alpha 5 Hotfix 1 → Beta 1 Web patch** or full Beta 1 Web package.
+5. Start the Bot and redeploy/restart the hosted Web service.
+6. Verify `!cgversion` reports `1.3.0-guild-expansion-b1`.
+7. Verify `/api/health` reports hosted runtime/frontend revision `1.3.0-guild-expansion-b1`, hosted sync schema **1**, and Portal Action protocol **21**.
+8. Open Fellowship and confirm the Guild/Airship surfaces load normally. Existing Founding Hall art and collapsible inventory groups should remain intact.
 
-1. Leave the Alpha 5 Bot and live player database unchanged.
-2. Deploy `CrystalGuild-v1.3.0-Guild-Expansion-Alpha5-Hotfix1-Web.zip`, or overlay the direct Alpha 5 → Alpha 5 Hotfix 1 Web patch.
-3. Redeploy the hosted Web service.
-4. Verify `/api/health` reports hosted runtime `1.3.0-guild-expansion-a5`, frontend revision `1.3.0-guild-expansion-a5h1`, hosted sync schema **1**, and Portal Action protocol **21**.
-5. Hard-refresh the Portal once so the cache-busted Hotfix 1 frontend and Founding Hall image load.
-6. Open **Fellowship → Guild Legacy** while the Guild is at Founding Hall and confirm the portrait Hall scene fills the Legacy panel without reducing readability.
-7. Open **Equipment & Inventory** and confirm Weapons, Armor, Accessories, Consumables, and Materials expand/collapse independently and remain in the chosen state after reload.
-
-No database migration or player reset is required.
+No database migration is required. Local schema remains **9** and all player, Fellowship, Airship, Legacy, Expedition, and inventory progression is preserved.

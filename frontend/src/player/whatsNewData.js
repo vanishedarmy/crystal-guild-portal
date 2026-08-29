@@ -1,6 +1,20 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
+    name: "Guild Expansion Beta 1",
+    title: "Guild progression gets its balance pass",
+    summary: "Airship construction and upgrade costs are tuned so the Guild grows over meaningful weeks without rare materials or raid clears becoming a wall.",
+    highlights: [
+      { title: "Airship arrives sooner", description: "Airship Dock and Crystal Guild Airship construction now ask for fewer raid clears and a more manageable shared resource investment." },
+      { title: "Rare materials respect rarity", description: "Adamantite and Dark Matter upgrade tracks now require fewer pieces than common-material tracks instead of sharing one flat quantity curve." },
+      { title: "Tier III stays long-term", description: "Airship upgrade Gil and raid requirements are lower, but maxing every track remains a sustained Guild goal rather than a quick checklist." },
+      { title: "Weekly rewards stay steady", description: "Weekly Order contributor payouts, Supply Drives, Workshop refining, Fellowship level thresholds, and Guild Legacy milestones remain unchanged." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+
+  {
+    version: "v1.3.0",
     name: "Guild Expansion Alpha 5",
     title: "The Guild begins writing its Legacy",
     summary: "Permanent Guild accomplishments now turn Fellowship history into trophies, Hall progression, and personal service recognition.",

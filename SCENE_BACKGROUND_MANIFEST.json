@@ -1,21 +1,21 @@
 {
-  "release": "v1.3.0 — Guild Expansion",
-  "frontend_asset_revision": "1.3.0-guild-expansion",
+  "release": "v1.3.1 \u2014 Guild Expansion",
+  "frontend_asset_revision": "1.3.1-asset-optimization",
   "scene_backgrounds": [
     {
-      "file": "camp.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v2/camp.png",
+      "file": "camp.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v2/camp.webp",
       "width": 1440,
       "height": 810,
       "bytes": 659480,
       "usage": [
-        "Adventure Board — Camp & Recovery",
-        "Inventory — Recovery"
+        "Adventure Board \u2014 Camp & Recovery",
+        "Inventory \u2014 Recovery"
       ]
     },
     {
-      "file": "blacksmith.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v3/blacksmith.png",
+      "file": "blacksmith.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v3/blacksmith.webp",
       "width": 941,
       "height": 1672,
       "bytes": 2647490,
@@ -25,8 +25,8 @@
       "format": "portrait"
     },
     {
-      "file": "chocobo_stable.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v3/chocobo_stable.png",
+      "file": "chocobo_stable.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v3/chocobo_stable.webp",
       "width": 941,
       "height": 1672,
       "bytes": 2751561,
@@ -36,8 +36,8 @@
       "format": "portrait"
     },
     {
-      "file": "emporium.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v3/emporium.png",
+      "file": "emporium.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v3/emporium.webp",
       "width": 941,
       "height": 1672,
       "bytes": 2728864,
@@ -47,19 +47,19 @@
       "format": "portrait"
     },
     {
-      "file": "solo_venture.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v3/solo_venture.png",
+      "file": "solo_venture.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v3/solo_venture.webp",
       "width": 941,
       "height": 1672,
       "bytes": 2251825,
       "usage": [
-        "Adventure Board — Solo Venture"
+        "Adventure Board \u2014 Solo Venture"
       ],
       "format": "portrait"
     },
     {
-      "file": "relic_arsenal.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v3/relic_arsenal.png",
+      "file": "relic_arsenal.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v3/relic_arsenal.webp",
       "width": 941,
       "height": 1672,
       "bytes": 2688178,
@@ -69,13 +69,13 @@
       "format": "portrait"
     },
     {
-      "file": "founding_hall.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v4/founding_hall.png",
+      "file": "founding_hall.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/founding_hall.webp",
       "width": 941,
       "height": 1672,
       "bytes": 2386182,
       "usage": [
-        "Fellowship — Guild Legacy — Founding Hall"
+        "Fellowship \u2014 Guild Legacy \u2014 Founding Hall"
       ],
       "format": "portrait"
     }

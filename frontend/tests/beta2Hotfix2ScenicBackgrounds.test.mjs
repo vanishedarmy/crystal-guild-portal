@@ -7,7 +7,7 @@ const envCss = fs.readFileSync(new URL("../src/styles/environment-pass.css", imp
 const guideCss = fs.readFileSync(new URL("../public/guide.css", import.meta.url), "utf8");
 const manifest = JSON.parse(fs.readFileSync(new URL("../../SCENE_BACKGROUND_MANIFEST.json", import.meta.url), "utf8"));
 
-const portraitNames = ["solo_venture.png", "relic_arsenal.png", "blacksmith.png", "chocobo_stable.png", "emporium.png"];
+const portraitNames = ["solo_venture.webp", "relic_arsenal.webp", "blacksmith.webp", "chocobo_stable.webp", "emporium.webp"];
 
 test("long-form tab backgrounds use the portrait v3 asset set", () => {
   for (const name of portraitNames) {

@@ -110,7 +110,7 @@ export default function SiteHeader({
       <header ref={headerRef} className={`site-header ${mobileHeaderHidden ? "mobile-header-collapsed" : ""} ${mobileMenuOpen ? "mobile-menu-open" : ""}`}>
         <a className="brand" href={brandHref} aria-label={`Crystal Guild ${sectionTitle}`}>
           <span className="brand-mark" aria-hidden="true">
-            <img className="brand-mark-image" src="/crystal-guild-portal-roundel.png" alt="" width="256" height="256" decoding="async" />
+            <img className="brand-mark-image" src="/crystal-guild-portal-roundel.webp" alt="" width="256" height="256" decoding="async" />
           </span>
           <span className="brand-copy">
             <small>Crystal Guild</small>

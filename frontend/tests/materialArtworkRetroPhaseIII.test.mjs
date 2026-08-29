@@ -49,18 +49,21 @@ const verified = [
   "chocobo_writ",
 ];
 
-test("Retro Phase III verified material artwork is packaged as 39 normalized PNGs", () => {
+test("Retro Phase III verified material artwork is packaged as 39 normalized lossless WebPs", () => {
   const dir = path.join(root, "public/retro-phase-iii/material-icons-v1");
-  const files = fs.readdirSync(dir).filter((n) => n.endsWith(".png"));
+  const files = fs.readdirSync(dir).filter((n) => n.endsWith(".webp"));
   assert.equal(files.length, 39);
   for (const id of verified) {
-    const file = path.join(dir, `${id}.png`);
+    const file = path.join(dir, `${id}.webp`);
     assert.ok(fs.existsSync(file), `missing ${id}`);
     const b = fs.readFileSync(file);
-    assert.deepEqual([...b.subarray(0, 8)], [137,80,78,71,13,10,26,10]);
-    assert.equal(b.readUInt32BE(16), 512);
-    assert.equal(b.readUInt32BE(20), 512);
-    assert.equal(itemArtworkPath({ id, type: "material" }), `/retro-phase-iii/material-icons-v1/${id}.png`);
+    assert.equal(b.subarray(0, 4).toString("ascii"), "RIFF");
+    assert.equal(b.subarray(8, 12).toString("ascii"), "WEBP");
+    assert.equal(b.subarray(12, 16).toString("ascii"), "VP8L");
+    const bits = b.readUInt32LE(21);
+    assert.equal((bits & 0x3fff) + 1, 512);
+    assert.equal(((bits >>> 14) & 0x3fff) + 1, 512);
+    assert.equal(itemArtworkPath({ id, type: "material" }), `/retro-phase-iii/material-icons-v1/${id}.webp`);
   }
 });
 

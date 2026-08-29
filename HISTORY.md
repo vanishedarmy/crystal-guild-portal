@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.3.1 — Asset Optimization
+- Converts all 390 remaining shipped PNG artwork files to smaller lossless WebP assets with exact rendered-pixel preservation.
+- Updates active artwork routes/manifests and reduces the Web distribution footprint without gameplay changes.
+- Runtime/frontend revision: `1.3.1-asset-optimization`; schema 9 / sync 1 / Portal protocol 22 unchanged.
+
 ## v1.3.0 — Guild Expansion
 - Final production release and public update-history cleanup.
 - What's New now lists shipped releases only; Alpha/Beta/RC milestones remain in this engineering history but are no longer player-facing.

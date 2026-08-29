@@ -33,7 +33,7 @@ export function relicArtworkPath(relic = {}, stageOverride = null) {
   const id = slug(relic.id || relic.relic_id || relic.name);
   if (!RELIC_IDS.has(id)) return "";
   const stage = relicArtworkStage(relic, stageOverride);
-  return `${RELIC_ART_BASE}/${id}_${STAGE_SLUGS[stage]}.png`;
+  return `${RELIC_ART_BASE}/${id}_${STAGE_SLUGS[stage]}.webp`;
 }
 
 export { RELIC_ART_BASE, RELIC_IDS };

@@ -1,9 +1,9 @@
-# Crystal Guild Web v1.3.0 — Guild Expansion
+# Crystal Guild Web v1.3.1 — Asset Optimization
 
 Final v1.3.0 production Web release.
 
-Hosted runtime/frontend revision: `1.3.0-guild-expansion`  
-Paired Bot runtime: `1.3.0-guild-expansion`  
+Hosted runtime/frontend revision: `1.3.1-asset-optimization`  
+Paired Bot runtime: `1.3.1-asset-optimization`  
 Local DB schema: **9** · hosted sync schema: **1** · Portal Action protocol: **22**
 
 The final Web includes the complete Fellowship/Guild Expansion interface, current-priority Fellowship layout, Founding Hall presentation, collapsible inventory groups, player-facing Guide, Airship/Legacy surfaces, and hardened shared-action behavior.

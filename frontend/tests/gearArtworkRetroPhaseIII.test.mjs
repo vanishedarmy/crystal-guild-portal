@@ -22,50 +22,54 @@ const waves = {
   ],
 };
 
-function pngInfo(file) {
+function webpInfo(file) {
   const b = fs.readFileSync(file);
-  assert.deepEqual([...b.subarray(0, 8)], [137,80,78,71,13,10,26,10], `${file} PNG signature`);
-  return { width: b.readUInt32BE(16), height: b.readUInt32BE(20), colorType: b[25] };
+  assert.equal(b.subarray(0, 4).toString("ascii"), "RIFF", `${file} RIFF signature`);
+  assert.equal(b.subarray(8, 12).toString("ascii"), "WEBP", `${file} WebP signature`);
+  assert.equal(b.subarray(12, 16).toString("ascii"), "VP8L", `${file} lossless WebP chunk`);
+  assert.equal(b[20], 0x2f, `${file} VP8L signature`);
+  const bits = b.readUInt32LE(21);
+  return { width: (bits & 0x3fff) + 1, height: ((bits >>> 14) & 0x3fff) + 1, alpha: (bits >>> 28) & 1 };
 }
 
 test("Retro Phase III consolidates CG-GEAR-R01 through R18 into one 180-file gear library", () => {
-  const files = fs.readdirSync(artDir).filter((name) => name.endsWith(".png")).sort();
+  const files = fs.readdirSync(artDir).filter((name) => name.endsWith(".webp")).sort();
   assert.equal(files.length, 180);
   for (const ids of Object.values(waves)) {
-    for (const id of ids) assert.ok(files.includes(`${id}.png`), `${id}.png present`);
+    for (const id of ids) assert.ok(files.includes(`${id}.webp`), `${id}.webp present`);
   }
-  assert.ok(files.includes("iron_sword.png"));
-  assert.ok(files.includes("apollo_harp.png"));
+  assert.ok(files.includes("iron_sword.webp"));
+  assert.ok(files.includes("apollo_harp.webp"));
 });
 
-test("CG-GEAR-R11 through R13 are separate 512x512 RGBA PNG assets", () => {
+test("CG-GEAR-R11 through R13 are separate 512x512 lossless WebP assets", () => {
   for (const ids of Object.values(waves)) {
     for (const id of ids) {
-      const info = pngInfo(path.join(artDir, `${id}.png`));
+      const info = webpInfo(path.join(artDir, `${id}.webp`));
       assert.equal(info.width, 512, `${id} width`);
       assert.equal(info.height, 512, `${id} height`);
-      assert.equal(info.colorType, 6, `${id} RGBA`);
+      assert.equal(info.alpha, 1, `${id} alpha`);
     }
   }
 });
 
 test("Retro Phase III maps R11 live and future identities to named artwork", () => {
-  assert.equal(itemArtworkPath({ id:"morbol_lash", type:"weapon" }), "/retro-phase-iii/weapon-icons-v2/venom_whip.png");
-  assert.equal(itemArtworkPath({ id:"dragonfire_whip", type:"weapon" }), "/retro-phase-iii/weapon-icons-v2/dragonfire_whip.png");
+  assert.equal(itemArtworkPath({ id:"morbol_lash", type:"weapon" }), "/retro-phase-iii/weapon-icons-v2/venom_whip.webp");
+  assert.equal(itemArtworkPath({ id:"dragonfire_whip", type:"weapon" }), "/retro-phase-iii/weapon-icons-v2/dragonfire_whip.webp");
 });
 
 test("Retro Phase III replaces shared firearm placeholders with exact R12 artwork", () => {
   const cases = new Map([
-    ["copper_pistol","copper_pistol.png"],
-    ["iron_pistol","iron_pistol.png"],
-    ["flintlock_pistol","flintlock_pistol.png"],
-    ["steel_revolver","steel_revolver.png"],
-    ["mythril_revolver","mythril_revolver.png"],
-    ["mythril_musket","mythril_musket.png"],
-    ["magitek_pistol","magitek_pistol.png"],
-    ["cerulean_rifle","cerulean_rifle.png"],
-    ["machina_repeater","machina_repeater.png"],
-    ["magitek_cannon","magitek_hand_cannon.png"],
+    ["copper_pistol","copper_pistol.webp"],
+    ["iron_pistol","iron_pistol.webp"],
+    ["flintlock_pistol","flintlock_pistol.webp"],
+    ["steel_revolver","steel_revolver.webp"],
+    ["mythril_revolver","mythril_revolver.webp"],
+    ["mythril_musket","mythril_musket.webp"],
+    ["magitek_pistol","magitek_pistol.webp"],
+    ["cerulean_rifle","cerulean_rifle.webp"],
+    ["machina_repeater","machina_repeater.webp"],
+    ["magitek_cannon","magitek_hand_cannon.webp"],
   ]);
   for (const [id,file] of cases) {
     assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v2/${file}`, id);
@@ -74,15 +78,15 @@ test("Retro Phase III replaces shared firearm placeholders with exact R12 artwor
 
 test("Retro Phase III packages direct R13 grimoire identities for caster expansion", () => {
   for (const id of waves.r13) {
-    assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v2/${id}.png`);
+    assert.equal(itemArtworkPath({ id, type:"weapon" }), `/retro-phase-iii/weapon-icons-v2/${id}.webp`);
   }
 });
 
-test("unmapped weapon identities use the regenerated Retro Phase III family PNG fallbacks", () => {
+test("unmapped weapon identities use the regenerated Retro Phase III family WebP fallbacks", () => {
   const axe = itemArtworkPath({ id:"adamant_axe", name:"Adamant Axe", type:"weapon", min_level:30, gear_family:"axe" });
   const wand = itemArtworkPath({ id:"unknown_wand", name:"Unknown Wand", type:"weapon", min_level:30, gear_family:"wand" });
-  assert.equal(axe, "/retro-phase-iii/weapon-families-v1/axe.png");
-  assert.equal(wand, "/retro-phase-iii/weapon-families-v1/wand.png");
+  assert.equal(axe, "/retro-phase-iii/weapon-families-v1/axe.webp");
+  assert.equal(wand, "/retro-phase-iii/weapon-families-v1/wand.webp");
   assert.ok(fs.existsSync(path.join(root, "public", axe)));
   assert.ok(fs.existsSync(path.join(root, "public", wand)));
   assert.equal(fs.existsSync(path.join(root, "public/retro-phase-ii/weapon-families-v2")), false);

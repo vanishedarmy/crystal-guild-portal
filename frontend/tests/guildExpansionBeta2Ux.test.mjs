@@ -30,7 +30,7 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 
 test("Fellowship UX remains present in the final release", () => {
   assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /1\.3\.0-guild-expansion/);
+  assert.match(version, /1\.3\.1-asset-optimization/);
   assert.match(news, /Guild Expansion has arrived/);
   assert.doesNotMatch(news, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
 });

@@ -32,7 +32,7 @@ const CHOCOBO_PORTRAITS = [
   ["desert_gold", "Sandrunner"],
   ["frost_silver", "Frost"],
   ["rose_pink", "Rose"],
-].map(([id, name]) => ({ id, name, src: `/retro-phase-iii/chocobo-portraits-v1/${id}.png` }));
+].map(([id, name]) => ({ id, name, src: `/retro-phase-iii/chocobo-portraits-v1/${id}.webp` }));
 
 const CHOCOBO_PORTRAIT_MAP = new Map(CHOCOBO_PORTRAITS.map((portrait) => [portrait.id, portrait]));
 const DEFAULT_CHOCOBO_PORTRAIT = CHOCOBO_PORTRAIT_MAP.get("classic_gold");

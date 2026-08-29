@@ -16,23 +16,26 @@ const generatedMaterialIds = [
   "dragon_heart", "holy_scale", "mimic_lock", "archon_shard", "dark_matter", "omega_core", "shinryu_scale",
 ];
 
-function pngSize(file) {
+function webpSize(file) {
   const b = fs.readFileSync(file);
-  assert.deepEqual([...b.subarray(0, 8)], [137,80,78,71,13,10,26,10], `${file} is not PNG`);
-  return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  assert.equal(b.subarray(0, 4).toString("ascii"), "RIFF", `${file} is not RIFF`);
+  assert.equal(b.subarray(8, 12).toString("ascii"), "WEBP", `${file} is not WebP`);
+  assert.equal(b.subarray(12, 16).toString("ascii"), "VP8L", `${file} is not lossless WebP`);
+  const bits = b.readUInt32LE(21);
+  return [(bits & 0x3fff) + 1, ((bits >>> 14) & 0x3fff) + 1];
 }
 
-test("Retro Phase III keeps clean typed PNG item and material artwork directories", () => {
+test("Retro Phase III keeps clean typed WebP item and material artwork directories", () => {
   assert.match(source, /item-icons-v1/);
   assert.match(source, /item-materials-v5/);
   const itemDir = path.join(root, "public/retro-phase-iii/item-icons-v1");
   const materialDir = path.join(root, "public/retro-phase-ii/item-materials-v5");
-  const itemFiles = fs.readdirSync(itemDir).filter((n) => n.endsWith(".png"));
-  const materialFiles = fs.readdirSync(materialDir).filter((n) => n.endsWith(".png"));
+  const itemFiles = fs.readdirSync(itemDir).filter((n) => n.endsWith(".webp"));
+  const materialFiles = fs.readdirSync(materialDir).filter((n) => n.endsWith(".webp"));
   assert.equal(itemFiles.length, 32);
   assert.equal(materialFiles.length, 31);
   for (const file of [...itemFiles.map((n)=>path.join(itemDir,n)), ...materialFiles.map((n)=>path.join(materialDir,n))]) {
-    assert.deepEqual(pngSize(file), [512,512], `${file} should be normalized 512x512 PNG`);
+    assert.deepEqual(webpSize(file), [512,512], `${file} should be normalized 512x512 WebP`);
   }
 });
 
@@ -42,20 +45,20 @@ test("ii37 removes superseded inventory artwork directories", () => {
   }
 });
 
-test("Retro Phase III canonical consumables resolve to item-icons-v1 PNG artwork", () => {
+test("Retro Phase III canonical consumables resolve to item-icons-v1 WebP artwork", () => {
   const consumables = data.items.filter((entry) => entry.type === "consumable");
   assert.equal(consumables.length, 32);
   for (const item of consumables) {
     const art = itemArtworkPath(item);
-    assert.match(art, /item-icons-v1\/.+\.png$/, `${item.id} should use v4 PNG item art`);
+    assert.match(art, /item-icons-v1\/.+\.webp$/, `${item.id} should use v4 WebP item art`);
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing ${item.id}: ${art}`);
   }
 });
 
-test("ii37 R03-R06 material identities resolve to item-materials-v5 PNG artwork", () => {
+test("ii37 R03-R06 material identities resolve to item-materials-v5 WebP artwork", () => {
   for (const id of generatedMaterialIds) {
     const art = itemArtworkPath({ id, type: "material" });
-    assert.equal(art, `/retro-phase-ii/item-materials-v5/${id}.png`);
+    assert.equal(art, `/retro-phase-ii/item-materials-v5/${id}.webp`);
     assert.ok(fs.existsSync(path.join(root, "public", art)), `missing generated material art ${id}`);
   }
 });

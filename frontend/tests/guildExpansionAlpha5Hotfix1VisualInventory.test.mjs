@@ -8,13 +8,13 @@ const manifest = JSON.parse(fs.readFileSync(new URL("../../SCENE_BACKGROUND_MANI
 const version = fs.readFileSync(new URL("../src/version.js", import.meta.url), "utf8");
 
 test("Alpha 5 Hotfix 1 routes the portrait Founding Hall scene", () => {
-  const scene = manifest.scene_backgrounds.find((item) => item.file === "founding_hall.png");
+  const scene = manifest.scene_backgrounds.find((item) => item.file === "founding_hall.webp");
   assert.ok(scene);
-  assert.equal(scene.path, "/retro-phase-iii/scene-backgrounds-v4/founding_hall.png");
+  assert.equal(scene.path, "/retro-phase-iii/scene-backgrounds-v4/founding_hall.webp");
   assert.equal(scene.width, 941);
   assert.equal(scene.height, 1672);
   assert.equal(scene.format, "portrait");
-  assert.match(css, /\.fellowship-legacy\.legacy-stage-1::after[\s\S]*scene-backgrounds-v4\/founding_hall\.png/);
+  assert.match(css, /\.fellowship-legacy\.legacy-stage-1::after[\s\S]*scene-backgrounds-v4\/founding_hall\.webp/);
   assert.match(css, /center top \/ cover no-repeat/);
 });
 
@@ -31,6 +31,6 @@ test("Equipment inventory groups are independently collapsible and remembered", 
 });
 
 test("Alpha 5 Hotfix 1 uses a cache-busted frontend revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion"/);
-  assert.equal(manifest.frontend_asset_revision, "1.3.0-guild-expansion");
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization"/);
+  assert.equal(manifest.frontend_asset_revision, "1.3.1-asset-optimization");
 });

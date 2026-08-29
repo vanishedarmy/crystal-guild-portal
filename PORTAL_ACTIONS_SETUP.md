@@ -1,4 +1,4 @@
-# Portal Actions Setup — v1.3.0 Guild Expansion
+# Portal Actions Setup — v1.3.1 Asset Optimization
 
 Portal Action protocol is **22** and hosted sync schema remains **1**. Deploy the final Web and Bot together so the Portal contribution payload and Bot action handler stay on the same protocol.
 

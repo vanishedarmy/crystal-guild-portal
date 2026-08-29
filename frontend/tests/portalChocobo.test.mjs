@@ -49,7 +49,7 @@ test("Retro Phase III ships ten selectable Chocobo portrait assets", async () =>
   ];
   for (const id of ids) {
     assert.match(stable, new RegExp(id));
-    const bytes = await readFile(new URL(`public/retro-phase-iii/chocobo-portraits-v1/${id}.png`, root));
+    const bytes = await readFile(new URL(`public/retro-phase-iii/chocobo-portraits-v1/${id}.webp`, root));
     assert.ok(bytes.length > 1000, `${id} portrait asset should not be empty`);
   }
   const css = await read("src/styles/portal.css");

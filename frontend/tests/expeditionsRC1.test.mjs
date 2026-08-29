@@ -9,7 +9,7 @@ test("v1.2 publishes the final Expeditions identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /1\.3\.0-guild-expansion/);
+  assert.match(version, /1\.3\.1-asset-optimization/);
   assert.match(news, /Expeditions has arrived/);
 });
 

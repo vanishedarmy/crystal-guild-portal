@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.3.1",
+    name: "Asset Optimization",
+    title: "The Portal travels lighter",
+    summary: "Crystal Guild's artwork library has been repacked to reduce download and deployment size without changing the look or behavior of the game.",
+    highlights: [
+      { title: "Smaller artwork library", description: "All remaining PNG gameplay artwork now uses smaller lossless WebP files when the conversion is beneficial." },
+      { title: "No visual downgrade", description: "Every converted image was decoded and compared pixel-for-pixel, including transparency, before replacing the original." },
+      { title: "Faster, leaner deployments", description: "The Web source and release archive are substantially smaller while all existing artwork routes remain covered by regression tests." },
+      { title: "No gameplay changes", description: "Guild progression, Expeditions, combat, rewards, inventories, player data, schemas, and Portal actions are unchanged." },
+    ],
+  },
+
+  {
     version: "v1.3.0",
     name: "Guild Expansion",
     title: "Guild Expansion has arrived",
@@ -35,11 +48,11 @@ export const MAJOR_UPDATES = [
     title: "The Arsenal gets a complete 16-bit identity pass",
     summary: "Retro Phase III consolidates Crystal Guild’s regenerated gear artwork and extends the SNES-era visual pass into materials, equipment families, weapons, and inventory identity cleanup.",
     highlights: [
-      { title: "180 standalone gear sprites", description: "CG-GEAR-R01 through R18 now live in one consolidated transparent PNG library, with one 512×512 asset per named gear identity." },
+      { title: "180 standalone gear sprites", description: "CG-GEAR-R01 through R18 now live in one consolidated transparent sprite library, with one 512×512 asset per named gear identity." },
       { title: "Whips through headgear", description: "The consolidated Retro Phase III art pass now spans whips, firearms, grimoires, refreshed swords and daggers, shields, and new helm/headgear identities." },
       { title: "Expanded late-wave coverage", description: "R14 through R18 extend the named library with additional daggers, rapiers, swords, shields, and helms while keeping the same SNES/FF look." },
-      { title: "Library stays consolidated", description: "All currently packaged Retro Phase III gear art remains in one active transparent PNG library for easier maintenance and future mapping work." },
-      { title: "Material artwork complete", description: "All 84 current materials now resolve to valid inventory artwork, including the final 19 dedicated SNES-style PNG identities added in this checkpoint." },
+      { title: "Library stays consolidated", description: "All currently packaged Retro Phase III gear art remains in one active transparent sprite library for easier maintenance and future mapping work." },
+      { title: "Material artwork complete", description: "All 84 current materials now resolve to valid inventory artwork, including the final 19 dedicated SNES-style material identities added in this checkpoint." },
       { title: "Facility supplies rebalanced", description: "Ancient Coin, Hi-Potion, Mythril Ore, Wyvern Scale, Elemental Crystal, and Demon Horn now have multiple level-appropriate monster sources instead of late single-source progression gates." },
       { title: "Choose your Chocobo portrait", description: "Registered Chocobos can now use one of ten SNES-style companion portraits. Your choice is saved to the Guild and shown when other adventurers view your Stable." },
       { title: "Relics now evolve visually", description: "All eight Relic weapon questlines now use the regenerated Tier 1, Tier 2, and final Tier 3 artwork across the Relic Arsenal, details, Trophy Hall, and Player Guide." },

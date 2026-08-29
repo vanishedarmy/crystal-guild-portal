@@ -1,8 +1,9 @@
-Crystal Guild v1.3.0 — Guild Expansion Web
-Hosted Web: 1.3.0-guild-expansion
-Frontend assets: 1.3.0-guild-expansion
-Compatible Bot: 1.3.0-guild-expansion
+Crystal Guild v1.3.1 — Asset Optimization Web
+Hosted Web: 1.3.1-asset-optimization
+Frontend assets: 1.3.1-asset-optimization
+Compatible Bot: 1.3.1-asset-optimization
 DB schema: 9
 Hosted sync schema: 1
 Portal Action protocol: 22
-Upgrade baseline: Guild Expansion RC2 Web
+Artwork: lossless WebP optimization pass
+Upgrade baseline: v1.3.0 Guild Expansion Web

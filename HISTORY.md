@@ -1,5 +1,12 @@
 # Crystal Guild Web History
 
+## v1.3.0 — Guild Expansion Beta 2
+- Web-only Fellowship UX & Mobile Consolidation pass.
+- Reorders the public Fellowship page around Current Project, Airship status, Weekly Orders, and Guild Legacy before secondary reference detail.
+- Adds browser-persistent disclosures for facilities, services, Airship catalog/upgrades, Expedition access, available Guild work, Legacy goals, and Deeds.
+- Keeps active Airship mission state visible while moving deep mission/upgrade/history reference behind one disclosure.
+- Preserves Beta 1 economy tuning and the compatible `1.3.0-guild-expansion-b1` Bot; schema 9 / sync 1 / protocol 21 unchanged.
+
 ## v1.3.0 — Guild Expansion Beta 1
 - Advances the public Web identity and What's New summary to the v1.3 balance pass.
 - Preserves Alpha 5 Hotfix 1 Founding Hall artwork and collapsible Equipment & Inventory groups.

@@ -1,14 +1,14 @@
-# Upgrade Guide — v1.3.0 Guild Expansion Beta 1
+# Upgrade Guide — v1.3.0 Guild Expansion Beta 2
 
-Recommended baseline: **Alpha 5 Hotfix 1 Web + Alpha 5 Bot**.
+Baseline: **Guild Expansion Beta 1 Web + Beta 1 Bot**.
 
-1. Back up the live Crystal Guild database and persistent Twitch/token data.
-2. Stop the Bot.
-3. Apply the **Alpha 5 → Beta 1 Bot patch** or replace the Bot source with the full Beta 1 Bot package while preserving `.env`, database files, and token stores.
-4. Deploy the **Alpha 5 Hotfix 1 → Beta 1 Web patch** or full Beta 1 Web package.
-5. Start the Bot and redeploy/restart the hosted Web service.
-6. Verify `!cgversion` reports `1.3.0-guild-expansion-b1`.
-7. Verify `/api/health` reports hosted runtime/frontend revision `1.3.0-guild-expansion-b1`, hosted sync schema **1**, and Portal Action protocol **21**.
-8. Open Fellowship and confirm the Guild/Airship surfaces load normally. Existing Founding Hall art and collapsible inventory groups should remain intact.
+1. Leave the Beta 1 Bot deployment unchanged.
+2. Deploy the **Beta 1 → Beta 2 Web patch**, or replace the hosted Web source with the full Beta 2 Web package.
+3. Redeploy the hosted Web service.
+4. Verify `/api/health` reports hosted runtime/frontend revision `1.3.0-guild-expansion-b2`, hosted sync schema **1**, and Portal Action protocol **21**.
+5. Confirm the Bot still reports `1.3.0-guild-expansion-b1` and protocol **21**.
+6. Open `/fellowship` and verify Current Project, Airship, Weekly Orders, and Guild Legacy appear before secondary Guild detail.
+7. Collapse a Fellowship section, refresh the page, and confirm its state is remembered.
+8. Check a phone-width view and confirm priority cards/disclosures stack without horizontal overflow.
 
-No database migration is required. Local schema remains **9** and all player, Fellowship, Airship, Legacy, Expedition, and inventory progression is preserved.
+No database migration, player reset, OAuth change, or new environment variable is required.

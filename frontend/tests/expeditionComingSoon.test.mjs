@@ -6,7 +6,7 @@ const SRC = new URL("../src/", import.meta.url);
 test("Fellowship page presents the active Expedition Board gate", async () => {
   const page = await readFile(new URL("pages/FellowshipPage.jsx", SRC), "utf8");
   assert.match(page, /Expeditions — Guild Board/);
-  assert.match(page, /<details className="panel fellowship-details fellowship-expedition-board">/);
+  assert.match(page, /<details className="panel fellowship-details fellowship-expedition-board"[^>]*>/);
   assert.match(page, /Registered Chocobo/);
   assert.match(page, /<strong>Open<\/strong>/);
   assert.match(page, /Five regions and Scout, Journey, and Deep routes/);

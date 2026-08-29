@@ -1,49 +1,51 @@
-# Crystal Guild v1.3.0 — Guild Expansion Beta 1
+# Crystal Guild v1.3.0 — Guild Expansion Beta 2
+## Fellowship UX & Mobile Consolidation
 
-## Guild Economy & Progression Balance
+Beta 2 keeps the v1.3 feature set and Beta 1 balance frozen while making the expanded Fellowship substantially easier to scan on desktop and mobile.
 
-Beta 1 is the balance checkpoint for the v1.3 Fellowship/Airship expansion. It does not add a new gameplay system; it tunes the late Guild progression curve so the Airship arrives over meaningful weeks while Tier III remains a long-term goal.
+## Current Guild priorities first
+The top Fellowship snapshot now answers the four questions players are most likely to have:
+- What Guild project is active?
+- What is the Airship doing?
+- How many Weekly Orders are complete?
+- What Legacy stage has the Guild reached?
 
-### Airship Dock
-- Lv. 1: 60,000 Gil · 25 Ancient Coins · 4 Guild raid wins · Fellowship LVL 7.
-- Lv. 2: 100,000 Gil · 35 Ancient Coins · 6 Guild raid wins · Fellowship LVL 8.
-- Lv. 3: 170,000 Gil · 55 Ancient Coins · 9 Guild raid wins · Fellowship LVL 9.
+The full active project, live Airship state, and Weekly Orders remain high in the page flow. Facilities and long-term reference ledgers no longer push current activity down the page.
 
-### Crystal Guild Airship construction
-- 140,000 Gil
-- 35 Mythril Ore
-- 18 Wyvern Scales
-- 20 Elemental Crystals
-- 10 Ancient Coins
-- 6 Guild raid wins
-- Fellowship LVL 8
+## Remembered Fellowship disclosures
+The following secondary areas can stay open or closed independently, with that choice remembered in the browser:
+- Guild Facilities
+- Facility Services
+- Airship mission catalog / upgrade tracks / recent history
+- Expedition Guild Board
+- Available Guild Work
+- Legacy Goals
+- Fellowship Deeds
 
-### Airship upgrade curve
-Every upgrade tier now uses 25,000 / 55,000 / 95,000 Gil and 1 / 2 / 2 Guild raid wins. Material quantities are rarity-aware instead of one flat curve:
-- Hull — Adamantite: 2 / 4 / 6
-- Engine — Magitek Capacitors: 3 / 5 / 8
-- Cargo Hold — Mythril Ore: 4 / 7 / 10
-- Survey Array — Elemental Crystals: 4 / 7 / 10
-- Crystal Core — Dark Matter: 2 / 4 / 6
+On narrow phone layouts, secondary information starts compact by default unless that browser already has a saved preference.
 
-### Intentionally unchanged
-- Weekly Fellowship Order shared and personal rewards.
-- Supply Drive and Guild Objective rewards.
-- Workshop refining recipes and service fees.
-- Fellowship LVL thresholds and personal Guild Rank thresholds.
-- Guild Legacy accomplishment targets/rewards.
-- Airship mission duration, progress, and reward formulas.
+## Airship and Legacy consolidation
+- Current Airship mission/ready/building state remains visible.
+- Mission catalog, upgrade tracks, and mission history move behind one Airship detail control.
+- Current Guild Hall Legacy stage and earned trophy shelf remain visible.
+- The full permanent accomplishment ledger moves behind a Legacy Goals disclosure.
 
-## Fixed-seed balance simulation
-The shipping simulator runs 1,000 seasons each for Casual, Core, and Active Guild profiles — 3,000 total. In the conservative Core profile, the median timing is roughly 6.1 weeks to Fellowship LVL 8, 11.1 weeks to Airship Dock Lv. 1, 13.3 weeks to the completed Airship, 24.0 weeks to all five major facilities at Lv. 3, and 33.4 weeks to all Airship upgrade tracks at Tier III. Contribution Renown is intentionally excluded from the model, so real progression can be somewhat faster.
+## Mobile & accessibility
+- Priority cards stack cleanly through tablet and narrow-phone widths.
+- Fellowship disclosure summaries retain at least 44px interaction targets and 48px on coarse-pointer devices.
+- Keyboard focus is clearly visible on expandable areas.
+- Long labels, badges, and Guild status text wrap instead of causing horizontal overflow.
+
+## Feature freeze
+No Guild economy, Weekly Order reward, Workshop service, facility requirement, Airship mission, Airship upgrade, Legacy threshold, Expedition, or combat value changes are included.
 
 ## Compatibility
-- Bot/Web runtime: `1.3.0-guild-expansion-b1`
-- Frontend asset revision: `1.3.0-guild-expansion-b1`
-- Local DB schema: **9** unchanged
-- Hosted sync schema: **1** unchanged
-- Portal Action protocol: **21** unchanged
+- Hosted Web runtime: `1.3.0-guild-expansion-b2`
+- Frontend asset revision: `1.3.0-guild-expansion-b2`
+- Compatible Bot runtime: `1.3.0-guild-expansion-b1`
+- Local DB schema: **9**
+- Hosted sync schema: **1**
+- Portal Action protocol: **21**
 - Twitch prefix: `!`
-- Database migration: **none**
 - Player reset: **none**
-- OAuth/environment changes: **none**
+- Database migration: **none**

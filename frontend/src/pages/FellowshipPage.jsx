@@ -47,6 +47,27 @@ function ProjectCard({ project }) {
   );
 }
 
+
+const FELLOWSHIP_DISCLOSURE_KEY = "crystal-guild:fellowship-disclosures:v1";
+
+function initialDisclosureState() {
+  const narrow = globalThis.matchMedia?.("(max-width: 760px)")?.matches ?? false;
+  const state = {
+    facilities: !narrow,
+    services: false,
+    airshipDetails: false,
+    expeditions: false,
+    availableWork: false,
+    legacyGoals: false,
+    deeds: false,
+  };
+  try {
+    const stored = JSON.parse(globalThis.localStorage?.getItem(FELLOWSHIP_DISCLOSURE_KEY) || "{}");
+    for (const key of Object.keys(state)) if (typeof stored?.[key] === "boolean") state[key] = stored[key];
+  } catch {}
+  return state;
+}
+
 function FacilityCard({ facility }) {
   const level = number(facility.level ?? facility.tier);
   const maxLevel = number(facility.max_level ?? facility.max_tier);
@@ -72,6 +93,15 @@ export default function FellowshipPage() {
   const [refreshToken, setRefreshToken] = useState(0);
   const refresh = useCallback(() => setRefreshToken((value) => value + 1), []);
   const liveStatus = useLiveUpdates(refresh);
+  const [disclosures, setDisclosures] = useState(initialDisclosureState);
+  const setDisclosure = useCallback((key, open) => {
+    setDisclosures((current) => {
+      if (current[key] === open) return current;
+      const next = { ...current, [key]: open };
+      try { globalThis.localStorage?.setItem(FELLOWSHIP_DISCLOSURE_KEY, JSON.stringify(next)); } catch {}
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     document.title = "Fellowship — Crystal Guild";
@@ -129,38 +159,36 @@ export default function FellowshipPage() {
               </aside>
             </div>
 
-            <div className="fellowship-summary-grid">
-              <div className="fellowship-summary"><span>Members</span><strong>{number(data.member_count)}</strong><small>registered Fellowship heroes</small></div>
-              <div className="fellowship-summary"><span>Guild Facilities</span><strong>{number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 5)}</strong><small>major facilities established</small></div>
-              <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)}</strong><small>community objectives</small></div>
-              <div className="fellowship-summary"><span>Guild Airship</span><strong>{data.airship?.built ? (data.airship?.active_mission ? "Away" : "Ready") : "Building"}</strong><small>{data.airship?.built ? `${number(data.airship?.missions_completed)} missions completed` : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</small></div>
+            <div className="fellowship-summary-grid fellowship-priority-grid" aria-label="Current Guild priorities">
+              <div className={`fellowship-summary ${data.active_project ? "active" : "idle"}`}><span>Current Project</span><strong>{data.active_project?.name || "Awaiting Selection"}</strong><small>{data.active_project ? `${number((data.active_project.requirements || []).filter((item) => !item.complete).length)} goals remaining` : "The streamer can choose the next unlocked project"}</small></div>
+              <div className={`fellowship-summary ${data.airship?.active_mission ? "active" : ""}`}><span>Guild Airship</span><strong>{data.airship?.built ? (data.airship?.active_mission ? data.airship.active_mission.name : "Ready") : "Building"}</strong><small>{data.airship?.active_mission ? `${number(data.airship.active_mission.progress)} / ${number(data.airship.active_mission.target)} mission progress` : data.airship?.built ? `${number(data.airship?.missions_completed)} missions completed` : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</small></div>
+              <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)} Complete</strong><small>{(data.orders?.orders || []).find((order) => !order.complete)?.name || "Weekly set cleared"}</small></div>
+              <div className="fellowship-summary"><span>Guild Legacy</span><strong>{data.legacy?.stage_name || "Founding Hall"}</strong><small>{number(data.legacy?.completed)} / {number(data.legacy?.total)} accomplishments</small></div>
             </div>
 
             <ProjectCard project={data.active_project} />
 
-            <section className="panel fellowship-section fellowship-guild-board">
-              <div className="panel-title-row">
-                <div><span className="panel-kicker">Guild Hall Foundation</span><h2>Guild Facilities</h2></div>
-                <span className="small-badge">Lv. 0–3</span>
+            <details className="panel fellowship-section fellowship-guild-board fellowship-dashboard-disclosure" open={disclosures.facilities} onToggle={(event) => setDisclosure("facilities", event.currentTarget.open)}>
+              <summary><span><span className="panel-kicker">Guild Hall Foundation</span><strong>Guild Facilities</strong><small>Construction progress and current facility benefits</small></span><span className="small-badge">Lv. 0–3 · {number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 5)} Built</span></summary>
+              <div className="fellowship-disclosure-body">
+                <p className="muted fellowship-board-copy">Major facilities grow through shared construction projects. Gil and requested materials can be donated voluntarily; gameplay milestones advance automatically.</p>
+                <div className="fellowship-facility-grid">
+                  {(data.facilities || []).map((facility) => <FacilityCard key={facility.id} facility={facility} />)}
+                </div>
               </div>
-              <p className="muted fellowship-board-copy">Major facilities grow through shared construction projects. Gil and requested materials can be donated voluntarily; gameplay milestones advance automatically.</p>
-              <div className="fellowship-facility-grid">
-                {(data.facilities || []).map((facility) => <FacilityCard key={facility.id} facility={facility} />)}
-              </div>
-            </section>
+            </details>
 
-            <section className="panel fellowship-section fellowship-services">
-              <div className="panel-title-row">
-                <div><span className="panel-kicker">Guild Services &amp; Workshop</span><h2>Facility Services</h2></div>
-                <span className="small-badge">Guild Services</span>
+            <details className="panel fellowship-section fellowship-services fellowship-dashboard-disclosure" open={disclosures.services} onToggle={(event) => setDisclosure("services", event.currentTarget.open)}>
+              <summary><span><span className="panel-kicker">Guild Services &amp; Workshop</span><strong>Facility Services</strong><small>Workshop, Stable, and Archive benefits</small></span><span className="small-badge">Guild Services</span></summary>
+              <div className="fellowship-disclosure-body">
+                <p className="muted">Facility levels provide practical Guild services without replacing normal character progression.</p>
+                <div className="fellowship-service-grid">
+                  <article><span>Workshop</span><strong>{number(data.services?.workshop?.forge_discount * 100)}% lower forge fees</strong><small>{number(data.services?.workshop?.level) >= 2 ? "Material refining available from the signed-in Fellowship tab." : "Material refining unlocks at Workshop Lv. 2."}</small></article>
+                  <article><span>Chocobo Stables</span><strong>+{number(data.services?.chocobo_stable?.xp_bonus * 100)}% Bond XP</strong><small>Applies automatically whenever your registered Chocobo earns XP.</small></article>
+                  <article><span>Guild Archive</span><strong>+{Number((data.services?.archive?.rare_event_bonus || 0) * 100).toFixed(1)}% rare events</strong><small>Archive research modestly improves rare Expedition event chances.</small></article>
+                </div>
               </div>
-              <p className="muted">Facility levels now provide practical Guild services without replacing normal character progression.</p>
-              <div className="fellowship-service-grid">
-                <article><span>Workshop</span><strong>{number(data.services?.workshop?.forge_discount * 100)}% lower forge fees</strong><small>{number(data.services?.workshop?.level) >= 2 ? "Material refining available from the signed-in Fellowship tab." : "Material refining unlocks at Workshop Lv. 2."}</small></article>
-                <article><span>Chocobo Stables</span><strong>+{number(data.services?.chocobo_stable?.xp_bonus * 100)}% Bond XP</strong><small>Applies automatically whenever your registered Chocobo earns XP.</small></article>
-                <article><span>Guild Archive</span><strong>+{Number((data.services?.archive?.rare_event_bonus || 0) * 100).toFixed(1)}% rare events</strong><small>Archive research modestly improves rare Expedition event chances.</small></article>
-              </div>
-            </section>
+            </details>
 
             <section className="panel fellowship-section fellowship-airship" aria-labelledby="guild-airship-title">
               <div className="panel-title-row">
@@ -194,6 +222,9 @@ export default function FellowshipPage() {
                     <div className="fellowship-airship-ready"><strong>Airship ready for deployment.</strong><span>The streamer can launch any unlocked mission from the Streamer Control Center or with <code>!airshipmission &lt;mission&gt;</code>.</span></div>
                   )}
 
+                  <details className="fellowship-details fellowship-airship-details" open={disclosures.airshipDetails} onToggle={(event) => setDisclosure("airshipDetails", event.currentTarget.open)}>
+                    <summary><span><strong>Mission Catalog &amp; Airship Upgrades</strong><small>Browse unlocked missions, upgrade tracks, and recent deployments</small></span><span>{number(data.airship?.missions?.filter((mission) => mission.unlocked).length)} Missions</span></summary>
+                    <div className="fellowship-airship-detail-body">
                   <div className="fellowship-airship-grid">
                     {(data.airship?.missions || []).map((mission) => (
                       <article className={`fellowship-airship-mission ${mission.unlocked ? "" : "locked"}`} key={mission.id}>
@@ -215,20 +246,22 @@ export default function FellowshipPage() {
                   </div>
 
                   {(data.airship?.history || []).length ? (
-                    <details className="fellowship-airship-history">
-                      <summary><span><strong>Recent Airship Missions</strong><small>Last five resolved deployments</small></span></summary>
+                    <div className="fellowship-airship-history">
+                      <strong>Recent Airship Missions</strong>
                       <div>
                         {data.airship.history.map((mission) => (
                           <p key={mission.run_id}><strong>{mission.name}</strong> · {mission.outcome === "success" ? "Success" : "Failed"} · {number(mission.progress)}/{number(mission.target)} · {number(mission.participant_count)} contributors · {timeAgo(new Date(Number(mission.ended_at) * 1000).toISOString())}</p>
                         ))}
                       </div>
-                    </details>
+                    </div>
                   ) : null}
+                    </div>
+                  </details>
                 </>
               )}
             </section>
 
-            <details className="panel fellowship-details fellowship-expedition-board">
+            <details className="panel fellowship-details fellowship-expedition-board" open={disclosures.expeditions} onToggle={(event) => setDisclosure("expeditions", event.currentTarget.open)}>
               <summary><span><strong>Expeditions — Guild Board</strong><small>Existing Guild-wide Expedition access</small></span><span className="small-badge">{expeditionStatus}</span></summary>
               <div className="fellowship-expedition-body">
               <p className="muted fellowship-expedition-copy">Distant contracts are now active. Complete the shared Guild Board, then each adventurer can launch Expeditions with a registered Chocobo from the Adventure Board.</p>
@@ -254,7 +287,7 @@ export default function FellowshipPage() {
             </details>
 
             {(data.available_projects || []).length ? (
-              <details className="panel fellowship-details fellowship-available-projects">
+              <details className="panel fellowship-details fellowship-available-projects" open={disclosures.availableWork} onToggle={(event) => setDisclosure("availableWork", event.currentTarget.open)}>
                 <summary><span><strong>Available Guild Work</strong><small>Construction, Supply Drives, and gameplay Objectives the Guild can begin next.</small></span><span>{number(data.available_projects.length)} Unlocked</span></summary>
                 <div className="fellowship-project-options">
                   {data.available_projects.map((project) => (
@@ -275,10 +308,10 @@ export default function FellowshipPage() {
               </details>
             ) : null}
 
-            <section className="panel fellowship-section">
+            <section className="panel fellowship-section fellowship-orders">
               <div className="panel-title-row"><div><span className="panel-kicker">This Week</span><h2>Fellowship Orders</h2></div><span className="small-badge">{number(data.orders?.completed)} / {number(data.orders?.total)} Complete</span></div>
               <div className="fellowship-order-reward-note">
-                <strong>Help the Guild, get paid too.</strong> Contributors to a completed Order receive its listed personal reward. If all three Orders are cleared, everyone who helped with at least one receives an extra <b>{number(data.orders?.weekly_bonus?.personal_gil)}g +{number(data.orders?.weekly_bonus?.personal_renown)} personal Renown</b>; the Guild also earns +{number(data.orders?.weekly_bonus?.guild_renown)} shared Renown.
+                <strong>Help the Guild, get paid too.</strong> Completed Orders pay their listed contributor reward. Clearing all three adds <b>{number(data.orders?.weekly_bonus?.personal_gil)}g +{number(data.orders?.weekly_bonus?.personal_renown)} personal Renown</b> to everyone who helped that week, plus +{number(data.orders?.weekly_bonus?.guild_renown)} shared Guild Renown.
               </div>
               <div className="fellowship-order-grid">
                 {(data.orders?.orders || []).map((order) => (
@@ -303,17 +336,20 @@ export default function FellowshipPage() {
               <div className="fellowship-legacy-shelf" aria-label="Unlocked Guild Legacy trophies">
                 {(data.legacy?.decorations || []).length ? (data.legacy.decorations || []).map((trophy) => <span key={trophy}>◆ {trophy}</span>) : <span className="muted">The first Guild trophy is still waiting to be earned.</span>}
               </div>
-              <div className="fellowship-legacy-grid">
-                {(data.legacy?.accomplishments || []).map((item) => (
-                  <article className={item.complete ? "complete" : ""} key={item.id}>
-                    <div><span>{item.complete ? "Trophy Earned" : "Legacy Goal"}</span><strong>{item.name}</strong></div>
-                    <p>{item.description}</p>
-                    <small>{item.trophy} · +{number(item.renown)} Guild Renown</small>
-                    <div className="vital-label"><span>Progress</span><span>{number(item.progress)} / {number(item.target)}</span></div>
-                    <ProgressBar value={pct(item.progress, item.target)} />
-                  </article>
-                ))}
-              </div>
+              <details className="fellowship-details fellowship-legacy-goals" open={disclosures.legacyGoals} onToggle={(event) => setDisclosure("legacyGoals", event.currentTarget.open)}>
+                <summary><span><strong>Legacy Goals</strong><small>Permanent accomplishments and trophy progress</small></span><span>{number(data.legacy?.completed)} / {number(data.legacy?.total)}</span></summary>
+                <div className="fellowship-legacy-grid">
+                  {(data.legacy?.accomplishments || []).map((item) => (
+                    <article className={item.complete ? "complete" : ""} key={item.id}>
+                      <div><span>{item.complete ? "Trophy Earned" : "Legacy Goal"}</span><strong>{item.name}</strong></div>
+                      <p>{item.description}</p>
+                      <small>{item.trophy} · +{number(item.renown)} Guild Renown</small>
+                      <div className="vital-label"><span>Progress</span><span>{number(item.progress)} / {number(item.target)}</span></div>
+                      <ProgressBar value={pct(item.progress, item.target)} />
+                    </article>
+                  ))}
+                </div>
+              </details>
             </section>
 
             <div className="fellowship-split">
@@ -352,7 +388,7 @@ export default function FellowshipPage() {
               </section>
             </div>
 
-            <details className="panel fellowship-details fellowship-deeds">
+            <details className="panel fellowship-details fellowship-deeds" open={disclosures.deeds} onToggle={(event) => setDisclosure("deeds", event.currentTarget.open)}>
               <summary><span><strong>Fellowship Deeds</strong><small>Permanent community milestones — expand to see the full ledger.</small></span><span>{number(data.deeds_complete)} / {number(data.deeds?.length)}</span></summary>
               <div className="fellowship-deed-grid">
                 {(data.deeds || []).map((deed) => (

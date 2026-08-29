@@ -1,0 +1,44 @@
+Crystal Guild v1.3.0 Guild Expansion Beta 2
+Baseline: Beta 1 Web
+Changed/new files: 39
+Deleted files: 0
+
+RELEASE_NOTES.md
+HISTORY.md
+PACKAGE_MANIFEST.txt
+VALIDATION_REPORT.md
+README_FIRST.txt
+SCENE_BACKGROUND_MANIFEST.json
+UPGRADE_GUIDE.md
+README.md
+VERSION.txt
+tests/test_hosted_portal.py
+crystal_guild/__init__.py
+crystal_guild/hosted_portal.py
+frontend/src/version.js
+frontend/public/guide-data.json
+frontend/public/raid-overlay.html
+frontend/tests/guildExpansionAlpha2.test.mjs
+frontend/tests/expeditionsBeta3Accessibility.test.mjs
+frontend/tests/guildExpansionAlpha5.test.mjs
+frontend/tests/guildExpansionBeta1.test.mjs
+frontend/tests/phase8UiUx.test.mjs
+frontend/tests/guildExpansionAlpha3.test.mjs
+frontend/tests/expeditionsBeta2.test.mjs
+frontend/tests/expeditionComingSoon.test.mjs
+frontend/tests/expeditionsBeta4Hardening.test.mjs
+frontend/tests/guideAssets.test.mjs
+frontend/tests/guildExpansionBeta2Ux.test.mjs
+frontend/tests/expeditionsBeta1.test.mjs
+frontend/tests/guildExpansionAlpha4.test.mjs
+frontend/tests/arsenalIIUx.test.mjs
+frontend/tests/expeditionsRC1.test.mjs
+frontend/tests/guideFellowshipReference.test.mjs
+frontend/tests/guildExpansionAlpha1.test.mjs
+frontend/tests/commandPrefixV115.test.mjs
+frontend/tests/guildExpansionAlpha5Hotfix1VisualInventory.test.mjs
+frontend/tests/guideExpeditionsAlpha2.test.mjs
+frontend/tests/version.test.mjs
+frontend/src/styles/portal.css
+frontend/src/pages/FellowshipPage.jsx
+frontend/src/player/whatsNewData.js

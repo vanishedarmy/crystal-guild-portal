@@ -1,6 +1,22 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
+    name: "Guild Expansion Beta 2",
+    title: "The Fellowship gets easier to scan",
+    summary: "Current Guild work now stays at the top while facilities, services, Airship reference details, and Legacy goals collapse into remembered sections.",
+    highlights: [
+      { title: "Current priorities first", description: "The Fellowship page now leads with the active project, Airship status, Weekly Orders, and current Guild Legacy stage instead of general statistics." },
+      { title: "Deep details collapse", description: "Facilities, services, Expedition access, available Guild work, Airship catalogs/upgrades, Legacy goals, and Deeds can stay tucked away until you need them." },
+      { title: "Your layout is remembered", description: "Fellowship disclosure choices persist on that browser, with secondary areas starting closed on narrow phone layouts." },
+      { title: "Airship status stays visible", description: "An active Airship mission or ready state remains in the main scan while the larger mission catalog, upgrades, and history move behind one detail control." },
+      { title: "Mobile Fellowship cleanup", description: "Priority cards, disclosures, orders, and long Guild labels stack more cleanly on small screens while retaining touch and keyboard accessibility." },
+      { title: "No balance changes", description: "Beta 1 economy tuning, Weekly Order rewards, facility services, Airship progression, and Legacy thresholds are unchanged." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+
+  {
+    version: "v1.3.0",
     name: "Guild Expansion Beta 1",
     title: "Guild progression gets its balance pass",
     summary: "Airship construction and upgrade costs are tuned so the Guild grows over meaningful weeks without rare materials or raid clears becoming a wall.",

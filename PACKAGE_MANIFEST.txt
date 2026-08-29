@@ -1,18 +1,19 @@
-Crystal Guild v1.3.0 — Guild Expansion Beta 1 Hotfix 1 Web
+Crystal Guild v1.3.0 — Guild Expansion Beta 2 Web
 
 Runtime identity
-- Hosted Web: 1.3.0-guild-expansion-b1
-- Frontend assets: 1.3.0-guild-expansion-b1
+- Hosted Web: 1.3.0-guild-expansion-b2
+- Frontend assets: 1.3.0-guild-expansion-b2
 - Compatible Bot: 1.3.0-guild-expansion-b1
 - Local DB schema: 9
 - Hosted sync schema: 1
 - Portal Action protocol: 21
 - Twitch prefix: !
 
-Hotfix scope
-- Founding Hall portrait scene: frontend/public/retro-phase-iii/scene-backgrounds-v4/founding_hall.png
-- Stage-1 Guild Legacy scenic routing/readability treatment
-- Collapsible Equipment & Inventory category groups with browser persistence
-- Items category renamed Consumables
+Scope
+- Fellowship action-first priority hierarchy
+- Browser-persistent Fellowship secondary disclosures
+- Consolidated Airship mission/upgrade/history detail
+- Collapsible Legacy goal ledger while trophy shelf remains visible
+- Narrow-phone/touch/keyboard Fellowship polish
 
-No database migration or player reset.
+No gameplay balance change, schema migration, or player reset.

@@ -9551,3 +9551,190 @@ button, input, select, textarea { font: inherit; }
 }
 
 /* v1.3 Guild Expansion Beta 1 — Guild economy & progression balance */
+
+/* v1.3 Guild Expansion Beta 2 — Fellowship UX & mobile consolidation */
+.fellowship-view {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.fellowship-hero { order: 0; }
+.fellowship-priority-grid { order: 1; }
+.fellowship-project { order: 2; }
+.fellowship-airship { order: 3; }
+.fellowship-orders { order: 4; }
+.fellowship-guild-board { order: 10; }
+.fellowship-services { order: 11; }
+.fellowship-available-projects { order: 12; }
+.fellowship-expedition-board { order: 13; }
+.fellowship-legacy { order: 14; }
+.fellowship-split { order: 20; }
+.fellowship-deeds { order: 21; }
+
+.fellowship-priority-grid .fellowship-summary {
+  display: grid;
+  align-content: start;
+  gap: .16rem;
+  min-height: 104px;
+}
+.fellowship-priority-grid .fellowship-summary strong {
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.fellowship-priority-grid .fellowship-summary.active {
+  border-color: rgba(232, 194, 105, .36);
+  background: linear-gradient(135deg, rgba(232,194,105,.08), rgba(9,27,42,.78));
+}
+.fellowship-priority-grid .fellowship-summary.idle strong { color: var(--muted); }
+
+.fellowship-dashboard-disclosure,
+.fellowship-airship-details,
+.fellowship-legacy-goals {
+  min-width: 0;
+}
+.fellowship-dashboard-disclosure > summary,
+.fellowship-airship-details > summary,
+.fellowship-legacy-goals > summary,
+.fellowship-expedition-board > summary,
+.fellowship-available-projects > summary,
+.fellowship-deeds > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+}
+.fellowship-dashboard-disclosure > summary::-webkit-details-marker,
+.fellowship-airship-details > summary::-webkit-details-marker,
+.fellowship-legacy-goals > summary::-webkit-details-marker,
+.fellowship-expedition-board > summary::-webkit-details-marker,
+.fellowship-available-projects > summary::-webkit-details-marker,
+.fellowship-deeds > summary::-webkit-details-marker { display: none; }
+.fellowship-dashboard-disclosure > summary::after,
+.fellowship-airship-details > summary::after,
+.fellowship-legacy-goals > summary::after,
+.fellowship-expedition-board > summary::after,
+.fellowship-available-projects > summary::after,
+.fellowship-deeds > summary::after {
+  content: "▾";
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-size: 1rem;
+  transition: transform .16s ease;
+}
+.fellowship-dashboard-disclosure:not([open]) > summary::after,
+.fellowship-airship-details:not([open]) > summary::after,
+.fellowship-legacy-goals:not([open]) > summary::after,
+.fellowship-expedition-board:not([open]) > summary::after,
+.fellowship-available-projects:not([open]) > summary::after,
+.fellowship-deeds:not([open]) > summary::after { transform: rotate(-90deg); }
+.fellowship-dashboard-disclosure > summary > span:first-child,
+.fellowship-airship-details > summary > span:first-child,
+.fellowship-legacy-goals > summary > span:first-child,
+.fellowship-expedition-board > summary > span:first-child,
+.fellowship-available-projects > summary > span:first-child,
+.fellowship-deeds > summary > span:first-child { min-width: 0; flex: 1 1 auto; }
+.fellowship-dashboard-disclosure > summary strong,
+.fellowship-dashboard-disclosure > summary small,
+.fellowship-airship-details > summary strong,
+.fellowship-airship-details > summary small,
+.fellowship-legacy-goals > summary strong,
+.fellowship-legacy-goals > summary small { display: block; overflow-wrap: anywhere; }
+.fellowship-dashboard-disclosure > summary strong,
+.fellowship-airship-details > summary strong,
+.fellowship-legacy-goals > summary strong { color: var(--crystal-soft); font-size: 1rem; }
+.fellowship-dashboard-disclosure > summary small,
+.fellowship-airship-details > summary small,
+.fellowship-legacy-goals > summary small { margin-top: .18rem; color: var(--muted); font-weight: 400; line-height: 1.35; }
+.fellowship-dashboard-disclosure > summary:focus-visible,
+.fellowship-airship-details > summary:focus-visible,
+.fellowship-legacy-goals > summary:focus-visible,
+.fellowship-expedition-board > summary:focus-visible,
+.fellowship-available-projects > summary:focus-visible,
+.fellowship-deeds > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: 8px;
+}
+.fellowship-disclosure-body,
+.fellowship-airship-detail-body { padding-top: .9rem; }
+.fellowship-airship-details {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(204,220,255,.14);
+}
+.fellowship-airship-details > summary,
+.fellowship-legacy-goals > summary { padding: .35rem .1rem; }
+.fellowship-airship-history {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(204,220,255,.12);
+}
+.fellowship-airship-history > strong { display: block; margin-bottom: 6px; color: var(--crystal-soft); }
+.fellowship-legacy-goals { margin-top: 10px; }
+.fellowship-legacy-goals .fellowship-legacy-grid { margin-top: 10px; }
+
+/* Keep current work visible; put deep reference information later in the scan. */
+.fellowship-orders .fellowship-order-reward-note {
+  padding: 9px 11px;
+  font-size: .9rem;
+}
+
+@media (max-width: 760px) {
+  .fellowship-shell { padding-top: 1rem; }
+  .fellowship-hero { gap: .8rem; margin-bottom: .9rem; }
+  .fellowship-hero .lede { max-width: 58ch; font-size: .96rem; }
+  .fellowship-level-card { padding: .85rem .95rem; border-radius: 14px; }
+  .fellowship-level-card > strong { font-size: clamp(1.8rem, 10vw, 2.5rem); }
+  .fellowship-priority-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: .55rem; }
+  .fellowship-priority-grid .fellowship-summary { min-height: 94px; padding: .72rem .8rem; }
+  .fellowship-airship { padding: .9rem; }
+  .fellowship-airship::after { background-position: right -2rem top 1rem; }
+  .fellowship-dashboard-disclosure > summary,
+  .fellowship-airship-details > summary,
+  .fellowship-legacy-goals > summary,
+  .fellowship-expedition-board > summary,
+  .fellowship-available-projects > summary,
+  .fellowship-deeds > summary {
+    align-items: flex-start;
+    gap: .65rem;
+  }
+  .fellowship-dashboard-disclosure > summary .small-badge,
+  .fellowship-expedition-board > summary .small-badge { white-space: normal; text-align: right; }
+  .fellowship-order-grid { grid-template-columns: 1fr; }
+  .fellowship-order { padding: .8rem; }
+  .fellowship-legacy-shelf { margin-bottom: 8px; }
+}
+
+@media (max-width: 520px) {
+  .fellowship-priority-grid { grid-template-columns: 1fr; }
+  .fellowship-priority-grid .fellowship-summary { min-height: 0; }
+  .fellowship-dashboard-disclosure > summary,
+  .fellowship-airship-details > summary,
+  .fellowship-legacy-goals > summary,
+  .fellowship-expedition-board > summary,
+  .fellowship-available-projects > summary,
+  .fellowship-deeds > summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .fellowship-dashboard-disclosure > summary > .small-badge,
+  .fellowship-expedition-board > summary > .small-badge { grid-column: 1 / -1; justify-self: start; }
+  .fellowship-airship-details > summary > span:last-child,
+  .fellowship-legacy-goals > summary > span:last-child,
+  .fellowship-available-projects > summary > span:last-child,
+  .fellowship-deeds > summary > span:last-child { grid-column: 1 / -1; }
+}
+
+@media (pointer: coarse) {
+  .fellowship-dashboard-disclosure > summary,
+  .fellowship-airship-details > summary,
+  .fellowship-legacy-goals > summary,
+  .fellowship-expedition-board > summary,
+  .fellowship-available-projects > summary,
+  .fellowship-deeds > summary { min-height: 48px; }
+}

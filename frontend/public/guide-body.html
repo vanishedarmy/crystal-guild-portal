@@ -432,7 +432,7 @@
       <div class="grid two">
        <div class="card"><h3>Shared Stable</h3><p>The Chocobo Stable is a Fellowship LVL 2 project requiring 5,000 Gil and 10 completed Ventures. Once built, it is available Guild-wide.</p></div>
        <div class="card"><h3>Personal Quest</h3><p>Reach Character Lv.10, complete 10 Ventures, and record at least one C-Rank Hunt clear. Completing the quest awards 250 Gil.</p></div>
-       <div class="card"><h3>Registration Writ</h3><p>The Writ costs 500 Gil and takes one hour to validate. Its authoritative timer survives Portal refreshes and Bot restarts.</p></div>
+       <div class="card"><h3>Registration Writ</h3><p>The Writ costs 500 Gil and takes one hour to validate. The countdown keeps its progress if you leave the Portal and come back later.</p></div>
        <div class="card"><h3>Bond Specialization</h3><p>Registered Chocobos gain Bond XP and have one persistent Expedition specialty derived from their existing trait: Guardian, Scout, Pathfinder, Forager, or Treasure Hunter. The specialty improves at Bond Lv.5, 10, 15, and 20.</p></div>
       </div>
       <p><b>Expedition readiness:</b> you need a registered Chocobo and the completed Fellowship Expedition Board. See <a href="#expeditions">Expeditions</a> for the full travel guide.</p>
@@ -441,7 +441,7 @@
 
      <section class="section searchable" id="expeditions">
       <h2>Expeditions</h2>
-      <div class="kicker">Expeditions — v1.2 Beta 3</div>
+      <div class="kicker">Expeditions — v1.2</div>
       <p class="lead">Take your Chocobo beyond the normal Adventure Board on persistent, multi-stage journeys where resources, choices, exploration, and the Expedition Cache carry from stage to stage.</p>
       <div class="callout"><b>Unlock:</b> the Guild must complete the <b>Expedition Board</b>, which becomes available at <b>Fellowship LVL 6 + Guild Hall Tier 1</b>. Each adventurer also needs their own registered Chocobo.</div>
       <p><b>Regions:</b> Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, or the Astral Scar.</p>
@@ -465,7 +465,7 @@
 
       <h3>What Happens During a Journey</h3>
       <div class="grid two">
-       <div class="card"><h3>Persistent Travel</h3><p>Travel timers and stage state are authoritative. You can leave the Portal and return later without losing the Expedition or its pending decision.</p></div>
+       <div class="card"><h3>Persistent Travel</h3><p>Your travel and current stage stay saved. You can leave the Portal and return later without losing the Expedition or its pending decision.</p></div>
        <div class="card"><h3>Stage Events</h3><p>Stages may become combat, treasure, resource nodes, hazards, discoveries, travelers, Chocobo events, camp opportunities, or rare encounters.</p></div>
        <div class="card"><h3>Resources Carry Forward</h3><p>Your HP, MP, AP, and consumed supplies persist across the run. Expedition Camp opportunities help you recover before deciding whether to continue.</p></div>
        <div class="card"><h3>Route Choices</h3><p>Some stages ask you to choose a path or response. Choices can alter danger, rewards, discoveries, and the next stage rather than acting as flavor-only prompts.</p></div>
@@ -487,15 +487,15 @@
        <div class="card"><h3>100% · Region Mastery</h3><p>Mastery is permanent and awards the region's achievement/title plus a small regional Expedition bonus. Mastered regions remain fully playable.</p></div>
       </div>
 
-      <h3>Expedition Atlas &amp; Legendary Contracts · Alpha 3</h3>
+      <h3>Expedition Atlas &amp; Legendary Contracts</h3>
       <div class="grid two">
        <div class="card"><h3>Expedition Atlas</h3><p>Your five regional surveys now combine into one overall Atlas rank. The Adventure Board shows overall exploration plus total stages, completed runs, Regional Boss clears, mastered regions, and unlocked Legendary routes.</p></div>
        <div class="card"><h3>Cartography Ranks</h3><p>Overall exploration advances through <b>Guild Scout → Trailblazer → Pathfinder → Surveyor → Cartographer</b>. Master all five regions to earn the final <b>Master Cartographer</b> distinction.</p></div>
        <div class="card"><h3>Legendary Contracts</h3><p>After a region reaches <b>100% Mastery</b> and its Regional Boss has been defeated at least once, that region gains a repeatable Legendary Contract: five stages, stronger boss pressure, higher rewards, and doubled guaranteed regional boss materials.</p></div>
-       <div class="card"><h3>All-Region Reward</h3><p>Mastering all five Expedition regions unlocks the <b>No Blank Spots Left</b> achievement and the equippable <b>Master Cartographer</b> title. Existing Alpha 2 exploration counts automatically.</p></div>
+       <div class="card"><h3>All-Region Reward</h3><p>Mastering all five Expedition regions unlocks the <b>No Blank Spots Left</b> achievement and the equippable <b>Master Cartographer</b> title. Your existing exploration progress counts toward this automatically.</p></div>
       </div>
 
-      <h3>Regional Discovery · Alpha 4</h3>
+      <h3>Regional Discovery</h3>
       <div class="grid two">
        <div class="card"><h3>Permanent Landmarks</h3><p>Every region now contains four named landmarks that become permanently charted as exploration rises. The Expedition Atlas shows your total landmark count, while the selected region reveals descriptions for places you have already mapped.</p></div>
        <div class="card"><h3>Regional Event Pools</h3><p>Normal resource, treasure, hazard, traveler, and Chocobo stages now use writing tied to the selected region. Emerald Wilds feels like overgrown exploration; Ashen Highlands leans into mines and Magitek debris; Mistfen into fog and drowned ruins; Frostveil into endurance; and the Astral Scar into unstable reality.</p></div>
@@ -504,48 +504,15 @@
       </div>
       <div class="callout"><b>Route signals:</b> <b>Safe</b> lowers combat and hazard pressure and has the lowest rare-event odds. <b>Unknown</b> stays balanced. <b>Push Deeper</b> increases combat, hazards, rewards, rare-event odds, and the weighting of rare regional monsters once they are unlocked.</div>
 
-      <h3>Chocobo Specialization &amp; Guild Stipends · Alpha 5</h3>
+      <h3>Chocobo Specialization &amp; Guild Stipends</h3>
       <div class="grid two">
        <div class="card"><h3>Guardian · Steady Strider</h3><p>Reduces Expedition hazard pressure and protects more of the Cache during Chocobo rescue. Bond tiers improve both effects.</p></div>
        <div class="card"><h3>Scout · Keen Eye</h3><p>Improves discovery weighting and rare-event chances, making it the strongest companion for filling the Atlas and finding unusual regional opportunities.</p></div>
-       <div class="card"><h3>Pathfinder · Fleet Feet</h3><p>Reduces authoritative travel time. The original 15% travel bonus grows gradually as the Chocobo reaches higher Bond tiers.</p></div>
+       <div class="card"><h3>Pathfinder · Fleet Feet</h3><p>Reduces Expedition travel time. The bonus starts at 15% and grows gradually as the Chocobo reaches higher Bond tiers.</p></div>
        <div class="card"><h3>Forager / Treasure Hunter</h3><p>Forager improves material weighting and yield; Treasure Hunter improves treasure and rare-event opportunities. Both scale naturally from existing Bond XP.</p></div>
       </div>
       <div class="callout"><b>Completion stipend:</b> Scout <b>2 Seals</b> · Journey <b>4</b> · Deep Expedition <b>7</b> · Regional Boss Contract <b>10</b> · Legendary Contract <b>15</b>. These are existing Hunt Seals, not a new Expedition currency, and are awarded only when the planned route is completed.</div>
       <p>The Chocobo Stable also records completed Expeditions, Chocobo rescues, rare discoveries, Regional Boss activity, and Legendary Contract completions as shared companion accomplishments.</p>
-
-      <h3>Beta 1 Balance Pass</h3>
-      <div class="grid two">
-       <div class="card"><h3>Safe Means Safer</h3><p>Safe routes now reduce actual enemy combat pressure and hazard damage in addition to lowering dangerous-event weighting. The reward modifier remains lower, so this is the survival-focused route rather than a free optimization.</p></div>
-       <div class="card"><h3>Push Deeper Means Risk</h3><p>Push Deeper now raises actual enemy pressure and hazard damage while retaining its stronger reward multiplier, rare-event chance, and rare-monster weighting. The high-risk route is no longer only a better reward button.</p></div>
-       <div class="card"><h3>Legendary Contract Tuning</h3><p>Legendary Regional Bosses remain stronger than their normal contracts, but the Alpha scaling cliff is slightly reduced. Their extra stage still creates attrition, while route choice now affects final-boss pressure as well.</p></div>
-       <div class="card"><h3>Economy Guardrail</h3><p>The Alpha 5 Hunt Seal stipends remain unchanged after simulation. Their expected Seal rate stays below dedicated Hunts in normal play, preserving Hunts as the primary Hunt Seal activity.</p></div>
-      </div>
-      <div class="callout"><b>Beta simulation:</b> the release balance suite runs thousands of reproducible Expedition samples across level bands, route choices, standard depths, Regional Boss Contracts, and Legendary Contracts. It uses a conservative basic-Attack baseline, so real player ability and item use should improve survival.</div>
-
-      <h3>Beta 2 Portal Consolidation</h3>
-      <div class="grid two">
-       <div class="card"><h3>Open Cards Stay Put</h3><p>Opening or closing a detail card, collapsible Adventure section, portrait gallery, or Guide catalog preserves your current reading position. The Portal no longer intentionally jumps the background to the top of the page when you inspect something.</p></div>
-       <div class="card"><h3>Current Activity First</h3><p>The Adventure Board now summarizes the active activity, Solo Venture state, Expedition state, and Hunt readiness before the larger cards. Saved results and active content take priority over routine choices.</p></div>
-       <div class="card"><h3>Secondary Progress Can Collapse</h3><p>The Expedition Atlas keeps its rank and progress visible while allowing the deeper statistic block to collapse independently and remember your browser preference.</p></div>
-       <div class="card"><h3>Feature Freeze Continues</h3><p>Beta 2 changes presentation and interaction only. Route balance, Expedition rewards, Chocobo specialization, regional progression, and contract rules remain the Beta 1 gameplay baseline.</p></div>
-      </div>
-
-      <h3>Beta 3 Mobile &amp; Accessibility Pass</h3>
-      <div class="grid two">
-       <div class="card"><h3>Touch-First Controls</h3><p>Primary actions, filters, collapse controls, menus, and form fields keep practical touch targets on phones and coarse-pointer devices, including landscape orientation.</p></div>
-       <div class="card"><h3>Keyboard Tab Navigation</h3><p>Portal tab groups support Arrow keys plus Home and End with a single roving keyboard focus, while the active panel remains explicitly labelled for assistive technology.</p></div>
-       <div class="card"><h3>Phone-Safe Layouts</h3><p>Long labels, tables, Expedition summaries, commerce controls, and detail cards collapse before they overflow, with dedicated handling down through 320–390px phone widths.</p></div>
-       <div class="card"><h3>Respect Device Preferences</h3><p>Reduced motion, increased contrast, forced-colors mode, device safe areas, and 16px mobile form text are handled directly without changing gameplay.</p></div>
-      </div>
-
-      <h3>Beta 4 Release Hardening</h3>
-      <div class="grid two">
-       <div class="card"><h3>Persistent Runs Stay Authoritative</h3><p>Long Rest and stream-start refreshes do not restore HP, MP, or AP through an active Wayfarer or distant Expedition. Leaving the Portal or restarting the Bot does not bypass the run's resource pressure.</p></div>
-       <div class="card"><h3>Replay-Safe Adventure Mutations</h3><p>Persistent Expedition Portal actions commit the gameplay change and replay receipt together, preventing a lost acknowledgement or browser retry from duplicating stage progress, cache banking, Hunt Seals, or rewards.</p></div>
-       <div class="card"><h3>Restart Recovery</h3><p>Expedition stage, route, cache, Journal, and saved run state remain database-authoritative across reconnects and Bot restarts.</p></div>
-       <div class="card"><h3>Upgrade Continuity</h3><p>The pre-v1.2 schema-7 path is validated into schema 8 with player progression, inventory, resources, Chocobo data, and the verified migration backup preserved.</p></div>
-      </div>
 
       <h3>Important Rules</h3>
       <div class="grid two">
@@ -600,7 +567,7 @@
       <div class="grid">
        <div class="card"><h3>Solo Battle Controls</h3><p><b>Attack</b> is free and reliable. <b>Ability</b> opens learned Job techniques with their MP/AP costs. <b>Use Item</b> shows eligible battle supplies and quantities. <b>Defend</b> reduces incoming damage for the round and restores a small amount of battle resource.</p></div>
        <div class="card"><h3>Enemy Intent</h3><p>Solo battles telegraph the enemy's prepared action before you commit your turn. A dangerous named technique may make Defend, healing, control, or an aggressive finishing attempt the better choice.</p></div>
-       <div class="card"><h3>Persistent Run State</h3><p>HP, MP, AP, and consumed items carry through the run. A Solo Venture can wait safely for your next decision and survives Portal refreshes or Bot restarts. Guild resupply, recovery, Job changes, and equipment changes are locked until you return or retreat.</p></div>
+       <div class="card"><h3>Persistent Run State</h3><p>HP, MP, AP, and consumed items carry through the run. A Solo Venture can wait safely for your next decision, even if you leave the Portal and return later. Guild resupply, recovery, Job changes, and equipment changes are locked until you return or retreat.</p></div>
       </div>
       <div class="callout"><b>Rally reward bonus:</b> Rally Venture encounter victories reward each participant with <b>+5% XP, JP, and Gil per enemy level above that hero</b>, capped at <b>+50%</b>. The bonus is personal to each hero's risk. Equal- or lower-level enemies give no Rally bonus, and treasure rewards are unchanged.</div>
       <div class="grid">

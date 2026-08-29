@@ -16,7 +16,7 @@ test("Expeditions Alpha 4 exposes landmarks, journal, and route signals", async 
   assert.match(css, /expedition-landmark-grid/);
   assert.match(css, /expedition-journal-entry\.rare/);
   assert.match(css, /expedition-route-signals/);
-  assert.match(guide, /Regional Discovery · Alpha 4/);
+  assert.match(guide, /Regional Discovery/);
   assert.match(guide, /Rare Regional Events/);
   assert.match(guide, /Push Deeper/);
 });

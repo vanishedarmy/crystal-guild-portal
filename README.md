@@ -1,10 +1,7 @@
-# Crystal Guild v1.2.0 — Expeditions Beta 4
+# Crystal Guild v1.2.0 — Expeditions RC1
 
-Release-hardening Web checkpoint for v1.2 Expeditions. Beta 3 mobile/accessibility polish and Beta 2 portrait/viewport work remain intact. Beta 4 publishes the hardened Bot/Web identity, synchronized Guide timing metadata, and player-facing release-hardening notes while gameplay/content remains frozen.
+Release Candidate 1 for the v1.2 Expeditions branch. The gameplay feature set is frozen; this checkpoint focuses on final player-facing Guide cleanup and release verification while preserving Beta 4 persistence/hardening and Beta 3 mobile/accessibility behavior.
 
-- Hosted Web runtime: `1.2.0-expeditions-beta4`
-- Frontend asset revision: `1.2.0-expeditions-b4`
-- Paired Bot runtime: `1.2.0-expeditions-b4`
-- Local DB schema: **8**
-- Hosted sync schema: **1**
-- Portal Action protocol: **20**
+Runtime `1.2.0-expeditions-rc1` · local DB schema **8** · hosted sync schema **1** · Portal Action protocol **20** · Twitch prefix `!`.
+
+See `UPGRADE_GUIDE.md`, `RELEASE_NOTES.md`, and `VALIDATION_REPORT.md`.

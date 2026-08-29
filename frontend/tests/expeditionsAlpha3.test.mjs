@@ -15,6 +15,6 @@ test("Expeditions Alpha 3 exposes Atlas ranks and Legendary Contracts", async ()
   assert.match(component, /Clear Boss to Unlock/);
   assert.match(css, /expedition-atlas-panel/);
   assert.match(css, /legendary-contract-button/);
-  assert.match(guide, /Expedition Atlas &amp; Legendary Contracts · Alpha 3/);
+  assert.match(guide, /Expedition Atlas &amp; Legendary Contracts/);
   assert.match(guide, /Master Cartographer/);
 });

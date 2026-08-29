@@ -858,7 +858,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">World Map</p><h2>Travel Regions</h2></div>
           <div className="section-collapse-actions">
             <span className="small-badge success">Current · {currentRegion.name}</span>
-            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} onClick={(event) => toggleWithViewportAnchor(event, setRegionsOpen)}>{regionsOpen ? "Collapse" : "Expand"}</button>
+            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} aria-label={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} title={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} onClick={(event) => toggleWithViewportAnchor(event, setRegionsOpen)} />
           </div>
         </div>
         {regionsOpen ? <div className="adventure-region-grid">
@@ -950,7 +950,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
           <div className="section-collapse-actions">
             <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
-            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} onClick={(event) => toggleWithViewportAnchor(event, setHuntBoardOpen)}>{huntBoardOpen ? "Collapse" : "Expand"}</button>
+            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} aria-label={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} title={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} onClick={(event) => toggleWithViewportAnchor(event, setHuntBoardOpen)} />
           </div>
         </div>
         {huntBoardOpen ? <>

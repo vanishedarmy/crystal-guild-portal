@@ -1,6 +1,6 @@
 {
   "release": "v1.3.1 — Guild Expansion",
-  "frontend_asset_revision": "1.3.1-asset-optimization-ui1",
+  "frontend_asset_revision": "1.3.1-asset-optimization-ui2",
   "scene_backgrounds": [
     {
       "file": "camp.webp",

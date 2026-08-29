@@ -8,7 +8,7 @@ test("Guild Expansion public web identity is centralized", () => {
   assert.equal(WEB_BUILD, "Guild Expansion");
   assert.equal(WEB_RELEASE, "v1.3.1 — Guild Expansion");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.3.1 — Guild Expansion");
-  assert.equal(WEB_ASSET_REVISION, "1.3.1-asset-optimization-ui1");
+  assert.equal(WEB_ASSET_REVISION, "1.3.1-asset-optimization-ui2");
 });
 
 

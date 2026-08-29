@@ -175,7 +175,7 @@ export default function Expeditions({
           </div>
           <div className="section-collapse-actions">
             <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
-            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)}>{boardOpen ? "Collapse" : "Expand"}</button>
+            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} aria-label={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} title={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)} />
           </div>
         </div>
 
@@ -205,7 +205,7 @@ export default function Expeditions({
                   </div>
                   <div className="section-collapse-actions">
                     <span className={`small-badge ${data.atlas?.all_mastered ? "success" : ""}`}>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)} MASTERED</span>
-                    <button type="button" className="section-collapse-button compact" aria-expanded={atlasOpen} onClick={(event) => toggleWithViewportAnchor(event, setAtlasOpen)}>{atlasOpen ? "Hide Atlas" : "Show Atlas"}</button>
+                    <button type="button" className="section-collapse-button compact" aria-expanded={atlasOpen} aria-label={atlasOpen ? "Collapse Expedition Atlas" : "Expand Expedition Atlas"} title={atlasOpen ? "Collapse Expedition Atlas" : "Expand Expedition Atlas"} onClick={(event) => toggleWithViewportAnchor(event, setAtlasOpen)} />
                   </div>
                 </div>
                 <ProgressBar value={Number(data.atlas?.overall_progress || 0)} />

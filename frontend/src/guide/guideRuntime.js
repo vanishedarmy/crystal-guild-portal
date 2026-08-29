@@ -895,7 +895,7 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
       `<span class="data-collapse-title">${config.title}</span>`,
       '<span class="data-collapse-meta">Loading entries…</span>',
       '</span>',
-      '<span class="data-collapse-chevron" aria-hidden="true">⌄</span>'
+      '<span class="data-collapse-chevron" aria-hidden="true"></span>'
     ].join('');
     const body = document.createElement('div');
     body.className = 'data-collapse-body';
@@ -1023,7 +1023,7 @@ function setupGuideSectionAccordions(){
       '</span>',
       '<span class="guide-section-state">',
       meta?`<span class="guide-section-meta">${esc(meta)}</span>`:'',
-      '<span class="guide-section-chevron" aria-hidden="true">⌄</span>',
+      '<span class="guide-section-chevron" aria-hidden="true"></span>',
       '</span>',
       lead?`<span class="guide-section-lead-full">${esc(lead)}</span>`:''
     ].join('');

@@ -1,32 +1,28 @@
-# Crystal Guild v1.3.1 — UI Shared Assets Hotfix 1
+# Crystal Guild v1.3.1 — UI Shared Assets Hotfix 2
 
-## Web-only UI polish
+## Web-only collapse-control and Rally Venture fix
 
-This Web-only hotfix builds on **v1.3.1 Asset Optimization**. It adds shared collapse-pointer artwork and the Rally Venture scene background without changing gameplay, balance, progression, schemas, Portal actions, or the compatible Bot.
+Hotfix 2 builds on **v1.3.1 UI Hotfix 1** and makes no gameplay, economy, progression, schema, Portal Action, or Bot changes.
 
-### Shared collapsible controls
-- Adds a retro pixel pointer-hand pair for expanded and collapsed states.
-- Uses the shared pointers across Adventure Board section buttons, Fellowship disclosures, Moogle sell details, Job unlock requirements, What's New history, Streamer Dashboard groups, and Player Guide expandable sections.
-- Replaces text-chevron-only indicators where custom collapse controls were already present while keeping keyboard/focus behavior intact.
+### Collapse-control consistency
+- All shared collapsible surfaces now use the **same right-pointing retro hand** in both closed and open states.
+- Removes visible `Expand`, `Collapse`, `Show Atlas`, and `Hide Atlas` text from the small section-control buttons.
+- Buttons retain descriptive `aria-label` and `title` text for accessibility/tooltips.
+- Fellowship, Streamer Dashboard, Player Guide, Moogle/Jobs/What's New details, and Adventure Board controls share the same hand language.
+- Player Guide generated chevrons are replaced by the hand graphic instead of rotating glyphs.
 
-### Rally Venture presentation
-- Adds a dedicated wide Rally Venture background to the Adventure Board.
-- Uses a dark readability treatment above the art so live status, rules, reward information, and active encounter content remain legible.
-
-### Asset discipline
-- New pointer PNG sources were cropped, reduced to 96×96 UI assets, and stored as lossless WebP.
-- Rally Venture artwork is stored as WebP; the shipping public tree remains **0 PNG**.
-- Frontend asset revision advances to `1.3.1-asset-optimization-ui1` for cache busting.
+### Rally Venture background fix
+- Applies `rally_venture.webp` directly to the Rally Venture panel background instead of placing it on a pseudo-element.
+- This removes the stacking conflict that could leave the tab looking like a plain navy panel.
+- Readability gradients remain above the artwork, with the scene made more visible across wide and compact layouts.
 
 ### Compatibility
 - Compatible Bot runtime: `1.3.1-asset-optimization`
 - Hosted Web runtime: `1.3.1-asset-optimization`
-- Frontend asset revision: `1.3.1-asset-optimization-ui1`
+- Frontend asset revision: `1.3.1-asset-optimization-ui2`
 - Local DB schema: **9** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **22** unchanged
 - Twitch prefix: `!`
-- Database migration: **none**
-- Player reset: **none**
-- OAuth/environment changes: **none**
+- Database migration / player reset / OAuth / environment changes: **none**
 - Gameplay/economy changes: **none**

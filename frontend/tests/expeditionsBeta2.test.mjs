@@ -58,5 +58,5 @@ test("Adventure Board presents current activity first and keeps secondary Atlas 
   assert.match(css, /Action-first reading order/);
   assert.match(css, /\.adventure-board-stack > \.adventure-pending-result-stack[\s\S]*?order: 1/);
   assert.match(expeditions, /crystal-guild:adventure:expedition-atlas/);
-  assert.match(expeditions, /Show Atlas/);
+  assert.match(expeditions, /aria-label=\{atlasOpen \? "Collapse Expedition Atlas" : "Expand Expedition Atlas"\}/);
 });

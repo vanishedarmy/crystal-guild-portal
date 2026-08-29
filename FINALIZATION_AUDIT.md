@@ -6,7 +6,7 @@ Maintenance pass over the complete v1.3.0 Guild Expansion Bot/Web packages, focu
 ## Current-package identity
 - Bot runtime: `1.3.1-asset-optimization`
 - Hosted Web/runtime: `1.3.1-asset-optimization`
-- Frontend asset revision: `1.3.1-asset-optimization-ui1`
+- Frontend asset revision: `1.3.1-asset-optimization-ui2`
 - Local DB schema: **9**
 - Hosted sync schema: **1**
 - Portal Action protocol: **22**

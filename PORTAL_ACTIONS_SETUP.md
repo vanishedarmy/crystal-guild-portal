@@ -1,5 +1,7 @@
-# Portal Actions Setup — v1.3.0 Guild Expansion Beta 1
+# Portal Actions Setup — v1.3.0 Guild Expansion
 
-Portal Action protocol remains **21**. Alpha 4 does not add a new public Portal action type: Airship construction/upgrades reuse Fellowship projects, while streamer mission launches use the existing allow-listed `STREAMER_COMMAND` path.
+Portal Action protocol is **22** and hosted sync schema remains **1**. Deploy the final Web and Bot together so the Portal contribution payload and Bot action handler stay on the same protocol.
 
-The Alpha 3 `WORKSHOP_EXCHANGE` action remains available unchanged. Hosted sync schema remains **1**. The paired Alpha 4 Bot advances its local database to schema **9** for persistent Airship state. No OAuth or environment-variable changes are required.
+Fellowship contributions include the project ID shown to the player so stale tabs fail closed after a streamer changes projects. Existing Workshop exchanges continue to use the allow-listed `WORKSHOP_EXCHANGE` action, and streamer Airship mission launches continue through the existing allow-listed `STREAMER_COMMAND` path.
+
+Local database schema is **9** for persistent Fellowship/Airship state. No OAuth change or new environment variable is required from RC2.

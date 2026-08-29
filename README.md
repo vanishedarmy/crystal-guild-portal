@@ -1,11 +1,11 @@
-# Crystal Guild Web v1.3.0 — Guild Expansion RC2
+# Crystal Guild Web v1.3.0 — Guild Expansion
 
-RC1 is the feature-frozen Web release candidate for v1.3 Guild Expansion.
+Final v1.3.0 production Web release.
 
-Hosted runtime/frontend revision: `1.3.0-guild-expansion-rc2`  
-Paired Bot runtime: `1.3.0-guild-expansion-rc2`  
+Hosted runtime/frontend revision: `1.3.0-guild-expansion`  
+Paired Bot runtime: `1.3.0-guild-expansion`  
 Local DB schema: **9** · hosted sync schema: **1** · Portal Action protocol: **22**
 
-The Beta 2 action-first Fellowship/mobile layout, Founding Hall portrait, collapsible inventory groups, player-facing Guide cleanup, and Beta 3 stale-tab/shared-state protections remain intact. No gameplay/economy balance changes are made in RC1.
+The final Web includes the complete Fellowship/Guild Expansion interface, current-priority Fellowship layout, Founding Hall presentation, collapsible inventory groups, player-facing Guide, Airship/Legacy surfaces, and hardened shared-action behavior.
 
-No database migration, reset, OAuth change, or new environment variable is required from Beta 3. See `UPGRADE_GUIDE.md`, `RELEASE_NOTES.md`, and `VALIDATION_REPORT.md`.
+The player-facing Previous major updates list contains shipped releases only. Upgrading from RC2 requires no database migration, player reset, OAuth change, or new environment variable. See `UPGRADE_GUIDE.md`, `RELEASE_NOTES.md`, and `VALIDATION_REPORT.md`.

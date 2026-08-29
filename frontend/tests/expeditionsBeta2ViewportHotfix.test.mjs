@@ -13,7 +13,8 @@ test("detail dialogs open in the current viewport instead of document layout", a
   assert.match(css, /max-height:\s*90dvh/);
 });
 
-test("Beta 2 What's New explains that opened cards appear in the current viewport", async () => {
+test("public update history omits prerelease viewport notes", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(data, /Detail dialogs now open inside the current viewport/);
+  assert.match(data, /name: "Expeditions"/);
+  assert.doesNotMatch(data, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
 });

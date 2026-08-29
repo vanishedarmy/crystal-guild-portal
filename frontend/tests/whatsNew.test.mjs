@@ -86,20 +86,15 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
 });
 
 
-test("What's New leads with Expeditions while retaining player-facing v1.2 history", async () => {
+test("What's New lists only shipped releases in public history", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  const latest = data.slice(0, data.indexOf('name: "Expeditions Alpha 5"'));
-  assert.match(latest, /Expeditions/);
-  assert.match(latest, /Expeditions has arrived/);
-  assert.match(data, /Expeditions Beta 1/);
-  assert.match(latest, /Safe routes are mechanically safer/);
-  assert.match(latest, /Push Deeper earns its risk label/);
-  assert.match(latest, /Route choices have a purpose/);
-  assert.match(data, /Expeditions Alpha 5/);
-  assert.match(data, /Expeditions Alpha 4/);
-  assert.match(data, /20 permanent landmarks/);
-  assert.match(data, /Expeditions Alpha 3/);
-  assert.match(data, /Legendary Regional Contracts/);
-  assert.match(data, /Expeditions Alpha 2/);
-  assert.match(data, /Elder Ochu/);
+  assert.match(data, /name: "Guild Expansion"/);
+  assert.match(data, /Guild Expansion has arrived/);
+  assert.match(data, /name: "Expeditions"/);
+  assert.match(data, /Expeditions has arrived/);
+  assert.match(data, /Safe favors survival/);
+  assert.match(data, /Push Deeper accepts greater danger/);
+  assert.match(data, /Your Chocobo matters/);
+  assert.doesNotMatch(data, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
 });
+

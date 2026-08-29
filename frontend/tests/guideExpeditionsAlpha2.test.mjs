@@ -26,5 +26,5 @@ test("Player Guide exposes a dedicated Expeditions section", () => {
 });
 
 test("Guide asset revision advances for Expeditions guide hotfix", () => {
-  assert.match(version, /1\.3\.0-guild-expansion-rc2/);
+  assert.match(version, /1\.3\.0-guild-expansion/);
 });

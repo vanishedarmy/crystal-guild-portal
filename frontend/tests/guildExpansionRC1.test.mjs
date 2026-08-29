@@ -16,26 +16,33 @@ function fellowshipSection(html) {
   return html.slice(start, end);
 }
 
-test("Guild Expansion RC2 publishes one consistent release-candidate identity", () => {
-  assert.match(version, /WEB_BUILD = "Guild Expansion RC2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc2"/);
-  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion RC2");
-  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-rc2");
-  assert.equal(manifest.release, "v1.3.0 — Guild Expansion RC2");
-  assert.equal(manifest.frontend_asset_revision, "1.3.0-guild-expansion-rc2");
+test("Guild Expansion publishes one consistent final-release identity", () => {
+  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion"/);
+  assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion");
+  assert.equal(guideData.meta.release, "1.3.0-guild-expansion");
+  assert.equal(manifest.release, "v1.3.0 — Guild Expansion");
+  assert.equal(manifest.frontend_asset_revision, "1.3.0-guild-expansion");
 });
 
-test("RC2 current What's New is player-facing and feature frozen", () => {
-  const current = news.split('name: "Guild Expansion RC2"')[1].split('\n  },')[0];
-  assert.match(current, /feature set is complete/i);
-  assert.match(current, /No balance changes/);
-  assert.match(current, /Progress stays intact/);
+test("Final What's New is player-facing and feature complete", () => {
+  const current = news.split('name: "Guild Expansion"')[1].split('\n  },')[0];
+  assert.match(current, /full shared Guild system/i);
+  assert.match(current, /Crystal Guild Airship/);
+  assert.match(current, /Build a lasting Legacy/);
   assert.doesNotMatch(current, /SQLite|transaction|mutex|schema|protocol|migration|replay receipt|write lock/i);
 });
 
-test("RC2 Fellowship Guide uses player language and current facility terminology", () => {
+test("Final Fellowship Guide uses player language and current facility terminology", () => {
   const section = fellowshipSection(guide);
   assert.doesNotMatch(section, /SQLite|transaction|mutex|schema|protocol|migration|replay receipt|feature freeze/i);
   assert.match(guide, /Fellowship LVL 6 \+ Guild Hall Lv\. 1/);
   assert.doesNotMatch(guide, /Fellowship LVL 6 \+ Guild Hall Tier 1/);
+});
+
+
+test("public update history excludes prerelease milestones", () => {
+  assert.doesNotMatch(news, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
+  assert.match(news, /name: "Guild Expansion"/);
+  assert.match(news, /name: "Expeditions"/);
 });

@@ -11,7 +11,7 @@ const whatsNew = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
 const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
 const version = await readFile(new URL("version.js", SRC), "utf8");
 
-test("Guild Expansion RC2 presents the five-facility Guild Board", () => {
+test("Guild Expansion presents the five-facility Guild Board", () => {
   assert.match(page, /Guild Hall Foundation/);
   assert.match(page, /Guild Facilities/);
   assert.match(page, /Lv\. 0–3/);
@@ -29,11 +29,12 @@ test("Player Guide explains facility play without backend implementation jargon"
   assert.doesNotMatch(chapter, /schema|protocol|SQLite|migration|transaction ledger|sync payload/i);
 });
 
-test("Alpha 2 release identity and launch summary are current", () => {
+test("Final release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.3\.0"/);
-  assert.match(version, /WEB_BUILD = "Guild Expansion RC2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-rc2"/);
-  assert.match(whatsNew, /name: "Guild Expansion RC2"/);
-  assert.match(whatsNew, /Airship Dock on the horizon/);
+  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion"/);
+  assert.match(whatsNew, /name: "Guild Expansion"/);
+  assert.match(whatsNew, /Build the Guild together/);
+  assert.match(whatsNew, /The Crystal Guild Airship/);
   assert.match(css, /v1\.3 Guild Expansion/);
 });

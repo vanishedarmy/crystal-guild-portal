@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.3.0 — Guild Expansion
+- Final production release and public update-history cleanup.
+- What's New now lists shipped releases only; Alpha/Beta/RC milestones remain in this engineering history but are no longer player-facing.
+- Final Web/frontend runtime is `1.3.0-guild-expansion`; schema 9 / sync 1 / Portal protocol 22 remain unchanged.
+
 ## v1.3.0 — Guild Expansion RC2
 - Final pre-release package/metadata hardening with no gameplay or balance changes.
 - Refreshes stale bundled finalization audit metadata and keeps public Guide/Web/package identity synchronized.

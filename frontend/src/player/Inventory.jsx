@@ -14,7 +14,8 @@ import { campRemainingSeconds } from "../utils/campCountdown.js";
 import { duration, formatBonuses, formatItemUse, number, pct } from "../utils/formatters.js";
 
 const GROUP_ORDER = ["weapon", "armor", "accessory", "item", "material"];
-const GROUP_LABELS = { weapon: "Weapons", armor: "Armor", accessory: "Accessories", item: "Items", material: "Materials" };
+const GROUP_LABELS = { weapon: "Weapons", armor: "Armor", accessory: "Accessories", item: "Consumables", material: "Materials" };
+const INVENTORY_GROUP_STATE_KEY = "crystal-guild:inventory-groups:v1";
 const EQUIPMENT_GROUPS = new Set(["weapon", "armor", "accessory"]);
 const STAT_LABELS = { attack: "ATK", magic_power: "M.PWR", str: "STR", vit: "VIT", mag: "MAG", spr: "SPR", dex: "DEX", lck: "LCK", hp: "HP" };
 
@@ -60,6 +61,14 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const [recoveryMessage, setRecoveryMessage] = useState("");
   const [recoveryTarget, setRecoveryTarget] = useState("");
   const [clockNow, setClockNow] = useState(() => Date.now());
+  const [openGroups, setOpenGroups] = useState(() => {
+    const defaults = Object.fromEntries(GROUP_ORDER.map((group) => [group, true]));
+    try {
+      const stored = JSON.parse(globalThis.localStorage?.getItem(INVENTORY_GROUP_STATE_KEY) || "{}");
+      for (const group of GROUP_ORDER) if (typeof stored?.[group] === "boolean") defaults[group] = stored[group];
+    } catch {}
+    return defaults;
+  });
   const recoveryLoadedFor = useRef("");
   const expiryRefreshFor = useRef(0);
 
@@ -74,6 +83,11 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const displayedItems = useMemo(() => data.items.map((item) => recoveryQuantities.has(item.id) ? { ...item, quantity: recoveryQuantities.get(item.id) } : item).filter((item) => Number(item.quantity || 0) > 0), [data.items, recoveryQuantities]);
   const filtered = useMemo(() => { const term = search.trim().toLowerCase(); return displayedItems.filter((item) => !term || item.name.toLowerCase().includes(term)); }, [displayedItems, search]);
   const grouped = useMemo(() => { const buckets = new Map(GROUP_ORDER.map((group) => [group, []])); for (const item of filtered) buckets.get(groupForItem(item))?.push(item); return GROUP_ORDER.map((group) => ({ key: group, label: GROUP_LABELS[group], items: [...(buckets.get(group) || [])].sort(compareItemsByLevel) })); }, [filtered]);
+  const toggleGroup = (group) => setOpenGroups((current) => {
+    const next = { ...current, [group]: current[group] === false };
+    try { globalThis.localStorage?.setItem(INVENTORY_GROUP_STATE_KEY, JSON.stringify(next)); } catch {}
+    return next;
+  });
 
   const runQueuedAction = async (key, submit, fallback, onComplete) => {
     if (busyKey) return null;
@@ -187,7 +201,23 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
       </section>
 
       <div className="toolbar"><label className="search-box"><span>Search Inventory</span><input type="search" placeholder="Item name" value={search} onChange={(event) => setSearch(event.target.value)} /></label></div>
-      <div className="inventory-section-list">{grouped.map((group) => <section className="inventory-group" key={group.key}><div className="panel-title-row inventory-group-heading"><h3>{group.label}</h3><span className="small-badge">{group.items.length} {group.items.length === 1 ? "stack" : "stacks"}</span></div>{group.items.length ? <div className="content-grid">{group.items.map((item, index) => { const upgrade = item.upgrade_level ? ` +${item.upgrade_level}` : ""; const rawType = String(item.type || "").toLowerCase(); const isHeldConsumable = group.key === "item" && !["accessory", "weapon", "armor", "material"].includes(rawType); const isEquipment = EQUIPMENT_GROUPS.has(group.key); const current = isEquipment ? currentBySlot.get(group.key) : null; const canUse = eligibility(item, overview); const itemBusy = busyKey === `equip:${item.id}` || busyKey === `unequip:${group.key}`; return <article className={`inventory-card inventory-action-card ${item.equipped ? "is-equipped" : ""}`} key={`${group.key}-${item.id || item.name}-${index}`}><button type="button" className="inventory-card-detail" onClick={() => onDetail?.({ type: "inventory", inventoryGroup: group.key, item })}><ItemArtwork item={item} className="inventory-item-artwork" /><span className="slot-label">{slotLabel(item)}</span>{item.equipped ? <span className="inventory-equipped-chip">Equipped now</span> : null}<span className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</span><span className="card-meta">Quantity {number(item.quantity)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</span><span className="item-meta">{isHeldConsumable ? (item.use?.effects?.length ? formatItemUse(item.use) : item.description || "Consumable item") : formatBonuses(itemBonuses(item))}</span>{isHeldConsumable && item.description ? <span className="inventory-consumable-description">{item.description}</span> : null}</button>{isEquipment ? <div className="equipment-card-actions"><div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <><span>Replaces: <strong>{current?.id ? `${current.name}${current.upgrade_level ? ` +${current.upgrade_level}` : ""}` : "Empty slot"}</strong></span><small>{equipmentDelta(item, current)}</small></>}</div>{isOwnProfile ? item.equipped ? <button type="button" className="equipment-action-button secondary" disabled={!equipmentActionsAvailable || Boolean(busyKey)} onClick={() => unequip(group.key)}>{itemBusy ? "Working…" : `Unequip ${item.name}`}</button> : <button type="button" className="equipment-action-button" disabled={!equipmentActionsAvailable || !canUse.eligible || Boolean(busyKey)} title={!canUse.eligible ? canUse.reason : undefined} onClick={() => equip(item)}>{itemBusy ? "Working…" : canUse.eligible ? `Equip ${item.name}` : canUse.reason}</button> : null}</div> : null}</article>; })}</div> : <div className="muted inventory-group-empty">No {group.label.toLowerCase()} match the current search.</div>}</section>)}</div>
+      <div className="inventory-section-list">
+        {grouped.map((group) => {
+          const isOpen = openGroups[group.key] !== false;
+          const contentId = `inventory-group-${group.key}`;
+          return (
+            <section className={`inventory-group ${isOpen ? "is-open" : "is-collapsed"}`} key={group.key}>
+              <button type="button" className="panel-title-row inventory-group-heading inventory-group-toggle" aria-expanded={isOpen} aria-controls={contentId} onClick={() => toggleGroup(group.key)}>
+                <h3>{group.label}</h3>
+                <span className="inventory-group-toggle-meta"><span className="small-badge">{group.items.length} {group.items.length === 1 ? "stack" : "stacks"}</span><span className="inventory-group-toggle-icon" aria-hidden="true">⌄</span></span>
+              </button>
+              <div id={contentId} hidden={!isOpen}>
+                {group.items.length ? <div className="content-grid">{group.items.map((item, index) => { const upgrade = item.upgrade_level ? ` +${item.upgrade_level}` : ""; const rawType = String(item.type || "").toLowerCase(); const isHeldConsumable = group.key === "item" && !["accessory", "weapon", "armor", "material"].includes(rawType); const isEquipment = EQUIPMENT_GROUPS.has(group.key); const current = isEquipment ? currentBySlot.get(group.key) : null; const canUse = eligibility(item, overview); const itemBusy = busyKey === `equip:${item.id}` || busyKey === `unequip:${group.key}`; return <article className={`inventory-card inventory-action-card ${item.equipped ? "is-equipped" : ""}`} key={`${group.key}-${item.id || item.name}-${index}`}><button type="button" className="inventory-card-detail" onClick={() => onDetail?.({ type: "inventory", inventoryGroup: group.key, item })}><ItemArtwork item={item} className="inventory-item-artwork" /><span className="slot-label">{slotLabel(item)}</span>{item.equipped ? <span className="inventory-equipped-chip">Equipped now</span> : null}<span className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</span><span className="card-meta">Quantity {number(item.quantity)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</span><span className="item-meta">{isHeldConsumable ? (item.use?.effects?.length ? formatItemUse(item.use) : item.description || "Consumable item") : formatBonuses(itemBonuses(item))}</span>{isHeldConsumable && item.description ? <span className="inventory-consumable-description">{item.description}</span> : null}</button>{isEquipment ? <div className="equipment-card-actions"><div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <><span>Replaces: <strong>{current?.id ? `${current.name}${current.upgrade_level ? ` +${current.upgrade_level}` : ""}` : "Empty slot"}</strong></span><small>{equipmentDelta(item, current)}</small></>}</div>{isOwnProfile ? item.equipped ? <button type="button" className="equipment-action-button secondary" disabled={!equipmentActionsAvailable || Boolean(busyKey)} onClick={() => unequip(group.key)}>{itemBusy ? "Working…" : `Unequip ${item.name}`}</button> : <button type="button" className="equipment-action-button" disabled={!equipmentActionsAvailable || !canUse.eligible || Boolean(busyKey)} title={!canUse.eligible ? canUse.reason : undefined} onClick={() => equip(item)}>{itemBusy ? "Working…" : canUse.eligible ? `Equip ${item.name}` : canUse.reason}</button> : null}</div> : null}</article>; })}</div> : <div className="muted inventory-group-empty">No {group.label.toLowerCase()} match the current search.</div>}
+              </div>
+            </section>
+          );
+        })}
+      </div>
     </section>
   );
 }

@@ -10,6 +10,8 @@ export const MAJOR_UPDATES = [
       { title: "Guild Service Record", description: "Your Fellowship tab now records Expedition, Hunt, raid, and Airship service alongside projects, donations, Orders, and Deeds." },
       { title: "Service distinctions", description: "Founding Member, Guild Builder, Guild Benefactor, Order Veteran, Deedkeeper, Airship Crew, and Frontier Pathfinder recognition appears automatically when earned." },
       { title: "Recognition over power", description: "Legacy rewards are trophies and modest shared Renown; they do not add permanent combat-stat power." },
+      { title: "Founding Hall scene", description: "The first Guild Legacy stage now uses its own tall Founding Hall backdrop while keeping accomplishment cards readable." },
+      { title: "Cleaner inventory", description: "Weapons, Armor, Accessories, Consumables, and Materials can now be collapsed independently, with your choices remembered on that browser." },
     ],
     action: { tab: "fellowship", label: "Open Fellowship" },
   },

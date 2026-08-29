@@ -10,7 +10,7 @@ test("Expeditions preserves the Beta 2 UX consolidation", async () => {
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
   assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 5"/);
-  assert.match(version, /1\.3\.0-guild-expansion-a5/);
+  assert.match(version, /1\.3\.0-guild-expansion-a5h1/);
   assert.match(news, /The Portal stays where you are/);
   assert.doesNotMatch(guide, /Beta 2 Portal Consolidation/);
 });

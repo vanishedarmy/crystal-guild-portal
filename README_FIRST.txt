@@ -1,6 +1,10 @@
-Crystal Guild v1.3.0 — Guild Expansion Alpha 5 Web
-Runtime/frontend: 1.3.0-guild-expansion-a5
+Crystal Guild v1.3.0 — Guild Expansion Alpha 5 Hotfix 1 Web
+Hosted runtime: 1.3.0-guild-expansion-a5
+Frontend revision: 1.3.0-guild-expansion-a5h1
+Compatible Bot: 1.3.0-guild-expansion-a5
+Local DB schema: 9
 Hosted sync schema: 1
 Portal Action protocol: 21
+Twitch prefix: !
 
-Deploy with the matching Alpha 5 Bot. No database migration, OAuth change, or new environment variable is required from Alpha 4.
+Web-only update. No migration or Bot redeploy is required.

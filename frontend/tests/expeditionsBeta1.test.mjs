@@ -12,7 +12,7 @@ test("Expeditions Beta 1 route balance remains active under RC1", async () => {
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
 
   assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 5"/);
-  assert.match(version, /1\.3\.0-guild-expansion-a5/);
+  assert.match(version, /1\.3\.0-guild-expansion-a5h1/);
   assert.match(board, /Lower combat damage and softer hazards/);
   assert.match(board, /Harder combat and hazards for stronger rewards/);
   assert.match(board, /Harder enemy pressure/);

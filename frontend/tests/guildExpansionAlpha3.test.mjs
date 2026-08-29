@@ -27,9 +27,9 @@ test("Alpha 3 public identity and protocol are current", () => {
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
   assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 5"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a5"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a5h1"/);
   assert.equal(guideData.meta.version, "v1.3.0 — Guild Expansion Alpha 5");
-  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-a5");
+  assert.equal(guideData.meta.release, "1.3.0-guild-expansion-a5h1");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 21/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

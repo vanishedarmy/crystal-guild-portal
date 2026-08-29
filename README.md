@@ -1,7 +1,7 @@
-# Crystal Guild v1.3.0 — Guild Expansion Alpha 5
+# Crystal Guild v1.3.0 — Guild Expansion Alpha 5 Hotfix 1
 
-Guild Legacy & Accomplishments release for the Crystal Guild Fellowship system.
+Web-only visual/usability hotfix for Guild Expansion Alpha 5.
 
-Runtime `1.3.0-guild-expansion-a5` · local DB schema **9** · hosted sync schema **1** · Portal Action protocol **21** · Twitch prefix `!`.
+Hosted runtime `1.3.0-guild-expansion-a5` · frontend revision `1.3.0-guild-expansion-a5h1` · compatible Bot `1.3.0-guild-expansion-a5` · local DB schema **9** · hosted sync schema **1** · Portal Action protocol **21** · Twitch prefix `!`.
 
-Alpha 5 preserves Alpha 4 Airship systems and adds permanent Guild Legacy trophies, Hall-stage progression, `!legacy`, and expanded personal Guild Service Records. No database migration is required from Alpha 4.
+Hotfix 1 adds the portrait Founding Hall scene to Guild Legacy Stage 1 and makes the Equipment & Inventory category groups independently collapsible with remembered browser state. Alpha 5 gameplay and progression are unchanged.

@@ -32,7 +32,7 @@ test("Player Guide explains facility play without backend implementation jargon"
 test("Alpha 2 release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.3\.0"/);
   assert.match(version, /WEB_BUILD = "Guild Expansion Alpha 5"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a5"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.0-guild-expansion-a5h1"/);
   assert.match(whatsNew, /name: "Guild Expansion Alpha 5"/);
   assert.match(whatsNew, /Airship Dock on the horizon/);
   assert.match(css, /v1\.3 Guild Expansion Alpha 5/);

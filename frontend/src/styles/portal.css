@@ -964,6 +964,41 @@ h1 {
   text-transform: uppercase;
 }
 
+.inventory-group-toggle {
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.inventory-group-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: 8px;
+}
+.inventory-group-toggle-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 0 0 auto;
+}
+.inventory-group-toggle-icon {
+  display: inline-grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  color: var(--crystal-soft);
+  font-size: 1.25rem;
+  line-height: 1;
+  transform: rotate(180deg);
+  transition: transform 140ms ease;
+}
+.inventory-group.is-collapsed .inventory-group-heading { margin-bottom: 0; }
+.inventory-group.is-collapsed .inventory-group-toggle-icon { transform: rotate(0deg); }
+
 .inventory-group-empty {
   padding: 0.4rem 0 0.1rem;
 }
@@ -9445,6 +9480,17 @@ button, input, select, textarea { font: inherit; }
     radial-gradient(circle at 88% 12%, rgba(110,171,235,.26), transparent 24%);
 }
 .fellowship-legacy > * { position: relative; z-index: 1; }
+.fellowship-legacy.legacy-stage-1::after {
+  opacity: 1;
+  background:
+    linear-gradient(180deg, rgba(4,10,18,.20) 0%, rgba(4,10,18,.52) 38%, rgba(4,10,18,.82) 76%, rgba(4,10,18,.94) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v4/founding_hall.png') center top / cover no-repeat;
+}
+.fellowship-legacy.legacy-stage-1 .fellowship-legacy-shelf,
+.fellowship-legacy.legacy-stage-1 .fellowship-legacy-grid article {
+  background: rgba(7,12,22,.80);
+  backdrop-filter: blur(1px);
+}
 .fellowship-legacy-shelf {
   display: flex;
   flex-wrap: wrap;
@@ -9489,7 +9535,17 @@ button, input, select, textarea { font: inherit; }
 .fellowship-service-ribbons > div > span { padding: 7px 10px; border-radius: 999px; border: 1px solid rgba(233,201,112,.24); background: rgba(233,201,112,.05); font-size: .84rem; }
 @media (max-width: 760px) {
   .fellowship-legacy-grid { grid-template-columns: 1fr; }
+  .fellowship-legacy.legacy-stage-1::after { background-position: center top; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inventory-group-toggle-icon { transition: none; }
 }
 @media (prefers-contrast: more) {
   .fellowship-legacy::after { opacity: .02; }
+  .fellowship-legacy.legacy-stage-1::after {
+    opacity: 1;
+    background:
+      linear-gradient(180deg, rgba(2,6,12,.82), rgba(2,6,12,.94)),
+      url('/retro-phase-iii/scene-backgrounds-v4/founding_hall.png') center top / cover no-repeat;
+  }
 }

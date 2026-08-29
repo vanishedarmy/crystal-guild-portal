@@ -1,16 +1,15 @@
-# Upgrade Guide — Crystal Guild v1.3.0 Guild Expansion Alpha 5
+# Upgrade Guide — Guild Expansion Alpha 5 Hotfix 1
 
-Baseline: **v1.3.0 Guild Expansion Alpha 4**.
+Baseline: **v1.3.0 Guild Expansion Alpha 5**.
 
-1. Back up the live Crystal Guild database and persistent Twitch/token data as normal.
-2. Stop the Bot cleanly.
-3. Apply the Alpha 4 → Alpha 5 Bot patch, or replace application files with the full Alpha 5 Bot package while preserving `.env`, database files, token storage, and persistent-disk paths.
-4. Apply the matching Alpha 4 → Alpha 5 Web patch/full Web package and redeploy the hosted Web service.
-5. Restart the Bot. No schema migration is required; schema **9** remains current.
-6. Existing Guild progress is evaluated against the new Legacy accomplishments once. Any accomplishments already earned are granted retroactively and recorded so they cannot pay twice.
-7. Confirm `!cgversion` reports `1.3.0-guild-expansion-a5`.
-8. Confirm `/api/health` reports runtime/frontend revision `1.3.0-guild-expansion-a5`, hosted sync schema **1**, and Portal Action protocol **21**.
-9. Open Fellowship and verify the new **Guild Legacy** section appears. Open your own Fellowship tab and verify the **Guild Service Record**.
-10. Test `!legacy` and `!guildrecord` in chat.
+This is a **Web-only** update.
 
-No player reset, OAuth change, or new environment variable is required.
+1. Leave the Alpha 5 Bot and live player database unchanged.
+2. Deploy `CrystalGuild-v1.3.0-Guild-Expansion-Alpha5-Hotfix1-Web.zip`, or overlay the direct Alpha 5 → Alpha 5 Hotfix 1 Web patch.
+3. Redeploy the hosted Web service.
+4. Verify `/api/health` reports hosted runtime `1.3.0-guild-expansion-a5`, frontend revision `1.3.0-guild-expansion-a5h1`, hosted sync schema **1**, and Portal Action protocol **21**.
+5. Hard-refresh the Portal once so the cache-busted Hotfix 1 frontend and Founding Hall image load.
+6. Open **Fellowship → Guild Legacy** while the Guild is at Founding Hall and confirm the portrait Hall scene fills the Legacy panel without reducing readability.
+7. Open **Equipment & Inventory** and confirm Weapons, Armor, Accessories, Consumables, and Materials expand/collapse independently and remain in the chosen state after reload.
+
+No database migration or player reset is required.

@@ -1,3 +1,7 @@
+# Crystal Guild v1.3.0 — Guild Expansion Alpha 5 Hotfix 1
+
+Web-only presentation hotfix. Adds the portrait Founding Hall backdrop to Guild Legacy Stage 1 and independently collapsible, browser-persistent Equipment & Inventory category groups. Hosted runtime/Bot remain `1.3.0-guild-expansion-a5`; frontend revision advances to `1.3.0-guild-expansion-a5h1`. Schema 9 / sync 1 / protocol 21 unchanged.
+
 # Crystal Guild v1.3.0 — Guild Expansion Alpha 5
 
 Adds Guild Legacy accomplishments, trophy/Hall progression, expanded Guild Service Records, and player-facing Legacy Guide/Fellowship surfaces. Runtime/frontend `1.3.0-guild-expansion-a5`; local DB schema 9, hosted sync 1, Portal protocol 21.

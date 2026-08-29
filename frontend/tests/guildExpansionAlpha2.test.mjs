@@ -26,8 +26,8 @@ test("Guild Expansion exposes Supply Drives, Guild Objectives, and Order rewards
 test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
-  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization-ui4"/);
-  assert.equal(guideData.meta.version, "v1.3.1 — Guild Expansion");
-  assert.equal(guideData.meta.release, "1.3.1-asset-optimization");
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a1"/);
+  assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Alpha 1");
+  assert.equal(guideData.meta.release, "1.4.0-dungeons-a1");
 });

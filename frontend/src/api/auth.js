@@ -181,6 +181,22 @@ export function submitChallengeHunt(huntId, csrfToken, idempotencyKey) {
   return submitPortalAction("CHALLENGE_HUNT", { hunt_id: huntId }, csrfToken, idempotencyKey);
 }
 
+export function submitDungeonStart(dungeonId, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_START", { dungeon_id: dungeonId }, csrfToken, idempotencyKey);
+}
+
+export function submitDungeonAction(runId, roomId, action, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_ACTION", { run_id: runId, room_id: roomId, action }, csrfToken, idempotencyKey);
+}
+
+export function submitDungeonContinue(runId, roomId, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_CONTINUE", { run_id: runId, room_id: roomId }, csrfToken, idempotencyKey);
+}
+
+export function submitDungeonRetreat(runId, roomId, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_RETREAT", { run_id: runId, room_id: roomId }, csrfToken, idempotencyKey);
+}
+
 export function submitAcknowledgeAdventureResult(resultId, csrfToken, idempotencyKey) {
   return submitPortalAction("ACK_ADVENTURE_RESULT", { result_id: Number(resultId) }, csrfToken, idempotencyKey);
 }

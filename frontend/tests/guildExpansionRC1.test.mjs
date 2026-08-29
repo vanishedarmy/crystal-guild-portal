@@ -16,13 +16,13 @@ function fellowshipSection(html) {
   return html.slice(start, end);
 }
 
-test("Guild Expansion publishes one consistent final-release identity", () => {
-  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization-ui4"/);
-  assert.equal(guideData.meta.version, "v1.3.1 — Guild Expansion");
-  assert.equal(guideData.meta.release, "1.3.1-asset-optimization");
-  assert.equal(manifest.release, "v1.3.1 — Guild Expansion");
-  assert.equal(manifest.frontend_asset_revision, "1.3.1-asset-optimization-ui4");
+test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a1"/);
+  assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Alpha 1");
+  assert.equal(guideData.meta.release, "1.4.0-dungeons-a1");
+  assert.equal(manifest.release, "v1.4.0 — Dungeons & Delves Alpha 1");
+  assert.equal(manifest.frontend_asset_revision, "1.4.0-dungeons-a1");
 });
 
 test("Final What's New is player-facing and feature complete", () => {
@@ -41,8 +41,10 @@ test("Final Fellowship Guide uses player language and current facility terminolo
 });
 
 
-test("public update history excludes prerelease milestones", () => {
-  assert.doesNotMatch(news, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
-  assert.match(news, /name: "Guild Expansion"/);
-  assert.match(news, /name: "Expeditions"/);
+test("public previous-update history excludes prerelease milestones", () => {
+  assert.match(news, /name: "Dungeons & Delves Alpha 1"/);
+  const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
+  assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
+  assert.match(previous, /name: "Guild Expansion"/);
+  assert.match(previous, /name: "Expeditions"/);
 });

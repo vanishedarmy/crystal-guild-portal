@@ -1,39 +1,52 @@
-# Crystal Guild v1.3.1 — UI Shared Assets Hotfix 4 Validation Report
+# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 1 Validation Report
 
 ## Result
 **PASS**
 
 ## Automated suites
-- Frontend Node regression suite: **366 / 366 PASS**.
+- Bot Python unittest suite: **498 / 498 PASS**.
+- Frontend Node regression suite: **372 / 372 PASS**.
 - Hosted Web/API Python unittest suite: **47 / 47 PASS**.
-- Compatible Bot remains unchanged at `1.3.1-asset-optimization`.
 
-## Source validation
-- Hosted Web Python compile sweep: **8 / 8 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **187 / 187 PASS**.
-- Plain JS/MJS `node --check`: **148 / 148 PASS**.
-- Public artwork state: **0 PNG / 575 WebP**.
+The Bot suite includes intentional simulated acknowledgement loss, temporary Twitch/live-status failures, corrupt checkpoint recovery, restart recovery, database recovery drills, and synthetic stress scenarios. Their warning/error log lines are expected test fixtures and are not Alpha 1 failures.
 
-## UI4 render-path coverage
-- `CollapsePointer.jsx` chooses `/ui/collapse-pointer-right.webp` when closed and `/ui/collapse-pointer-down.webp` when open and renders that choice as a real `<img>`.
-- Travel Regions, Hunt Board, Expedition Board, Expedition Atlas, What's New, and Equipment/Inventory groups use the real state-selected pointer component.
-- Fellowship, Streamer Dashboard, Jobs, and What's New native `<details>` summaries contain explicit right/down image elements, with the real `open` attribute choosing which is visible.
-- Player Guide disclosure rules are forced at the end of `guide.css` so closed/open states resolve to the right/down assets respectively.
-- Rally Venture contains a real `<img class="rally-venture-background-art">` child for `rally_venture.webp`; the generic `.panel` background can no longer replace the artwork.
-- The old UI3 `environment-pass.css` Rally background override has been removed so there is only one Rally scene rendering path.
-- The right and down pointer WebP files are distinct assets and remain lightweight (**3,162 / 4,924 bytes**); Rally Venture art is **147,704 bytes**.
+## Dungeon Alpha 1 coverage
+- Schema **9 → 10** migration creates a verified pre-schema-10 backup and preserves existing player/Guild progression.
+- Active Dungeon state persists in the database and survives engine/database restart.
+- The Forgotten Ossuary unlock requires character Lv. 10 plus 25% Emerald Wilds Expedition exploration.
+- Seven-chamber progression covers entrance, combat, treasure, hazard, miniboss, sanctuary, and boss room types.
+- HP, MP/AP, consumed items, combat state, and Dungeon Cache persist across chambers.
+- Full clear banks 100% of the cache plus completion bonus; retreat banks 50%; defeat recovers 25%.
+- Dungeon victories feed existing Bestiary/monster-defeat records.
+- Active-run and permanent Dungeon-progress records are separate; `!clearadventures` clears the active run without erasing completed Dungeon history.
+- Portal Dungeon actions are bound to the exact run ID and chamber ID visible in the browser. Stale tabs fail closed after another tab advances/replaces the Dungeon state.
+- Dungeon actions remain covered by the existing Portal replay/idempotency path.
+- Existing incompatible Adventure/Portal mutations are blocked while a Dungeon run is active.
+
+## Source and asset validation
+- Python source compilation: **92 / 92 PASS** across Alpha 1 Bot + Web source trees.
+- Frontend JS/JSX/MJS TypeScript-parser sweep: **189 / 189 PASS**.
+- Plain JS/MJS `node --check`: **149 / 149 PASS**.
+- Explicit literal asset-route audit: **148 routes checked / 0 missing**.
+- Game data validation: **0 errors**; **1 Dungeon** loaded.
+- Public artwork remains **0 PNG / 575 WebP**.
 
 ## Continuity
-- Hosted Web runtime: `1.3.1-asset-optimization`.
-- Frontend asset revision: `1.3.1-asset-optimization-ui4`.
-- Compatible Bot runtime: `1.3.1-asset-optimization`.
-- Local DB schema **9**, hosted sync schema **1**, Portal Action protocol **22**, Twitch prefix `!` unchanged.
-- No Bot update, DB migration, reset, OAuth/environment change, gameplay/economy/balance change.
+- v1.3.1 Asset Optimization and UI4 behavior remain regression-covered.
+- v1.3 Guild Expansion shared-state, Fellowship, Airship, Workshop, Weekly Order, Legacy, and recovery protections remain covered by the full suites.
+- v1.2 Expedition behavior remains covered by the full suites.
+- Public Previous major updates remains stable-release-only.
+- Existing non-Dungeon gameplay/economy balance is unchanged.
+- Bot/Web/frontend runtime: `1.4.0-dungeons-a1`.
+- Local DB schema: **10**.
+- Hosted sync schema: **1** unchanged.
+- Portal Action protocol: **23**.
+- Twitch prefix: `!`.
+- Player reset: **none**.
+- OAuth change: **none**.
+- New environment variables: **none**.
 
-## Package verification
-- UI3 → UI4 Web patch: **36 changed/new files, 0 deletions**.
-- Final Web tree: **814 files**.
-- Full Web ZIP CRC/integrity: **PASS**.
-- Patch ZIP CRC/integrity: **PASS**.
-- UI3 patch reconstruction: **814 / 814 exact files PASS**.
-
+## Packaging verification
+- v1.3.1 Bot → Alpha 1 Bot patch: **36 changed/new files, 0 deletions**; reconstructs **147 / 147** shipping Bot files exactly.
+- v1.3.1 UI4 Web → Alpha 1 Web patch: **57 changed/new files, 0 deletions**; reconstructs **816 / 816** shipping Web files exactly.
+- Final archive CRC/integrity, runtime/private-artifact hygiene, and SHA-256 verification: **PASS**.

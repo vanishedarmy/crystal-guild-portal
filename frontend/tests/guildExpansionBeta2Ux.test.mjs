@@ -29,8 +29,9 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 });
 
 test("Fellowship UX remains present in the final release", () => {
-  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /1\.3\.1-asset-optimization/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
+  assert.match(version, /1\.4\.0-dungeons-a1/);
   assert.match(news, /Guild Expansion has arrived/);
-  assert.doesNotMatch(news, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
+  const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
+  assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
 });

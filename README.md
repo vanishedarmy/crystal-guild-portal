@@ -1,12 +1,8 @@
-# Crystal Guild Web v1.3.1 — Asset Optimization UI Hotfix 4
+# Crystal Guild Web v1.4.0 — Dungeons & Delves Alpha 1
 
-Final v1.3.0 production Web release.
+Hosted runtime: `1.4.0-dungeons-a1`  
+Frontend asset revision: `1.4.0-dungeons-a1`  
+Paired Bot runtime: `1.4.0-dungeons-a1`  
+Local DB schema: **10** · hosted sync schema: **1** · Portal Action protocol: **23**.
 
-Hosted runtime: `1.3.1-asset-optimization`  
-Frontend asset revision: `1.3.1-asset-optimization-ui4`  
-Paired Bot runtime: `1.3.1-asset-optimization`  
-Local DB schema: **9** · hosted sync schema: **1** · Portal Action protocol: **22**
-
-The final Web includes the complete Fellowship/Guild Expansion interface, current-priority Fellowship layout, Founding Hall presentation, collapsible inventory groups, player-facing Guide, Airship/Legacy surfaces, and hardened shared-action behavior.
-
-The player-facing Previous major updates list contains shipped releases only. Upgrading from RC2 requires no database migration, player reset, OAuth change, or new environment variable. See `UPGRADE_GUIDE.md`, `RELEASE_NOTES.md`, and `VALIDATION_REPORT.md`.
+Adventure Board now includes Dungeons & Delves, beginning with The Forgotten Ossuary. Use this Web package with the matching Alpha 1 Bot because protocol 23 adds Dungeon Portal actions.

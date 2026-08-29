@@ -8,8 +8,8 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("v1.2 publishes the final Expeditions identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /1\.3\.1-asset-optimization/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
+  assert.match(version, /1\.4\.0-dungeons-a1/);
   assert.match(news, /Expeditions has arrived/);
 });
 

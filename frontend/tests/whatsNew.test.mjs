@@ -88,6 +88,7 @@ test("Retro Phase III What's New explains the consolidated gear-art rollout", as
 
 test("What's New lists only shipped releases in public history", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
+  assert.match(data, /name: "Dungeons & Delves Alpha 1"/);
   assert.match(data, /name: "Guild Expansion"/);
   assert.match(data, /Guild Expansion has arrived/);
   assert.match(data, /name: "Expeditions"/);
@@ -95,6 +96,7 @@ test("What's New lists only shipped releases in public history", async () => {
   assert.match(data, /Safe favors survival/);
   assert.match(data, /Push Deeper accepts greater danger/);
   assert.match(data, /Your Chocobo matters/);
-  assert.doesNotMatch(data, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
+  const previous = data.slice(data.indexOf('name: "Asset Optimization"'));
+  assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
 });
 

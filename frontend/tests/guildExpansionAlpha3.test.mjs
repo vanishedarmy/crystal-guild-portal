@@ -22,14 +22,14 @@ test("Guild Expansion exposes practical facility services", () => {
   assert.match(whatsNew, /name: "Guild Expansion"/);
 });
 
-test("Alpha 3 public identity and protocol are current", () => {
+test("Guild Expansion services remain available under the current Dungeon protocol", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.3\.1-asset-optimization-ui4"/);
-  assert.equal(guideData.meta.version, "v1.3.1 — Guild Expansion");
-  assert.equal(guideData.meta.release, "1.3.1-asset-optimization");
-  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 22/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a1"/);
+  assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Alpha 1");
+  assert.equal(guideData.meta.release, "1.4.0-dungeons-a1");
+  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 23/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

@@ -44,6 +44,6 @@ test("Streamer dashboard can launch an Airship mission through the existing secu
 
 test("Alpha 4 public version identity is current", async () => {
   const version = await text(versionPath);
-  assert.match(version, /Guild Expansion/);
-  assert.match(version, /1\.3\.1-asset-optimization/);
+  assert.match(version, /Dungeons & Delves Alpha 1/);
+  assert.match(version, /1\.4\.0-dungeons-a1/);
 });

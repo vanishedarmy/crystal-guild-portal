@@ -1,7 +1,10 @@
-Crystal Guild Web v1.3.1 — Asset Optimization UI Hotfix 4
+Crystal Guild Web v1.4.0 — Dungeons & Delves Alpha 1
 
-Hosted Web runtime: 1.3.1-asset-optimization
-Frontend asset revision: 1.3.1-asset-optimization-ui4
-Compatible Bot: 1.3.1-asset-optimization
+Hosted Web runtime: 1.4.0-dungeons-a1
+Frontend asset revision: 1.4.0-dungeons-a1
+Compatible Bot: 1.4.0-dungeons-a1
+Local DB schema: 10
+Hosted sync schema: 1
+Portal Action protocol: 23
 
-Web-only UI fix. Right hand = closed; down hand = open. Rally Venture scene now overrides the final universal panel background correctly.
+Deploy Web and Bot together. New Dungeon actions require protocol 23.

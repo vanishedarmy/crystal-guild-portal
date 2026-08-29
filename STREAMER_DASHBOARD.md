@@ -1,3 +1,7 @@
+# Dungeons & Delves Alpha 1 compatibility
+
+Streamer Dashboard remains compatible with protocol 23. Clear All Adventures includes persistent Dungeon runs.
+
 # Crystal Guild — Streamer Dashboard
 
 The broadcaster-focused dashboard is available at `/streamer`. It remains separate from the normal viewer Portal navigation.

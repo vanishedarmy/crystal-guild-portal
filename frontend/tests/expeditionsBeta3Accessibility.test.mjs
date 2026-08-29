@@ -11,10 +11,11 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Guild Expansion"/);
-  assert.match(version, /1\.3\.1-asset-optimization/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 1"/);
+  assert.match(version, /1\.4\.0-dungeons-a1/);
   assert.match(news, /name: "Expeditions"/);
-  assert.doesNotMatch(news, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
+  const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
+  assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
   assert.doesNotMatch(guide, /Beta 3 Mobile &amp; Accessibility Pass/);
 });
 

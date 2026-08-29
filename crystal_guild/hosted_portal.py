@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.3.1-asset-optimization"
-FRONTEND_ASSET_REVISION = "1.3.1-asset-optimization-ui4"
+HOSTED_PORTAL_VERSION = "1.4.0-dungeons-a1"
+FRONTEND_ASSET_REVISION = "1.4.0-dungeons-a1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 22
+ACTION_PROTOCOL_VERSION = 23
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -35,6 +35,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
+    "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
     "STREAMER_COMMAND",
 }
@@ -88,6 +89,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
+    "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_RETREAT",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -834,6 +836,36 @@ class HostedPortalStore:
             if route not in {"safe", "unknown", "deep"}:
                 raise ValueError("Invalid Expedition route.")
             payload = {"route": route}
+        elif kind == "DUNGEON_START":
+            if set(payload) != {"dungeon_id"}:
+                raise ValueError("DUNGEON_START requires only dungeon_id.")
+            dungeon_id = str(payload.get("dungeon_id") or "").strip().lower()
+            if not dungeon_id or len(dungeon_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", dungeon_id):
+                raise ValueError("Invalid Dungeon ID.")
+            payload = {"dungeon_id": dungeon_id}
+        elif kind == "DUNGEON_ACTION":
+            if set(payload) != {"run_id", "room_id", "action"}:
+                raise ValueError("DUNGEON_ACTION requires run_id, room_id, and action.")
+            run_id = str(payload.get("run_id") or "").strip().lower()
+            room_id = str(payload.get("room_id") or "").strip().lower()
+            action = str(payload.get("action") or "").strip().lower()
+            if not run_id or len(run_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", run_id):
+                raise ValueError("Invalid Dungeon run ID.")
+            if not room_id or len(room_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", room_id):
+                raise ValueError("Invalid Dungeon room ID.")
+            if not re.fullmatch(r"(?:attack|defend|ability:[a-z0-9_.-]+|item:[a-z0-9_.-]+)", action):
+                raise ValueError("Invalid Dungeon battle action.")
+            payload = {"run_id": run_id, "room_id": room_id, "action": action}
+        elif kind in {"DUNGEON_CONTINUE", "DUNGEON_RETREAT"}:
+            if set(payload) != {"run_id", "room_id"}:
+                raise ValueError(f"{kind} requires run_id and room_id.")
+            run_id = str(payload.get("run_id") or "").strip().lower()
+            room_id = str(payload.get("room_id") or "").strip().lower()
+            if not run_id or len(run_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", run_id):
+                raise ValueError("Invalid Dungeon run ID.")
+            if not room_id or len(room_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", room_id):
+                raise ValueError("Invalid Dungeon room ID.")
+            payload = {"run_id": run_id, "room_id": room_id}
         elif kind == "TRAVEL_REGION":
             if set(payload) != {"region_id"}:
                 raise ValueError("TRAVEL_REGION requires only region_id.")

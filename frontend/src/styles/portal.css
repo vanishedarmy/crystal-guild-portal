@@ -9818,3 +9818,32 @@ summary:has(> .details-collapse-pointer)::after { content: none !important; disp
 .details-collapse-pointer-open { display: none; }
 details[open] > summary .details-collapse-pointer-closed { display: none; }
 details[open] > summary .details-collapse-pointer-open { display: block; }
+
+/* v1.4.0 Dungeons & Delves Alpha 1 */
+.dungeon-board-panel { overflow: hidden; }
+.dungeon-board-panel.dungeon-active { border-color: rgba(142, 164, 214, .62); }
+.dungeon-board-title-row { align-items: flex-start; }
+.dungeon-card-grid { display: grid; gap: .85rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.dungeon-card { display: grid; gap: .8rem; padding: 1rem; border: 1px solid rgba(135, 159, 205, .34); border-radius: .75rem; background: rgba(4, 15, 37, .72); }
+.dungeon-card.locked { opacity: .72; }
+.dungeon-card-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+.dungeon-card-stats > span { display: grid; gap: .18rem; padding: .55rem .65rem; border: 1px solid rgba(135, 159, 205, .22); border-radius: .55rem; background: rgba(8, 22, 49, .62); }
+.dungeon-card-stats strong { color: var(--muted, #aab8d6); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; }
+.dungeon-bonus-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dungeon-run-shell { display: grid; gap: 1rem; }
+.dungeon-room-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.dungeon-room-header h3 { margin: .2rem 0 .25rem; }
+.dungeon-combat-panel { margin-top: 0; }
+.dungeon-choice-panel { display: grid; gap: .65rem; }
+.dungeon-cache-grid { margin-top: 0; }
+.dungeon-journal { margin-top: 0; }
+.dungeon-result-panel { border-color: rgba(142, 164, 214, .5); }
+.adventure-priority-strip { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 980px) {
+  .adventure-priority-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dungeon-card-stats, .dungeon-bonus-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .adventure-priority-strip { grid-template-columns: 1fr; }
+  .dungeon-room-header { display: grid; }
+}

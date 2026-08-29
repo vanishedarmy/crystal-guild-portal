@@ -1,7 +1,7 @@
-# Crystal Guild v1.3.1 Asset Optimization — Hosting Guide
+# Crystal Guild v1.4.0 Dungeons & Delves Alpha 1 — Hosting Guide
 
-Deploy this Web package together with the matching v1.3.1 Asset Optimization Bot. Preserve the existing hosted environment variables, persistent storage, Twitch/OAuth settings, and portal sync key.
+Deploy this Web package together with the matching `1.4.0-dungeons-a1` Bot. Preserve all existing environment variables, persistent storage, Twitch/OAuth settings, and Portal sync key.
 
-The hosted runtime remains `1.3.1-asset-optimization`; the frontend asset revision is `1.3.1-asset-optimization-ui4`. Local DB schema remains **9**, hosted sync schema **1**, and Portal Action protocol **22**.
+Hosted runtime/frontend revision: `1.4.0-dungeons-a1`. Local DB schema **10**, hosted sync schema **1**, Portal Action protocol **23**.
 
-After deployment, hard-refresh the site once and verify `/api/health`, the Fellowship page, current Guild project, Airship state, Guild Legacy, Founding Hall scene, and collapsible Equipment & Inventory groups.
+The local Bot performs the additive schema-9 → schema-10 migration on startup. The hosted Web database schema remains unchanged.

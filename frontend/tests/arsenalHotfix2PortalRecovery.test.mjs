@@ -19,7 +19,7 @@ test("Arsenal Hotfix 3 makes Solo Venture requests resumable and keeps active ru
   assert.match(board, /sessionStorage/);
   assert.match(board, /stateInflight/);
   assert.match(board, /expeditionActive = Boolean\(state\?\.solo_venture\?\.expedition\)/);
-  assert.match(board, /expeditionActive \? 5000 : 4000/);
+  assert.match(board, /expeditionActive \? 5000 : dungeonActive \? 5000 : 4000/);
   assert.match(board, /Retry or refresh safely resumes the same request/);
   assert.match(board, /submitSoloExpeditionAction\("attack", csrfToken, idem\)/);
   assert.match(board, /submitSoloExpeditionContinue\(csrfToken, idem\)/);

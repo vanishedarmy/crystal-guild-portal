@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.4.0",
+    name: "Dungeons & Delves Alpha 1",
+    title: "The first Dungeon opens",
+    summary: "Enter The Forgotten Ossuary from the Adventure Board and work through a persistent sequence of chambers where your condition, carried cache, and combat choices matter from room to room.",
+    highlights: [
+      { title: "A real multi-room delve", description: "The Forgotten Ossuary is a seven-room proof dungeon with an entrance, combat, treasure, a hazard, a miniboss, a sanctuary, and a final boss." },
+      { title: "Your condition carries forward", description: "HP, MP, AP, status pressure, and consumed battle items persist as you move between Dungeon rooms." },
+      { title: "Choose every combat round", description: "Dungeon battles use the same player-paced Attack, Ability, Item, and Defend controls as interactive Solo Ventures." },
+      { title: "Carry a Dungeon Cache", description: "Enemy rewards and treasure remain in the delve cache until you clear the Dungeon or retreat. A normal retreat banks half; defeat recovers one quarter." },
+      { title: "Runs stay saved", description: "Dungeon progress survives refreshes and Bot restarts, so the delve waits safely for your next choice." },
+    ],
+    action: { tab: "hunts", label: "Open Dungeon Board" },
+  },
+  {
     version: "v1.3.1",
     name: "Asset Optimization",
     title: "The Portal travels lighter",

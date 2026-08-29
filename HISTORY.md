@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.4.0 — Dungeons & Delves Alpha 1
+- Added the first persistent seven-room Dungeon and Adventure Board Dungeon controls.
+- Schema 10 / Portal Action protocol 23.
+- v1.3.1 UI4 and Asset Optimization behavior retained.
+
 ## v1.3.1 — Asset Optimization
 - Converts all 390 remaining shipped PNG artwork files to smaller lossless WebP assets with exact rendered-pixel preservation.
 - Updates active artwork routes/manifests and reduces the Web distribution footprint without gameplay changes.

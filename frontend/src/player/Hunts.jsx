@@ -17,6 +17,7 @@ import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
 import Expeditions from "./Expeditions.jsx";
+import Dungeons from "./Dungeons.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
@@ -433,13 +434,14 @@ export default function Hunts({ data, overview, onRefresh }) {
   useEffect(() => {
     const expeditionActive = Boolean(state?.solo_venture?.expedition);
     const fieldExpeditionActive = Boolean(state?.expeditions?.active);
-    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt && !expeditionActive && !fieldExpeditionActive)) return undefined;
+    const dungeonActive = Boolean(state?.dungeons?.active);
+    if (!actionsAvailable || (!state?.encounter && !state?.active_hunt && !expeditionActive && !fieldExpeditionActive && !dungeonActive)) return undefined;
     const refreshActive = () => {
       if (document.visibilityState === "visible") void loadState({ quiet: true });
     };
-    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : fieldExpeditionActive ? 8000 : expeditionActive ? 5000 : 4000);
+    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : fieldExpeditionActive ? 8000 : expeditionActive ? 5000 : dungeonActive ? 5000 : 4000);
     return () => window.clearInterval(timer);
-  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, state?.solo_venture?.expedition?.updated_at, state?.expeditions?.active?.travel_ready_at, state?.expeditions?.active?.status, loadState]);
+  }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, state?.solo_venture?.expedition?.updated_at, state?.expeditions?.active?.travel_ready_at, state?.expeditions?.active?.status, state?.dungeons?.active?.run_id, state?.dungeons?.active?.room_number, state?.dungeons?.active?.status, loadState]);
 
   useEffect(() => {
     if (!actionsAvailable || !state) return undefined;
@@ -551,13 +553,18 @@ export default function Hunts({ data, overview, onRefresh }) {
   const pendingSoloResults = pendingResults.filter((result) => result?.kind === "solo_venture");
   const pendingHuntResults = pendingResults.filter((result) => result?.kind === "hunt");
   const pendingExpeditionResults = pendingResults.filter((result) => result?.kind === "expedition");
+  const pendingDungeonResults = pendingResults.filter((result) => result?.kind === "dungeon");
   const soloEncounterChance = Number(state?.solo_venture?.encounter_chance_percent ?? 80);
   const soloTreasureChance = Number(state?.solo_venture?.treasure_chance_percent ?? 20);
   const fieldExpedition = state?.expeditions?.active || null;
+  const dungeonRun = state?.dungeons?.active || null;
+  const readyDungeonCount = (state?.dungeons?.dungeons || []).filter((entry) => entry?.unlocked).length;
   const readyHuntCount = (state?.hunts || []).filter((hunt) => Boolean(hunt.challengeable) && remainingUntil(hunt.cooldown_available_at, authoritativeClock) <= 0).length;
-  const activeAdventureLabel = fieldExpedition
-    ? `Expedition · ${fieldExpedition.region?.name || "In progress"}`
-    : expedition
+  const activeAdventureLabel = dungeonRun
+    ? `Dungeon · ${dungeonRun.name || "In progress"}`
+    : fieldExpedition
+      ? `Expedition · ${fieldExpedition.region?.name || "In progress"}`
+      : expedition
       ? `Solo Venture · Stage ${number(expedition.stage)}`
       : activeHunt
         ? `Hunt · ${activeHunt.name}`
@@ -568,6 +575,7 @@ export default function Hunts({ data, overview, onRefresh }) {
             : "No active adventure";
   const soloBoardLabel = expedition ? `Stage ${number(expedition.stage)}` : soloRemaining > 0 ? duration(soloRemaining) : state?.solo_venture?.ready ? "Ready" : "Unavailable";
   const expeditionBoardLabel = fieldExpedition ? `Stage ${number(fieldExpedition.stage)}` : state?.expeditions?.ready ? "Ready" : "Locked";
+  const dungeonBoardLabel = dungeonRun ? `Room ${number(dungeonRun.room_number)} / ${number(dungeonRun.room_count)}` : readyDungeonCount ? `${number(readyDungeonCount)} ready` : "Locked";
   const huntBoardLabel = activeHunt ? `Returns in ${duration(activeHuntRemaining)}` : readyHuntCount ? `${number(readyHuntCount)} ready` : "No marks ready";
 
 
@@ -636,6 +644,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         <div className="adventure-priority-strip" aria-label="Adventure Board status summary">
           <div className={`adventure-priority-item ${activeAdventureLabel === "No active adventure" ? "idle" : "active"}`}><span>Current</span><strong>{activeAdventureLabel}</strong><small>{pendingResults.length ? `${number(pendingResults.length)} saved result${pendingResults.length === 1 ? "" : "s"}` : "Board clear"}</small></div>
           <div className="adventure-priority-item"><span>Solo Venture</span><strong>{soloBoardLabel}</strong><small>Portal only</small></div>
+          <div className="adventure-priority-item"><span>Dungeon</span><strong>{dungeonBoardLabel}</strong><small>Persistent delve</small></div>
           <div className="adventure-priority-item"><span>Expedition</span><strong>{expeditionBoardLabel}</strong><small>{state?.expeditions?.chocobo?.specialization?.name || "Chocobo route"}</small></div>
           <div className="adventure-priority-item"><span>Hunts</span><strong>{huntBoardLabel}</strong><small>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)} Seals</small></div>
         </div>
@@ -660,6 +669,16 @@ export default function Hunts({ data, overview, onRefresh }) {
           {state?.camp?.reason ? <span className="adventure-disabled-reason">{state.camp.reason}</span> : null}
         </div>
       </section>
+
+      <Dungeons
+        data={state?.dungeons}
+        csrfToken={csrfToken}
+        actionsAvailable={actionsAvailable}
+        busy={busy}
+        runRequest={runRequest}
+        pendingResults={pendingDungeonResults}
+        onConfirmResult={confirmAdventureResult}
+      />
 
       <Expeditions
         data={state?.expeditions}

@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("Arsenal II publishes the expanded ability curve to the shared Guide catalog", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.2.0 — Expeditions RC1");
+  assert.equal(data.meta.version, "v1.2.0 — Expeditions");
   assert.equal(data.active_abilities.blackmage.length, 12);
   assert.equal(data.active_abilities.whitemage.length, 12);
   assert.equal(data.active_abilities.warrior.length, 8);
@@ -58,13 +58,13 @@ test("Hosted Raid Overlay is rendered after the normal dashboard flow", async ()
 });
 
 
-test("Player Guide release identity comes from the shared header and uses Expeditions RC1", async () => {
+test("Player Guide release identity comes from the shared header and uses Expeditions", async () => {
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
   const guidePage = await readFile(new URL("guide/GuidePage.jsx", SRC), "utf8");
   const version = await readFile(new URL("version.js", SRC), "utf8");
   assert.doesNotMatch(guide, /Cloud Continuity/);
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
-  assert.match(version, /WEB_BUILD = "Expeditions RC1"/);
-  assert.match(version, /1\.2\.0-expeditions-rc1/);
+  assert.match(version, /WEB_BUILD = "Expeditions"/);
+  assert.match(version, /1\.2\.0-expeditions(?!-)/);
 });

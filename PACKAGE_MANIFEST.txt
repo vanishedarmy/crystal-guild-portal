@@ -1,10 +1,10 @@
-Crystal Guild v1.2.0 — Expeditions RC1 Web
+Crystal Guild v1.2.0 — Expeditions Web
 
 Runtime identity
-- Hosted Web: 1.2.0-expeditions-rc1
-- Frontend assets: 1.2.0-expeditions-rc1
-- Paired Bot: 1.2.0-expeditions-rc1
+- Hosted Web: 1.2.0-expeditions
+- Frontend assets: 1.2.0-expeditions
+- Paired Bot: 1.2.0-expeditions
 - Hosted sync schema: 1
 - Portal Action protocol: 20
 
-Release state: RC1 / feature frozen.
+Release state: final v1.2.0.

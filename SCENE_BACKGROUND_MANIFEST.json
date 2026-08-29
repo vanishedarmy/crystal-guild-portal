@@ -1,16 +1,16 @@
 {
-  "release": "v1.2.0 \u2014 Expeditions Beta 2 Hotfix 2",
-  "frontend_asset_revision": "1.2.0-expeditions-b2h2",
+  "release": "v1.2.0 — Expeditions",
+  "frontend_asset_revision": "1.2.0-expeditions",
   "scene_backgrounds": [
     {
       "file": "camp.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v1/camp.png",
+      "path": "/retro-phase-iii/scene-backgrounds-v2/camp.png",
       "width": 1440,
       "height": 810,
       "bytes": 659480,
       "usage": [
-        "Adventure Board \u2014 Camp & Recovery",
-        "Inventory \u2014 Recovery"
+        "Adventure Board — Camp & Recovery",
+        "Inventory — Recovery"
       ]
     },
     {
@@ -53,7 +53,7 @@
       "height": 1672,
       "bytes": 2251825,
       "usage": [
-        "Adventure Board \u2014 Solo Venture"
+        "Adventure Board — Solo Venture"
       ],
       "format": "portrait"
     },

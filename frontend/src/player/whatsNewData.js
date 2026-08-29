@@ -1,14 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.2.0",
-    name: "Expeditions RC1",
-    title: "Expeditions reaches its release candidate",
-    summary: "The v1.2 Expedition rules are locked in for release-candidate testing, with the Player Guide simplified around what you can do, what choices mean, and what rewards or risks to expect.",
+    name: "Expeditions",
+    title: "Expeditions has arrived",
+    summary: "Set out across five distant regions, choose how much danger to accept, chart permanent discoveries, master regional challenges, and build a long-term partnership with your Chocobo.",
     highlights: [
-      { title: "Cleaner Player Guide", description: "Release-engineering notes are removed from the Guide so Expeditions focuses on regions, routes, Cache, landmarks, bosses, Mastery, Chocobo specialties, and rewards." },
-      { title: "Journeys stay saved", description: "Active Solo Ventures and Expeditions keep their current stage, resources, Cache, and choices when you leave and return." },
-      { title: "Route choices stay distinct", description: "Safe favors survival, Unknown stays balanced, and Push Deeper accepts more danger for better reward and rare-event opportunities." },
-      { title: "Mobile and detail cards stay polished", description: "Touch controls, keyboard navigation, narrow-screen layouts, and in-place detail cards carry forward unchanged into RC1." },
+      { title: "Five regions to explore", description: "Scout Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, and the Astral Scar, each with its own encounters, hazards, resources, landmarks, and regional boss." },
+      { title: "Choose the risk", description: "Safe favors survival, Unknown stays balanced, and Push Deeper accepts greater danger for stronger reward and rare-event opportunities." },
+      { title: "Map and master each region", description: "Exploration milestones reveal landmarks, Regional Boss Contracts, Mastery rewards, Atlas ranks, and repeatable Legendary Contracts." },
+      { title: "Your Chocobo matters", description: "Bond level and specialty affect travel, discovery, gathering, treasure, hazards, and rescue while the Stable records your shared Expedition accomplishments." },
+      { title: "Journeys stay saved", description: "Active Expeditions keep their current stage, resources, Cache, Journal, and pending choices when you leave the Portal and return later." },
     ],
     action: { tab: "hunts", label: "Open Adventure Board" },
   },

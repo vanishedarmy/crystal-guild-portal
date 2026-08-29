@@ -7,12 +7,12 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 const load = (path, root = SRC) => readFile(new URL(path, root), "utf8");
 
-test("Expeditions RC1 preserves the mobile and accessibility pass", async () => {
+test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Expeditions RC1"/);
-  assert.match(version, /1\.2\.0-expeditions-rc1/);
+  assert.match(version, /WEB_BUILD = "Expeditions"/);
+  assert.match(version, /1\.2\.0-expeditions(?!-)/);
   assert.match(news, /Keyboard-friendly tabs/);
   assert.doesNotMatch(guide, /Beta 3 Mobile &amp; Accessibility Pass/);
 });

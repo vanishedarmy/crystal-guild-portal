@@ -1,3 +1,7 @@
+# Crystal Guild v1.2.0 — Expeditions
+
+Final release promoted from the validated RC1 baseline with no gameplay changes. Expeditions, regional progression, Legendary Contracts, Chocobo specialization, balance tuning, UX/mobile/accessibility polish, and release hardening are now the v1.2 production baseline.
+
 # Crystal Guild v1.2.0 — Expeditions Beta 4
 ## Release Hardening
 

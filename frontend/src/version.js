@@ -1,5 +1,5 @@
 export const WEB_VERSION = "v1.2.0";
-export const WEB_BUILD = "Expeditions RC1";
+export const WEB_BUILD = "Expeditions";
 export const WEB_RELEASE = `${WEB_VERSION} — ${WEB_BUILD}`;
 export const WEB_PRODUCT = `Crystal Guild Web ${WEB_RELEASE}`;
-export const WEB_ASSET_REVISION = "1.2.0-expeditions-rc1";
+export const WEB_ASSET_REVISION = "1.2.0-expeditions";

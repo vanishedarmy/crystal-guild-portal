@@ -5,12 +5,12 @@ import { readFile } from "node:fs/promises";
 const SRC = new URL("../src/", import.meta.url);
 const PUBLIC = new URL("../public/", import.meta.url);
 
-test("Expeditions RC1 preserves the Beta 2 UX consolidation", async () => {
+test("Expeditions preserves the Beta 2 UX consolidation", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
-  assert.match(version, /WEB_BUILD = "Expeditions RC1"/);
-  assert.match(version, /1\.2\.0-expeditions-rc1/);
+  assert.match(version, /WEB_BUILD = "Expeditions"/);
+  assert.match(version, /1\.2\.0-expeditions(?!-)/);
   assert.match(news, /The Portal stays where you are/);
   assert.doesNotMatch(guide, /Beta 2 Portal Consolidation/);
 });

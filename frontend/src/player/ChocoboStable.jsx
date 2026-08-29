@@ -11,6 +11,7 @@ import {
 import ProgressBar from "../components/ProgressBar.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
+import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 
 function actionKey(kind, target = "chocobo") {
   const suffix = globalThis.crypto?.randomUUID
@@ -298,7 +299,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
                 className="equipment-action-button secondary chocobo-portrait-toggle"
                 aria-expanded={showPortraitPicker}
                 aria-controls="chocobo-portrait-gallery"
-                onClick={() => setShowPortraitPicker((current) => !current)}
+                onClick={(event) => toggleWithViewportAnchor(event, setShowPortraitPicker)}
               >
                 {showPortraitPicker ? "Hide Portrait Gallery" : "Show Portrait Gallery"}
               </button>

@@ -1207,21 +1207,30 @@ setupGuideSectionAccordions();
     const close = section.querySelector('[data-catalog-close]');
     if (!launch || !panel || !close) return;
 
+    function preserveCatalogViewport(anchor, mutate) {
+      const left = window.scrollX || 0;
+      const top = window.scrollY || 0;
+      mutate();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        window.scrollTo({ left, top, behavior: 'auto' });
+        anchor?.focus?.({ preventScroll: true });
+      }));
+    }
+
     function openCatalog() {
-      panel.hidden = false;
-      section.classList.add('catalog-open');
-      launch.setAttribute('aria-expanded', 'true');
-      requestAnimationFrame(() => {
-        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      preserveCatalogViewport(launch, () => {
+        panel.hidden = false;
+        section.classList.add('catalog-open');
+        launch.setAttribute('aria-expanded', 'true');
       });
     }
 
     function closeCatalog() {
-      panel.hidden = true;
-      section.classList.remove('catalog-open');
-      launch.setAttribute('aria-expanded', 'false');
-      launch.focus({ preventScroll: true });
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      preserveCatalogViewport(launch, () => {
+        panel.hidden = true;
+        section.classList.remove('catalog-open');
+        launch.setAttribute('aria-expanded', 'false');
+      });
     }
 
     launch.addEventListener('click', openCatalog);

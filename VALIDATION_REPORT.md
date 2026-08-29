@@ -1,39 +1,41 @@
-# Validation Report — Crystal Guild v1.2.0 Expeditions Beta 1
+# Validation Report — Crystal Guild v1.2.0 Expeditions Beta 2
 
 ## Result
-**PASS — Beta 1 balance, simulation, compatibility, and regression validation complete.**
+**PASS — Beta 2 UX consolidation and compatibility validation complete.**
 
-## Automated suites
-- Bot: **437 / 437 PASS**
-- Hosted Web/API: **47 / 47 PASS**
-- Frontend Node regression suite: **307 / 307 PASS**
-- Python compilation: **PASS**
+## Automated validation
+- Frontend Node regression suite: **312 / 312 PASS**.
+- Hosted Web/API Python suite: **47 / 47 PASS**.
+- Compatible Beta 1 Bot regression suite: **437 / 437 PASS**.
+- JS/JSX TypeScript-parser pass: **64 source files PASS**.
+- Hosted Python AST compilation: **PASS**.
 
-Expected simulated network-loss, Twitch-auth, corrupt-checkpoint, and recovery warnings emitted by resilience tests were observed; those tests passed.
+## Beta 2 regression coverage
+- Detail dialogs capture and restore the underlying viewport.
+- Detail-card focus returns with `preventScroll`.
+- What's New, Expedition Board, Expedition Atlas, Travel Regions, Hunt Board, and Chocobo portrait gallery use viewport-anchored expansion.
+- Player Guide Bestiary/Items catalog open/close no longer uses `scrollIntoView()`.
+- Adventure Board current-activity summary and action-first ordering are present.
+- Saved results and active Adventures receive priority above routine choices.
+- Expedition Atlas detail is independently collapsible and remembers browser preference.
+- Beta 1 balance and Alpha 2–5 Expedition progression remain represented by the full regression suite.
 
-## Balance validation
-- Fixed-seed Expedition matrix: **3,000 runs** across 75 scenarios.
-- Safe/Unknown/Push Deeper pressure is mechanically distinct, not only descriptive.
-- Legendary final-boss HP/pressure smoothing is covered by dedicated tests.
-- Existing Alpha 2–5 Expedition progression, regional bosses, Atlas, Legendary contracts, regional discovery, Chocobo specialties, accomplishments, and Hunt Seal stipends remain covered.
-- Adventure Board compact-state regression remains below the established **16 KB** guardrail; new pressure multipliers are kept Bot-authoritative rather than enlarging the Portal payload.
-- Alpha 5 stipend values remain unchanged after the economy audit.
-
-## Package validation
-- Alpha 5 → Beta 1 Bot patch: **16 changed/new files, 0 deleted; exact reproduction PASS**.
-- Alpha 5 → Beta 1 Web patch: **29 changed/new files, 0 deleted; exact reproduction PASS**.
-- Full Bot, full Web, direct patches, paired update, and Complete ZIP integrity: **PASS**.
-- Runtime/secret hygiene scan: **PASS**; no live `.env`, token store, SQLite database/WAL/SHM, bytecode/cache directories, `node_modules`, or log files are packaged.
-- SHA-256 manifest generated after final archive creation.
-
-## Release identity
-- Bot runtime: `1.2.0-expeditions-b1`
-- Hosted Web runtime: `1.2.0-expeditions-beta1`
-- Frontend revision: `1.2.0-expeditions-b1`
+## Compatibility
+- Hosted Web runtime: `1.2.0-expeditions-beta2`
+- Frontend asset revision: `1.2.0-expeditions-b2`
+- Compatible Bot runtime: `1.2.0-expeditions-b1` (unchanged)
 - Local DB schema: **8**
 - Hosted sync schema: **1**
 - Portal Action protocol: **20**
-- Player reset/migration: **none**
+- Database migration / player reset: **none**
+
+## Packaging validation
+- Beta 1 → Beta 2 Web patch contains changed/new files only; no deletions are required.
+- Patch overlay exact-reproduction verification: **PASS**.
+- Full Web ZIP integrity: **PASS**.
+- Complete bundle ZIP integrity: **PASS**.
+- Runtime/secret hygiene scan: **PASS**; no live `.env`, token stores, SQLite files, bytecode, logs, or cache directories are packaged.
+- SHA-256 manifest verification: **PASS**.
 
 ## Production bundle note
-The source package intentionally does not include `node_modules`, so a local Vite production bundle is not part of this validation environment. The full source-level frontend suite, hosted/API suite, JSX/source parsing exercised by the regressions, and Python compilation are clean.
+The release source intentionally does not package `node_modules`; a local Vite production bundle was not executed. Source parsing plus the complete frontend regression suite are clean.

@@ -1,3 +1,6 @@
+# v1.2.0 — Expeditions Beta 2
+Web-only UX consolidation: viewport-preserving detail/disclosure behavior, action-first Adventure Board hierarchy, and independently collapsible Expedition Atlas detail. Hosted runtime `1.2.0-expeditions-beta2`; frontend revision `1.2.0-expeditions-b2`; compatible Bot remains `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
+
 # v1.2.0 — Expeditions Beta 1
 Balance/simulation feature freeze: Safe and Push Deeper now change actual combat/hazard pressure, Legendary final-boss scaling is slightly smoothed, a fixed-seed 3,000-run balance matrix is published, and Alpha 5 Hunt Seal stipends remain unchanged. Hosted runtime `1.2.0-expeditions-beta1`; frontend revision `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
 

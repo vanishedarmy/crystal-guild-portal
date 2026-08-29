@@ -1,4 +1,8 @@
-Crystal Guild v1.2.0 Expeditions Beta 1 — Web Package Manifest
-Hosted runtime: 1.2.0-expeditions-beta1
-Frontend asset revision: 1.2.0-expeditions-b1
-Required Bot: 1.2.0-expeditions-b1 / local DB schema 8 / protocol 20
+Crystal Guild v1.2.0 Expeditions Beta 2 — Web Package Manifest
+Hosted runtime: 1.2.0-expeditions-beta2
+Frontend asset revision: 1.2.0-expeditions-b2
+Compatible Bot: 1.2.0-expeditions-b1 / local DB schema 8 / protocol 20
+Hosted sync schema: 1
+Release type: Web-only UX consolidation
+Migration: none
+Player reset: none

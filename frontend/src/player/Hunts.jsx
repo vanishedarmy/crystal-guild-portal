@@ -19,6 +19,7 @@ import StatCard from "../components/StatCard.jsx";
 import Expeditions from "./Expeditions.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
+import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 
 const volatileAdventureActionKeys = new Map();
 
@@ -551,6 +552,22 @@ export default function Hunts({ data, overview, onRefresh }) {
   const pendingExpeditionResults = pendingResults.filter((result) => result?.kind === "expedition");
   const soloEncounterChance = Number(state?.solo_venture?.encounter_chance_percent ?? 80);
   const soloTreasureChance = Number(state?.solo_venture?.treasure_chance_percent ?? 20);
+  const fieldExpedition = state?.expeditions?.active || null;
+  const readyHuntCount = (state?.hunts || []).filter((hunt) => Boolean(hunt.challengeable) && remainingUntil(hunt.cooldown_available_at, authoritativeClock) <= 0).length;
+  const activeAdventureLabel = fieldExpedition
+    ? `Expedition · ${fieldExpedition.region?.name || "In progress"}`
+    : expedition
+      ? `Solo Venture · Stage ${number(expedition.stage)}`
+      : activeHunt
+        ? `Hunt · ${activeHunt.name}`
+        : encounter
+          ? `${encounter.kind === "venture" ? "Rally Venture" : "Adventure"} · ${encounter.monster?.name || "In progress"}`
+          : state?.camp?.resting
+            ? "Camp · Resting"
+            : "No active adventure";
+  const soloBoardLabel = expedition ? `Stage ${number(expedition.stage)}` : soloRemaining > 0 ? duration(soloRemaining) : state?.solo_venture?.ready ? "Ready" : "Unavailable";
+  const expeditionBoardLabel = fieldExpedition ? `Stage ${number(fieldExpedition.stage)}` : state?.expeditions?.ready ? "Ready" : "Locked";
+  const huntBoardLabel = activeHunt ? `Returns in ${duration(activeHuntRemaining)}` : readyHuntCount ? `${number(readyHuntCount)} ready` : "No marks ready";
 
 
   const renderActiveEncounter = (embedded = false) => {
@@ -604,7 +621,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div>
             <p className="eyebrow">Adventure Board</p>
             <h2>Choose Your Next Adventure</h2>
-            <p className="muted">Solo Venture, Expeditions, Hunts, travel, and recovery. Rally Ventures stay in chat.</p>
+            <p className="muted">Current activity first. Then choose a personal adventure, contract, travel, or recovery.</p>
           </div>
           <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
             {busy === "state" ? "Refreshing…" : "Refresh Board"}
@@ -615,6 +632,12 @@ export default function Hunts({ data, overview, onRefresh }) {
           <span>{actionsAvailable ? `Adventure actions ready.${pendingResults.length ? ` ${pendingResults.length} saved result${pendingResults.length === 1 ? "" : "s"} awaiting confirmation.` : ""}` : "Actions return when Crystal Guild reconnects."}</span>
           {message ? <small aria-live="polite">{message}</small> : null}
         </div>
+        <div className="adventure-priority-strip" aria-label="Adventure Board status summary">
+          <div className={`adventure-priority-item ${activeAdventureLabel === "No active adventure" ? "idle" : "active"}`}><span>Current</span><strong>{activeAdventureLabel}</strong><small>{pendingResults.length ? `${number(pendingResults.length)} saved result${pendingResults.length === 1 ? "" : "s"}` : "Board clear"}</small></div>
+          <div className="adventure-priority-item"><span>Solo Venture</span><strong>{soloBoardLabel}</strong><small>Portal only</small></div>
+          <div className="adventure-priority-item"><span>Expedition</span><strong>{expeditionBoardLabel}</strong><small>{state?.expeditions?.chocobo?.specialization?.name || "Chocobo route"}</small></div>
+          <div className="adventure-priority-item"><span>Hunts</span><strong>{huntBoardLabel}</strong><small>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)} Seals</small></div>
+        </div>
       </section>
 
       <section className={`panel adventure-camp-panel ${state?.camp?.resting ? "camp-active" : ""}`}>
@@ -622,7 +645,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, authoritativeClock))}` : "Set Up Camp"}</h2></div>
           <span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span>
         </div>
-        <p className="muted">Restores HP and current Job MP/AP. Base time: 15m LIVE · 1h OFFLINE, before Fellowship bonuses.</p>
+        <p className="muted">Full recovery for HP and current Job resources. Base time: 15m LIVE · 1h OFFLINE before Fellowship bonuses.</p>
         {state?.camp ? (
           <div className="adventure-camp-grid">
             <div><span>HP</span><strong>{number(state.camp.hp)} / {number(state.camp.max_hp)}</strong></div>
@@ -726,8 +749,20 @@ export default function Hunts({ data, overview, onRefresh }) {
 
                 <div className="solo-command-bar" aria-label="Solo Venture battle actions">
                   <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Round resolved.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
-                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={() => setSoloPicker((value) => value === "ability" ? "" : "ability")}>Ability</button>
-                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "item" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "item"} onClick={() => setSoloPicker((value) => value === "item" ? "" : "item")}>Use Item</button>
+                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={(event) => {
+                    const next = soloPicker === "ability" ? "" : "ability";
+                    const anchor = event.currentTarget;
+                    const y = window.scrollY;
+                    setSoloPicker(next);
+                    window.requestAnimationFrame(() => window.requestAnimationFrame(() => { anchor?.focus?.({ preventScroll: true }); window.scrollTo({ top: y, left: window.scrollX, behavior: "auto" }); }));
+                  }}>Ability</button>
+                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "item" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "item"} onClick={(event) => {
+                    const next = soloPicker === "item" ? "" : "item";
+                    const anchor = event.currentTarget;
+                    const y = window.scrollY;
+                    setSoloPicker(next);
+                    window.requestAnimationFrame(() => window.requestAnimationFrame(() => { anchor?.focus?.({ preventScroll: true }); window.scrollTo({ top: y, left: window.scrollX, behavior: "auto" }); }));
+                  }}>Use Item</button>
                   <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:defend", "solo-action", "defend", (idem) => submitSoloExpeditionAction("defend", csrfToken, idem), "Round resolved.")}>{busy === "solo:defend" ? "Defending…" : "Defend"}</button>
                 </div>
 
@@ -799,7 +834,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         ) : null}
       </section>
 
-      <section className="panel rally-venture-notice">
+      <section className="panel rally-venture-notice" data-active={encounter?.kind === "venture" ? "true" : "false"}>
         <div className="panel-title-row">
           <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
           <span className="small-badge">Live Stream</span>
@@ -823,7 +858,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">World Map</p><h2>Travel Regions</h2></div>
           <div className="section-collapse-actions">
             <span className="small-badge success">Current · {currentRegion.name}</span>
-            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} onClick={() => setRegionsOpen((open) => !open)}>{regionsOpen ? "Collapse" : "Expand"}</button>
+            <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} onClick={(event) => toggleWithViewportAnchor(event, setRegionsOpen)}>{regionsOpen ? "Collapse" : "Expand"}</button>
           </div>
         </div>
         {regionsOpen ? <div className="adventure-region-grid">
@@ -837,7 +872,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 <span className={`small-badge ${region.current ? "success" : !region.unlocked ? "locked" : ""}`}>{region.current ? "Current" : region.unlocked ? "Unlocked" : "Locked"}</span>
               </div>
               <h3>{region.name}</h3>
-              <p>{region.description}</p>
+              <p className="adventure-region-summary">{region.description}</p>
               {!region.current ? (
                 <div className="adventure-card-footer">
                   <button
@@ -915,7 +950,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
           <div className="section-collapse-actions">
             <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
-            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} onClick={() => setHuntBoardOpen((open) => !open)}>{huntBoardOpen ? "Collapse" : "Expand"}</button>
+            <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} onClick={(event) => toggleWithViewportAnchor(event, setHuntBoardOpen)}>{huntBoardOpen ? "Collapse" : "Expand"}</button>
           </div>
         </div>
         {huntBoardOpen ? <>

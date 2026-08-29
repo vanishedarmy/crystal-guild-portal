@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MAJOR_UPDATES } from "./whatsNewData.js";
+import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 
 function UpdateHighlights({ highlights }) {
   return (
@@ -47,7 +48,7 @@ export default function WhatsNew({ onNavigate }) {
         </div>
         <div className="section-collapse-actions">
           <span className="small-badge whats-new-version">{latest.version} · {latest.name}</span>
-          <button type="button" className="section-collapse-button" aria-expanded={open} onClick={() => setOpen((value) => !value)}>{open ? "Collapse" : "Expand"}</button>
+          <button type="button" className="section-collapse-button" aria-expanded={open} onClick={(event) => toggleWithViewportAnchor(event, setOpen)}>{open ? "Collapse" : "Expand"}</button>
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import ItemArtwork from "./ItemArtwork.jsx";
 import RelicArtwork from "./RelicArtwork.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useEffect, useRef } from "react";
+import { captureViewport, restoreViewport } from "../utils/viewportAnchor.js";
 import {
   formatBonuses,
   formatEquipmentRequirements,
@@ -211,22 +212,40 @@ function abilityTraitLabels(ability = {}) {
 
 export default function DetailDialog({ detail, onClose }) {
   const ref = useRef(null);
+  const viewportRef = useRef(null);
 
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
-    if (detail && !dialog.open) dialog.showModal();
+    if (detail && !dialog.open) {
+      const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      viewportRef.current = captureViewport(active);
+      dialog.showModal();
+      restoreViewport(viewportRef.current);
+    }
     if (!detail && dialog.open) dialog.close();
   }, [detail]);
+
+  const restoreAndClose = () => {
+    const snapshot = viewportRef.current;
+    onClose?.();
+    restoreViewport(snapshot, { focus: true });
+  };
+
+  const handleNativeClose = () => {
+    const snapshot = viewportRef.current;
+    if (detail) onClose?.();
+    restoreViewport(snapshot, { focus: true });
+  };
 
   return (
     <dialog
       ref={ref}
       className="detail-dialog"
-      onClose={onClose}
-      onClick={(event) => event.target === ref.current && onClose()}
+      onClose={handleNativeClose}
+      onClick={(event) => event.target === ref.current && restoreAndClose()}
     >
-      <button className="dialog-close" type="button" aria-label="Close detail card" onClick={onClose}>×</button>
+      <button className="dialog-close" type="button" aria-label="Close detail card" onClick={restoreAndClose}>×</button>
       <DetailBody detail={detail} />
     </dialog>
   );

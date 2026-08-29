@@ -8867,3 +8867,86 @@ main h1,
   .expedition-specialization-card { align-items: flex-start; flex-direction: column; }
   .chocobo-expedition-records { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* v1.2 Expeditions Beta 2 — UX consolidation + stable disclosures */
+.adventure-priority-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .55rem;
+  margin-top: .7rem;
+}
+.adventure-priority-item {
+  min-width: 0;
+  display: grid;
+  gap: .14rem;
+  padding: .58rem .66rem;
+  border: 1px solid rgba(143, 219, 255, .13);
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+}
+.adventure-priority-item span,
+.adventure-priority-item small {
+  color: var(--muted);
+  font-size: .68rem;
+  line-height: 1.25;
+}
+.adventure-priority-item span {
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+.adventure-priority-item strong {
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: .83rem;
+}
+.adventure-priority-item.active {
+  border-color: rgba(229,197,111,.38);
+  background: linear-gradient(135deg, rgba(229,197,111,.09), rgba(255,255,255,.02));
+}
+.adventure-priority-item.idle strong { color: #b8c8d6; }
+
+/* Action-first reading order. Urgent results/current activity rise above routine choices. */
+.adventure-board-stack > .adventure-hero-panel { order: 0; }
+.adventure-board-stack > .adventure-pending-result-stack,
+.adventure-board-stack > .adventure-result-panel { order: 1; }
+.adventure-board-stack > .active-adventure-panel,
+.adventure-board-stack > .timed-hunt-panel,
+.adventure-board-stack > .solo-venture-panel.expedition-active,
+.adventure-board-stack > .expedition-board-panel.active,
+.adventure-board-stack > .adventure-camp-panel.camp-active,
+.adventure-board-stack > .rally-venture-notice[data-active="true"] { order: 2; }
+.adventure-board-stack > .solo-venture-panel { order: 10; }
+.adventure-board-stack > .rally-venture-notice { order: 20; }
+.adventure-board-stack > .adventure-camp-panel { order: 30; }
+.adventure-board-stack > .expedition-board-panel { order: 40; }
+.adventure-board-stack > .adventure-region-panel { order: 50; }
+.adventure-board-stack > .hunt-board-panel { order: 60; }
+
+.adventure-region-summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-bottom: .25rem;
+}
+.section-collapse-button.compact {
+  min-height: 30px;
+  padding: .28rem .5rem;
+  font-size: .7rem;
+}
+.expedition-atlas-heading { align-items: center; }
+
+/* Modal/detail cards live in the top layer without changing the document's scroll context. */
+.detail-dialog { overscroll-behavior: contain; }
+html:has(.detail-dialog[open]) { overflow-anchor: none; }
+
+@media (max-width: 900px) {
+  .adventure-priority-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .adventure-priority-strip { grid-template-columns: 1fr; }
+  .adventure-priority-item { grid-template-columns: minmax(0,1fr) auto; align-items: center; column-gap: .7rem; }
+  .adventure-priority-item span { grid-column: 1 / -1; }
+  .adventure-priority-item small { text-align: right; }
+}

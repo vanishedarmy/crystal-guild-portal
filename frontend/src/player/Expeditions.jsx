@@ -12,6 +12,7 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
+import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 
 const DEPTH_COPY = {
   scout: "3 stages · short survey",
@@ -46,6 +47,17 @@ function remainingUntil(timestamp, nowMs) {
 function defaultBoardOpen() {
   try {
     const stored = window.localStorage?.getItem("crystal-guild:adventure:expedition-board");
+    if (stored === "open") return true;
+    if (stored === "closed") return false;
+    return !window.matchMedia?.("(max-width: 760px)")?.matches;
+  } catch {
+    return true;
+  }
+}
+
+function defaultAtlasOpen() {
+  try {
+    const stored = window.localStorage?.getItem("crystal-guild:adventure:expedition-atlas");
     if (stored === "open") return true;
     if (stored === "closed") return false;
     return !window.matchMedia?.("(max-width: 760px)")?.matches;
@@ -134,6 +146,7 @@ export default function Expeditions({
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedDepth, setSelectedDepth] = useState("scout");
   const [boardOpen, setBoardOpen] = useState(() => data?.active ? true : defaultBoardOpen());
+  const [atlasOpen, setAtlasOpen] = useState(defaultAtlasOpen);
   const active = data?.active || null;
   const regions = useMemo(() => [...(data?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1)), [data?.regions]);
   const depths = data?.depths || [];
@@ -145,6 +158,9 @@ export default function Expeditions({
   useEffect(() => {
     try { window.localStorage?.setItem("crystal-guild:adventure:expedition-board", boardOpen ? "open" : "closed"); } catch {}
   }, [boardOpen]);
+  useEffect(() => {
+    try { window.localStorage?.setItem("crystal-guild:adventure:expedition-atlas", atlasOpen ? "open" : "closed"); } catch {}
+  }, [atlasOpen]);
 
   const doRequest = (key, kind, target, submit, fallback) => runRequest?.(key, kind, target, submit, fallback);
 
@@ -159,7 +175,7 @@ export default function Expeditions({
           </div>
           <div className="section-collapse-actions">
             <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
-            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} onClick={() => setBoardOpen((open) => !open)}>{boardOpen ? "Collapse" : "Expand"}</button>
+            <button type="button" className="section-collapse-button" aria-expanded={boardOpen} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)}>{boardOpen ? "Collapse" : "Expand"}</button>
           </div>
         </div>
 
@@ -182,22 +198,27 @@ export default function Expeditions({
 
             {data?.atlas ? (
               <div className={`expedition-atlas-panel ${data.atlas?.all_mastered ? "mastered" : ""}`}>
-                <div className="panel-title-row compact">
+                <div className="panel-title-row compact expedition-atlas-heading">
                   <div>
                     <span className="slot-label">Expedition Atlas</span>
                     <h3>{data.atlas?.rank_name || "Guild Scout"} · {number(data.atlas?.overall_progress || 0)}%</h3>
                   </div>
-                  <span className={`small-badge ${data.atlas?.all_mastered ? "success" : ""}`}>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)} MASTERED</span>
+                  <div className="section-collapse-actions">
+                    <span className={`small-badge ${data.atlas?.all_mastered ? "success" : ""}`}>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)} MASTERED</span>
+                    <button type="button" className="section-collapse-button compact" aria-expanded={atlasOpen} onClick={(event) => toggleWithViewportAnchor(event, setAtlasOpen)}>{atlasOpen ? "Hide Atlas" : "Show Atlas"}</button>
+                  </div>
                 </div>
                 <ProgressBar value={Number(data.atlas?.overall_progress || 0)} />
-                <div className="expedition-atlas-stats">
-                  <div><span>Overall survey</span><strong>{number(data.atlas?.overall_progress || 0)}%</strong></div>
-                  <div><span>Regions mastered</span><strong>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)}</strong></div>
-                  <div><span>Landmarks charted</span><strong>{number(data.atlas?.landmarks_found || 0)} / {number(data.atlas?.landmark_count || 0)}</strong></div>
-                  <div><span>Boss clears</span><strong>{number(data.atlas?.total_boss_clears || 0)}</strong></div>
-                  <div><span>Legendary routes</span><strong>{number(data.atlas?.legendary_contracts_unlocked || 0)}</strong></div>
-                </div>
-                {data.atlas?.all_mastered ? <p className="expedition-atlas-note"><strong>Atlas complete.</strong> All five regions are Mastered and the Master Cartographer reward is available through the achievement system.</p> : data.atlas?.next_rank ? <p className="expedition-atlas-note"><strong>Next rank:</strong> {data.atlas.next_rank.name} at {number(data.atlas.next_rank.progress)}% overall exploration.</p> : null}
+                {atlasOpen ? <>
+                  <div className="expedition-atlas-stats">
+                    <div><span>Overall survey</span><strong>{number(data.atlas?.overall_progress || 0)}%</strong></div>
+                    <div><span>Regions mastered</span><strong>{number(data.atlas?.regions_mastered || 0)} / {number(data.atlas?.region_count || regions.length)}</strong></div>
+                    <div><span>Landmarks charted</span><strong>{number(data.atlas?.landmarks_found || 0)} / {number(data.atlas?.landmark_count || 0)}</strong></div>
+                    <div><span>Boss clears</span><strong>{number(data.atlas?.total_boss_clears || 0)}</strong></div>
+                    <div><span>Legendary routes</span><strong>{number(data.atlas?.legendary_contracts_unlocked || 0)}</strong></div>
+                  </div>
+                  {data.atlas?.all_mastered ? <p className="expedition-atlas-note"><strong>Atlas complete.</strong> All five regions are Mastered and the Master Cartographer reward is available through the achievement system.</p> : data.atlas?.next_rank ? <p className="expedition-atlas-note"><strong>Next rank:</strong> {data.atlas.next_rank.name} at {number(data.atlas.next_rank.progress)}% overall exploration.</p> : null}
+                </> : null}
               </div>
             ) : null}
 

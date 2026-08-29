@@ -9428,3 +9428,68 @@ button, input, select, textarea { font: inherit; }
   .fellowship-airship-grid,
   .fellowship-airship-upgrade-grid { grid-template-columns: 1fr; }
 }
+
+/* v1.3 Guild Expansion Alpha 5 — Guild Legacy & Accomplishments */
+.fellowship-legacy {
+  position: relative;
+  overflow: hidden;
+}
+.fellowship-legacy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .08;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(241,211,126,.35), transparent 28%),
+    radial-gradient(circle at 88% 12%, rgba(110,171,235,.26), transparent 24%);
+}
+.fellowship-legacy > * { position: relative; z-index: 1; }
+.fellowship-legacy-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 14px;
+  padding: 12px;
+  border: 1px solid rgba(233, 201, 112, .24);
+  border-radius: 12px;
+  background: rgba(8,13,24,.74);
+}
+.fellowship-legacy-shelf > span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(233, 201, 112, .26);
+  background: rgba(233, 201, 112, .06);
+  font-size: .84rem;
+}
+.fellowship-legacy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.fellowship-legacy-grid article {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(204,220,255,.15);
+  border-radius: 12px;
+  background: rgba(8,13,24,.76);
+}
+.fellowship-legacy-grid article.complete { border-color: rgba(233,201,112,.44); }
+.fellowship-legacy-grid article > div:first-child { display: grid; gap: 3px; }
+.fellowship-legacy-grid article > div:first-child > span { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; opacity: .72; }
+.fellowship-legacy-grid article p { margin: 0; color: var(--muted); line-height: 1.45; }
+.fellowship-legacy-grid article small { color: rgba(239,221,169,.86); }
+.legacy-stage-2 { box-shadow: inset 0 0 0 1px rgba(233,201,112,.08); }
+.legacy-stage-3 { box-shadow: inset 0 0 0 1px rgba(233,201,112,.14), 0 0 30px rgba(81,132,202,.05); }
+.legacy-stage-4 { box-shadow: inset 0 0 0 1px rgba(233,201,112,.22), 0 0 38px rgba(233,201,112,.06); }
+.fellowship-service-ribbons { display: grid; gap: 8px; margin-top: 14px; }
+.fellowship-service-ribbons > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.fellowship-service-ribbons > div > span { padding: 7px 10px; border-radius: 999px; border: 1px solid rgba(233,201,112,.24); background: rgba(233,201,112,.05); font-size: .84rem; }
+@media (max-width: 760px) {
+  .fellowship-legacy-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-contrast: more) {
+  .fellowship-legacy::after { opacity: .02; }
+}

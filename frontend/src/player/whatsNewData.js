@@ -1,6 +1,21 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.3.0",
+    name: "Guild Expansion Alpha 5",
+    title: "The Guild begins writing its Legacy",
+    summary: "Permanent Guild accomplishments now turn Fellowship history into trophies, Hall progression, and personal service recognition.",
+    highlights: [
+      { title: "Guild Legacy", description: "Ten long-term accomplishments track facilities, donations, Expeditions, raids, Airship service, Weekly Orders, and Deeds." },
+      { title: "Trophy Hall progression", description: "Completed accomplishments unlock visible Guild trophies and advance the Fellowship through Founding Hall, Bannered Hall, Hall of Heroes, and Legendary Guild Hall stages." },
+      { title: "Guild Service Record", description: "Your Fellowship tab now records Expedition, Hunt, raid, and Airship service alongside projects, donations, Orders, and Deeds." },
+      { title: "Service distinctions", description: "Founding Member, Guild Builder, Guild Benefactor, Order Veteran, Deedkeeper, Airship Crew, and Frontier Pathfinder recognition appears automatically when earned." },
+      { title: "Recognition over power", description: "Legacy rewards are trophies and modest shared Renown; they do not add permanent combat-stat power." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+
+  {
+    version: "v1.3.0",
     name: "Guild Expansion Alpha 4",
     title: "The Crystal Guild Airship takes flight",
     summary: "Build the shared Airship, launch Guild-scale missions, and improve it through five Dock-gated upgrade tracks powered by normal community play.",

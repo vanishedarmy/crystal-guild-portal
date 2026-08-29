@@ -1,3 +1,7 @@
+# Crystal Guild v1.3.0 — Guild Expansion Alpha 5
+
+Adds Guild Legacy accomplishments, trophy/Hall progression, expanded Guild Service Records, and player-facing Legacy Guide/Fellowship surfaces. Runtime/frontend `1.3.0-guild-expansion-a5`; local DB schema 9, hosted sync 1, Portal protocol 21.
+
 # Crystal Guild v1.3.0 — Guild Expansion Alpha 4
 
 Adds the persistent Guild Airship: live Airship Dock construction, one-time Airship build project, six shared timed missions, five upgrade tracks, contributor rewards/history, streamer launch control, Fellowship/Guide surfaces, and schema-9 persistence. Runtime/frontend `1.3.0-guild-expansion-a4`; local DB schema 9, hosted sync 1, Portal protocol 21.

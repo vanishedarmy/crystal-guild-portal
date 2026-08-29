@@ -294,6 +294,28 @@ export default function FellowshipPage() {
               </div>
             </section>
 
+            <section className={`panel fellowship-section fellowship-legacy legacy-stage-${number(data.legacy?.stage || 1)}`} aria-labelledby="guild-legacy-title">
+              <div className="panel-title-row">
+                <div><span className="panel-kicker">Guild Legacy</span><h2 id="guild-legacy-title">{data.legacy?.stage_name || "Founding Hall"}</h2></div>
+                <span className="small-badge">{number(data.legacy?.completed)} / {number(data.legacy?.total)} Accomplishments</span>
+              </div>
+              <p className="muted">Permanent Guild accomplishments turn the Hall and Archive into a record of what the community has achieved. Legacy rewards are recognition, trophies, and modest shared Renown—not combat power.</p>
+              <div className="fellowship-legacy-shelf" aria-label="Unlocked Guild Legacy trophies">
+                {(data.legacy?.decorations || []).length ? (data.legacy.decorations || []).map((trophy) => <span key={trophy}>◆ {trophy}</span>) : <span className="muted">The first Guild trophy is still waiting to be earned.</span>}
+              </div>
+              <div className="fellowship-legacy-grid">
+                {(data.legacy?.accomplishments || []).map((item) => (
+                  <article className={item.complete ? "complete" : ""} key={item.id}>
+                    <div><span>{item.complete ? "Trophy Earned" : "Legacy Goal"}</span><strong>{item.name}</strong></div>
+                    <p>{item.description}</p>
+                    <small>{item.trophy} · +{number(item.renown)} Guild Renown</small>
+                    <div className="vital-label"><span>Progress</span><span>{number(item.progress)} / {number(item.target)}</span></div>
+                    <ProgressBar value={pct(item.progress, item.target)} />
+                  </article>
+                ))}
+              </div>
+            </section>
+
             <div className="fellowship-split">
               <section className="panel fellowship-section">
                 <div className="panel-title-row"><h2>Guild Standing</h2><span className="small-badge">Personal Ranks</span></div>

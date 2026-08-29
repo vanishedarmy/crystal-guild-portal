@@ -404,7 +404,7 @@ export default function Fellowship({ data, onRefresh }) {
         <div className="panel-title-row">
           <div>
             <span className="panel-kicker">Your Contributions</span>
-            <h2>Fellowship Record</h2>
+            <h2>Guild Service Record</h2>
           </div>
           <span className="small-badge">Persistent Career Record</span>
         </div>
@@ -414,7 +414,17 @@ export default function Fellowship({ data, onRefresh }) {
           <StatCard current={fellowship.materials_donated} label="Materials Donated" />
           <StatCard current={fellowship.orders_participated} label="Orders Participated" />
           <StatCard current={fellowship.deeds_assisted} label="Deeds Assisted" />
+          <StatCard current={fellowship.service_record?.expeditions_completed || 0} label="Expeditions" />
+          <StatCard current={fellowship.service_record?.hunts_won || 0} label="Hunts Won" />
+          <StatCard current={fellowship.service_record?.raid_participations || 0} label="Raid Service" />
+          <StatCard current={fellowship.service_record?.airship_missions_supported || 0} label="Airship Missions" />
         </div>
+        {(fellowship.distinctions || []).length ? (
+          <div className="fellowship-service-ribbons">
+            <span className="slot-label">Guild Service Distinctions</span>
+            <div>{fellowship.distinctions.map((item) => <span key={item}>◆ {item}</span>)}</div>
+          </div>
+        ) : null}
       </section>
 
       <section className="panel fellowship-member-about span-12">

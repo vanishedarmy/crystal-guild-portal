@@ -1,41 +1,34 @@
-# Validation Report — Crystal Guild v1.2.0 Expeditions Beta 2
+# Validation Report — Crystal Guild v1.2.0 Expeditions Beta 2 Hotfix 1
 
 ## Result
-**PASS — Beta 2 UX consolidation and compatibility validation complete.**
+**PASS — current-viewport detail-card positioning hotfix validated.**
 
 ## Automated validation
-- Frontend Node regression suite: **312 / 312 PASS**.
+- Frontend Node regression suite: **314 / 314 PASS**.
 - Hosted Web/API Python suite: **47 / 47 PASS**.
-- Compatible Beta 1 Bot regression suite: **437 / 437 PASS**.
-- JS/JSX TypeScript-parser pass: **64 source files PASS**.
-- Hosted Python AST compilation: **PASS**.
+- Compatible Beta 1 Bot suite: **437 / 437 PASS**.
+- Python compilation: **PASS**.
+- Focused current-viewport dialog regression: **PASS**.
 
-## Beta 2 regression coverage
-- Detail dialogs capture and restore the underlying viewport.
-- Detail-card focus returns with `preventScroll`.
-- What's New, Expedition Board, Expedition Atlas, Travel Regions, Hunt Board, and Chocobo portrait gallery use viewport-anchored expansion.
-- Player Guide Bestiary/Items catalog open/close no longer uses `scrollIntoView()`.
-- Adventure Board current-activity summary and action-first ordering are present.
-- Saved results and active Adventures receive priority above routine choices.
-- Expedition Atlas detail is independently collapsible and remembers browser preference.
-- Beta 1 balance and Alpha 2–5 Expedition progression remain represented by the full regression suite.
+## Hotfix coverage
+- Detail dialogs are explicitly `position: fixed` in the final imported style layer.
+- Desktop detail dialogs center inside the visible viewport rather than document layout.
+- Narrow/mobile detail dialogs open as a bottom sheet inside the current viewport.
+- Beta 2 viewport capture/restore and `preventScroll` focus restoration remain intact.
+- Beta 2 Adventure Board hierarchy, anchored collapsibles, Atlas preference, Player Guide catalog behavior, and Beta 1 gameplay balance remain unchanged.
+
+## Patch / package validation
+- Beta 2 → Beta 2 Hotfix 1 Web patch contains **16 changed/new files, 0 deletions**.
+- Applying the patch to a clean Beta 2 Web tree reproduces the final Hotfix 1 tree exactly across **785 files**.
+- ZIP integrity: **PASS**.
+- Runtime/secret hygiene: **PASS**; no live `.env`, token stores, SQLite runtime files, logs, bytecode, or cache directories are packaged.
 
 ## Compatibility
+- Public product: **v1.2.0 — Expeditions Beta 2**
 - Hosted Web runtime: `1.2.0-expeditions-beta2`
-- Frontend asset revision: `1.2.0-expeditions-b2`
-- Compatible Bot runtime: `1.2.0-expeditions-b1` (unchanged)
+- Frontend asset revision: `1.2.0-expeditions-b2h1`
+- Compatible Bot runtime: `1.2.0-expeditions-b1`
 - Local DB schema: **8**
 - Hosted sync schema: **1**
 - Portal Action protocol: **20**
-- Database migration / player reset: **none**
-
-## Packaging validation
-- Beta 1 → Beta 2 Web patch contains changed/new files only; no deletions are required.
-- Patch overlay exact-reproduction verification: **PASS**.
-- Full Web ZIP integrity: **PASS**.
-- Complete bundle ZIP integrity: **PASS**.
-- Runtime/secret hygiene scan: **PASS**; no live `.env`, token stores, SQLite files, bytecode, logs, or cache directories are packaged.
-- SHA-256 manifest verification: **PASS**.
-
-## Production bundle note
-The release source intentionally does not package `node_modules`; a local Vite production bundle was not executed. Source parsing plus the complete frontend regression suite are clean.
+- Migration/player reset: **none**

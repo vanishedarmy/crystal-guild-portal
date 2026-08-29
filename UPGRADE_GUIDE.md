@@ -1,15 +1,12 @@
-# Upgrade Guide — Crystal Guild v1.2.0 Expeditions Beta 2
+# Upgrade Guide — Expeditions Beta 2 Hotfix 1
 
-Beta 2 is a **Web-only** UX release. The existing Expeditions Beta 1 Bot remains compatible.
+This is a **Web-only** hotfix for an existing Beta 2 deployment. Keep the existing Beta 1 Bot.
 
-## From Beta 1
-1. Back up the current Web deployment as normal.
-2. Apply the **B1 → B2 Web patch** over the existing Beta 1 Web tree, or deploy the full Beta 2 Web package.
-3. Keep the existing Bot runtime `1.2.0-expeditions-b1` and existing `.env`, database, and token storage unchanged.
-4. Redeploy the hosted Web service.
-5. Refresh the browser once if an older frontend revision remains cached.
-6. Confirm `/api/health` reports Web `1.2.0-expeditions-beta2`, frontend revision `1.2.0-expeditions-b2`, hosted sync schema 1, and Portal Action protocol 20.
-7. Open a detail card midway down a Portal page and confirm the background remains at the same scroll position when the card opens/closes.
-8. On Adventure Board, confirm current activity/results appear before routine actions and the Expedition Atlas can collapse independently.
+1. Back up the current Web deployment.
+2. Apply the **B2 → B2H1 Web patch**, or deploy the full Beta 2 Hotfix 1 Web package.
+3. Redeploy the hosted Web service.
+4. Hard-refresh once if an older frontend bundle remains cached.
+5. Open a detail card while scrolled well down a page and confirm it appears in the current viewport rather than at document top.
+6. Confirm `/api/health` reports Web `1.2.0-expeditions-beta2` and frontend revision `1.2.0-expeditions-b2h1`.
 
-No Bot deployment, database migration, player reset, OAuth change, or environment-variable change is required.
+No Bot update, database migration, OAuth change, environment-variable change, or player reset is required.

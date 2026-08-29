@@ -5,7 +5,7 @@ export const MAJOR_UPDATES = [
     title: "The Portal stays where you are",
     summary: "Beta 2 consolidates the v1.2 interface around current activity and player decisions, removes avoidable visual noise, and prevents expandable cards or catalogs from snapping the page away from the place you opened them.",
     highlights: [
-      { title: "Open cards in place", description: "Detail dialogs, Adventure Board collapsibles, Chocobo portrait selection, and Player Guide catalogs preserve the current viewport instead of jumping the background toward the top." },
+      { title: "Open cards in place", description: "Detail dialogs now open inside the current viewport while Adventure Board collapsibles, Chocobo portrait selection, and Player Guide catalogs preserve the current scroll position instead of jumping toward the top." },
       { title: "Current activity comes first", description: "Saved results and active Adventures now rise above routine choices, while the Board summarizes Solo Venture, Expedition, Hunt, and current-activity state at a glance." },
       { title: "Cleaner Expedition progression", description: "The Expedition Atlas keeps its progress bar visible but can collapse its secondary statistics and remembers that preference." },
       { title: "Less repeated reading", description: "Travel cards and recovery copy are tightened so requirements, state, and the next usable action carry the visual weight." },

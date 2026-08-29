@@ -1,3 +1,6 @@
+# v1.2.0 — Expeditions Beta 2 Hotfix 1
+Web-only current-viewport dialog positioning fix. Hosted runtime remains `1.2.0-expeditions-beta2`; frontend revision advances to `1.2.0-expeditions-b2h1`; compatible Bot remains `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
+
 # v1.2.0 — Expeditions Beta 2
 Web-only UX consolidation: viewport-preserving detail/disclosure behavior, action-first Adventure Board hierarchy, and independently collapsible Expedition Atlas detail. Hosted runtime `1.2.0-expeditions-beta2`; frontend revision `1.2.0-expeditions-b2`; compatible Bot remains `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
 

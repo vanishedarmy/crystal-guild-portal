@@ -130,3 +130,27 @@ body {
 @media (prefers-reduced-motion: reduce) {
   body { background-attachment: scroll; }
 }
+
+/* v1.2 Beta 2 Hotfix 1 — detail dialogs must open in the current viewport.
+ * The retro window layer previously made .detail-dialog position:relative,
+ * which caused top-layer dialogs to resolve against document layout. Keep
+ * them fixed to the visible viewport instead, so opening a card never
+ * requires scrolling back to where the dialog rendered. */
+.detail-dialog {
+  position: fixed !important;
+  inset: 50% auto auto 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  max-height: min(86dvh, 850px);
+}
+
+@media (max-width: 640px) {
+  .detail-dialog {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    margin: 0;
+    transform: none;
+  }
+}

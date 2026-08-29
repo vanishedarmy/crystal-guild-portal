@@ -8009,9 +8009,9 @@ main h1,
   .chocobo-portrait-toggle { width: 100%; min-width: 0; }
 }
 
-/* v1.1.19 Retro Phase III RC1 Hotfix 1 — scenic panel backgrounds.
-   Use ::after for scenic art so it does not collide with the shared .panel::before
-   decorative rule, which intentionally remains a 1px accent line. */
+/* v1.2 Beta 2 Hotfix 2 — portrait scenic backgrounds.
+   The new long-form artwork follows the full workspace instead of being cropped
+   into a short header band. Camp retains its existing horizontal scene treatment. */
 .adventure-camp-panel,
 .blacksmith-panel,
 .chocobo-stable-panel,
@@ -8021,23 +8021,35 @@ main h1,
   isolation: isolate;
 }
 
-/* The artwork lives in a dedicated upper scene band. A dark fade at the bottom
-   carries the scene back into the normal panel surface so long workspaces stay readable. */
 .adventure-camp-panel::after,
 .blacksmith-panel::after,
 .chocobo-stable-panel::after,
 .moogle-panel::after {
   content: "";
   position: absolute;
-  inset: 0 0 auto 0;
   z-index: 0;
   width: 100%;
-  height: clamp(320px, 48vw, 560px);
   pointer-events: none;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   opacity: 1;
+}
+
+/* Camp still uses the approved landscape scene band. */
+.adventure-camp-panel::after {
+  inset: 0 0 auto 0;
+  height: clamp(320px, 48vw, 560px);
+  background-size: cover;
+}
+
+/* Portrait scenes cover the complete long-form tab so scrolling continues through
+   the environment rather than dropping into a plain panel after the first screen. */
+.blacksmith-panel::after,
+.chocobo-stable-panel::after,
+.moogle-panel::after {
+  inset: 0;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
 }
 
 .adventure-camp-panel > *,
@@ -8058,22 +8070,22 @@ main h1,
 .blacksmith-panel::after {
   background-image:
     linear-gradient(180deg, rgba(9, 8, 10, .12) 0%, rgba(9, 12, 18, .40) 48%, rgba(8, 17, 26, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/blacksmith.png');
-  background-position: center 50%;
+    url('/retro-phase-iii/scene-backgrounds-v3/blacksmith.png');
+  background-position: center top;
 }
 
 .chocobo-stable-panel::after {
   background-image:
     linear-gradient(180deg, rgba(6, 14, 20, .10) 0%, rgba(6, 18, 26, .38) 48%, rgba(7, 18, 28, .95) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/chocobo_stable.png');
-  background-position: center 44%;
+    url('/retro-phase-iii/scene-backgrounds-v3/chocobo_stable.png');
+  background-position: center top;
 }
 
 .moogle-panel::after {
   background-image:
     linear-gradient(180deg, rgba(7, 10, 18, .10) 0%, rgba(9, 16, 27, .40) 48%, rgba(8, 18, 29, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/emporium.png');
-  background-position: center 48%;
+    url('/retro-phase-iii/scene-backgrounds-v3/emporium.png');
+  background-position: center top;
 }
 
 /* Give the first layer of functional UI its own translucent surface so text and
@@ -8094,11 +8106,14 @@ main h1,
 }
 
 @media (max-width: 720px) {
-  .adventure-camp-panel::after,
+  .adventure-camp-panel::after {
+    height: 360px;
+    background-position: center top;
+  }
   .blacksmith-panel::after,
   .chocobo-stable-panel::after,
   .moogle-panel::after {
-    height: 360px;
+    height: 100%;
     background-position: center top;
   }
 }
@@ -8633,7 +8648,7 @@ main h1,
 }
 
 
-/* v1.2 Expeditions Alpha 2 Hotfix 3 — Solo Venture + Relic Arsenal scenic backdrops */
+/* v1.2 Beta 2 Hotfix 2 — Solo Venture + Relic Arsenal portrait scenic backdrops */
 .solo-venture-panel,
 .relic-arsenal-panel {
   position: relative;
@@ -8645,13 +8660,14 @@ main h1,
 .relic-arsenal-panel::after {
   content: "";
   position: absolute;
-  inset: 0 0 auto 0;
+  inset: 0;
   z-index: 0;
   width: 100%;
-  height: clamp(300px, 46vw, 540px);
+  height: 100%;
   pointer-events: none;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center top;
   opacity: 1;
 }
 
@@ -8664,15 +8680,15 @@ main h1,
 .solo-venture-panel::after {
   background-image:
     linear-gradient(180deg, rgba(6, 12, 24, .12) 0%, rgba(7, 14, 26, .38) 48%, rgba(6, 12, 24, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/solo_venture.png');
-  background-position: center 46%;
+    url('/retro-phase-iii/scene-backgrounds-v3/solo_venture.png');
+  background-position: center top;
 }
 
 .relic-arsenal-panel::after {
   background-image:
     linear-gradient(180deg, rgba(8, 11, 20, .10) 0%, rgba(10, 16, 28, .38) 48%, rgba(6, 11, 21, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/relic_arsenal.png');
-  background-position: center 38%;
+    url('/retro-phase-iii/scene-backgrounds-v3/relic_arsenal.png');
+  background-position: center top;
 }
 
 .solo-venture-panel .solo-venture-rules span,
@@ -8685,7 +8701,7 @@ main h1,
 @media (max-width: 720px) {
   .solo-venture-panel::after,
   .relic-arsenal-panel::after {
-    height: 340px;
+    height: 100%;
     background-position: center top;
   }
 }

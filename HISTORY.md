@@ -1,3 +1,6 @@
+# v1.2.0 — Expeditions Beta 2 Hotfix 2
+Web-only portrait scenic-background fit pass and duplicate-airship cleanup. Hosted runtime remains `1.2.0-expeditions-beta2`; frontend revision `1.2.0-expeditions-b2h2`; compatible Bot `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
+
 # v1.2.0 — Expeditions Beta 2 Hotfix 1
 Web-only current-viewport dialog positioning fix. Hosted runtime remains `1.2.0-expeditions-beta2`; frontend revision advances to `1.2.0-expeditions-b2h1`; compatible Bot remains `1.2.0-expeditions-b1`; protocol 20 and DB schema 8 unchanged.
 

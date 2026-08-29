@@ -1,12 +1,12 @@
-# Upgrade Guide — Expeditions Beta 2 Hotfix 1
+# Upgrade Guide — Beta 2 Hotfix 1 → Beta 2 Hotfix 2
 
-This is a **Web-only** hotfix for an existing Beta 2 deployment. Keep the existing Beta 1 Bot.
+This is a Web-only visual hotfix. Keep the existing Beta 1 Bot.
 
 1. Back up the current Web deployment.
-2. Apply the **B2 → B2H1 Web patch**, or deploy the full Beta 2 Hotfix 1 Web package.
+2. Apply the B2H1 → B2H2 Web patch or deploy the full B2H2 Web package.
 3. Redeploy the hosted Web service.
-4. Hard-refresh once if an older frontend bundle remains cached.
-5. Open a detail card while scrolled well down a page and confirm it appears in the current viewport rather than at document top.
-6. Confirm `/api/health` reports Web `1.2.0-expeditions-beta2` and frontend revision `1.2.0-expeditions-b2h1`.
+4. Hard-refresh once so the `1.2.0-expeditions-b2h2` asset revision and portrait backgrounds load.
+5. Confirm Solo Venture, Relics Arsenal, Blacksmith, Chocobo Stable, and Moogle Emporium show the new long-form backgrounds.
+6. Confirm Guild Heroes and Player Guide display only one ambient airship.
 
-No Bot update, database migration, OAuth change, environment-variable change, or player reset is required.
+No Bot deployment, database migration, player reset, OAuth change, protocol change, or environment-variable change is required.

@@ -1,6 +1,6 @@
 {
-  "release": "v1.2.0 \u2014 Expeditions Alpha 2 Hotfix 3",
-  "frontend_asset_revision": "1.2.0-expeditions-a2h4",
+  "release": "v1.2.0 \u2014 Expeditions Beta 2 Hotfix 2",
+  "frontend_asset_revision": "1.2.0-expeditions-b2h2",
   "scene_backgrounds": [
     {
       "file": "camp.png",
@@ -15,53 +15,58 @@
     },
     {
       "file": "blacksmith.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v1/blacksmith.png",
-      "width": 1440,
-      "height": 810,
-      "bytes": 773577,
+      "path": "/retro-phase-iii/scene-backgrounds-v3/blacksmith.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 2647490,
       "usage": [
         "Blacksmith"
-      ]
+      ],
+      "format": "portrait"
     },
     {
       "file": "chocobo_stable.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v1/chocobo_stable.png",
-      "width": 1440,
-      "height": 810,
-      "bytes": 794542,
+      "path": "/retro-phase-iii/scene-backgrounds-v3/chocobo_stable.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 2751561,
       "usage": [
         "Chocobo Stable"
-      ]
+      ],
+      "format": "portrait"
     },
     {
       "file": "emporium.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v1/emporium.png",
-      "width": 1440,
-      "height": 810,
-      "bytes": 720135,
+      "path": "/retro-phase-iii/scene-backgrounds-v3/emporium.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 2728864,
       "usage": [
         "Moogle Emporium"
-      ]
+      ],
+      "format": "portrait"
     },
     {
       "file": "solo_venture.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v2/solo_venture.png",
-      "width": 1672,
-      "height": 941,
-      "bytes": 2650092,
+      "path": "/retro-phase-iii/scene-backgrounds-v3/solo_venture.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 2251825,
       "usage": [
         "Adventure Board \u2014 Solo Venture"
-      ]
+      ],
+      "format": "portrait"
     },
     {
       "file": "relic_arsenal.png",
-      "path": "/retro-phase-iii/scene-backgrounds-v2/relic_arsenal.png",
-      "width": 1672,
-      "height": 941,
-      "bytes": 2933274,
+      "path": "/retro-phase-iii/scene-backgrounds-v3/relic_arsenal.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 2688178,
       "usage": [
         "Relics Arsenal"
-      ]
+      ],
+      "format": "portrait"
     }
   ]
 }

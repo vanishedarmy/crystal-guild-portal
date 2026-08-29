@@ -24,7 +24,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.2.0-expeditions-beta2"
-FRONTEND_ASSET_REVISION = "1.2.0-expeditions-b2h1"
+FRONTEND_ASSET_REVISION = "1.2.0-expeditions-b2h2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 20
 ALLOWED_PORTAL_ACTIONS = {

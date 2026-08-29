@@ -8,7 +8,7 @@ test("Expeditions Beta 2 public web identity is centralized", () => {
   assert.equal(WEB_BUILD, "Expeditions Beta 2");
   assert.equal(WEB_RELEASE, "v1.2.0 — Expeditions Beta 2");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.2.0 — Expeditions Beta 2");
-  assert.equal(WEB_ASSET_REVISION, "1.2.0-expeditions-b2h1");
+  assert.equal(WEB_ASSET_REVISION, "1.2.0-expeditions-b2h2");
 });
 
 

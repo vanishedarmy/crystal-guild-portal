@@ -30,8 +30,7 @@ body {
   padding: clamp(.8rem, 2vw, 1.35rem);
   border: 1px solid rgba(83,101,143,.5);
   background:
-    linear-gradient(90deg, rgba(8,15,43,.96) 0%, rgba(15,29,69,.86) 58%, rgba(8,15,43,.44) 100%),
-    var(--env-airship) right 2.5rem center / min(31vw, 390px) auto no-repeat;
+    linear-gradient(90deg, rgba(8,15,43,.96) 0%, rgba(15,29,69,.86) 58%, rgba(8,15,43,.76) 100%);
   box-shadow: inset 0 0 0 1px rgba(231,240,255,.13), 4px 4px 0 rgba(0,0,0,.26);
 }
 

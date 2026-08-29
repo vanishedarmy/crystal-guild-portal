@@ -8,9 +8,9 @@ const PUBLIC = path.join(ROOT, "public");
 const CSS = fs.readFileSync(path.join(ROOT, "src/styles/portal.css"), "utf8");
 const scenes = {
   camp: "/retro-phase-iii/scene-backgrounds-v2/camp.png",
-  blacksmith: "/retro-phase-iii/scene-backgrounds-v2/blacksmith.png",
-  chocobo_stable: "/retro-phase-iii/scene-backgrounds-v2/chocobo_stable.png",
-  emporium: "/retro-phase-iii/scene-backgrounds-v2/emporium.png",
+  blacksmith: "/retro-phase-iii/scene-backgrounds-v3/blacksmith.png",
+  chocobo_stable: "/retro-phase-iii/scene-backgrounds-v3/chocobo_stable.png",
+  emporium: "/retro-phase-iii/scene-backgrounds-v3/emporium.png",
 };
 
 const components = {
@@ -21,7 +21,7 @@ const components = {
   "recovery-dashboard": "src/player/Inventory.jsx",
 };
 
-test("RC1H1 scenic backgrounds exist, are cache-busted, and are bound to live Portal components", () => {
+test("current scenic backgrounds exist and are bound to live Portal components", () => {
   for (const [name, url] of Object.entries(scenes)) {
     assert.match(CSS, new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${name} CSS route`);
     assert.ok(fs.existsSync(path.join(PUBLIC, url.slice(1))), `${name} asset exists`);
@@ -31,10 +31,11 @@ test("RC1H1 scenic backgrounds exist, are cache-busted, and are bound to live Po
     assert.match(source, new RegExp(className), `${className} is present on live component`);
   }
   assert.match(CSS, /\.adventure-camp-panel::after[\s\S]*scene-backgrounds-v2\/camp\.png/);
-  assert.match(CSS, /\.blacksmith-panel::after[\s\S]*scene-backgrounds-v2\/blacksmith\.png/);
-  assert.match(CSS, /\.chocobo-stable-panel::after[\s\S]*scene-backgrounds-v2\/chocobo_stable\.png/);
-  assert.match(CSS, /\.moogle-panel::after[\s\S]*scene-backgrounds-v2\/emporium\.png/);
-  assert.match(CSS, /height:\s*clamp\(320px,\s*48vw,\s*560px\)/);
+  assert.match(CSS, /\.blacksmith-panel::after[\s\S]*scene-backgrounds-v3\/blacksmith\.png/);
+  assert.match(CSS, /\.chocobo-stable-panel::after[\s\S]*scene-backgrounds-v3\/chocobo_stable\.png/);
+  assert.match(CSS, /\.moogle-panel::after[\s\S]*scene-backgrounds-v3\/emporium\.png/);
+  assert.match(CSS, /\.adventure-camp-panel::after[\s\S]*height:\s*clamp\(320px,\s*48vw,\s*560px\)/);
+  assert.match(CSS, /\.blacksmith-panel::after,[\s\S]*height:\s*100%/);
   assert.match(CSS, /recovery-dashboard::before/);
   assert.match(CSS, /prefers-contrast:\s*more/);
   assert.match(CSS, /@media \(max-width:\s*720px\)/);

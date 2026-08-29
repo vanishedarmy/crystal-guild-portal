@@ -2218,8 +2218,7 @@ body{
 }
 .hero{
   background:
-    linear-gradient(100deg,rgba(20,38,88,.98) 0%,rgba(9,15,45,.95) 58%,rgba(9,15,45,.60) 100%),
-    var(--env-airship) right 4vw center/min(34vw,500px) auto no-repeat;
+    linear-gradient(100deg,rgba(20,38,88,.98) 0%,rgba(9,15,45,.95) 58%,rgba(9,15,45,.78) 100%);
 }
 .hero:after{
   width:86px;height:116px;right:3.2vw;top:auto;bottom:18px;border:0;border-radius:0;transform:none;

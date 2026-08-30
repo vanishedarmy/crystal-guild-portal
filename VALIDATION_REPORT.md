@@ -1,41 +1,39 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Beta 2 Validation Report
+# Crystal Guild v1.4.0 — Dungeons & Delves Beta 3 Validation Report
 
 ## Result
 **PASS**
 
 ## Automated suites
-- Frontend Node regression suite: **389 / 389 PASS**.
+- Frontend Node regression suite: **393 / 393 PASS**.
 - Hosted Web/API Python unittest suite: **47 / 47 PASS**.
-- Compatible Beta 1 Bot remains unchanged at its shipping baseline: **522 / 522 PASS**.
+- Matching Beta 3 Bot suite: **526 / 526 PASS**.
 
-## Beta 2 UX/mobile coverage
-- Active delve view exposes chamber progress, Dungeon identity, current state, and retreat value in one run-status group.
-- Carried Cache is separated and explicitly labeled as at-risk until the delve ends.
-- Crossroads consequences use individual scannable effect chips.
-- Result reports expose the exact Cache settlement rate and outcome explanation.
-- Clear / retreat / defeat settlement remains **100% / 50% / 25%** with no balance change.
-- Dungeon cards consolidate level, length, choices/events, and personal record.
-- Mobile Dungeon battle commands use a two-column action grid; route choices and cards collapse cleanly for narrow screens.
-- Beta 1 run/chamber/revision stale-tab binding remains present in the Web action payloads and regression suite.
+## Beta 3 coverage
+- Mobile Dungeon Board title row uses a dedicated two-column layout on <=620px.
+- Dungeon disclosure control is pinned to the right column and retains compact sizing.
+- Shared pointer remains right-hand when closed and down-hand when open.
+- Player Guide documents stale-tab refresh and safe same-action retry.
+- Beta 2 run-status, Cache, route-effect, settlement, and mobile combat UX remain intact.
+- Bot cross-connection concurrency tests prove only one different action ID can spend a given run/chamber/revision, while duplicate delivery of the same action ID replays once.
 
 ## Source / asset validation
-- Hosted Web Python compile sweep: **8 / 8 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **195 / 195 PASS**.
-- Plain JS/MJS `node --check`: **155 / 155 PASS**.
-- Quoted literal image-route audit: **226 routes / 0 missing**.
-- Public artwork remains **0 PNG / 576 WebP**.
-- No new artwork is added in Beta 2.
+- Python compile sweep across Bot + Web: **96 / 96 PASS**.
+- Frontend JS/JSX/MJS TypeScript-parser sweep: **196 / 196 PASS**.
+- Plain JS/MJS `node --check`: **156 / 156 PASS**.
+- Active quoted literal image-route audit: **149 routes / 0 missing**.
+- Public artwork: **0 PNG / 576 WebP**.
+- GameData: **4 Dungeons / 0 errors**.
 
-## Payload / compatibility continuity
-- The authoritative Adventure-state data contract is unchanged from Beta 1; the all-four-Dungeon payload remains **15,368 bytes**, leaving **1,016 bytes** below the 16 KiB guardrail.
-- Compatible Bot runtime: `1.4.0-dungeons-b1`.
-- Hosted Web/frontend: `1.4.0-dungeons-b2`.
-- Local DB schema **10**, hosted sync schema **1**, Portal Action protocol **25**, Twitch prefix `!`.
-- No Bot update, DB migration, player reset, OAuth/environment change, or gameplay/economy/balance change.
+## Payload / compatibility
+- Adventure state with all four Dungeons unlocked: **15,368 bytes**, **1,016 bytes** below the 16 KiB guardrail.
+- Bot/Web/frontend: `1.4.0-dungeons-b3`.
+- Schema **10**, hosted sync **1**, Portal protocol **25**, Twitch prefix `!`.
+- No migration, reset, OAuth/environment, gameplay/economy, or balance change.
 
-## Patch/package verification
-- Beta 1 → Beta 2 Web patch: **55 changed/new files, 0 deletions**.
-- Patch helper reconstructs **823 / 823** final Web shipping files exactly.
-- Full Web and patch ZIP CRC/integrity: **PASS**.
+## Packaging verification
+- Beta 1 → Beta 3 Bot patch: **17 changed/new files, 0 deletions**; reconstructs **153 / 153 Bot files** exactly.
+- Beta 2 → Beta 3 Web patch: **56 changed/new files, 0 deletions**; reconstructs **824 / 824 Web files** exactly.
+- Individual patch helpers and the paired updater reproduce the exact final shipping trees.
+- All **6 / 6** release ZIPs pass CRC/integrity checks.
 - Runtime/private-artifact hygiene: **0 violations**.
 - SHA-256 verification: **PASS**.

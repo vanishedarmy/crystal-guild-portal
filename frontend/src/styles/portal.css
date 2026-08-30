@@ -10053,3 +10053,30 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
   .dungeon-run-status-grid, .dungeon-card-stats { grid-template-columns:1fr; }
   .dungeon-cache-grid, .dungeon-result-rewards { grid-template-columns:1fr 1fr !important; }
 }
+
+
+/* v1.4.0 Dungeons & Delves Beta 3 — mobile disclosure alignment hardening. */
+@media (max-width: 620px) {
+  .dungeon-board-title-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px;
+    align-items: start !important;
+    width: 100%;
+  }
+  .dungeon-board-title-row > div:first-child {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+  .dungeon-board-collapse-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+    width: 40px;
+    min-width: 40px !important;
+    max-width: 40px;
+    min-height: 40px;
+    margin: 0;
+  }
+}

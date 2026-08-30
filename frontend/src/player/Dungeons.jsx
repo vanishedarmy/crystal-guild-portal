@@ -135,7 +135,7 @@ export default function Dungeons({
         <img className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
         <div className="panel-title-row dungeon-board-title-row">
           <div>
-            <p className="eyebrow">Dungeons & Delves · Beta 2</p>
+            <p className="eyebrow">Dungeons & Delves · Beta 3</p>
             <h2>{active ? active.name : "Dungeon Board"}</h2>
             <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
           </div>

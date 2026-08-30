@@ -26,10 +26,10 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-b2"/);
-  assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Beta 2");
-  assert.equal(guideData.meta.release, "1.4.0-dungeons-b2");
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-b3"/);
+  assert.equal(guideData.meta.version, "v1.4.0 — Dungeons & Delves Beta 3");
+  assert.equal(guideData.meta.release, "1.4.0-dungeons-b3");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 25/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

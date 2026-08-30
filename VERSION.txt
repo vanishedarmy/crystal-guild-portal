@@ -1,1 +1,1 @@
-1.4.0-dungeons-b2
+1.4.0-dungeons-b3

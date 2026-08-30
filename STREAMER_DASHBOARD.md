@@ -1,3 +1,3 @@
-# Dungeons & Delves Beta 2 compatibility
+# Dungeons & Delves Beta 3 compatibility
 
-The Streamer Dashboard remains compatible with the existing Beta 1 owner controls and Portal Action protocol **25**. `!clearadventures` / the corresponding owner recovery control continues to clear active Dungeon runs while preserving completed Dungeon records. Beta 2 makes no streamer-command or Bot behavior changes.
+The Streamer Dashboard remains compatible with Portal Action protocol **25** and existing owner recovery controls. `!clearadventures` / the corresponding recovery control continues to clear active Dungeon runs while preserving completed Dungeon records. Beta 3 adds shared-state serialization but no new streamer commands or balance behavior.

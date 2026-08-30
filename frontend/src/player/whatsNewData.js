@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Beta 2",
-    title: "Dungeon UX & mobile consolidation",
-    summary: "Beta 2 freezes Dungeon content at four delves and concentrates the active delve, choices, Cache risk, results, and mobile controls into a clearer player-facing flow.",
+    name: "Dungeons & Delves Beta 3",
+    title: "Dungeon shared-state hardening",
+    summary: "Beta 3 keeps the four-Dungeon feature freeze and hardens simultaneous Portal actions, restart-safe replay handling, and the final mobile Dungeon Board disclosure layout before release-candidate work.",
     highlights: [
-      { title: "Run status at a glance", description: "Active delves now surface chamber progress, Dungeon identity, current state, and retreat value before the detailed room content." },
-      { title: "Clearer risk and rewards", description: "The carried Cache, route consequences, and 100% / 50% / 25% clear-retreat-defeat settlement rules are easier to scan before committing." },
-      { title: "Cleaner Dungeon cards", description: "Entry/recommended level, length, routes/events, and personal clear record are consolidated into four readable blocks." },
-      { title: "Mobile-first battle flow", description: "Dungeon cards, route choices, combat actions, result summaries, and retreat controls collapse cleanly for narrow screens without horizontal crowding." },
-      { title: "Beta 1 reliability retained", description: "Exact run, chamber, and revision binding remains active so stale tabs cannot spend a second combat turn after the authoritative state advances." },
+      { title: "One authoritative Dungeon action", description: "State-guarded mutations now acquire SQLite write intent before validating live state, so separate Bot connections cannot spend the same Dungeon revision concurrently." },
+      { title: "Replay remains exact", description: "Retries using the same Portal action ID still return the committed receipt rather than repeating a combat round, route choice, retreat, or settlement." },
+      { title: "Stale tabs fail closed", description: "Run, chamber, and revision binding from Beta 1 remains authoritative after another tab or connection advances the delve." },
+      { title: "Mobile pointer stays put", description: "The Dungeon Board disclosure button now remains fixed to the right side of its header on narrow screens while keeping right-closed and down-open pointer states." },
+      { title: "Content remains frozen", description: "Forgotten Ossuary, Emberglass Foundry, Whiteglass Bastion, and Riftglass Observatory remain the complete Beta catalog with no economy or balance changes." },
     ],
     action: { tab: "adventure", label: "Open Dungeon Board" },
   },

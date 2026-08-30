@@ -26,9 +26,9 @@ test("Dungeons Beta 2 has narrow-screen Dungeon layouts", () => {
 });
 
 test("Dungeons Beta 2 advances only Web identity and player-facing guidance", () => {
-  assert.match(version, /1\.4\.0-dungeons-b2/);
-  assert.match(news, /Dungeons & Delves Beta 2/);
-  assert.match(news, /Dungeon UX & mobile consolidation/);
+  assert.match(version, /1\.4\.0-dungeons-b3/);
+  assert.match(news, /Dungeons & Delves Beta 3/);
+  assert.match(news, /Dungeon shared-state hardening/);
   assert.match(guide, /Reading an active delve/);
   assert.match(guide, /room progress, delve style, current state/);
 });

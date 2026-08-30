@@ -1,15 +1,17 @@
-# Upgrade Guide — Crystal Guild v1.4.0 — Dungeons & Delves Beta 2
+# Upgrade Guide — Crystal Guild v1.4.0 — Dungeons & Delves Beta 3
 
-Baseline: **v1.4.0 Dungeons & Delves Beta 1 Web + Beta 1 Bot**.
+Expected live baseline: **Beta 2 Web + Beta 1 Bot**.
 
-1. Leave the Bot, database, token storage, `.env`, and persistent state untouched.
-2. Deploy the full **Beta 2 Web package**, or apply the **Beta 1 → Beta 2 Web patch** to the current Beta 1 Web root.
-3. Restart/redeploy the hosted Web service only.
-4. Verify `!cgversion` on the unchanged Bot still reports `1.4.0-dungeons-b1` with local schema **10**.
-5. Verify `/api/health` reports hosted Web/frontend `1.4.0-dungeons-b2`, hosted sync schema **1**, and Portal Action protocol **25**.
-6. Open the Dungeon Board and verify all four existing delves and their unlock/record state remain unchanged.
-7. During an active delve, confirm the new run-status row, Carried Cache block, route-effect chips, and clear/retreat/defeat settlement guidance are readable.
-8. On a narrow/mobile viewport, verify Dungeon cards stack cleanly, route choices use one column, and the four combat commands render as a two-column touch grid.
-9. Confirm an older browser tab still fails closed after a newer Dungeon mutation, preserving the Beta 1 exact run/chamber/revision contract.
+1. Back up the current player database and persistent Twitch/token data.
+2. Stop the Bot cleanly.
+3. Apply the **Beta 1 → Beta 3 Bot patch** while preserving `.env`, the live database, token storage, and persistent-disk configuration.
+4. Apply the **Beta 2 → Beta 3 Web patch** or deploy the full Beta 3 Web package.
+5. Restart/redeploy Bot and Web together.
+6. Verify `!cgversion` reports `1.4.0-dungeons-b3`, schema **10**, and protocol **25**.
+7. Verify `/api/health` reports Web/frontend `1.4.0-dungeons-b3`, hosted sync schema **1**, and Portal Action protocol **25**.
+8. On mobile/narrow view, confirm the Dungeon Board disclosure stays at the right edge and switches right-hand closed / down-hand open.
+9. Confirm a stale Dungeon tab fails closed after another tab/connection advances the same run state, and refresh loads the latest state.
+10. Confirm duplicate retry of the same pending action does not resolve twice.
+11. Confirm all four Dungeons and existing player/Guild/Expedition state remain intact.
 
-No Bot update, database migration, player reset, OAuth change, environment-variable change, protocol change, or gameplay rebalance is included.
+No database migration, protocol change, player reset, OAuth change, or new environment variable is required.

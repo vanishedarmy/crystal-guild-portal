@@ -1,22 +1,18 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Beta 2
+# Crystal Guild Web v1.4.0 — Dungeons & Delves Beta 3
 
-Crystal Guild is a persistent Final Fantasy-inspired Twitch RPG with a companion Adventurer Portal. Beta 2 is the Web-only Dungeon UX/mobile consolidation pass built on the feature-frozen Beta 1 ruleset.
+Beta 3 is the final Dungeon hardening pass before release-candidate work. The Web keeps Beta 2's active-run/mobile consolidation, adds the final Dungeon Board mobile disclosure correction, and pairs with the Beta 3 Bot's cross-connection state serialization.
 
-## Beta 2 focus
-
-- Clearer active-run hierarchy and carried Cache presentation.
-- Scannable Crossroads consequences and explicit 100% / 50% / 25% end-of-run settlement guidance.
-- Consolidated Dungeon cards and result reports.
-- Narrow-screen Dungeon cards, route choices, combat commands, and retreat controls.
-- No gameplay, reward, schema, protocol, or Bot changes.
+## Beta 3 Web focus
+- Dungeon Board collapse control remains fixed to the right side of its header on mobile/narrow screens.
+- Shared pointer remains right when closed and down when open.
+- What's New and Player Guide explain the final Beta stability/retry behavior.
+- Four-Dungeon catalog, rewards, settlement ratios, records, and Beta 2 UX remain unchanged.
 
 ## Runtime identity
-
-- Compatible Bot: `1.4.0-dungeons-b1`
-- Hosted Web/frontend: `1.4.0-dungeons-b2`
+- Hosted Web/frontend: `1.4.0-dungeons-b3`
+- Compatible Bot: `1.4.0-dungeons-b3`
 - Local DB schema: **10**
 - Hosted sync schema: **1**
 - Portal Action protocol: **25**
-- Twitch command prefix: `!`
 
-Deploy Beta 2 Web over the Beta 1 Web installation and keep the Beta 1 Bot unchanged. See `UPGRADE_GUIDE.md`.
+Deploy the Beta 3 Web and Bot together.

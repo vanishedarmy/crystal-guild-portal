@@ -1,42 +1,31 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Beta 2
+# Crystal Guild v1.4.0 — Dungeons & Delves Beta 3
 
-## Dungeon UX & Mobile Consolidation — Web-only
+## Final Beta hardening
 
-Beta 2 keeps the v1.4 Dungeon feature set frozen at four delves and focuses on player-facing clarity. The authoritative Dungeon rules, rewards, persistence, exact run/chamber/revision action contract, schema, and Portal protocol are unchanged from Beta 1.
+Beta 3 keeps the four-Dungeon feature freeze and combines final shared-state reliability work with a small mobile disclosure correction before release-candidate work.
 
-### Active delve hierarchy
-- Adds a compact run-status row for chamber progress, Dungeon identity, current state, and retreat value.
-- Separates the carried Dungeon Cache from room copy and labels it clearly as at-risk progress.
-- Keeps discoveries and pending route consequences close to the current room without repeating rules text.
+### Shared-state reliability
+- The matching Beta 3 Bot serializes authoritative state-guarded mutations at the SQLite write boundary before reading current Dungeon state.
+- Independent Bot/database connections therefore cannot spend the same Dungeon revision concurrently.
+- Exact run/chamber/revision binding remains in place, and same action-ID replay remains safe and idempotent.
 
-### Route and settlement clarity
-- Crossroads consequences render as individual effect chips instead of one dense sentence.
-- Result reports explicitly identify the Cache settlement rate and explain what was banked.
-- Active runs keep the full settlement rule visible: **clear 100% / retreat 50% / defeat 25%**.
-- Retreat confirmation now states exactly what will be banked and what will be left behind.
+### Mobile Dungeon Board correction
+- On screens **620px and below**, the Dungeon Board title row uses a dedicated two-column layout.
+- The disclosure button is pinned to the **right-hand column** instead of wrapping to the left under generic mobile panel rules.
+- Pointer state remains **right when closed / down when open**.
+- The shared compact disclosure sizing remains unchanged.
 
-### Dungeon Board cleanup
-- Dungeon cards consolidate entry/recommended level, chamber length, route/event count, and personal record into four readable blocks.
-- Existing first-clear state, unlock requirements, scene artwork, and clear records remain unchanged.
-
-### Mobile consolidation
-- Dungeon cards and route choices collapse to a single-column flow on narrow screens.
-- Active-run status and Cache blocks use compact two-column layouts where space allows.
-- Dungeon combat actions use a stable two-column touch layout on phones instead of a crowded horizontal row.
-- Results and retreat controls become full-width where that improves touch readability.
+### Player guidance
+- What's New identifies Beta 3 as the final shared-state hardening pass.
+- Player Guide now explains stale-tab behavior in player language: refresh an older tab to obtain the latest Dungeon state; retrying the same pending action remains safe.
+- Beta 2 active-run hierarchy, Cache risk blocks, route-effect chips, settlement clarity, and mobile combat layout remain intact.
 
 ### Compatibility
-- Compatible Bot runtime: `1.4.0-dungeons-b1` — unchanged
-- Hosted Web runtime: `1.4.0-dungeons-b2`
-- Frontend asset revision: `1.4.0-dungeons-b2`
+- Hosted Web/frontend: `1.4.0-dungeons-b3`
+- Compatible Bot: `1.4.0-dungeons-b3`
 - Local DB schema: **10** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **25** unchanged
-- Twitch prefix: `!`
-- Database migration: **none**
-- Player reset: **none**
-- OAuth/environment changes: **none**
-- New environment variables: **none**
-- Gameplay/economy/balance changes: **none**
+- No DB migration, player reset, OAuth/environment change, new environment variables, or gameplay/economy rebalance.
 
-Beta 2 is a **Web-only update**. The existing Beta 1 Bot remains the compatible authoritative runtime.
+Deploy Beta 3 Web and Bot together to receive the complete hardening pass.

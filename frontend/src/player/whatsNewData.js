@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Alpha 3",
-    title: "Dungeon routes now shape the rooms ahead",
-    summary: "Alpha 3 gives each delve a stronger reward identity, adds first-clear bonuses and persistent route consequences, and opens a third higher-level Dungeon — The Whiteglass Bastion.",
+    name: "Dungeons & Delves Alpha 4",
+    title: "Dungeons grow stranger and more dangerous",
+    summary: "Alpha 4 expands Dungeons with a fourth high-level delve, weighted Event chambers, richer treasure and hazard outcomes, and room-specific miniboss and boss rules.",
     highlights: [
-      { title: "A third Dungeon", description: "The Whiteglass Bastion unlocks at Lv.26 after charting 45% of Frostveil Reach, with nine chambers, two Crossroads, an Iron Giant miniboss, and a Behemoth finale." },
-      { title: "Choices echo forward", description: "Crossroads can now ward the next hazard, make the next foe weaker or stronger, or increase the rewards from the next combat instead of only changing immediate HP and Cache." },
-      { title: "First clears matter", description: "Every Dungeon now has a one-time first-clear bonus built around its identity: relic salvage in the Ossuary, forge materials in Emberglass, and warded Frostveil materials in Whiteglass." },
-      { title: "Know the trade before choosing", description: "Route buttons preview their actual effects, while active route modifiers remain visible until the affected hazard or battle consumes them." },
-      { title: "Records read more clearly", description: "Dungeon cards now expose their identity, clear record, best chamber, route count, and whether the first-clear reward has already been claimed." },
+      { title: "A fourth Dungeon", description: "The Riftglass Observatory unlocks at Lv.34 after charting 55% of The Astral Scar, with ten chambers, two Crossroads, a weighted Event chamber, and a pressure-heavy final sequence." },
+      { title: "Dungeon events arrive", description: "Event chambers can resolve different weighted outcomes, changing HP or MP/AP, adding Cache rewards and discoveries, or shaping the next hazard or battle." },
+      { title: "Encounter rules deepen", description: "Minibosses and bosses can now carry tighter round limits, opening pressure, resource drain, and temporary enemy statuses that are shown directly on the battle card." },
+      { title: "Choices echo forward", description: "The forward-route system from Whiteglass Bastion remains intact: Crossroads can ward the next hazard, alter the next foe, or increase the rewards of a later combat." },
+      { title: "First clears matter", description: "One-time first-clear rewards remain part of every current Dungeon, including the new Astral Scar delve." },
     ],
     action: { tab: "hunts", label: "Open Dungeon Board" },
   },

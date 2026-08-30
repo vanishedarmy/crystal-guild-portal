@@ -1,29 +1,45 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 3
+# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 4
 
-## Dungeon Depth & Reward Identity
+## Dungeon Encounter & Event Expansion
 
-Alpha 3 is a paired Dungeon feature update based on **Alpha 2 Bot + Alpha 2 Web Hotfix 1**. It adds the third delve, forward route consequences, first-clear identity, and matching Portal/Guide presentation while keeping schema **10** and Portal Action protocol **24** unchanged.
+Alpha 4 builds on Alpha 3 with a fourth high-level delve, weighted Dungeon Event chambers, richer room outcomes, and encounter-specific miniboss/boss pressure. Existing Dungeon persistence, run/chamber stale-tab binding, replay protection, retreat/defeat settlement, Crossroads route effects, and first-clear records remain intact.
 
-### Dungeon Board
-- Adds **The Whiteglass Bastion**: Lv.26 entry, Lv.30 recommended, unlocked at 45% Frostveil Reach exploration.
-- Dungeon cards now carry a clear reward identity and first-clear reward status.
-- The Alpha 2 H1 Dungeon Board artwork and normalized disclosure pointer treatment remain intact.
+### The Riftglass Observatory
+- Adds the fourth persistent Dungeon: **The Riftglass Observatory**.
+- Unlock: character **Lv. 34** plus **55% The Astral Scar** Expedition exploration.
+- Recommended level: **38**.
+- Ten chambers with two Crossroads, one weighted Event chamber, a Death Machine miniboss, sanctuary, and Crystal Wolf finale.
+- Dungeon identity: **Anomalies & Pressure**.
 
-### Active-run clarity
-- Crossroads options show their immediate and forward effects before selection.
-- Pending route effects are visible on the active run and combat panels.
-- First-clear bonuses are surfaced in completion results.
+### Dungeon Events
+- Adds the new **Event** room type without adding a new Portal action or database table.
+- Event rooms select from validated weighted outcomes and can restore or drain resources, damage/heal the hero, add Dungeon Cache XP/JP/Gil/items, record discoveries, or shape a later hazard/combat.
+- Event outcomes are resolved authoritatively and persisted with the active Dungeon run.
 
-### Player Guide / What’s New
-- Documents all three current delves and explains route effects that persist into later chambers.
-- Current What’s New advances to Alpha 3 while Previous major updates remains stable-release-only.
+### Encounter rules and opening pressure
+- Dungeon combat rooms can define their own round limit, opening HP/resource pressure, temporary enemy statuses, and player-facing mechanic notes.
+- The Riftglass Observatory miniboss begins protected and must be defeated within 10 rounds.
+- The final Crystal Wolf begins with Haste/brief Regen, drains 12% max MP/AP on entry, and has a 9-round collapse window.
+- Existing player-paced Dungeon combat, items, abilities, Defend, Bestiary credit, and cache settlement remain unchanged.
+
+### Richer room outcomes
+- Treasure, hazard, sanctuary, Crossroads, and Event rooms now share a validated effect engine.
+- Forward modifiers remain restart-safe and are consumed only by the relevant later room.
+- Existing first-clear bonuses and Dungeon reward identities remain intact.
+
+### Payload hardening
+- Empty optional Dungeon/Hunt fields are omitted where the Web already has safe defaults.
+- With all four Dungeons unlocked, the Adventure-state payload serializes to **15,475 bytes**, leaving **909 bytes** below the 16 KiB transport guardrail.
 
 ### Compatibility
-- Hosted Web runtime: `1.4.0-dungeons-a3`
-- Frontend asset revision: `1.4.0-dungeons-a3`
-- Compatible Bot runtime: `1.4.0-dungeons-a3`
+- Bot runtime: `1.4.0-dungeons-a4`
+- Hosted Web runtime: `1.4.0-dungeons-a4`
+- Frontend asset revision: `1.4.0-dungeons-a4`
 - Local DB schema: **10** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **24** unchanged
 - Twitch prefix: `!`
-- Migration/reset/OAuth/environment changes: **none**
+- Database migration: **none from Alpha 3**
+- Player reset: **none**
+- OAuth/environment changes: **none**
+- Non-Dungeon gameplay/economy rebalance: **none**

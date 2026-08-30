@@ -1,11 +1,11 @@
-Crystal Guild v1.4.0 Dungeons & Delves Alpha 3 — Web Patch Manifest
-Baseline: v1.4.0 Dungeons & Delves Alpha 2 Web Hotfix 1
-Target: 1.4.0-dungeons-a3
+Crystal Guild v1.4.0 Dungeons & Delves Alpha 4 — Web Patch Manifest
+Baseline: v1.4.0 Dungeons & Delves Alpha 3 Web
+Target: 1.4.0-dungeons-a4
 Schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 24
 Changed/new files: 53
-Deletions: 1
+Deletions: 0
 
 Changed/new:
 - FINALIZATION_AUDIT.md
@@ -26,7 +26,6 @@ Changed/new:
 - crystal_guild/hosted_portal.py
 - frontend/public/guide-body.html
 - frontend/public/guide-data.json
-- frontend/public/guide.css
 - frontend/public/raid-overlay.html
 - frontend/src/player/Dungeons.jsx
 - frontend/src/player/whatsNewData.js
@@ -38,6 +37,7 @@ Changed/new:
 - frontend/tests/dungeonsAlpha1.test.mjs
 - frontend/tests/dungeonsAlpha2.test.mjs
 - frontend/tests/dungeonsAlpha3.test.mjs
+- frontend/tests/dungeonsAlpha4.test.mjs
 - frontend/tests/expeditionsBeta1.test.mjs
 - frontend/tests/expeditionsBeta2.test.mjs
 - frontend/tests/expeditionsBeta2ViewportHotfix.test.mjs
@@ -61,6 +61,3 @@ Changed/new:
 - frontend/tests/version.test.mjs
 - frontend/tests/whatsNew.test.mjs
 - tests/test_hosted_portal.py
-
-Deleted:
-- PATCH_MANIFEST.txt

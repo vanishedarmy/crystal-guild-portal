@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.4.0-dungeons-a3"
-FRONTEND_ASSET_REVISION = "1.4.0-dungeons-a3"
+HOSTED_PORTAL_VERSION = "1.4.0-dungeons-a4"
+FRONTEND_ASSET_REVISION = "1.4.0-dungeons-a4"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 24
 ALLOWED_PORTAL_ACTIONS = {

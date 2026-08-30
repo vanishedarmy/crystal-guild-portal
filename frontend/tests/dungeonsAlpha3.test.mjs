@@ -6,7 +6,7 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("Alpha 3 Dungeon UI exposes route consequences and first-clear identity", () => {
   const board = read("../src/player/Dungeons.jsx");
-  assert.match(board, /Dungeons & Delves · Alpha 3/);
+  assert.match(board, /Dungeons & Delves · Alpha 4/);
   assert.match(board, /Route effects ahead/);
   assert.match(board, /First Clear/);
   assert.match(board, /choice\.effects/);
@@ -15,7 +15,7 @@ test("Alpha 3 Dungeon UI exposes route consequences and first-clear identity", (
 
 test("Alpha 3 What's New introduces Whiteglass and forward route effects", () => {
   const news = read("../src/player/whatsNewData.js");
-  assert.match(news, /Dungeons & Delves Alpha 3/);
+  assert.match(news, /Dungeons & Delves Alpha 4/);
   assert.match(news, /Whiteglass Bastion/);
   assert.match(news, /Choices echo forward/);
   assert.match(news, /First clears matter/);

@@ -1,5 +1,10 @@
 # Crystal Guild Web History
 
+## v1.5.0 — Trails & Raids Alpha 2
+- Shiva — Diamond Throne: Frostbrand Cleave, Icebound Mirrors, Diamond Aegis, Stagger, Diamond Dust.
+- Adds and Break/Stagger public state, role-aware contribution display, no schema/protocol change.
+- Runtime/frontend/Bot `1.5.0-trails-raids-a2`.
+
 ## v1.5.0 — Trails & Raids Alpha 1 Hotfix 2
 - Web-only Player Guide completeness and visual-cleanup pass.
 - Gives The Riftglass Observatory a dedicated Dungeons & Delves guide dossier with its full ten-chamber/Event/miniboss/finale identity.

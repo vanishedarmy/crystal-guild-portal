@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.5.0-trails-raids-a1h1"
-FRONTEND_ASSET_REVISION = "1.5.0-trails-raids-a1h2"
+HOSTED_PORTAL_VERSION = "1.5.0-trails-raids-a2"
+FRONTEND_ASSET_REVISION = "1.5.0-trails-raids-a2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 25
 ALLOWED_PORTAL_ACTIONS = {
@@ -1597,7 +1597,7 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
     allowed = {
         "active", "status", "boss", "tier", "encounter_type", "encounter_name",
         "hp", "max_hp", "round", "phase", "signature", "raiders", "alive",
-        "enraged", "summon_gauge", "top", "mechanic", "last_mechanic",
+        "enraged", "summon_gauge", "top", "adds", "mechanic", "last_mechanic",
         "next_round_at", "updated_at",
     }
     extra = set(overlay) - allowed
@@ -1608,10 +1608,10 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
     if not isinstance(top, list) or len(top) > 5:
         raise ValueError("Overlay contribution list is invalid.")
     for item in top:
-        if not isinstance(item, dict) or set(item) - {"name", "damage", "healing", "mitigation", "score"}:
+        if not isinstance(item, dict) or set(item) - {"name", "role", "damage", "healing", "mitigation", "score"}:
             raise ValueError("Overlay contribution entry is invalid.")
-        if len(str(item.get("name") or "")) > 80:
-            raise ValueError("Overlay contribution name is invalid.")
+        if len(str(item.get("name") or "")) > 80 or len(str(item.get("role") or "")) > 24:
+            raise ValueError("Overlay contribution name or role is invalid.")
         for key in ("damage", "healing", "mitigation", "score"):
             if key in item:
                 try:
@@ -1620,6 +1620,21 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
                     raise ValueError("Overlay contribution value is invalid.") from None
                 if value < 0:
                     raise ValueError("Overlay contribution value is invalid.")
+
+    adds = overlay.get("adds", [])
+    if not isinstance(adds, list) or len(adds) > 4:
+        raise ValueError("Overlay add list is invalid.")
+    for item in adds:
+        if not isinstance(item, dict) or set(item) - {"name", "hp", "max_hp"}:
+            raise ValueError("Overlay add entry is invalid.")
+        if len(str(item.get("name") or "")) > 80:
+            raise ValueError("Overlay add name is invalid.")
+        try:
+            hp = int(item.get("hp", 0)); max_hp = int(item.get("max_hp", 0))
+        except (TypeError, ValueError):
+            raise ValueError("Overlay add HP is invalid.") from None
+        if hp < 0 or max_hp < 1 or hp > max_hp:
+            raise ValueError("Overlay add HP is invalid.")
 
     mechanic_keys = {"name", "kind", "warning", "target", "result", "rounds_remaining", "required", "progress"}
     for field in ("mechanic", "last_mechanic"):

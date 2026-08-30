@@ -1,38 +1,41 @@
-# Crystal Guild v1.5.0 — Trails & Raids Alpha 1 Hotfix 2 Validation Report
+# Crystal Guild v1.5.0 — Trails & Raids Alpha 2 Validation Report
 
 ## Result
 **PASS**
 
-## Fix coverage
-- Player Guide Dungeons & Delves now includes a dedicated **The Riftglass Observatory** card with ten chambers, two Crossroads, weighted Event chamber, Death Machine miniboss, sanctuary recovery, Crystal Wolf finale, and higher-pressure encounter rules.
-- Portal Environment Pass CSS contains no gold-divider variable or pseudo-element rendering path.
-- Player Guide CSS contains no gold-divider variable or section-heading rendering path.
-- `gold-divider.webp` is absent from the shipping public tree.
-- Frontend cache revision is `1.5.0-trails-raids-a1h2`.
-- Hotfix 1 hosted Overlay field validation remains unchanged and covered by the hosted suite.
+## Automated suites
+- Bot Python unittest suite: **545 / 545 PASS**.
+- Frontend Node regression suite: **410 / 410 PASS**.
+- Hosted Web/API Python unittest suite: **47 / 47 PASS**.
 
-## Automated validation
-- Frontend Node regression suite: **406 / 406 PASS**.
-- Hosted Web/API Python suite: **47 / 47 PASS**.
-- Hosted Web Python compile sweep: **8 / 8 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **201 / 201 PASS**.
-- Plain JS/MJS `node --check`: **160 / 160 PASS**.
-- Active literal image routes: **149 / 149 PASS**, **0 missing**.
-- Public artwork: **0 PNG / 575 WebP** (one intentional WebP removal).
+## Alpha 2 coverage
+- Shiva — Diamond Throne scripted Trial data and mechanic cycle are regression-covered.
+- Icebound Mirror adds persist in raid state and intercept boss-targeted damage.
+- Mirror clear advances to Diamond Aegis; Break success creates a one-round Stagger/vulnerability window.
+- Alpha 1 Ifrit Trial regression suite remains green.
+- Public Overlay sanitization includes add HP and Tank/Healer/Support/DPS role labels without internal add/target IDs.
+- Hosted validator accepts the additive public fields and retains forbidden-private-field checks.
+- Existing contribution reward math remains unchanged.
+
+## Source / asset validation
+- Python compile sweep: **100 / 100 PASS**.
+- Frontend JS/JSX/MJS TypeScript-parser sweep: **202 / 202 PASS**.
+- Plain JS/MJS `node --check`: **161 / 161 PASS**.
+- GameData: **37 bosses / 4 Dungeons / 0 errors**.
+- Public artwork: **0 PNG / 575 WebP**.
+- Literal frontend image-route audit: **150 / 150 PASS**, 0 missing.
+
+## Upgrade / recovery drill
+- Real v1.4.0-created schema-10 database reopened under Alpha 2: **PASS**.
+- Existing test-player level/Gil preserved exactly (**Lv.17 / 4,321 Gil**): **PASS**.
+- SQLite quick-check and foreign-key check: **PASS**.
+- Non-destructive backup verification: **PASS**.
 
 ## Compatibility
-- Hosted Web runtime: `1.5.0-trails-raids-a1h1` unchanged.
-- Frontend asset revision: `1.5.0-trails-raids-a1h2`.
-- Compatible Bot runtime: `1.5.0-trails-raids-a1` unchanged.
-- Local DB schema **10**, hosted sync **1**, Portal protocol **25** unchanged.
-- Bot update / migration / reset / OAuth/environment/new variables: **none**.
-
-## Source delta
-Relative to Hotfix 1: **52 changed/new files, 1 deletion; final Web tree 828 files**.
+- Bot/Web/frontend runtime: `1.5.0-trails-raids-a2`.
+- Local DB schema **10**, hosted sync **1**, Portal Action protocol **25**, Twitch prefix `!`.
+- No migration, reset, OAuth/environment, or new environment-variable change.
 
 ## Packaging verification
-- Full Hotfix 2 Web archive: **828 / 828 exact frozen source files**.
-- Hotfix 1 → Hotfix 2 Web patch reconstruction: **828 / 828 exact files PASS**.
-- Release ZIP CRC/integrity: **2 / 2 PASS**.
-- Runtime/private-artifact hygiene: **0 violations**.
-- SHA-256 verification: **PASS**.
+- Final source delta and archive reconstruction results are recorded in `FINALIZATION_AUDIT.md` and the patch manifests.
+- Release ZIP CRC/integrity and SHA-256 verification: **PASS**.

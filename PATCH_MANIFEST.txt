@@ -1,9 +1,9 @@
-Crystal Guild v1.5.0 — Trails & Raids Alpha 1 Hotfix 2 — Web Hotfix 1 → Hotfix 2 Patch
-Hosted runtime: 1.5.0-trails-raids-a1h1
-Frontend asset revision: 1.5.0-trails-raids-a1h2
-Compatible Bot: 1.5.0-trails-raids-a1
-Changed/new files: 52
-Deleted files: 1
+Crystal Guild v1.5.0 — Trails & Raids Alpha 2 — Web Alpha 1 Hotfix 2 → Alpha 2 Patch
+Hosted runtime: 1.5.0-trails-raids-a2
+Frontend asset revision: 1.5.0-trails-raids-a2
+Compatible Bot: 1.5.0-trails-raids-a2
+Changed/new files: 55
+Deleted files: 0
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25
@@ -18,26 +18,29 @@ README.md
 README_FIRST.txt
 RELEASE_NOTES.md
 SCENE_BACKGROUND_MANIFEST.json
+STREAMER_DASHBOARD.md
 UI_SHARED_ASSET_MANIFEST.json
 UPGRADE_GUIDE.md
 VALIDATION_REPORT.md
 VERSION.txt
+crystal_guild/__init__.py
 crystal_guild/hosted_portal.py
 frontend/public/guide-body.html
 frontend/public/guide-data.json
-frontend/public/guide.css
 frontend/public/raid-overlay.html
-frontend/src/styles/environment-pass.css
+frontend/public/raid-overlay.js
+frontend/src/player/Raids.jsx
+frontend/src/player/whatsNewData.js
+frontend/src/styles/portal.css
 frontend/src/version.js
 frontend/tests/arsenalIIUx.test.mjs
 frontend/tests/assetOptimization131.test.mjs
-frontend/tests/dungeonsAlpha4.test.mjs
+frontend/tests/commandPrefixV115.test.mjs
 frontend/tests/dungeonsBeta1.test.mjs
 frontend/tests/dungeonsBeta2.test.mjs
 frontend/tests/dungeonsBeta3.test.mjs
 frontend/tests/dungeonsRC1.test.mjs
 frontend/tests/dungeonsRelease.test.mjs
-frontend/tests/environmentPass.test.mjs
 frontend/tests/expeditionsBeta1.test.mjs
 frontend/tests/expeditionsBeta2.test.mjs
 frontend/tests/expeditionsBeta3Accessibility.test.mjs
@@ -58,9 +61,6 @@ frontend/tests/guildExpansionBeta3Hardening.test.mjs
 frontend/tests/guildExpansionRC1.test.mjs
 frontend/tests/phase8UiUx.test.mjs
 frontend/tests/trailsRaidsAlpha1.test.mjs
+frontend/tests/trailsRaidsAlpha2.test.mjs
 frontend/tests/version.test.mjs
 tests/test_hosted_portal.py
-frontend/tests/trailsRaidsAlpha1Hotfix2.test.mjs
-
-Deleted:
-frontend/public/retro-phase-ii/environment-pass/gold-divider.webp

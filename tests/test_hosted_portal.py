@@ -149,8 +149,9 @@ class PortalServerCase(unittest.TestCase):
                 "hp": 1500, "max_hp": 2500, "round": 3, "phase": "Rage",
                 "signature": "Hellfire", "raiders": 4, "alive": 3, "enraged": False,
                 "summon_gauge": 45,
-                "top": [{"name": "Van", "damage": 900, "healing": 25, "mitigation": 70, "score": 968}],
-                "mechanic": {"name": "Infernal Nails", "kind": "damage_check", "warning": "Destroy the nails!", "rounds_remaining": 1, "required": 1200, "progress": 700},
+                "top": [{"name": "Van", "role": "Tank", "damage": 900, "healing": 25, "mitigation": 70, "score": 968}],
+                "adds": [{"name": "Icebound Mirror A", "hp": 500, "max_hp": 1200}],
+                "mechanic": {"name": "Diamond Aegis", "kind": "break_check", "warning": "Break the aegis!", "rounds_remaining": 1, "required": 1200, "progress": 700},
                 "last_mechanic": {"name": "Radiant Plume", "kind": "raidwide", "result": "resolved"},
                 "next_round_at": 1770000015, "updated_at": 1770000000,
             },
@@ -167,7 +168,9 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(state["top"][0]["damage"], 900)
         self.assertEqual(state["top"][0]["mitigation"], 70)
         self.assertEqual(state["top"][0]["score"], 968)
-        self.assertEqual(state["mechanic"]["name"], "Infernal Nails")
+        self.assertEqual(state["top"][0]["role"], "Tank")
+        self.assertEqual(state["adds"][0]["name"], "Icebound Mirror A")
+        self.assertEqual(state["mechanic"]["name"], "Diamond Aegis")
         self.assertEqual(state["last_mechanic"]["name"], "Radiant Plume")
         status, body, _ = self.get("/overlay")
         self.assertEqual(status, 200)
@@ -183,8 +186,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.5.0-trails-raids-a1h1", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.5.0-trails-raids-a1h2")
+        self.assertIn("1.5.0-trails-raids-a2", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.5.0-trails-raids-a2")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

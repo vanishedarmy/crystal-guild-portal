@@ -16,7 +16,10 @@ function mechanicText(m){
   if(!m||!m.name)return 'Standard boss pressure';
   if(m.kind==='targeted')return `${m.name} → ${m.target||'one raider'}`;
   if(m.kind==='raidwide')return `${m.name} → raidwide damage`;
-  if(m.kind==='damage_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} · ${Number(m.rounds_remaining)||0}R`;
+  if(m.kind==='damage_check'||m.kind==='break_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} · ${Number(m.rounds_remaining)||0}R`;
+  if(m.kind==='adds')return `${m.name} · destroy active adds`;
+  if(m.kind==='cleave')return `${m.name} → ${m.target||'marked raider'} + ally`;
+  if(m.kind==='stagger')return `${m.name} · vulnerable window`;
   if(m.result)return `${m.name} · ${m.result}`;
   return String(m.name);
 }
@@ -25,12 +28,18 @@ function renderLeaders(entries){
   (Array.isArray(entries)?entries:[]).slice(0,3).forEach((entry,index)=>{
     const el=document.createElement('span');el.className='leader';
     const rank=document.createElement('b');rank.textContent=`#${index+1}`;
-    const name=document.createElement('span');name.textContent=` ${entry?.name||'Adventurer'} `;
+    const name=document.createElement('span');name.textContent=` ${entry?.name||'Adventurer'}${entry?.role?` [${entry.role}]`:''} `;
     const score=document.createElement('strong');score.textContent=fmt(entry?.score);
     el.append(rank,name,score);
-    el.title=`#${index+1} ${entry?.name||'Adventurer'} — ${fmt(entry?.score)} contribution · ${fmt(entry?.damage)} dmg · ${fmt(entry?.healing)} heal · ${fmt(entry?.mitigation)} mit`;
+    el.title=`#${index+1} ${entry?.name||'Adventurer'}${entry?.role?` [${entry.role}]`:''} — ${fmt(entry?.score)} contribution · ${fmt(entry?.damage)} dmg · ${fmt(entry?.healing)} heal · ${fmt(entry?.mitigation)} mit`;
     root.appendChild(el);
   });
+}
+function renderAdds(entries){
+  const root=$('adds');if(!root)return;root.replaceChildren();
+  const rows=(Array.isArray(entries)?entries:[]).slice(0,4);
+  if(!rows.length){root.hidden=true;return}root.hidden=false;
+  rows.forEach(entry=>{const el=document.createElement('span');el.className='add-chip';el.textContent=`${entry?.name||'Add'} ${fmt(entry?.hp)}/${fmt(entry?.max_hp)}`;root.appendChild(el)});
 }
 async function refresh(){
   try{
@@ -46,7 +55,7 @@ async function refresh(){
     const summon=Math.max(0,Math.min(100,Number(s.summon_gauge)||0));$('summonbar').style.width=summon+'%';$('summon').textContent=Math.round(summon)+'%';
     const mechanic=$('mechanic');const mechanicBox=$('mechanic-box');mechanic.textContent=mechanicText(s.mechanic);mechanicBox.dataset.kind=String(s.mechanic?.kind||'standard');
     const badge=$('status-badge');badge.textContent=s.enraged&&state==='ACTIVE'?'Enraged':state==='VICTORY'?'Victory':state==='WIPE'?'Raid Wipe':'Active';
-    renderLeaders(s.top);
+    renderLeaders(s.top);renderAdds(s.adds);
   }catch{hide()}
 }
 setInterval(refresh,700);refresh();

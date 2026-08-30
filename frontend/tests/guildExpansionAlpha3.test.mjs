@@ -26,10 +26,10 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Trails & Raids Alpha 1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids-a1h2"/);
-  assert.equal(guideData.meta.version, "v1.5.0 — Trails & Raids Alpha 1");
-  assert.equal(guideData.meta.release, "1.5.0-trails-raids-a1h2");
+  assert.match(version, /WEB_BUILD = "Trails & Raids Alpha 2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids-a2"/);
+  assert.equal(guideData.meta.version, "v1.5.0 — Trails & Raids Alpha 2");
+  assert.equal(guideData.meta.release, "1.5.0-trails-raids-a2");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 25/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

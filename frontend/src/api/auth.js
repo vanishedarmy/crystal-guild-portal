@@ -185,20 +185,20 @@ export function submitDungeonStart(dungeonId, csrfToken, idempotencyKey) {
   return submitPortalAction("DUNGEON_START", { dungeon_id: dungeonId }, csrfToken, idempotencyKey);
 }
 
-export function submitDungeonAction(runId, roomId, action, csrfToken, idempotencyKey) {
-  return submitPortalAction("DUNGEON_ACTION", { run_id: runId, room_id: roomId, action }, csrfToken, idempotencyKey);
+export function submitDungeonAction(runId, roomId, revision, action, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_ACTION", { run_id: runId, room_id: roomId, revision: Number(revision), action }, csrfToken, idempotencyKey);
 }
 
-export function submitDungeonContinue(runId, roomId, csrfToken, idempotencyKey) {
-  return submitPortalAction("DUNGEON_CONTINUE", { run_id: runId, room_id: roomId }, csrfToken, idempotencyKey);
+export function submitDungeonContinue(runId, roomId, revision, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_CONTINUE", { run_id: runId, room_id: roomId, revision: Number(revision) }, csrfToken, idempotencyKey);
 }
 
-export function submitDungeonChoice(runId, roomId, choiceId, csrfToken, idempotencyKey) {
-  return submitPortalAction("DUNGEON_CHOICE", { run_id: runId, room_id: roomId, choice_id: choiceId }, csrfToken, idempotencyKey);
+export function submitDungeonChoice(runId, roomId, revision, choiceId, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_CHOICE", { run_id: runId, room_id: roomId, revision: Number(revision), choice_id: choiceId }, csrfToken, idempotencyKey);
 }
 
-export function submitDungeonRetreat(runId, roomId, csrfToken, idempotencyKey) {
-  return submitPortalAction("DUNGEON_RETREAT", { run_id: runId, room_id: roomId }, csrfToken, idempotencyKey);
+export function submitDungeonRetreat(runId, roomId, revision, csrfToken, idempotencyKey) {
+  return submitPortalAction("DUNGEON_RETREAT", { run_id: runId, room_id: roomId, revision: Number(revision) }, csrfToken, idempotencyKey);
 }
 
 export function submitAcknowledgeAdventureResult(resultId, csrfToken, idempotencyKey) {

@@ -1,5 +1,7 @@
-# Portal Actions — v1.4.0 Dungeons & Delves Alpha 4
+# Portal Actions — v1.4.0 Dungeons & Delves Beta 1
 
-Portal Action protocol remains **24** from Alpha 3. Alpha 4 reuses the existing Dungeon action contract, including `DUNGEON_CHOICE`; weighted Event chambers resolve authoritatively during normal room progression and do not add a new Portal action type.
+Portal Action protocol advances **24 → 25**. Beta 1 adds a persisted Dungeon `revision` to every Dungeon mutation payload. The Bot accepts a Dungeon mutation only when the submitted run ID, chamber ID, and revision all match the current authoritative run.
 
-Dungeon mutations remain authoritative on the Bot, replay-safe, and bound to the exact active run/chamber shown by the submitting browser tab. Deploy matching Alpha 4 Web and Bot so both sides share the same Dungeon catalog and encounter presentation.
+This closes same-room stale tabs while retaining existing action-ID replay/idempotency behavior. `DUNGEON_ACTION`, `DUNGEON_CONTINUE`, `DUNGEON_CHOICE`, and `DUNGEON_RETREAT` all use the exact-state contract.
+
+Deploy matching Beta 1 Web and Bot together. No schema migration, OAuth change, or new environment variable is required.

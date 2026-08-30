@@ -1,17 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Alpha 4",
-    title: "Dungeons grow stranger and more dangerous",
-    summary: "Alpha 4 expands Dungeons with a fourth high-level delve, weighted Event chambers, richer treasure and hazard outcomes, and room-specific miniboss and boss rules.",
+    name: "Dungeons & Delves Beta 1",
+    title: "Dungeon feature freeze & reliability",
+    summary: "Beta 1 freezes Dungeon content at four delves and hardens same-room actions so stale tabs cannot spend a second combat turn after the authoritative run has advanced.",
     highlights: [
-      { title: "A fourth Dungeon", description: "The Riftglass Observatory unlocks at Lv.34 after charting 55% of The Astral Scar, with ten chambers, two Crossroads, a weighted Event chamber, and a pressure-heavy final sequence." },
-      { title: "Dungeon events arrive", description: "Event chambers can resolve different weighted outcomes, changing HP or MP/AP, adding Cache rewards and discoveries, or shaping the next hazard or battle." },
-      { title: "Encounter rules deepen", description: "Minibosses and bosses can now carry tighter round limits, opening pressure, resource drain, and temporary enemy statuses that are shown directly on the battle card." },
-      { title: "Choices echo forward", description: "The forward-route system from Whiteglass Bastion remains intact: Crossroads can ward the next hazard, alter the next foe, or increase the rewards of a later combat." },
-      { title: "First clears matter", description: "One-time first-clear rewards remain part of every current Dungeon, including the new Astral Scar delve." },
+      { title: "Exact dungeon state", description: "Every Dungeon action now carries the precise persisted run revision in addition to run and chamber identity." },
+      { title: "Stale-tab protection", description: "A second tab or delayed click from an older combat round fails closed instead of acting on the next round." },
+      { title: "Beta readability", description: "Dungeon combat now shows the active round against the room round limit, with the four-delve catalog feature-frozen for stabilization." },
     ],
-    action: { tab: "hunts", label: "Open Dungeon Board" },
+    action: { tab: "adventure", label: "Open Dungeon Board" },
   },
   {
     version: "v1.3.1",

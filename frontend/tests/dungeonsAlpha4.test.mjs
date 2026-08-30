@@ -6,19 +6,20 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("Alpha 4 Dungeon UI exposes event count and encounter rules", () => {
   const board = read("../src/player/Dungeons.jsx");
-  assert.match(board, /Dungeons & Delves · Alpha 4/);
+  assert.match(board, /Dungeons & Delves · Beta 1/);
   assert.match(board, /Events/);
   assert.match(board, /Encounter Rules/);
   assert.match(board, /opening_effects/);
   assert.match(board, /combat\.mechanics/);
 });
 
-test("Alpha 4 What's New introduces events and encounter depth", () => {
+test("Alpha 4 event and encounter depth remains under the Beta 1 feature freeze", () => {
   const news = read("../src/player/whatsNewData.js");
-  assert.match(news, /Dungeons & Delves Alpha 4/);
-  assert.match(news, /Riftglass Observatory/);
-  assert.match(news, /Dungeon events arrive/);
-  assert.match(news, /Encounter rules deepen/);
+  const guide = read("../public/guide-body.html");
+  assert.match(news, /Dungeons & Delves Beta 1/);
+  assert.match(news, /four delves/);
+  assert.match(guide, /The Riftglass Observatory/);
+  assert.match(guide, /Events &amp; encounter rules/);
 });
 
 test("Player Guide documents Riftglass and event encounter rules", () => {

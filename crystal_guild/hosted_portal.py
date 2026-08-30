@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.4.0-dungeons-a4"
-FRONTEND_ASSET_REVISION = "1.4.0-dungeons-a4"
+HOSTED_PORTAL_VERSION = "1.4.0-dungeons-b1"
+FRONTEND_ASSET_REVISION = "1.4.0-dungeons-b1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 24
+ACTION_PROTOCOL_VERSION = 25
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",

@@ -1,16 +1,16 @@
-Crystal Guild v1.4.0 — Dungeons & Delves Alpha 4 Web
-Hosted runtime: 1.4.0-dungeons-a4
-Frontend assets: 1.4.0-dungeons-a4
-Compatible Bot: 1.4.0-dungeons-a4
+Crystal Guild v1.4.0 — Dungeons & Delves Beta 1 — Web Package Manifest
+Hosted runtime: 1.4.0-dungeons-b1
+Frontend assets: 1.4.0-dungeons-b1
+Compatible Bot: 1.4.0-dungeons-b1
 Local DB schema: 10
 Hosted sync schema: 1
-Portal Action protocol: 24
+Portal Action protocol: 25
 Twitch prefix: !
-Upgrade baseline: v1.4.0 Dungeons & Delves Alpha 3 Web
+Upgrade baseline: v1.4.0 Dungeons & Delves Alpha 4 Web
 
 Highlights:
-- The Riftglass Observatory fourth Dungeon
-- Weighted Dungeon Event chambers
-- Room-specific miniboss/boss encounter rules and opening pressure
-- Richer treasure/hazard resource outcomes
-- Four-Dungeon Adventure payload headroom hardening
+- Four-Dungeon feature freeze
+- Exact run/chamber/revision contract for Dungeon Portal mutations
+- Same-room stale-tab protection
+- Round X / Limit encounter presentation
+- Adventure-state payload headroom hardening

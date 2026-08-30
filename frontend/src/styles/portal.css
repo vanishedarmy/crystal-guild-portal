@@ -9971,7 +9971,7 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 .dungeon-combat-route-effects { display: block; margin-top: .35rem; color: #f1d78f; }
 
 
-/* v1.4.0 Dungeons & Delves Alpha 4 — encounter depth */
+/* v1.4.0 Dungeons & Delves Beta 1 — encounter depth */
 .dungeon-mechanic-list { display:grid; gap:.2rem; margin-top:.45rem; padding:.55rem .65rem; border:1px solid rgba(229,197,111,.24); border-radius:.52rem; background:rgba(31,25,13,.34); }
 .dungeon-mechanic-list span { color:var(--muted); font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; }
 .dungeon-mechanic-list strong { color:#f1d78f; font-size:.82rem; font-weight:600; }

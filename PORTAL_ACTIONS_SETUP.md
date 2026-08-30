@@ -1,7 +1,7 @@
-# Portal Actions — v1.4.0 Dungeons & Delves Beta 3
+# Portal Actions — v1.4.0 Dungeons & Delves RC1
 
-Portal Action protocol remains **25**. Beta 3 does not add or rename action types.
+Portal Action protocol remains **25**. RC1 does not add, remove, or rename actions.
 
-Dungeon mutations continue to submit exact run ID + chamber ID + persisted `revision`. The matching Beta 3 Bot now acquires database write intent before authoritative state validation so separate connections cannot concurrently spend the same revision. Same action-ID replay remains idempotent and is returned without resolving the action twice.
+Dungeon mutations continue to submit exact run ID + chamber ID + persisted revision. Database write intent is acquired before authoritative state validation, and same action-ID replay remains idempotent.
 
-Bot/Web/frontend: `1.4.0-dungeons-b3`. Schema **10**, hosted sync **1**, protocol **25**. No migration, OAuth/environment change, or new environment variable is required.
+Bot/Web/frontend: `1.4.0-dungeons-rc1`. Schema **10**, hosted sync **1**, protocol **25**. No migration, OAuth/environment change, or new environment variable is required.

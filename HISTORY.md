@@ -1,16 +1,16 @@
 # Crystal Guild Web History
 
-## v1.4.0 — Dungeons & Delves Beta 3
-- Final shared-state/restart/replay hardening pass before release-candidate work.
-- Pairs with the Beta 3 Bot's cross-connection Dungeon serialization while keeping protocol 25 and schema 10 unchanged.
-- Pins the Dungeon Board collapse control to the right side on mobile/narrow screens while preserving right-closed/down-open pointer state.
-- Keeps the four-Dungeon feature freeze and Beta 2 UX/mobile consolidation intact.
+## v1.4.0 — Dungeons & Delves RC1
+- Release-candidate cleanup and deployment-readiness pass with the four-Dungeon catalog frozen.
+- Keeps Beta 2 UX/mobile consolidation and Beta 3 shared-state/replay/restart hardening unchanged.
+- Advances Bot/Web/frontend identity to `1.4.0-dungeons-rc1` while keeping schema 10 / sync 1 / protocol 25.
+- Refreshes Player Guide/current-build wording and repeats package/upgrade/asset-route validation.
 
 ## v1.4.0 — Dungeons & Delves Beta 2
 - Web-only Dungeon UX/mobile consolidation on the feature-frozen Beta 1 ruleset.
 - Clarifies active-run progress, carried Cache risk, Crossroads consequences, settlement outcomes, and personal Dungeon records.
 - Tightens Dungeon cards, results, battle controls, and route-choice layouts for narrow/mobile screens.
-- Keeps compatible Bot `1.4.0-dungeons-b3`, schema 10 / sync 1 / Portal protocol 25 unchanged.
+- Keeps compatible Bot `1.4.0-dungeons-b1`, schema 10 / sync 1 / Portal protocol 25 unchanged.
 
 ## v1.4.0 — Dungeons & Delves Beta 1
 - Freezes the four-Dungeon catalog for stabilization and release-quality testing.

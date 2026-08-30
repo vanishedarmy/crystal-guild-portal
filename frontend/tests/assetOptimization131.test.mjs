@@ -43,9 +43,9 @@ test("current release identity is v1.3.1 everywhere relevant", () => {
   const py = fs.readFileSync(path.join(webRoot, "crystal_guild", "__init__.py"), "utf8");
   const overlay = fs.readFileSync(path.join(publicRoot, "raid-overlay.html"), "utf8");
   const index = fs.readFileSync(path.join(frontend, "index.html"), "utf8");
-  assert.match(version, /1\.4\.0-dungeons-b3/);
-  assert.match(py, /1\.4\.0-dungeons-b3/);
-  assert.match(overlay, /1\.4\.0-dungeons-b3/);
-  assert.ok(!overlay.includes("1.4.0-dungeons-b3-b2"));
+  assert.match(version, /1\.4\.0-dungeons-rc1/);
+  assert.match(py, /1\.4\.0-dungeons-rc1/);
+  assert.match(overlay, /1\.4\.0-dungeons-rc1/);
+  assert.ok(!overlay.includes("1.4.0-dungeons-rc1-b2"));
   assert.match(index, /type="image\/webp" href="\/crystal-guild-portal-roundel\.webp"/);
 });

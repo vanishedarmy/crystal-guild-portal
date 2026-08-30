@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Beta 3",
-    title: "Dungeon shared-state hardening",
-    summary: "Beta 3 keeps the four-Dungeon feature freeze and hardens simultaneous Portal actions, restart-safe replay handling, and the final mobile Dungeon Board disclosure layout before release-candidate work.",
+    name: "Dungeons & Delves RC1",
+    title: "Dungeons & Delves release candidate",
+    summary: "RC1 keeps the four-Dungeon feature freeze, carries forward the final concurrency and stale-tab protections, and completes deployment, upgrade, package-hygiene, and mobile-readiness checks for v1.4.0.",
     highlights: [
-      { title: "One authoritative Dungeon action", description: "State-guarded mutations now acquire SQLite write intent before validating live state, so separate Bot connections cannot spend the same Dungeon revision concurrently." },
-      { title: "Replay remains exact", description: "Retries using the same Portal action ID still return the committed receipt rather than repeating a combat round, route choice, retreat, or settlement." },
-      { title: "Stale tabs fail closed", description: "Run, chamber, and revision binding from Beta 1 remains authoritative after another tab or connection advances the delve." },
+      { title: "Release candidate ready", description: "The complete four-Dungeon feature set is frozen while deployment, upgrade, restart, and recovery checks receive their final pre-release pass." },
+      { title: "Dungeon progress stays dependable", description: "The final concurrency, stale-tab, retry, and reconnect protections from Beta 3 remain intact for active delves." },
+      { title: "Safe across tabs and reconnects", description: "If another tab advances a Dungeon, older controls refuse the outdated action and refresh safely from the latest run state." },
       { title: "Mobile pointer stays put", description: "The Dungeon Board disclosure button now remains fixed to the right side of its header on narrow screens while keeping right-closed and down-open pointer states." },
-      { title: "Content remains frozen", description: "Forgotten Ossuary, Emberglass Foundry, Whiteglass Bastion, and Riftglass Observatory remain the complete Beta catalog with no economy or balance changes." },
+      { title: "Four complete delves", description: "Forgotten Ossuary, Emberglass Foundry, Whiteglass Bastion, and Riftglass Observatory remain the complete v1.4 release-candidate catalog." },
     ],
     action: { tab: "adventure", label: "Open Dungeon Board" },
   },

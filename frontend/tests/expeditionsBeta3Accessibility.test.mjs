@@ -11,8 +11,8 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 3"/);
-  assert.match(version, /1\.4\.0-dungeons-b3/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves RC1"/);
+  assert.match(version, /1\.4\.0-dungeons-rc1/);
   assert.match(news, /name: "Expeditions"/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

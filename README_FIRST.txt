@@ -1,11 +1,10 @@
-Crystal Guild Web v1.4.0 — Dungeons & Delves Beta 3
+Crystal Guild Web v1.4.0 — Dungeons & Delves RC1
 
-Deploy with the matching Beta 3 Bot.
-Hosted runtime: 1.4.0-dungeons-b3
-Frontend revision: 1.4.0-dungeons-b3
-Compatible Bot: 1.4.0-dungeons-b3
+Deploy matching RC1 Web + Bot together.
+Hosted Web/frontend: 1.4.0-dungeons-rc1
+Compatible Bot: 1.4.0-dungeons-rc1
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25
 
-Expected live baseline is Beta 2 Web + Beta 1 Bot. Apply both Beta 3 patches together. No database migration, protocol change, OAuth change, or new environment variables are required.
+No migration, reset, OAuth/environment, gameplay, economy, or balance change is required from Beta 3.

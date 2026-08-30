@@ -1,18 +1,19 @@
-# Crystal Guild Web v1.4.0 — Dungeons & Delves Beta 3
+# Crystal Guild Web v1.4.0 — Dungeons & Delves RC1
 
-Beta 3 is the final Dungeon hardening pass before release-candidate work. The Web keeps Beta 2's active-run/mobile consolidation, adds the final Dungeon Board mobile disclosure correction, and pairs with the Beta 3 Bot's cross-connection state serialization.
+RC1 is the release-candidate cleanup and deployment-readiness pass. The four-Dungeon catalog, Beta 2 UX consolidation, and Beta 3 shared-state hardening remain feature-frozen.
 
-## Beta 3 Web focus
-- Dungeon Board collapse control remains fixed to the right side of its header on mobile/narrow screens.
-- Shared pointer remains right when closed and down when open.
-- What's New and Player Guide explain the final Beta stability/retry behavior.
-- Four-Dungeon catalog, rewards, settlement ratios, records, and Beta 2 UX remain unchanged.
+## RC1 Web focus
+- Advances hosted Web/frontend identity to `1.4.0-dungeons-rc1` for clean cache/version verification.
+- Keeps the mobile Dungeon Board disclosure on the right edge, with right-hand closed / down-hand open.
+- Keeps the active-run, Cache-risk, route-effect, settlement, records, and mobile layouts unchanged from Beta 2/3.
+- Updates Player Guide/What's New from prerelease Beta wording to RC1 release-candidate wording.
+- Performs final asset-route, package, and upgrade reconstruction checks.
 
-## Runtime identity
-- Hosted Web/frontend: `1.4.0-dungeons-b3`
-- Compatible Bot: `1.4.0-dungeons-b3`
+## Compatibility
+- Compatible Bot: `1.4.0-dungeons-rc1`
+- Hosted Web/frontend: `1.4.0-dungeons-rc1`
 - Local DB schema: **10**
 - Hosted sync schema: **1**
 - Portal Action protocol: **25**
 
-Deploy the Beta 3 Web and Bot together.
+Deploy the matching RC1 Web + Bot together. No migration or environment change is required from Beta 3.

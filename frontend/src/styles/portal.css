@@ -10055,7 +10055,7 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 }
 
 
-/* v1.4.0 Dungeons & Delves Beta 3 — mobile disclosure alignment hardening. */
+/* v1.4.0 Dungeons & Delves RC1 — mobile disclosure alignment hardening. */
 @media (max-width: 620px) {
   .dungeon-board-title-row {
     display: grid;

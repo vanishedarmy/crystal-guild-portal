@@ -1,17 +1,14 @@
-# Upgrade Guide — Crystal Guild v1.4.0 — Dungeons & Delves Beta 3
+# Upgrade Guide — Crystal Guild v1.4.0 Dungeons & Delves RC1
 
-Expected live baseline: **Beta 2 Web + Beta 1 Bot**.
+Baseline: **Dungeons & Delves Beta 3 Web + Bot**.
 
-1. Back up the current player database and persistent Twitch/token data.
-2. Stop the Bot cleanly.
-3. Apply the **Beta 1 → Beta 3 Bot patch** while preserving `.env`, the live database, token storage, and persistent-disk configuration.
-4. Apply the **Beta 2 → Beta 3 Web patch** or deploy the full Beta 3 Web package.
-5. Restart/redeploy Bot and Web together.
-6. Verify `!cgversion` reports `1.4.0-dungeons-b3`, schema **10**, and protocol **25**.
-7. Verify `/api/health` reports Web/frontend `1.4.0-dungeons-b3`, hosted sync schema **1**, and Portal Action protocol **25**.
-8. On mobile/narrow view, confirm the Dungeon Board disclosure stays at the right edge and switches right-hand closed / down-hand open.
-9. Confirm a stale Dungeon tab fails closed after another tab/connection advances the same run state, and refresh loads the latest state.
-10. Confirm duplicate retry of the same pending action does not resolve twice.
-11. Confirm all four Dungeons and existing player/Guild/Expedition state remain intact.
+1. Preserve the existing database, `.env`, Twitch token storage, and hosted secrets.
+2. Apply the Beta 3 → RC1 Web patch or deploy the full RC1 Web package.
+3. Apply the Beta 3 → RC1 Bot patch or deploy the full RC1 Bot package.
+4. Redeploy/restart Web and Bot together.
+5. Verify `/api/health` reports Web/frontend `1.4.0-dungeons-rc1`, hosted sync schema **1**, and protocol **25**.
+6. Verify `!cgversion` reports Bot `1.4.0-dungeons-rc1` and local schema **10**.
+7. Spot-check Dungeon Board desktop/mobile disclosure placement and open/closed pointer state.
+8. Resume/start a Dungeon and confirm current state, route effects, Cache, and results remain intact.
 
-No database migration, protocol change, player reset, OAuth change, or new environment variable is required.
+No DB migration, player reset, OAuth/environment change, new environment variable, protocol change, or gameplay/economy rebalance is required.

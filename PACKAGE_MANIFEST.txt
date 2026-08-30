@@ -1,8 +1,8 @@
-v1.5.0 — Trails & Raids Alpha 3 — Web Package Manifest
-Hosted Web runtime: 1.5.0-trails-raids-a3
-Frontend asset revision: 1.5.0-trails-raids-a3
-Compatible Bot: 1.5.0-trails-raids-a3
+v1.5.0 — Trails & Raids Alpha 4 — Web Package Manifest
+Hosted Web runtime: 1.5.0-trails-raids-a4
+Frontend asset revision: 1.5.0-trails-raids-a4
+Compatible Bot: 1.5.0-trails-raids-a4
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25
-Baseline: v1.5.0 Trails & Raids Alpha 2 Web
+Baseline: v1.5.0 Trails & Raids Alpha 3 Web

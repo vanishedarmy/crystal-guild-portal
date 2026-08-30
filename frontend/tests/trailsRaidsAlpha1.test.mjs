@@ -8,18 +8,18 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_RELEASE, WEB_VERSION } from "../src/
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 
-test("Trails & Raids Alpha 3 identity is current", () => {
+test("Trails & Raids Alpha 4 identity is current", () => {
   assert.equal(WEB_VERSION, "v1.5.0");
-  assert.equal(WEB_BUILD, "Trails & Raids Alpha 3");
-  assert.equal(WEB_RELEASE, "v1.5.0 — Trails & Raids Alpha 3");
-  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-a3");
+  assert.equal(WEB_BUILD, "Trails & Raids Alpha 4");
+  assert.equal(WEB_RELEASE, "v1.5.0 — Trails & Raids Alpha 4");
+  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-a4");
   assert.equal(JSON.parse(read("package.json")).version, "1.5.0");
 });
 
 test("Ifrit guide data declares Inferno Crucible and the four Alpha 1 mechanics", () => {
   const data = JSON.parse(read("public/guide-data.json"));
   const ifrit = data.bosses.find((boss) => boss.id === "ifrit");
-  assert.equal(data.meta.release, "1.5.0-trails-raids-a3");
+  assert.equal(data.meta.release, "1.5.0-trails-raids-a4");
   assert.equal(ifrit.encounter_type, "Trial");
   assert.equal(ifrit.encounter_name, "Inferno Crucible");
   assert.equal(ifrit.raid_script, "ifrit_inferno_crucible");
@@ -42,19 +42,18 @@ test("hosted raid overlay renders telegraphs and weighted contribution without p
   const js = read("public/raid-overlay.js");
   assert.match(html, /mechanic-box/);
   assert.match(html, /Contribution/);
-  assert.match(html, /raid-overlay\.js\?v=1\.5\.0-trails-raids-a3/);
+  assert.match(html, /raid-overlay\.js\?v=1\.5\.0-trails-raids-a4/);
   assert.match(js, /mechanic/);
   assert.match(js, /score/);
   assert.doesNotMatch(js, /twitch_id|target_id/);
 });
 
-test("Alpha 3 preserves the Alpha 1 Ifrit Trial loop", () => {
+test("Alpha 4 preserves the Alpha 1 Ifrit Trial loop", () => {
   const body = read("public/guide-body.html");
   const runtime = read("src/guide/guideRuntime.js");
-  const news = read("src/player/whatsNewData.js");
+  const raids = read("src/player/Raids.jsx");
   for (const term of ["Inferno Crucible", "Incinerate", "Radiant Plume", "Infernal Nails", "Hellfire"]) {
-    assert.match(body + runtime + news, new RegExp(term));
+    assert.match(body + runtime + raids, new RegExp(term));
   }
-  assert.match(news, /v1\.5\.0 Alpha 3/);
-  assert.match(news, /Earlier Trials remain intact/);
+  assert.match(read("src/player/whatsNewData.js"), /v1\.5\.0 Alpha 4/);
 });

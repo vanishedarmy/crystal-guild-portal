@@ -1,5 +1,8 @@
 # Crystal Guild Web History
 
+## v1.5.0 — Trails & Raids Alpha 4
+Adds Titan — Heart of the Crag as the fourth scripted Trial. Landslide introduces a Defend-driven brace response, Granite Gaol temporarily restrains one raider until the party breaks the prison, and the exposed Heart creates a two-round damage check that weakens or empowers Earthen Fury. The collapsible Trial & Raid Board remains intact and gains Titan rescue/Heart telegraphs. Runtime/frontend `1.5.0-trails-raids-a4`; schema 10 / sync 1 / Portal protocol 25 unchanged.
+
 ## v1.5.0 — Trails & Raids Alpha 3
 Adds Ramuh — Judgment Spire with chain lightning, shared-hit stack coordination, and a Defend-driven Grounding Gauge. The Adventure Board Trial & Raid Board becomes collapsible using the established right/down disclosure pointer language. Runtime `1.5.0-trails-raids-a3`; schema 10, hosted sync 1, and Portal protocol 25 unchanged.
 

@@ -23,7 +23,7 @@ test("Alpha 2 Dungeon Board presents multiple delves and route metadata", () => 
   assert.match(board, /Route Choices/);
   assert.match(board, /dungeon-card-art/);
   assert.match(board, /dungeon-run-art/);
-  assert.match(board, /Dungeons & Delves · RC1/);
+  assert.match(board, /Dungeons & Delves · v1.4.0/);
 });
 
 test("collapse hands use one canonical rendered size and state-select the correct asset", () => {

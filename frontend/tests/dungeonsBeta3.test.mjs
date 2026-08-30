@@ -23,14 +23,14 @@ test("Beta 3 Dungeon disclosure still switches right closed to down open", () =>
 test("Beta 3 identity is exposed by the Dungeon Board and frontend revision", () => {
   const board = read("src/player/Dungeons.jsx");
   const version = read("src/version.js");
-  assert.match(board, /Dungeons & Delves · RC1/);
-  assert.match(version, /1\.4\.0-dungeons-rc1/);
+  assert.match(board, /Dungeons & Delves · v1.4.0/);
+  assert.match(version, /1\.4\.0-dungeons-delves/);
 });
 
 
 test("Player Guide explains stale-tab recovery without exposing implementation detail", () => {
   const guide = read("public/guide-body.html");
-  assert.match(guide, /Dungeons &amp; Delves — v1\.4 RC1/);
+  assert.match(guide, /Dungeons &amp; Delves — v1\.4\.0/);
   assert.match(guide, /older tab fails closed/);
   assert.match(guide, /refresh that tab to continue from the latest Dungeon state/);
   assert.match(guide, /Retrying the same pending action is safe/);

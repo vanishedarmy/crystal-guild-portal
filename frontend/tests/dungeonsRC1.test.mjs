@@ -9,10 +9,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("RC1 identity and Dungeon catalog remain feature frozen", () => {
-  assert.equal(WEB_BUILD, "Dungeons & Delves RC1");
-  assert.equal(WEB_ASSET_REVISION, "1.4.0-dungeons-rc1");
+  assert.equal(WEB_BUILD, "Dungeons & Delves");
+  assert.equal(WEB_ASSET_REVISION, "1.4.0-dungeons-delves");
   const board=read("src/player/Dungeons.jsx");
-  assert.match(board,/Dungeons & Delves · RC1/);
+  assert.match(board,/Dungeons & Delves · v1.4.0/);
 });
 
 test("RC1 keeps the mobile Dungeon disclosure pinned right with stateful pointers", () => {
@@ -25,7 +25,7 @@ test("RC1 keeps the mobile Dungeon disclosure pinned right with stateful pointer
 
 test("RC1 player-facing history keeps prerelease milestones out of Previous major updates", () => {
   const news=read("src/player/whatsNewData.js");
-  assert.match(news,/name: "Dungeons & Delves RC1"/);
+  assert.match(news,/name: "Dungeons & Delves"/);
   const previous=news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous,/name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
 });

@@ -1,8 +1,8 @@
-Crystal Guild v1.4.0 — Dungeons & Delves RC1 — Web Package Manifest
-Hosted Web/frontend: 1.4.0-dungeons-rc1
-Compatible Bot: 1.4.0-dungeons-rc1
+Crystal Guild v1.4.0 — Dungeons & Delves — Web Package Manifest
+Hosted Web/frontend: 1.4.0-dungeons-delves
+Compatible Bot: 1.4.0-dungeons-delves
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25
-Dungeons: 4, frozen
-Migration from Beta 3: none
+Dungeons: 4, production frozen
+Migration from RC1: none

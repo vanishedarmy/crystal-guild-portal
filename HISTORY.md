@@ -1,5 +1,11 @@
 # Crystal Guild Web History
 
+## v1.4.0 — Dungeons & Delves
+- Final production release of the feature-frozen RC1 Dungeon system.
+- Ships the four-delves catalog and preserves Beta 2 mobile/UX consolidation plus Beta 3/RC1 shared-state, replay, restart, and packaging hardening.
+- Final Web/frontend runtime is `1.4.0-dungeons-delves`; schema 10 / sync 1 / Portal protocol 25 remain unchanged.
+- Public What's New now presents Dungeons & Delves as a shipped stable release; prerelease milestones remain engineering history only.
+
 ## v1.4.0 — Dungeons & Delves RC1
 - Release-candidate cleanup and deployment-readiness pass with the four-Dungeon catalog frozen.
 - Keeps Beta 2 UX/mobile consolidation and Beta 3 shared-state/replay/restart hardening unchanged.

@@ -1,6 +1,6 @@
 {
-  "release": "v1.4.0 \u2014 Dungeons & Delves RC1",
-  "frontend_asset_revision": "1.4.0-dungeons-rc1",
+  "release": "v1.4.0 \u2014 Dungeons & Delves",
+  "frontend_asset_revision": "1.4.0-dungeons-delves",
   "assets": [
     {
       "file": "collapse-pointer-right-a2.webp",

@@ -1,46 +1,66 @@
-Crystal Guild v1.4.0 Dungeons & Delves Alpha 2 — Web Hotfix 1 Patch Manifest
-Changed/new files: 40
-Deleted files: 0
-Baseline shipping files: 818
-Final shipping files: 820
+Crystal Guild v1.4.0 Dungeons & Delves Alpha 3 — Web Patch Manifest
+Baseline: v1.4.0 Dungeons & Delves Alpha 2 Web Hotfix 1
+Target: 1.4.0-dungeons-a3
+Schema: 10
+Hosted sync schema: 1
+Portal Action protocol: 24
+Changed/new files: 53
+Deletions: 1
 
-FINALIZATION_AUDIT.md
-HISTORY.md
-HOSTING_GUIDE.md
-PACKAGE_MANIFEST.txt
-PATCH_MANIFEST.txt
-README_FIRST.txt
-RELEASE_NOTES.md
-SCENE_BACKGROUND_MANIFEST.json
-UI_SHARED_ASSET_MANIFEST.json
-UPGRADE_GUIDE.md
-VALIDATION_REPORT.md
-crystal_guild/hosted_portal.py
-frontend/public/raid-overlay.html
-frontend/public/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp
-frontend/src/player/Dungeons.jsx
-frontend/src/styles/portal.css
-frontend/src/version.js
-frontend/tests/arsenalIIUx.test.mjs
-frontend/tests/assetOptimization131.test.mjs
-frontend/tests/dungeonsAlpha2Hotfix1.test.mjs
-frontend/tests/expeditionsBeta1.test.mjs
-frontend/tests/expeditionsBeta2.test.mjs
-frontend/tests/expeditionsBeta3Accessibility.test.mjs
-frontend/tests/expeditionsBeta4Hardening.test.mjs
-frontend/tests/expeditionsRC1.test.mjs
-frontend/tests/guideExpeditionsAlpha2.test.mjs
-frontend/tests/guideFellowshipReference.test.mjs
-frontend/tests/guildExpansionAlpha1.test.mjs
-frontend/tests/guildExpansionAlpha2.test.mjs
-frontend/tests/guildExpansionAlpha3.test.mjs
-frontend/tests/guildExpansionAlpha4.test.mjs
-frontend/tests/guildExpansionAlpha5.test.mjs
-frontend/tests/guildExpansionAlpha5Hotfix1VisualInventory.test.mjs
-frontend/tests/guildExpansionBeta1.test.mjs
-frontend/tests/guildExpansionBeta2Ux.test.mjs
-frontend/tests/guildExpansionBeta3Hardening.test.mjs
-frontend/tests/guildExpansionRC1.test.mjs
-frontend/tests/phase8UiUx.test.mjs
-frontend/tests/version.test.mjs
-tests/test_hosted_portal.py
+Changed/new:
+- FINALIZATION_AUDIT.md
+- HISTORY.md
+- HOSTING_GUIDE.md
+- PACKAGE_MANIFEST.txt
+- PORTAL_ACTIONS_SETUP.md
+- README.md
+- README_FIRST.txt
+- RELEASE_NOTES.md
+- SCENE_BACKGROUND_MANIFEST.json
+- STREAMER_DASHBOARD.md
+- UI_SHARED_ASSET_MANIFEST.json
+- UPGRADE_GUIDE.md
+- VALIDATION_REPORT.md
+- VERSION.txt
+- crystal_guild/__init__.py
+- crystal_guild/hosted_portal.py
+- frontend/public/guide-body.html
+- frontend/public/guide-data.json
+- frontend/public/guide.css
+- frontend/public/raid-overlay.html
+- frontend/src/player/Dungeons.jsx
+- frontend/src/player/whatsNewData.js
+- frontend/src/styles/portal.css
+- frontend/src/version.js
+- frontend/tests/arsenalIIUx.test.mjs
+- frontend/tests/assetOptimization131.test.mjs
+- frontend/tests/commandPrefixV115.test.mjs
+- frontend/tests/dungeonsAlpha1.test.mjs
+- frontend/tests/dungeonsAlpha2.test.mjs
+- frontend/tests/dungeonsAlpha3.test.mjs
+- frontend/tests/expeditionsBeta1.test.mjs
+- frontend/tests/expeditionsBeta2.test.mjs
+- frontend/tests/expeditionsBeta2ViewportHotfix.test.mjs
+- frontend/tests/expeditionsBeta3Accessibility.test.mjs
+- frontend/tests/expeditionsBeta4Hardening.test.mjs
+- frontend/tests/expeditionsRC1.test.mjs
+- frontend/tests/guideAssets.test.mjs
+- frontend/tests/guideExpeditionsAlpha2.test.mjs
+- frontend/tests/guideFellowshipReference.test.mjs
+- frontend/tests/guildExpansionAlpha1.test.mjs
+- frontend/tests/guildExpansionAlpha2.test.mjs
+- frontend/tests/guildExpansionAlpha3.test.mjs
+- frontend/tests/guildExpansionAlpha4.test.mjs
+- frontend/tests/guildExpansionAlpha5.test.mjs
+- frontend/tests/guildExpansionAlpha5Hotfix1VisualInventory.test.mjs
+- frontend/tests/guildExpansionBeta1.test.mjs
+- frontend/tests/guildExpansionBeta2Ux.test.mjs
+- frontend/tests/guildExpansionBeta3Hardening.test.mjs
+- frontend/tests/guildExpansionRC1.test.mjs
+- frontend/tests/phase8UiUx.test.mjs
+- frontend/tests/version.test.mjs
+- frontend/tests/whatsNew.test.mjs
+- tests/test_hosted_portal.py
+
+Deleted:
+- PATCH_MANIFEST.txt

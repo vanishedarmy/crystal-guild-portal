@@ -74,6 +74,7 @@ function DungeonResult({ result, onConfirm, confirming }) {
         <div><span>Loot</span><strong>{number((rewards?.loot || []).length)}</strong></div>
       </div>
       {(rewards?.loot || []).length ? <p className="expedition-loot-line"><strong>Banked:</strong> {rewards.loot.join(" · ")}</p> : null}
+      {summary?.first_clear ? <p className="dungeon-first-clear-line"><strong>First Clear Bonus:</strong> {(summary?.first_clear_bonus || []).join(" · ") || "Claimed"}</p> : null}
       {(summary?.discoveries || []).length ? <p className="expedition-loot-line"><strong>Discovered:</strong> {summary.discoveries.join(" · ")}</p> : null}
       <div className="adventure-result-confirmation">
         <div><strong>Saved until you confirm</strong><span>This Dungeon report remains on your Adventure Board across refreshes.</span></div>
@@ -114,7 +115,7 @@ export default function Dungeons({
         <img className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
         <div className="panel-title-row dungeon-board-title-row">
           <div>
-            <p className="eyebrow">Dungeons & Delves · Alpha 2</p>
+            <p className="eyebrow">Dungeons & Delves · Alpha 3</p>
             <h2>{active ? active.name : "Dungeon Board"}</h2>
             <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
           </div>
@@ -133,6 +134,7 @@ export default function Dungeons({
               <ProgressBar value={pct(active.room_number, active.room_count)} />
               <DungeonCache cache={active.cache} />
               {active.discoveries?.length ? <div className="dungeon-discovery-strip"><span>Discoveries this delve</span><strong>{active.discoveries.join(" · ")}</strong></div> : null}
+              {active.modifiers?.length ? <div className="dungeon-modifier-strip"><span>Route effects ahead</span><strong>{active.modifiers.join(" · ")}</strong></div> : null}
 
               {active.status === "combat" && combat ? (
                 <div className="solo-combat-panel dungeon-combat-panel">
@@ -145,6 +147,7 @@ export default function Dungeons({
                         <ProgressBar value={pct(combat.enemy?.hp, combat.enemy?.max_hp)} className="hp" />
                         <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{combat.enemy?.intent || "Preparing an action"}</strong></div>
                         {combat.enemy?.statuses && combat.enemy.statuses !== "—" ? <small>Status: {combat.enemy.statuses}</small> : null}
+                        {combat.route_effects?.length ? <small className="dungeon-combat-route-effects">Route consequence: {combat.route_effects.join(" · ")}</small> : null}
                       </div>
                     </div>
                   </div>
@@ -177,7 +180,7 @@ export default function Dungeons({
                   <div className="dungeon-route-options">
                     {(active.choices || []).map((choice) => (
                       <button key={choice.id} type="button" className="dungeon-route-option" disabled={!actionsAvailable || Boolean(busy)} onClick={() => runRequest(`dungeon:choice:${choice.id}`, "dungeon-choice", choice.id, (idem) => submitDungeonChoice(active.run_id, active.room?.id, choice.id, csrfToken, idem), `${choice.label} chosen.`)}>
-                        <strong>{choice.label}</strong><span>{choice.description}</span>
+                        <strong>{choice.label}</strong><span>{choice.description}</span>{choice.effects?.length ? <small>{choice.effects.join(" · ")}</small> : null}
                       </button>
                     ))}
                   </div>
@@ -203,8 +206,9 @@ export default function Dungeons({
                 <article key={dungeon.id} className={`dungeon-card ${dungeon.unlocked ? "unlocked" : "locked"}`}>
                   {dungeon.art ? <img className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
                   <div className="dungeon-card-content">
-                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · Lv.{number(dungeon.min_level)}+</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
-                  <div className="dungeon-card-stats"><span><strong>Entry Level</strong> Lv.{number(dungeon.min_level)}</span><span><strong>Recommended</strong> Lv.{number(dungeon.recommended_level || dungeon.min_level)}</span><span><strong>Route Choices</strong> {number(dungeon.choice_rooms || 0)}</span><span><strong>Clears</strong> {number(dungeon.progress?.[0] || 0)}</span><span><strong>Best</strong> {number(dungeon.progress?.[1] || 0)} / {number(dungeon.rooms)}</span></div>
+                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · {dungeon.identity || `Lv.${number(dungeon.min_level)}+`}</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
+                  <div className="dungeon-card-stats"><span><strong>Entry Level</strong> Lv.{number(dungeon.min_level)}</span><span><strong>Recommended</strong> Lv.{number(dungeon.recommended_level || dungeon.min_level)}</span><span><strong>Route Choices</strong> {number(dungeon.choice_rooms || 0)}</span><span><strong>Clears</strong> {number(dungeon.record?.clears || dungeon.progress?.[0] || 0)}</span><span><strong>Best</strong> {number(dungeon.record?.best_rooms || dungeon.progress?.[1] || 0)} / {number(dungeon.rooms)}</span></div>
+                  {dungeon.unlocked ? <div className={`dungeon-first-clear ${dungeon.first_clear_claimed ? "claimed" : "available"}`}><span>First Clear</span><strong>{dungeon.first_clear_claimed ? "Claimed" : (dungeon.first_clear_rewards || []).join(" · ") || "Bonus reward"}</strong></div> : null}
                   {dungeon.missing?.length ? <p className="adventure-disabled-reason">{dungeon.missing.join(" · ")}</p> : null}
                   <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !dungeon.unlocked || Boolean(busy)} onClick={() => runRequest(`dungeon:start:${dungeon.id}`, "dungeon-start", dungeon.id, (idem) => submitDungeonStart(dungeon.id, csrfToken, idem), `${dungeon.name} begun.`)}>{busy === `dungeon:start:${dungeon.id}` ? "Entering…" : "Enter Dungeon"}</button>
                   </div>

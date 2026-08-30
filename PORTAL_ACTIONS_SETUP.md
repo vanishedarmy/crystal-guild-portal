@@ -1,5 +1,5 @@
-# Portal Actions — v1.4.0 Dungeons & Delves Alpha 2
+# Portal Actions — v1.4.0 Dungeons & Delves Alpha 3
 
-Use the matching Alpha 2 Bot and Web packages. Portal Action protocol is **24**. Existing Portal sync/OAuth environment variables and secrets remain unchanged.
+Portal Action protocol remains **24** from Alpha 2. Alpha 3 reuses the existing Dungeon action contract, including `DUNGEON_CHOICE`; no new Portal action type is introduced.
 
-Dungeon Portal actions now include `DUNGEON_START`, `DUNGEON_ACTION`, `DUNGEON_CONTINUE`, `DUNGEON_CHOICE`, and `DUNGEON_RETREAT`. Dungeon mutations remain replay-safe and run/chamber-bound so stale browser tabs fail closed.
+Dungeon mutations remain authoritative on the Bot, replay-safe, and bound to the exact active run/chamber shown by the submitting browser tab. Deploy matching Alpha 3 Web and Bot so both sides share the same Dungeon catalog and route-effect presentation.

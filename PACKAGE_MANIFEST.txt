@@ -1,10 +1,15 @@
-Crystal Guild v1.4.0 — Dungeons & Delves Alpha 2 Web Hotfix 1
-Hosted runtime: 1.4.0-dungeons-a2
-Frontend assets: 1.4.0-dungeons-a2-h1
-Compatible Bot: 1.4.0-dungeons-a2
+Crystal Guild v1.4.0 — Dungeons & Delves Alpha 3 Web
+Hosted runtime: 1.4.0-dungeons-a3
+Frontend assets: 1.4.0-dungeons-a3
+Compatible Bot: 1.4.0-dungeons-a3
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 24
 Twitch prefix: !
-Feature state: Alpha 2 Dungeons unchanged; Dungeon Board visual/pointer hotfix only.
-Upgrade baseline: v1.4.0 Dungeons & Delves Alpha 2 Web
+Upgrade baseline: v1.4.0 Dungeons & Delves Alpha 2 Web Hotfix 1
+
+Highlights:
+- Whiteglass Bastion Dungeon card and active-run presentation
+- Forward route-effect previews
+- First-clear reward identity
+- Three-Dungeon Player Guide / What's New coverage

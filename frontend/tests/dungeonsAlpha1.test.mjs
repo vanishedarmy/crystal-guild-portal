@@ -32,7 +32,7 @@ test("Dungeon Board uses the existing shared collapse pointer and responsive lay
   const dungeons = read("src/player/Dungeons.jsx");
   const css = read("src/styles/portal.css");
   assert.match(dungeons, /<CollapsePointer open=\{open\}/);
-  assert.match(css, /v1\.4\.0 Dungeons & Delves Alpha 2/);
+  assert.match(css, /v1\.4\.0 Dungeons & Delves Alpha 3/);
   assert.match(css, /\.dungeon-card-grid/);
   assert.match(css, /\.dungeon-run-shell/);
   assert.match(css, /@media \(max-width: 620px\)/);
@@ -47,10 +47,10 @@ test("Player Guide preserves Dungeon cache rules alongside Alpha 2 expansion", (
   assert.match(guide, /defeat recovers <b>25%<\/b>/);
 });
 
-test("v1.4 Alpha 2 current entry does not repopulate prerelease history", () => {
+test("v1.4 Alpha 3 current entry does not repopulate prerelease history", () => {
   const whatsNew = read("src/player/whatsNewData.js");
-  assert.match(whatsNew, /name: "Dungeons & Delves Alpha 2"/);
-  const currentIndex = whatsNew.indexOf('name: "Dungeons & Delves Alpha 2"');
+  assert.match(whatsNew, /name: "Dungeons & Delves Alpha 3"/);
+  const currentIndex = whatsNew.indexOf('name: "Dungeons & Delves Alpha 3"');
   const stableIndex = whatsNew.indexOf('name: "Asset Optimization"');
   assert.ok(currentIndex > 0 && stableIndex > currentIndex);
 });

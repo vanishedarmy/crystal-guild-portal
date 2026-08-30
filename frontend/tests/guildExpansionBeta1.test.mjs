@@ -14,8 +14,8 @@ test("Guild Expansion publishes the complete player-facing Guild summary", async
 
 test("Guild Expansion public identity is current", async () => {
   const version = await text("../src/version.js");
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a2-h1"/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Alpha 3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-a3"/);
 });
 
 test("Player Guide stays focused on play instead of simulation internals", async () => {

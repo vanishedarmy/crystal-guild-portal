@@ -9819,7 +9819,7 @@ summary:has(> .details-collapse-pointer)::after { content: none !important; disp
 details[open] > summary .details-collapse-pointer-closed { display: none; }
 details[open] > summary .details-collapse-pointer-open { display: block; }
 
-/* v1.4.0 Dungeons & Delves Alpha 2 */
+/* v1.4.0 Dungeons & Delves Alpha 3 */
 .dungeon-board-panel { position: relative; overflow: hidden; isolation: isolate; }
 .dungeon-board-background-art {
   position: absolute;
@@ -9874,7 +9874,7 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
   .dungeon-board-panel::before { background: rgba(5, 12, 34, .68); }
 }
 
-/* v1.4.0 Dungeons & Delves Alpha 2 — route choices + dungeon scenes */
+/* v1.4.0 Dungeons & Delves Alpha 3 — route depth + dungeon reward identity */
 .dungeon-card,
 .dungeon-run-shell { position: relative; overflow: hidden; isolation: isolate; }
 .dungeon-card-art,
@@ -9949,3 +9949,23 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
   height: var(--cg-collapse-pointer-size) !important;
   flex-basis: var(--cg-collapse-pointer-size) !important;
 }
+
+/* v1.4 Alpha 3 — dungeon route consequences and first-clear identity. */
+.dungeon-first-clear,
+.dungeon-modifier-strip,
+.dungeon-first-clear-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .35rem .7rem;
+  padding: .58rem .72rem;
+  border: 1px solid rgba(229, 197, 111, .25);
+  border-radius: .58rem;
+  background: rgba(31, 25, 13, .38);
+}
+.dungeon-first-clear span, .dungeon-modifier-strip span { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; }
+.dungeon-first-clear strong, .dungeon-modifier-strip strong, .dungeon-first-clear-line strong { color: #f1d78f; font-size: .86rem; }
+.dungeon-first-clear.claimed { border-color: rgba(135, 159, 205, .22); background: rgba(8, 22, 49, .56); }
+.dungeon-first-clear.claimed strong { color: var(--muted); }
+.dungeon-route-option small { color: #b9cae8; font-size: .76rem; line-height: 1.35; }
+.dungeon-combat-route-effects { display: block; margin-top: .35rem; color: #f1d78f; }

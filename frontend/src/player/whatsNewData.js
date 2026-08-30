@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Alpha 2",
-    title: "Dungeon routes open up",
-    summary: "Dungeons now ask you to make meaningful route decisions, and a second persistent delve — The Emberglass Foundry — expands the Dungeon Board into a real progression path.",
+    name: "Dungeons & Delves Alpha 3",
+    title: "Dungeon routes now shape the rooms ahead",
+    summary: "Alpha 3 gives each delve a stronger reward identity, adds first-clear bonuses and persistent route consequences, and opens a third higher-level Dungeon — The Whiteglass Bastion.",
     highlights: [
-      { title: "A second Dungeon", description: "The Emberglass Foundry unlocks at Lv.18 after charting 35% of Ashen Highlands, with its own enemies, treasure, hazards, sanctuary, miniboss, and final boss." },
-      { title: "Choose your route", description: "Crossroads rooms stop the delve for a real decision: take the safer path to preserve resources or accept immediate danger for stronger cache rewards and discoveries." },
-      { title: "The Ossuary grows", description: "The Forgotten Ossuary now includes its own Crossroads chamber, bringing the proof dungeon to eight chambers without changing its original persistent-combat rules." },
-      { title: "Dungeon identity is clearer", description: "The Board now shows each delve’s scene art, recommended level, route count, unlock state, and discoveries while active." },
-      { title: "Collapse controls normalized", description: "The shared pointer hand now uses one consistent rendered size everywhere while retaining right-when-closed and down-when-open states." },
+      { title: "A third Dungeon", description: "The Whiteglass Bastion unlocks at Lv.26 after charting 45% of Frostveil Reach, with nine chambers, two Crossroads, an Iron Giant miniboss, and a Behemoth finale." },
+      { title: "Choices echo forward", description: "Crossroads can now ward the next hazard, make the next foe weaker or stronger, or increase the rewards from the next combat instead of only changing immediate HP and Cache." },
+      { title: "First clears matter", description: "Every Dungeon now has a one-time first-clear bonus built around its identity: relic salvage in the Ossuary, forge materials in Emberglass, and warded Frostveil materials in Whiteglass." },
+      { title: "Know the trade before choosing", description: "Route buttons preview their actual effects, while active route modifiers remain visible until the affected hazard or battle consumes them." },
+      { title: "Records read more clearly", description: "Dungeon cards now expose their identity, clear record, best chamber, route count, and whether the first-clear reward has already been claimed." },
     ],
     action: { tab: "hunts", label: "Open Dungeon Board" },
   },

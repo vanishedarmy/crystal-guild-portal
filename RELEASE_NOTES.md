@@ -1,31 +1,29 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 2 Web Hotfix 1
+# Crystal Guild v1.4.0 — Dungeons & Delves Alpha 3
 
-## Web-only Dungeon Board visual fix
+## Dungeon Depth & Reward Identity
 
-This hotfix builds directly on **Dungeons & Delves Alpha 2** and changes presentation only. The compatible Alpha 2 Bot, database schema, hosted sync schema, and Portal Action protocol are unchanged.
+Alpha 3 is a paired Dungeon feature update based on **Alpha 2 Bot + Alpha 2 Web Hotfix 1**. It adds the third delve, forward route consequences, first-clear identity, and matching Portal/Guide presentation while keeping schema **10** and Portal Action protocol **24** unchanged.
 
-### Dungeon Board background
-- Adds the new wide crystal-dungeon scene to the Dungeon Board.
-- The artwork is rendered as a real DOM image layer inside the panel, so the global `.panel` background cannot override or hide it.
-- A dedicated readability veil keeps headings, dungeon cards, and controls legible while allowing the environment artwork to remain clearly visible.
-- Source PNG: **1,964,168 bytes**; shipping WebP: **183,336 bytes**, saving **1,780,832 bytes (90.7%)**.
-- Shipping dimensions remain **2172×724**.
+### Dungeon Board
+- Adds **The Whiteglass Bastion**: Lv.26 entry, Lv.30 recommended, unlocked at 45% Frostveil Reach exploration.
+- Dungeon cards now carry a clear reward identity and first-clear reward status.
+- The Alpha 2 H1 Dungeon Board artwork and normalized disclosure pointer treatment remain intact.
 
-### Dungeon Board collapse pointer
-- Replaces the Dungeon Board's local `adventure-collapse-toggle` treatment with the same shared `section-collapse-button` used by Travel Regions, Hunt Board, Expedition Board, and What's New.
-- The control now renders in the canonical **38px button box** instead of inheriting the oversized generic button/image treatment.
-- Pointer state remains authoritative: **right hand when closed, down hand when open**.
-- Removes the large gray/raw-image-tile appearance reported on the Dungeon Board.
+### Active-run clarity
+- Crossroads options show their immediate and forward effects before selection.
+- Pending route effects are visible on the active run and combat panels.
+- First-clear bonuses are surfaced in completion results.
+
+### Player Guide / What’s New
+- Documents all three current delves and explains route effects that persist into later chambers.
+- Current What’s New advances to Alpha 3 while Previous major updates remains stable-release-only.
 
 ### Compatibility
-- Hosted Web runtime: `1.4.0-dungeons-a2` unchanged
-- Frontend asset revision: `1.4.0-dungeons-a2-h1`
-- Compatible Bot runtime: `1.4.0-dungeons-a2` unchanged
+- Hosted Web runtime: `1.4.0-dungeons-a3`
+- Frontend asset revision: `1.4.0-dungeons-a3`
+- Compatible Bot runtime: `1.4.0-dungeons-a3`
 - Local DB schema: **10** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **24** unchanged
 - Twitch prefix: `!`
-- Bot update: **not required**
-- Database migration/player reset: **none**
-- OAuth/environment changes: **none**
-- Gameplay/economy/balance changes: **none**
+- Migration/reset/OAuth/environment changes: **none**

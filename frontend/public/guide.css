@@ -2403,7 +2403,7 @@ button, input, select, textarea { font: inherit; }
 .guide-content details[open]:not(.catalog-disclosure):not(.data-collapse):not(.guide-section-accordion) > summary::after { content: url('/ui/collapse-pointer-down-a2.webp') !important; }
 
 
-/* v1.4 Alpha 2 — canonical 22px disclosure hand across the Player Guide. */
+/* v1.4 Alpha 3 — canonical 22px disclosure hand across the Player Guide. */
 .data-collapse-chevron,
 .guide-section-chevron,
 .catalog-launch-action::after {

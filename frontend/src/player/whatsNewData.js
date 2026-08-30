@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.5.0 Alpha 2",
+    version: "v1.5.0 Alpha 3",
     name: "Trails & Raids",
-    title: "Break the boss, control the battlefield",
-    summary: "Trails & Raids Alpha 2 expands cooperative boss combat with Shiva — Diamond Throne, persistent encounter adds, a shared Break gauge, Stagger vulnerability windows, and visible Tank/Healer/Support/DPS identities on contribution standings.",
+    title: "Coordinate the storm",
+    summary: "Trails & Raids Alpha 3 adds Ramuh — Judgment Spire, chaining lightning, stack-sharing pressure, coordinated Defend checks, and a collapsible Trial & Raid Board.",
     highlights: [
-      { title: "Shiva — Diamond Throne", description: "The second flagship Trial combines Frostbrand Cleave, Icebound Mirrors, Diamond Aegis, Stagger, and Diamond Dust." },
-      { title: "Adds are real targets", description: "Icebound Mirrors persist in raid state and intercept ordinary boss-directed attacks and enemy abilities until the Guild destroys them." },
-      { title: "Break → Stagger", description: "Fill Diamond Aegis's shared Break gauge within two rounds to make Shiva vulnerable and cancel her response for the following round." },
-      { title: "Read your role", description: "Contribution rows now identify Tank, Healer, Support, or DPS while retaining the established damage/healing/mitigation score and reward math." },
-      { title: "Ifrit remains intact", description: "Inferno Crucible and all Alpha 1 telegraphs, Infernal Nails, Hellfire resolution, and overlay behavior remain supported." },
+      { title: "Ramuh — Judgment Spire", description: "The third flagship Trial combines Rolling Thunder, Levinshare, Judgment Charge, and grounded/overcharged Judgment Bolt resolution." },
+      { title: "Stack mechanics", description: "Levinshare marks one raider; allies who Defend join the stack and divide the incoming pressure using the existing chat action surface." },
+      { title: "Grounding Gauge", description: "Judgment Charge counts coordinated Defend actions across two rounds. Meet the target to weaken Judgment Bolt; miss it and the discharge is empowered." },
+      { title: "Collapsible Raid Board", description: "The Trial & Raid Board now uses the same right-hand closed / down-hand open disclosure language as the rest of the Adventure Board." },
+      { title: "Earlier Trials remain intact", description: "Ifrit — Inferno Crucible and Shiva — Diamond Throne keep their Alpha 1/2 mechanics and rewards unchanged." },
       { title: "Safe upgrade", description: "Schema 10, hosted sync 1, Portal Action protocol 25, existing progression, and all four production Dungeons remain unchanged." },
     ],
     action: { tab: "hunts", label: "Open Trial & Raid Board" },

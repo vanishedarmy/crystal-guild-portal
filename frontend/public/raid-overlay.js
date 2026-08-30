@@ -16,7 +16,9 @@ function mechanicText(m){
   if(!m||!m.name)return 'Standard boss pressure';
   if(m.kind==='targeted')return `${m.name} → ${m.target||'one raider'}`;
   if(m.kind==='raidwide')return `${m.name} → raidwide damage`;
-  if(m.kind==='damage_check'||m.kind==='break_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} · ${Number(m.rounds_remaining)||0}R`;
+  if(m.kind==='damage_check'||m.kind==='break_check'||m.kind==='guard_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} · ${Number(m.rounds_remaining)||0}R`;
+  if(m.kind==='chain')return `${m.name} → ${m.target||'chain target'} + chain`;
+  if(m.kind==='shared_hit')return `${m.name} → ${m.target||'marked raider'} · STACK`;
   if(m.kind==='adds')return `${m.name} · destroy active adds`;
   if(m.kind==='cleave')return `${m.name} → ${m.target||'marked raider'} + ally`;
   if(m.kind==='stagger')return `${m.name} · vulnerable window`;

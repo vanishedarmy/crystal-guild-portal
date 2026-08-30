@@ -1,5 +1,8 @@
 # Crystal Guild Web History
 
+## v1.5.0 — Trails & Raids Alpha 3
+Adds Ramuh — Judgment Spire with chain lightning, shared-hit stack coordination, and a Defend-driven Grounding Gauge. The Adventure Board Trial & Raid Board becomes collapsible using the established right/down disclosure pointer language. Runtime `1.5.0-trails-raids-a3`; schema 10, hosted sync 1, and Portal protocol 25 unchanged.
+
 ## v1.5.0 — Trails & Raids Alpha 2
 - Shiva — Diamond Throne: Frostbrand Cleave, Icebound Mirrors, Diamond Aegis, Stagger, Diamond Dust.
 - Adds and Break/Stagger public state, role-aware contribution display, no schema/protocol change.

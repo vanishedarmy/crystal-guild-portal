@@ -33,7 +33,7 @@ test("Alpha 2 OBS overlay displays adds roles and new mechanic kinds", () => {
   assert.match(js, /stagger/);
 });
 
-test("Alpha 2 What's New explains the cooperative combat expansion", () => {
+test("Alpha 3 What's New preserves the Alpha 2 Shiva Trial", () => {
   const news = read("src/player/whatsNewData.js");
-  for (const term of ["v1.5.0 Alpha 2", "Shiva — Diamond Throne", "Break → Stagger", "Icebound Mirrors", "Tank, Healer, Support, or DPS"]) assert.match(news, new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  for (const term of ["v1.5.0 Alpha 3", "Shiva — Diamond Throne", "Earlier Trials remain intact"]) assert.match(news, new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });

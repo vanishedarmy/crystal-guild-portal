@@ -1,10 +1,5 @@
 # Crystal Guild Web History
 
-## v1.5.0 — Trails & Raids Alpha 1
-- Begins the cooperative Raid/Trial expansion with Ifrit — Inferno Crucible.
-- Adds telegraphed targeted/raidwide mechanics, Infernal Nails damage check, Hellfire resolution, weighted contribution, and live Raid Board/overlay presentation.
-- Runtime `1.5.0-trails-raids-a1`; schema 10 / sync 1 / protocol 25 unchanged.
-
 ## v1.4.0 — Dungeons & Delves
 - Final production release of the feature-frozen RC1 Dungeon system.
 - Ships the four-delves catalog and preserves Beta 2 mobile/UX consolidation plus Beta 3/RC1 shared-state, replay, restart, and packaging hardening.

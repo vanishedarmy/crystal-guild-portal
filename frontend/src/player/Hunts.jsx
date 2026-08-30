@@ -18,7 +18,6 @@ import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
 import Expeditions from "./Expeditions.jsx";
 import Dungeons from "./Dungeons.jsx";
-import Raids from "./Raids.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
@@ -670,8 +669,6 @@ export default function Hunts({ data, overview, onRefresh }) {
           {state?.camp?.reason ? <span className="adventure-disabled-reason">{state.camp.reason}</span> : null}
         </div>
       </section>
-
-      <Raids />
 
       <Dungeons
         data={state?.dungeons}

@@ -507,8 +507,8 @@ function bossOverview(b){let art=bossArtworkPath(b);return `<button type="button
 function renderBosses(){let q=$('#bossSearch').value.toLowerCase(),t=$('#bossTier').value;let bs=D.bosses.filter(b=>(!t||b.tier===t)&&([b.name,b.tier,b.signature,b.description,
   ...(b.drops||[]).map(d=>itemName(d.item_id)),...(b.phases||[]).map(p=>p.name)].join(' ').toLowerCase().includes(q)));
   $('#bossGrid').innerHTML=bs.map(bossOverview).join('')||'<div class="command-empty">No raid bosses match this filter.</div>';}
-function renderBossInfo(b){let art=bossArtworkPath(b);infoKicker.textContent=b.encounter_type||'Raid Boss';infoTitle.textContent=b.name;infoBadges.innerHTML=`<span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}
-  </span><span class="badge">Recommended Lv.${b.recommended_level}</span><span class="badge">${b.phases.length} phases</span>${b.encounter_name?`<span class="badge">${esc(b.encounter_name)}</span>`:''}`;infoBody.innerHTML=`${art?`<div class="info-boss-art"><img src="${esc(art)}" alt="${esc(b.name)} artwork" decoding="async"></div>`:''}<section class="info-section">
+function renderBossInfo(b){let art=bossArtworkPath(b);infoKicker.textContent='Raid Boss';infoTitle.textContent=b.name;infoBadges.innerHTML=`<span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}
+  </span><span class="badge">Recommended Lv.${b.recommended_level}</span><span class="badge">${b.phases.length} phases</span>`;infoBody.innerHTML=`${art?`<div class="info-boss-art"><img src="${esc(art)}" alt="${esc(b.name)} artwork" decoding="async"></div>`:''}<section class="info-section">
   <div class="info-section-title">Threat Profile</div><p>${esc(b.description||'')}</p><div class="info-hero-stat"><div class="info-stat"><span>Boss HP</span><b>${fmtInt(b.hp)}</b></div>
   <div class="info-stat"><span>Signature</span><b>${esc(b.signature)}</b></div><div class="info-stat"><span>Attacks / Round</span><b>${b.attacks_per_round}</b></div><div class="info-stat"><span>
   Party Attack</span><b>Every ${b.aoe_every} rounds</b></div><div class="info-stat"><span>Enrage</span><b>Round ${b.enrage_round}</b></div><div class="info-stat"><span>Victory XP</span><b>${fmtInt(b.xp)}</b>
@@ -516,7 +516,7 @@ function renderBossInfo(b){let art=bossArtworkPath(b);infoKicker.textContent=b.e
   <div class="info-phase-list">${(b.phases||[]).map(p=>`<div class="info-phase"><div class="phase-threshold">${Math.round(p.threshold*100)}% HP</div><div class="phase-name"><b>${esc(p.name)}</b><span>
   Phase activates at or below this threshold</span></div><div class="phase-mult">DMG ×${p.damage_mult}</div></div>`).join('')}</div></section><section class="info-section">
   <div class="info-section-title">Raid Loot</div><div class="info-loot-grid">${(b.drops||[]).map(d=>`<div class="info-loot"><b>${esc(itemName(d.item_id))}</b><span>${pct(d.chance)} drop chance</span>
-  </div>`).join('')||'<div class="muted">No configured raid drops.</div>'}</div></section>${(b.mechanics||[]).length?`<section class="info-section"><div class="info-section-title">Trial Mechanics</div><div class="info-phase-list">${(b.mechanics||[]).map(m=>`<div class="info-phase"><div class="phase-threshold">${esc(humanizeLabel(m.kind||'mechanic'))}</div><div class="phase-name"><b>${esc(m.name)}</b><span>${esc(m.description||'')}</span></div></div>`).join('')}</div></section>`:''}<section class="info-section"><div class="info-section-title">Chat Commands</div>
+  </div>`).join('')||'<div class="muted">No configured raid drops.</div>'}</div></section><section class="info-section"><div class="info-section-title">Chat Commands</div>
   <div class="info-command-row"><code class="info-command">!bossinfo ${esc(b.name)}</code><code class="info-command">!raid</code><code class="info-command">!raidstats</code></div></section>`;}
 $('#bossSearch').oninput=renderBosses;$('#bossTier').onchange=renderBosses;renderBosses();
 

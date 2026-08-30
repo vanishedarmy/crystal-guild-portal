@@ -1,20 +1,5 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.5.0 Alpha 1",
-    name: "Trails & Raids",
-    title: "Raid mechanics become visible and deliberate",
-    summary: "Trails & Raids Alpha 1 begins the cooperative boss-combat expansion with a flagship Ifrit Trial, visible telegraphs, a two-round damage check, contribution standings, and a live Raid Board in the Adventurer Portal.",
-    highlights: [
-      { title: "Ifrit — Inferno Crucible", description: "The first flagship Trial alternates Incinerate and Radiant Plume telegraphs before forcing the Guild through Infernal Nails and Hellfire." },
-      { title: "Read the mechanic", description: "The Adventure Board and hosted raid overlay now mirror the current safe-to-display telegraph, phase, round state, and damage-check progress." },
-      { title: "Infernal Nails", description: "Raiders have two combat rounds to meet the shared damage target. Success weakens Hellfire; failure empowers the raidwide blast." },
-      { title: "Contribution beyond damage", description: "Damage, healing, and mitigation feed one contribution score so support and defensive play appear alongside raw damage." },
-      { title: "Twitch-first combat remains", description: "Raid actions still resolve through the existing Bot-authoritative Twitch combat loop; the Portal is a live read-only battle board in Alpha 1." },
-      { title: "Safe upgrade", description: "Schema 10, hosted sync 1, Portal Action protocol 25, existing progression, and the four production Dungeons remain unchanged." },
-    ],
-    action: { tab: "hunts", label: "Open Trial & Raid Board" },
-  },
-  {
     version: "v1.4.0",
     name: "Dungeons & Delves",
     title: "Dungeons & Delves has arrived",

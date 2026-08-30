@@ -1,11 +1,11 @@
-# Crystal Guild Hosted Web — Trails & Raids Alpha 1
+# Crystal Guild Hosted Web — Dungeons & Delves
 
-Deploy this Web package with the matching **v1.5.0 Alpha 1 Bot**.
+Deploy this Web package with the matching **RC1 Bot**.
 
-Hosted runtime: `1.5.0-trails-raids-a1`  
-Frontend revision: `1.5.0-trails-raids-a1`  
-Compatible Bot: `1.5.0-trails-raids-a1`  
+Hosted runtime: `1.4.0-dungeons-delves`  
+Frontend revision: `1.4.0-dungeons-delves`  
+Compatible Bot: `1.4.0-dungeons-delves`  
 Hosted sync schema: **1**  
 Portal Action protocol: **25**
 
-No new environment variables are introduced. Preserve the existing hosted sync key and OAuth configuration. Expected baseline is v1.4.0 production; deploy matching Alpha 1 Web + Bot together.
+No new environment variables are introduced. Preserve the existing hosted sync key and OAuth configuration. Expected baseline is Beta 3; deploy both RC1 components together.

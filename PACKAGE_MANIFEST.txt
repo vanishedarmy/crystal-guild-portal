@@ -1,16 +1,16 @@
-Crystal Guild v1.4.0 — Dungeons & Delves Beta 1 — Web Package Manifest
-Hosted runtime: 1.4.0-dungeons-b1
-Frontend assets: 1.4.0-dungeons-b1
+Crystal Guild v1.4.0 — Dungeons & Delves Beta 2 — Web Package Manifest
+Hosted runtime: 1.4.0-dungeons-b2
+Frontend assets: 1.4.0-dungeons-b2
 Compatible Bot: 1.4.0-dungeons-b1
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25
 Twitch prefix: !
-Upgrade baseline: v1.4.0 Dungeons & Delves Alpha 4 Web
+Upgrade baseline: v1.4.0 Dungeons & Delves Beta 1 Web
 
 Highlights:
-- Four-Dungeon feature freeze
-- Exact run/chamber/revision contract for Dungeon Portal mutations
-- Same-room stale-tab protection
-- Round X / Limit encounter presentation
-- Adventure-state payload headroom hardening
+- Web-only Dungeon UX/mobile consolidation
+- Active-run status and Carried Cache clarity
+- Route consequence chips and explicit 100/50/25 settlement guidance
+- Consolidated Dungeon cards and narrow-screen combat controls
+- Beta 1 exact run/chamber/revision protection retained

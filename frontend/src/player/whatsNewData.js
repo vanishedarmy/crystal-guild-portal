@@ -1,13 +1,15 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.4.0",
-    name: "Dungeons & Delves Beta 1",
-    title: "Dungeon feature freeze & reliability",
-    summary: "Beta 1 freezes Dungeon content at four delves and hardens same-room actions so stale tabs cannot spend a second combat turn after the authoritative run has advanced.",
+    name: "Dungeons & Delves Beta 2",
+    title: "Dungeon UX & mobile consolidation",
+    summary: "Beta 2 freezes Dungeon content at four delves and concentrates the active delve, choices, Cache risk, results, and mobile controls into a clearer player-facing flow.",
     highlights: [
-      { title: "Exact dungeon state", description: "Every Dungeon action now carries the precise persisted run revision in addition to run and chamber identity." },
-      { title: "Stale-tab protection", description: "A second tab or delayed click from an older combat round fails closed instead of acting on the next round." },
-      { title: "Beta readability", description: "Dungeon combat now shows the active round against the room round limit, with the four-delve catalog feature-frozen for stabilization." },
+      { title: "Run status at a glance", description: "Active delves now surface chamber progress, Dungeon identity, current state, and retreat value before the detailed room content." },
+      { title: "Clearer risk and rewards", description: "The carried Cache, route consequences, and 100% / 50% / 25% clear-retreat-defeat settlement rules are easier to scan before committing." },
+      { title: "Cleaner Dungeon cards", description: "Entry/recommended level, length, routes/events, and personal clear record are consolidated into four readable blocks." },
+      { title: "Mobile-first battle flow", description: "Dungeon cards, route choices, combat actions, result summaries, and retreat controls collapse cleanly for narrow screens without horizontal crowding." },
+      { title: "Beta 1 reliability retained", description: "Exact run, chamber, and revision binding remains active so stale tabs cannot spend a second combat turn after the authoritative state advances." },
     ],
     action: { tab: "adventure", label: "Open Dungeon Board" },
   },

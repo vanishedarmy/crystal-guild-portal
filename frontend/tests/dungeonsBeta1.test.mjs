@@ -20,8 +20,8 @@ test("Dungeons Beta 1 binds Portal mutations to the exact persisted revision", (
 
 test("Dungeons Beta 1 exposes round pressure and current release identity", () => {
   assert.match(board, /Round \{number\(combat\.round\)\} \/ \{number\(combat\.max_rounds \|\| 12\)\}/);
-  assert.match(board, /Dungeons & Delves · Beta 1/);
-  assert.match(version, /1\.4\.0-dungeons-b1/);
-  assert.match(whatsNew, /Dungeons & Delves Beta 1/);
+  assert.match(board, /Dungeons & Delves · Beta 2/);
+  assert.match(version, /1\.4\.0-dungeons-b2/);
+  assert.match(whatsNew, /Dungeons & Delves Beta 2/);
   assert.match(whatsNew, /stale tabs cannot spend a second combat turn/);
 });

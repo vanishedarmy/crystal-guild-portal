@@ -1,5 +1,11 @@
 # Crystal Guild Web History
 
+## v1.4.0 — Dungeons & Delves Beta 2
+- Web-only Dungeon UX/mobile consolidation on the feature-frozen Beta 1 ruleset.
+- Clarifies active-run progress, carried Cache risk, Crossroads consequences, settlement outcomes, and personal Dungeon records.
+- Tightens Dungeon cards, results, battle controls, and route-choice layouts for narrow/mobile screens.
+- Keeps compatible Bot `1.4.0-dungeons-b1`, schema 10 / sync 1 / Portal protocol 25 unchanged.
+
 ## v1.4.0 — Dungeons & Delves Beta 1
 - Freezes the four-Dungeon catalog for stabilization and release-quality testing.
 - Adds persisted revision binding to every Dungeon Portal mutation, closing same-room stale tabs.

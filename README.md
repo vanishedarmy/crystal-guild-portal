@@ -1,21 +1,22 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Beta 1
+# Crystal Guild v1.4.0 — Dungeons & Delves Beta 2
 
-Crystal Guild is a persistent Final Fantasy-inspired Twitch RPG with a companion Adventurer Portal. Beta 1 freezes the Dungeons & Delves feature set and hardens the four existing persistent Dungeons for release-quality testing.
+Crystal Guild is a persistent Final Fantasy-inspired Twitch RPG with a companion Adventurer Portal. Beta 2 is the Web-only Dungeon UX/mobile consolidation pass built on the feature-frozen Beta 1 ruleset.
 
-## Beta 1 focus
+## Beta 2 focus
 
-- Four-Dungeon catalog frozen: Forgotten Ossuary, Emberglass Foundry, Whiteglass Bastion, Riftglass Observatory.
-- Exact Portal mutation binding to Dungeon run, chamber, and persisted state revision.
-- Same-room stale tabs fail closed after any newer Dungeon mutation.
-- Replay-safe action receipts, restart/reconnect persistence, route effects, Event rooms, first-clear bonuses, retreat/defeat settlement, and records remain intact.
-- Round-limited encounters expose their current round and limit in the Portal.
+- Clearer active-run hierarchy and carried Cache presentation.
+- Scannable Crossroads consequences and explicit 100% / 50% / 25% end-of-run settlement guidance.
+- Consolidated Dungeon cards and result reports.
+- Narrow-screen Dungeon cards, route choices, combat commands, and retreat controls.
+- No gameplay, reward, schema, protocol, or Bot changes.
 
 ## Runtime identity
 
-- Runtime: `1.4.0-dungeons-b1`
+- Compatible Bot: `1.4.0-dungeons-b1`
+- Hosted Web/frontend: `1.4.0-dungeons-b2`
 - Local DB schema: **10**
 - Hosted sync schema: **1**
 - Portal Action protocol: **25**
 - Twitch command prefix: `!`
 
-Deploy the matching Beta 1 Web and Bot together. See `UPGRADE_GUIDE.md` for the Alpha 4 upgrade path.
+Deploy Beta 2 Web over the Beta 1 Web installation and keep the Beta 1 Bot unchanged. See `UPGRADE_GUIDE.md`.

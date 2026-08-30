@@ -11,8 +11,8 @@ test("Expeditions Beta 1 route balance remains active under the final v1.3 relea
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
 
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 1"/);
-  assert.match(version, /1\.4\.0-dungeons-b1/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 2"/);
+  assert.match(version, /1\.4\.0-dungeons-b2/);
   assert.match(board, /Lower combat damage and softer hazards/);
   assert.match(board, /Harder combat and hazards for stronger rewards/);
   assert.match(board, /Harder enemy pressure/);

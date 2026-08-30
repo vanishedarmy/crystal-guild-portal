@@ -6,7 +6,7 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("Alpha 3 Dungeon UI exposes route consequences and first-clear identity", () => {
   const board = read("../src/player/Dungeons.jsx");
-  assert.match(board, /Dungeons & Delves · Beta 1/);
+  assert.match(board, /Dungeons & Delves · Beta 2/);
   assert.match(board, /Route effects ahead/);
   assert.match(board, /First Clear/);
   assert.match(board, /choice\.effects/);
@@ -16,7 +16,7 @@ test("Alpha 3 Dungeon UI exposes route consequences and first-clear identity", (
 test("Alpha 3 route-depth features remain under the Beta 1 feature freeze", () => {
   const news = read("../src/player/whatsNewData.js");
   const guide = read("../public/guide-body.html");
-  assert.match(news, /Dungeons & Delves Beta 1/);
+  assert.match(news, /Dungeons & Delves Beta 2/);
   assert.match(news, /freezes Dungeon content at four delves/);
   assert.match(guide, /The Whiteglass Bastion/);
   assert.match(guide, /one-time first-clear reward/);

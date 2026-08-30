@@ -1,7 +1,7 @@
-# Portal Actions — v1.4.0 Dungeons & Delves Beta 1
+# Portal Actions — v1.4.0 Dungeons & Delves Beta 2
 
-Portal Action protocol advances **24 → 25**. Beta 1 adds a persisted Dungeon `revision` to every Dungeon mutation payload. The Bot accepts a Dungeon mutation only when the submitted run ID, chamber ID, and revision all match the current authoritative run.
+Portal Action protocol remains **25**. Beta 2 does not change the action contract introduced in Beta 1.
 
-This closes same-room stale tabs while retaining existing action-ID replay/idempotency behavior. `DUNGEON_ACTION`, `DUNGEON_CONTINUE`, `DUNGEON_CHOICE`, and `DUNGEON_RETREAT` all use the exact-state contract.
+Dungeon mutations continue to submit the exact persisted Dungeon `revision` together with run ID and chamber ID. `DUNGEON_ACTION`, `DUNGEON_CONTINUE`, `DUNGEON_CHOICE`, and `DUNGEON_RETREAT` fail closed when the submitted state is stale, while same-action replay remains idempotent.
 
-Deploy matching Beta 1 Web and Bot together. No schema migration, OAuth change, or new environment variable is required.
+Compatible Bot: `1.4.0-dungeons-b1`. Hosted Web/frontend: `1.4.0-dungeons-b2`. No schema migration, OAuth change, environment-variable change, or Bot update is required.

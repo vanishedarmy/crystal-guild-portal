@@ -15,7 +15,7 @@ test("detail dialogs open in the current viewport instead of document layout", a
 
 test("public update history omits prerelease viewport notes", async () => {
   const data = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(data, /name: "Dungeons & Delves Beta 1"/);
+  assert.match(data, /name: "Dungeons & Delves Beta 2"/);
   assert.match(data, /name: "Expeditions"/);
   const previous = data.slice(data.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

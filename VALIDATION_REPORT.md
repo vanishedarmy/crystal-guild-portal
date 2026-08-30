@@ -1,48 +1,41 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Beta 1 Validation Report
+# Crystal Guild v1.4.0 — Dungeons & Delves Beta 2 Validation Report
 
 ## Result
 **PASS**
 
 ## Automated suites
-- Bot Python unittest suite: **522 / 522 PASS**.
-- Frontend Node regression suite: **386 / 386 PASS**.
+- Frontend Node regression suite: **389 / 389 PASS**.
 - Hosted Web/API Python unittest suite: **47 / 47 PASS**.
+- Compatible Beta 1 Bot remains unchanged at its shipping baseline: **522 / 522 PASS**.
 
-The Bot suite includes intentional simulated acknowledgement loss, Twitch/live-status outages, corrupt checkpoint recovery, and restart/recovery fixtures; their warning/error log lines are expected.
-
-## Beta 1 Dungeon hardening coverage
-- GameData validation: **4 Dungeons / 0 errors**; feature catalog remains frozen at Alpha 4 content.
-- Portal Dungeon mutations are bound to exact **run ID + chamber ID + persisted revision**.
-- A stale same-room tab cannot spend a second combat turn after another tab advances the room state.
-- Stale revisions also fail closed for Continue, Crossroads Choice, and Retreat.
-- Same action-ID replay is resolved from the existing idempotency receipt before the stale revision check and cannot advance twice.
-- Dungeon revision survives engine restart/reconnect.
-- Round-limit UI presents current round and room limit for pressure encounters.
-- Adventure Board with all four Dungeons unlocked serializes to **15,368 bytes**, leaving **1,016 bytes** below the 16 KiB guardrail.
+## Beta 2 UX/mobile coverage
+- Active delve view exposes chamber progress, Dungeon identity, current state, and retreat value in one run-status group.
+- Carried Cache is separated and explicitly labeled as at-risk until the delve ends.
+- Crossroads consequences use individual scannable effect chips.
+- Result reports expose the exact Cache settlement rate and outcome explanation.
+- Clear / retreat / defeat settlement remains **100% / 50% / 25%** with no balance change.
+- Dungeon cards consolidate level, length, choices/events, and personal record.
+- Mobile Dungeon battle commands use a two-column action grid; route choices and cards collapse cleanly for narrow screens.
+- Beta 1 run/chamber/revision stale-tab binding remains present in the Web action payloads and regression suite.
 
 ## Source / asset validation
-- Python compile sweep: **95 / 95 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **194 / 194 PASS**.
-- Plain JS/MJS `node --check`: **154 / 154 PASS**.
-- Active literal image-route audit: **149 routes / 0 missing**.
-- Public artwork: **0 PNG / 576 WebP**.
+- Hosted Web Python compile sweep: **8 / 8 PASS**.
+- Frontend JS/JSX/MJS TypeScript-parser sweep: **195 / 195 PASS**.
+- Plain JS/MJS `node --check`: **155 / 155 PASS**.
+- Quoted literal image-route audit: **226 routes / 0 missing**.
+- Public artwork remains **0 PNG / 576 WebP**.
+- No new artwork is added in Beta 2.
 
-## Compatibility
-- Bot/Web/frontend runtime: `1.4.0-dungeons-b1`.
-- Local DB schema: **10** unchanged from Alpha 4.
-- Hosted sync schema: **1** unchanged.
-- Portal Action protocol: **25** (24 → 25).
-- Twitch prefix: `!`.
-- Database migration: **none from Alpha 4**.
-- Player reset: **none**.
-- OAuth/environment changes: **none**.
-- Non-Dungeon gameplay/economy rebalance: **none**.
+## Payload / compatibility continuity
+- The authoritative Adventure-state data contract is unchanged from Beta 1; the all-four-Dungeon payload remains **15,368 bytes**, leaving **1,016 bytes** below the 16 KiB guardrail.
+- Compatible Bot runtime: `1.4.0-dungeons-b1`.
+- Hosted Web/frontend: `1.4.0-dungeons-b2`.
+- Local DB schema **10**, hosted sync schema **1**, Portal Action protocol **25**, Twitch prefix `!`.
+- No Bot update, DB migration, player reset, OAuth/environment change, or gameplay/economy/balance change.
 
 ## Patch/package verification
-- Alpha 4 → Beta 1 Bot patch: **26 changed/new files, 0 deletions**; reconstructs **152 / 152** shipping Bot files exactly.
-- Alpha 4 → Beta 1 Web patch: **54 changed/new files, 0 deletions**; reconstructs **822 / 822** shipping Web files exactly.
-- Individual patch helpers and paired updater reconstruct the exact Beta 1 trees.
-- Six release ZIPs: CRC/integrity **PASS**.
+- Beta 1 → Beta 2 Web patch: **55 changed/new files, 0 deletions**.
+- Patch helper reconstructs **823 / 823** final Web shipping files exactly.
+- Full Web and patch ZIP CRC/integrity: **PASS**.
 - Runtime/private-artifact hygiene: **0 violations**.
 - SHA-256 verification: **PASS**.
-

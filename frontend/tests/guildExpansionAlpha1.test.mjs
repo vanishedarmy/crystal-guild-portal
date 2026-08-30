@@ -31,8 +31,8 @@ test("Player Guide explains facility play without backend implementation jargon"
 
 test("Final release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.4\.0"/);
-  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-b1"/);
+  assert.match(version, /WEB_BUILD = "Dungeons & Delves Beta 2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.4\.0-dungeons-b2"/);
   assert.match(whatsNew, /name: "Guild Expansion"/);
   assert.match(whatsNew, /Build the Guild together/);
   assert.match(whatsNew, /The Crystal Guild Airship/);

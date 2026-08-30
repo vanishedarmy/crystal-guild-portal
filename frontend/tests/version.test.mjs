@@ -5,10 +5,10 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } 
 
 test("Dungeons & Delves public web identity is centralized", () => {
   assert.equal(WEB_VERSION, "v1.4.0");
-  assert.equal(WEB_BUILD, "Dungeons & Delves Beta 1");
-  assert.equal(WEB_RELEASE, "v1.4.0 — Dungeons & Delves Beta 1");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.4.0 — Dungeons & Delves Beta 1");
-  assert.equal(WEB_ASSET_REVISION, "1.4.0-dungeons-b1");
+  assert.equal(WEB_BUILD, "Dungeons & Delves Beta 2");
+  assert.equal(WEB_RELEASE, "v1.4.0 — Dungeons & Delves Beta 2");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.4.0 — Dungeons & Delves Beta 2");
+  assert.equal(WEB_ASSET_REVISION, "1.4.0-dungeons-b2");
 });
 
 

@@ -1,25 +1,25 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Beta 1 Release Audit
+# Crystal Guild v1.4.0 — Dungeons & Delves Beta 2 Release Audit
 
 ## Release identity
-- Bot runtime: `1.4.0-dungeons-b1`
-- Hosted Web runtime: `1.4.0-dungeons-b1`
-- Frontend asset revision: `1.4.0-dungeons-b1`
+- Compatible Bot runtime: `1.4.0-dungeons-b1` — unchanged
+- Hosted Web runtime: `1.4.0-dungeons-b2`
+- Frontend asset revision: `1.4.0-dungeons-b2`
 - Local DB schema: **10**
 - Hosted sync schema: **1**
 - Portal Action protocol: **25**
 - Twitch prefix: `!`
 
 ## Scope lock
-Beta 1 is the v1.4 feature-freeze and stabilization pass. The Dungeon catalog remains exactly four delves. No fifth Dungeon, new currency, new progression layer, or non-Dungeon balance change is included.
+Beta 2 is a Web-only Dungeon UX/mobile consolidation pass. The catalog remains exactly four delves. No fifth Dungeon, new currency, progression layer, reward tuning, combat tuning, or authoritative state-contract change is included.
 
-## Reliability closure
-- Run/chamber binding is strengthened with a persisted state revision, closing stale actions from a second tab that is still viewing the same room.
-- Action-ID replay/idempotency remains authoritative and restart-safe.
-- Existing Crossroads modifiers, Event outcomes, first-clear records, retreat/defeat settlement, and completed Dungeon records remain intact.
-- Existing Guild, Expedition, Hunt, inventory, recovery, Airship, and Fellowship persistence contracts are unchanged.
+## Continuity
+- Beta 1 exact run/chamber/revision binding remains the authoritative Portal mutation contract.
+- Replay/idempotency, restart/reconnect persistence, route modifiers, Event outcomes, first-clear rewards, settlement ratios, and completed records are unchanged.
+- The Dungeon Board retains the existing optimized artwork and shared pointer controls.
 - Shipping archives must contain no `.env`, live database, token JSON, cache, log, or other runtime-private state.
 
 ## Upgrade contract
-- Alpha 4 → Beta 1: **no DB migration**.
-- Portal Action protocol advances **24 → 25**, therefore Web and Bot deploy together.
+- Beta 1 → Beta 2: **Web-only**.
+- No DB migration and no Portal Action protocol change.
+- Keep the Beta 1 Bot running; deploy/restart only the Web service.
 - No player reset, OAuth change, or new environment variable.

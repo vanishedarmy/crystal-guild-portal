@@ -29,13 +29,28 @@ function cacheItemCount(cache) {
   return (cache?.items || []).reduce((sum, row) => sum + Number(row?.quantity || 0), 0);
 }
 
+function dungeonSettlement(outcome) {
+  if (outcome === "complete") return { pct: 100, label: "Full Cache", note: "The entire carried Cache is banked, plus completion rewards." };
+  if (outcome === "retreat") return { pct: 50, label: "Retreat", note: "Half of the carried Cache is banked; the remainder is left behind." };
+  return { pct: 25, label: "Defeat", note: "A quarter of the carried Cache is recovered after defeat." };
+}
+
+function runStatusLabel(status) {
+  if (status === "combat") return "In Battle";
+  if (status === "decision") return "Choose Route";
+  return "Room Cleared";
+}
+
 function DungeonCache({ cache }) {
   return (
-    <div className="expedition-cache-grid dungeon-cache-grid" aria-label="Dungeon Cache">
-      <div><span>XP carried</span><strong>{number(cache?.xp || 0)}</strong></div>
-      <div><span>JP carried</span><strong>{number(cache?.jp || 0)}</strong></div>
-      <div><span>Gil carried</span><strong>{number(cache?.gil || 0)}</strong></div>
-      <div><span>Items carried</span><strong>{number(cacheItemCount(cache))}</strong></div>
+    <div className="dungeon-cache-block">
+      <div className="dungeon-section-heading"><span>Carried Cache</span><small>At risk until the delve ends</small></div>
+      <div className="expedition-cache-grid dungeon-cache-grid" aria-label="Dungeon Cache">
+        <div><span>XP</span><strong>{number(cache?.xp || 0)}</strong></div>
+        <div><span>JP</span><strong>{number(cache?.jp || 0)}</strong></div>
+        <div><span>Gil</span><strong>{number(cache?.gil || 0)}</strong></div>
+        <div><span>Items</span><strong>{number(cacheItemCount(cache))}</strong></div>
+      </div>
     </div>
   );
 }
@@ -61,13 +76,18 @@ function DungeonResult({ result, onConfirm, confirming }) {
   const summary = result?.summary || {};
   const rewards = summary?.rewards || {};
   const won = summary?.outcome === "complete";
+  const settlement = dungeonSettlement(summary?.outcome);
   return (
     <section className={`panel expedition-result-panel dungeon-result-panel ${won ? "won" : "lost"}`} aria-live="polite">
       <div className="panel-title-row">
         <div><p className="eyebrow">Dungeon Report · Saved</p><h2>{summary?.title || "Dungeon Delve Ended"}</h2><p className="muted">{summary?.dungeon_name || "Dungeon"} · {number(summary?.rooms || 0)} / {number(summary?.room_count || 0)} rooms</p></div>
         <span className={`small-badge ${won ? "success" : ""}`}>{won ? "Cleared" : summary?.outcome === "retreat" ? "Retreated" : "Defeat"}</span>
       </div>
-      <div className="expedition-cache-grid">
+      <div className="dungeon-result-settlement">
+        <div><span>Cache Settlement</span><strong>{settlement.pct}% · {settlement.label}</strong></div>
+        <p>{settlement.note}</p>
+      </div>
+      <div className="expedition-cache-grid dungeon-result-rewards">
         <div><span>XP banked</span><strong>+{number(rewards?.xp || 0)}</strong></div>
         <div><span>JP banked</span><strong>+{number(rewards?.jp || 0)}</strong></div>
         <div><span>Gil banked</span><strong>{number(rewards?.gil || 0)}</strong></div>
@@ -115,7 +135,7 @@ export default function Dungeons({
         <img className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
         <div className="panel-title-row dungeon-board-title-row">
           <div>
-            <p className="eyebrow">Dungeons & Delves · Beta 1</p>
+            <p className="eyebrow">Dungeons & Delves · Beta 2</p>
             <h2>{active ? active.name : "Dungeon Board"}</h2>
             <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
           </div>
@@ -129,7 +149,13 @@ export default function Dungeons({
               <div className="dungeon-room-content">
               <div className="dungeon-room-header">
                 <div><span className="slot-label">Room {number(active.room_number)} of {number(active.room_count)} · {active.room?.type_label}</span><h3>{active.room?.name}</h3><p className="muted">{active.room?.description}</p></div>
-                <span className={`small-badge ${active.status === "combat" ? "danger" : active.status === "decision" ? "warning" : "success"}`}>{active.status === "combat" ? "In Battle" : active.status === "decision" ? "Choose Route" : "Room Cleared"}</span>
+                <span className={`small-badge ${active.status === "combat" ? "danger" : active.status === "decision" ? "warning" : "success"}`}>{runStatusLabel(active.status)}</span>
+              </div>
+              <div className="dungeon-run-status-grid" aria-label="Current dungeon run status">
+                <div><span>Progress</span><strong>Room {number(active.room_number)} / {number(active.room_count)}</strong></div>
+                <div><span>Delve Style</span><strong>{active.identity || "Dungeon"}</strong></div>
+                <div><span>Current State</span><strong>{runStatusLabel(active.status)}</strong></div>
+                <div><span>Retreat Value</span><strong>50% Cache</strong></div>
               </div>
               <ProgressBar value={pct(active.room_number, active.room_count)} />
               <DungeonCache cache={active.cache} />
@@ -182,7 +208,7 @@ export default function Dungeons({
                   <div className="dungeon-route-options">
                     {(active.choices || []).map((choice) => (
                       <button key={choice.id} type="button" className="dungeon-route-option" disabled={!actionsAvailable || Boolean(busy)} onClick={() => runRequest(`dungeon:choice:${choice.id}`, "dungeon-choice", choice.id, (idem) => submitDungeonChoice(active.run_id, active.room?.id, active.revision, choice.id, csrfToken, idem), `${choice.label} chosen.`)}>
-                        <strong>{choice.label}</strong><span>{choice.description}</span>{choice.effects?.length ? <small>{choice.effects.join(" · ")}</small> : null}
+                        <strong>{choice.label}</strong><span>{choice.description}</span>{choice.effects?.length ? <div className="dungeon-route-effect-list" aria-label="Route consequences">{choice.effects.map((effect) => <small key={effect}>{effect}</small>)}</div> : null}
                       </button>
                     ))}
                   </div>
@@ -199,7 +225,7 @@ export default function Dungeons({
               ) : null}
 
               <DungeonHistory history={active.history} />
-              {active.can_retreat ? <div className="solo-retreat-row"><button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Dungeon? Only part of the carried cache will be banked.")) runRequest("dungeon:retreat", "dungeon-retreat", active.run_id || "run", (idem) => submitDungeonRetreat(active.run_id, active.room?.id, active.revision, csrfToken, idem), "Retreated from the Dungeon."); }}>{busy === "dungeon:retreat" ? "Retreating…" : "Retreat — Bank 50% of Cache"}</button></div> : null}
+              {active.can_retreat ? <div className="dungeon-retreat-block"><div className="dungeon-settlement-note"><span>End-of-run settlement</span><strong>Clear 100% · Retreat 50% · Defeat 25%</strong></div><div className="solo-retreat-row"><button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Dungeon? 50% of the carried Cache will be banked; the rest will be left behind.")) runRequest("dungeon:retreat", "dungeon-retreat", active.run_id || "run", (idem) => submitDungeonRetreat(active.run_id, active.room?.id, active.revision, csrfToken, idem), "Retreated from the Dungeon."); }}>{busy === "dungeon:retreat" ? "Retreating…" : "Retreat — Bank 50% of Cache"}</button></div></div> : null}
               </div>
             </div>
           ) : (
@@ -209,7 +235,12 @@ export default function Dungeons({
                   {dungeon.art ? <img className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
                   <div className="dungeon-card-content">
                   <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · {dungeon.identity || `Lv.${number(dungeon.min_level)}+`}</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
-                  <div className="dungeon-card-stats"><span><strong>Entry Level</strong> Lv.{number(dungeon.min_level)}</span><span><strong>Recommended</strong> Lv.{number(dungeon.recommended_level || dungeon.min_level)}</span><span><strong>Route Choices</strong> {number(dungeon.choice_rooms || 0)}</span><span><strong>Events</strong> {number(dungeon.event_rooms || 0)}</span><span><strong>Clears</strong> {number(dungeon.record?.clears || dungeon.progress?.[0] || 0)}</span><span><strong>Best</strong> {number(dungeon.record?.best_rooms || dungeon.progress?.[1] || 0)} / {number(dungeon.rooms)}</span></div>
+                  <div className="dungeon-card-stats">
+                    <span><strong>Recommended</strong> Lv.{number(dungeon.recommended_level || dungeon.min_level)} · Entry Lv.{number(dungeon.min_level)}</span>
+                    <span><strong>Length</strong> {number(dungeon.rooms)} chambers</span>
+                    <span><strong>Route Choices &amp; Events</strong> {number(dungeon.choice_rooms || 0)} choices · {number(dungeon.event_rooms || 0)} Events</span>
+                    <span><strong>Record</strong> {number(dungeon.record?.clears || dungeon.progress?.[0] || 0)} clears · Best {number(dungeon.record?.best_rooms || dungeon.progress?.[1] || 0)}/{number(dungeon.rooms)}</span>
+                  </div>
                   {dungeon.unlocked ? <div className={`dungeon-first-clear ${dungeon.first_clear_claimed ? "claimed" : "available"}`}><span>First Clear</span><strong>{dungeon.first_clear_claimed ? "Claimed" : (dungeon.first_clear_rewards || []).join(" · ") || "Bonus reward"}</strong></div> : null}
                   {dungeon.missing?.length ? <p className="adventure-disabled-reason">{dungeon.missing.join(" · ")}</p> : null}
                   <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !dungeon.unlocked || Boolean(busy)} onClick={() => runRequest(`dungeon:start:${dungeon.id}`, "dungeon-start", dungeon.id, (idem) => submitDungeonStart(dungeon.id, csrfToken, idem), `${dungeon.name} begun.`)}>{busy === `dungeon:start:${dungeon.id}` ? "Entering…" : "Enter Dungeon"}</button>

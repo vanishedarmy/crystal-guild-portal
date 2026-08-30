@@ -1,12 +1,12 @@
-# Crystal Guild Web v1.4.0 — Dungeons & Delves
+# Crystal Guild Web v1.5.0 — Trails & Raids Alpha 1
 
-Production Web/Portal for the final v1.4.0 Dungeons & Delves release. It ships the four-Dungeon Adventure Board experience, Beta 2 mobile/UX consolidation, Beta 3 shared-state hardening, and RC1 deployment/package cleanup.
+Alpha 1 Web/Portal for the Trails & Raids expansion, carrying forward the stable v1.4.0 Dungeon experience while adding the live read-only Trial/Raid board, telegraph presentation, and weighted contribution display.
 
 ## Runtime identity
-- Hosted Web/frontend: `1.4.0-dungeons-delves`
-- Compatible Bot: `1.4.0-dungeons-delves`
+- Hosted Web/frontend: `1.5.0-trails-raids-a1`
+- Compatible Bot: `1.5.0-trails-raids-a1`
 - Local DB schema: **10**
 - Hosted sync schema: **1**
 - Portal Action protocol: **25**
 
-Deploy matching production Web + Bot together. RC1 promotes directly with no DB migration, reset, OAuth/environment change, or gameplay/economy rebalance.
+Deploy matching Alpha 1 Web + Bot together. Upgrade from v1.4.0 production with no DB migration, reset, OAuth/environment change, or new environment variable.

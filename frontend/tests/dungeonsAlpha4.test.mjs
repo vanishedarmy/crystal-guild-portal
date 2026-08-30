@@ -24,8 +24,11 @@ test("Alpha 4 event and encounter depth remains under the Beta 1 feature freeze"
 
 test("Player Guide documents Riftglass and event encounter rules", () => {
   const guide = read("../public/guide-body.html");
-  assert.match(guide, /The Riftglass Observatory/);
+  assert.match(guide, /<h3>The Riftglass Observatory<\/h3>/);
   assert.match(guide, /55% of The Astral Scar/);
+  assert.match(guide, /ten-chamber Astral Scar observatory/);
+  assert.match(guide, /Death Machine miniboss/);
+  assert.match(guide, /Crystal Wolf finale/);
   assert.match(guide, /Events &amp; encounter rules/);
   assert.match(guide, /tighter round limits/);
 });

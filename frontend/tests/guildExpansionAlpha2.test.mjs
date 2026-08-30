@@ -27,7 +27,7 @@ test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   assert.match(version, /WEB_BUILD = "Trails & Raids Alpha 1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids-a1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids-a1h2"/);
   assert.equal(guideData.meta.version, "v1.5.0 — Trails & Raids Alpha 1");
-  assert.equal(guideData.meta.release, "1.5.0-trails-raids-a1");
+  assert.equal(guideData.meta.release, "1.5.0-trails-raids-a1h2");
 });

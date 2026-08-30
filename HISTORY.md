@@ -1,5 +1,11 @@
 # Crystal Guild Web History
 
+## v1.5.0 — Trails & Raids Alpha 1 Hotfix 2
+- Web-only Player Guide completeness and visual-cleanup pass.
+- Gives The Riftglass Observatory a dedicated Dungeons & Delves guide dossier with its full ten-chamber/Event/miniboss/finale identity.
+- Removes the old gold divider from Portal and Player Guide CSS and deletes the asset from the shipping tree.
+- Hosted runtime remains `1.5.0-trails-raids-a1h1`; frontend advances to `1.5.0-trails-raids-a1h2`; Bot remains `1.5.0-trails-raids-a1`; schema 10 / sync 1 / protocol 25 unchanged.
+
 ## v1.5.0 — Trails & Raids Alpha 1 Hotfix 1
 - Web-only hosted Overlay compatibility repair.
 - Accepts Alpha 1 sanitized Trial fields: encounter type/name, mechanic/last mechanic, next-round time, mitigation, and weighted contribution score.

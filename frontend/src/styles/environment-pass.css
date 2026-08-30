@@ -3,7 +3,6 @@
  * reducing information density or body-text readability.
  */
 :root {
-  --env-gold-divider: url("/retro-phase-ii/environment-pass/gold-divider.webp");
   --env-crystal-watermark: url("/retro-phase-ii/environment-pass/crystal-watermark.webp");
   --env-airship: url("/retro-phase-ii/environment-pass/airship-ambient.webp");
   --env-portal: url("/retro-phase-ii/environment-pass/portal-ambient.webp");
@@ -47,25 +46,6 @@ body {
   background-repeat: no-repeat, no-repeat !important;
   background-position: right 12px top 12px, 0 0 !important;
   background-size: 58px auto, 100% 100% !important;
-}
-
-/* Replace generic section rules with the approved pixel-art gold divider. */
-.panel-title-row,
-.streamer-panel-heading {
-  position: relative;
-  border-bottom: 0 !important;
-  padding-bottom: 1.05rem;
-}
-.panel-title-row::after,
-.streamer-panel-heading::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: .08rem;
-  width: min(390px, 82%);
-  height: 14px;
-  background: var(--env-gold-divider) left center / contain no-repeat;
-  pointer-events: none;
 }
 
 /* A readable FF-inspired UI voice: display serif only for labels and controls. */

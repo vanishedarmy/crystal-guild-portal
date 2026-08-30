@@ -8,7 +8,7 @@ test("Trails & Raids Alpha 1 public web identity is centralized", () => {
   assert.equal(WEB_BUILD, "Trails & Raids Alpha 1");
   assert.equal(WEB_RELEASE, "v1.5.0 — Trails & Raids Alpha 1");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.5.0 — Trails & Raids Alpha 1");
-  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-a1");
+  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-a1h2");
 });
 
 

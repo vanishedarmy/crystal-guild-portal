@@ -10,7 +10,7 @@ const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("RC1 identity and Dungeon catalog remain feature frozen", () => {
   assert.equal(WEB_BUILD, "Trails & Raids Alpha 1");
-  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-a1");
+  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-a1h2");
   const board=read("src/player/Dungeons.jsx");
   assert.match(board,/Dungeons & Delves · v1.4.0/);
 });

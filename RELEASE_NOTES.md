@@ -1,26 +1,22 @@
-# Crystal Guild v1.5.0 — Trails & Raids Alpha 1 Hotfix 1
+# Crystal Guild v1.5.0 — Trails & Raids Alpha 1 Hotfix 2
 
-## Hosted Overlay contract repair
-
-The original Alpha 1 Bot correctly sanitized and emitted the new public Trial/Raid Overlay fields, but the hosted Web validator still used the older Overlay allowlist. This caused authenticated Portal sync to fail closed with HTTP 400, commonly reporting `Overlay snapshot contains unsupported field: last_mechanic`.
+## Player Guide completeness & divider cleanup
 
 ### Fixed
-- Hosted Overlay sync now accepts Alpha 1 `encounter_type` and `encounter_name`.
-- Accepts sanitized `mechanic` and `last_mechanic` payloads used by Trial telegraphs and resolved-mechanic presentation.
-- Accepts `next_round_at` for live round timing.
-- Contribution rows now accept `mitigation` and weighted `score` alongside damage/healing.
-- New fields remain shape-, size-, and non-negative-value validated; the existing forbidden-private-field scan remains intact.
+- **The Riftglass Observatory** now has a full dedicated entry in **Player Guide → Dungeons & Delves**, matching the first three production Dungeons rather than appearing only in the unlock summary.
+- The Riftglass dossier documents its ten chambers, two Crossroads, weighted Event chamber, Death Machine miniboss, sanctuary recovery, Crystal Wolf finale, and higher-pressure encounter rules.
+- Removes the referenced gold divider ornament from **all Portal and Player Guide rendering paths**.
+- Deletes `frontend/public/retro-phase-ii/environment-pass/gold-divider.webp` from the shipping tree so the removed decoration cannot reappear through stale CSS.
+- Frontend asset revision advances to `1.5.0-trails-raids-a1h2` for cache busting.
 
 ### Compatibility
-- Hosted Web runtime: `1.5.0-trails-raids-a1h1`
-- Frontend asset revision: `1.5.0-trails-raids-a1` unchanged
+- Hosted Web runtime: `1.5.0-trails-raids-a1h1` unchanged from Hotfix 1
+- Frontend asset revision: `1.5.0-trails-raids-a1h2`
 - Compatible Bot runtime: `1.5.0-trails-raids-a1` unchanged
 - Local DB schema: **10** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **25** unchanged
-- Player reset: **none**
-- Database migration: **none**
-- Bot update: **none**
+- Player reset / DB migration / Bot update: **none**
 - OAuth/environment/new variables: **none**
 
 Deploy only the Web hotfix, then restart/redeploy the hosted Web service.

@@ -2187,7 +2187,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 
 /* v1.1.18 Retro Environment Pass — transparent scene dressing + readable fantasy UI type. */
 :root{
-  --env-gold-divider:url("/retro-phase-ii/environment-pass/gold-divider.webp");
   --env-crystal-watermark:url("/retro-phase-ii/environment-pass/crystal-watermark.webp");
   --env-airship:url("/retro-phase-ii/environment-pass/airship-ambient.webp");
   --env-portal:url("/retro-phase-ii/environment-pass/portal-ambient.webp");
@@ -2213,10 +2212,6 @@ body{
   background:var(--env-crystal-watermark) center/contain no-repeat;box-shadow:none;opacity:1;
 }
 .section>h2,.catalog-panel>h2{font-family:var(--font-display);letter-spacing:.045em}
-.section>h2:after,.catalog-panel>h2:after{
-  content:"";display:block;width:min(390px,78%);height:16px;margin-top:7px;
-  background:var(--env-gold-divider) left center/contain no-repeat;opacity:.78;
-}
 .guide-section-toolbar-copy strong,.guide-section-summary h2,.guide-section-summary h3,.nav a,.mobile-title b,.group-filter,.tab,.job-view-tab{
   font-family:var(--font-retro-ui);font-weight:700;letter-spacing:.035em;
 }

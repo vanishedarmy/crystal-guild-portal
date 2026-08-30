@@ -32,7 +32,7 @@ test("Alpha 3 Player Guide documents Judgment Spire", () => {
   for (const term of ["Alpha 3 Trial — Ramuh: Judgment Spire","Rolling Thunder","Levinshare","Judgment Charge","ground Judgment Bolt"]) assert.match(guide,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
 });
 
-test("Alpha 4 preserves Ramuh and the collapsible Raid Board", () => {
+test("Alpha 5 preserves Ramuh and the collapsible Raid Board", () => {
   const raids=read("src/player/Raids.jsx");
   const guide=read("public/guide-body.html");
   for (const term of ["Ramuh", "Judgment Spire", "Rolling Thunder", "Levinshare", "Judgment Charge", "Collapse Trial & Raid Board"]) {

@@ -33,7 +33,7 @@ test("Alpha 2 OBS overlay displays adds roles and new mechanic kinds", () => {
   assert.match(js, /stagger/);
 });
 
-test("Alpha 4 preserves the Alpha 2 Shiva Trial", () => {
+test("Alpha 5 preserves the Alpha 2 Shiva Trial", () => {
   const raids = read("src/player/Raids.jsx");
   const guide = read("public/guide-body.html");
   for (const term of ["Shiva", "Diamond Throne", "Icebound Mirrors", "Diamond Aegis", "Stagger"]) {

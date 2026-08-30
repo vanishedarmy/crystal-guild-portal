@@ -1,3 +1,8 @@
+# Crystal Guild Release History
+
+## v1.5.0 — Trails & Raids Alpha 5
+Adds Garuda — Eye of the Storm as the fifth scripted Trial. Slipstream and Friction introduce targeted Defend responses with different party consequences, while Satin/Razor Plumes create a two-round add pressure phase that determines Aerial Blast strength. The collapsible Trial & Raid Board receives a spacious two-column desktop redesign with wider copy, separated metadata/stats/commands, and single-column responsive fallbacks. Runtime/frontend `1.5.0-trails-raids-a5`; schema 10 / sync 1 / Portal protocol 25 unchanged.
+
 # Crystal Guild Web History
 
 ## v1.5.0 — Trails & Raids Alpha 4

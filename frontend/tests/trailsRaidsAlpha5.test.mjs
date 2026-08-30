@@ -1,0 +1,11 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),".."); const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
+test("Alpha 5 guide data promotes Garuda to Eye of the Storm",()=>{const data=JSON.parse(read("public/guide-data.json"));const g=data.bosses.find((b)=>b.id==="garuda_prime");assert.equal(g.encounter_type,"Trial");assert.equal(g.encounter_name,"Eye of the Storm");assert.equal(g.raid_script,"garuda_eye_of_storm");assert.deepEqual(g.mechanics.map((m)=>m.name),["Slipstream","Friction","Plume Squadron","Aerial Blast"]);});
+test("Alpha 5 Raid Board uses a spacious two-column layout",()=>{const jsx=read("src/player/Raids.jsx"),css=read("src/styles/portal.css");for(const term of ["Garuda","Eye of the Storm","raid-featured-meta","raid-featured-commands","garuda_prime.webp"])assert.match(jsx,new RegExp(term));assert.match(css,/raid-featured-trials\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);assert.match(css,/@media\(max-width:1180px\)\{\.raid-featured-trials\{grid-template-columns:1fr\}/);});
+test("Alpha 5 Player Guide documents Garuda mechanics",()=>{const guide=read("public/guide-body.html");for(const term of ["Alpha 5 Trial — Garuda: Eye of the Storm","Slipstream","Friction","Satin/Razor Plumes","Aerial Blast"])assert.match(guide,new RegExp(term.replace(/[.*+?^${}()|[\\]\\]/g,"\\$&")));});
+test("Alpha 5 Board remains collapsible and responsive",()=>{const jsx=read("src/player/Raids.jsx"),css=read("src/styles/portal.css");for(const term of ["crystal-guild:adventure:trial-raid-board","CollapsePointer","aria-expanded={boardOpen}"])assert.match(jsx,new RegExp(term.replace(/[.*+?^${}()|[\\]\\]/g,"\\$&")));assert.match(css,/@media\(max-width:700px\)/);});
+test("Alpha 5 What's New covers Garuda and the readability pass",()=>{const news=read("src/player/whatsNewData.js");for(const term of ["v1.5.0 Alpha 5","Garuda — Eye of the Storm","Roomier Trial Board","Break the Plume Squadron"])assert.match(news,new RegExp(term.replace(/[.*+?^${}()|[\\]\\]/g,"\\$&")));});

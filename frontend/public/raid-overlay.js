@@ -21,6 +21,8 @@ function mechanicText(m){
   if(m.kind==='shared_hit')return `${m.name} → ${m.target||'marked raider'} · STACK`;
   if(m.kind==='knockback')return `${m.name} → ${m.target||'marked raider'} · DEFEND`;
   if(m.kind==='restraint')return `${m.name} → ${m.target||'trapped raider'} · RESCUE`;
+  if(m.kind==='wind_pressure')return `${m.name} → ${m.target||'marked raider'} · BRACE`;
+  if(m.kind==='wind_mark')return `${m.name} → ${m.target||'marked raider'} · CONTAIN`;
   if(m.kind==='adds')return `${m.name} · destroy active adds`;
   if(m.kind==='cleave')return `${m.name} → ${m.target||'marked raider'} + ally`;
   if(m.kind==='stagger')return `${m.name} · vulnerable window`;

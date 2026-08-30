@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.5.0 Alpha 4",
+    version: "v1.5.0 Alpha 5",
     name: "Trails & Raids",
-    title: "Stand firm against the Crag",
-    summary: "Trails & Raids Alpha 4 adds Titan — Heart of the Crag with Defend-driven Landslide response, Granite Gaol rescue play, and an exposed-Heart damage check before Earthen Fury.",
+    title: "Enter the Eye of the Storm",
+    summary: "Trails & Raids Alpha 5 adds Garuda — Eye of the Storm and rebuilds the flagship Trial Board into a spacious two-column desktop layout with stronger card hierarchy and responsive one-column fallbacks.",
     highlights: [
-      { title: "Titan — Heart of the Crag", description: "The fourth flagship Trial combines Landslide, Granite Gaol, Heart of the Crag, and weakened/empowered Earthen Fury resolution." },
-      { title: "Brace for Landslide", description: "A marked raider can use the existing Defend action to brace. Ignoring the telegraph causes knockdown pressure on the following round." },
-      { title: "Break Granite Gaol", description: "One raider is temporarily restrained and cannot act. Normal boss-directed damage automatically strikes the Gaol until the party frees them." },
-      { title: "Heart damage check", description: "Titan exposes the Heart of the Crag for two rounds. Destroy it to weaken Earthen Fury; leave it standing and the raidwide blast is empowered." },
-      { title: "Raid Board stays collapsible", description: "The Alpha 3 Trial & Raid Board disclosure remains persistent and now presents Titan rescue and Heart-check telegraphs alongside earlier Trial mechanics." },
+      { title: "Garuda — Eye of the Storm", description: "The fifth flagship Trial combines Slipstream, Friction, Satin/Razor Plumes, and a variable-pressure Aerial Blast resolution." },
+      { title: "Brace and contain", description: "Defend through Slipstream to avoid lingering Slow, and contain Friction so its marked pressure does not splash across the raid." },
+      { title: "Break the Plume Squadron", description: "Satin and Razor Plumes intercept normal boss-directed damage for two rounds. Clearing both gives the safest Aerial Blast outcome." },
+      { title: "Roomier Trial Board", description: "Flagship Trial cards now use a two-column desktop grid with larger art, wider copy, separated metadata/stats/commands, and a single-column tablet/mobile fallback." },
+      { title: "Collapse behavior preserved", description: "The Trial & Raid Board still remembers its open/closed state and keeps the canonical right-hand closed / down-hand open pointer." },
       { title: "Safe upgrade", description: "Schema 10, hosted sync 1, Portal Action protocol 25, existing progression, and all four production Dungeons remain unchanged." },
     ],
     action: { tab: "hunts", label: "Open Trial & Raid Board" },

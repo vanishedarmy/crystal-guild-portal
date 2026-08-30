@@ -20,7 +20,7 @@ test("Alpha 4 guide data promotes Titan to Heart of the Crag Trial", () => {
 test("Alpha 4 Raid Board features Titan without regressing collapse state", () => {
   const raids=read("src/player/Raids.jsx");
   for (const term of ["Titan","Heart of the Crag","Landslide","Granite Gaol","heart_check","restraint","knockback","crystal-guild:adventure:trial-raid-board","CollapsePointer"]) {
-    assert.match(raids,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+    assert.match(raids,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\$&")));
   }
 });
 
@@ -42,9 +42,11 @@ test("Alpha 4 hosted OBS overlay understands Titan mechanic kinds", () => {
   assert.match(js,/DEFEND/);
 });
 
-test("Alpha 4 What's New covers Titan and preserves the collapsible Raid Board", () => {
+test("Alpha 5 carries forward Titan and the collapsible Raid Board", () => {
+  const raids=read("src/player/Raids.jsx");
   const news=read("src/player/whatsNewData.js");
-  for (const term of ["v1.5.0 Alpha 4","Titan — Heart of the Crag","Brace for Landslide","Break Granite Gaol","Heart damage check","Raid Board stays collapsible"]) {
-    assert.match(news,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+  for (const term of ["Titan","Heart of the Crag","Landslide","Granite Gaol","crystal-guild:adventure:trial-raid-board"]) {
+    assert.match(raids,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\$&")));
   }
+  assert.match(news,/v1\.5\.0 Alpha 5/);
 });

@@ -1,10 +1,12 @@
-Crystal Guild Web v1.4.0 — Dungeons & Delves
+Crystal Guild v1.5.0 — Trails & Raids Alpha 1 Hotfix 1
 
-Deploy matching v1.4.0 Web + Bot together.
-Hosted Web/frontend: 1.4.0-dungeons-delves
-Compatible Bot: 1.4.0-dungeons-delves
+WEB-ONLY HOTFIX. Keep the existing Alpha 1 Bot.
+Hosted runtime: 1.5.0-trails-raids-a1h1
+Frontend asset revision: 1.5.0-trails-raids-a1
+Compatible Bot: 1.5.0-trails-raids-a1
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25
+Twitch prefix: !
 
-RC1 promotes directly to production with no migration or configuration change.
+Deploy the Hotfix 1 Web package or apply the Alpha 1 → Hotfix 1 Web patch, then restart/redeploy the hosted Web service. No migration, player reset, Bot update, OAuth/environment change, or new environment variable is required.

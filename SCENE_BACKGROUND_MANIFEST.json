@@ -1,6 +1,6 @@
 {
-  "release": "v1.4.0 \u2014 Dungeons & Delves",
-  "frontend_asset_revision": "1.4.0-dungeons-delves",
+  "release": "v1.5.0 \u2014 Trails & Raids Alpha 1",
+  "frontend_asset_revision": "1.5.0-trails-raids-a1",
   "scene_backgrounds": [
     {
       "file": "camp.webp",

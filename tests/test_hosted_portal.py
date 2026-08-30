@@ -145,10 +145,14 @@ class PortalServerCase(unittest.TestCase):
             "sync_version": "1.1.15-wayfarer",
             "overlay": {
                 "active": True, "status": "COMBAT", "boss": "Behemoth King",
-                "tier": "World Boss", "hp": 1500, "max_hp": 2500, "round": 3,
-                "phase": "Rage", "raiders": 4, "alive": 3, "enraged": False,
-                "summon_gauge": 45, "top": [{"name": "Van", "damage": 900, "healing": 25}],
-                "updated_at": 1770000000,
+                "tier": "Trial", "encounter_type": "Trial", "encounter_name": "Inferno Crucible",
+                "hp": 1500, "max_hp": 2500, "round": 3, "phase": "Rage",
+                "signature": "Hellfire", "raiders": 4, "alive": 3, "enraged": False,
+                "summon_gauge": 45,
+                "top": [{"name": "Van", "damage": 900, "healing": 25, "mitigation": 70, "score": 968}],
+                "mechanic": {"name": "Infernal Nails", "kind": "damage_check", "warning": "Destroy the nails!", "rounds_remaining": 1, "required": 1200, "progress": 700},
+                "last_mechanic": {"name": "Radiant Plume", "kind": "raidwide", "result": "resolved"},
+                "next_round_at": 1770000015, "updated_at": 1770000000,
             },
         }
         status, result = self.post("/api/sync/overlay", payload)
@@ -159,7 +163,12 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertTrue(state["available"])
         self.assertEqual(state["boss"], "Behemoth King")
+        self.assertEqual(state["encounter_type"], "Trial")
         self.assertEqual(state["top"][0]["damage"], 900)
+        self.assertEqual(state["top"][0]["mitigation"], 70)
+        self.assertEqual(state["top"][0]["score"], 968)
+        self.assertEqual(state["mechanic"]["name"], "Infernal Nails")
+        self.assertEqual(state["last_mechanic"]["name"], "Radiant Plume")
         status, body, _ = self.get("/overlay")
         self.assertEqual(status, 200)
         self.assertIn("Crystal Guild Raid Overlay", body)
@@ -174,8 +183,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.4.0-dungeons-delves", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.4.0-dungeons-delves")
+        self.assertIn("1.5.0-trails-raids-a1h1", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.5.0-trails-raids-a1")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

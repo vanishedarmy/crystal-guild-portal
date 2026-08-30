@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.4.0-dungeons-delves"
-FRONTEND_ASSET_REVISION = "1.4.0-dungeons-delves"
+HOSTED_PORTAL_VERSION = "1.5.0-trails-raids-a1h1"
+FRONTEND_ASSET_REVISION = "1.5.0-trails-raids-a1"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 25
 ALLOWED_PORTAL_ACTIONS = {
@@ -1595,18 +1595,50 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
     if forbidden:
         raise ValueError(f"Overlay snapshot contains forbidden private field: {forbidden}")
     allowed = {
-        "active", "status", "boss", "tier", "hp", "max_hp", "round", "phase",
-        "signature", "raiders", "alive", "enraged", "summon_gauge", "top", "updated_at",
+        "active", "status", "boss", "tier", "encounter_type", "encounter_name",
+        "hp", "max_hp", "round", "phase", "signature", "raiders", "alive",
+        "enraged", "summon_gauge", "top", "mechanic", "last_mechanic",
+        "next_round_at", "updated_at",
     }
     extra = set(overlay) - allowed
     if extra:
         raise ValueError(f"Overlay snapshot contains unsupported field: {sorted(extra)[0]}")
+
     top = overlay.get("top", [])
     if not isinstance(top, list) or len(top) > 5:
-        raise ValueError("Overlay top-damage list is invalid.")
+        raise ValueError("Overlay contribution list is invalid.")
     for item in top:
-        if not isinstance(item, dict) or set(item) - {"name", "damage", "healing"}:
-            raise ValueError("Overlay top-damage entry is invalid.")
+        if not isinstance(item, dict) or set(item) - {"name", "damage", "healing", "mitigation", "score"}:
+            raise ValueError("Overlay contribution entry is invalid.")
+        if len(str(item.get("name") or "")) > 80:
+            raise ValueError("Overlay contribution name is invalid.")
+        for key in ("damage", "healing", "mitigation", "score"):
+            if key in item:
+                try:
+                    value = int(item[key])
+                except (TypeError, ValueError):
+                    raise ValueError("Overlay contribution value is invalid.") from None
+                if value < 0:
+                    raise ValueError("Overlay contribution value is invalid.")
+
+    mechanic_keys = {"name", "kind", "warning", "target", "result", "rounds_remaining", "required", "progress"}
+    for field in ("mechanic", "last_mechanic"):
+        mechanic = overlay.get(field)
+        if mechanic is None:
+            continue
+        if not isinstance(mechanic, dict) or set(mechanic) - mechanic_keys:
+            raise ValueError(f"Overlay {field} is invalid.")
+        for key in ("name", "kind", "warning", "target", "result"):
+            if key in mechanic and len(str(mechanic[key])) > 160:
+                raise ValueError(f"Overlay {field} is invalid.")
+        for key in ("rounds_remaining", "required", "progress"):
+            if key in mechanic:
+                try:
+                    value = int(mechanic[key])
+                except (TypeError, ValueError):
+                    raise ValueError(f"Overlay {field} is invalid.") from None
+                if value < 0:
+                    raise ValueError(f"Overlay {field} is invalid.")
 
 
 def validate_manifest_payload(payload: dict[str, Any]) -> tuple[list[str], str]:

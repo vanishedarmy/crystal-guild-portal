@@ -1,48 +1,43 @@
-# Crystal Guild v1.4.0 — Dungeons & Delves Validation Report
+# Crystal Guild v1.5.0 — Trails & Raids Alpha 1 Hotfix 1 Validation Report
 
 ## Result
 **PASS**
 
-## Automated suites
-- Bot Python unittest suite: **533 / 533 PASS**.
-- Frontend Node regression suite: **399 / 399 PASS**.
-- Hosted Web/API Python unittest suite: **47 / 47 PASS**.
+## Defect reproduced
+The Alpha 1 Bot emitted the new sanitized public Raid Overlay field `last_mechanic`, while the hosted Web Overlay validator still used the older v1.4 allowlist. Authenticated Portal sync therefore failed closed with HTTP 400 (`Overlay snapshot contains unsupported field: last_mechanic`) and retried with backoff.
 
-## Production-release coverage
-- RC1 feature set promotes unchanged into the stable v1.4.0 release.
-- Four-Dungeon catalog remains production frozen.
-- Exact run/chamber/revision stale-state binding, cross-connection SQLite serialization, action-ID replay idempotency, and restart/reconnect persistence remain green.
-- Mobile Dungeon Board disclosure remains pinned to the right edge at <=620px with right-hand closed / down-hand open.
-- Player-facing What's New now presents Dungeons & Delves as a shipped stable release; prerelease milestones remain engineering history only.
-- Runtime overlay state remains excluded from the shipping contract.
+The same stale hosted contract would also have rejected other Alpha 1 fields when present: `encounter_type`, `encounter_name`, `mechanic`, `next_round_at`, and contribution `mitigation` / `score`.
 
-## Source / asset validation
-- Python compile sweep across Bot + Web: **98 / 98 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **198 / 198 PASS**.
-- Plain JS/MJS `node --check`: **158 / 158 PASS**.
-- Active quoted literal image-route audit: **149 / 149 PASS**; **0 missing**.
-- Public artwork: **0 PNG / 576 WebP**.
-- GameData: **4 Dungeons / 0 errors**.
+## Fix coverage
+- Hosted Overlay allowlist now matches the Alpha 1 Bot sanitizer contract.
+- `mechanic` and `last_mechanic` remain restricted to the public telegraph/result keys emitted by the Bot.
+- Mechanic text remains bounded; numeric progress fields must be non-negative integers.
+- Contribution rows accept damage, healing, mitigation, and weighted score; names remain bounded and numeric values non-negative.
+- Existing recursive forbidden-private-field validation still runs before the Overlay-specific shape checks.
+- No Portal write action or combat-authority behavior changed.
 
-## Upgrade / recovery drill
-- Real RC1-created schema-10 database upgraded in place under the production code: **PASS**.
-- Existing test-player level/Gil preserved exactly (**Lv.17 / 4,321 Gil**): **PASS**.
-- Non-destructive backup/restore recovery drill: **PASS**.
-- SQLite quick-check, foreign keys, WAL/busy-timeout runtime pragmas, and runtime-checkpoint verification: **PASS**.
+## Automated validation
+- Hosted Web/API Python suite: **47 / 47 PASS**.
+- Frontend Node regression suite: **404 / 404 PASS** (frontend assets unchanged from Alpha 1).
+- Hosted Web Python compile sweep: **8 / 8 PASS**.
+- The hosted Overlay regression fixture now posts and reads back encounter type/name, Infernal Nails mechanic state, last mechanic, next-round timing, mitigation, and contribution score.
 
-## Payload / compatibility
-- Fully unlocked four-Dungeon Adventure-state payload: **15,390 bytes**.
-- Headroom below the 16 KiB guardrail: **994 bytes**.
-- Bot/Web/frontend runtime: `1.4.0-dungeons-delves`.
-- Local DB schema **10**, hosted sync **1**, Portal protocol **25**, Twitch prefix `!`.
-- No migration, reset, OAuth/environment, new environment variable, gameplay/economy, or balance change from RC1.
+## Compatibility
+- Hosted Web runtime: `1.5.0-trails-raids-a1h1`.
+- Frontend asset revision: `1.5.0-trails-raids-a1` unchanged.
+- Compatible Bot runtime: `1.5.0-trails-raids-a1` unchanged.
+- Local DB schema: **10** unchanged.
+- Hosted sync schema: **1** unchanged.
+- Portal Action protocol: **25** unchanged.
+- Bot update: **none**.
+- Database migration / player reset: **none**.
+- OAuth/environment/new variables: **none**.
+
+## Source delta
+Relative to the shipped Alpha 1 Web package: **14 changed files, 0 deletions; final Web tree remains 828 files**.
 
 ## Packaging verification
-- RC1 → production Bot patch: **29 changed/new files, 0 deletions**; final Bot tree **152 files**.
-- RC1 → production Web patch: **58 changed/new files, 0 deletions**; final Web tree **826 files**.
-- Individual patch helpers reconstruct **152/152 Bot** and **826/826 Web** files exactly: **PASS**.
-- Paired updater reconstructs **152/152 Bot** and **826/826 Web** files exactly: **PASS**.
-- Complete archive contains exact final Bot/Web trees: **PASS**.
-- All **6/6** release ZIPs pass CRC/integrity checks.
+- Full Hotfix 1 Web archive: **828 / 828 exact frozen source files**.
+- Alpha 1 → Hotfix 1 Web patch reconstruction: **828 / 828 exact files PASS**.
+- Release ZIP CRC/integrity: **2 / 2 PASS**.
 - Runtime/private-artifact hygiene: **0 violations**.
-- SHA-256 checksum verification: **PASS**.

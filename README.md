@@ -1,7 +1,5 @@
-# Crystal Guild Web — v1.6.0 Gold Saucer Alpha 2 Web Hotfix 1
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Canonical Baseline
 
-Monster Toss visual treatment: dedicated scenic artwork, four target images, three throw-style images, projectile/reticle feedback, hit/miss and completed-game result art, plus score/throws/play presentation. Hosted runtime remains `1.6.0-gold-saucer-a2`; frontend asset revision is `1.6.0-gold-saucer-a2h1`; schema 12; sync 1; protocol 27.
+This is the canonical Alpha 2 Web baseline going forward. Hosted runtime remains `1.6.0-gold-saucer-a2`; frontend asset revision is `1.6.0-gold-saucer-a2h2`; local DB schema 12; hosted sync 1; Portal Action protocol 27; Twitch prefix `!`.
 
-# Crystal Guild Web — v1.6.0 Gold Saucer Alpha 1 Hotfix 2
-
-Gold Saucer UX polish: Cactpot line preview/highlight, UTC daily reset copy, presentation-only slot reel animation, stronger win feedback, compact history, expanded personal records, and a cleaner future-attraction board. Compatible runtime `1.6.0-gold-saucer-a2`; schema 12; sync 1; protocol 27.
+Monster Toss retains its Gold Saucer scenic background and all gameplay-state artwork, but the redundant standalone top marquee has been removed. The active Monster Toss visual set is 17 separate WebP assets under `/gold-saucer/a2h2/monster-toss/`. No gameplay, SP economy, payout, daily-limit, schema, protocol, or Bot behavior changes are included.

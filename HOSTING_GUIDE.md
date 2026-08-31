@@ -1,5 +1,5 @@
-# Hosting Guide — Gold Saucer Alpha 2 Web Hotfix 1
+# Hosting Guide — Gold Saucer Alpha 2 Canonical Baseline
 
-Deploy this Web hotfix with the existing `1.6.0-gold-saucer-a2` Bot. Preserve hosted secrets and persistent state. No Bot replacement or database migration is required.
+Deploy the full canonical Web tree with the Alpha 2 Bot runtime. Preserve hosted secrets and persistent state. After deployment, `/api/health` should report hosted runtime `1.6.0-gold-saucer-a2`, frontend asset revision `1.6.0-gold-saucer-a2h2`, hosted sync schema 1, and Portal protocol 27.
 
-After deployment, `/api/health` should report hosted runtime `1.6.0-gold-saucer-a2`, frontend asset revision `1.6.0-gold-saucer-a2h1`, hosted sync schema 1, and Portal protocol 27. Monster Toss actions remain Bot-authoritative and the Portal Trial & Raid Board remains read-only.
+Monster Toss remains Bot-authoritative; this baseline changes presentation only.

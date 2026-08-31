@@ -15,7 +15,7 @@ import { duration, number } from "../utils/formatters.js";
 
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
-const TOSS_ART_ROOT = "/gold-saucer/a2h1/monster-toss";
+const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
 const TOSS_TARGET_ART = {
   small_pot: `${TOSS_ART_ROOT}/targets/small-pot.webp`,
   medium_pot: `${TOSS_ART_ROOT}/targets/medium-pot.webp`,
@@ -322,9 +322,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <img className="monster-toss-background" src={`${TOSS_ART_ROOT}/background.webp`} alt="" aria-hidden="true" />
             <div className="monster-toss-scenic-shade" aria-hidden="true" />
             <div className="monster-toss-content">
-              <img className="monster-toss-marquee" src={`${TOSS_ART_ROOT}/marquee.webp`} alt="Monster Toss" />
               <div className="panel-title-row monster-toss-title-row">
-                <div><p className="eyebrow">Alpha 2 Attraction · Visual Hotfix 1</p><h3>Monster Toss</h3></div>
+                <div><p className="eyebrow">Alpha 2 Attraction · Visual Hotfix 2</p><h3>Monster Toss</h3></div>
                 <span className={`small-badge ${tossGame ? "ready" : ""}`}>{tossGame ? `${number(tossGame.throws_remaining)} throws left` : `${number(toss.games_remaining)} / ${number(toss.daily_games || 3)} games left`}</span>
               </div>
               <p className="muted monster-toss-intro">Five throws per game. Choose a target, then choose Safe, Normal, or Power. Harder targets and riskier throws score more, while every hit and payout remains Bot-authoritative.</p>

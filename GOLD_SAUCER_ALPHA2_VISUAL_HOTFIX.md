@@ -1,12 +1,9 @@
-# Gold Saucer Alpha 2 — Web Hotfix 1: Monster Toss Visual Treatment
+# Gold Saucer Alpha 2 — Web Hotfix 2: Canonical Monster Toss Presentation
 
-Web-only visual update on top of v1.6.0 Gold Saucer Alpha 2.
+Web-only presentation cleanup on top of Alpha 2 Web Hotfix 1.
 
-- Adds a dedicated Monster Toss scenic background and marquee.
-- Adds four separate target artworks: Small Pot, Medium Pot, Large Pot, and Golden Cactuar.
-- Adds three separate throw-style artworks: Safe, Normal, and Power.
-- Adds separate projectile, targeting reticle, hit, miss, score, throws-left, bullseye, jackpot, and play-banner artwork.
-- Integrates the assets as explicit DOM image layers and responsive UI art; no CSS background-image dependency is used for the attraction scene.
-- Ships all 18 new public assets as WebP under `/gold-saucer/a2h1/monster-toss/` for cache-busting.
-- Keeps hosted runtime `1.6.0-gold-saucer-a2`, schema 12, hosted sync 1, Portal protocol 27, and the matching Alpha 2 Bot unchanged.
-- No Monster Toss target accuracy, style modifier, SP entry cost, payout threshold, daily game limit, Mini Cactpot/Slots balance, Gil economy, combat progression, database, OAuth, or environment change.
+- Removes the redundant standalone Monster Toss marquee from the top of the attraction card.
+- Keeps the normal title row, scenic background, and start-state Play Monster Toss artwork.
+- Prunes the unused marquee asset from the shipping tree.
+- Moves the 17 active Monster Toss assets to `/gold-saucer/a2h2/monster-toss/` for cache busting.
+- No Monster Toss rules, odds, score values, SP payouts, daily limits, schema, protocol, or Bot behavior change.

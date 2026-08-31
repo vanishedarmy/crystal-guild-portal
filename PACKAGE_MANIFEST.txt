@@ -1,12 +1,10 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 1 — Monster Toss Visual Treatment
-Baseline: v1.6.0 Gold Saucer Alpha 2 Web
+Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 2 — Canonical Baseline
 Hosted runtime: 1.6.0-gold-saucer-a2
-Frontend asset revision: 1.6.0-gold-saucer-a2h1
-Compatible Bot: 1.6.0-gold-saucer-a2
-DB schema: 12
-Hosted sync: 1
+Frontend asset revision: 1.6.0-gold-saucer-a2h2
+Local DB schema: 12
+Hosted sync schema: 1
 Portal Action protocol: 27
-Existing Gold Saucer asset root retained: /gold-saucer/a1h1/
-New Monster Toss asset root: /gold-saucer/a2h1/monster-toss/
-New artwork: 18 separate WebP assets
-Scope: Web-only visual presentation; gameplay/economy/protocol/schema behavior unchanged
+Twitch prefix: !
+Monster Toss active art: 17 separate WebP assets
+Monster Toss asset root: /gold-saucer/a2h2/monster-toss/
+Redundant top marquee: removed from DOM and shipping tree

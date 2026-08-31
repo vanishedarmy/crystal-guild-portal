@@ -1,17 +1,17 @@
 {
-  "release": "Crystal Guild v1.6.0 Gold Saucer Alpha 2 Web Hotfix 1 \u2014 Monster Toss Visual Treatment",
+  "release": "Crystal Guild v1.6.0 Gold Saucer Alpha 2 Web Hotfix 2 \u2014 Canonical Monster Toss Presentation",
   "hosted_runtime": "1.6.0-gold-saucer-a2",
-  "frontend_asset_revision": "1.6.0-gold-saucer-a2h1",
+  "frontend_asset_revision": "1.6.0-gold-saucer-a2h2",
   "compatible_bot": "1.6.0-gold-saucer-a2",
   "schema": 12,
   "hosted_sync": 1,
   "portal_action_protocol": 27,
-  "asset_root": "/gold-saucer/a2h1/monster-toss/",
-  "asset_count": 18,
+  "asset_root": "/gold-saucer/a2h2/monster-toss/",
+  "asset_count": 17,
   "shipping_format": "WebP",
   "assets": [
     {
-      "route": "/gold-saucer/a2h1/monster-toss/background.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/background.webp",
       "role": "Monster Toss attraction scenic background",
       "width": 1672,
       "height": 941,
@@ -21,17 +21,7 @@
       "sha256": "2c5b80bea75f8f3e20259e8154ce3da74a75a1091d1dd65d144f5931fadee3eb"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/marquee.webp",
-      "role": "Monster Toss attraction marquee",
-      "width": 2172,
-      "height": 724,
-      "mode": "RGBA",
-      "alpha": true,
-      "bytes": 437304,
-      "sha256": "c3a29805023591cc14ad8131b2bc01cbc1ba73fa036208cf7fc0c6c381bdc226"
-    },
-    {
-      "route": "/gold-saucer/a2h1/monster-toss/targets/small-pot.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/targets/small-pot.webp",
       "role": "Small Pot target",
       "width": 1254,
       "height": 1254,
@@ -41,7 +31,7 @@
       "sha256": "9ca47ab902c957d2beed39b55c2f8fc72cb69467435aee549c7b86cdc3b325e7"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/targets/medium-pot.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/targets/medium-pot.webp",
       "role": "Medium Pot target",
       "width": 1254,
       "height": 1254,
@@ -51,7 +41,7 @@
       "sha256": "1f28f7935dd3639be8c4b733594a9aa27b87063f0148bb802642cc103ef4b686"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/targets/large-pot.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/targets/large-pot.webp",
       "role": "Large Pot target",
       "width": 1254,
       "height": 1254,
@@ -61,7 +51,7 @@
       "sha256": "f353d1177357768c4a27cee17bca3eb6e23c25705b14c3b2c97d4bc0035ee091"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/targets/golden-cactuar.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/targets/golden-cactuar.webp",
       "role": "Golden Cactuar jackpot target",
       "width": 1254,
       "height": 1254,
@@ -71,7 +61,7 @@
       "sha256": "52a016abcb22831098424de3ad2174a9806fa6875963ff447655d29334bcae3d"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/styles/safe.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/styles/safe.webp",
       "role": "Safe Throw style badge",
       "width": 2172,
       "height": 724,
@@ -81,7 +71,7 @@
       "sha256": "40e8ed8a1cb780d1e89271e1399e48f3373061f892be7a485e3f928a14bf7829"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/styles/normal.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/styles/normal.webp",
       "role": "Normal Throw style badge",
       "width": 2172,
       "height": 724,
@@ -91,7 +81,7 @@
       "sha256": "8df9a0000138cf6b0922de4be6fd31d003e9f95800ddc4a151032528e178db21"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/styles/power.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/styles/power.webp",
       "role": "Power Throw style badge",
       "width": 2172,
       "height": 724,
@@ -101,7 +91,7 @@
       "sha256": "c2b7dd820dd0999ff60440bbc6f9a155361483cb9bb0fa2bff7a26cc3a848372"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/projectile.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/projectile.webp",
       "role": "Monster Toss crystal projectile",
       "width": 1254,
       "height": 1254,
@@ -111,7 +101,7 @@
       "sha256": "41b746bcab063124e1ae015130094ac509e247b9afde8c6a5defe52aed4ac430"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/reticle.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/reticle.webp",
       "role": "Selected-target reticle",
       "width": 1254,
       "height": 1254,
@@ -121,7 +111,7 @@
       "sha256": "424845216c4cb29acfda3839a2d0eb1a04d26825b465161fb8571df5f9e40d1a"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/results/hit.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/results/hit.webp",
       "role": "Hit result emblem",
       "width": 1254,
       "height": 1254,
@@ -131,7 +121,7 @@
       "sha256": "6e6cc459971375695e777e6930466ceb8a81cc2fa05aa3a5c9128d2ed93bd57d"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/results/miss.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/results/miss.webp",
       "role": "Miss result emblem",
       "width": 1254,
       "height": 1254,
@@ -141,7 +131,7 @@
       "sha256": "1d94372e0dff4b516143954e1fc9618796893ddf5901d5735b912bf5ec654d6e"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/ui/scoreboard.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/ui/scoreboard.webp",
       "role": "Score display frame",
       "width": 2172,
       "height": 724,
@@ -151,7 +141,7 @@
       "sha256": "13e064889d1e59517819b187b96625efe84b2670b625a856f5c0029a87ea4a95"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/ui/throws-left.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/ui/throws-left.webp",
       "role": "Throws-left display frame",
       "width": 2172,
       "height": 724,
@@ -161,7 +151,7 @@
       "sha256": "736478915069614742b21042603391608d5adf9befa2ccd4db11275b6d19fa10"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/results/bullseye.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/results/bullseye.webp",
       "role": "Completed-game positive result emblem",
       "width": 1254,
       "height": 1254,
@@ -171,7 +161,7 @@
       "sha256": "2d6e64ee6f7a12ff1faa7f79906be26c5fa5d26ce374c08a90088d743484aab4"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/results/jackpot.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/results/jackpot.webp",
       "role": "Completed-game jackpot result emblem",
       "width": 1254,
       "height": 1254,
@@ -181,7 +171,7 @@
       "sha256": "2b9866e736bf91d05f835138cf3020e923e6df3c87453c0c0a8cc31fa46944ec"
     },
     {
-      "route": "/gold-saucer/a2h1/monster-toss/ui/play-banner.webp",
+      "route": "/gold-saucer/a2h2/monster-toss/ui/play-banner.webp",
       "role": "Monster Toss play/start banner",
       "width": 2172,
       "height": 724,

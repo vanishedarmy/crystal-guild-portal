@@ -10,7 +10,7 @@ const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("RC1 identity and Dungeon catalog remain feature frozen", () => {
   assert.equal(WEB_BUILD, "Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2h1");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2h2");
   const board=read("src/player/Dungeons.jsx");
   assert.match(board,/Dungeons & Delves · v1.4.0/);
 });

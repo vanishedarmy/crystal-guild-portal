@@ -1,3 +1,12 @@
+## v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 2 / Canonical Baseline
+- Removes the redundant standalone Monster Toss top marquee while retaining the scenic background and Play Monster Toss start artwork.
+- Prunes the unused marquee asset; active Monster Toss art is 17 separate WebP files under `/gold-saucer/a2h2/monster-toss/`.
+- Hosted/Bot runtime remains `1.6.0-gold-saucer-a2`; frontend revision `1.6.0-gold-saucer-a2h2`; schema 12 / sync 1 / Portal protocol 27 unchanged.
+
+## v1.6.0 — Gold Saucer Alpha 2
+- Adds persistent five-throw Monster Toss with target and throw-style choices, three games per UTC day, records, and cosmetic Prize Counter expansion.
+- Runtime `1.6.0-gold-saucer-a2`; schema 12 / hosted sync 1 / Portal protocol 27.
+
 ## v1.5.1 — Relic Arsenal Complete
 - Completes Relic coverage for all 18 playable Jobs with 10 new three-stage questlines and 30 stage weapon items.
 - Adds matching Relic artwork and 18-Job collection progress in the Portal and Player Guide.

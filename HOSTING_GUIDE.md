@@ -1,5 +1,5 @@
-# Crystal Guild v1.6.0 Alpha 1 — Relic Arsenal Complete Hosting Guide
+# Hosting Guide — Gold Saucer Alpha 2 Web Hotfix 1
 
-Deploy the matching v1.6.0 Alpha 1 Web and Bot together. Preserve hosted secrets and persistent state. Verify `/api/health` reports `1.6.0-gold-saucer-a2`, hosted sync schema 1 and Portal protocol 27. The Raid Board remains read-only; raid mutations remain Twitch/Bot-authoritative.
+Deploy this Web hotfix with the existing `1.6.0-gold-saucer-a2` Bot. Preserve hosted secrets and persistent state. No Bot replacement or database migration is required.
 
-No database migration, OAuth change, or new environment variable is required from Beta 3.
+After deployment, `/api/health` should report hosted runtime `1.6.0-gold-saucer-a2`, frontend asset revision `1.6.0-gold-saucer-a2h1`, hosted sync schema 1, and Portal protocol 27. Monster Toss actions remain Bot-authoritative and the Portal Trial & Raid Board remains read-only.

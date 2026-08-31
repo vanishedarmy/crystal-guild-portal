@@ -15,6 +15,18 @@ import { duration, number } from "../utils/formatters.js";
 
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
+const TOSS_ART_ROOT = "/gold-saucer/a2h1/monster-toss";
+const TOSS_TARGET_ART = {
+  small_pot: `${TOSS_ART_ROOT}/targets/small-pot.webp`,
+  medium_pot: `${TOSS_ART_ROOT}/targets/medium-pot.webp`,
+  large_pot: `${TOSS_ART_ROOT}/targets/large-pot.webp`,
+  golden_cactuar: `${TOSS_ART_ROOT}/targets/golden-cactuar.webp`,
+};
+const TOSS_STYLE_ART = {
+  safe: `${TOSS_ART_ROOT}/styles/safe.webp`,
+  normal: `${TOSS_ART_ROOT}/styles/normal.webp`,
+  power: `${TOSS_ART_ROOT}/styles/power.webp`,
+};
 const SLOT_IDS = ["crystal", "moogle", "chocobo", "cactuar", "bomb", "potion"];
 const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 const SLOT_ART = {
@@ -177,7 +189,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2 H1</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -214,13 +226,23 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const hoverCells = hoveredLine != null ? (cactpot.lines || []).find((line) => Number(line.index) === Number(hoveredLine))?.cells || [] : [];
   const highlightedCells = new Set(hoverCells.length ? hoverCells : chosenCells);
   const cactpotTier = Number(ticket?.payout || 0) >= 1000 ? "jackpot" : Number(ticket?.payout || 0) >= 300 ? "big-win" : "win";
+  const tossThrows = Array.isArray(tossGame?.throws) ? tossGame.throws : [];
+  const lastTossThrow = tossThrows.length ? tossThrows[tossThrows.length - 1] : null;
+  const lastTossHistory = history.find((entry) => entry.game === "monster_toss") || null;
+  const lastTossDetails = lastTossHistory?.details || {};
+  const lastTossTier = String(lastTossDetails.tier || lastTossHistory?.outcome || "miss");
+  const lastTossResultArt = lastTossTier === "jackpot"
+    ? `${TOSS_ART_ROOT}/results/jackpot.webp`
+    : Number(lastTossHistory?.payout || 0) > 0
+      ? `${TOSS_ART_ROOT}/results/bullseye.webp`
+      : `${TOSS_ART_ROOT}/results/miss.webp`;
 
   return (
     <section className="gold-saucer-shell">
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2 H1</p>
           <h2>Gold Saucer</h2>
           <p className="muted">A low-stakes side hall for daily luck, quick games, cosmetic rewards, collection records, and future Chocobo and card attractions. First visit includes a 500 SP welcome purse.</p>
         </div>
@@ -296,34 +318,82 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </section>
           </div>
 
-          <section className="panel saucer-game-card monster-toss-card">
-            <div className="panel-title-row">
-              <div><p className="eyebrow">Alpha 2 Attraction</p><h3>Monster Toss</h3></div>
-              <span className={`small-badge ${tossGame ? "ready" : ""}`}>{tossGame ? `${number(tossGame.throws_remaining)} throws left` : `${number(toss.games_remaining)} / ${number(toss.daily_games || 3)} games left`}</span>
-            </div>
-            <p className="muted">Five throws per game. Choose a target, then choose Safe, Normal, or Power. Harder targets and riskier throws score more, but the Bot resolves every hit authoritatively.</p>
-            {tossGame ? (
-              <>
-                <div className="monster-toss-scoreboard">
-                  <div><span>Score</span><strong>{number(tossGame.score)}</strong></div>
-                  <div><span>Throw</span><strong>{number(tossGame.throw_index)} / {number(toss.throws_per_game || 5)}</strong></div>
-                </div>
-                <div className="monster-toss-target-grid">
-                  {tossTargets.map((target) => <button type="button" key={target.id} className={`monster-toss-choice ${tossTarget === target.id ? "selected" : ""}`} onClick={() => setTossTarget(target.id)} disabled={Boolean(busy)}><strong>{target.name}</strong><span>{number(target.points)} base pts</span><small>{Math.round(Number(target.accuracy || 0) * 100)}% base accuracy</small></button>)}
-                </div>
-                <div className="monster-toss-style-grid">
-                  {tossStyles.map((style) => <button type="button" key={style.id} className={`monster-toss-choice style ${tossStyle === style.id ? "selected" : ""}`} onClick={() => setTossStyle(style.id)} disabled={Boolean(busy)}><strong>{style.name}</strong><small>{style.description}</small></button>)}
-                </div>
-                <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy)} onClick={() => mutate("monster-toss-throw", () => submitMonsterTossThrow(tossTarget, tossStyle, csrfToken, actionKey("monster-toss-throw", `${tossTarget}-${tossStyle}`)), "Throwing…")}>{busy === "monster-toss-throw" ? "Throwing…" : "Take Throw"}</button>
-                <div className="monster-toss-log">{(tossGame.throws || []).slice().reverse().map((entry) => <div key={entry.throw}><span>Throw {entry.throw}: {entry.target_name} · {entry.style_name}</span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
-              </>
-            ) : (
-              <div className="monster-toss-start">
-                <div className="saucer-result"><strong>{number(toss.cost || 20)} SP entry</strong><span>{number(toss.throws_per_game || 5)} throws · {number(toss.daily_games || 3)} games/day</span></div>
-                <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : points < Number(toss.cost || 20) ? "Not Enough SP" : `Start Game · ${number(toss.cost || 20)} SP`}</button>
+          <section className="panel saucer-game-card monster-toss-card monster-toss-scenic-panel">
+            <img className="monster-toss-background" src={`${TOSS_ART_ROOT}/background.webp`} alt="" aria-hidden="true" />
+            <div className="monster-toss-scenic-shade" aria-hidden="true" />
+            <div className="monster-toss-content">
+              <img className="monster-toss-marquee" src={`${TOSS_ART_ROOT}/marquee.webp`} alt="Monster Toss" />
+              <div className="panel-title-row monster-toss-title-row">
+                <div><p className="eyebrow">Alpha 2 Attraction · Visual Hotfix 1</p><h3>Monster Toss</h3></div>
+                <span className={`small-badge ${tossGame ? "ready" : ""}`}>{tossGame ? `${number(tossGame.throws_remaining)} throws left` : `${number(toss.games_remaining)} / ${number(toss.daily_games || 3)} games left`}</span>
               </div>
-            )}
-            <details className="saucer-balance-notes"><summary>Score rewards</summary><div className="monster-toss-payouts">{(toss.payouts || []).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} SP</span>)}</div></details>
+              <p className="muted monster-toss-intro">Five throws per game. Choose a target, then choose Safe, Normal, or Power. Harder targets and riskier throws score more, while every hit and payout remains Bot-authoritative.</p>
+              {tossGame ? (
+                <>
+                  <div className="monster-toss-status-art">
+                    <div className="monster-toss-score-art">
+                      <img src={`${TOSS_ART_ROOT}/ui/scoreboard.webp`} alt="" aria-hidden="true" />
+                      <div className="monster-toss-score-overlay"><span>Current Score</span><strong>{number(tossGame.score)}</strong></div>
+                    </div>
+                    <div className="monster-toss-throws-art">
+                      <img src={`${TOSS_ART_ROOT}/ui/throws-left.webp`} alt="" aria-hidden="true" />
+                      <div className="monster-toss-throws-overlay"><strong>{number(tossGame.throws_remaining)}</strong><span>throws left</span></div>
+                    </div>
+                  </div>
+
+                  <div className="monster-toss-target-grid" aria-label="Monster Toss targets">
+                    {tossTargets.map((target) => (
+                      <button type="button" key={target.id} className={`monster-toss-choice target ${tossTarget === target.id ? "selected" : ""}`} onClick={() => setTossTarget(target.id)} disabled={Boolean(busy)}>
+                        <span className="monster-toss-target-art-wrap">
+                          <img className="monster-toss-target-art" src={TOSS_TARGET_ART[target.id]} alt="" aria-hidden="true" />
+                          {tossTarget === target.id ? <img className="monster-toss-reticle" src={`${TOSS_ART_ROOT}/reticle.webp`} alt="" aria-hidden="true" /> : null}
+                        </span>
+                        <strong>{target.name}</strong>
+                        <span>{number(target.points)} base pts</span>
+                        <small>{Math.round(Number(target.accuracy || 0) * 100)}% base accuracy</small>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="monster-toss-style-grid" aria-label="Monster Toss throw styles">
+                    {tossStyles.map((style) => (
+                      <button type="button" key={style.id} className={`monster-toss-choice style ${tossStyle === style.id ? "selected" : ""}`} onClick={() => setTossStyle(style.id)} disabled={Boolean(busy)}>
+                        <img className="monster-toss-style-art" src={TOSS_STYLE_ART[style.id]} alt="" aria-hidden="true" />
+                        <strong>{style.name}</strong>
+                        <small>{style.description}</small>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="monster-toss-throw-stage">
+                    <img className="monster-toss-projectile" src={`${TOSS_ART_ROOT}/projectile.webp`} alt="" aria-hidden="true" />
+                    <button type="button" className="equipment-action-button monster-toss-throw-button" disabled={!actionsAvailable || Boolean(busy)} onClick={() => mutate("monster-toss-throw", () => submitMonsterTossThrow(tossTarget, tossStyle, csrfToken, actionKey("monster-toss-throw", `${tossTarget}-${tossStyle}`)), "Throwing…")}>{busy === "monster-toss-throw" ? "Throwing…" : "Take Throw"}</button>
+                  </div>
+
+                  {lastTossThrow ? (
+                    <div className={`monster-toss-last-result ${lastTossThrow.hit ? "hit" : "miss"}`}>
+                      <img src={`${TOSS_ART_ROOT}/results/${lastTossThrow.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" />
+                      <div><strong>{lastTossThrow.hit ? `HIT +${number(lastTossThrow.points)}` : "MISS"}</strong><span>{lastTossThrow.target_name} · {lastTossThrow.style_name}</span></div>
+                    </div>
+                  ) : null}
+
+                  <div className="monster-toss-log">{tossThrows.slice().reverse().map((entry) => <div key={entry.throw}><span className="monster-toss-log-main"><img src={`${TOSS_ART_ROOT}/results/${entry.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" /><span>Throw {entry.throw}: {entry.target_name} · {entry.style_name}</span></span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
+                </>
+              ) : (
+                <div className="monster-toss-start">
+                  <img className="monster-toss-play-banner" src={`${TOSS_ART_ROOT}/ui/play-banner.webp`} alt="Play Monster Toss" />
+                  {lastTossHistory ? (
+                    <div className={`monster-toss-final-result tier-${lastTossTier}`}>
+                      <img src={lastTossResultArt} alt="" aria-hidden="true" />
+                      <div><span>Last Game</span><strong>{number(lastTossDetails.score || 0)} pts · {number(lastTossHistory.payout || 0)} SP</strong><small>{String(lastTossTier).replaceAll("_", " ")}</small></div>
+                    </div>
+                  ) : null}
+                  <div className="saucer-result monster-toss-entry-card"><strong>{number(toss.cost || 20)} SP entry</strong><span>{number(toss.throws_per_game || 5)} throws · {number(toss.daily_games || 3)} games/day</span></div>
+                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : points < Number(toss.cost || 20) ? "Not Enough SP" : `Start Game · ${number(toss.cost || 20)} SP`}</button>
+                </div>
+              )}
+              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards</summary><div className="monster-toss-payouts">{(toss.payouts || []).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} SP</span>)}</div></details>
+            </div>
           </section>
 
           <section className="panel saucer-prize-panel saucer-scenic-panel">

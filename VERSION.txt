@@ -1,7 +1,9 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web
+Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 1 — Monster Toss Visual Treatment
 Hosted runtime: 1.6.0-gold-saucer-a2
-Frontend asset revision: 1.6.0-gold-saucer-a2
+Frontend asset revision: 1.6.0-gold-saucer-a2h1
 Compatible Bot: 1.6.0-gold-saucer-a2
 Local DB schema: 12
 Hosted sync schema: 1
 Portal Action protocol: 27
+Twitch prefix: !
+Monster Toss visual asset family: /gold-saucer/a2h1/monster-toss/

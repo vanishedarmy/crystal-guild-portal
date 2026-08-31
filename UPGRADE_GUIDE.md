@@ -1,7 +1,13 @@
-# Upgrade Guide — Gold Saucer Alpha 2 Web
+# Upgrade Guide — v1.6.0 Gold Saucer Alpha 2 Web Hotfix 1
 
-Baseline: **v1.6.0 Gold Saucer Alpha 1 Hotfix 2 Web**.
+Supported baseline: **v1.6.0 Gold Saucer Alpha 2 Web + Alpha 2 Bot**.
 
-Apply the H2 → Alpha 2 Web patch from the Web project root or replace with the full Alpha 2 Web tree, then rebuild/redeploy. Deploy the matching Alpha 2 Bot because Portal Action protocol advances to **27** and Monster Toss is Bot-authoritative.
+1. Leave the Alpha 2 Bot and live database unchanged.
+2. Preserve hosted secrets, `.env`, persistent state, and token storage.
+3. Deploy the full Hotfix 1 Web package or apply the Alpha 2 → Alpha 2 H1 Web patch.
+4. Restart/redeploy only the hosted Web service.
+5. Verify `/api/health` reports hosted runtime `1.6.0-gold-saucer-a2`, frontend asset revision `1.6.0-gold-saucer-a2h1`, hosted sync 1, and Portal protocol 27.
+6. Open Gold Saucer → Monster Toss and confirm the scenic background, four target images, three throw-style banners, targeting reticle, score/throws art, and hit/miss/final-result art are visible.
+7. Confirm Mini Cactpot, Crystal Slots, Prize Counter, and Monster Toss rules/payouts behave exactly as before.
 
-Local DB schema advances **11 → 12** in the Bot only. Hosted sync remains **1**. Preserve hosted secrets and environment values; no new variable is required.
+No database migration or player reset is required. Schema remains 12.

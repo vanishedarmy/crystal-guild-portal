@@ -10353,3 +10353,72 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 .monster-toss-log>div{display:flex;justify-content:space-between;gap:.75rem;padding:.5rem .6rem;border-radius:8px;background:rgba(8,10,18,.55)}
 .monster-toss-payouts{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}.monster-toss-payouts span{padding:.4rem .55rem;border:1px solid var(--border);border-radius:999px;background:rgba(8,10,18,.6)}
 @media(max-width:760px){.monster-toss-target-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.monster-toss-style-grid{grid-template-columns:1fr}.monster-toss-choice{min-height:auto}}
+
+/* v1.6.0 Gold Saucer Alpha 2 — Web Hotfix 1 Monster Toss visual treatment */
+.monster-toss-scenic-panel{position:relative;isolation:isolate;overflow:hidden;background:#080816;border-color:rgba(240,201,92,.3)}
+.monster-toss-background{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;opacity:.58;pointer-events:none;user-select:none}
+.monster-toss-scenic-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(5,4,18,.52),rgba(7,7,24,.76) 43%,rgba(5,7,18,.95) 88%),linear-gradient(90deg,rgba(25,6,35,.42),transparent 32%,transparent 68%,rgba(25,6,35,.42))}
+.monster-toss-content{position:relative;z-index:2;display:grid;gap:.75rem}
+.monster-toss-marquee{display:block;width:min(620px,88%);max-height:170px;object-fit:contain;margin:-.25rem auto -.35rem;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))}
+.monster-toss-title-row{margin-top:-.25rem}
+.monster-toss-intro{max-width:900px;margin:.1rem auto .2rem;text-align:center;color:#d8d9e5}
+.monster-toss-status-art{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:.75rem;align-items:center;margin:.2rem auto;width:min(930px,100%)}
+.monster-toss-score-art,.monster-toss-throws-art{position:relative;min-width:0}
+.monster-toss-score-art>img,.monster-toss-throws-art>img{display:block;width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 7px 12px rgba(0,0,0,.32))}
+.monster-toss-score-overlay,.monster-toss-throws-overlay{position:absolute;left:50%;top:61%;transform:translate(-50%,-50%);display:grid;place-items:center;text-align:center;text-shadow:0 2px 3px rgba(0,0,0,.85);white-space:nowrap}
+.monster-toss-score-overlay span,.monster-toss-throws-overlay span{font-size:.72rem;text-transform:uppercase;letter-spacing:.11em;color:#ffe9ac}
+.monster-toss-score-overlay strong{font:800 clamp(1.2rem,3vw,2.15rem)/1 Cinzel,Georgia,serif;color:#fff5ce}
+.monster-toss-throws-overlay strong{font:800 clamp(1.35rem,3vw,2.35rem)/1 Cinzel,Georgia,serif;color:#fff5ce}
+.monster-toss-target-grid{position:relative;z-index:2}
+.monster-toss-choice.target{min-height:238px;align-items:center;text-align:center;justify-content:flex-start;background:linear-gradient(180deg,rgba(22,11,36,.82),rgba(7,8,18,.9));border-color:rgba(216,160,255,.22);overflow:hidden}
+.monster-toss-choice.target.selected{border-color:#f0c95c;outline-color:rgba(240,201,92,.88);box-shadow:0 0 22px rgba(240,201,92,.14)}
+.monster-toss-target-art-wrap{position:relative;display:grid;place-items:center;width:100%;height:136px;margin:-.1rem 0 .15rem}
+.monster-toss-target-art{display:block;width:126px;height:126px;object-fit:contain;filter:drop-shadow(0 7px 10px rgba(0,0,0,.38))}
+.monster-toss-reticle{position:absolute;width:150px;height:150px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 0 8px rgba(215,115,255,.35));animation:monsterTossReticle 1.2s ease-in-out infinite alternate}
+@keyframes monsterTossReticle{from{transform:scale(.94) rotate(-3deg);opacity:.72}to{transform:scale(1.03) rotate(3deg);opacity:1}}
+.monster-toss-style-grid{position:relative;z-index:2}
+.monster-toss-choice.style{min-height:142px;align-items:center;text-align:center;background:linear-gradient(180deg,rgba(20,9,34,.84),rgba(7,8,18,.9));border-color:rgba(216,160,255,.2)}
+.monster-toss-choice.style.selected{border-color:#f0c95c;outline-color:rgba(240,201,92,.88);box-shadow:0 0 20px rgba(240,201,92,.12)}
+.monster-toss-style-art{display:block;width:100%;height:66px;object-fit:contain;filter:drop-shadow(0 5px 8px rgba(0,0,0,.3))}
+.monster-toss-choice.style>strong{margin-top:-.2rem}
+.monster-toss-throw-stage{display:flex;align-items:center;justify-content:center;gap:.6rem;margin:.2rem auto;width:min(500px,100%)}
+.monster-toss-projectile{width:78px;height:78px;object-fit:contain;filter:drop-shadow(0 5px 10px rgba(0,0,0,.35))}
+.monster-toss-throw-button{min-width:min(280px,70%)}
+.monster-toss-last-result{display:flex;align-items:center;justify-content:center;gap:.65rem;margin:.15rem auto;padding:.55rem .8rem;width:min(480px,100%);border:1px solid rgba(143,219,255,.14);border-radius:12px;background:rgba(5,8,20,.76);backdrop-filter:blur(2px)}
+.monster-toss-last-result.hit{border-color:rgba(240,201,92,.35);background:linear-gradient(90deg,rgba(105,63,17,.34),rgba(5,8,20,.76))}
+.monster-toss-last-result>img{width:72px;height:72px;object-fit:contain;flex:0 0 auto}
+.monster-toss-last-result>div{display:grid;gap:.12rem}.monster-toss-last-result strong{color:#ffe39a;font-size:1.05rem}.monster-toss-last-result span{color:#d4d6df;font-size:.84rem}
+.monster-toss-log>div{background:rgba(5,8,20,.72);border:1px solid rgba(143,219,255,.1);backdrop-filter:blur(2px)}
+.monster-toss-log-main{display:flex;align-items:center;gap:.45rem;min-width:0}
+.monster-toss-log-main>img{width:30px;height:30px;object-fit:contain;flex:0 0 auto}.monster-toss-log-main>span{min-width:0}
+.monster-toss-start{display:grid;gap:.75rem;place-items:center}
+.monster-toss-play-banner{display:block;width:min(620px,92%);height:auto;object-fit:contain;filter:drop-shadow(0 9px 15px rgba(0,0,0,.35))}
+.monster-toss-final-result{display:flex;align-items:center;justify-content:center;gap:.8rem;width:min(600px,100%);padding:.7rem 1rem;border:1px solid rgba(240,201,92,.22);border-radius:13px;background:rgba(5,8,20,.78);backdrop-filter:blur(2px)}
+.monster-toss-final-result.tier-jackpot{border-color:rgba(255,227,154,.62);background:linear-gradient(90deg,rgba(137,82,18,.38),rgba(65,25,91,.52));box-shadow:0 0 28px rgba(240,201,92,.16)}
+.monster-toss-final-result>img{width:112px;height:112px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 6px 10px rgba(0,0,0,.3))}
+.monster-toss-final-result>div{display:grid;gap:.15rem;text-align:left}.monster-toss-final-result span,.monster-toss-final-result small{color:var(--muted)}.monster-toss-final-result small{text-transform:capitalize}.monster-toss-final-result strong{color:#fff2c8;font-size:1.05rem}
+.monster-toss-entry-card{width:min(520px,100%);backdrop-filter:blur(2px)}
+.monster-toss-rewards{background:rgba(4,8,20,.68);backdrop-filter:blur(2px)}
+.monster-toss-payouts span{background:rgba(5,8,20,.76)}
+@media(max-width:900px){
+  .monster-toss-marquee{width:min(560px,96%)}
+  .monster-toss-status-art{grid-template-columns:1fr;max-width:620px}
+  .monster-toss-score-art,.monster-toss-throws-art{width:min(500px,100%);margin:auto}
+  .monster-toss-choice.target{min-height:214px}
+}
+@media(max-width:620px){
+  .monster-toss-background{object-position:42% center;opacity:.42}
+  .monster-toss-scenic-shade{background:linear-gradient(180deg,rgba(5,4,18,.66),rgba(7,7,24,.84) 42%,rgba(5,7,18,.97))}
+  .monster-toss-marquee{max-height:112px;margin:-.25rem auto -.15rem}
+  .monster-toss-title-row{align-items:flex-start}
+  .monster-toss-intro{text-align:left}
+  .monster-toss-target-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .monster-toss-choice.target{min-height:190px;padding:.55rem}
+  .monster-toss-target-art-wrap{height:106px}.monster-toss-target-art{width:100px;height:100px}.monster-toss-reticle{width:118px;height:118px}
+  .monster-toss-choice.style{min-height:118px}.monster-toss-style-art{height:54px}
+  .monster-toss-throw-stage{gap:.35rem}.monster-toss-projectile{width:58px;height:58px}.monster-toss-throw-button{min-width:0;flex:1}
+  .monster-toss-last-result{justify-content:flex-start}.monster-toss-last-result>img{width:58px;height:58px}
+  .monster-toss-log>div{align-items:flex-start}.monster-toss-log-main{align-items:flex-start}
+  .monster-toss-final-result{justify-content:flex-start;padding:.6rem}.monster-toss-final-result>img{width:82px;height:82px}
+}
+@media(prefers-reduced-motion:reduce){.monster-toss-reticle{animation:none}}

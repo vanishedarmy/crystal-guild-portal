@@ -12,7 +12,7 @@ test("Trails & Raids identity is current", () => {
   assert.equal(WEB_VERSION, "v1.6.0 Alpha 2");
   assert.equal(WEB_BUILD, "Gold Saucer");
   assert.equal(WEB_RELEASE, "v1.6.0 Alpha 2 — Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2h1");
   assert.equal(JSON.parse(read("package.json")).version, "1.6.0-alpha.2");
 });
 

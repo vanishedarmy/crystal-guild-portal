@@ -1,28 +1,29 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Release Audit
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 1 Release Audit
 
-## Frozen Alpha 2 scope
-- Opens **Monster Toss** as the third playable Gold Saucer attraction.
-- Five persistent throws per game with player-selected target and throw style.
-- **20 SP** entry, **3 games per UTC day**, bounded score-to-SP settlement.
-- Monster Toss records are derived from the existing Gold Saucer ledger.
-- Adds cosmetic-only **Toss Tactician** and **Pot Shot Pro** Prize Counter Titles.
-- Carries Alpha 1 H1 Gold Saucer scenic artwork and Alpha 1 H2 Cactpot/Slots UX and records forward unchanged.
+## Frozen scope
+- Web-only Monster Toss visual treatment.
+- 18 separate WebP assets, not a combined sprite sheet.
+- Explicit scenic DOM layer plus target/style/result/status UI integration.
+- Existing Gold Saucer Alpha 1 visual family and all Alpha 2 gameplay retained unchanged.
 
 ## Frozen contract
-Runtime `1.6.0-gold-saucer-a2`; local DB schema **12**; hosted sync **1**; Portal Action protocol **27**; Twitch prefix `!`.
+- Hosted runtime: `1.6.0-gold-saucer-a2`
+- Frontend asset revision: `1.6.0-gold-saucer-a2h1`
+- Compatible Bot: `1.6.0-gold-saucer-a2`
+- Local DB schema: **12**
+- Hosted sync: **1**
+- Portal Action protocol: **27**
+- Twitch prefix: `!`
 
-Schema 12 adds only persistent active Monster Toss state. No player reset, OAuth/environment change, new required variable, normal Gil economy change, combat progression change, Mini Cactpot payout change, or Crystal Slots payout change.
+No Bot update, migration, reset, OAuth/environment change, required variable, SP/Gil balance change, Monster Toss odds/payout change, or combat progression change.
 
-## Release gate
-**615/615 Bot**, **481/481 frontend**, **51/51 hosted**, **116/116 Python parse**, **217/217 frontend parser**, **177/177 Node syntax**, **8/8 CSS parse**, **0 PNG / 675 WebP decode**, **0 GameData errors**.
-
-A genuine Alpha 1 H2 schema-11 database upgraded to schema 12 with a verified pre-migration backup and preserved the validation hero at **Lv.17 / 4,321 Gil**.
-
-The local Vite production build was attempted but cannot execute because this source-only environment does not contain the pinned local Vite executable; no Vite-build pass is claimed.
+## Validation
+- **484/484 frontend PASS**.
+- **51/51 hosted Web/API PASS**.
+- **10/10 Web Python compile**, **220/220 frontend parser**, **178/178 Node syntax**, **8/8 CSS parse**.
+- Public assets: **0 PNG / 693 WebP**, all decode successfully.
+- New Monster Toss art: **18/18 WebP**; 17 transparent UI/sprite assets retain alpha and the scenic background is intentionally opaque.
+- Production Vite build attempted but unavailable because the local Vite executable is not installed in this source-only environment.
 
 ## Packaging
-- Clean Bot tree: **169 files**; H2 → Alpha 2 delta: **48 changed/new, 0 deleted**.
-- Clean Web tree: **951 files**; H2 → Alpha 2 delta: **60 changed/new, 0 deleted**.
-- Individual Bot/Web patches are verified by file hash to reconstruct the final clean trees exactly.
-- Full Bot, full Web, Complete, Bot patch, Web patch, and paired updater are ZIP CRC/integrity checked.
-- Runtime/private-state hygiene exclusions cover databases, WAL/SHM files, token/environment secrets, caches, logs, and runtime overlay/checkpoint files.
+Baseline clean Web tree: **951 files**. Final H1 clean Web tree: **972 files**. Alpha 2 → H1 delta: **53 changed/new files, 0 deletions**. The patch is applied to a copied Alpha 2 baseline and must reproduce all 972 final files byte-for-byte before release. Full Web, patch, and visual-assets archives are CRC-tested; runtime/private artifacts are excluded from the shipping tree.

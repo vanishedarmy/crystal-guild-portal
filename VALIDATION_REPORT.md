@@ -1,48 +1,39 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Validation Report
+# Validation Report — Gold Saucer Alpha 2 Web Hotfix 1
 
 ## Result
-**PASS**
+**PASS** for all executable source, Web/API, and asset gates available in the source-only environment.
 
 ## Automated suites
-- Bot regression suite: **615 / 615 PASS**.
-- Frontend Node regression suite: **481 / 481 PASS**.
+- Frontend Node regression suite: **484 / 484 PASS**.
 - Hosted Web/API suite: **51 / 51 PASS**.
+- Matching Alpha 2 Bot is unchanged by this Web-only hotfix.
 
-## Source / asset validation
-- Python source parse across Bot + Web: **116 / 116 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **217 / 217 PASS**.
-- Plain JS/MJS Node syntax: **177 / 177 PASS**.
+## Source validation
+- Web Python compile sweep: **10 / 10 PASS**.
+- Frontend JS/JSX/MJS TypeScript-parser sweep: **220 / 220 PASS**.
+- Plain JS/MJS Node syntax: **178 / 178 PASS**.
 - CSS parse: **8 / 8 PASS**.
-- Public artwork: **0 PNG / 675 WebP**; **675 / 675 WebP decode PASS**.
-- GameData: **18 Jobs / 18 Relics / 435 items / 37 bosses / 4 Dungeons / 96 Titles / 0 validation errors**.
 
-## Gold Saucer Alpha 2 coverage
-- Monster Toss is the third playable Gold Saucer attraction.
-- Entry cost is **20 SP**; each game has **5 throws** and a maximum of **3 games per UTC day**.
-- Each throw chooses one of four targets and one of three throw styles; target/style combinations trade hit chance against score.
-- Active game ID, throw index, score, and throw history persist across Portal refreshes, reconnects, and Bot restarts.
-- Duplicate action IDs replay the committed Monster Toss start/throw result and do not debit, throw, or pay twice.
-- Fifth throw settles a bounded SP reward exactly once and records the completed game in the existing Gold Saucer ledger.
-- Personal records include Monster Toss games, best score, hits/throws, hit accuracy, and best payout.
-- Prize Counter adds **Toss Tactician** and **Pot Shot Pro** as cosmetic-only Titles.
-- Mini Cactpot, Crystal Slots, daily SP recovery, H1 scenic artwork, and H2 UX/records behavior remain green.
+## Artwork validation
+- New Monster Toss artwork: **18 / 18 WebP decode PASS**.
+- New transparent UI/sprite artwork: **17 / 17 retain alpha**; the scenic background is intentionally opaque.
+- Final public artwork tree: **0 PNG / 693 WebP**, **693 / 693 decode PASS**.
+- New asset family is cache-busted at `/gold-saucer/a2h1/monster-toss/`.
+- Manifest covers all 18 separate assets and their SHA-256 hashes.
 
-## Upgrade / recovery
-A genuine **v1.6.0 Alpha 1 Hotfix 2 schema-11** database was created with the prior runtime and then opened under Alpha 2:
-- schema advanced **11 → 12**;
-- a verified `pre_schema_12_*` backup was created automatically;
-- validation hero remained **Lv.17 / 4,321 Gil**;
-- foreign-key validation remained clean.
-
-Schema 12 is additive and adds only persistent active Monster Toss state.
+## Functional visual coverage
+- Explicit Monster Toss scenic DOM image layer: PASS.
+- Small / Medium / Large / Golden Cactuar target mapping: PASS.
+- Safe / Normal / Power throw-style mapping: PASS.
+- Selected-target reticle: PASS.
+- Score / throws-left frames: PASS.
+- Projectile presentation: PASS.
+- Hit / miss throw feedback: PASS.
+- Bullseye / jackpot completed-game presentation: PASS.
+- Mobile responsive rules and reduced-motion handling: PASS.
 
 ## Production frontend build gate
-`npm run build` was explicitly attempted. This source-only environment does not contain the pinned local Vite executable (`vite: not found`, exit 127), so this report does **not** claim a local Vite production-build pass. The complete frontend regression/parser/syntax/CSS gates above are green.
+`npm run build` was attempted. The source-only environment does not contain the pinned local Vite executable (`vite: not found`, exit 127), so this report does not claim a local Vite production-build pass. Regression, parser, syntax, CSS, asset decode, and package reconstruction gates are reported separately.
 
-## Compatibility contract
-- Runtime: `1.6.0-gold-saucer-a2`
-- Local DB schema: **12**
-- Hosted sync schema: **1**
-- Portal Action protocol: **27**
-- Twitch prefix: **`!`**
-- No player reset, OAuth/environment change, new required environment variable, normal Gil economy change, combat progression change, Mini Cactpot payout change, or Crystal Slots payout change.
+## Compatibility
+Hosted runtime `1.6.0-gold-saucer-a2`; frontend asset revision `1.6.0-gold-saucer-a2h1`; schema **12**; hosted sync **1**; Portal Action protocol **27**; prefix `!`. No gameplay/economy/backend change. Clean-tree packaging target: **972 Web files**, with **53 changed/new and 0 deleted** relative to Alpha 2.

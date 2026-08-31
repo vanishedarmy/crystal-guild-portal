@@ -6,6 +6,7 @@ export const MAJOR_UPDATES = [
     summary: "Gold Saucer Alpha 2 opens Monster Toss as a persistent five-throw attraction with target and throw-style choices, daily play limits, new records, and expanded cosmetic prizes.",
     highlights: [
       { title: "Five throws, real choices", description: "Choose Small Pot, Medium Pot, Large Pot, or the Golden Cactuar on each throw, then select Safe, Normal, or Power to trade accuracy against score." },
+      { title: "Full Monster Toss visual treatment", description: "The attraction now has its own Gold Saucer scene, target and throw-style artwork, live score/throws presentation, aiming reticle, and hit, miss, bullseye, and jackpot result art." },
       { title: "Three games per UTC day", description: "Monster Toss costs 20 SP per game and provides five throws. Daily game limits reset at 00:00 UTC while an active game remains safely resumable." },
       { title: "Persistent and replay-safe", description: "Current score, throw history, and remaining throws persist through refreshes and restarts. Duplicate Portal delivery cannot repeat a throw or payout." },
       { title: "New records", description: "Track Monster Toss games, best score, hit accuracy, and best payout alongside Cactpot and Crystal Slots records." },

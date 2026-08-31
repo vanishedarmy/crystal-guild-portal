@@ -29,8 +29,8 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 });
 
 test("Fellowship UX remains present in the final release", () => {
-  assert.match(version, /WEB_BUILD = "Trails & Raids Alpha 6"/);
-  assert.match(version, /1\.5\.0-trails-raids-a6/);
+  assert.match(version, /WEB_BUILD = "Trails & Raids Alpha 7"/);
+  assert.match(version, /1\.5\.0-trails-raids-a7/);
   assert.match(news, /Guild Expansion has arrived/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

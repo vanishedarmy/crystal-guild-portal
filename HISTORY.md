@@ -1,3 +1,9 @@
+## v1.5.0 — Trails & Raids Alpha 7
+- Bahamut — The Final Coil becomes the first capstone Trial.
+- Flare Breath, Akh Morn, Megaflare Towers, and critical-HP Teraflare Charge add multi-phase coordination.
+- The Trial Board gives Bahamut a full-width capstone card while preserving the roomy collapsible layout.
+- Runtime `1.5.0-trails-raids-a7`; schema 10 / hosted sync 1 / Portal protocol 25 unchanged.
+
 ## v1.5.0 — Trails & Raids Alpha 6
 Adds Leviathan — Tidebreak Expanse as the sixth scripted Trial. Tidal Sweep marks one side of the raid for individual Defend responses, Undertow adds HP/resource pressure, and Maelstrom Surge introduces a two-round Stability Gauge whose coordinated Defends determine Tidal Wave strength. Alpha 5's roomier collapsible Trial Board remains the presentation baseline. Runtime/frontend `1.5.0-trails-raids-a6`; schema 10 / sync 1 / Portal protocol 25 unchanged.
 

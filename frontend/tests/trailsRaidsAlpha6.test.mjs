@@ -32,7 +32,8 @@ test("Alpha 6 OBS overlay understands tide mechanic kinds",()=>{
   for(const term of ["side_sweep","undertow","survival_check"]) { assert.match(js,new RegExp(term)); assert.match(html,new RegExp(term)); }
 });
 
-test("Alpha 6 What's New covers Leviathan and preserves the board baseline",()=>{
-  const news=read("src/player/whatsNewData.js");
-  for(const term of ["v1.5.0 Alpha 6","Leviathan — Tidebreak Expanse","Brace the marked side","Resist Undertow","Stabilize the Maelstrom","Roomier board retained"]) assert.match(news,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+test("Alpha 7 carries forward Leviathan and the roomy board baseline",()=>{
+  const jsx=read("src/player/Raids.jsx"),guide=read("public/guide-body.html"),news=read("src/player/whatsNewData.js");
+  for(const term of ["Leviathan","Tidebreak Expanse","Tidal Sweep","Undertow","Maelstrom Surge"]) assert.match(jsx+guide,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+  assert.match(news,/v1\.5\.0 Alpha 7/);
 });

@@ -1,6 +1,6 @@
-Crystal Guild v1.5.0 — Trails & Raids Alpha 6 — Web Alpha 5 → Alpha 6 Patch
-Runtime: 1.5.0-trails-raids-a6
-Changed/new files: 57
+Crystal Guild v1.5.0 — Trails & Raids Alpha 7 — Web Alpha 6 → Alpha 7 Patch
+Runtime: 1.5.0-trails-raids-a7
+Changed/new files: 58
 Deleted files: 0
 Local DB schema: 10
 Hosted sync schema: 1
@@ -62,7 +62,9 @@ frontend/tests/trailsRaidsAlpha1.test.mjs
 frontend/tests/trailsRaidsAlpha4.test.mjs
 frontend/tests/trailsRaidsAlpha5.test.mjs
 frontend/tests/trailsRaidsAlpha6.test.mjs
+frontend/tests/trailsRaidsAlpha7.test.mjs
 frontend/tests/version.test.mjs
 tests/test_hosted_portal.py
 
 Deleted:
+

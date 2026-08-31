@@ -25,6 +25,8 @@ function mechanicText(m){
   if(m.kind==='wind_mark')return `${m.name} → ${m.target||'marked raider'} · CONTAIN`;
   if(m.kind==='side_sweep')return `${m.name} → ${m.target||'marked side'} · BRACE`;
   if(m.kind==='undertow')return `${m.name} → ${m.target||'marked raider'} · DEFEND`;
+  if(m.kind==='tower_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} Towers`;
+  if(m.kind==='final_damage_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} damage · ${Number(m.rounds_remaining)||0}R`;
   if(m.kind==='survival_check')return `${m.name} · ${fmt(m.progress)}/${fmt(m.required)} Defends · ${Number(m.rounds_remaining)||0}R`;
   if(m.kind==='adds')return `${m.name} · destroy active adds`;
   if(m.kind==='cleave')return `${m.name} → ${m.target||'marked raider'} + ally`;

@@ -10319,3 +10319,20 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
   .saucer-reel{min-height:104px}
   .saucer-slot-symbol{width:min(72px,70%);height:min(72px,70%)}
 }
+
+/* v1.6.0 Gold Saucer Alpha 1 Hotfix 2 — UX, animation, records & balance polish */
+.cactpot-cell.line-highlight{border-color:#ffe39a;box-shadow:inset 0 0 20px rgba(240,201,92,.22),0 0 0 2px rgba(240,201,92,.3),0 0 18px rgba(240,201,92,.18);transform:translateY(-1px)}
+.cactpot-line-buttons .equipment-action-button:hover,.cactpot-line-buttons .equipment-action-button:focus-visible{border-color:#f0c95c;background:rgba(115,76,24,.38)}
+.saucer-result>div{display:grid;gap:.15rem}.saucer-result small{color:var(--muted)}
+.saucer-result.jackpot,.saucer-result.big-win,.slot-result.jackpot{border-color:rgba(255,227,154,.62);background:linear-gradient(90deg,rgba(137,82,18,.34),rgba(80,31,109,.22));box-shadow:0 0 24px rgba(240,201,92,.14)}
+.saucer-reels.is-spinning .saucer-reel{animation:saucerReelPulse .18s linear infinite alternate;border-color:rgba(216,160,255,.65)}
+.saucer-reels.is-spinning .saucer-slot-symbol{animation:saucerSymbolBounce .14s linear infinite alternate;filter:blur(.35px) drop-shadow(0 3px 5px rgba(52,15,72,.34))}
+.spin-callout{color:#ffe39a;font-weight:700;letter-spacing:.03em}
+@keyframes saucerReelPulse{from{transform:translateY(-2px);box-shadow:inset 0 0 0 2px rgba(74,45,15,.32),0 0 12px rgba(168,102,226,.18)}to{transform:translateY(2px);box-shadow:inset 0 0 0 2px rgba(74,45,15,.32),0 0 24px rgba(240,201,92,.22)}}
+@keyframes saucerSymbolBounce{from{transform:translateY(-5px) scale(.97)}to{transform:translateY(5px) scale(1.03)}}
+.saucer-balance-notes{margin-top:.8rem;padding:.65rem .75rem;border:1px solid rgba(143,219,255,.13);border-radius:9px;background:rgba(4,10,22,.34)}
+.saucer-balance-notes summary{cursor:pointer;color:#dff6ff;font-weight:700}.saucer-balance-notes p{margin:.55rem 0 0}
+.saucer-disclosure{padding:.8rem 1rem}.saucer-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer;list-style:none}.saucer-disclosure>summary::-webkit-details-marker{display:none}.saucer-disclosure>summary>span:first-child{display:grid;gap:.15rem}.saucer-disclosure>summary strong{font:700 1rem/1.2 Cinzel,Georgia,serif;color:var(--text)}.saucer-disclosure[open] .saucer-history-list{margin-top:.75rem}
+.saucer-attraction-grid.future-only{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:900px){.saucer-attraction-grid.future-only{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.saucer-reels.is-spinning .saucer-reel,.saucer-reels.is-spinning .saucer-slot-symbol{animation:none}}

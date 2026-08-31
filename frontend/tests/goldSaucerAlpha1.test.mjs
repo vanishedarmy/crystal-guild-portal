@@ -6,9 +6,9 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Gold Saucer Alpha 1 public identity and tab are wired", () => {
-  assert.equal(WEB_VERSION, "v1.6.0 Alpha 1");
+  assert.equal(WEB_VERSION, "v1.6.0 Alpha 1 H2");
   assert.equal(WEB_BUILD, "Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a1");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a1h2");
   const profile = read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /gold_saucer.*Gold Saucer/s);
   assert.match(profile, /\.\.\/player\/GoldSaucer\.jsx/);
@@ -23,7 +23,7 @@ test("Gold Saucer client exposes the bounded Alpha 1 actions", () => {
   assert.match(saucer, /500 SP|welcome/i);
   assert.match(saucer, /Mini Cactpot/);
   assert.match(saucer, /Crystal Slots/);
-  assert.match(saucer, /Gold Saucer Roadmap/);
+  assert.match(saucer, /Future Attractions/);
   assert.match(saucer, /Prize Counter/);
   assert.match(saucer, /daily floor allowance/i);
   assert.match(saucer, /Recent Activity/);

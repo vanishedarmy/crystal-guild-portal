@@ -1,19 +1,15 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 1 Web Hotfix 1
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 1 Web Hotfix 2
 
-## Gold Saucer visual treatment
-This Web-only hotfix gives the Alpha 1 Gold Saucer its dedicated visual identity without changing any gameplay or economy rules.
+Hotfix 2 polishes the playable Gold Saucer without adding another attraction.
 
-- Gold Saucer Lobby, Mini Cactpot, Crystal Slots, and Prize Counter now use explicit scenic DOM image layers.
-- Crystal Slots replaces placeholder text glyphs with individual WebP art for all six authoritative Alpha 1 symbols: Crystal, Moogle, Chocobo, Cactuar, Bomb, and Potion.
-- New artwork ships under `/gold-saucer/a1h1/` for route-level cache busting.
-- Scenic layers remain non-interactive and sit behind readable content on desktop and mobile.
+- Mini Cactpot line buttons preview/highlight the affected cells.
+- Resolved Cactpot tickets show stronger result treatment and the chosen line total.
+- Crystal Slots now run a presentation-only reel cycle with staggered stops **after** the Bot has committed the result.
+- Reduced-motion preferences disable reel animation.
+- Saucer Ledger expands with net SP, total games, Cactpot high rolls, Slot win rate, triple matches, best payouts, and lifetime earned/spent.
+- A collapsed balance detail compares personal realized Slot return with the validated ~87.5% long-run payout target.
+- Recent Activity is collapsed by default.
+- The lower attraction board now shows only future attractions instead of repeating the two playable games.
+- Web Hotfix 1 Gold Saucer scenic/slot WebP artwork remains unchanged and fully retained.
 
-## Compatibility
-- Hosted runtime: `1.6.0-gold-saucer-a1`
-- Compatible Bot: `1.6.0-gold-saucer-a1`
-- Local DB schema: **11**
-- Hosted sync schema: **1**
-- Portal Action protocol: **26**
-- Twitch prefix: `!`
-
-No Bot update, DB migration, player reset, OAuth/environment change, SP cost/payout change, prize change, or slot-odds change is required.
+Hosted/frontend/compatible Bot runtime: `1.6.0-gold-saucer-a1h2`. Schema 11, hosted sync 1, Portal protocol 26, and prefix `!` are unchanged.

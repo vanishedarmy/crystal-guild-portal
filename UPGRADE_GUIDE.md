@@ -1,11 +1,7 @@
-# Upgrade Guide — Gold Saucer Alpha 1 Web Hotfix 1
+# Upgrade Guide — Gold Saucer Alpha 1 Web Hotfix 2
 
-Supported baseline: **v1.6.0 Gold Saucer Alpha 1 Web**.
+Baseline: **Gold Saucer Alpha 1 Web Hotfix 1 — Visual Treatment** with the matching Alpha 1 Bot.
 
-1. Leave the Alpha 1 Bot, live database, `.env`, Twitch tokens, hosted secrets, and persistent state untouched.
-2. Apply `CrystalGuild-v1.6.0-Gold-Saucer-Alpha1-Web-Hotfix1-Visuals-Patch.zip` from the Web project root using its included `apply_patch.py`, or replace the Web tree with the full H1 Web package.
-3. Rebuild/redeploy the Web service normally.
-4. Hard-refresh once after deployment.
-5. Open Gold Saucer and verify the Lobby, Mini Cactpot, Crystal Slots, and Prize Counter scenic art appears; spin Crystal Slots and confirm individual symbol art appears on the reels.
+Apply the Web patch from the Web project root or deploy the full H2 Web package. Deploy the matching H2 Bot at the same time because the new record fields and UTC Cactpot reset are authoritative Bot behavior. Restart/redeploy, then hard-refresh once.
 
-No Bot deployment or database migration is required.
+No H2 DB migration or player reset is required. Local schema remains 11; hosted sync 1; Portal protocol 26.

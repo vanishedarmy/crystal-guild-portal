@@ -1,3 +1,3 @@
-# Crystal Guild Web — v1.6.0 Alpha 1 Relic Arsenal Complete
+# Crystal Guild Web — v1.6.0 Gold Saucer Alpha 1 Hotfix 2
 
-Shows all 18 Job Relics, 54 stage weapons, collection progress, and the expanded Relic artwork catalog. Hosted/frontend/Bot compatibility: `1.6.0-gold-saucer-a1`; schema 11; sync 1; protocol 25.
+Gold Saucer UX polish: Cactpot line preview/highlight, UTC daily reset copy, presentation-only slot reel animation, stronger win feedback, compact history, expanded personal records, and a cleaner future-attraction board. Compatible runtime `1.6.0-gold-saucer-a1h2`; schema 11; sync 1; protocol 26.

@@ -13,6 +13,8 @@ import { duration, number } from "../utils/formatters.js";
 
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
+const SLOT_IDS = ["crystal", "moogle", "chocobo", "cactuar", "bomb", "potion"];
+const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 const SLOT_ART = {
   crystal: `${SAUCER_ART_ROOT}/slots/crystal.webp`,
   moogle: `${SAUCER_ART_ROOT}/slots/moogle.webp`,
@@ -52,6 +54,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const [clock, setClock] = useState(() => Date.now());
+  const [slotDisplay, setSlotDisplay] = useState({ reels: [], labels: [] });
+  const [slotAnimating, setSlotAnimating] = useState(false);
+  const [hoveredLine, setHoveredLine] = useState(null);
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
@@ -123,10 +128,52 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
     }
   };
 
+  const spinSlots = async () => {
+    if (!actionsAvailable || busy) return;
+    setBusy("slots");
+    setSlotAnimating(true);
+    setMessage("Spinning Crystal Slots…");
+    try {
+      const response = await submitSlotsSpin(csrfToken, actionKey("slots-spin"));
+      const finished = await finishedAction(response);
+      if (!finished) throw new Error("Crystal Slots result is still processing.");
+      if (finished.result?.ok === false) {
+        applyFinished(finished, "Crystal Slots could not spin.");
+        return;
+      }
+      const finalReels = Array.isArray(finished.result?.data?.reels) ? finished.result.data.reels : [];
+      const finalState = finished.result?.data?.gold_saucer_state || null;
+      const finalDetails = finalState?.slots?.last_spin?.details || {};
+      const finalLabels = Array.isArray(finalDetails.labels) ? finalDetails.labels : finalReels.map((value) => String(value || "").replaceAll("_", " "));
+      for (let frame = 0; frame < 9; frame += 1) {
+        const ids = [0, 1, 2].map((reel) => SLOT_IDS[(frame * 2 + reel * 3) % SLOT_IDS.length]);
+        setSlotDisplay({ reels: ids, labels: ids.map((value) => value.replaceAll("_", " ")) });
+        await wait(70 + frame * 8);
+      }
+      for (let stop = 0; stop < 3; stop += 1) {
+        setSlotDisplay((current) => {
+          const ids = [...current.reels];
+          const labels = [...current.labels];
+          ids[stop] = finalReels[stop];
+          labels[stop] = finalLabels[stop];
+          return { reels: ids, labels };
+        });
+        await wait(180);
+      }
+      applyFinished(finished, "Crystal Slots resolved.");
+      onRefresh?.();
+    } catch (error) {
+      setMessage(String(error?.message || error));
+    } finally {
+      setSlotAnimating(false);
+      setBusy("");
+    }
+  };
+
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1 H2</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -142,6 +189,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const points = Number(state?.points || 0);
   const prizes = Array.isArray(state?.prizes) ? state.prizes : [];
   const history = Array.isArray(state?.history) ? state.history : [];
+  const records = state?.records || {};
+  const balance = state?.balance || {};
   const nextAllowanceRemaining = Math.max(0, Number(state?.next_daily_allowance_at || 0) - nowSeconds);
   const canStartTicket = Boolean(!ticket?.state || ticket.state === "resolved") && cactpotRemaining <= 0 && points >= Number(cactpot.cost || 10);
   const canSpin = slotsRemaining <= 0 && points >= Number(slots.cost || 15);
@@ -149,13 +198,19 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const lastSlots = slots?.last_spin?.details || null;
   const reels = Array.isArray(lastSlots?.reels) ? lastSlots.reels : [];
   const reelLabels = Array.isArray(lastSlots?.labels) ? lastSlots.labels : [];
+  const shownReels = slotAnimating ? slotDisplay.reels : reels;
+  const shownLabels = slotAnimating ? slotDisplay.labels : reelLabels;
+  const chosenCells = ticket?.chosen_line != null ? (cactpot.lines || []).find((line) => Number(line.index) === Number(ticket.chosen_line))?.cells || [] : [];
+  const hoverCells = hoveredLine != null ? (cactpot.lines || []).find((line) => Number(line.index) === Number(hoveredLine))?.cells || [] : [];
+  const highlightedCells = new Set(hoverCells.length ? hoverCells : chosenCells);
+  const cactpotTier = Number(ticket?.payout || 0) >= 1000 ? "jackpot" : Number(ticket?.payout || 0) >= 300 ? "big-win" : "win";
 
   return (
     <section className="gold-saucer-shell">
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1 H2</p>
           <h2>Gold Saucer</h2>
           <p className="muted">A low-stakes side hall for daily luck, quick games, cosmetic rewards, collection records, and future Chocobo and card attractions. First visit includes a 500 SP welcome purse.</p>
         </div>
@@ -180,9 +235,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <img className="saucer-scenic-art saucer-cactpot-art" src={`${SAUCER_ART_ROOT}/mini-cactpot.webp`} alt="" aria-hidden="true" />
               <div className="panel-title-row">
                 <div><p className="eyebrow">Daily Attraction</p><h3>Mini Cactpot</h3></div>
-                <span className="small-badge">{number(cactpot.cost || 10)} SP</span>
+                <span className={`small-badge ${cactpotRemaining <= 0 && (!ticket || ticket.state === "resolved") ? "ready" : ""}`}>{ticket?.state === "reveal" ? `${number(ticket.reveals_remaining)} reveals left` : ticket?.state === "line" ? "Choose a line" : cactpotRemaining > 0 ? `Next ${duration(cactpotRemaining)}` : "Daily ticket ready"}</span>
               </div>
-              <p className="muted">Open one ticket, reveal three additional cells, then choose a row, column, or diagonal. The three-number sum determines the payout.</p>
+              <p className="muted">Reveal four cells total, preview any row, column, or diagonal, then choose your payout line. New tickets reset at 00:00 UTC.</p>
               {ticket ? (
                 <>
                   <div className="cactpot-grid" aria-label="Mini Cactpot ticket">
@@ -190,7 +245,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                       <button
                         type="button"
                         key={index}
-                        className={`cactpot-cell ${value != null ? "revealed" : "hidden"}`}
+                        className={`cactpot-cell ${value != null ? "revealed" : "hidden"} ${highlightedCells.has(index) ? "line-highlight" : ""}`}
                         disabled={!actionsAvailable || Boolean(busy) || ticket.state !== "reveal" || revealed.has(index)}
                         onClick={() => mutate(`reveal-${index}`, () => submitCactpotReveal(index, csrfToken, actionKey("cactpot-reveal", index)), "Revealing Mini Cactpot cell…")}
                         aria-label={value != null ? `Cell ${index + 1}: ${value}` : `Reveal cell ${index + 1}`}
@@ -202,11 +257,11 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     <div className="cactpot-lines">
                       <span className="slot-label">Choose one payout line</span>
                       <div className="cactpot-line-buttons">
-                        {(cactpot.lines || []).map((line) => <button type="button" className="equipment-action-button secondary" key={line.index} disabled={!actionsAvailable || Boolean(busy)} onClick={() => mutate(`line-${line.index}`, () => submitCactpotLine(line.index, csrfToken, actionKey("cactpot-line", line.index)), "Resolving Mini Cactpot…")}>{LINE_NAMES[line.index] || `Line ${line.index + 1}`}</button>)}
+                        {(cactpot.lines || []).map((line) => <button type="button" className="equipment-action-button secondary" key={line.index} disabled={!actionsAvailable || Boolean(busy)} onMouseEnter={() => setHoveredLine(line.index)} onMouseLeave={() => setHoveredLine(null)} onFocus={() => setHoveredLine(line.index)} onBlur={() => setHoveredLine(null)} onClick={() => mutate(`line-${line.index}`, () => submitCactpotLine(line.index, csrfToken, actionKey("cactpot-line", line.index)), "Resolving Mini Cactpot…")}>{LINE_NAMES[line.index] || `Line ${line.index + 1}`}</button>)}
                       </div>
                     </div>
                   ) : null}
-                  {ticket.state === "resolved" ? <div className="saucer-result"><strong>{number(ticket.payout)} SP won</strong><span>{LINE_NAMES[ticket.chosen_line] || "Chosen line"}</span></div> : null}
+                  {ticket.state === "resolved" ? <div className={`saucer-result cactpot-result ${cactpotTier}`}><div><strong>{number(ticket.payout)} SP won</strong><small>{ticket.line_sum ? `Line total ${number(ticket.line_sum)}` : "Ticket complete"}</small></div><span>{LINE_NAMES[ticket.chosen_line] || "Chosen line"}</span></div> : null}
                 </>
               ) : null}
               {(!ticket || ticket.state === "resolved") ? (
@@ -222,12 +277,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div><p className="eyebrow">Quick Attraction</p><h3>Crystal Slots</h3></div>
                 <span className="small-badge">{number(slots.cost || 15)} SP / spin</span>
               </div>
-              <p className="muted">Three matching symbols pay the most. Any pair pays a small win. Spins are deliberately paced by the server.</p>
-              <div className="saucer-reels" aria-label="Last Crystal Slots result">
-                {[0, 1, 2].map((index) => <Reel key={index} id={reels[index]} label={reelLabels[index]} />)}
+              <p className="muted">Three matching symbols pay the most; any pair pays a smaller win. The Bot commits the result first, then the reels animate locally for presentation.</p>
+              <div className={`saucer-reels ${slotAnimating ? "is-spinning" : ""}`} aria-label={slotAnimating ? "Crystal Slots reels spinning" : "Last Crystal Slots result"}>
+                {[0, 1, 2].map((index) => <Reel key={index} id={shownReels[index]} label={shownLabels[index]} />)}
               </div>
-              {slots.last_spin ? <div className="saucer-result"><strong>{slots.last_spin.payout > 0 ? `+${number(slots.last_spin.payout)} SP` : "No payout"}</strong><span>{String(slots.last_spin.outcome || "spin").replaceAll("_", " ")}</span></div> : <p className="saucer-instruction">No spins recorded yet.</p>}
-              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canSpin} onClick={() => mutate("slots", () => submitSlotsSpin(csrfToken, actionKey("slots-spin")), "Spinning Crystal Slots…")}>{busy === "slots" ? "Spinning…" : slotsRemaining > 0 ? `Ready in ${duration(slotsRemaining)}` : points < Number(slots.cost || 15) ? "Not Enough SP" : `Spin · ${number(slots.cost || 15)} SP`}</button>
+              {slots.last_spin && !slotAnimating ? <div className={`saucer-result slot-result ${String(slots.last_spin.details?.result_tier || slots.last_spin.outcome || "spin")}`}><strong>{slots.last_spin.payout > 0 ? `+${number(slots.last_spin.payout)} SP` : "No payout"}</strong><span>{String(slots.last_spin.outcome || "spin").replaceAll("_", " ")}</span></div> : slotAnimating ? <p className="saucer-instruction spin-callout">Reels are stopping…</p> : <p className="saucer-instruction">No spins recorded yet.</p>}
+              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canSpin} onClick={() => void spinSlots()}>{busy === "slots" ? "Spinning…" : slotsRemaining > 0 ? `Ready in ${duration(slotsRemaining)}` : points < Number(slots.cost || 15) ? "Not Enough SP" : `Spin · ${number(slots.cost || 15)} SP`}</button>
             </section>
           </div>
 
@@ -259,20 +314,29 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </section>
 
           <section className="panel saucer-records-panel">
-            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 1</span></div>
+            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 1 H2</span></div>
             <div className="saucer-record-grid">
-              <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} SP</strong></div>
-              <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} SP</strong></div>
+              <div><span>Current Net SP</span><strong>{Number(records.net_points || 0) >= 0 ? "+" : ""}{number(records.net_points)} SP</strong></div>
+              <div><span>Games Played</span><strong>{number(records.games_played)}</strong></div>
               <div><span>Prizes Collected</span><strong>{number(state.account?.prizes_bought)}</strong></div>
               <div><span>Cactpot Tickets</span><strong>{number(state.account?.cactpot_plays)}</strong></div>
               <div><span>Best Cactpot</span><strong>{number(state.account?.cactpot_best_payout)} SP</strong></div>
+              <div><span>Cactpot High Rolls</span><strong>{number(records.cactpot_high_rolls)}</strong></div>
               <div><span>Slot Spins</span><strong>{number(state.account?.slots_spins)}</strong></div>
+              <div><span>Slot Win Rate</span><strong>{Number(records.slots_win_rate_pct || 0).toFixed(1)}%</strong></div>
+              <div><span>Triple Matches</span><strong>{number(records.slots_triples)}</strong></div>
               <div><span>Best Slots</span><strong>{number(state.account?.slots_best_payout)} SP</strong></div>
+              <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} SP</strong></div>
+              <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} SP</strong></div>
             </div>
+            <details className="saucer-balance-notes">
+              <summary>Balance details</summary>
+              <p className="muted">Your realized slot return is <b>{Number(records.slots_realized_return_pct || 0).toFixed(1)}%</b>. The current long-run payout target is about <b>{Number(balance.slots_theoretical_return_pct || 87.5).toFixed(1)}%</b>. Short sessions can vary dramatically.</p>
+            </details>
           </section>
 
-          <section className="panel saucer-history-panel">
-            <div className="panel-title-row"><div><p className="eyebrow">Recent Activity</p><h3>Last Eight Entries</h3></div></div>
+          <details className="panel saucer-history-panel saucer-disclosure">
+            <summary><span><span className="eyebrow">Recent Activity</span><strong>Last Eight Entries</strong></span><span className="small-badge">{number(history.length)}</span></summary>
             {history.length ? (
               <div className="saucer-history-list">
                 {history.map((entry, index) => {
@@ -286,12 +350,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 })}
               </div>
             ) : <p className="muted">No Gold Saucer activity recorded yet.</p>}
-          </section>
+          </details>
 
           <section className="panel saucer-attractions-panel">
-            <div className="panel-title-row"><div><p className="eyebrow">Gold Saucer Roadmap</p><h3>Attractions</h3></div></div>
-            <div className="saucer-attraction-grid">
-              {(state.attractions || []).map((attraction) => (
+            <div className="panel-title-row"><div><p className="eyebrow">Coming Next</p><h3>Future Attractions</h3></div></div>
+            <div className="saucer-attraction-grid future-only">
+              {(state.attractions || []).filter((attraction) => attraction.status !== "open").map((attraction) => (
                 <article className={`saucer-attraction ${attraction.status}`} key={attraction.id}>
                   <span className={`small-badge ${attraction.status === "open" ? "ready" : "locked"}`}>{attraction.status === "open" ? "OPEN" : "COMING SOON"}</span>
                   <h4>{attraction.name}</h4>

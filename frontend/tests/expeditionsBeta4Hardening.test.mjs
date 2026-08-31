@@ -29,7 +29,7 @@ test("Player Guide is player-facing and omits release-engineering jargon", async
 
 test("Guide release metadata matches authoritative H9+ combat timings", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.release, "1.6.0-gold-saucer-a1");
+  assert.equal(data.meta.release, "1.6.0-gold-saucer-a1h2");
   assert.equal(data.meta.encounter_rally, 60);
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);

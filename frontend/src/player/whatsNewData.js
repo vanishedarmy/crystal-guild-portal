@@ -1,16 +1,16 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.6.0 Alpha 1",
+    version: "v1.6.0 Alpha 1 H2",
     name: "Gold Saucer",
-    title: "The Gold Saucer opens",
-    summary: "Crystal Guild's first dedicated attraction hall is live with a separate Saucer Point economy, a persistent daily Mini Cactpot ticket, and quick Crystal Slots play.",
+    title: "Gold Saucer polish pass",
+    summary: "Mini Cactpot and Crystal Slots now have clearer play states, reel-stop presentation, stronger result feedback, richer personal records, and a true UTC daily Cactpot reset.",
     highlights: [
       { title: "500 SP welcome purse", description: "Your first visit creates a private Saucer account with 500 Saucer Points. From the following UTC day onward, your first Saucer visit each day grants a 50 SP floor allowance. SP cannot be bought with Gil or real money." },
-      { title: "Persistent Mini Cactpot", description: "Open one daily ticket, reveal four cells total, then choose one of eight lines. The ticket survives refreshes, reconnects, and Bot restarts until resolved." },
-      { title: "Crystal Slots", description: "Three server-resolved reels provide a fast repeatable attraction with a short authoritative cooldown, bounded pair/triple payouts, and replay-safe spins." },
+      { title: "Clearer Mini Cactpot", description: "The board now highlights the line you are previewing, strengthens the final payout result, and resets new tickets at 00:00 UTC instead of 24 hours after the previous opening." },
+      { title: "Animated Crystal Slots", description: "The Bot still commits every spin first, while the Portal now runs a presentation-only reel cycle and staggered stop sequence before revealing the authoritative result." },
       { title: "Prize Counter", description: "Spend SP on cosmetic-only Gold Saucer titles: Saucer Regular, Cactpot Connoisseur, and Jackpot Chaser. No combat power or ordinary Gil is sold here." },
-      { title: "Personal Saucer ledger", description: "Track lifetime SP earned and spent, Cactpot and Slot records, prizes collected, and your eight most recent Saucer transactions." },
-      { title: "Built for expansion", description: "Monster Toss, Chocobo Racing, and Triple Triad are visible as upcoming attractions so later Gold Saucer alphas can grow the same hub." },
+      { title: "Expanded records", description: "Track net SP, total games, Cactpot high rolls, Slot win rate, triple matches, personal realized return, best payouts, prizes, and recent transactions." },
+      { title: "Cleaner attraction board", description: "Playable attractions no longer repeat in the roadmap; the lower board now focuses only on Monster Toss, Chocobo Racing, and Triple Triad as what comes next." },
       { title: "Upgrade-safe foundation", description: "Local schema advances to 11 and Portal Action protocol to 26. Hosted sync remains 1, Twitch prefix remains !, and existing Relics, Trials, Raids, Dungeons, Expeditions, and player progression are preserved." },
     ],
     action: { tab: "gold_saucer", label: "Enter Gold Saucer" },

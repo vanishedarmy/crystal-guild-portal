@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("Arsenal II publishes the expanded ability curve to the shared Guide catalog", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.6.0 Alpha 1 — Gold Saucer");
+  assert.equal(data.meta.version, "v1.6.0 Alpha 1 H2 — Gold Saucer");
   assert.equal(data.active_abilities.blackmage.length, 12);
   assert.equal(data.active_abilities.whitemage.length, 12);
   assert.equal(data.active_abilities.warrior.length, 8);

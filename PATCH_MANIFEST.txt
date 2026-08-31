@@ -1,8 +1,3 @@
-Crystal Guild v1.5.0 — Trails & Raids Web Hotfix 1
-Baseline: stable v1.5.0 — Trails & Raids Web
-Runtime identity: 1.5.0-trails-raids (unchanged)
-Changed files: 2
-Deleted files: 0
-
-frontend/src/styles/portal.css
-frontend/tests/trailsRaidsReleaseVisuals.test.mjs
+Crystal Guild v1.5.0 Trails & Raids Web Hotfix 2
+Apply these files over either the RC1 Web source or the stable v1.5.0 Web source.
+This patch includes the scenic board assets and the corrected portal.css.

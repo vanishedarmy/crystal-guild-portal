@@ -1,53 +1,30 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 1 Validation Report
+# Validation Report — Gold Saucer Alpha 1 Web Hotfix 1
 
 ## Result
 **PASS**
 
-## Regression suites
-- Bot: **607 / 607 PASS**.
-- Frontend: **472 / 472 PASS**.
-- Hosted Web/API: **49 / 49 PASS**.
+## Automated suites
+- Frontend regression suite: **475 / 475 PASS**.
+- Hosted Web/API Python suite: **49 / 49 PASS**.
+- Node syntax sweep: **175 checked / 0 failures**.
+- CSS parse: **0 errors**.
 
-## Gold Saucer Alpha 1 coverage
-- Dedicated Gold Saucer Portal tab: PASS.
-- Separate Saucer Point economy; ordinary Gil is never wagered: PASS.
-- One-time **500 SP** welcome purse: exactly once.
-- Daily **50 SP** floor allowance beginning after the welcome day: exactly once per UTC day.
-- Persistent Mini Cactpot ticket/reveals/line resolution: PASS.
-- Replay-safe Crystal Slots debit/payout: PASS.
-- Cosmetic-only Prize Counter purchases: atomic, replay-safe, and Title-system backed.
-- Recent Saucer ledger and personal records: PASS.
-- Streamer `!saucergrant` / `!saucerreset`: PASS.
-- Monster Toss, Chocobo Racing, and Triple Triad remain disabled/Coming Soon: PASS.
+## Artwork
+- New Gold Saucer scenic backgrounds: **4 / 4 WebP decode PASS**.
+- Live Alpha 1 Crystal Slots symbols: **6 / 6 WebP decode PASS**.
+- Slot-symbol alpha/transparency: **6 / 6 PASS**.
+- New asset total: **10 WebP**, **0 PNG** in the shipping visual asset family.
+- Gold Saucer visuals use explicit DOM image layers behind content.
 
-## Source validation
-- Python source parse: **113 / 113 PASS**.
-- Frontend JS/JSX/MJS TypeScript-parser sweep: **216 / 216 PASS**.
-- Plain JS/MJS Node syntax: **174 / 174 PASS**.
-- `portal.css` PostCSS parse: **0 errors**.
+## Contract
+Hosted runtime remains `1.6.0-gold-saucer-a1`; local DB schema **11**; hosted sync **1**; Portal Action protocol **26**; Twitch prefix `!`. No gameplay/economy/odds/payout/prize changes.
 
-## GameData and artwork
-- **18 Jobs / 18 Relics / 435 items / 37 bosses / 4 Dungeons / 94 Titles**.
-- Public artwork: **0 PNG / 665 WebP**.
-- WebP decode: **665 / 665 PASS**.
-- Refreshed Relic artwork family: **54 / 54** WebP assets present under `relic-weapons-v2`.
+## Production build gate
+`npm run build` is attempted during finalization when the local Vite executable is available. If the source-only environment does not contain Vite, the release does not represent that gate as passed; the regression/parser/syntax gates above remain authoritative for this packaging pass.
 
-## Upgrade / recovery drill
-A genuine v1.5.1 schema-10 database was created with the prior runtime and opened under Alpha 1:
-- automatic verified pre-migration backup created under `backups/pre_schema_11_*.db`;
-- schema advanced **10 → 11**;
-- validation hero remained **Lv.17 / 4,321 Gil**;
-- SQLite `quick_check`: **ok**;
-- foreign-key violations: **0**;
-- Gold Saucer tables: **3 / 3 present**.
-
-## Frontend production build gate
-`npm run build` was explicitly attempted. The source-only container does not contain the pinned local Vite executable (`sh: vite: not found`, exit 127), so this report does **not** claim a local Vite production-build pass. The complete frontend regression/parser/syntax/CSS gates above are green.
-
-## Compatibility contract
-- Runtime: `1.6.0-gold-saucer-a1`
-- Local DB schema: **11**
-- Hosted sync schema: **1**
-- Portal Action protocol: **26**
-- Twitch prefix: **`!`**
-- No player reset, OAuth reauthorization, hosted sync migration, or new required environment variable.
+## Final package verification
+- Baseline Web tree: **934 files**.
+- Hotfix Web tree: **947 files**.
+- Alpha 1 → H1 delta: **21 changed/new files**, **0 deletions**.
+- Final public artwork: **0 PNG / 675 WebP**.
+- Local Vite production build attempt: **not runnable in this source-only container** (`vite: not found`, exit 127); no Vite pass is claimed.

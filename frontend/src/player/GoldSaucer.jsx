@@ -12,7 +12,15 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number } from "../utils/formatters.js";
 
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
-const SLOT_GLYPHS = { crystal: "✦", moogle: "◇", chocobo: "♞", cactuar: "✣", bomb: "●", potion: "◆" };
+const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
+const SLOT_ART = {
+  crystal: `${SAUCER_ART_ROOT}/slots/crystal.webp`,
+  moogle: `${SAUCER_ART_ROOT}/slots/moogle.webp`,
+  chocobo: `${SAUCER_ART_ROOT}/slots/chocobo.webp`,
+  cactuar: `${SAUCER_ART_ROOT}/slots/cactuar.webp`,
+  bomb: `${SAUCER_ART_ROOT}/slots/bomb.webp`,
+  potion: `${SAUCER_ART_ROOT}/slots/potion.webp`,
+};
 
 function actionKey(kind, target = "saucer") {
   const suffix = globalThis.crypto?.randomUUID
@@ -29,7 +37,13 @@ async function finishedAction(response) {
 }
 
 function Reel({ id, label }) {
-  return <div className={`saucer-reel symbol-${id}`}><span aria-hidden="true">{SLOT_GLYPHS[id] || "✧"}</span><small>{label || id || "—"}</small></div>;
+  const art = SLOT_ART[id] || null;
+  return (
+    <div className={`saucer-reel symbol-${id || "empty"}`}>
+      {art ? <img className="saucer-slot-symbol" src={art} alt="" aria-hidden="true" /> : <span className="saucer-slot-placeholder" aria-hidden="true">✧</span>}
+      <small>{label || id || "—"}</small>
+    </div>
+  );
 }
 
 export default function GoldSaucer({ data, overview, onRefresh }) {
@@ -138,7 +152,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
 
   return (
     <section className="gold-saucer-shell">
-      <section className="panel gold-saucer-hero">
+      <section className="panel gold-saucer-hero saucer-scenic-panel">
+        <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
           <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1</p>
           <h2>Gold Saucer</h2>
@@ -161,7 +176,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
       {!state ? <div className="state-message">{actionsAvailable ? "Opening the Gold Saucer floor…" : "Crystal Guild must be online to enter."}</div> : (
         <>
           <div className="saucer-game-grid">
-            <section className="panel saucer-game-card cactpot-card">
+            <section className="panel saucer-game-card cactpot-card saucer-scenic-panel">
+              <img className="saucer-scenic-art saucer-cactpot-art" src={`${SAUCER_ART_ROOT}/mini-cactpot.webp`} alt="" aria-hidden="true" />
               <div className="panel-title-row">
                 <div><p className="eyebrow">Daily Attraction</p><h3>Mini Cactpot</h3></div>
                 <span className="small-badge">{number(cactpot.cost || 10)} SP</span>
@@ -200,7 +216,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               ) : null}
             </section>
 
-            <section className="panel saucer-game-card slots-card">
+            <section className="panel saucer-game-card slots-card saucer-scenic-panel">
+              <img className="saucer-scenic-art saucer-slots-art" src={`${SAUCER_ART_ROOT}/crystal-slots.webp`} alt="" aria-hidden="true" />
               <div className="panel-title-row">
                 <div><p className="eyebrow">Quick Attraction</p><h3>Crystal Slots</h3></div>
                 <span className="small-badge">{number(slots.cost || 15)} SP / spin</span>
@@ -214,7 +231,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </section>
           </div>
 
-          <section className="panel saucer-prize-panel">
+          <section className="panel saucer-prize-panel saucer-scenic-panel">
+            <img className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="panel-title-row">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
               <span className="small-badge">Titles Only · Alpha 1</span>

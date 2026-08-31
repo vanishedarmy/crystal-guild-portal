@@ -1,6 +1,7 @@
-v1.6.0 — Gold Saucer Alpha 1
+v1.6.0 — Gold Saucer Alpha 1 Web Hotfix 1
 Hosted runtime: 1.6.0-gold-saucer-a1
-Frontend asset revision: 1.6.0-gold-saucer-a1
+Frontend runtime: v1.6.0 Alpha 1 — Gold Saucer
+Gold Saucer visual asset family: /gold-saucer/a1h1/
 Compatible Bot: 1.6.0-gold-saucer-a1
 Local DB schema: 11
 Hosted sync schema: 1

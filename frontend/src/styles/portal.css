@@ -10294,3 +10294,28 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 @media (max-width: 620px) {
   .saucer-history-row { align-items: flex-start; }
 }
+
+/* v1.6.0 Gold Saucer Alpha 1 — Web Hotfix 1 visual treatment */
+.saucer-scenic-panel{position:relative;isolation:isolate;overflow:hidden;background:#090b1c}
+.saucer-scenic-panel>.saucer-scenic-art{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;user-select:none}
+.saucer-scenic-panel::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(4,6,18,.36),rgba(7,9,24,.76) 52%,rgba(5,8,20,.91))}
+.saucer-scenic-panel>*:not(.saucer-scenic-art){position:relative;z-index:2}
+.gold-saucer-hero.saucer-scenic-panel>.saucer-lobby-art{object-position:center 58%;opacity:.72}
+.gold-saucer-hero.saucer-scenic-panel::after{background:linear-gradient(90deg,rgba(5,7,20,.80),rgba(7,8,23,.56) 54%,rgba(6,8,22,.72))}
+.cactpot-card.saucer-scenic-panel>.saucer-cactpot-art{object-position:center 58%;opacity:.62}
+.slots-card.saucer-scenic-panel>.saucer-slots-art{object-position:center 54%;opacity:.62}
+.saucer-prize-panel.saucer-scenic-panel>.saucer-prize-art{object-position:center 45%;opacity:.54}
+.cactpot-card.saucer-scenic-panel::after,.slots-card.saucer-scenic-panel::after,.saucer-prize-panel.saucer-scenic-panel::after{background:linear-gradient(180deg,rgba(5,7,18,.54),rgba(6,9,22,.82) 56%,rgba(5,8,20,.95))}
+.saucer-scenic-panel .muted{color:#cdd2df}
+.saucer-scenic-panel .small-badge{backdrop-filter:blur(2px);background-color:rgba(7,10,25,.72)}
+.saucer-scenic-panel .cactpot-cell,.saucer-scenic-panel .saucer-reel,.saucer-scenic-panel .saucer-prize-card,.saucer-scenic-panel .saucer-result{backdrop-filter:blur(2px)}
+.saucer-reel{overflow:hidden;min-height:132px;background:linear-gradient(180deg,rgba(246,231,191,.94),rgba(226,207,163,.88));border-color:rgba(230,203,136,.52);box-shadow:inset 0 0 0 2px rgba(74,45,15,.32),inset 0 0 24px rgba(63,31,76,.16),0 6px 18px rgba(0,0,0,.18)}
+.saucer-slot-symbol{display:block;width:min(88px,72%);height:min(88px,72%);object-fit:contain;image-rendering:auto;filter:drop-shadow(0 3px 4px rgba(31,14,38,.28))}
+.saucer-slot-placeholder{color:#786b8c;font-size:2rem}
+.saucer-reel small{padding:.14rem .35rem;border-radius:999px;background:rgba(40,24,52,.78);color:#ffe39a;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+@media(max-width:620px){
+  .gold-saucer-hero.saucer-scenic-panel>.saucer-lobby-art{object-position:42% center;opacity:.56}
+  .cactpot-card.saucer-scenic-panel>.saucer-cactpot-art,.slots-card.saucer-scenic-panel>.saucer-slots-art,.saucer-prize-panel.saucer-scenic-panel>.saucer-prize-art{opacity:.46}
+  .saucer-reel{min-height:104px}
+  .saucer-slot-symbol{width:min(72px,70%);height:min(72px,70%)}
+}

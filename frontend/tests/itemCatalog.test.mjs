@@ -19,9 +19,9 @@ test("item catalog is organized by level and class/job", async () => {
 
 test("early-game gear expansion is present in guide data", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.items.length, 405);
+  assert.equal(data.items.length, 435);
   assert.ok(data.items.every((item) => typeof item.description === "string" && item.description.trim().length >= 80), "every item should have a full description");
-  assert.equal(new Set(data.items.map((item) => item.description)).size, 405, "item descriptions should be individually authored");
+  assert.equal(new Set(data.items.map((item) => item.description)).size, 435, "item descriptions should be individually authored");
   const shopGear = data.items.filter((item) => item.shop && ["weapon", "armor"].includes(item.type));
   for (const level of [1, 5, 8, 12, 16, 20, 25, 30, 35, 40, 45, 50]) {
     assert.ok(shopGear.some((item) => item.type === "weapon" && (item.min_level ?? item.shop_level) === level), `missing weapon tier ${level}`);

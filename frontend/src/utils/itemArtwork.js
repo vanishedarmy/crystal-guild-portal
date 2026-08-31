@@ -44,7 +44,7 @@ export const ITEM_ART_IDS = new Set([
 ]);
 
 const WEAPON_FAMILIES = new Set([
-  "sword", "axe", "spear", "staff", "dagger", "katana", "knuckles", "firearm", "instrument", "rapier", "wand", "unrestricted",
+  "sword", "axe", "spear", "staff", "dagger", "katana", "knuckles", "firearm", "instrument", "rapier", "wand", "bow", "tome", "noulith", "unrestricted",
 ]);
 
 const WEAPON_ART_BY_ID = new Map([
@@ -77,6 +77,36 @@ const WEAPON_ART_BY_ID = new Map([
   ["last_knife_dormant", `${RELIC_WEAPON_BASE}/last_knife_dormant.webp`],
   ["last_knife_awakened", `${RELIC_WEAPON_BASE}/last_knife_awakened.webp`],
   ["last_knife_zenith", `${RELIC_WEAPON_BASE}/last_knife_zenith.webp`],
+  ["bravura_dormant", `${RELIC_WEAPON_BASE}/bravura_dormant.webp`],
+  ["bravura_awakened", `${RELIC_WEAPON_BASE}/bravura_awakened.webp`],
+  ["bravura_zenith", `${RELIC_WEAPON_BASE}/bravura_zenith.webp`],
+  ["murgleis_dormant", `${RELIC_WEAPON_BASE}/murgleis_dormant.webp`],
+  ["murgleis_awakened", `${RELIC_WEAPON_BASE}/murgleis_awakened.webp`],
+  ["murgleis_zenith", `${RELIC_WEAPON_BASE}/murgleis_zenith.webp`],
+  ["yoshimitsu_dormant", `${RELIC_WEAPON_BASE}/yoshimitsu_dormant.webp`],
+  ["yoshimitsu_awakened", `${RELIC_WEAPON_BASE}/yoshimitsu_awakened.webp`],
+  ["yoshimitsu_zenith", `${RELIC_WEAPON_BASE}/yoshimitsu_zenith.webp`],
+  ["veil_of_wiyu_dormant", `${RELIC_WEAPON_BASE}/veil_of_wiyu_dormant.webp`],
+  ["veil_of_wiyu_awakened", `${RELIC_WEAPON_BASE}/veil_of_wiyu_awakened.webp`],
+  ["veil_of_wiyu_zenith", `${RELIC_WEAPON_BASE}/veil_of_wiyu_zenith.webp`],
+  ["almace_dormant", `${RELIC_WEAPON_BASE}/almace_dormant.webp`],
+  ["almace_awakened", `${RELIC_WEAPON_BASE}/almace_awakened.webp`],
+  ["almace_zenith", `${RELIC_WEAPON_BASE}/almace_zenith.webp`],
+  ["chronos_dormant", `${RELIC_WEAPON_BASE}/chronos_dormant.webp`],
+  ["chronos_awakened", `${RELIC_WEAPON_BASE}/chronos_awakened.webp`],
+  ["chronos_zenith", `${RELIC_WEAPON_BASE}/chronos_zenith.webp`],
+  ["artemis_bow_dormant", `${RELIC_WEAPON_BASE}/artemis_bow_dormant.webp`],
+  ["artemis_bow_awakened", `${RELIC_WEAPON_BASE}/artemis_bow_awakened.webp`],
+  ["artemis_bow_zenith", `${RELIC_WEAPON_BASE}/artemis_bow_zenith.webp`],
+  ["armageddon_dormant", `${RELIC_WEAPON_BASE}/armageddon_dormant.webp`],
+  ["armageddon_awakened", `${RELIC_WEAPON_BASE}/armageddon_awakened.webp`],
+  ["armageddon_zenith", `${RELIC_WEAPON_BASE}/armageddon_zenith.webp`],
+  ["guttler_dormant", `${RELIC_WEAPON_BASE}/guttler_dormant.webp`],
+  ["guttler_awakened", `${RELIC_WEAPON_BASE}/guttler_awakened.webp`],
+  ["guttler_zenith", `${RELIC_WEAPON_BASE}/guttler_zenith.webp`],
+  ["astral_codex_dormant", `${RELIC_WEAPON_BASE}/astral_codex_dormant.webp`],
+  ["astral_codex_awakened", `${RELIC_WEAPON_BASE}/astral_codex_awakened.webp`],
+  ["astral_codex_zenith", `${RELIC_WEAPON_BASE}/astral_codex_zenith.webp`],
 
   // CG-GEAR-R02 — Daggers, Rapiers & Rogue Weapons.
   ["knife", `${WEAPON_ITEM_BASE}/knife.webp`],
@@ -426,6 +456,9 @@ function inferWeaponFamily(item = {}) {
     ["knuckles", /knuckle|cesti|claw|fist/],
     ["rapier", /rapier|foil|epee/],
     ["spear", /spear|lance|trident|halberd/],
+    ["bow", /bow|artemis/],
+    ["tome", /tome|book|codex|grimoire|wiyu/],
+    ["noulith", /noulith|astral_codex/],
     ["staff", /staff|rod/],
     ["wand", /wand/],
     ["dagger", /dagger|knife|dirk|stiletto/],

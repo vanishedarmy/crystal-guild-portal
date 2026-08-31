@@ -6,7 +6,7 @@ import { number, pct } from "../utils/formatters.js";
 export default function Relics({ data, onDetail }) {
   return (
     <section className="panel relic-arsenal-panel">
-      <div className="panel-title-row"><h2>Relic Arsenal</h2><span className="small-badge">{data.relics.filter((relic) => relic.completed).length} completed</span></div>
+      <div className="panel-title-row"><div><p className="eyebrow">18-Job Collection</p><h2>Relic Arsenal</h2></div><span className="small-badge">{data.relics.filter((relic) => relic.completed).length} / {data.relics.length} complete</span></div>
       <div className="relic-grid">
         {data.relics.map((relic) => (
           <ClickableCard className="relic-card" key={relic.id || relic.name} detail={{ type: "relic", relic }} onOpen={onDetail}>

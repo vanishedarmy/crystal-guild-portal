@@ -9,11 +9,11 @@ const read=(p)=>fs.readFileSync(path.join(ROOT,p),"utf8");
 
 test("Trails & Raids public identity is current",()=>{
   const version=read("src/version.js");
-  assert.match(version,/WEB_BUILD = "Trails & Raids"/);
-  assert.match(version,/1\.5\.0-trails-raids/);
+  assert.match(version,/WEB_BUILD = "Relic Arsenal Complete"/);
+  assert.match(version,/1\.5\.1-relic-arsenal-complete/);
   const manifest=read("../UI_SHARED_ASSET_MANIFEST.json");
-  assert.match(manifest,/v1\.5\.0 — Trails & Raids/);
-  assert.match(manifest,/1\.5\.0-trails-raids/);
+  assert.match(manifest,/v1\.5\.1 — Relic Arsenal Complete/);
+  assert.match(manifest,/1\.5\.1-relic-arsenal-complete/);
 });
 
 test("Stable player-facing copy documents production hardening",()=>{

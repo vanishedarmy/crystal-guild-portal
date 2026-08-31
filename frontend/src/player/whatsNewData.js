@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.5.1",
+    name: "Relic Arsenal Complete",
+    title: "Every Job now has a Relic",
+    summary: "The Relic Arsenal is complete: all 18 playable Jobs now have a dedicated three-stage Relic path, with thirty new stage weapons and matching artwork.",
+    highlights: [
+      { title: "18 / 18 Job coverage", description: "Warrior, Red Mage, Ninja, Summoner, Blue Mage, Time Mage, Bard, Machinist, Beastmaster, and Sage now join the eight existing Relic paths." },
+      { title: "Thirty new Relic weapons", description: "Each new line follows the established Dormant → Awakened → Zenith progression with Job-specific stats and weapon identity." },
+      { title: "Existing progression preserved", description: "Relic costs, Hunt Seal requirements, level gates, and the three-stage advancement model are unchanged." },
+      { title: "Collection clarity", description: "The Relic Arsenal now shows completed Relics against the full 18-Job collection." },
+      { title: "No system churn", description: "Schema 10, hosted sync 1, Portal protocol 25, Trials, Dungeons, and the v1.5.0 economy remain unchanged." },
+    ],
+    action: { tab: "relics", label: "Open Relic Arsenal" },
+  },
+  {
     version: "v1.5.0",
     name: "Trails & Raids",
     title: "Trails & Raids has arrived",

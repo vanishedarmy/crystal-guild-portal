@@ -17,12 +17,12 @@ function fellowshipSection(html) {
 }
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
-  assert.match(version, /WEB_BUILD = "Trails & Raids"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids"/);
-  assert.equal(guideData.meta.version, "v1.5.0 — Trails & Raids");
-  assert.equal(guideData.meta.release, "1.5.0-trails-raids");
-  assert.equal(manifest.release, "v1.5.0 — Trails & Raids");
-  assert.equal(manifest.frontend_asset_revision, "1.5.0-trails-raids");
+  assert.match(version, /WEB_BUILD = "Relic Arsenal Complete"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.1-relic-arsenal-complete"/);
+  assert.equal(guideData.meta.version, "v1.5.1 — Relic Arsenal Complete");
+  assert.equal(guideData.meta.release, "1.5.1-relic-arsenal-complete");
+  assert.equal(manifest.release, "v1.5.1 — Relic Arsenal Complete");
+  assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });
 
 test("Final What's New is player-facing and feature complete", () => {

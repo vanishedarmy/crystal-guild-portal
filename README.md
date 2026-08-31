@@ -1,5 +1,3 @@
-# Crystal Guild Web — v1.5.0 Trails & Raids
+# Crystal Guild Web — v1.5.1 Relic Arsenal Complete
 
-v1.5.0 ships the frozen seven-Trial catalog and keeps the **Round Readiness** strip reflect only actions owned by the exact active Raid run and upcoming round. Beta 3 shared-state protection, Beta 2 settlement hardening, Chronicle, repeat mastery, and Last Trial Result remain intact.
-
-Hosted/frontend/Bot compatibility: `1.5.0-trails-raids` · schema 10 · hosted sync 1 · Portal protocol 25. Deploy matching v1.5.0 Web + Bot together.
+Shows all 18 Job Relics, 54 stage weapons, collection progress, and the expanded Relic artwork catalog. Hosted/frontend/Bot compatibility: `1.5.1-relic-arsenal-complete`; schema 10; sync 1; protocol 25.

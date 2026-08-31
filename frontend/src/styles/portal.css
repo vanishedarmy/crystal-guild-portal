@@ -10171,3 +10171,10 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 .raid-board-panel.open::after{background:linear-gradient(90deg,rgba(5,14,34,.58),rgba(7,18,43,.36) 48%,rgba(4,10,25,.46))}
 .timed-hunt-panel>*:not(.panel-scenic-art),.raid-board-panel>*:not(.panel-scenic-art){position:relative;z-index:2}
 @media(max-width:620px){.raid-board-panel>.raid-board-scenic-art.open{object-position:center top;opacity:.44}}
+
+/* v1.5.1 Relic Arsenal Complete — keep the Hunt scene through resolution */
+.hunt-result-panel{position:relative;isolation:isolate;overflow:hidden;background:#08142f}
+.hunt-result-panel>.hunt-result-scenic-art{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 43%;opacity:.62;pointer-events:none;user-select:none;z-index:0}
+.hunt-result-panel::after{position:absolute;inset:0;z-index:1;pointer-events:none;content:"";background:linear-gradient(90deg,rgba(5,13,31,.40),rgba(6,15,35,.22) 46%,rgba(5,12,29,.50))}
+.hunt-result-panel>*:not(.panel-scenic-art){position:relative;z-index:2}
+.hunt-result-panel .hunt-result-reward-grid>div,.hunt-result-panel .hunt-result-combat-grid>div,.hunt-result-panel .hunt-result-survival,.hunt-result-panel .hunt-result-details,.hunt-result-panel .hunt-result-auto-plan{background-color:rgba(7,18,39,.52);backdrop-filter:blur(1.5px)}

@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.5.0-trails-raids"
-FRONTEND_ASSET_REVISION = "1.5.0-trails-raids"
+HOSTED_PORTAL_VERSION = "1.5.1-relic-arsenal-complete"
+FRONTEND_ASSET_REVISION = "1.5.1-relic-arsenal-complete"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 25
 ALLOWED_PORTAL_ACTIONS = {

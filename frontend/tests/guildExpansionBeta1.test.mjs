@@ -14,8 +14,8 @@ test("Guild Expansion publishes the complete player-facing Guild summary", async
 
 test("Guild Expansion public identity is current", async () => {
   const version = await text("../src/version.js");
-  assert.match(version, /WEB_BUILD = "Trails & Raids"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids"/);
+  assert.match(version, /WEB_BUILD = "Relic Arsenal Complete"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.1-relic-arsenal-complete"/);
 });
 
 test("Player Guide stays focused on play instead of simulation internals", async () => {

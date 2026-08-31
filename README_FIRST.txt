@@ -1,7 +1,3 @@
-v1.5.0 — Trails & Raids
-
-FINAL PAIRED BOT/WEB PRODUCTION RELEASE. Deploy matching v1.5.0 Web + Bot together.
-Hosted runtime / frontend / Bot: 1.5.0-trails-raids
-Schema 10 · hosted sync 1 · Portal protocol 25.
-No migration, reset, OAuth/environment change, or new environment variable.
-See UPGRADE_GUIDE.md before deployment.
+v1.5.1 — Relic Arsenal Complete
+Hosted/frontend/Bot: 1.5.1-relic-arsenal-complete
+Deploy matching v1.5.1 Bot + Web together. Schema 10 / sync 1 / protocol 25 unchanged.

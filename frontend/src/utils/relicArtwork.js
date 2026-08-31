@@ -9,6 +9,16 @@ const RELIC_IDS = new Set([
   "stardust_rod",
   "nirvana",
   "last_knife",
+  "bravura",
+  "murgleis",
+  "yoshimitsu",
+  "veil_of_wiyu",
+  "almace",
+  "chronos",
+  "artemis_bow",
+  "armageddon",
+  "guttler",
+  "astral_codex",
 ]);
 
 const STAGE_SLUGS = { 1: "dormant", 2: "awakened", 3: "zenith" };

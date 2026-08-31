@@ -20,8 +20,14 @@ test("active Hunt uses dedicated scenic image layer",()=>{
   assert.match(hunts,/\/trails-raids\/h4\/hunt-active\.webp/);
   assert.match(css,/timed-hunt-panel>\.timed-hunt-scenic-art/);
 });
+test("completed Hunt result keeps the scenic image layer",()=>{
+  const hunts=fs.readFileSync(path.join(root,"src/player/Hunts.jsx"),"utf8");
+  assert.match(hunts,/hunt-result-scenic-art/);
+  assert.ok((hunts.match(/hunt-result-scenic-art/g)||[]).length >= 2);
+  assert.match(css,/hunt-result-panel>\.hunt-result-scenic-art/);
+});
 test("production scenic CSS contains real newlines, not escaped newline text",()=>assert.doesNotMatch(css,/\\n/));
 test("stable production identity is current",()=>{
-  assert.match(version,/WEB_BUILD = "Trails & Raids"/);
-  assert.match(version,/WEB_ASSET_REVISION = "1\.5\.0-trails-raids"/);
+  assert.match(version,/WEB_BUILD = "Relic Arsenal Complete"/);
+  assert.match(version,/WEB_ASSET_REVISION = "1\.5\.1-relic-arsenal-complete"/);
 });

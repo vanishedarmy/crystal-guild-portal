@@ -4,11 +4,11 @@ import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
 test("Trails & Raids public web identity is centralized", () => {
-  assert.equal(WEB_VERSION, "v1.5.0");
-  assert.equal(WEB_BUILD, "Trails & Raids");
-  assert.equal(WEB_RELEASE, "v1.5.0 — Trails & Raids");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.5.0 — Trails & Raids");
-  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids");
+  assert.equal(WEB_VERSION, "v1.5.1");
+  assert.equal(WEB_BUILD, "Relic Arsenal Complete");
+  assert.equal(WEB_RELEASE, "v1.5.1 — Relic Arsenal Complete");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.5.1 — Relic Arsenal Complete");
+  assert.equal(WEB_ASSET_REVISION, "1.5.1-relic-arsenal-complete");
 });
 
 

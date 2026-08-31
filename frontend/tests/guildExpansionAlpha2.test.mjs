@@ -26,8 +26,8 @@ test("Guild Expansion exposes Supply Drives, Guild Objectives, and Order rewards
 test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
-  assert.match(version, /WEB_BUILD = "Trails & Raids"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids"/);
-  assert.equal(guideData.meta.version, "v1.5.0 — Trails & Raids");
-  assert.equal(guideData.meta.release, "1.5.0-trails-raids");
+  assert.match(version, /WEB_BUILD = "Relic Arsenal Complete"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.1-relic-arsenal-complete"/);
+  assert.equal(guideData.meta.version, "v1.5.1 — Relic Arsenal Complete");
+  assert.equal(guideData.meta.release, "1.5.1-relic-arsenal-complete");
 });

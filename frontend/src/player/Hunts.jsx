@@ -233,6 +233,7 @@ function HuntResult({ result, onConfirm, confirming }) {
   if (!summary) {
     return (
       <section className={`panel hunt-result-panel legacy ${result?.won ? "won" : "lost"}`} aria-live="polite">
+        <img className="panel-scenic-art hunt-result-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
         <div className="panel-title-row">
           <div><p className="eyebrow">Last Hunt Result</p><h2>{result?.hunt_name || result?.monster_name || "Hunt Result"}</h2></div>
           <span className={`small-badge ${result?.won ? "success" : ""}`}>{result?.won ? "Victory" : "Failed"}</span>
@@ -256,6 +257,7 @@ function HuntResult({ result, onConfirm, confirming }) {
 
   return (
     <section className={`panel hunt-result-panel ${victory ? "won" : "lost"}`} aria-live="polite" aria-labelledby="last-hunt-result-title">
+      <img className="panel-scenic-art hunt-result-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
       <div className="hunt-result-identity">
         <MonsterPortrait monster={monster} name={monster.name} className="hunt-result-portrait" />
         <div className="panel-title-row hunt-result-title-row">

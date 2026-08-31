@@ -1,280 +1,664 @@
 {
-  "release": "Crystal Guild v1.1.19 Retro Phase III RC1 Hotfix 4 \u2014 Relic Refresh + Dynamic Camp",
-  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h9",
+  "release": "Crystal Guild v1.5.1 \u2014 Relic Arsenal Complete",
+  "frontend_asset_revision": "1.5.1-relic-arsenal-complete",
   "asset_family": "relic-weapons-v1",
-  "relic_count": 8,
+  "relic_count": 18,
   "stages_per_relic": 3,
-  "asset_count": 24,
+  "asset_count": 54,
   "notes": {
-    "dormant": "Regenerated Tier 1 Relics: restrained early-stage designs with simple SNES/FF-era silhouettes.",
-    "awakened": "Regenerated Tier 2 Relics: visibly upgraded ornamentation and stronger identity than Tier 1.",
-    "zenith": "Regenerated Tier 3 Relics: final-form, highly ornate legendary designs with the strongest visual treatment.",
-    "routing": "All Relic reward item IDs continue to route to this dedicated stage-aware asset family."
+    "dormant": "Tier 1 restrained relic forms.",
+    "awakened": "Tier 2 upgraded relic forms.",
+    "zenith": "Tier 3 final legendary relic forms.",
+    "routing": "All 18 Job relic lines route through the dedicated stage-aware relic asset family."
   },
   "entries": [
     {
       "relic_id": "gae_bolg",
       "relic_name": "Gae Bolg",
+      "job_id": "dragoon",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/gae_bolg_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "851157585d983256adde9d233682d8b21f72a5175b194e179fa2bd7b697a7ac0"
+      "sha256": "dcd792360a178fae51e2fd1723b412349569dd2f2a019d09641d10e114a8b496"
     },
     {
       "relic_id": "gae_bolg",
       "relic_name": "Gae Bolg",
+      "job_id": "dragoon",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/gae_bolg_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "84eada677cfb4c78aea3e8c4ff9a96174e98e8425046d8cd20e2c8d8f8c35581"
+      "sha256": "49d902f00a4bda040fb478ba3b91f6c6ef14fc38fb6ec42e3d453ee738a7d014"
     },
     {
       "relic_id": "gae_bolg",
       "relic_name": "Gae Bolg",
+      "job_id": "dragoon",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/gae_bolg_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "2c257be37f8d8c40feab8036f58d2ed1c91371b44c9b8771b3238cba4e30d40d"
+      "sha256": "b677511a3264100eb2dc5d8f1f530f2d5bdb3aede4e12d33256913df6fa4af64"
     },
     {
       "relic_id": "excalibur",
       "relic_name": "Excalibur",
+      "job_id": "paladin",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/excalibur_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "8264385da6e4a78bae54dd8f6c6189b794978430048975d8ee7b6eb411f941de"
+      "sha256": "c9f84d28b909258e8ae6809d69379a328b9d2495a3b88d42a9cc1e27e3c42096"
     },
     {
       "relic_id": "excalibur",
       "relic_name": "Excalibur",
+      "job_id": "paladin",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/excalibur_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "2622bf8bd242c223c7e36992f92fea7b7f3d9b9ede6958dcb7517d280e789cd9"
+      "sha256": "78ebce2bb048493c42a9b1441a6916a8320f33845e489d0c1467d28276efb2c4"
     },
     {
       "relic_id": "excalibur",
       "relic_name": "Excalibur",
+      "job_id": "paladin",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/excalibur_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "7bb1a819044d669590a33e0cad3664711fbc5bb9668e323435fb3ed0c3ff026a"
+      "sha256": "f36bf651c6197f02a0a6416a6f3eaef5933cc8980d0e78e4171495936acedb87"
     },
     {
       "relic_id": "apocalypse",
       "relic_name": "Apocalypse",
+      "job_id": "darkknight",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/apocalypse_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "de071bbce5ad743cbcf22b271049c6fc7a9509227242c8726d6cf75b3f1f510f"
+      "sha256": "b50f08d1e62af3243983ec875bd7d61c839b8a6a5df6a7a7301def37f43b0443"
     },
     {
       "relic_id": "apocalypse",
       "relic_name": "Apocalypse",
+      "job_id": "darkknight",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/apocalypse_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "ea7f7d8a75aa193ea04d786e24cf909cf9cb14850014211f89a74ec3088de696"
+      "sha256": "0e7b060b49b3e68919085f6536e1c03d9d4fd2145653e4b6f9a8d4d0f5cef44e"
     },
     {
       "relic_id": "apocalypse",
       "relic_name": "Apocalypse",
+      "job_id": "darkknight",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/apocalypse_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "a50f06f7777056a923fffda808ef9ce349fe6018c86593f4f36a4a18daff8002"
+      "sha256": "6da46e0b846741e570cd4074c8514861ca3bc3a8bc6f68c2eb73b9d2be869173"
     },
     {
       "relic_id": "godhand",
       "relic_name": "Godhand",
+      "job_id": "monk",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/godhand_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "9abd3541009a979dcb87aa85252727f4438e98d07cf2dec4c93cec35c071530e"
+      "sha256": "6d9965672994fb4d267f6e958aee0366cd605ddd121137b67c9050334fa17a1f"
     },
     {
       "relic_id": "godhand",
       "relic_name": "Godhand",
+      "job_id": "monk",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/godhand_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "9b749b1c05e9841abcf4a1890a20845c7269d71680f8b92c32ff961c7db37428"
+      "sha256": "b4d1cccb5f9ed9897cc4adb3abab5fe7ef382889c0ec97240b68fe06e45e4afe"
     },
     {
       "relic_id": "godhand",
       "relic_name": "Godhand",
+      "job_id": "monk",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/godhand_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "6c2dfd1e07395a9e82c7bc13fb77d2b49781fc3a4f78474bdf3885ffc2f79c05"
+      "sha256": "db92ebbbbd9666ca2cb042bc07ab68a204c7d607148cc5f7d3cd538896f37d83"
     },
     {
       "relic_id": "masamune",
       "relic_name": "Masamune",
+      "job_id": "samurai",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/masamune_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "6f9ea1c81777b936c727d5eb787a736098effd8a5f35b7107f4c549eb2d91086"
+      "sha256": "2f814dd97b4d44c140b8a9884ca187980fcafd4b1eb7db28081970219757389a"
     },
     {
       "relic_id": "masamune",
       "relic_name": "Masamune",
+      "job_id": "samurai",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/masamune_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "4a8aa0796d6088d7559744ad961b3d6b941f6285b204b32e26c163fac9c01b4a"
+      "sha256": "b16bcc34a8811636e2221693441c6dd09e15489e945afd1f3df51f47fe7c9f04"
     },
     {
       "relic_id": "masamune",
       "relic_name": "Masamune",
+      "job_id": "samurai",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/masamune_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "ff99c2573bf40c49cd29a1e0160ed80003996e0ee19be9722073b28840a7cf80"
+      "sha256": "a897c387d2bc8b540f625b93dae2105e51ed92fc09cc7a1d9a8b77fccbb35511"
     },
     {
       "relic_id": "stardust_rod",
       "relic_name": "Stardust Rod",
+      "job_id": "blackmage",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/stardust_rod_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "b6ab896d5cfe7c0bb3d5b12298c74521c219e9c82a8e45a073742a5177973e2c"
+      "sha256": "955d2634ab02194f644cf9bb5f19ee79f20b73e096a0c1cb1794b761bbfc6623"
     },
     {
       "relic_id": "stardust_rod",
       "relic_name": "Stardust Rod",
+      "job_id": "blackmage",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/stardust_rod_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "198751e7f8c3d0d18a78a01f4413c4e49514edd338d8109d4bbbe45acc0a3065"
+      "sha256": "15d1fae9aab8a54f762599c1732ff3ee3773cd11eba16b272c10a96e76869262"
     },
     {
       "relic_id": "stardust_rod",
       "relic_name": "Stardust Rod",
+      "job_id": "blackmage",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/stardust_rod_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "45acb31b60b1b94a8cded697f54f36b2e57a26c1530862721c65570e4799e193"
+      "sha256": "9ab393ef93986d49954b7a11c7b1edadfd6d18263f438b8c8a893557bdd28871"
     },
     {
       "relic_id": "nirvana",
       "relic_name": "Nirvana",
+      "job_id": "whitemage",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/nirvana_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "0322a2ef02524a84130a348b7e34143188ab6b5b657d413cd71ce22d6649eb88"
+      "sha256": "1466dec8fef72d54c4da8bfaf213837391edc9c66840ecf254183a3bb67106e0"
     },
     {
       "relic_id": "nirvana",
       "relic_name": "Nirvana",
+      "job_id": "whitemage",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/nirvana_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "ecc8322f95b7bc25c44fdd92a1e0657caa1c21ba0f0df6aafd05bb6322484e12"
+      "sha256": "97fb0183988108decd07406cbee00c9cef4f8eb20740fe8457c85ba8111c0324"
     },
     {
       "relic_id": "nirvana",
       "relic_name": "Nirvana",
+      "job_id": "whitemage",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/nirvana_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "b32900dbfe4bd998619fe0967e99c4834ac505132b8f9b4c23ae3532cceaca34"
+      "sha256": "60d8a23e0ba66fe2292f59624db049fe8b8cbd74afdc1350304c3cd189be6705"
     },
     {
       "relic_id": "last_knife",
       "relic_name": "Last Knife",
+      "job_id": "thief",
       "stage": 1,
       "stage_name": "Dormant",
       "asset": "/retro-phase-iii/relic-weapons-v1/last_knife_dormant.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "7c0ba90eee54b4298545fa87a863a7171d343a642c6d3c07cef601db67064eb5"
+      "sha256": "9e1a3c07955f0109b679dc79ee905d03aecd40f57bc2d43c2a8f5dac1973536d"
     },
     {
       "relic_id": "last_knife",
       "relic_name": "Last Knife",
+      "job_id": "thief",
       "stage": 2,
       "stage_name": "Awakened",
       "asset": "/retro-phase-iii/relic-weapons-v1/last_knife_awakened.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "3914cfb31ff54a16594c6a091dcde3bf27483e9a5428660bc063ea3650d94ccf"
+      "sha256": "9af209124642f34463153accfc3ca69f876d7b1795ce31a71f5fc7e0c244b83a"
     },
     {
       "relic_id": "last_knife",
       "relic_name": "Last Knife",
+      "job_id": "thief",
       "stage": 3,
       "stage_name": "Zenith",
       "asset": "/retro-phase-iii/relic-weapons-v1/last_knife_zenith.webp",
       "width": 1254,
       "height": 1254,
       "transparent_background": true,
-      "sha256": "d71569cb54c835047698bbfca8a7c87284b1b23a4b329a12cfba82e99dbae875"
+      "sha256": "a40d491f254cd11c60bea46adc449ef0dd0e0d3e0820cc0138830927570ae73a"
+    },
+    {
+      "relic_id": "bravura",
+      "relic_name": "Bravura",
+      "job_id": "warrior",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/bravura_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "5dbf925ebe7ff04a4ccc5b68c5ab90b05964aeb036066e35c13f690aab43ae34"
+    },
+    {
+      "relic_id": "bravura",
+      "relic_name": "Bravura",
+      "job_id": "warrior",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/bravura_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "a813d67100d5140b5e0043a088624c69325199c99a3eb6eb4b91bf95465c2058"
+    },
+    {
+      "relic_id": "bravura",
+      "relic_name": "Bravura",
+      "job_id": "warrior",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/bravura_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "106a580052243b7b29d316d951ad0718fb22b8c101e31754dcc3aa38bb979514"
+    },
+    {
+      "relic_id": "murgleis",
+      "relic_name": "Murgleis",
+      "job_id": "redmage",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/murgleis_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "97b908cc7963184fd429e748b3cfcec16102d91b375b5ec04fd9b0739b06ac5e"
+    },
+    {
+      "relic_id": "murgleis",
+      "relic_name": "Murgleis",
+      "job_id": "redmage",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/murgleis_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "2677462473493e50fe32545463b0b8c6def0cdd19e9601d4b446c4e11a7174ad"
+    },
+    {
+      "relic_id": "murgleis",
+      "relic_name": "Murgleis",
+      "job_id": "redmage",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/murgleis_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "1c522088e3288d05a269b3371e5cd3062119a01b08cb084a2b3caa7e4f9fd767"
+    },
+    {
+      "relic_id": "yoshimitsu",
+      "relic_name": "Yoshimitsu",
+      "job_id": "ninja",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/yoshimitsu_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "47a2c1b6a5864ff88bba79cfb5e713e89e8b760f7373d23bfaea3401bd962de5"
+    },
+    {
+      "relic_id": "yoshimitsu",
+      "relic_name": "Yoshimitsu",
+      "job_id": "ninja",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/yoshimitsu_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "adf6a8d9a092018cb29768a255110a295d6f24eaedcec2efbda38241d488c3a3"
+    },
+    {
+      "relic_id": "yoshimitsu",
+      "relic_name": "Yoshimitsu",
+      "job_id": "ninja",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/yoshimitsu_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "cb79345cb8f8bc739e8dcbcb4afb49d7cf71af3143307038e856e4fa660a8d6c"
+    },
+    {
+      "relic_id": "veil_of_wiyu",
+      "relic_name": "Veil of Wiyu",
+      "job_id": "summoner",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/veil_of_wiyu_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "a552b512c4af1860546f89bd3247dffc6c033aae1cb4da1593566853e589b7e5"
+    },
+    {
+      "relic_id": "veil_of_wiyu",
+      "relic_name": "Veil of Wiyu",
+      "job_id": "summoner",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/veil_of_wiyu_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "8c0d48a9bafd645dedbe0baf1b2a47b2795352377baf9084996b4e1d253afaf4"
+    },
+    {
+      "relic_id": "veil_of_wiyu",
+      "relic_name": "Veil of Wiyu",
+      "job_id": "summoner",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/veil_of_wiyu_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "c128a3717eab4dd4ddda1aa711105a634c6eb13c32a2ba7dc905f32f826b8b8b"
+    },
+    {
+      "relic_id": "almace",
+      "relic_name": "Almace",
+      "job_id": "bluemage",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/almace_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "2961edd8a04a4464118157730d22107d84d7670d32abd3e434530c8467a71231"
+    },
+    {
+      "relic_id": "almace",
+      "relic_name": "Almace",
+      "job_id": "bluemage",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/almace_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "c9417856e1594d234e44ed45b3809d145f473ac0253a8f0ea5774a9072e7f538"
+    },
+    {
+      "relic_id": "almace",
+      "relic_name": "Almace",
+      "job_id": "bluemage",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/almace_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "6024ce248bbc1e981e48f328a9b7b3dd767b646b3ab54a7e0b62e7ff2b0717b6"
+    },
+    {
+      "relic_id": "chronos",
+      "relic_name": "Chronos",
+      "job_id": "timemage",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/chronos_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "bb131e437475ac02798b97ba59ea7f6ada3cd6608334c73937ab6b09504cac1e"
+    },
+    {
+      "relic_id": "chronos",
+      "relic_name": "Chronos",
+      "job_id": "timemage",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/chronos_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "d808797225b3e28d2c288ee41a8cad35b0ef9eb7f253918357544096ced4c352"
+    },
+    {
+      "relic_id": "chronos",
+      "relic_name": "Chronos",
+      "job_id": "timemage",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/chronos_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "1294bde2df08a5d7fab727245c815fa0b3f2e8c1db492e043b33669b560b99f8"
+    },
+    {
+      "relic_id": "artemis_bow",
+      "relic_name": "Artemis Bow",
+      "job_id": "bard",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/artemis_bow_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "e97dd319ab4a782c5225f106b14c3ec1566b9d223ddfc47abceba3db55da1e82"
+    },
+    {
+      "relic_id": "artemis_bow",
+      "relic_name": "Artemis Bow",
+      "job_id": "bard",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/artemis_bow_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "fefe063778346583f9b5b35c29dfbdb398a9a94429715e6b24c955a4f5240b0f"
+    },
+    {
+      "relic_id": "artemis_bow",
+      "relic_name": "Artemis Bow",
+      "job_id": "bard",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/artemis_bow_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "438d4528d6399305fc8d73a6f68a85e93b2b6f8761c78ea833cbeb14841e885b"
+    },
+    {
+      "relic_id": "armageddon",
+      "relic_name": "Armageddon",
+      "job_id": "machinist",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/armageddon_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "48be2537ae9c3b2bb5b7739c8c6197764e31b7d1dcd3317552233d7f9bb85fc8"
+    },
+    {
+      "relic_id": "armageddon",
+      "relic_name": "Armageddon",
+      "job_id": "machinist",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/armageddon_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "bdc26917aa183c2594a22472c1a00399afcdab45dbdab716bf297494cf5a321b"
+    },
+    {
+      "relic_id": "armageddon",
+      "relic_name": "Armageddon",
+      "job_id": "machinist",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/armageddon_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "c70e1250a0fe9a719c6f3e4c5ba5ebb6a6bf9c7d3b7918651e9b359531fd12e0"
+    },
+    {
+      "relic_id": "guttler",
+      "relic_name": "Guttler",
+      "job_id": "beastmaster",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/guttler_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "a54921a3c860458fecd0a8614d9f46243f7a4a02ff78505f5100bb02bae59e13"
+    },
+    {
+      "relic_id": "guttler",
+      "relic_name": "Guttler",
+      "job_id": "beastmaster",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/guttler_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "0dd05fe050c066b0ab01fc973b2f077367fbe830b4d4b87bf77e7a5c236c09b9"
+    },
+    {
+      "relic_id": "guttler",
+      "relic_name": "Guttler",
+      "job_id": "beastmaster",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/guttler_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "8a29c5ec40d0b5b85dec32ca5324a72d4de58fa34073afd9a2e42fad0e97051a"
+    },
+    {
+      "relic_id": "astral_codex",
+      "relic_name": "Astral Codex",
+      "job_id": "sage",
+      "stage": 1,
+      "stage_name": "Dormant",
+      "asset": "/retro-phase-iii/relic-weapons-v1/astral_codex_dormant.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "aa1f5490850c4e6d31a86647f20c91788d92d78b277a0dae0083dd4f03635eeb"
+    },
+    {
+      "relic_id": "astral_codex",
+      "relic_name": "Astral Codex",
+      "job_id": "sage",
+      "stage": 2,
+      "stage_name": "Awakened",
+      "asset": "/retro-phase-iii/relic-weapons-v1/astral_codex_awakened.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "f85c44bd7d306d52bd966f7dcafe0c54d1e26720ad5df7af3478360212cd45b2"
+    },
+    {
+      "relic_id": "astral_codex",
+      "relic_name": "Astral Codex",
+      "job_id": "sage",
+      "stage": 3,
+      "stage_name": "Zenith",
+      "asset": "/retro-phase-iii/relic-weapons-v1/astral_codex_zenith.webp",
+      "width": 512,
+      "height": 512,
+      "transparent_background": true,
+      "sha256": "27ca7963100b554fdb65cb73f4e10c16ee6a4334e5d112443f6d44a600b4d40b"
     }
   ]
 }

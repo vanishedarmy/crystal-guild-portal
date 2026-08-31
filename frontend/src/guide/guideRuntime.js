@@ -318,7 +318,7 @@ const rarities=[...new Set(D.items.map(x=>x.rarity).filter(Boolean))];
 const ITEM_FAMILY_LABELS={
   sword:'Sword',knuckles:'Knuckles',dagger:'Dagger',spear:'Polearm',
   katana:'Katana',instrument:'Instrument',firearm:'Firearm',axe:'Axe',
-  rapier:'Rapier',wand:'Wand',staff:'Staff',heavy:'Heavy Armor',
+  rapier:'Rapier',wand:'Wand',staff:'Staff',bow:'Bow',tome:'Tome',noulith:'Nouliths',heavy:'Heavy Armor',
   light:'Light Armor',robe:'Caster Robes',coat:'Field Coat',
   unrestricted:'Any Job'
 };

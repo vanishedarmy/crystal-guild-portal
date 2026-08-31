@@ -9,8 +9,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("RC1 identity and Dungeon catalog remain feature frozen", () => {
-  assert.equal(WEB_BUILD, "Trails & Raids");
-  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids");
+  assert.equal(WEB_BUILD, "Relic Arsenal Complete");
+  assert.equal(WEB_ASSET_REVISION, "1.5.1-relic-arsenal-complete");
   const board=read("src/player/Dungeons.jsx");
   assert.match(board,/Dungeons & Delves · v1.4.0/);
 });

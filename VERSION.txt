@@ -1,7 +1,7 @@
-v1.5.0 — Trails & Raids
-Hosted runtime: 1.5.0-trails-raids
-Frontend asset revision: 1.5.0-trails-raids
-Compatible Bot: 1.5.0-trails-raids
+v1.5.1 — Relic Arsenal Complete
+Hosted runtime: 1.5.1-relic-arsenal-complete
+Frontend asset revision: 1.5.1-relic-arsenal-complete
+Compatible Bot: 1.5.1-relic-arsenal-complete
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25

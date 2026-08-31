@@ -1,6 +1,6 @@
-Crystal Guild v1.5.0 — Trails & Raids Alpha 7 — Web Alpha 6 → Alpha 7 Patch
-Runtime: 1.5.0-trails-raids-a7
-Changed/new files: 58
+Crystal Guild v1.5.0 — Trails & Raids Beta 1 — Web Alpha 7 → Beta 1 Patch
+Runtime: 1.5.0-trails-raids-b1
+Changed/new files: 59
 Deleted files: 0
 Local DB schema: 10
 Hosted sync schema: 1
@@ -8,7 +8,6 @@ Portal Action protocol: 25
 
 Changed/new:
 FINALIZATION_AUDIT.md
-HISTORY.md
 HOSTING_GUIDE.md
 PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
@@ -26,8 +25,9 @@ crystal_guild/hosted_portal.py
 frontend/public/guide-body.html
 frontend/public/guide-data.json
 frontend/public/raid-overlay.html
-frontend/public/raid-overlay.js
+frontend/src/player/Hunts.jsx
 frontend/src/player/Raids.jsx
+frontend/src/player/Records.jsx
 frontend/src/player/whatsNewData.js
 frontend/src/styles/portal.css
 frontend/src/version.js
@@ -63,8 +63,8 @@ frontend/tests/trailsRaidsAlpha4.test.mjs
 frontend/tests/trailsRaidsAlpha5.test.mjs
 frontend/tests/trailsRaidsAlpha6.test.mjs
 frontend/tests/trailsRaidsAlpha7.test.mjs
+frontend/tests/trailsRaidsBeta1.test.mjs
 frontend/tests/version.test.mjs
 tests/test_hosted_portal.py
 
 Deleted:
-

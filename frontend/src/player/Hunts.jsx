@@ -671,7 +671,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
       </section>
 
-      <Raids />
+      <Raids username={overview?.identity?.username || state?.player?.username || ""} />
 
       <Dungeons
         data={state?.dungeons}

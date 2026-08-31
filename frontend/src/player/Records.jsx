@@ -33,6 +33,8 @@ export default function Records({ data, onDetail }) {
   const progression = data.progression || {};
   const rivalries = data.rivalries || {};
   const bosses = data.bosses || [];
+  const trials = data.trials || [];
+  const trialSummary = data.trial_summary || {};
   const careerEntries = [
     ["Adventures", career.ventures],
     ["Monsters Defeated", career.monsters_defeated],
@@ -98,6 +100,24 @@ export default function Records({ data, onDetail }) {
           <StatCard current={career.crafts} label="Crafts" />
           <StatCard current={career.forge_upgrades} label="Forge Upgrades" />
         </div>
+      </RecordPanel>
+
+      <RecordPanel badge={trialSummary.rank || "Unproven"} className="span-12" title="Trial Chronicle">
+        <div className="record-progress-grid trial-record-summary-grid">
+          <StatCard current={trialSummary.unique_clears || 0} label="Unique Trials" max={trialSummary.total_trials || trials.length || 7} />
+          <StatCard current={trialSummary.total_clears || 0} label="Trial Clears" />
+          <StatCard current={trialSummary.tracked_wipes || 0} label="Tracked Wipes" />
+          <StatCard current={trialSummary.best_score || 0} label="Best Contribution" />
+        </div>
+        <div className="trial-record-grid">
+          {trials.map((trial) => (
+            <div className={`trial-record-card ${Number(trial.clears || 0) > 0 ? "cleared" : "uncleared"}`} key={trial.id}>
+              <div className="trial-record-card-head"><div><span className="slot-label">{trial.capstone ? "Capstone Trial" : "Flagship Trial"}</span><strong>{trial.name} — {trial.encounter_name}</strong></div><span className={`small-badge ${Number(trial.clears || 0) > 0 ? "success" : ""}`}>{Number(trial.clears || 0) > 0 ? `${number(trial.clears)} clear${Number(trial.clears) === 1 ? "" : "s"}` : "Uncleared"}</span></div>
+              <div className="trial-record-card-stats"><span><b>{trial.fastest_clear_rounds ? `R${number(trial.fastest_clear_rounds)}` : "—"}</b><small>Fastest</small></span><span><b>{number(trial.best_score || 0)}</b><small>Best Score</small></span><span><b>{number(trial.best_damage || 0)}</b><small>Damage</small></span><span><b>{number(trial.best_healing || 0)}</b><small>Healing</small></span><span><b>{number(trial.best_mitigation || 0)}</b><small>Mitigation</small></span><span><b>{number(trial.wipes || 0)}</b><small>Tracked Wipes</small></span></div>
+            </div>
+          ))}
+        </div>
+        <p className="muted trial-record-note">Existing clears from earlier Alphas are preserved. Wipe, fastest-round, and contribution-best tracking begins with Beta 1 because those values were not persisted previously.</p>
       </RecordPanel>
 
       <RecordPanel badge="Personal History" className="span-12" title="Rivalries & Identity">

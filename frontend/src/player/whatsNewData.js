@@ -1,17 +1,17 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.5.0 Alpha 7",
+    version: "v1.5.0 Beta 1",
     name: "Trails & Raids",
-    title: "Enter the Final Coil",
-    summary: "Trails & Raids Alpha 7 adds Bahamut — The Final Coil as the first capstone Trial, escalating through shared-hit and tower coordination into a critical-HP Teraflare damage race while preserving the roomy collapsible Raid Board.",
+    title: "Build your Trial Chronicle",
+    summary: "Trails & Raids Beta 1 consolidates the seven flagship encounters into persistent personal records, preserving existing clears while adding tracked wipes, fastest clear rounds, contribution bests, and a Seven-Trial mastery ladder.",
     highlights: [
-      { title: "Bahamut — The Final Coil", description: "The seventh flagship encounter is a capstone Trial with Flare Breath, Akh Morn, Megaflare Towers, and a final Teraflare Charge." },
-      { title: "Share Akh Morn", description: "Defending allies join the marked raider and split one of the heaviest focused hits in the Trial lineup." },
-      { title: "Soak Megaflare Towers", description: "Enough standing raiders must Defend in the same round to contain Megaflare." },
-      { title: "Break Teraflare", description: "At critical HP, Bahamut begins a one-time three-round damage race. Success contains Teraflare; failure unleashes it at full power." },
-      { title: "Capstone board treatment", description: "Bahamut spans the full desktop Trial Board row while preserving the two-column baseline for the six elemental Trials." },
+      { title: "Trial Chronicle", description: "The Trial & Raid Board now summarizes your unique clears, lifetime Trial clears, tracked wipes, best contribution score, and current mastery rank." },
+      { title: "Personal records", description: "Each flagship Trial records fastest clear round plus best contribution, damage, healing, and mitigation from Beta 1 onward." },
+      { title: "Existing clears preserved", description: "Every Trial clear already recorded during Alpha remains part of your Chronicle automatically; no reset or conversion step is required." },
+      { title: "Seven-Trial mastery", description: "Unique flagship clears advance visible Chronicle ranks from Unproven through Trial Initiate, Trial Vanguard, Primal Conqueror, and Coilbreaker." },
+      { title: "No reward rebalance", description: "Trial rewards, boss drops, encounter mechanics, Dungeon progression, and the established raid contribution payout formula are unchanged in this consolidation pass." },
     ],
-    action: { tab: "hunts", label: "Open Trial & Raid Board" },
+    action: { tab: "hunts", label: "Open Trial Chronicle" },
   },
   {
     version: "v1.4.0",

@@ -1,5 +1,5 @@
-# Crystal Guild Web — v1.5.0 Trails & Raids Alpha 7
+# Crystal Guild Web — v1.5.0 Trails & Raids Beta 1
 
-Alpha 7 adds the live presentation for **Bahamut — The Final Coil** as the first capstone Trial. Flare Breath, Akh Morn, Megaflare Towers, and the critical-HP Teraflare Charge are surfaced through the roomy collapsible Trial & Raid Board and hosted Overlay. The six elemental Trials remain supported.
+Beta 1 adds the **Trial Chronicle & Personal Records** presentation across the Trial & Raid Board and Records page. Existing Trial clears remain visible automatically; new wipe, fastest-clear, and contribution bests begin recording under Beta 1. All seven scripted Trials and the roomy collapsible Board remain supported.
 
-Hosted/frontend/Bot compatibility: `1.5.0-trails-raids-a7` · schema 10 · hosted sync 1 · Portal protocol 25. Deploy matching Alpha 7 Web + Bot together.
+Hosted/frontend/Bot compatibility: `1.5.0-trails-raids-b1` · schema 10 · hosted sync 1 · Portal protocol 25. Deploy matching Beta 1 Web + Bot together.

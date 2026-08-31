@@ -1,7 +1,12 @@
+## v1.5.0 — Trails & Raids Beta 3
+- Adds Round Readiness and richer Last Trial Result contributor details.
+- Carries the seven frozen Trials, Chronicle, repeat mastery, and Beta 2 settlement hardening forward.
+- Matching Bot hardens multi-connection active-Raid round state without a schema/protocol change.
+
 ## v1.5.0 — Trails & Raids Beta 2
 - Adds repeat-clear mastery, Last Trial Result, live action-readiness presentation, and settlement-hardening continuity.
 - Keeps the seven-Trial catalog, roomy collapsible Board, Trial Chronicle, rewards, schema 10, sync 1, and Portal protocol 25 unchanged.
-- Runtime/frontend/Bot `1.5.0-trails-raids-b2`.
+- Runtime/frontend/Bot `1.5.0-trails-raids-b3`.
 
 ## v1.5.0 — Trails & Raids Beta 1
 - Freezes the seven scripted Trials and adds the authenticated Trial Chronicle across the Trial Board and Records page.

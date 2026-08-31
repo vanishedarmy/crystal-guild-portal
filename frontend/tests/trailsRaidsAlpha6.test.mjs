@@ -35,5 +35,5 @@ test("Alpha 6 OBS overlay understands tide mechanic kinds",()=>{
 test("Alpha 7 carries forward Leviathan and the roomy board baseline",()=>{
   const jsx=read("src/player/Raids.jsx"),guide=read("public/guide-body.html"),news=read("src/player/whatsNewData.js");
   for(const term of ["Leviathan","Tidebreak Expanse","Tidal Sweep","Undertow","Maelstrom Surge"]) assert.match(jsx+guide,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
-  assert.match(news,/v1\.5\.0 Beta 2/);
+  assert.match(news,/v1\.5\.0 Beta 3/);
 });

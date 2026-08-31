@@ -10117,13 +10117,13 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 /* v1.5.0 Trails & Raids Alpha 6 — Tidebreak Expanse */
 .raid-mechanic-callout.side_sweep{border-color:rgba(96,174,214,.5);border-left-color:#6bb8df;background:linear-gradient(90deg,rgba(26,74,105,.3),rgba(23,20,30,.24))}.raid-mechanic-callout.undertow{border-color:rgba(74,155,195,.5);border-left-color:#4ea2ca;background:linear-gradient(90deg,rgba(21,67,94,.3),rgba(23,20,30,.24))}.raid-mechanic-callout.survival_check{border-color:rgba(112,197,229,.55);border-left-color:#76c9e8;background:linear-gradient(90deg,rgba(24,82,109,.3),rgba(23,20,30,.24))}
 
-/* v1.5.0 Trails & Raids Beta 2 — Final Coil capstone */
+/* v1.5.0 Trails & Raids Alpha 7 — Final Coil capstone */
 .raid-featured-trial.capstone{grid-column:1/-1;grid-template-columns:minmax(260px,34%) minmax(0,1fr);border-color:rgba(224,187,90,.34);background:linear-gradient(135deg,rgba(42,28,65,.76),rgba(11,24,51,.62));box-shadow:inset 0 0 0 1px rgba(238,208,120,.06),0 14px 30px rgba(0,0,0,.16)}
 .raid-featured-trial.capstone .raid-featured-art{min-height:330px}.raid-mechanic-callout.tower_check{border-color:rgba(226,194,104,.58);border-left-color:#e8c56d;background:linear-gradient(90deg,rgba(100,75,25,.30),rgba(23,20,30,.24))}.raid-mechanic-callout.final_damage_check{border-color:rgba(214,120,255,.58);border-left-color:#d98cff;background:linear-gradient(90deg,rgba(85,38,112,.32),rgba(23,20,30,.24))}
 @media(max-width:1180px){.raid-featured-trial.capstone{grid-template-columns:minmax(210px,32%) minmax(0,1fr)}}
 @media(max-width:700px){.raid-featured-trial.capstone{grid-template-columns:1fr}.raid-featured-trial.capstone .raid-featured-art{min-height:250px}}
 
-/* v1.5.0 Trails & Raids Beta 2 — persistent Trial Chronicle */
+/* v1.5.0 Trails & Raids Beta 1 — persistent Trial Chronicle */
 .raid-board-idle-content{display:grid;gap:18px}
 .raid-trial-chronicle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:12px;border:1px solid rgba(232,198,109,.24);border-radius:9px;background:linear-gradient(135deg,rgba(37,30,61,.62),rgba(12,29,58,.55))}
 .raid-trial-chronicle>div{display:grid;gap:3px;min-width:0;padding:9px 10px;border-left:1px solid rgba(255,255,255,.08)}
@@ -10151,3 +10151,9 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 .raid-repeat-mastery,.trial-repeat-mastery{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:5px;padding-top:6px;border-top:1px solid rgba(255,255,255,.07)}.raid-repeat-mastery span,.trial-repeat-mastery span{font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#f0d78c}.raid-repeat-mastery small,.trial-repeat-mastery small{color:var(--muted);font-size:.68rem;text-align:right}
 .trial-repeat-mastery{margin-top:0;padding:7px 8px;border:1px solid rgba(232,198,109,.13);border-radius:5px;background:rgba(75,57,18,.10)}
 @media(max-width:700px){.raid-last-result-meta,.raid-last-result-leaders{grid-template-columns:1fr}.raid-last-result-head{align-items:flex-start}.raid-repeat-mastery,.trial-repeat-mastery{align-items:flex-start;flex-direction:column}.raid-repeat-mastery small,.trial-repeat-mastery small{text-align:left}}
+
+/* v1.5.0 Trails & Raids Beta 3 — round-readiness and result clarity */
+.raid-readiness-strip{display:grid;grid-template-columns:minmax(170px,.36fr) minmax(0,1fr);align-items:center;gap:14px;padding:10px 12px;border:1px solid rgba(135,159,205,.18);border-radius:7px;background:rgba(7,17,38,.48)}
+.raid-readiness-strip>div{display:grid;gap:2px}.raid-readiness-strip span{color:var(--muted);font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.raid-readiness-strip strong{font-size:.9rem;color:#edf3ff}.raid-readiness-strip small{color:var(--muted);font-size:.7rem}
+.raid-last-result-leaders span{grid-template-rows:auto auto auto}.raid-last-result-leaders em{color:#c5cfdf;font-size:.66rem;font-style:normal;line-height:1.35}
+@media(max-width:700px){.raid-readiness-strip{grid-template-columns:1fr;gap:8px}}

@@ -48,5 +48,5 @@ test("Alpha 5 carries forward Titan and the collapsible Raid Board", () => {
   for (const term of ["Titan","Heart of the Crag","Landslide","Granite Gaol","crystal-guild:adventure:trial-raid-board"]) {
     assert.match(raids,new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,"\$&")));
   }
-  assert.match(news,/v1\.5\.0 Beta 2/);
+  assert.match(news,/v1\.5\.0 Beta 3/);
 });

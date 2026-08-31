@@ -27,8 +27,8 @@ test("Beta 2 includes result and mastery responsive styling",()=>{
   for(const term of ["raid-last-result","raid-last-result-leaders","raid-repeat-mastery","trial-repeat-mastery"]) assert.match(css,new RegExp(term));
 });
 
-test("Beta 2 player-facing release copy explains repeat mastery and settlement hardening",()=>{
-  const news=read("src/player/whatsNewData.js"), guide=read("public/guide-body.html");
-  for(const term of ["v1.5.0 Beta 2","Repeat-clear mastery","Last Trial Result","settlement"]) assert.match(news,new RegExp(term,"i"));
+test("Beta 2 repeat mastery and settlement hardening remain documented",()=>{
+  const guide=read("public/guide-body.html"), raids=read("src/player/Raids.jsx");
   for(const term of ["Beta 2","repeat-clear","Last Trial Result","settlement"]) assert.match(guide,new RegExp(term,"i"));
+  for(const term of ["repeatMastery","Last Trial Result","ready_actions","actionable_raiders"]) assert.match(raids,new RegExp(term,"i"));
 });

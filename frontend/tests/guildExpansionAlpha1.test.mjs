@@ -31,8 +31,8 @@ test("Player Guide explains facility play without backend implementation jargon"
 
 test("Final release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.5\.0"/);
-  assert.match(version, /WEB_BUILD = "Trails & Raids Beta 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids-b2"/);
+  assert.match(version, /WEB_BUILD = "Trails & Raids Beta 3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.0-trails-raids-b3"/);
   assert.match(whatsNew, /name: "Guild Expansion"/);
   assert.match(whatsNew, /Build the Guild together/);
   assert.match(whatsNew, /The Crystal Guild Airship/);

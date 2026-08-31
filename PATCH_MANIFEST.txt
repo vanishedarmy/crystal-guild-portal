@@ -1,5 +1,5 @@
-Crystal Guild v1.5.0 — Trails & Raids Beta 2 — Web Beta 1 → Beta 2 Patch
-Runtime: 1.5.0-trails-raids-b2
+Crystal Guild v1.5.0 — Trails & Raids Beta 3 — Web Beta 2 → Beta 3 Patch
+Runtime: 1.5.0-trails-raids-b3
 Changed/new files: 59
 Deleted files: 0
 Local DB schema: 10
@@ -27,7 +27,6 @@ frontend/public/guide-body.html
 frontend/public/guide-data.json
 frontend/public/raid-overlay.html
 frontend/src/player/Raids.jsx
-frontend/src/player/Records.jsx
 frontend/src/player/whatsNewData.js
 frontend/src/styles/portal.css
 frontend/src/version.js
@@ -63,8 +62,9 @@ frontend/tests/trailsRaidsAlpha4.test.mjs
 frontend/tests/trailsRaidsAlpha6.test.mjs
 frontend/tests/trailsRaidsAlpha7.test.mjs
 frontend/tests/trailsRaidsBeta1.test.mjs
+frontend/tests/trailsRaidsBeta2.test.mjs
 frontend/tests/version.test.mjs
 tests/test_hosted_portal.py
-frontend/tests/trailsRaidsBeta2.test.mjs
+frontend/tests/trailsRaidsBeta3.test.mjs
 
 Deleted:

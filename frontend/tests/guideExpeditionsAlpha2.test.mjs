@@ -26,5 +26,5 @@ test("Player Guide exposes a dedicated Expeditions section", () => {
 });
 
 test("Guide asset revision advances for Expeditions guide hotfix", () => {
-  assert.match(version, /1\.5\.0-trails-raids-b2/);
+  assert.match(version, /1\.5\.0-trails-raids-b3/);
 });

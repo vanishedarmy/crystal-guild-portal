@@ -15,6 +15,7 @@ test("Trial Board binds scenic background to disclosure state",()=>{
   assert.match(css,/raid-board-panel\.open[\s\S]*trial-board-open\.webp/);
 });
 test("active Hunt uses dedicated scenic background",()=>assert.match(css,/timed-hunt-panel[\s\S]*hunt-active\.webp/));
+test("production scenic CSS contains real newlines, not escaped newline text",()=>assert.doesNotMatch(css,/\\n/));
 test("stable production identity is current",()=>{
   assert.match(version,/WEB_BUILD = "Trails & Raids"/);
   assert.match(version,/WEB_ASSET_REVISION = "1\.5\.0-trails-raids"/);

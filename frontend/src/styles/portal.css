@@ -10099,13 +10099,13 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 /* v1.5.0 Trails & Raids Alpha 3 — Judgment mechanics + collapsible Raid Board */
 .raid-board-title-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}.raid-board-collapse-toggle{margin-left:0}.raid-mechanic-callout.guard_check{border-color:rgba(241,210,90,.58);border-left-color:#f1d25a;background:linear-gradient(90deg,rgba(112,88,20,.28),rgba(23,20,30,.24))}.raid-mechanic-callout.chain{border-left-color:#d7b8ff}.raid-mechanic-callout.shared_hit{border-left-color:#f1d25a}.raid-featured-trials{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}@media(max-width:620px){.raid-board-title-row{align-items:flex-start}.raid-board-title-actions{margin-left:auto}.raid-board-title-actions .small-badge{display:none}}
 
-/* v1.5.0 Trails & Raids Alpha 5 — Titan rescue / Heart mechanics */
+/* v1.5.0 Trails & Raids Alpha 6 — Titan rescue / Heart mechanics */
 .raid-mechanic-callout.knockback{border-left-color:#d7a45b;background:linear-gradient(90deg,rgba(105,69,24,.27),rgba(23,20,30,.24))}
 .raid-mechanic-callout.restraint{border-color:rgba(205,169,111,.55);border-left-color:#d7b06c;background:linear-gradient(90deg,rgba(95,68,35,.31),rgba(23,20,30,.24))}
 .raid-mechanic-callout.heart_check{border-color:rgba(214,144,96,.58);border-left-color:#e09a68;background:linear-gradient(90deg,rgba(115,56,28,.30),rgba(23,20,30,.24))}
 
 
-/* v1.5.0 Trails & Raids Alpha 5 — spacious Trial Board + Eye of the Storm */
+/* v1.5.0 Trails & Raids Alpha 6 — spacious Trial Board + Eye of the Storm */
 .raid-featured-trials{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
 .raid-featured-trial{grid-template-columns:minmax(190px,38%) minmax(0,1fr);gap:20px;min-height:310px;padding:14px;border:1px solid rgba(135,159,205,.20);border-radius:9px;background:linear-gradient(135deg,rgba(14,32,68,.72),rgba(8,19,43,.50));box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}
 .raid-featured-art{min-height:280px;max-height:none;border-radius:7px}.raid-featured-art img{object-position:center 22%}
@@ -10113,3 +10113,6 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 @media(max-width:1180px){.raid-featured-trials{grid-template-columns:1fr}.raid-featured-trial{grid-template-columns:minmax(210px,32%) minmax(0,1fr);min-height:290px}.raid-featured-art{min-height:260px}}
 @media(max-width:700px){.raid-featured-trials{gap:12px}.raid-featured-trial{grid-template-columns:1fr;min-height:0;padding:11px;gap:14px}.raid-featured-art{min-height:230px;max-height:300px}.raid-featured-copy h3{font-size:1.05rem}.raid-featured-stats{margin:.2rem 0 .7rem}.raid-featured-commands{grid-template-columns:1fr}}
 @media(max-width:430px){.raid-featured-art{min-height:200px}.raid-featured-stats{grid-template-columns:1fr 1fr 1fr}.raid-featured-stats span{padding:7px}.raid-featured-meta .slot-label{white-space:normal}}
+
+/* v1.5.0 Trails & Raids Alpha 6 — Tidebreak Expanse */
+.raid-mechanic-callout.side_sweep{border-color:rgba(96,174,214,.5);border-left-color:#6bb8df;background:linear-gradient(90deg,rgba(26,74,105,.3),rgba(23,20,30,.24))}.raid-mechanic-callout.undertow{border-color:rgba(74,155,195,.5);border-left-color:#4ea2ca;background:linear-gradient(90deg,rgba(21,67,94,.3),rgba(23,20,30,.24))}.raid-mechanic-callout.survival_check{border-color:rgba(112,197,229,.55);border-left-color:#76c9e8;background:linear-gradient(90deg,rgba(24,82,109,.3),rgba(23,20,30,.24))}

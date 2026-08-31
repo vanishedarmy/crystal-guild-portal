@@ -1,15 +1,15 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.5.0 Alpha 5",
+    version: "v1.5.0 Alpha 6",
     name: "Trails & Raids",
-    title: "Enter the Eye of the Storm",
-    summary: "Trails & Raids Alpha 5 adds Garuda — Eye of the Storm and rebuilds the flagship Trial Board into a spacious two-column desktop layout with stronger card hierarchy and responsive one-column fallbacks.",
+    title: "Break the Tide",
+    summary: "Trails & Raids Alpha 6 adds Leviathan — Tidebreak Expanse, extending the flagship Trial roster with side pressure, resource control, and a two-round survival/stability check while preserving the roomier collapsible Raid Board.",
     highlights: [
-      { title: "Garuda — Eye of the Storm", description: "The fifth flagship Trial combines Slipstream, Friction, Satin/Razor Plumes, and a variable-pressure Aerial Blast resolution." },
-      { title: "Brace and contain", description: "Defend through Slipstream to avoid lingering Slow, and contain Friction so its marked pressure does not splash across the raid." },
-      { title: "Break the Plume Squadron", description: "Satin and Razor Plumes intercept normal boss-directed damage for two rounds. Clearing both gives the safest Aerial Blast outcome." },
-      { title: "Roomier Trial Board", description: "Flagship Trial cards now use a two-column desktop grid with larger art, wider copy, separated metadata/stats/commands, and a single-column tablet/mobile fallback." },
-      { title: "Collapse behavior preserved", description: "The Trial & Raid Board still remembers its open/closed state and keeps the canonical right-hand closed / down-hand open pointer." },
+      { title: "Leviathan — Tidebreak Expanse", description: "The sixth flagship Trial combines Tidal Sweep, Undertow, Maelstrom Surge, and a stability-dependent Tidal Wave." },
+      { title: "Brace the marked side", description: "Tidal Sweep marks roughly half the standing raid. Each marked hero can Defend to reduce the hit and avoid lingering Slow." },
+      { title: "Resist Undertow", description: "One raider is pulled beneath the current; Defend protects their resources, while an unbraced target loses MP/AP and splashes pressure into allies." },
+      { title: "Stabilize the Maelstrom", description: "Coordinate Defends across two rounds while repeated surges hit the party. Meeting the Stability Gauge weakens the final Tidal Wave." },
+      { title: "Roomier board retained", description: "The two-column desktop Trial layout, responsive single-column fallback, and remembered collapse state remain the board standard." },
       { title: "Safe upgrade", description: "Schema 10, hosted sync 1, Portal Action protocol 25, existing progression, and all four production Dungeons remain unchanged." },
     ],
     action: { tab: "hunts", label: "Open Trial & Raid Board" },

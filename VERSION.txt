@@ -1,7 +1,7 @@
-v1.5.0 — Trails & Raids Alpha 5
-Hosted runtime: 1.5.0-trails-raids-a5
-Frontend asset revision: 1.5.0-trails-raids-a5
-Compatible Bot: 1.5.0-trails-raids-a5
+v1.5.0 — Trails & Raids Alpha 6
+Hosted runtime: 1.5.0-trails-raids-a6
+Frontend asset revision: 1.5.0-trails-raids-a6
+Compatible Bot: 1.5.0-trails-raids-a6
 Local DB schema: 10
 Hosted sync schema: 1
 Portal Action protocol: 25

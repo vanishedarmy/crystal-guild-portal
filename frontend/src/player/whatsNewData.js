@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.5.0 RC1",
+    name: "Trails & Raids",
+    title: "Release Candidate: exact readiness, frozen content",
+    summary: "Trails & Raids RC1 freezes the seven-Trial feature set and tightens the final active-round readiness boundary before production release.",
+    highlights: [
+      { title: "Exact readiness", description: "The Board and all-actions-ready checks now count only actions belonging to the current Raid run and upcoming round, so a stale stamped queue cannot make the party appear ready." },
+      { title: "Malformed stamps fail closed", description: "A damaged or malformed restored action stamp no longer risks breaking round resolution; it is ignored and safely falls back to the normal automatic Attack for that round." },
+      { title: "Upgrade compatibility retained", description: "The single unstamped action restored from a pre-Beta-3 checkpoint is still honored once, preserving in-progress upgrades without weakening new run/round binding." },
+      { title: "Feature freeze", description: "All seven Trials, Chronicle, repeat mastery, settlement receipts, rewards, Dungeons, schema, and Portal protocol are frozen for release-candidate validation." },
+      { title: "No progression churn", description: "RC1 adds no boss, reward multiplier, currency, Portal combat action, database table, or environment requirement." },
+    ],
+    action: { tab: "hunts", label: "Open Trial & Raid Board" },
+  },
+  {
     version: "v1.5.0 Beta 3",
     name: "Trails & Raids",
     title: "One raid state, one round at a time",

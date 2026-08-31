@@ -1,5 +1,5 @@
-# Crystal Guild Web — v1.5.0 Trails & Raids Beta 3
+# Crystal Guild Web — v1.5.0 Trails & Raids RC1
 
-Beta 3 adds the **Round Readiness** live strip and richer **Last Trial Result** contributor details while carrying Beta 2 Chronicle, repeat mastery, settlement hardening, and the frozen seven-Trial catalog forward.
+RC1 freezes the seven-Trial catalog and makes the **Round Readiness** strip reflect only actions owned by the exact active Raid run and upcoming round. Beta 3 shared-state protection, Beta 2 settlement hardening, Chronicle, repeat mastery, and Last Trial Result remain intact.
 
-Hosted/frontend/Bot compatibility: `1.5.0-trails-raids-b3` · schema 10 · hosted sync 1 · Portal protocol 25. Deploy matching Beta 3 Web + Bot together.
+Hosted/frontend/Bot compatibility: `1.5.0-trails-raids-rc1` · schema 10 · hosted sync 1 · Portal protocol 25. Deploy matching RC1 Web + Bot together.

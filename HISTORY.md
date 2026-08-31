@@ -1,3 +1,14 @@
+# Crystal Guild Web History
+
+## v1.6.0 — Gold Saucer Alpha 4 — Chocobo Racing
+
+- Opens Chocobo Racing for players with an existing registered Chocobo.
+- Adds three daily races, three courses with Bond-level gates, and Steady/Balanced/Sprint pace choices.
+- Settles entry costs and podium payouts atomically in MGP using the existing Gold Saucer ledger and exactly-once Portal receipts.
+- Adds race records, recent-history rendering, and the Feathered Finisher / Circuit Champion Prize Counter titles.
+- Keeps local DB schema 12 and hosted sync schema 1; Portal Action protocol advances to 28 for `CHOCOBO_RACE`.
+- Triple Triad remains Coming Soon.
+
 ## v1.6.0 — Gold Saucer Alpha 3 — MGP
 
 - Standardizes Manderville Gold Saucer Points (**MGP**) across the Web, Player Guide, streamer controls, and Gold Saucer ledger.

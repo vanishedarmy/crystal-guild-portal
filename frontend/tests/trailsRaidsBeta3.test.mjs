@@ -26,6 +26,6 @@ test("Beta 3 player-facing copy documents shared-state and timer hardening",()=>
 test("Beta 3 features remain under RC1 runtime identity",()=>{
   const version=read("src/version.js"), manifest=read("../UI_SHARED_ASSET_MANIFEST.json");
   assert.match(version,/Gold Saucer/);
-  assert.match(version,/1\.6\.0-gold-saucer-a3/);
+  assert.match(version,/1\.6\.0-gold-saucer-a4/);
   assert.match(manifest,/v1\.5\.1 — Relic Arsenal Complete/);
 });

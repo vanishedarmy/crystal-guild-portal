@@ -1,5 +1,22 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.6.0 Alpha 4",
+    name: "Gold Saucer",
+    title: "Chocobo Racing opens the circuit",
+    summary: "Gold Saucer Alpha 4 opens Chocobo Racing using your existing registered companion, with three daily races, course and pace choices, MGP podium purses, and persistent personal records.",
+    highlights: [
+      { title: "Your Chocobo, not a second system", description: "The circuit uses the companion already registered at the Chocobo Stable, including its name, portrait, Bond level, and existing trait." },
+      { title: "Three courses", description: "Manderville Sprint opens at Bond Lv. 1 for 25 MGP, Crystal Circuit at Lv. 5 for 35 MGP, and Golden Gauntlet at Lv. 10 for 50 MGP." },
+      { title: "Choose your pace", description: "Steady Pace lowers variance, Balanced keeps a neutral profile, and Final Sprint raises the ceiling while making the result much swingier." },
+      { title: "Traits have a light touch", description: "Each course favors existing Chocobo traits for a modest performance bonus. Bond level helps too, without replacing the uncertainty of a six-racer field." },
+      { title: "Three races per UTC day", description: "Race entries reset at 00:00 UTC. Results are committed once by the authoritative Bot and duplicate Portal delivery replays the same result without another charge or payout." },
+      { title: "New ledger records", description: "Track races, wins, podiums, win rate, best finish, and best race payout alongside Cactpot, Slots, and Monster Toss records." },
+      { title: "Prize Counter expansion", description: "Feathered Finisher and Circuit Champion join the cosmetic-only MGP title collection." },
+      { title: "Clean compatibility step", description: "Local schema stays 12 and hosted sync stays 1. Portal Action protocol advances to 28 for the new CHOCOBO_RACE action; all existing MGP balances and attraction economics are preserved." },
+    ],
+    action: { tab: "gold_saucer", label: "Race Your Chocobo" },
+  },
+  {
     version: "v1.6.0 Alpha 3",
     name: "Gold Saucer",
     title: "MGP becomes the Gold Saucer standard",

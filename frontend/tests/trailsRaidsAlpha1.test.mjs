@@ -9,17 +9,17 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 
 test("Trails & Raids identity is current", () => {
-  assert.equal(WEB_VERSION, "v1.6.0 Alpha 3");
+  assert.equal(WEB_VERSION, "v1.6.0 Alpha 4");
   assert.equal(WEB_BUILD, "Gold Saucer");
-  assert.equal(WEB_RELEASE, "v1.6.0 Alpha 3 — Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a3");
-  assert.equal(JSON.parse(read("package.json")).version, "1.6.0-alpha.3");
+  assert.equal(WEB_RELEASE, "v1.6.0 Alpha 4 — Gold Saucer");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a4");
+  assert.equal(JSON.parse(read("package.json")).version, "1.6.0-alpha.4");
 });
 
 test("Ifrit guide data declares Inferno Crucible and the four Alpha 1 mechanics", () => {
   const data = JSON.parse(read("public/guide-data.json"));
   const ifrit = data.bosses.find((boss) => boss.id === "ifrit");
-  assert.equal(data.meta.release, "1.6.0-gold-saucer-a3");
+  assert.equal(data.meta.release, "1.6.0-gold-saucer-a4");
   assert.equal(ifrit.encounter_type, "Trial");
   assert.equal(ifrit.encounter_name, "Inferno Crucible");
   assert.equal(ifrit.raid_script, "ifrit_inferno_crucible");
@@ -42,7 +42,7 @@ test("hosted raid overlay renders telegraphs and weighted contribution without p
   const js = read("public/raid-overlay.js");
   assert.match(html, /mechanic-box/);
   assert.match(html, /Contribution/);
-  assert.match(html, /raid-overlay\.js\?v=1\.6\.0-gold-saucer-a3/);
+  assert.match(html, /raid-overlay\.js\?v=1\.6\.0-gold-saucer-a4/);
   assert.match(js, /mechanic/);
   assert.match(js, /score/);
   assert.doesNotMatch(js, /twitch_id|target_id/);

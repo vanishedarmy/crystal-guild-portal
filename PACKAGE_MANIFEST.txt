@@ -1,10 +1,10 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 3 — MGP
-Hosted runtime: 1.6.0-gold-saucer-a3
-Frontend asset revision: 1.6.0-gold-saucer-a3
-Compatible Bot: 1.6.0-gold-saucer-a3
+Crystal Guild v1.6.0 — Gold Saucer Alpha 4 — Web Package
+Hosted runtime: 1.6.0-gold-saucer-a4
+Frontend revision: 1.6.0-gold-saucer-a4
+Compatible Bot runtime: 1.6.0-gold-saucer-a4
 Local DB schema: 12
 Hosted sync schema: 1
-Portal Action protocol: 27
+Portal Action protocol: 28
 Twitch prefix: !
-Currency: MGP
-Full source package: Web
+Alpha 4 feature: Chocobo Racing
+Database migration: none

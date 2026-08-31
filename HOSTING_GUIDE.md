@@ -1,5 +1,5 @@
-# Hosting Guide — Gold Saucer Alpha 3 — MGP
+# Hosting Guide — Gold Saucer Alpha 4 — MGP
 
-Deploy this full Web tree with the matching Alpha 3 Bot runtime. Preserve hosted secrets and persistent state. `/api/health` should report hosted runtime `1.6.0-gold-saucer-a3`, frontend asset revision `1.6.0-gold-saucer-a3`, hosted sync schema 1, and Portal protocol 27.
+Deploy this full Web tree with the matching Alpha 4 Bot runtime. Preserve hosted secrets and persistent state. `/api/health` should report hosted runtime `1.6.0-gold-saucer-a4`, frontend asset revision `1.6.0-gold-saucer-a4`, hosted sync schema 1, and Portal protocol 28.
 
-A staggered rollout is safe: the Alpha 3 Web prefers canonical MGP fields and falls back to Alpha 2 balance aliases, while the Alpha 3 Bot continues exposing legacy aliases temporarily.
+Deploy Alpha 4 Bot and Web as a matched protocol-28 pair because Chocobo Racing introduces `CHOCOBO_RACE`. Canonical MGP fields and legacy balance aliases remain unchanged.

@@ -29,5 +29,5 @@ test("completed Hunt result keeps the scenic image layer",()=>{
 test("production scenic CSS contains real newlines, not escaped newline text",()=>assert.doesNotMatch(css,/\\n/));
 test("stable production identity is current",()=>{
   assert.match(version,/WEB_BUILD = "Gold Saucer"/);
-  assert.match(version,/WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a3"/);
+  assert.match(version,/WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a4"/);
 });

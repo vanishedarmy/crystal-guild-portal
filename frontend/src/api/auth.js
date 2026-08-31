@@ -169,6 +169,10 @@ export function submitMonsterTossThrow(target, style, csrfToken, idempotencyKey)
   return submitPortalAction("MONSTER_TOSS_THROW", { target: String(target || ""), style: String(style || "") }, csrfToken, idempotencyKey);
 }
 
+export function submitChocoboRace(course, strategy, csrfToken, idempotencyKey) {
+  return submitPortalAction("CHOCOBO_RACE", { course: String(course || ""), strategy: String(strategy || "") }, csrfToken, idempotencyKey);
+}
+
 export function submitSaucerBuy(prizeId, csrfToken, idempotencyKey) {
   return submitPortalAction("SAUCER_BUY", { prize_id: String(prizeId || "") }, csrfToken, idempotencyKey);
 }

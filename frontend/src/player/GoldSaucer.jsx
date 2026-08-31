@@ -6,6 +6,7 @@ import {
   submitGoldSaucerState,
   submitMonsterTossStart,
   submitMonsterTossThrow,
+  submitChocoboRace,
   submitSaucerBuy,
   submitSlotsSpin,
   waitForPortalAction,
@@ -16,6 +17,7 @@ import { duration, number } from "../utils/formatters.js";
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
 const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
+const CHOCOBO_PORTRAIT_ROOT = "/retro-phase-iii/chocobo-portraits-v1";
 const TOSS_TARGET_ART = {
   small_pot: `${TOSS_ART_ROOT}/targets/small-pot.webp`,
   medium_pot: `${TOSS_ART_ROOT}/targets/medium-pot.webp`,
@@ -73,11 +75,13 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const [hoveredLine, setHoveredLine] = useState(null);
   const [tossTarget, setTossTarget] = useState("medium_pot");
   const [tossStyle, setTossStyle] = useState("normal");
+  const [raceCourse, setRaceCourse] = useState("manderville_sprint");
+  const [raceStrategy, setRaceStrategy] = useState("balanced");
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
   const capabilities = useMemo(() => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []), [auth.action_capabilities]);
-  const required = ["GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "SAUCER_BUY"];
+  const required = ["GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "SAUCER_BUY"];
   const actionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && required.every((kind) => capabilities.has(kind)));
   const csrfToken = auth.csrf_token || "";
 
@@ -124,6 +128,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
     document.addEventListener("visibilitychange", visible);
     return () => { window.clearInterval(timer); window.removeEventListener("focus", tick); document.removeEventListener("visibilitychange", visible); };
   }, [state]);
+
+  useEffect(() => {
+    const courses = Array.isArray(state?.chocobo_racing?.courses) ? state.chocobo_racing.courses : [];
+    if (!courses.length || courses.some((course) => course.id === raceCourse)) return;
+    setRaceCourse((courses.find((course) => course.eligible) || courses[0]).id);
+  }, [state, raceCourse]);
 
   const mutate = async (key, submit, fallback) => {
     if (!actionsAvailable || busy) return;
@@ -189,7 +199,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 3</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 4</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -219,6 +229,16 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const tossStyles = Array.isArray(toss.styles) ? toss.styles : [];
   const canStartToss = Boolean(toss.can_start);
   const tossResetRemaining = Math.max(0, Number(toss.next_daily_reset_at || 0) - nowSeconds);
+  const racing = state?.chocobo_racing || {};
+  const raceCourses = Array.isArray(racing.courses) ? racing.courses : [];
+  const raceStrategies = Array.isArray(racing.strategies) ? racing.strategies : [];
+  const selectedRaceCourse = raceCourses.find((course) => course.id === raceCourse) || raceCourses[0] || null;
+  const selectedRaceStrategy = raceStrategies.find((strategy) => strategy.id === raceStrategy) || raceStrategies[0] || null;
+  const raceResetRemaining = Math.max(0, Number(racing.next_daily_reset_at || 0) - nowSeconds);
+  const raceCompanion = racing.companion || null;
+  const lastRace = racing.last_race || null;
+  const lastRaceDetails = lastRace?.details || {};
+  const raceCanEnter = Boolean(selectedRaceCourse?.can_enter);
   const revealed = new Set(Array.isArray(ticket?.revealed) ? ticket.revealed : []);
   const lastSlots = slots?.last_spin?.details || null;
   const reels = Array.isArray(lastSlots?.reels) ? lastSlots.reels : [];
@@ -245,9 +265,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 3</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 4</p>
           <h2>Gold Saucer</h2>
-          <p className="muted">A low-stakes side hall for daily luck, quick games, cosmetic rewards, collection records, and future Chocobo and card attractions. First visit includes a 500 MGP welcome purse.</p>
+          <p className="muted">A low-stakes side hall for daily luck, quick games, Chocobo Racing, cosmetic rewards, collection records, and future card attractions. First visit includes a 500 MGP welcome purse.</p>
         </div>
         <div className="saucer-balance">
           <span>Current Balance</span>
@@ -398,11 +418,63 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </div>
           </section>
 
+          <section className="panel saucer-racing-panel">
+            <div className="panel-title-row">
+              <div><p className="eyebrow">Alpha 4 Attraction</p><h3>Chocobo Racing</h3></div>
+              <span className={`small-badge ${Number(racing.races_remaining || 0) > 0 ? "ready" : "locked"}`}>{number(racing.races_remaining)} / {number(racing.daily_races || 3)} races left</span>
+            </div>
+            <p className="muted">Race your existing registered Chocobo. Bond level gives a modest performance edge, favored traits help on specific courses, and your pace choice controls race variance.</p>
+            {!racing.registered ? (
+              <div className="saucer-race-locked">
+                <strong>Registered Chocobo Required</strong>
+                <span>Visit the Chocobo Stable, complete registration, then return to the Gold Saucer circuit.</span>
+              </div>
+            ) : (
+              <>
+                <div className="saucer-race-companion">
+                  <img src={`${CHOCOBO_PORTRAIT_ROOT}/${raceCompanion?.portrait_id || "classic_gold"}.webp`} alt={`${raceCompanion?.name || "Registered Chocobo"} portrait`} />
+                  <div><span>Your Racer</span><strong>{raceCompanion?.name || "Chocobo"}</strong><small>Bond Lv. {number(raceCompanion?.level || 1)}</small></div>
+                  <div className="saucer-race-traits">{(raceCompanion?.traits || []).map((trait) => <span className="small-badge" key={typeof trait === "string" ? trait : trait.id}>{String(typeof trait === "string" ? trait : trait.name || trait.id).replaceAll("_", " ")}</span>)}</div>
+                </div>
+
+                {lastRace ? (
+                  <div className={`saucer-race-result place-${number(lastRaceDetails.placement || 6)}`}>
+                    <div><span>Last Race</span><strong>{number(lastRaceDetails.placement || 0)}{Number(lastRaceDetails.placement) === 1 ? "st" : Number(lastRaceDetails.placement) === 2 ? "nd" : Number(lastRaceDetails.placement) === 3 ? "rd" : "th"} · {lastRaceDetails.course_name || "Circuit"}</strong><small>{lastRaceDetails.strategy_name || "Balanced"} · performance {Number(lastRaceDetails.performance || 0).toFixed(1)}</small></div>
+                    <b className={Number(lastRace.payout || 0) > 0 ? "positive" : ""}>{Number(lastRace.payout || 0) > 0 ? `+${number(lastRace.payout)} MGP` : "No podium payout"}</b>
+                  </div>
+                ) : null}
+
+                <div className="saucer-race-course-grid">
+                  {raceCourses.map((course) => (
+                    <button type="button" key={course.id} className={`saucer-race-course ${raceCourse === course.id ? "selected" : ""} ${course.eligible ? "" : "locked"}`} onClick={() => setRaceCourse(course.id)} disabled={Boolean(busy)}>
+                      <span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : `Lv. ${number(course.min_level)}`}</span>
+                      <strong>{course.name}</strong>
+                      <small>{course.description}</small>
+                      <span className="saucer-race-podium">{(course.payouts || []).map((row) => `${row.place}: ${number(row.payout)}`).join(" · ")} MGP</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="saucer-race-strategies">
+                  <span className="slot-label">Race Pace</span>
+                  <div>
+                    {raceStrategies.map((strategy) => <button type="button" className={`equipment-action-button secondary ${raceStrategy === strategy.id ? "selected" : ""}`} key={strategy.id} disabled={Boolean(busy)} onClick={() => setRaceStrategy(strategy.id)} title={strategy.description}>{strategy.name}</button>)}
+                  </div>
+                  {selectedRaceStrategy ? <small className="muted">{selectedRaceStrategy.description}</small> : null}
+                </div>
+
+                <button type="button" className="equipment-action-button saucer-race-enter" disabled={!actionsAvailable || Boolean(busy) || !raceCanEnter} onClick={() => mutate("chocobo-race", () => submitChocoboRace(selectedRaceCourse?.id, selectedRaceStrategy?.id, csrfToken, actionKey("chocobo-race", `${selectedRaceCourse?.id}-${selectedRaceStrategy?.id}`)), `Entering ${selectedRaceCourse?.name || "Chocobo Racing"}…`)}>
+                  {busy === "chocobo-race" ? "Racing…" : Number(racing.races_remaining || 0) <= 0 ? `Daily reset ${duration(raceResetRemaining)}` : !selectedRaceCourse?.eligible ? `Requires Chocobo Lv. ${number(selectedRaceCourse?.min_level || 1)}` : mgp < Number(selectedRaceCourse?.cost || 0) ? "Not Enough MGP" : `Race ${selectedRaceCourse?.name || "Circuit"} · ${number(selectedRaceCourse?.cost || 0)} MGP`}
+                </button>
+              </>
+            )}
+          </section>
+
           <section className="panel saucer-prize-panel saucer-scenic-panel">
             <img className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="panel-title-row">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
-              <span className="small-badge">Titles Only · Alpha 3</span>
+              <span className="small-badge">Titles Only · Alpha 4</span>
             </div>
             <p className="muted">Spend MGP on collectible titles. Gold Saucer prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
             <div className="saucer-prize-grid">
@@ -426,7 +498,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </section>
 
           <section className="panel saucer-records-panel">
-            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 3</span></div>
+            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 4</span></div>
             <div className="saucer-record-grid">
               <div><span>Current Net MGP</span><strong>{netMgp >= 0 ? "+" : ""}{number(netMgp)} MGP</strong></div>
               <div><span>Games Played</span><strong>{number(records.games_played)}</strong></div>
@@ -442,6 +514,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div><span>Best Toss Score</span><strong>{number(records.monster_toss_best_score)}</strong></div>
               <div><span>Toss Accuracy</span><strong>{Number(records.monster_toss_accuracy_pct || 0).toFixed(1)}%</strong></div>
               <div><span>Best Toss Payout</span><strong>{number(records.monster_toss_best_payout)} MGP</strong></div>
+              <div><span>Chocobo Races</span><strong>{number(records.chocobo_races)}</strong></div>
+              <div><span>Race Wins</span><strong>{number(records.chocobo_race_wins)}</strong></div>
+              <div><span>Race Podiums</span><strong>{number(records.chocobo_race_podiums)}</strong></div>
+              <div><span>Race Win Rate</span><strong>{Number(records.chocobo_race_win_rate_pct || 0).toFixed(1)}%</strong></div>
+              <div><span>Best Race Finish</span><strong>{records.chocobo_race_best_finish ? `#${number(records.chocobo_race_best_finish)}` : "—"}</strong></div>
+              <div><span>Best Race Payout</span><strong>{number(records.chocobo_race_best_payout)} MGP</strong></div>
               <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} MGP</strong></div>
               <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} MGP</strong></div>
             </div>
@@ -458,9 +536,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 {history.map((entry, index) => {
                   const game = String(entry.game || "activity").replaceAll("_", " ");
                   const details = entry.details || {};
-                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : game;
+                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
-                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
+                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
                     <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} MGP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} MGP` : "—"}</b>
                   </div>;
                 })}

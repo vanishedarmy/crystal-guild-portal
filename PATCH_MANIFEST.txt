@@ -1,6 +1,6 @@
-Crystal Guild v1.5.0 — Trails & Raids RC1 — Web Beta 3 → RC1 Patch
-Runtime: 1.5.0-trails-raids-rc1
-Changed/new files: 55
+Crystal Guild v1.5.0 — Trails & Raids — Web RC1 → Production Patch
+Runtime: 1.5.0-trails-raids
+Changed/new files: 59
 Deleted files: 0
 Local DB schema: 10
 Hosted sync schema: 1
@@ -59,8 +59,12 @@ frontend/tests/guildExpansionRC1.test.mjs
 frontend/tests/phase8UiUx.test.mjs
 frontend/tests/trailsRaidsAlpha1.test.mjs
 frontend/tests/trailsRaidsBeta3.test.mjs
+frontend/tests/trailsRaidsRC1.test.mjs
 frontend/tests/version.test.mjs
 tests/test_hosted_portal.py
-frontend/tests/trailsRaidsRC1.test.mjs
+frontend/public/trails-raids/hunt-active.webp
+frontend/public/trails-raids/trial-board-collapsed.webp
+frontend/public/trails-raids/trial-board-open.webp
+frontend/tests/trailsRaidsReleaseVisuals.test.mjs
 
 Deleted:

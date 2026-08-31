@@ -8,7 +8,7 @@ const read=(p)=>fs.readFileSync(path.join(ROOT,p),"utf8");
 
 test("Beta 3 Trial Board gives readiness its own readable progress strip",()=>{
   const jsx=read("src/player/Raids.jsx"), css=read("src/styles/portal.css");
-  for(const term of ["RC1","Round Readiness","raid-readiness-strip","All actionable raiders ready","waiting"]) assert.match(jsx,new RegExp(term));
+  for(const term of ["Round Readiness","raid-readiness-strip","All actionable raiders ready","waiting"]) assert.match(jsx,new RegExp(term));
   for(const term of ["raid-readiness-strip","grid-template-columns","max-width:700px"]) assert.match(css,new RegExp(term));
 });
 
@@ -25,7 +25,7 @@ test("Beta 3 player-facing copy documents shared-state and timer hardening",()=>
 
 test("Beta 3 features remain under RC1 runtime identity",()=>{
   const version=read("src/version.js"), manifest=read("../UI_SHARED_ASSET_MANIFEST.json");
-  assert.match(version,/Trails & Raids RC1/);
-  assert.match(version,/1\.5\.0-trails-raids-rc1/);
-  assert.match(manifest,/1\.5\.0-trails-raids-rc1/);
+  assert.match(version,/Trails & Raids/);
+  assert.match(version,/1\.5\.0-trails-raids/);
+  assert.match(manifest,/1\.5\.0-trails-raids/);
 });

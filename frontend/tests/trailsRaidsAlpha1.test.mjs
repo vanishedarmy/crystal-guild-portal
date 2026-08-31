@@ -8,18 +8,18 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_RELEASE, WEB_VERSION } from "../src/
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 
-test("Trails & Raids RC1 identity is current", () => {
+test("Trails & Raids identity is current", () => {
   assert.equal(WEB_VERSION, "v1.5.0");
-  assert.equal(WEB_BUILD, "Trails & Raids RC1");
-  assert.equal(WEB_RELEASE, "v1.5.0 — Trails & Raids RC1");
-  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids-rc1");
+  assert.equal(WEB_BUILD, "Trails & Raids");
+  assert.equal(WEB_RELEASE, "v1.5.0 — Trails & Raids");
+  assert.equal(WEB_ASSET_REVISION, "1.5.0-trails-raids");
   assert.equal(JSON.parse(read("package.json")).version, "1.5.0");
 });
 
 test("Ifrit guide data declares Inferno Crucible and the four Alpha 1 mechanics", () => {
   const data = JSON.parse(read("public/guide-data.json"));
   const ifrit = data.bosses.find((boss) => boss.id === "ifrit");
-  assert.equal(data.meta.release, "1.5.0-trails-raids-rc1");
+  assert.equal(data.meta.release, "1.5.0-trails-raids");
   assert.equal(ifrit.encounter_type, "Trial");
   assert.equal(ifrit.encounter_name, "Inferno Crucible");
   assert.equal(ifrit.raid_script, "ifrit_inferno_crucible");
@@ -42,7 +42,7 @@ test("hosted raid overlay renders telegraphs and weighted contribution without p
   const js = read("public/raid-overlay.js");
   assert.match(html, /mechanic-box/);
   assert.match(html, /Contribution/);
-  assert.match(html, /raid-overlay\.js\?v=1\.5\.0-trails-raids-rc1/);
+  assert.match(html, /raid-overlay\.js\?v=1\.5\.0-trails-raids/);
   assert.match(js, /mechanic/);
   assert.match(js, /score/);
   assert.doesNotMatch(js, /twitch_id|target_id/);

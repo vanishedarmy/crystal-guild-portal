@@ -1,6 +1,6 @@
 {
-  "release": "v1.5.0 — Trails & Raids RC1",
-  "frontend_asset_revision": "1.5.0-trails-raids-rc1",
+  "release": "v1.5.0 — Trails & Raids",
+  "frontend_asset_revision": "1.5.0-trails-raids",
   "scene_backgrounds": [
     {
       "file": "camp.webp",
@@ -100,6 +100,39 @@
         "Adventure Board — Dungeon Board"
       ],
       "format": "wide"
+    },
+    {
+      "file": "hunt-active.webp",
+      "path": "/trails-raids/hunt-active.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 125784,
+      "usage": [
+        "Adventure Board — Active Hunt"
+      ],
+      "format": "wide"
+    },
+    {
+      "file": "trial-board-collapsed.webp",
+      "path": "/trails-raids/trial-board-collapsed.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 178110,
+      "usage": [
+        "Adventure Board — Trial & Raid Board — Collapsed"
+      ],
+      "format": "wide"
+    },
+    {
+      "file": "trial-board-open.webp",
+      "path": "/trails-raids/trial-board-open.webp",
+      "width": 1086,
+      "height": 1448,
+      "bytes": 207510,
+      "usage": [
+        "Adventure Board — Trial & Raid Board — Open"
+      ],
+      "format": "portrait"
     }
   ]
 }

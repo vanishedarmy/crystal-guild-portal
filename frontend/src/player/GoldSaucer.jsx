@@ -189,7 +189,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2 H1</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 3</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -202,14 +202,17 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const cactpotRemaining = Math.max(0, Number(cactpot.available_at || 0) - nowSeconds);
   const slots = state?.slots || {};
   const slotsRemaining = Math.max(0, Number(slots.available_at || 0) - nowSeconds);
-  const points = Number(state?.points || 0);
+  const mgp = Number(state?.mgp ?? state?.points ?? state?.account?.mgp ?? state?.account?.points ?? 0);
+  const currencyCode = String(state?.currency_code || state?.currency_name || "MGP");
+  const dailyAllowanceMgp = Number(state?.daily_allowance_mgp ?? state?.daily_allowance_points ?? 50);
   const prizes = Array.isArray(state?.prizes) ? state.prizes : [];
   const history = Array.isArray(state?.history) ? state.history : [];
   const records = state?.records || {};
+  const netMgp = Number(records.net_mgp ?? records.net_points ?? 0);
   const balance = state?.balance || {};
   const nextAllowanceRemaining = Math.max(0, Number(state?.next_daily_allowance_at || 0) - nowSeconds);
-  const canStartTicket = Boolean(!ticket?.state || ticket.state === "resolved") && cactpotRemaining <= 0 && points >= Number(cactpot.cost || 10);
-  const canSpin = slotsRemaining <= 0 && points >= Number(slots.cost || 15);
+  const canStartTicket = Boolean(!ticket?.state || ticket.state === "resolved") && cactpotRemaining <= 0 && mgp >= Number(cactpot.cost || 10);
+  const canSpin = slotsRemaining <= 0 && mgp >= Number(slots.cost || 15);
   const toss = state?.monster_toss || {};
   const tossGame = toss.active_game || null;
   const tossTargets = Array.isArray(toss.targets) ? toss.targets : [];
@@ -242,14 +245,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2 H1</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 3</p>
           <h2>Gold Saucer</h2>
-          <p className="muted">A low-stakes side hall for daily luck, quick games, cosmetic rewards, collection records, and future Chocobo and card attractions. First visit includes a 500 SP welcome purse.</p>
+          <p className="muted">A low-stakes side hall for daily luck, quick games, cosmetic rewards, collection records, and future Chocobo and card attractions. First visit includes a 500 MGP welcome purse.</p>
         </div>
         <div className="saucer-balance">
           <span>Current Balance</span>
-          <strong>{number(points)} SP</strong>
-          <small>Saucer Points cannot be purchased with Gil. After your welcome day, the floor grants {number(state?.daily_allowance_points || 50)} SP once per UTC day so you can always play again.</small>
+          <strong>{number(mgp)} {currencyCode}</strong>
+          <small>Manderville Gold Saucer Points (MGP) cannot be purchased with Gil. After your welcome day, the floor grants {number(dailyAllowanceMgp)} MGP once per UTC day so you can always play again.</small>
         </div>
       </section>
 
@@ -293,12 +296,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                       </div>
                     </div>
                   ) : null}
-                  {ticket.state === "resolved" ? <div className={`saucer-result cactpot-result ${cactpotTier}`}><div><strong>{number(ticket.payout)} SP won</strong><small>{ticket.line_sum ? `Line total ${number(ticket.line_sum)}` : "Ticket complete"}</small></div><span>{LINE_NAMES[ticket.chosen_line] || "Chosen line"}</span></div> : null}
+                  {ticket.state === "resolved" ? <div className={`saucer-result cactpot-result ${cactpotTier}`}><div><strong>{number(ticket.payout)} MGP won</strong><small>{ticket.line_sum ? `Line total ${number(ticket.line_sum)}` : "Ticket complete"}</small></div><span>{LINE_NAMES[ticket.chosen_line] || "Chosen line"}</span></div> : null}
                 </>
               ) : null}
               {(!ticket || ticket.state === "resolved") ? (
                 <div className="card-actions">
-                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartTicket} onClick={() => mutate("cactpot-start", () => submitCactpotStart(csrfToken, actionKey("cactpot-start")), "Opening Mini Cactpot ticket…")}>{busy === "cactpot-start" ? "Opening…" : cactpotRemaining > 0 ? `Next Ticket ${duration(cactpotRemaining)}` : points < Number(cactpot.cost || 10) ? "Not Enough SP" : "Open Daily Ticket"}</button>
+                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartTicket} onClick={() => mutate("cactpot-start", () => submitCactpotStart(csrfToken, actionKey("cactpot-start")), "Opening Mini Cactpot ticket…")}>{busy === "cactpot-start" ? "Opening…" : cactpotRemaining > 0 ? `Next Ticket ${duration(cactpotRemaining)}` : mgp < Number(cactpot.cost || 10) ? "Not Enough MGP" : "Open Daily Ticket"}</button>
                 </div>
               ) : null}
             </section>
@@ -307,14 +310,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <img className="saucer-scenic-art saucer-slots-art" src={`${SAUCER_ART_ROOT}/crystal-slots.webp`} alt="" aria-hidden="true" />
               <div className="panel-title-row">
                 <div><p className="eyebrow">Quick Attraction</p><h3>Crystal Slots</h3></div>
-                <span className="small-badge">{number(slots.cost || 15)} SP / spin</span>
+                <span className="small-badge">{number(slots.cost || 15)} MGP / spin</span>
               </div>
               <p className="muted">Three matching symbols pay the most; any pair pays a smaller win. The Bot commits the result first, then the reels animate locally for presentation.</p>
               <div className={`saucer-reels ${slotAnimating ? "is-spinning" : ""}`} aria-label={slotAnimating ? "Crystal Slots reels spinning" : "Last Crystal Slots result"}>
                 {[0, 1, 2].map((index) => <Reel key={index} id={shownReels[index]} label={shownLabels[index]} />)}
               </div>
-              {slots.last_spin && !slotAnimating ? <div className={`saucer-result slot-result ${String(slots.last_spin.details?.result_tier || slots.last_spin.outcome || "spin")}`}><strong>{slots.last_spin.payout > 0 ? `+${number(slots.last_spin.payout)} SP` : "No payout"}</strong><span>{String(slots.last_spin.outcome || "spin").replaceAll("_", " ")}</span></div> : slotAnimating ? <p className="saucer-instruction spin-callout">Reels are stopping…</p> : <p className="saucer-instruction">No spins recorded yet.</p>}
-              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canSpin} onClick={() => void spinSlots()}>{busy === "slots" ? "Spinning…" : slotsRemaining > 0 ? `Ready in ${duration(slotsRemaining)}` : points < Number(slots.cost || 15) ? "Not Enough SP" : `Spin · ${number(slots.cost || 15)} SP`}</button>
+              {slots.last_spin && !slotAnimating ? <div className={`saucer-result slot-result ${String(slots.last_spin.details?.result_tier || slots.last_spin.outcome || "spin")}`}><strong>{slots.last_spin.payout > 0 ? `+${number(slots.last_spin.payout)} MGP` : "No payout"}</strong><span>{String(slots.last_spin.outcome || "spin").replaceAll("_", " ")}</span></div> : slotAnimating ? <p className="saucer-instruction spin-callout">Reels are stopping…</p> : <p className="saucer-instruction">No spins recorded yet.</p>}
+              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canSpin} onClick={() => void spinSlots()}>{busy === "slots" ? "Spinning…" : slotsRemaining > 0 ? `Ready in ${duration(slotsRemaining)}` : mgp < Number(slots.cost || 15) ? "Not Enough MGP" : `Spin · ${number(slots.cost || 15)} MGP`}</button>
             </section>
           </div>
 
@@ -384,14 +387,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   {lastTossHistory ? (
                     <div className={`monster-toss-final-result tier-${lastTossTier}`}>
                       <img src={lastTossResultArt} alt="" aria-hidden="true" />
-                      <div><span>Last Game</span><strong>{number(lastTossDetails.score || 0)} pts · {number(lastTossHistory.payout || 0)} SP</strong><small>{String(lastTossTier).replaceAll("_", " ")}</small></div>
+                      <div><span>Last Game</span><strong>{number(lastTossDetails.score || 0)} pts · {number(lastTossHistory.payout || 0)} MGP</strong><small>{String(lastTossTier).replaceAll("_", " ")}</small></div>
                     </div>
                   ) : null}
-                  <div className="saucer-result monster-toss-entry-card"><strong>{number(toss.cost || 20)} SP entry</strong><span>{number(toss.throws_per_game || 5)} throws · {number(toss.daily_games || 3)} games/day</span></div>
-                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : points < Number(toss.cost || 20) ? "Not Enough SP" : `Start Game · ${number(toss.cost || 20)} SP`}</button>
+                  <div className="saucer-result monster-toss-entry-card"><strong>{number(toss.cost || 20)} MGP entry</strong><span>{number(toss.throws_per_game || 5)} throws · {number(toss.daily_games || 3)} games/day</span></div>
+                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : mgp < Number(toss.cost || 20) ? "Not Enough MGP" : `Start Game · ${number(toss.cost || 20)} MGP`}</button>
                 </div>
               )}
-              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards</summary><div className="monster-toss-payouts">{(toss.payouts || []).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} SP</span>)}</div></details>
+              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards</summary><div className="monster-toss-payouts">{(toss.payouts || []).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} MGP</span>)}</div></details>
             </div>
           </section>
 
@@ -399,23 +402,23 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <img className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="panel-title-row">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
-              <span className="small-badge">Titles Only · Alpha 2</span>
+              <span className="small-badge">Titles Only · Alpha 3</span>
             </div>
-            <p className="muted">Spend SP on collectible titles. Gold Saucer prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
+            <p className="muted">Spend MGP on collectible titles. Gold Saucer prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
             <div className="saucer-prize-grid">
               {prizes.map((prize) => (
                 <article className={`saucer-prize-card ${prize.owned ? "owned" : ""}`} key={prize.id}>
                   <div>
-                    <span className={`small-badge ${prize.owned ? "ready" : ""}`}>{prize.owned ? "OWNED" : `${number(prize.cost)} SP`}</span>
+                    <span className={`small-badge ${prize.owned ? "ready" : ""}`}>{prize.owned ? "OWNED" : `${number(prize.cost)} MGP`}</span>
                     <h4>{prize.name}</h4>
                     <p className="muted">{prize.description}</p>
                   </div>
                   <button
                     type="button"
                     className="equipment-action-button secondary"
-                    disabled={!actionsAvailable || Boolean(busy) || prize.owned || points < Number(prize.cost || 0)}
+                    disabled={!actionsAvailable || Boolean(busy) || prize.owned || mgp < Number(prize.cost || 0)}
                     onClick={() => mutate(`prize-${prize.id}`, () => submitSaucerBuy(prize.id, csrfToken, actionKey("saucer-buy", prize.id)), `Claiming ${prize.name}…`)}
-                  >{prize.owned ? "Collected" : points < Number(prize.cost || 0) ? "Not Enough SP" : `Unlock · ${number(prize.cost)} SP`}</button>
+                  >{prize.owned ? "Collected" : mgp < Number(prize.cost || 0) ? "Not Enough MGP" : `Unlock · ${number(prize.cost)} MGP`}</button>
                 </article>
               ))}
             </div>
@@ -423,24 +426,24 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </section>
 
           <section className="panel saucer-records-panel">
-            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 2</span></div>
+            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 3</span></div>
             <div className="saucer-record-grid">
-              <div><span>Current Net SP</span><strong>{Number(records.net_points || 0) >= 0 ? "+" : ""}{number(records.net_points)} SP</strong></div>
+              <div><span>Current Net MGP</span><strong>{netMgp >= 0 ? "+" : ""}{number(netMgp)} MGP</strong></div>
               <div><span>Games Played</span><strong>{number(records.games_played)}</strong></div>
               <div><span>Prizes Collected</span><strong>{number(state.account?.prizes_bought)}</strong></div>
               <div><span>Cactpot Tickets</span><strong>{number(state.account?.cactpot_plays)}</strong></div>
-              <div><span>Best Cactpot</span><strong>{number(state.account?.cactpot_best_payout)} SP</strong></div>
+              <div><span>Best Cactpot</span><strong>{number(state.account?.cactpot_best_payout)} MGP</strong></div>
               <div><span>Cactpot High Rolls</span><strong>{number(records.cactpot_high_rolls)}</strong></div>
               <div><span>Slot Spins</span><strong>{number(state.account?.slots_spins)}</strong></div>
               <div><span>Slot Win Rate</span><strong>{Number(records.slots_win_rate_pct || 0).toFixed(1)}%</strong></div>
               <div><span>Triple Matches</span><strong>{number(records.slots_triples)}</strong></div>
-              <div><span>Best Slots</span><strong>{number(state.account?.slots_best_payout)} SP</strong></div>
+              <div><span>Best Slots</span><strong>{number(state.account?.slots_best_payout)} MGP</strong></div>
               <div><span>Monster Toss Games</span><strong>{number(records.monster_toss_games)}</strong></div>
               <div><span>Best Toss Score</span><strong>{number(records.monster_toss_best_score)}</strong></div>
               <div><span>Toss Accuracy</span><strong>{Number(records.monster_toss_accuracy_pct || 0).toFixed(1)}%</strong></div>
-              <div><span>Best Toss Payout</span><strong>{number(records.monster_toss_best_payout)} SP</strong></div>
-              <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} SP</strong></div>
-              <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} SP</strong></div>
+              <div><span>Best Toss Payout</span><strong>{number(records.monster_toss_best_payout)} MGP</strong></div>
+              <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} MGP</strong></div>
+              <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} MGP</strong></div>
             </div>
             <details className="saucer-balance-notes">
               <summary>Balance details</summary>
@@ -458,7 +461,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
                     <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
-                    <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} SP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} SP` : "—"}</b>
+                    <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} MGP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} MGP` : "—"}</b>
                   </div>;
                 })}
               </div>

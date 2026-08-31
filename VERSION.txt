@@ -1,8 +1,10 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 2 — Canonical Baseline
-Hosted runtime: 1.6.0-gold-saucer-a2
-Frontend asset revision: 1.6.0-gold-saucer-a2h2
+Crystal Guild v1.6.0 — Gold Saucer Alpha 3 — MGP
+Hosted runtime: 1.6.0-gold-saucer-a3
+Frontend asset revision: 1.6.0-gold-saucer-a3
+Compatible Bot runtime: 1.6.0-gold-saucer-a3
 Local DB schema: 12
 Hosted sync schema: 1
 Portal Action protocol: 27
 Twitch prefix: !
-Monster Toss visual asset family: /gold-saucer/a2h2/monster-toss/
+Canonical Gold Saucer currency: MGP
+Monster Toss visual asset family retained: /gold-saucer/a2h2/monster-toss/

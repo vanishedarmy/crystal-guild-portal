@@ -6,8 +6,8 @@ import { WEB_ASSET_REVISION, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Gold Saucer H2 identity and authoritative presentation contract are wired", () => {
-  assert.equal(WEB_VERSION, "v1.6.0 Alpha 2");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2h2");
+  assert.equal(WEB_VERSION, "v1.6.0 Alpha 3");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a3");
   const source = read("src/player/GoldSaucer.jsx");
   assert.match(source, /const spinSlots = async/);
   assert.match(source, /finishedAction\(response\)/);
@@ -19,7 +19,7 @@ test("Gold Saucer H2 identity and authoritative presentation contract are wired"
 
 test("Gold Saucer H2 records and compact roadmap are player-facing", () => {
   const source = read("src/player/GoldSaucer.jsx");
-  for (const label of ["Current Net SP", "Games Played", "Cactpot High Rolls", "Slot Win Rate", "Triple Matches", "Balance details"]) {
+  for (const label of ["Current Net MGP", "Games Played", "Cactpot High Rolls", "Slot Win Rate", "Triple Matches", "Balance details"]) {
     assert.match(source, new RegExp(label));
   }
   assert.match(source, /filter\(\(attraction\) => attraction\.status !== "open"\)/);

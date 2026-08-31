@@ -1,3 +1,5 @@
-# Portal Actions — Gold Saucer Alpha 2
+# Portal Actions — Gold Saucer Alpha 3
 
-Portal Action protocol is **27**. Alpha 2 adds `MONSTER_TOSS_START` and `MONSTER_TOSS_THROW`; the local Bot remains authoritative for every toss, score, SP debit/payout, daily limit, and replay receipt. Raid combat remains Twitch/Bot-authoritative and the Portal Trial & Raid Board remains read-only. Hosted runtime/frontend/Bot are `1.6.0-gold-saucer-a2`.
+Portal Action protocol remains **27**. Alpha 3 adds no new action kinds; it standardizes the Gold Saucer currency contract as **MGP**. The local Bot remains authoritative for Mini Cactpot, Crystal Slots, Monster Toss, Prize Counter purchases, MGP debit/payout, daily limits, and replay receipts.
+
+Hosted runtime/frontend/Bot: `1.6.0-gold-saucer-a3`. Hosted sync remains 1. The Web prefers Alpha 3 MGP fields but accepts Alpha 2 `points` aliases during a staggered rollout.

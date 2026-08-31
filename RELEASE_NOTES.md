@@ -1,19 +1,26 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 2 / Canonical Baseline
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 3 — MGP
 
-## Monster Toss layout cleanup
-- Removes the redundant standalone Monster Toss marquee that previously appeared above the normal attraction title row.
-- Keeps the scenic Monster Toss background, text title, game-limit badge, start-state Play Monster Toss artwork, target art, throw-style art, score/throws UI, projectile/reticle, and result artwork.
-- Prunes `marquee.webp` from the shipping public tree instead of retaining an unused asset.
-- Moves the 17 active Monster Toss assets to `/gold-saucer/a2h2/monster-toss/` for clean cache busting.
+## Canonical MGP terminology
+- Renames the temporary player-facing Gold Saucer **SP / Saucer Points** label to **MGP — Manderville Gold Saucer Points**.
+- Gold Saucer balance, attraction costs, payouts, Prize Counter, ledger, recent activity, Player Guide, What's New, and streamer controls now display MGP.
+- The Web consumes canonical Alpha 3 `mgp`, `daily_allowance_mgp`, and `records.net_mgp` fields.
+- Alpha 2 `points`, `daily_allowance_points`, and `records.net_points` remain supported as compatibility fallbacks during deployment.
+
+## Economy preservation
+- Existing stored Gold Saucer balances are preserved exactly.
+- Welcome purse remains **500 MGP**.
+- Daily floor remains **50 MGP**.
+- Mini Cactpot remains **10 MGP**.
+- Crystal Slots remains **15 MGP**.
+- Monster Toss remains **20 MGP** per game.
+- No payout, odds, Prize Counter cost, ownership, record, or daily-limit rebalance.
 
 ## Compatibility
-- Hosted runtime: `1.6.0-gold-saucer-a2` unchanged
-- Frontend asset revision: `1.6.0-gold-saucer-a2h2`
-- Compatible Bot runtime: `1.6.0-gold-saucer-a2` unchanged
+- Hosted runtime: `1.6.0-gold-saucer-a3`
+- Frontend asset revision: `1.6.0-gold-saucer-a3`
+- Compatible Bot: `1.6.0-gold-saucer-a3`
 - Local DB schema: **12** unchanged
 - Hosted sync schema: **1** unchanged
 - Portal Action protocol: **27** unchanged
 - Twitch prefix: `!`
-- No database migration, player reset, OAuth/environment change, new variable, SP balance change, or gameplay change.
-
-This full Web tree plus the unchanged Alpha 2 Bot is the canonical baseline for subsequent v1.6.0 work.
+- Existing Alpha 2 Monster Toss artwork remains under `/gold-saucer/a2h2/monster-toss/`.

@@ -6,9 +6,9 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Gold Saucer Alpha 1 public identity and tab are wired", () => {
-  assert.equal(WEB_VERSION, "v1.6.0 Alpha 2");
+  assert.equal(WEB_VERSION, "v1.6.0 Alpha 3");
   assert.equal(WEB_BUILD, "Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2h2");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a3");
   const profile = read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /gold_saucer.*Gold Saucer/s);
   assert.match(profile, /\.\.\/player\/GoldSaucer\.jsx/);
@@ -20,7 +20,7 @@ test("Gold Saucer client exposes the bounded Alpha 1 actions", () => {
     assert.match(api, new RegExp(`submitPortalAction\\(\\\"${action}\\\"`));
   }
   const saucer = read("src/player/GoldSaucer.jsx");
-  assert.match(saucer, /500 SP|welcome/i);
+  assert.match(saucer, /500 MGP|welcome/i);
   assert.match(saucer, /Mini Cactpot/);
   assert.match(saucer, /Crystal Slots/);
   assert.match(saucer, /Future Attractions/);
@@ -32,13 +32,13 @@ test("Gold Saucer client exposes the bounded Alpha 1 actions", () => {
 test("Player Guide documents Alpha 1 and no longer says only eight relic questlines", () => {
   const guide = read("public/guide-body.html");
   assert.match(guide, /id="gold-saucer"/);
-  assert.match(guide, /500 SP/);
+  assert.match(guide, /500 MGP/);
   assert.match(guide, /Mini Cactpot/);
   assert.match(guide, /Crystal Slots/);
   assert.match(guide, /Monster Toss/);
   assert.match(guide, /Chocobo Racing/);
   assert.match(guide, /Triple Triad/);
   assert.match(guide, /Prize Counter/);
-  assert.match(guide, /daily.*50 SP/i);
+  assert.match(guide, /daily.*50 MGP/i);
   assert.doesNotMatch(guide, /Eight three-stage endgame weapon questlines/);
 });

@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.6.0 Alpha 3",
+    name: "Gold Saucer",
+    title: "MGP becomes the Gold Saucer standard",
+    summary: "Gold Saucer Alpha 3 standardizes Manderville Gold Saucer Points (MGP) across the Portal and hosted contract while preserving every existing balance, cost, payout, attraction, and record.",
+    highlights: [
+      { title: "MGP everywhere", description: "The Gold Saucer balance, attraction costs, payouts, Prize Counter, records, recent activity, Player Guide, and streamer controls now use MGP as the canonical currency label." },
+      { title: "Balances preserved", description: "Existing Gold Saucer balances carry forward exactly. No conversion, reset, or rebalance is performed." },
+      { title: "Safe staggered rollout", description: "The Web prefers the new mgp, daily_allowance_mgp, and records.net_mgp fields while accepting the Alpha 2 points aliases during deployment." },
+      { title: "Economy unchanged", description: "The welcome purse remains 500 MGP, the daily floor remains 50 MGP, Mini Cactpot costs 10 MGP, Crystal Slots costs 15 MGP, and Monster Toss costs 20 MGP." },
+      { title: "Protocol stays stable", description: "Local schema remains 12, hosted sync remains 1, and Portal Action protocol remains 27 because Alpha 3 adds no new action kinds." },
+    ],
+    action: { tab: "gold_saucer", label: "Enter Gold Saucer" },
+  },
+  {
     version: "v1.6.0 Alpha 2",
     name: "Gold Saucer",
     title: "Monster Toss joins the floor",
@@ -7,11 +21,11 @@ export const MAJOR_UPDATES = [
     highlights: [
       { title: "Five throws, real choices", description: "Choose Small Pot, Medium Pot, Large Pot, or the Golden Cactuar on each throw, then select Safe, Normal, or Power to trade accuracy against score." },
       { title: "Full Monster Toss visual treatment", description: "The attraction now has its own Gold Saucer scene, target and throw-style artwork, live score/throws presentation, aiming reticle, and hit, miss, bullseye, and jackpot result art." },
-      { title: "Three games per UTC day", description: "Monster Toss costs 20 SP per game and provides five throws. Daily game limits reset at 00:00 UTC while an active game remains safely resumable." },
+      { title: "Three games per UTC day", description: "Monster Toss costs 20 MGP per game and provides five throws. Daily game limits reset at 00:00 UTC while an active game remains safely resumable." },
       { title: "Persistent and replay-safe", description: "Current score, throw history, and remaining throws persist through refreshes and restarts. Duplicate Portal delivery cannot repeat a throw or payout." },
       { title: "New records", description: "Track Monster Toss games, best score, hit accuracy, and best payout alongside Cactpot and Crystal Slots records." },
       { title: "Prize Counter expansion", description: "Toss Tactician and Pot Shot Pro join the cosmetic-only Gold Saucer title collection." },
-      { title: "Existing attractions preserved", description: "Mini Cactpot UTC reset behavior, Crystal Slots odds, the 500 SP welcome purse, daily 50 SP floor allowance, and all Alpha 1 H2 polish remain unchanged." },
+      { title: "Existing attractions preserved", description: "Mini Cactpot UTC reset behavior, Crystal Slots odds, the 500 MGP welcome purse, daily 50 MGP floor allowance, and all Alpha 1 H2 polish remain unchanged." },
       { title: "Upgrade-safe Alpha", description: "Local schema advances to 12 for persistent Monster Toss game state and Portal Action protocol advances to 27. Hosted sync remains 1 and ordinary Gil/combat progression remain untouched." },
     ],
     action: { tab: "gold_saucer", label: "Enter Gold Saucer" },

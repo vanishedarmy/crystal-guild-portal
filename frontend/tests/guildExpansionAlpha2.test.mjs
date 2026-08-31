@@ -27,7 +27,7 @@ test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a2h2"/);
-  assert.equal(guideData.meta.version, "v1.6.0 Alpha 2 — Gold Saucer");
-  assert.equal(guideData.meta.release, "1.6.0-gold-saucer-a2");
+  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a3"/);
+  assert.equal(guideData.meta.version, "v1.6.0 Alpha 3 — Gold Saucer");
+  assert.equal(guideData.meta.release, "1.6.0-gold-saucer-a3");
 });

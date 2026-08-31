@@ -1,0 +1,36 @@
+{
+  "release": "Crystal Guild v1.6.0 Gold Saucer Alpha 3 \u2014 MGP",
+  "hosted_runtime": "1.6.0-gold-saucer-a3",
+  "frontend_asset_revision": "1.6.0-gold-saucer-a3",
+  "compatible_bot": "1.6.0-gold-saucer-a3",
+  "local_db_schema": 12,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 27,
+  "twitch_prefix": "!",
+  "currency": {
+    "name": "Manderville Gold Saucer Points",
+    "code": "MGP",
+    "canonical_fields": [
+      "mgp",
+      "welcome_mgp",
+      "daily_allowance_mgp",
+      "account.mgp",
+      "records.net_mgp"
+    ],
+    "compatibility_aliases": [
+      "points",
+      "welcome_points",
+      "daily_allowance_points",
+      "account.points",
+      "records.net_points"
+    ]
+  },
+  "economy": {
+    "welcome_mgp": 500,
+    "daily_allowance_mgp": 50,
+    "mini_cactpot_cost_mgp": 10,
+    "crystal_slots_cost_mgp": 15,
+    "monster_toss_cost_mgp": 20
+  },
+  "balance_migration": false
+}

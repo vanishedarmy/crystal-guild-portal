@@ -1,3 +1,10 @@
+## v1.6.0 — Gold Saucer Alpha 3 — MGP
+
+- Standardizes Manderville Gold Saucer Points (**MGP**) across the Web, Player Guide, streamer controls, and Gold Saucer ledger.
+- Prefers canonical Alpha 3 MGP fields with Alpha 2 balance aliases retained as rollout fallbacks.
+- Existing balances and all Gold Saucer costs/payouts remain unchanged.
+- Runtime/frontend `1.6.0-gold-saucer-a3`; schema 12 / sync 1 / Portal protocol 27.
+
 ## v1.6.0 — Gold Saucer Alpha 2 Web Hotfix 2 / Canonical Baseline
 - Removes the redundant standalone Monster Toss top marquee while retaining the scenic background and Play Monster Toss start artwork.
 - Prunes the unused marquee asset; active Monster Toss art is 17 separate WebP files under `/gold-saucer/a2h2/monster-toss/`.

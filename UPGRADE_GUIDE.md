@@ -1,13 +1,12 @@
-# Upgrade Guide — v1.6.0 Gold Saucer Alpha 2 Canonical Baseline
+# Upgrade Guide — v1.6.0 Gold Saucer Alpha 3 — MGP
 
-Supported source: any prior Gold Saucer Alpha 2 Web build with the matching Alpha 2 Bot. For the cleanest reset of the source tree, deploy the full canonical Web package.
+1. Preserve the live database, `.env`, Twitch token/OAuth storage, hosted secrets, and persistent-disk state.
+2. Replace the Web source with this full Alpha 3 Web package.
+3. Replace the Bot with the matching full Alpha 3 MGP Bot package.
+4. Restart/redeploy both services.
+5. Verify `!cgversion` reports `1.6.0-gold-saucer-a3`.
+6. Verify `/api/health` reports hosted runtime `1.6.0-gold-saucer-a3`, frontend asset revision `1.6.0-gold-saucer-a3`, hosted sync 1, and Portal protocol 27.
+7. Open Gold Saucer and confirm the existing balance appears as MGP; Mini Cactpot, Crystal Slots, Monster Toss, Prize Counter, ledger, and recent activity should all use MGP.
+8. Confirm an existing player's MGP value is numerically unchanged from their prior Alpha 2 balance.
 
-1. Preserve the live database, `.env`, Twitch token storage, hosted secrets, and persistent-disk state.
-2. Replace the Web source with the full canonical Web package.
-3. Keep or replace the Bot with the matching full Alpha 2 Bot package; Bot runtime remains unchanged.
-4. Restart/redeploy the services.
-5. Verify `!cgversion` reports `1.6.0-gold-saucer-a2`.
-6. Verify `/api/health` reports hosted runtime `1.6.0-gold-saucer-a2`, frontend asset revision `1.6.0-gold-saucer-a2h2`, hosted sync 1, and Portal protocol 27.
-7. Open Gold Saucer → Monster Toss and confirm there is no standalone image banner above the normal Monster Toss title row. The scenic background and Play Monster Toss start artwork should remain.
-
-No database migration or player reset is required. Schema remains 12.
+No database migration or player reset is required. The matching Alpha 3 Bot intentionally preserves the physical schema-12 Gold Saucer balance storage while exposing canonical MGP fields.

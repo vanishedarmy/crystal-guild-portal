@@ -1,23 +1,19 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Canonical Baseline Audit
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 3 MGP Finalization Audit
 
-## Frozen scope
-- Gold Saucer Alpha 2 gameplay remains unchanged.
-- Monster Toss visual treatment remains fully integrated.
-- The redundant top Monster Toss marquee is removed from rendering and from the public asset tree.
-- The normal title row and Play Monster Toss start-state artwork remain.
-- The active Monster Toss visual family contains 17 separate WebP assets under `/gold-saucer/a2h2/monster-toss/`.
+## Scope
+- Canonical currency name is **MGP — Manderville Gold Saucer Points**.
+- Existing Gold Saucer balances are preserved numerically; no Web-side conversion exists.
+- Web prefers Alpha 3 MGP fields while retaining Alpha 2 aliases strictly as rollout fallbacks.
+- Welcome purse, daily floor, Mini Cactpot, Crystal Slots, Monster Toss, Prize Counter, odds, payouts, limits, records, and ownership are unchanged.
 
 ## Frozen contract
-- Bot/hosted runtime: `1.6.0-gold-saucer-a2`
-- Frontend asset revision: `1.6.0-gold-saucer-a2h2`
-- Local DB schema: **12**
-- Hosted sync schema: **1**
-- Portal Action protocol: **27**
-- Twitch prefix: `!`
-
-No migration, reset, OAuth/environment change, new variable, SP payout/rule change, or combat progression change.
+- Hosted/Web/Bot runtime family: `1.6.0-gold-saucer-a3`
+- Frontend revision: `1.6.0-gold-saucer-a3`
+- Schema **12** / hosted sync **1** / Portal protocol **27** / prefix `!`
 
 ## Validation
-**615/615 Bot**, **484/484 frontend**, **51/51 hosted**, **116/116 Python parse**, **220/220 frontend parser**, **178/178 Node syntax**, **8/8 CSS parse**, **692/692 WebP decode**, **0 PNG**.
-
-The local Vite production build was attempted but the source-only environment lacks the pinned Vite executable; that gate is recorded as unavailable rather than passed.
+- Frontend: **487 / 487 PASS**
+- Hosted Web/API: **51 / 51 PASS**
+- Python parse: **10 / 10 PASS**
+- Plain JS/MJS syntax: **179 / 179 PASS**
+- Production Vite build not claimed because dependencies are intentionally absent from the source package.

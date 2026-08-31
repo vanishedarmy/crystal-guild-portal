@@ -1,4 +1,4 @@
-const RELIC_ART_BASE = "/retro-phase-iii/relic-weapons-v1";
+const RELIC_ART_BASE = "/retro-phase-iii/relic-weapons-v2";
 
 const RELIC_IDS = new Set([
   "gae_bolg",

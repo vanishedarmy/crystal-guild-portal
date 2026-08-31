@@ -1,3 +1,6 @@
-v1.5.1 — Relic Arsenal Complete
-Hosted/frontend/Bot: 1.5.1-relic-arsenal-complete
-Deploy matching v1.5.1 Bot + Web together. Schema 10 / sync 1 / protocol 25 unchanged.
+Crystal Guild v1.5.1 Web Hotfix 1 — Relic Artwork Refresh
+
+Apply this package to the current v1.5.1 — Relic Arsenal Complete Web project root.
+Run: python web_patch/apply_patch.py <target-web-root>
+Then rebuild/redeploy the Web service and hard-refresh once.
+No Bot update, database migration, player reset, OAuth change, or new environment variable is required.

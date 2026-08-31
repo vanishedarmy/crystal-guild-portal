@@ -1,17 +1,11 @@
-# Crystal Guild v1.5.1 — Relic Arsenal Complete Upgrade Guide
+# Upgrade Guide — v1.5.1 Relic Artwork Refresh Web Hotfix 1
 
-## Supported baseline
-Upgrade in place from **v1.5.0 — Trails & Raids**. The Web patch is based on the current **v1.5.0 Web Hotfix 4** tree and carries those scenic-layer fixes forward.
+Supported baseline: **v1.5.1 — Relic Arsenal Complete Web**.
 
-## Upgrade
-1. Stop the local/cloud Bot worker before replacing source files.
-2. Back up the live `crystal_guild.db` and preserve `.env`, Twitch token storage, hosted secrets, and persistent-disk data.
-3. Apply the Bot patch or replace with the full v1.5.1 Bot tree.
-4. Apply the Web Hotfix 4 → v1.5.1 Web patch or replace with the full v1.5.1 Web tree.
-5. Deploy/restart the matching Bot and Web builds.
-6. Verify `!cgversion`, `!health`, and `/api/health` report `1.5.1-relic-arsenal-complete`.
-7. Open the Relics page and confirm the collection denominator is 18; confirm an active Hunt keeps its scenic art on the result card after resolution.
+1. Preserve your deployment secrets/environment as usual.
+2. Extract the patch package.
+3. From the extracted package, run `python web_patch/apply_patch.py <target-web-root>`.
+4. Rebuild/redeploy the hosted Web service.
+5. Hard-refresh once, then open Relics and verify Dormant/Awakened/Zenith artwork for several Jobs.
 
-No migration or player reset is required. Schema remains 10, hosted sync 1, Portal protocol 25, and prefix `!`.
-
-If the Web source is older than v1.5.0 Hotfix 4, use the full v1.5.1 Web package rather than the incremental Web patch.
+No Bot update, database migration, player reset, OAuth reauthorization, or new environment variable is required.

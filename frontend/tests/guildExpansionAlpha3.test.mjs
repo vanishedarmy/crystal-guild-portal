@@ -26,10 +26,10 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Relic Arsenal Complete"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.5\.1-relic-arsenal-complete"/);
-  assert.equal(guideData.meta.version, "v1.5.1 — Relic Arsenal Complete");
-  assert.equal(guideData.meta.release, "1.5.1-relic-arsenal-complete");
-  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 25/);
+  assert.match(version, /WEB_BUILD = "Gold Saucer"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a1"/);
+  assert.equal(guideData.meta.version, "v1.6.0 Alpha 1 — Gold Saucer");
+  assert.equal(guideData.meta.release, "1.6.0-gold-saucer-a1");
+  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 26/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

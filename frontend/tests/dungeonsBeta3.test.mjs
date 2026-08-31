@@ -24,7 +24,7 @@ test("Beta 3 identity is exposed by the Dungeon Board and frontend revision", ()
   const board = read("src/player/Dungeons.jsx");
   const version = read("src/version.js");
   assert.match(board, /Dungeons & Delves · v1.4.0/);
-  assert.match(version, /1\.5\.1-relic-arsenal-complete/);
+  assert.match(version, /1\.6\.0-gold-saucer-a1/);
 });
 
 

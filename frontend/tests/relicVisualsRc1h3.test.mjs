@@ -17,7 +17,7 @@ test("RC1H3 packages all eight Relics across all three visual stages", () => {
   for (const id of relicIds) {
     for (let stage = 1; stage <= 3; stage += 1) {
       const art = relicArtworkPath({ id, stage });
-      assert.equal(art, `/retro-phase-iii/relic-weapons-v1/${id}_${stageNames[stage - 1]}.webp`);
+      assert.equal(art, `/retro-phase-iii/relic-weapons-v2/${id}_${stageNames[stage - 1]}.webp`);
       assert.ok(fs.existsSync(path.join(publicRoot, art)), `missing ${art}`);
     }
   }
@@ -28,7 +28,7 @@ test("Relic stage reward items route to dedicated Relic artwork", () => {
     for (const stage of relic.stages) {
       const item = data.items.find((entry) => entry.id === stage.reward_item);
       assert.ok(item, `missing stage reward item ${stage.reward_item}`);
-      assert.equal(itemArtworkPath(item), `/retro-phase-iii/relic-weapons-v1/${stage.reward_item}.webp`);
+      assert.equal(itemArtworkPath(item), `/retro-phase-iii/relic-weapons-v2/${stage.reward_item}.webp`);
     }
   }
 });

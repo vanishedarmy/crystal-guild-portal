@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.5.1-relic-arsenal-complete"
-FRONTEND_ASSET_REVISION = "1.5.1-relic-arsenal-complete"
+HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-a1"
+FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 25
+ACTION_PROTOCOL_VERSION = 26
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -37,6 +37,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
+    "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY",
     "STREAMER_COMMAND",
 }
 
@@ -57,6 +58,8 @@ STREAMER_COMMAND_SPECS = {
     "resolveboss": "none",
     "additem": "inventory",
     "removeitem": "inventory",
+    "saucergrant": "text",
+    "saucerreset": "text",
 }
 
 CHOCOBO_PORTRAIT_IDS = {
@@ -78,7 +81,7 @@ MAX_ACTION_HISTORY = 20
 # Read/state requests are safe to collapse because only the newest response matters.
 READ_ONLY_STATE_ACTIONS = {
     "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
-    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE",
+    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE",
 }
 # Gameplay mutations below are also safe to coalesce while one identical request is
 # still pending/processing. This prevents a browser retry from applying a Solo
@@ -90,6 +93,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
+    "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -715,6 +719,42 @@ class HostedPortalStore:
             if batches < 1 or batches > 20:
                 raise ValueError("Workshop batches must be between 1 and 20.")
             payload = {"exchange_id": exchange_id, "batches": batches}
+        elif kind in {"GOLD_SAUCER_STATE", "CACTPOT_START", "SLOTS_SPIN"}:
+            if payload:
+                raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "CACTPOT_REVEAL":
+            if set(payload) != {"cell"}:
+                raise ValueError("CACTPOT_REVEAL requires only cell.")
+            cell = payload.get("cell")
+            if isinstance(cell, bool):
+                raise ValueError("Invalid Mini Cactpot cell.")
+            try:
+                cell = int(cell)
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Mini Cactpot cell.") from None
+            if cell < 0 or cell > 8:
+                raise ValueError("Mini Cactpot cell must be from 0 to 8.")
+            payload = {"cell": cell}
+        elif kind == "CACTPOT_LINE":
+            if set(payload) != {"line"}:
+                raise ValueError("CACTPOT_LINE requires only line.")
+            line_index = payload.get("line")
+            if isinstance(line_index, bool):
+                raise ValueError("Invalid Mini Cactpot line.")
+            try:
+                line_index = int(line_index)
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Mini Cactpot line.") from None
+            if line_index < 0 or line_index > 7:
+                raise ValueError("Mini Cactpot line must be from 0 to 7.")
+            payload = {"line": line_index}
+        elif kind == "SAUCER_BUY":
+            if set(payload) != {"prize_id"}:
+                raise ValueError("SAUCER_BUY requires only prize_id.")
+            prize_id = str(payload.get("prize_id") or "").strip().lower()
+            if not prize_id or len(prize_id) > 64 or not re.fullmatch(r"[a-z0-9_]+", prize_id):
+                raise ValueError("Invalid Gold Saucer prize ID.")
+            payload = {"prize_id": prize_id}
         elif kind in {"CRAFTING_STATE", "DAILY_STATE", "CLAIM_DAILY"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")

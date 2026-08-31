@@ -29,8 +29,8 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 });
 
 test("Fellowship UX remains present in the final release", () => {
-  assert.match(version, /WEB_BUILD = "Relic Arsenal Complete"/);
-  assert.match(version, /1\.5\.1-relic-arsenal-complete/);
+  assert.match(version, /WEB_BUILD = "Gold Saucer"/);
+  assert.match(version, /1\.6\.0-gold-saucer-a1/);
   assert.match(news, /Guild Expansion has arrived/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

@@ -25,7 +25,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "953de77b6ac8101d89228d2a008e8392168962fd547ac8167f99da5bcfeea958",
-      "source_generation_file": "ornate_sapphire_skyward_spear.png"
+      "source_generation_asset": "ornate_sapphire_skyward_spear"
     },
     {
       "relic_id": "gae_bolg",
@@ -38,7 +38,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "8092290740a90358c12f5f4241a294f65985ba008c7ed43058fad7fcff7d26ef",
-      "source_generation_file": "gilded_azure_arcane_polearm.png"
+      "source_generation_asset": "gilded_azure_arcane_polearm"
     },
     {
       "relic_id": "gae_bolg",
@@ -51,7 +51,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "f607bcb9adeb76634831d816f1d3c9d369c2737bf51db7bd35b2743d723114fa",
-      "source_generation_file": "celestial_dragonwing_lance.png"
+      "source_generation_asset": "celestial_dragonwing_lance"
     },
     {
       "relic_id": "excalibur",
@@ -64,7 +64,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "4d14352c07e7e8cd165881f90c97251f87d50a2aee63ed580051d28c49f7c0c6",
-      "source_generation_file": "jeweled_pixel_art_fantasy_sword.png"
+      "source_generation_asset": "jeweled_pixel_art_fantasy_sword"
     },
     {
       "relic_id": "excalibur",
@@ -77,7 +77,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "97b1baf99f854afdd7786174ca7956ad1fe9dd62017a8bdaeed6ff769a6ca110",
-      "source_generation_file": "celestial_winged_excalibur_sprite.png"
+      "source_generation_asset": "celestial_winged_excalibur_sprite"
     },
     {
       "relic_id": "excalibur",
@@ -90,7 +90,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "5c3e957a354606964aff6be4cb25747731dbbe671c85b0083b7a4f1054baddcb",
-      "source_generation_file": "holy_crystal_sword_sprite.png"
+      "source_generation_asset": "holy_crystal_sword_sprite"
     },
     {
       "relic_id": "apocalypse",
@@ -103,7 +103,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "b719e3d43cde53699c94eb6189891b1a58678a1bdeccbbbc182f5745c48700fc",
-      "source_generation_file": "crimson_vein_demon_greatsword.png"
+      "source_generation_asset": "crimson_vein_demon_greatsword"
     },
     {
       "relic_id": "apocalypse",
@@ -116,7 +116,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "0e777be5c724f275c99c7b3354654f314aa0f5a218be460f752de0159bf67d04",
-      "source_generation_file": "demonic_crimson_eclipse_greatsword.png"
+      "source_generation_asset": "demonic_crimson_eclipse_greatsword"
     },
     {
       "relic_id": "apocalypse",
@@ -129,7 +129,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "4188b81beb5ac858ad2fc512f65534c450462e0475fcc8b6a21641474898f141",
-      "source_generation_file": "cursed_voidfire_demonic_greatsword.png"
+      "source_generation_asset": "cursed_voidfire_demonic_greatsword"
     },
     {
       "relic_id": "godhand",
@@ -142,7 +142,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "bc02a7f577dd94b9ba8fa3955c0d7864d8725033e3185aeadd5fc649192f7deb",
-      "source_generation_file": "ornate_crimson_gem_gauntlet.png"
+      "source_generation_asset": "ornate_crimson_gem_gauntlet"
     },
     {
       "relic_id": "godhand",
@@ -155,7 +155,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "7319a47fbf211d08c47ddd416fcbf4e25b9bc3aef26f72f158df20b8af8ddd76",
-      "source_generation_file": "legendary_ruby_trimmed_mecha_gauntlet.png"
+      "source_generation_asset": "legendary_ruby_trimmed_mecha_gauntlet"
     },
     {
       "relic_id": "godhand",
@@ -168,7 +168,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "0cf9ee002a61762e3044ba8ed90d2a7d81e7530062f8b4c71e98337ee7b89cf7",
-      "source_generation_file": "flaming_golden_dragon_gauntlet.png"
+      "source_generation_asset": "flaming_golden_dragon_gauntlet"
     },
     {
       "relic_id": "masamune",
@@ -181,7 +181,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "1afe41b27e3edbeda00527442a6fbf434a502252c400c74ef674e8f08f3980b8",
-      "source_generation_file": "ornate_legendary_katana_sprite.png"
+      "source_generation_asset": "ornate_legendary_katana_sprite"
     },
     {
       "relic_id": "masamune",
@@ -194,7 +194,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "6b3688bf6b02cfd1d9339ed43377303f304a73db96c022031b045d48b01739e9",
-      "source_generation_file": "enchanted_crimson_katana_sprite.png"
+      "source_generation_asset": "enchanted_crimson_katana_sprite"
     },
     {
       "relic_id": "masamune",
@@ -207,7 +207,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "c8af14f0d9f9114da0e391ddd0b81af16f10493534cce8f7e38088f164c786e6",
-      "source_generation_file": "enchanted_sakura_katana_sprite.png"
+      "source_generation_asset": "enchanted_sakura_katana_sprite"
     },
     {
       "relic_id": "stardust_rod",
@@ -220,7 +220,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "28371389c243feaa33901f1fb4443ddabcbf1ae45cbb13dcb72667013a1382a6",
-      "source_generation_file": "celestial_starburst_magic_staff.png"
+      "source_generation_asset": "celestial_starburst_magic_staff"
     },
     {
       "relic_id": "stardust_rod",
@@ -233,7 +233,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "7862ff2a2f6098c7f0b50b7ee040bbee1f7cc3ab232ff10b9e0783dd56958c27",
-      "source_generation_file": "celestial_starlight_magic_staff.png"
+      "source_generation_asset": "celestial_starlight_magic_staff"
     },
     {
       "relic_id": "stardust_rod",
@@ -246,7 +246,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "016df5e2450c526d7f45470c9956a3fe3346e8759f747722b27d058a057a407f",
-      "source_generation_file": "celestial_galaxy_magic_staff.png"
+      "source_generation_asset": "celestial_galaxy_magic_staff"
     },
     {
       "relic_id": "nirvana",
@@ -259,7 +259,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "858843e1c864bef7b5a1ea2dcaf1d50b124c6944374c94a37ed49a342b113e13",
-      "source_generation_file": "celestial_winged_crystal_staff.png"
+      "source_generation_asset": "celestial_winged_crystal_staff"
     },
     {
       "relic_id": "nirvana",
@@ -272,7 +272,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "b6cc1db3f75d81b2ae944e7cfb6b2c1e7a7dcaaf2667df6ba5b3d897fb8c5428",
-      "source_generation_file": "celestial_angelic_staff_sprite.png"
+      "source_generation_asset": "celestial_angelic_staff_sprite"
     },
     {
       "relic_id": "nirvana",
@@ -285,7 +285,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "51ae3f91edd6c39471919768821b4f45dc6ce0f52964722101d64ffdce190aad",
-      "source_generation_file": "celestial_angelic_crystal_staff.png"
+      "source_generation_asset": "celestial_angelic_crystal_staff"
     },
     {
       "relic_id": "last_knife",
@@ -298,7 +298,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "99814d8d8fd555d9527ae6d9669961fc6ecb85e97a71351bb48bb7c0869bdbb5",
-      "source_generation_file": "ornate_sapphire_guard_pixel_dagger.png"
+      "source_generation_asset": "ornate_sapphire_guard_pixel_dagger"
     },
     {
       "relic_id": "last_knife",
@@ -311,7 +311,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "235c100fd31d6d8d50ddc9689a991b384b3d9630d8e4eb5a646cf27213c5108f",
-      "source_generation_file": "pixel_art_sapphire_kris_dagger.png"
+      "source_generation_asset": "pixel_art_sapphire_kris_dagger"
     },
     {
       "relic_id": "last_knife",
@@ -324,7 +324,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "f0ead9dd12960a6bf64dc8204ef1207ec7c8fead64e41cc6e134f9e9558f4be6",
-      "source_generation_file": "arcane_frostwind_dagger_sprite.png"
+      "source_generation_asset": "arcane_frostwind_dagger_sprite"
     },
     {
       "relic_id": "bravura",
@@ -337,7 +337,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "352110a9de49039319c79fb2196e454bd190c519c8835a6581dd8d9f0cde1229",
-      "source_generation_file": "ornate_sapphire_battle_axe.png"
+      "source_generation_asset": "ornate_sapphire_battle_axe"
     },
     {
       "relic_id": "bravura",
@@ -350,7 +350,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "3df1a9ae0463ec9977a77fd6bb7b79f43a14b47852f4537bd8539dfdfc7cf96f",
-      "source_generation_file": "awakened_sapphire_battle_axe.png"
+      "source_generation_asset": "awakened_sapphire_battle_axe"
     },
     {
       "relic_id": "bravura",
@@ -363,7 +363,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "92e7cba4f60a53df550fe8df7acebdccebcd65348c516c7973007cfa4267fcf7",
-      "source_generation_file": "ornate_sapphire_arcane_battle_axe.png"
+      "source_generation_asset": "ornate_sapphire_arcane_battle_axe"
     },
     {
       "relic_id": "murgleis",
@@ -376,7 +376,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "0d6483971d77aae115dbac200314de7d394925f335a3a79e7079855f5efe534e",
-      "source_generation_file": "ornate_ruby_rapier_sprite.png"
+      "source_generation_asset": "ornate_ruby_rapier_sprite"
     },
     {
       "relic_id": "murgleis",
@@ -389,7 +389,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "ad913646e7dbb28c7061a930a900af94581efcc3c751f99b27ce84bd1eb75968",
-      "source_generation_file": "awakened_ruby_rapier_sprite.png"
+      "source_generation_asset": "awakened_ruby_rapier_sprite"
     },
     {
       "relic_id": "murgleis",
@@ -402,7 +402,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "c267339878ab170ae4ae5d9fa1e75adf7017f59b9664d9ab6b7826052b786745",
-      "source_generation_file": "crimson_starfire_rapier_relic.png"
+      "source_generation_asset": "crimson_starfire_rapier_relic"
     },
     {
       "relic_id": "yoshimitsu",
@@ -415,7 +415,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "397275b857e13f98b8ac9546558c69053699bc6b607065e7a769b189f20b8d15",
-      "source_generation_file": "ornate_purple_rune_dagger_sprite.png"
+      "source_generation_asset": "ornate_purple_rune_dagger_sprite"
     },
     {
       "relic_id": "yoshimitsu",
@@ -428,7 +428,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "766a1ce7b7795bb0f1d95a42ba78eb9fc7deb76db763998be61ffcc3d136cacd",
-      "source_generation_file": "enchanted_violet_relic_katana.png"
+      "source_generation_asset": "enchanted_violet_relic_katana"
     },
     {
       "relic_id": "yoshimitsu",
@@ -441,7 +441,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "521a8e2f2744ed67be03724d9a8a58d88a626424d78c1f8ced871b40f2e2f21b",
-      "source_generation_file": "enchanted_amethyst_demon_katana.png"
+      "source_generation_asset": "enchanted_amethyst_demon_katana"
     },
     {
       "relic_id": "veil_of_wiyu",
@@ -454,7 +454,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "cbdad2577f4054232e306b67e907711863ff9247d7133b88781418f213cb8ea7",
-      "source_generation_file": "enchanted_sapphire_grimoire.png"
+      "source_generation_asset": "enchanted_sapphire_grimoire"
     },
     {
       "relic_id": "veil_of_wiyu",
@@ -467,7 +467,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "fff191ed3387bc709e81b241a23903a8ff33bc0bb1f6848b1ecae84e64eb8ec4",
-      "source_generation_file": "astral_sapphire_grimoire.png"
+      "source_generation_asset": "astral_sapphire_grimoire"
     },
     {
       "relic_id": "veil_of_wiyu",
@@ -480,7 +480,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "8941e8c7e0bb235e0386464a1e721b948e31ad78be52d9bf3cef68b38f8af90e",
-      "source_generation_file": "celestial_sapphire_grimoire.png"
+      "source_generation_asset": "celestial_sapphire_grimoire"
     },
     {
       "relic_id": "almace",
@@ -493,7 +493,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "de403788e7f8d66a12e5587b184921472a86a05e156dcee45a08d6b43bc37f59",
-      "source_generation_file": "ornate_icy_sapphire_pixel_sword.png"
+      "source_generation_asset": "ornate_icy_sapphire_pixel_sword"
     },
     {
       "relic_id": "almace",
@@ -506,7 +506,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "df5a498c1a46833d837ec8305ecd993b8808ba705e9c628845982f25f60ed89f",
-      "source_generation_file": "tier_2_awakened_ice_relic_sword.png"
+      "source_generation_asset": "tier_2_awakened_ice_relic_sword"
     },
     {
       "relic_id": "almace",
@@ -519,7 +519,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "0db77899c9f7b2032fc2fecaeca52be214a1d04f8ab01a1995ea3d5df8044b54",
-      "source_generation_file": "celestial_frostbringer_sword.png"
+      "source_generation_asset": "celestial_frostbringer_sword"
     },
     {
       "relic_id": "chronos",
@@ -532,7 +532,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "7c6b2707ed56b62a2e2e9df8a169b4182c0a6426b0514a74bc00aaa5f00a2f7d",
-      "source_generation_file": "celestial_clockwork_magic_staff.png"
+      "source_generation_asset": "celestial_clockwork_magic_staff"
     },
     {
       "relic_id": "chronos",
@@ -545,7 +545,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "51d0eae4d6c1ecfa7d6a35e19c70cdaf5a7f6cef7ac90cba22e1cd35c71071d6",
-      "source_generation_file": "celestial_clockwork_moon_staff.png"
+      "source_generation_asset": "celestial_clockwork_moon_staff"
     },
     {
       "relic_id": "chronos",
@@ -558,7 +558,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "fc024739f8f73ec4599c884d1881002fb9698e16895c5882dcabee9a0acfbae3",
-      "source_generation_file": "celestial_clockwork_mooncaster_staff.png"
+      "source_generation_asset": "celestial_clockwork_mooncaster_staff"
     },
     {
       "relic_id": "artemis_bow",
@@ -571,7 +571,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "b69e326e89938297d24a62081b082d2a8bda2e8f2965729aa52ae95e57215be4",
-      "source_generation_file": "emerald_elven_bow_relic.png"
+      "source_generation_asset": "emerald_elven_bow_relic"
     },
     {
       "relic_id": "artemis_bow",
@@ -584,7 +584,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "026bf84598a4f60b58b5753b89069ed903bf4364b61f43ecea80d76f3d259d79",
-      "source_generation_file": "enchanted_elven_pixel_bow.png"
+      "source_generation_asset": "enchanted_elven_pixel_bow"
     },
     {
       "relic_id": "artemis_bow",
@@ -597,7 +597,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "22bcd1b4a84111d4b1abac849529562cbab6ecccf01fc56a6dade2bdbf4e10be",
-      "source_generation_file": "enchanted_emerald_elven_bow.png"
+      "source_generation_asset": "enchanted_emerald_elven_bow"
     },
     {
       "relic_id": "armageddon",
@@ -610,7 +610,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "41191511be5eecb412a8c3f7d170fae01fe813980b3c939e09db5cb1b1631e83",
-      "source_generation_file": "arcane_steampunk_blaster_sprite.png"
+      "source_generation_asset": "arcane_steampunk_blaster_sprite"
     },
     {
       "relic_id": "armageddon",
@@ -623,7 +623,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "dff78203e641c99e9edc5d043d3f4913ea803a1f9f852427058ffe7f88af1a39",
-      "source_generation_file": "awakened_arcane_steampunk_pistol.png"
+      "source_generation_asset": "awakened_arcane_steampunk_pistol"
     },
     {
       "relic_id": "armageddon",
@@ -636,7 +636,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "be7e1d618304548f62ff607cfc0e0c7aacff924ab4db969cce408f0fff42617a",
-      "source_generation_file": "gilded_magitek_starburst_cannon.png"
+      "source_generation_asset": "gilded_magitek_starburst_cannon"
     },
     {
       "relic_id": "guttler",
@@ -649,7 +649,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "bd82bc33b9178f4ed48175ef86f03fe00255cb596cf923d2d819e33e63d3fd0d",
-      "source_generation_file": "beastmaster_s_verdant_war_axe.png"
+      "source_generation_asset": "beastmaster_s_verdant_war_axe"
     },
     {
       "relic_id": "guttler",
@@ -662,7 +662,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "0c94f2ff8ad24fa376b2422f64d1603b49c79e6b947fa65ed20ef1cbd410eba2",
-      "source_generation_file": "awakened_beastmaster_axe.png"
+      "source_generation_asset": "awakened_beastmaster_axe"
     },
     {
       "relic_id": "guttler",
@@ -675,7 +675,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "184255484a34dd758b558d89990b66658e16a9c13be66205c8d377aa1950f411",
-      "source_generation_file": "ornate_neon_green_beastmaster_axe.png"
+      "source_generation_asset": "ornate_neon_green_beastmaster_axe"
     },
     {
       "relic_id": "astral_codex",
@@ -688,7 +688,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "92e5e574f779952869d76a2d5d97bf7d83df7174f65399840eb3ea808e92639f",
-      "source_generation_file": "celestial_blue_spellbook_icon.png"
+      "source_generation_asset": "celestial_blue_spellbook_icon"
     },
     {
       "relic_id": "astral_codex",
@@ -701,7 +701,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "0895f41ec53af877b2b4c2313d7020a27ffc2777a86ae6534ceac0b0799f1833",
-      "source_generation_file": "awakened_astral_grimoire.png"
+      "source_generation_asset": "awakened_astral_grimoire"
     },
     {
       "relic_id": "astral_codex",
@@ -714,7 +714,7 @@
       "height": 512,
       "transparent_background": true,
       "sha256": "7fa563308ba26fc662e5fff533e2f9dd1532e4401ac0f3c6857a6c6f8977ad9e",
-      "source_generation_file": "astral_sage_s_radiant_grimoire.png"
+      "source_generation_asset": "astral_sage_s_radiant_grimoire"
     }
   ]
 }

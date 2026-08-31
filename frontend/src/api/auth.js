@@ -141,6 +141,30 @@ export function submitForgeItem(itemId, csrfToken, idempotencyKey) {
   return submitPortalAction("FORGE_ITEM", { item_id: itemId }, csrfToken, idempotencyKey);
 }
 
+export function submitGoldSaucerState(csrfToken, idempotencyKey) {
+  return submitPortalAction("GOLD_SAUCER_STATE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitCactpotStart(csrfToken, idempotencyKey) {
+  return submitPortalAction("CACTPOT_START", {}, csrfToken, idempotencyKey);
+}
+
+export function submitCactpotReveal(cell, csrfToken, idempotencyKey) {
+  return submitPortalAction("CACTPOT_REVEAL", { cell: Number(cell) }, csrfToken, idempotencyKey);
+}
+
+export function submitCactpotLine(line, csrfToken, idempotencyKey) {
+  return submitPortalAction("CACTPOT_LINE", { line: Number(line) }, csrfToken, idempotencyKey);
+}
+
+export function submitSlotsSpin(csrfToken, idempotencyKey) {
+  return submitPortalAction("SLOTS_SPIN", {}, csrfToken, idempotencyKey);
+}
+
+export function submitSaucerBuy(prizeId, csrfToken, idempotencyKey) {
+  return submitPortalAction("SAUCER_BUY", { prize_id: String(prizeId || "") }, csrfToken, idempotencyKey);
+}
+
 export function submitDailyState(csrfToken, idempotencyKey) {
   return submitPortalAction("DAILY_STATE", {}, csrfToken, idempotencyKey);
 }

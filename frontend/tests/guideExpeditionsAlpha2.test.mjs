@@ -26,5 +26,5 @@ test("Player Guide exposes a dedicated Expeditions section", () => {
 });
 
 test("Guide asset revision advances for Expeditions guide hotfix", () => {
-  assert.match(version, /1\.5\.1-relic-arsenal-complete/);
+  assert.match(version, /1\.6\.0-gold-saucer-a1/);
 });

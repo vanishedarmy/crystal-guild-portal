@@ -1,6 +1,10 @@
-v1.5.1 — Relic Arsenal Complete — Web Package Manifest
-Hosted Web runtime: 1.5.1-relic-arsenal-complete
-Frontend asset revision: 1.5.1-relic-arsenal-complete
-Compatible Bot: 1.5.1-relic-arsenal-complete
-Schema 10 / hosted sync 1 / Portal protocol 25
-Baseline: v1.5.0 — Trails & Raids Web Hotfix 4
+Crystal Guild v1.6.0 — Gold Saucer Alpha 1 — Web Package
+Hosted Web runtime: 1.6.0-gold-saucer-a1
+Frontend asset revision: 1.6.0-gold-saucer-a1
+Compatible Bot: 1.6.0-gold-saucer-a1
+Local schema: 11
+Hosted sync: 1
+Portal Action protocol: 26
+Twitch prefix: !
+Baseline: v1.5.1 — Relic Arsenal Complete + Relic Artwork Refresh Web Hotfix 1
+Carries all 54 refreshed Relic v2 stage assets forward.

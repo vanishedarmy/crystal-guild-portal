@@ -940,6 +940,7 @@ export default function Hunts({ data, overview, onRefresh }) {
 
       {activeHunt ? (
         <section className="panel timed-hunt-panel" aria-live="polite">
+          <img className="panel-scenic-art timed-hunt-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
           <div className="timed-hunt-identity">
             <MonsterPortrait monster={activeHunt.monster} name={activeHunt.monster?.name} className="timed-hunt-portrait" />
             <div className="panel-title-row timed-hunt-title-row">

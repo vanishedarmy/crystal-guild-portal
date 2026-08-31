@@ -9,12 +9,17 @@ const version=fs.readFileSync(path.join(root,"src/version.js"),"utf8");
 for(const asset of ["hunt-active.webp","trial-board-collapsed.webp","trial-board-open.webp"]){
   test(`production scene asset ${asset} ships`,()=>assert.ok(fs.existsSync(path.join(root,"public/trails-raids",asset))));
 }
-test("Trial Board binds scenic background to disclosure state",()=>{
+test("Trial Board binds scenic image layer to disclosure state",()=>{
   assert.match(raids,/boardOpen \? "open" : "collapsed"/);
-  assert.match(css,/raid-board-panel\.collapsed[\s\S]*trial-board-collapsed\.webp/);
-  assert.match(css,/raid-board-panel\.open[\s\S]*trial-board-open\.webp/);
+  assert.match(raids,/boardOpen \? "\/trails-raids\/h4\/trial-board-open\.webp" : "\/trails-raids\/h4\/trial-board-collapsed\.webp"/);
+  assert.match(css,/raid-board-panel>\.raid-board-scenic-art\.collapsed/);
+  assert.match(css,/raid-board-panel>\.raid-board-scenic-art\.open/);
 });
-test("active Hunt uses dedicated scenic background",()=>assert.match(css,/timed-hunt-panel[\s\S]*hunt-active\.webp/));
+test("active Hunt uses dedicated scenic image layer",()=>{
+  const hunts=fs.readFileSync(path.join(root,"src/player/Hunts.jsx"),"utf8");
+  assert.match(hunts,/\/trails-raids\/h4\/hunt-active\.webp/);
+  assert.match(css,/timed-hunt-panel>\.timed-hunt-scenic-art/);
+});
 test("production scenic CSS contains real newlines, not escaped newline text",()=>assert.doesNotMatch(css,/\\n/));
 test("stable production identity is current",()=>{
   assert.match(version,/WEB_BUILD = "Trails & Raids"/);

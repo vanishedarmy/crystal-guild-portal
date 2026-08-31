@@ -1,3 +1,13 @@
-Crystal Guild v1.5.0 Trails & Raids Web Hotfix 3
-This patch includes corrected scenic-board styling plus the three Trails & Raids public assets.
-Purpose: make Active Hunt and Trial & Raid board background art visibly present in live UI.
+Crystal Guild v1.5.0 Trails & Raids Web Hotfix 4
+Base: Web Hotfix 3
+Changed/new files: 8
+Deleted files: 0
+
+frontend/public/trails-raids/h4/hunt-active.webp
+frontend/public/trails-raids/h4/trial-board-collapsed.webp
+frontend/public/trails-raids/h4/trial-board-open.webp
+frontend/src/player/Hunts.jsx
+frontend/src/player/Raids.jsx
+frontend/src/styles/portal.css
+frontend/tests/trailsRaidsReleaseVisuals.test.mjs
+frontend/tests/trailsRaidsScenicLayersHotfix4.test.mjs

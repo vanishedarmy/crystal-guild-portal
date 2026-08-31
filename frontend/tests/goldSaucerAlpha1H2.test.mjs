@@ -6,8 +6,8 @@ import { WEB_ASSET_REVISION, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Gold Saucer H2 identity and authoritative presentation contract are wired", () => {
-  assert.equal(WEB_VERSION, "v1.6.0 Alpha 1 H2");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a1h2");
+  assert.equal(WEB_VERSION, "v1.6.0 Alpha 2");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a2");
   const source = read("src/player/GoldSaucer.jsx");
   assert.match(source, /const spinSlots = async/);
   assert.match(source, /finishedAction\(response\)/);

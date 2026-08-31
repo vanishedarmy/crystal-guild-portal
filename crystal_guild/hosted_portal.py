@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-a1h2"
-FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a1h2"
+HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-a2"
+FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a2"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 26
+ACTION_PROTOCOL_VERSION = 27
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -37,7 +37,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
-    "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY",
+    "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "SAUCER_BUY",
     "STREAMER_COMMAND",
 }
 
@@ -93,7 +93,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
-    "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY",
+    "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "SAUCER_BUY",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -719,7 +719,7 @@ class HostedPortalStore:
             if batches < 1 or batches > 20:
                 raise ValueError("Workshop batches must be between 1 and 20.")
             payload = {"exchange_id": exchange_id, "batches": batches}
-        elif kind in {"GOLD_SAUCER_STATE", "CACTPOT_START", "SLOTS_SPIN"}:
+        elif kind in {"GOLD_SAUCER_STATE", "CACTPOT_START", "SLOTS_SPIN", "MONSTER_TOSS_START"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")
         elif kind == "CACTPOT_REVEAL":
@@ -748,6 +748,16 @@ class HostedPortalStore:
             if line_index < 0 or line_index > 7:
                 raise ValueError("Mini Cactpot line must be from 0 to 7.")
             payload = {"line": line_index}
+        elif kind == "MONSTER_TOSS_THROW":
+            if set(payload) != {"target", "style"}:
+                raise ValueError("MONSTER_TOSS_THROW requires only target and style.")
+            target = str(payload.get("target") or "").strip().lower()
+            style = str(payload.get("style") or "").strip().lower()
+            if target not in {"small_pot", "medium_pot", "large_pot", "golden_cactuar"}:
+                raise ValueError("Invalid Monster Toss target.")
+            if style not in {"safe", "normal", "power"}:
+                raise ValueError("Invalid Monster Toss throw style.")
+            payload = {"target": target, "style": style}
         elif kind == "SAUCER_BUY":
             if set(payload) != {"prize_id"}:
                 raise ValueError("SAUCER_BUY requires only prize_id.")

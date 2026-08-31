@@ -10336,3 +10336,20 @@ details[open] > summary .details-collapse-pointer-open { display: block; }
 .saucer-attraction-grid.future-only{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:900px){.saucer-attraction-grid.future-only{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.saucer-reels.is-spinning .saucer-reel,.saucer-reels.is-spinning .saucer-slot-symbol{animation:none}}
+
+
+/* v1.6.0 Gold Saucer Alpha 2 — Monster Toss */
+.monster-toss-card{grid-column:1/-1;position:relative;overflow:hidden}
+.monster-toss-scoreboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin:.75rem 0}
+.monster-toss-scoreboard>div{padding:.75rem;border:1px solid var(--border);border-radius:10px;background:rgba(8,10,18,.72);display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.monster-toss-scoreboard span,.monster-toss-choice span,.monster-toss-choice small{color:var(--muted)}
+.monster-toss-scoreboard strong{font-size:1.25rem}
+.monster-toss-target-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem;margin:.75rem 0}
+.monster-toss-style-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin:.75rem 0}
+.monster-toss-choice{min-height:92px;text-align:left;padding:.7rem;border:1px solid var(--border);border-radius:10px;background:rgba(8,10,18,.82);color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:.25rem}
+.monster-toss-choice.selected{outline:2px solid rgba(244,194,84,.9);background:rgba(91,55,16,.45)}
+.monster-toss-choice:hover:not(:disabled){transform:translateY(-1px)}
+.monster-toss-log{display:grid;gap:.35rem;margin-top:.75rem}
+.monster-toss-log>div{display:flex;justify-content:space-between;gap:.75rem;padding:.5rem .6rem;border-radius:8px;background:rgba(8,10,18,.55)}
+.monster-toss-payouts{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}.monster-toss-payouts span{padding:.4rem .55rem;border:1px solid var(--border);border-radius:999px;background:rgba(8,10,18,.6)}
+@media(max-width:760px){.monster-toss-target-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.monster-toss-style-grid{grid-template-columns:1fr}.monster-toss-choice{min-height:auto}}

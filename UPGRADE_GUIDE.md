@@ -1,7 +1,7 @@
-# Upgrade Guide — Gold Saucer Alpha 1 Web Hotfix 2
+# Upgrade Guide — Gold Saucer Alpha 2 Web
 
-Baseline: **Gold Saucer Alpha 1 Web Hotfix 1 — Visual Treatment** with the matching Alpha 1 Bot.
+Baseline: **v1.6.0 Gold Saucer Alpha 1 Hotfix 2 Web**.
 
-Apply the Web patch from the Web project root or deploy the full H2 Web package. Deploy the matching H2 Bot at the same time because the new record fields and UTC Cactpot reset are authoritative Bot behavior. Restart/redeploy, then hard-refresh once.
+Apply the H2 → Alpha 2 Web patch from the Web project root or replace with the full Alpha 2 Web tree, then rebuild/redeploy. Deploy the matching Alpha 2 Bot because Portal Action protocol advances to **27** and Monster Toss is Bot-authoritative.
 
-No H2 DB migration or player reset is required. Local schema remains 11; hosted sync 1; Portal protocol 26.
+Local DB schema advances **11 → 12** in the Bot only. Hosted sync remains **1**. Preserve hosted secrets and environment values; no new variable is required.

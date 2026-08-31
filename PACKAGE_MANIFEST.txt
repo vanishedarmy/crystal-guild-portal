@@ -1,10 +1,9 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 1 Web Hotfix 2
-Paired UX / animation / records / balance-polish release.
-Baseline: v1.6.0 Gold Saucer Alpha 1 Web Hotfix 1 — Visual Treatment
-Hosted runtime: 1.6.0-gold-saucer-a1h2
-Compatible Bot: 1.6.0-gold-saucer-a1h2
-DB schema: 11
+Crystal Guild v1.6.0 — Gold Saucer Alpha 2 Web
+Baseline: v1.6.0 Gold Saucer Alpha 1 Hotfix 2
+Hosted runtime: 1.6.0-gold-saucer-a2
+Compatible Bot: 1.6.0-gold-saucer-a2
+DB schema: 12
 Hosted sync: 1
-Portal Action protocol: 26
+Portal Action protocol: 27
 Gold Saucer asset root retained: /gold-saucer/a1h1/
-H2: Cactpot line preview + UTC reset presentation, authoritative-result-first Slots animation, expanded records, compact history/roadmap
+Alpha 2: Monster Toss target/style UI, persistent score/throw history, daily games, reward tiers, records, expanded Prize Counter

@@ -82,7 +82,7 @@ const OWNER_COMMAND_GROUPS = [
     description: "Testing and event controls for the Alpha 1 Saucer economy. These never spend or convert player Gil.",
     commands: [
       { id: "saucergrant", command: "!saucergrant <player> | <amount>", label: "Grant Saucer Points", description: "Grant 1–100,000 Saucer Points to an exact player for testing or events", risk: "caution", argument: { type: "text", placeholder: "player | amount", label: "Player | amount" } },
-      { id: "saucerreset", command: "!saucerreset <player>", label: "Reset Saucer Timers", description: "Clear the player's active Mini Cactpot ticket and Saucer cooldowns while preserving balance and records", risk: "danger", argument: { type: "text", placeholder: "player", label: "Player" } },
+      { id: "saucerreset", command: "!saucerreset <player>", label: "Reset Saucer Timers", description: "Clear the player's active Mini Cactpot / Monster Toss state and Saucer cooldowns while preserving balance and records", risk: "danger", argument: { type: "text", placeholder: "player", label: "Player" } },
     ],
   },
   {

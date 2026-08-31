@@ -4,6 +4,8 @@ import {
   submitCactpotReveal,
   submitCactpotStart,
   submitGoldSaucerState,
+  submitMonsterTossStart,
+  submitMonsterTossThrow,
   submitSaucerBuy,
   submitSlotsSpin,
   waitForPortalAction,
@@ -57,11 +59,13 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const [slotDisplay, setSlotDisplay] = useState({ reels: [], labels: [] });
   const [slotAnimating, setSlotAnimating] = useState(false);
   const [hoveredLine, setHoveredLine] = useState(null);
+  const [tossTarget, setTossTarget] = useState("medium_pot");
+  const [tossStyle, setTossStyle] = useState("normal");
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
   const capabilities = useMemo(() => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []), [auth.action_capabilities]);
-  const required = ["GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY"];
+  const required = ["GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "SAUCER_BUY"];
   const actionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && required.every((kind) => capabilities.has(kind)));
   const csrfToken = auth.csrf_token || "";
 
@@ -173,7 +177,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1 H2</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -194,6 +198,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const nextAllowanceRemaining = Math.max(0, Number(state?.next_daily_allowance_at || 0) - nowSeconds);
   const canStartTicket = Boolean(!ticket?.state || ticket.state === "resolved") && cactpotRemaining <= 0 && points >= Number(cactpot.cost || 10);
   const canSpin = slotsRemaining <= 0 && points >= Number(slots.cost || 15);
+  const toss = state?.monster_toss || {};
+  const tossGame = toss.active_game || null;
+  const tossTargets = Array.isArray(toss.targets) ? toss.targets : [];
+  const tossStyles = Array.isArray(toss.styles) ? toss.styles : [];
+  const canStartToss = Boolean(toss.can_start);
+  const tossResetRemaining = Math.max(0, Number(toss.next_daily_reset_at || 0) - nowSeconds);
   const revealed = new Set(Array.isArray(ticket?.revealed) ? ticket.revealed : []);
   const lastSlots = slots?.last_spin?.details || null;
   const reels = Array.isArray(lastSlots?.reels) ? lastSlots.reels : [];
@@ -210,7 +220,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 1 H2</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer Alpha 2</p>
           <h2>Gold Saucer</h2>
           <p className="muted">A low-stakes side hall for daily luck, quick games, cosmetic rewards, collection records, and future Chocobo and card attractions. First visit includes a 500 SP welcome purse.</p>
         </div>
@@ -286,13 +296,43 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </section>
           </div>
 
+          <section className="panel saucer-game-card monster-toss-card">
+            <div className="panel-title-row">
+              <div><p className="eyebrow">Alpha 2 Attraction</p><h3>Monster Toss</h3></div>
+              <span className={`small-badge ${tossGame ? "ready" : ""}`}>{tossGame ? `${number(tossGame.throws_remaining)} throws left` : `${number(toss.games_remaining)} / ${number(toss.daily_games || 3)} games left`}</span>
+            </div>
+            <p className="muted">Five throws per game. Choose a target, then choose Safe, Normal, or Power. Harder targets and riskier throws score more, but the Bot resolves every hit authoritatively.</p>
+            {tossGame ? (
+              <>
+                <div className="monster-toss-scoreboard">
+                  <div><span>Score</span><strong>{number(tossGame.score)}</strong></div>
+                  <div><span>Throw</span><strong>{number(tossGame.throw_index)} / {number(toss.throws_per_game || 5)}</strong></div>
+                </div>
+                <div className="monster-toss-target-grid">
+                  {tossTargets.map((target) => <button type="button" key={target.id} className={`monster-toss-choice ${tossTarget === target.id ? "selected" : ""}`} onClick={() => setTossTarget(target.id)} disabled={Boolean(busy)}><strong>{target.name}</strong><span>{number(target.points)} base pts</span><small>{Math.round(Number(target.accuracy || 0) * 100)}% base accuracy</small></button>)}
+                </div>
+                <div className="monster-toss-style-grid">
+                  {tossStyles.map((style) => <button type="button" key={style.id} className={`monster-toss-choice style ${tossStyle === style.id ? "selected" : ""}`} onClick={() => setTossStyle(style.id)} disabled={Boolean(busy)}><strong>{style.name}</strong><small>{style.description}</small></button>)}
+                </div>
+                <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy)} onClick={() => mutate("monster-toss-throw", () => submitMonsterTossThrow(tossTarget, tossStyle, csrfToken, actionKey("monster-toss-throw", `${tossTarget}-${tossStyle}`)), "Throwing…")}>{busy === "monster-toss-throw" ? "Throwing…" : "Take Throw"}</button>
+                <div className="monster-toss-log">{(tossGame.throws || []).slice().reverse().map((entry) => <div key={entry.throw}><span>Throw {entry.throw}: {entry.target_name} · {entry.style_name}</span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
+              </>
+            ) : (
+              <div className="monster-toss-start">
+                <div className="saucer-result"><strong>{number(toss.cost || 20)} SP entry</strong><span>{number(toss.throws_per_game || 5)} throws · {number(toss.daily_games || 3)} games/day</span></div>
+                <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : points < Number(toss.cost || 20) ? "Not Enough SP" : `Start Game · ${number(toss.cost || 20)} SP`}</button>
+              </div>
+            )}
+            <details className="saucer-balance-notes"><summary>Score rewards</summary><div className="monster-toss-payouts">{(toss.payouts || []).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} SP</span>)}</div></details>
+          </section>
+
           <section className="panel saucer-prize-panel saucer-scenic-panel">
             <img className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="panel-title-row">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
-              <span className="small-badge">Titles Only · Alpha 1</span>
+              <span className="small-badge">Titles Only · Alpha 2</span>
             </div>
-            <p className="muted">Spend SP on collectible titles. Alpha 1 prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
+            <p className="muted">Spend SP on collectible titles. Gold Saucer prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
             <div className="saucer-prize-grid">
               {prizes.map((prize) => (
                 <article className={`saucer-prize-card ${prize.owned ? "owned" : ""}`} key={prize.id}>
@@ -314,7 +354,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </section>
 
           <section className="panel saucer-records-panel">
-            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 1 H2</span></div>
+            <div className="panel-title-row"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 2</span></div>
             <div className="saucer-record-grid">
               <div><span>Current Net SP</span><strong>{Number(records.net_points || 0) >= 0 ? "+" : ""}{number(records.net_points)} SP</strong></div>
               <div><span>Games Played</span><strong>{number(records.games_played)}</strong></div>
@@ -326,6 +366,10 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div><span>Slot Win Rate</span><strong>{Number(records.slots_win_rate_pct || 0).toFixed(1)}%</strong></div>
               <div><span>Triple Matches</span><strong>{number(records.slots_triples)}</strong></div>
               <div><span>Best Slots</span><strong>{number(state.account?.slots_best_payout)} SP</strong></div>
+              <div><span>Monster Toss Games</span><strong>{number(records.monster_toss_games)}</strong></div>
+              <div><span>Best Toss Score</span><strong>{number(records.monster_toss_best_score)}</strong></div>
+              <div><span>Toss Accuracy</span><strong>{Number(records.monster_toss_accuracy_pct || 0).toFixed(1)}%</strong></div>
+              <div><span>Best Toss Payout</span><strong>{number(records.monster_toss_best_payout)} SP</strong></div>
               <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} SP</strong></div>
               <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} SP</strong></div>
             </div>
@@ -342,9 +386,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 {history.map((entry, index) => {
                   const game = String(entry.game || "activity").replaceAll("_", " ");
                   const details = entry.details || {};
-                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : game;
+                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
-                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
+                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
                     <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} SP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} SP` : "—"}</b>
                   </div>;
                 })}

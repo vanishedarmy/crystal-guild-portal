@@ -161,6 +161,14 @@ export function submitSlotsSpin(csrfToken, idempotencyKey) {
   return submitPortalAction("SLOTS_SPIN", {}, csrfToken, idempotencyKey);
 }
 
+export function submitMonsterTossStart(csrfToken, idempotencyKey) {
+  return submitPortalAction("MONSTER_TOSS_START", {}, csrfToken, idempotencyKey);
+}
+
+export function submitMonsterTossThrow(target, style, csrfToken, idempotencyKey) {
+  return submitPortalAction("MONSTER_TOSS_THROW", { target: String(target || ""), style: String(style || "") }, csrfToken, idempotencyKey);
+}
+
 export function submitSaucerBuy(prizeId, csrfToken, idempotencyKey) {
   return submitPortalAction("SAUCER_BUY", { prize_id: String(prizeId || "") }, csrfToken, idempotencyKey);
 }

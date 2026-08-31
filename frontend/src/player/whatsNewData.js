@@ -1,17 +1,17 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.5.0 Beta 1",
+    version: "v1.5.0 Beta 2",
     name: "Trails & Raids",
-    title: "Build your Trial Chronicle",
-    summary: "Trails & Raids Beta 1 consolidates the seven flagship encounters into persistent personal records, preserving existing clears while adding tracked wipes, fastest clear rounds, contribution bests, and a Seven-Trial mastery ladder.",
+    title: "Master the Trials, trust the settlement",
+    summary: "Trails & Raids Beta 2 gives repeat clears visible mastery goals, keeps the last Trial result on the Board, shows live action readiness, and hardens raid settlement so stale Bot connections can never grant the same victory twice.",
     highlights: [
-      { title: "Trial Chronicle", description: "The Trial & Raid Board now summarizes your unique clears, lifetime Trial clears, tracked wipes, best contribution score, and current mastery rank." },
-      { title: "Personal records", description: "Each flagship Trial records fastest clear round plus best contribution, damage, healing, and mitigation from Beta 1 onward." },
-      { title: "Existing clears preserved", description: "Every Trial clear already recorded during Alpha remains part of your Chronicle automatically; no reset or conversion step is required." },
-      { title: "Seven-Trial mastery", description: "Unique flagship clears advance visible Chronicle ranks from Unproven through Trial Initiate, Trial Vanguard, Primal Conqueror, and Coilbreaker." },
-      { title: "No reward rebalance", description: "Trial rewards, boss drops, encounter mechanics, Dungeon progression, and the established raid contribution payout formula are unchanged in this consolidation pass." },
+      { title: "Repeat-clear mastery", description: "Each flagship Trial now advances through Proven, Seasoned, Veteran, and Mastered milestones at 1, 3, 5, and 10 clears using the clear history you already have." },
+      { title: "Last Trial Result", description: "After a victory or wipe, the Trial & Raid Board keeps the encounter, round count, survivors, last mechanic, and top contribution results visible until the next raid begins." },
+      { title: "Action readiness", description: "During combat the Board and !boss status show how many eligible raiders have queued an action for the current round, making stack, tower, and Defend checks easier to coordinate." },
+      { title: "Exactly-once settlement", description: "Every raid run now carries an exact run identity with a bounded atomic settlement receipt. A stale or recovered second Bot connection replays the committed result instead of duplicating XP, Gil, loot, Fellowship credit, or records." },
+      { title: "Chronicle continuity", description: "Beta 1 personal bests and Trial Chronicle ranks remain intact. Repeat mastery is derived from the existing boss-clear ledger, so qualifying older clears count immediately." },
     ],
-    action: { tab: "hunts", label: "Open Trial Chronicle" },
+    action: { tab: "hunts", label: "Open Trial & Raid Board" },
   },
   {
     version: "v1.4.0",

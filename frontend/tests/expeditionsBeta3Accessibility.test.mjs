@@ -11,8 +11,8 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Trails & Raids Beta 1"/);
-  assert.match(version, /1\.5\.0-trails-raids-b1/);
+  assert.match(version, /WEB_BUILD = "Trails & Raids Beta 2"/);
+  assert.match(version, /1\.5\.0-trails-raids-b2/);
   assert.match(news, /name: "Expeditions"/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

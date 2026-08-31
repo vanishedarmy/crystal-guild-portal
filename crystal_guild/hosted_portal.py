@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.5.0-trails-raids-b1"
-FRONTEND_ASSET_REVISION = "1.5.0-trails-raids-b1"
+HOSTED_PORTAL_VERSION = "1.5.0-trails-raids-b2"
+FRONTEND_ASSET_REVISION = "1.5.0-trails-raids-b2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 25
 ALLOWED_PORTAL_ACTIONS = {
@@ -1597,12 +1597,23 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
     allowed = {
         "active", "status", "boss", "tier", "encounter_type", "encounter_name",
         "hp", "max_hp", "round", "phase", "signature", "raiders", "alive",
-        "enraged", "summon_gauge", "top", "adds", "mechanic", "last_mechanic",
+        "ready_actions", "actionable_raiders", "enraged", "summon_gauge", "top", "adds", "mechanic", "last_mechanic",
         "next_round_at", "updated_at",
     }
     extra = set(overlay) - allowed
     if extra:
         raise ValueError(f"Overlay snapshot contains unsupported field: {sorted(extra)[0]}")
+
+    for key in ("ready_actions", "actionable_raiders"):
+        if key in overlay:
+            try:
+                value = int(overlay[key])
+            except (TypeError, ValueError):
+                raise ValueError("Overlay raid action readiness is invalid.") from None
+            if value < 0:
+                raise ValueError("Overlay raid action readiness is invalid.")
+    if int(overlay.get("ready_actions", 0) or 0) > int(overlay.get("actionable_raiders", overlay.get("raiders", 0)) or 0):
+        raise ValueError("Overlay raid action readiness is invalid.")
 
     top = overlay.get("top", [])
     if not isinstance(top, list) or len(top) > 5:

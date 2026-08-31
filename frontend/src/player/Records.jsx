@@ -108,12 +108,13 @@ export default function Records({ data, onDetail }) {
           <StatCard current={trialSummary.total_clears || 0} label="Trial Clears" />
           <StatCard current={trialSummary.tracked_wipes || 0} label="Tracked Wipes" />
           <StatCard current={trialSummary.best_score || 0} label="Best Contribution" />
+          <StatCard current={trialSummary.mastered_trials || 0} label="Mastered Trials" max={trialSummary.total_trials || trials.length || 7} />
         </div>
         <div className="trial-record-grid">
           {trials.map((trial) => (
             <div className={`trial-record-card ${Number(trial.clears || 0) > 0 ? "cleared" : "uncleared"}`} key={trial.id}>
               <div className="trial-record-card-head"><div><span className="slot-label">{trial.capstone ? "Capstone Trial" : "Flagship Trial"}</span><strong>{trial.name} — {trial.encounter_name}</strong></div><span className={`small-badge ${Number(trial.clears || 0) > 0 ? "success" : ""}`}>{Number(trial.clears || 0) > 0 ? `${number(trial.clears)} clear${Number(trial.clears) === 1 ? "" : "s"}` : "Uncleared"}</span></div>
-              <div className="trial-record-card-stats"><span><b>{trial.fastest_clear_rounds ? `R${number(trial.fastest_clear_rounds)}` : "—"}</b><small>Fastest</small></span><span><b>{number(trial.best_score || 0)}</b><small>Best Score</small></span><span><b>{number(trial.best_damage || 0)}</b><small>Damage</small></span><span><b>{number(trial.best_healing || 0)}</b><small>Healing</small></span><span><b>{number(trial.best_mitigation || 0)}</b><small>Mitigation</small></span><span><b>{number(trial.wipes || 0)}</b><small>Tracked Wipes</small></span></div>
+              <div className="trial-record-card-stats"><span><b>{trial.fastest_clear_rounds ? `R${number(trial.fastest_clear_rounds)}` : "—"}</b><small>Fastest</small></span><span><b>{number(trial.best_score || 0)}</b><small>Best Score</small></span><span><b>{number(trial.best_damage || 0)}</b><small>Damage</small></span><span><b>{number(trial.best_healing || 0)}</b><small>Healing</small></span><span><b>{number(trial.best_mitigation || 0)}</b><small>Mitigation</small></span><span><b>{number(trial.wipes || 0)}</b><small>Tracked Wipes</small></span></div><div className="trial-repeat-mastery"><span>{trial.repeat_mastery || "Uncleared"}</span><small>{trial.next_clear_goal ? `${number(trial.clears || 0)} / ${number(trial.next_clear_goal)} clears to next repeat milestone` : "10+ clears · repeat mastery complete"}</small></div>
             </div>
           ))}
         </div>

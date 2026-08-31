@@ -147,7 +147,7 @@ class PortalServerCase(unittest.TestCase):
                 "active": True, "status": "COMBAT", "boss": "Behemoth King",
                 "tier": "Trial", "encounter_type": "Trial", "encounter_name": "Inferno Crucible",
                 "hp": 1500, "max_hp": 2500, "round": 3, "phase": "Rage",
-                "signature": "Hellfire", "raiders": 4, "alive": 3, "enraged": False,
+                "signature": "Hellfire", "raiders": 4, "alive": 3, "ready_actions": 2, "actionable_raiders": 3, "enraged": False,
                 "summon_gauge": 45,
                 "top": [{"name": "Van", "role": "Tank", "damage": 900, "healing": 25, "mitigation": 70, "score": 968}],
                 "adds": [{"name": "Icebound Mirror A", "hp": 500, "max_hp": 1200}],
@@ -169,6 +169,8 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(state["top"][0]["mitigation"], 70)
         self.assertEqual(state["top"][0]["score"], 968)
         self.assertEqual(state["top"][0]["role"], "Tank")
+        self.assertEqual(state["ready_actions"], 2)
+        self.assertEqual(state["actionable_raiders"], 3)
         self.assertEqual(state["adds"][0]["name"], "Icebound Mirror A")
         self.assertEqual(state["mechanic"]["name"], "Diamond Aegis")
         self.assertEqual(state["last_mechanic"]["name"], "Radiant Plume")
@@ -186,8 +188,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.5.0-trails-raids-b1", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.5.0-trails-raids-b1")
+        self.assertIn("1.5.0-trails-raids-b2", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.5.0-trails-raids-b2")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

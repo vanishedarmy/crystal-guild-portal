@@ -1,3 +1,13 @@
+## v1.5.0 — Trails & Raids Beta 2
+- Adds repeat-clear mastery, Last Trial Result, live action-readiness presentation, and settlement-hardening continuity.
+- Keeps the seven-Trial catalog, roomy collapsible Board, Trial Chronicle, rewards, schema 10, sync 1, and Portal protocol 25 unchanged.
+- Runtime/frontend/Bot `1.5.0-trails-raids-b2`.
+
+## v1.5.0 — Trails & Raids Beta 1
+- Freezes the seven scripted Trials and adds the authenticated Trial Chronicle across the Trial Board and Records page.
+- Existing clears carry forward; Beta 1 begins persistence of wipes, fastest clears, and contribution personal bests.
+- Runtime/frontend/Bot `1.5.0-trails-raids-b1`; schema 10 / sync 1 / Portal protocol 25 unchanged.
+
 ## v1.5.0 — Trails & Raids Alpha 7
 - Bahamut — The Final Coil becomes the first capstone Trial.
 - Flare Breath, Akh Morn, Megaflare Towers, and critical-HP Teraflare Charge add multi-phase coordination.

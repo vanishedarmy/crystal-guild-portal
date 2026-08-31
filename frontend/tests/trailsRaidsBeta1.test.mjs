@@ -26,7 +26,8 @@ test("Beta 1 Player Guide explains record continuity",()=>{
   for(const term of ["Beta 1 — Trial Chronicle","existing Trial clears","Tracked wipes","fastest clear","contribution bests"]) assert.match(guide,new RegExp(term,"i"));
 });
 
-test("Beta 1 What's New shifts from new Trial content to records consolidation",()=>{
-  const news=read("src/player/whatsNewData.js");
-  for(const term of ["v1.5.0 Beta 1","Trial Chronicle","Personal records","Existing clears preserved","Seven-Trial mastery"]) assert.match(news,new RegExp(term));
+test("Beta 2 carries the Beta 1 Trial Chronicle forward",()=>{
+  const news=read("src/player/whatsNewData.js"), guide=read("public/guide-body.html");
+  for(const term of ["v1.5.0 Beta 2","Chronicle continuity","Repeat-clear mastery"]) assert.match(news,new RegExp(term));
+  for(const term of ["Beta 1 — Trial Chronicle","fastest clear","contribution bests"]) assert.match(guide,new RegExp(term,"i"));
 });

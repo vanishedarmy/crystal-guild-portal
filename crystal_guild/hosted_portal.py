@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.7.0-retainer-a1"
-FRONTEND_ASSET_REVISION = "1.7.0-retainer-a1"
+HOSTED_PORTAL_VERSION = "1.7.0-retainer-a2"
+FRONTEND_ASSET_REVISION = "1.7.0-retainer-a2"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 30
+ACTION_PROTOCOL_VERSION = 31
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -811,13 +811,16 @@ class HostedPortalStore:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")
         elif kind == "RETAINER_DISPATCH":
-            if set(payload) != {"assignment"}:
-                raise ValueError("RETAINER_DISPATCH requires only assignment.")
+            if not set(payload).issubset({"assignment", "priority"}) or "assignment" not in payload:
+                raise ValueError("RETAINER_DISPATCH requires assignment and optional priority only.")
             assignment = str(payload.get("assignment") or "").strip().lower()
+            priority = str(payload.get("priority") or "").strip().lower()
             allowed = {"field_gathering", "monster_salvage", "mineral_survey", "regional_procurement", "specialist_acquisition"}
             if assignment not in allowed:
                 raise ValueError("Invalid Retainer assignment.")
-            payload = {"assignment": assignment}
+            if priority and (len(priority) > 100 or not re.fullmatch(r"[a-z0-9_]+", priority)):
+                raise ValueError("Invalid Retainer priority material.")
+            payload = {"assignment": assignment, "priority": priority}
         elif kind in {"CRAFTING_STATE", "DAILY_STATE", "CLAIM_DAILY"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")

@@ -5,7 +5,7 @@ import test from "node:test";
 const root = new URL("../", import.meta.url);
 const read = (path) => readFile(new URL(path, root), "utf8");
 
-test("v1.7.0 Alpha 1 mounts Retainer Service as a personal Guild Service", async () => {
+test("v1.7.0 Alpha 2 mounts Retainer Service as a personal Guild Service", async () => {
   const profile = await read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /RetainerService/);
   assert.match(profile, /\["retainer", "Retainer Service", "◇"\]/);
@@ -29,7 +29,7 @@ test("Portal auth exports strict Retainer action helpers", async () => {
 
 test("Retainer Service has responsive assignment and haul layouts", async () => {
   const css = await read("src/styles/portal.css");
-  assert.match(css, /v1\.7\.0 Alpha 1 — Retainer Service/);
+  assert.match(css, /v1\.7\.0 Alpha 2 — Retainer Service/);
   assert.match(css, /\.retainer-assignment-grid\{display:grid/);
   assert.match(css, /@media\(max-width:620px\)/);
   assert.match(css, /\.retainer-assignment-grid,.retainer-haul-grid\{grid-template-columns:1fr\}/);
@@ -39,10 +39,10 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   const updates = await read("src/player/whatsNewData.js");
   const guide = await read("public/guide-body.html");
   const guideData = JSON.parse(await read("public/guide-data.json"));
-  assert.match(updates, /version: "v1\.7\.0 Alpha 1"[\s\S]*?name: "Retainer Service"/);
+  assert.match(updates, /version: "v1\.7\.0 Alpha 2"[\s\S]*?name: "Retainer Service"/);
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
-  assert.match(guide, /Field Gathering \(30m \/ 100 Gil\)/);
-  assert.equal(guideData.meta.version, "v1.7.0 — Retainer Service Alpha 1");
-  assert.equal(guideData.meta.release, "1.7.0-retainer-a1");
+  assert.match(guide, /Priority material/);
+  assert.equal(guideData.meta.version, "v1.7.0 — Retainer Service Alpha 2");
+  assert.equal(guideData.meta.release, "1.7.0-retainer-a2");
 });

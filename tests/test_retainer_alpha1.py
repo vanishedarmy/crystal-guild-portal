@@ -38,9 +38,9 @@ class RetainerHostedAlpha1Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_retainer_contract_advances_release_and_protocol(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-retainer-a1")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a1")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 30)
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-retainer-a2")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a2")
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 31)
         for action in ("RETAINER_STATE", "RETAINER_DISPATCH", "RETAINER_COLLECT"):
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)
 

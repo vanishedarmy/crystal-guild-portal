@@ -193,8 +193,8 @@ export function submitRetainerState(csrfToken, idempotencyKey) {
   return submitPortalAction("RETAINER_STATE", {}, csrfToken, idempotencyKey);
 }
 
-export function submitRetainerDispatch(assignment, csrfToken, idempotencyKey) {
-  return submitPortalAction("RETAINER_DISPATCH", { assignment: String(assignment || "") }, csrfToken, idempotencyKey);
+export function submitRetainerDispatch(assignment, priority, csrfToken, idempotencyKey) {
+  return submitPortalAction("RETAINER_DISPATCH", { assignment: String(assignment || ""), priority: String(priority || "") }, csrfToken, idempotencyKey);
 }
 
 export function submitRetainerCollect(csrfToken, idempotencyKey) {

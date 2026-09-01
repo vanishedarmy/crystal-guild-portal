@@ -5,10 +5,10 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } 
 
 test("Trails & Raids public web identity is centralized", () => {
   assert.equal(WEB_VERSION, "v1.7.0");
-  assert.equal(WEB_BUILD, "Retainer Service Alpha 1");
-  assert.equal(WEB_RELEASE, "v1.7.0 — Retainer Service Alpha 1");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.7.0 — Retainer Service Alpha 1");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-retainer-a1");
+  assert.equal(WEB_BUILD, "Retainer Service Alpha 2");
+  assert.equal(WEB_RELEASE, "v1.7.0 — Retainer Service Alpha 2");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.7.0 — Retainer Service Alpha 2");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-retainer-a2");
 });
 
 

@@ -29,6 +29,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const [clock, setClock] = useState(() => Date.now());
+  const [priorityByAssignment, setPriorityByAssignment] = useState({});
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
@@ -86,11 +87,13 @@ export default function RetainerService({ data, overview, onRefresh }) {
   }, [state?.assignment?.assignment_id, state?.assignment?.state]);
 
   const runDispatch = async (assignment) => {
-    if (!actionsAvailable || busy || !assignment?.can_dispatch) return;
+    const priority = String(priorityByAssignment[assignment?.id] || "");
+    const canDispatch = priority ? assignment?.can_dispatch_focused : assignment?.can_dispatch;
+    if (!actionsAvailable || busy || !canDispatch) return;
     setBusy(`dispatch:${assignment.id}`);
-    setMessage(`Dispatching your Retainer on ${assignment.name}…`);
+    setMessage(`Dispatching your Retainer on ${assignment.name}${priority ? " with a priority request" : ""}…`);
     try {
-      const response = await submitRetainerDispatch(assignment.id, csrfToken, actionKey("retainer-dispatch", assignment.id));
+      const response = await submitRetainerDispatch(assignment.id, priority, csrfToken, actionKey("retainer-dispatch", assignment.id));
       const finished = await finishedAction(response);
       applyFinished(finished, "Retainer dispatched.");
       onRefresh?.();
@@ -139,7 +142,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
       <section className="panel span-12 retainer-hero-panel">
         <div className="panel-title-row">
           <div>
-            <p className="eyebrow">v1.7.0 Alpha 1</p>
+            <p className="eyebrow">v1.7.0 Alpha 2</p>
             <h2>Retainer Service</h2>
           </div>
           <span className="small-badge">{number(state.gil)} Gil</span>
@@ -167,7 +170,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
           <div className="retainer-idle-state"><strong>Your Retainer is ready for work.</strong><span>Choose one procurement assignment below. Only one assignment can be active at a time.</span></div>
         ) : assignment.state === "active" && !returned ? (
           <div className="retainer-away-state">
-            <div><strong>{assignment.name}</strong><span>{assignment.pool_label}</span></div>
+            <div><strong>{assignment.name}</strong><span>{assignment.pool_label}</span>{assignment.priority ? <small>Priority: {assignment.priority.name}</small> : null}</div>
             <div className="retainer-timer"><span>Returns in</span><strong>{duration(remaining)}</strong></div>
             <small>The haul was committed when the Retainer departed and cannot be rerolled by refreshing or reconnecting.</small>
           </div>
@@ -195,15 +198,21 @@ export default function RetainerService({ data, overview, onRefresh }) {
             const dispatching = busy === `dispatch:${option.id}`;
             return (
               <article className={`retainer-assignment-card ${option.unlocked ? "" : "locked"}`} key={option.id}>
-                <div className="retainer-assignment-head"><strong>{option.name}</strong><span className={`small-badge ${option.unlocked ? "ready" : "locked"}`}>{option.unlocked ? `${number(option.cost_gil)} Gil` : `Rank ${number(option.rank_required)}`}</span></div>
+                <div className="retainer-assignment-head"><strong>{option.name}</strong><span className={`small-badge ${option.unlocked ? "ready" : "locked"}`}>{option.unlocked ? `${number(priorityByAssignment[option.id] ? option.focused_cost_gil : option.cost_gil)} Gil` : `Rank ${number(option.rank_required)}`}</span></div>
                 <p>{option.description}</p>
                 <div className="retainer-assignment-meta"><span>{duration(option.duration_seconds)}</span><span>+{number(option.retainer_xp)} EXP</span></div>
                 <small>{option.pool_label}</small>
-                <button type="button" className="equipment-action-button" disabled={Boolean(busy) || !option.can_dispatch} onClick={() => runDispatch(option)}>{dispatching ? "Dispatching…" : option.unlocked ? `Dispatch · ${number(option.cost_gil)} Gil` : `Requires Rank ${number(option.rank_required)}`}</button>
+                {option.unlocked ? <label className="retainer-priority-field"><span>Priority material</span><select value={priorityByAssignment[option.id] || ""} disabled={Boolean(busy)} onChange={(event) => setPriorityByAssignment((current) => ({ ...current, [option.id]: event.target.value }))}><option value="">General mixed haul</option>{(Array.isArray(option.priorities) ? option.priorities : []).map((item) => <option value={item.item_id} key={item.item_id}>{item.name} · {item.rarity}</option>)}</select><small>{priorityByAssignment[option.id] ? `Guaranteed one normal roll · ${number(option.focused_cost_gil)} Gil` : `Standard mixed haul · ${number(option.cost_gil)} Gil`}</small></label> : null}
+                <button type="button" className="equipment-action-button" disabled={Boolean(busy) || !(priorityByAssignment[option.id] ? option.can_dispatch_focused : option.can_dispatch)} onClick={() => runDispatch(option)}>{dispatching ? "Dispatching…" : option.unlocked ? `Dispatch · ${number(priorityByAssignment[option.id] ? option.focused_cost_gil : option.cost_gil)} Gil` : `Requires Rank ${number(option.rank_required)}`}</button>
               </article>
             );
           })}
         </div>
+      </section>
+
+      <section className="panel span-12 retainer-history-panel">
+        <div className="panel-title-row"><div><p className="eyebrow">Procurement Record</p><h3>Recent Retainer Hauls</h3></div><span className="small-badge">Last 8</span></div>
+        {Array.isArray(state.history) && state.history.length ? <div className="retainer-history-list">{state.history.map((entry) => <article key={entry.assignment_id}><div><strong>{entry.name}</strong><span>{entry.priority ? `Priority: ${entry.priority.name}` : "General haul"} · {number(entry.cost_gil)} Gil · +{number(entry.retainer_xp)} EXP</span></div><small>{(entry.rewards || []).map((item) => `${item.name} x${number(item.quantity)}`).join(" · ")}{entry.bonus ? ` · Bonus: ${entry.bonus.name} x${number(entry.bonus.quantity)}` : ""}</small></article>)}</div> : <div className="retainer-idle-state"><strong>No collected hauls yet.</strong><span>Your eight most recent Retainer collections will appear here.</span></div>}
       </section>
     </div>
   );

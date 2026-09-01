@@ -1,9 +1,9 @@
-Crystal Guild v1.7.0 — Retainer Service Alpha 1 Web
-Frontend revision: 1.7.0-retainer-a1
-Runtime/Bot: 1.7.0-retainer-a1
-Paired local DB schema: 14
+Crystal Guild v1.7.0 — Retainer Service Alpha 2 Web
+Frontend revision: 1.7.0-retainer-a2
+Runtime/Bot: 1.7.0-retainer-a2
+Paired local DB schema: 15
 Hosted sync: 1
-Portal protocol: 30
-Feature: Retainer Service — personal timed crafting-material procurement
+Portal protocol: 31
+Feature: Retainer Service — general or priority-targeted timed crafting-material procurement + eight-entry haul history
 Gold Saucer: v1.6.0 production baseline preserved unchanged
-Moogle Emporium Annex: not included in Alpha 1; planned for a later v1.7.0 phase
+Moogle Emporium Annex: not included in Alpha 2; planned for a later v1.7.0 phase

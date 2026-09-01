@@ -1,18 +1,11 @@
-# Crystal Guild v1.7.0 — Retainer Service Alpha 1 Web
+# Crystal Guild v1.7.0 — Retainer Service Alpha 2
 
-## Alpha 1
+Alpha 2 expands the personal Retainer Service with **targeted procurement** and a persistent recent-haul record. Every existing assignment can still run as the Alpha 1 general mixed haul, or the player can nominate one material from that route as a priority.
 
-Retainer Service joins Guild Services as a Portal-only material-procurement feature. Every player has one lightweight personal Retainer and may run one timed assignment at a time.
+A focused dispatch costs a modest Gil premium and guarantees one normal reward roll for the selected material. Remaining rolls and bonus finds stay mixed and independent, preventing priority procurement from becoming a rare-material multiplier. General assignment costs, durations, Retainer EXP, Rank thresholds, one-assignment limits, dispatch-time reward commitment, and exactly-once collection are unchanged.
 
-The Portal shows Retainer Rank/EXP, lifetime assignment/material statistics, current assignment status and return countdown, secured returned hauls, bonus finds, and five procurement routes with Gil costs and rank gates.
+The Retainer desk now records the eight most recently collected assignments with route, priority, haul, bonus find, Gil cost, and Retainer EXP.
 
-Rewards are authoritative on the local Bot and committed at dispatch, so refreshes and reconnects cannot reroll them. Collection is exactly-once. Retainers do not store equipment or enter combat.
+Database schema advances from **14 to 15** for Retainer history. Portal Action protocol advances from **30 to 31** because `RETAINER_DISPATCH` now accepts an optional `priority` material ID. Hosted sync remains 1. No artwork changes are included in Alpha 2; Retainer artwork is intentionally the next pass.
 
-### Release contract
-
-- Runtime/frontend: `1.7.0-retainer-a1`
-- Paired Bot schema: **14**
-- Hosted sync: **1**
-- Portal protocol: **30**
-- Gold Saucer/MGP behavior: unchanged from v1.6.0 production
-- Moogle Emporium Annex: deferred to a later v1.7.0 phase
+Runtime identity: `1.7.0-retainer-a2`.

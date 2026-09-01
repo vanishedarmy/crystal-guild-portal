@@ -1,3 +1,7 @@
+## v1.7.0 — Retainer Service Alpha 2
+
+Adds targeted material procurement and an eight-entry recent-haul history to Retainer Service. Focused dispatches preserve the existing roll count/timers/EXP but pay a Gil premium to guarantee one normal roll of the selected route material. Runtime/frontend `1.7.0-retainer-a2`; paired Bot schema 15 / hosted sync 1 / Portal protocol 31. Artwork remains deferred to the next pass.
+
 ## v1.7.0 — Retainer Service Alpha 1
 
 Adds a Portal-only personal Retainer for Gil-funded timed crafting-material procurement. Alpha 1 includes five assignment routes, Retainer Rank/EXP, committed-at-dispatch rewards, modest bonus finds, restart-safe persistence, and exactly-once collection. Runtime/frontend `1.7.0-retainer-a1`; paired Bot schema 14 / hosted sync 1 / Portal protocol 30. The v1.6.0 Gold Saucer production baseline remains unchanged.

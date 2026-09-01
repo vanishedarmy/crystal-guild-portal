@@ -1,10 +1,12 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 4 — Web Package
+Crystal Guild v1.6.0 — Gold Saucer Alpha 4 Web Hotfix 1 — Web Package
 Hosted runtime: 1.6.0-gold-saucer-a4
-Frontend revision: 1.6.0-gold-saucer-a4
+Frontend revision: 1.6.0-gold-saucer-a4h1
 Compatible Bot runtime: 1.6.0-gold-saucer-a4
 Local DB schema: 12
 Hosted sync schema: 1
 Portal Action protocol: 28
 Twitch prefix: !
 Alpha 4 feature: Chocobo Racing
+Hotfix 1: Chocobo Racing artwork + responsive UI pass
+Artwork: 9 optimized WebP assets under /gold-saucer/a4h1/chocobo-racing/
 Database migration: none

@@ -18,6 +18,17 @@ const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Cente
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
 const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
 const CHOCOBO_PORTRAIT_ROOT = "/retro-phase-iii/chocobo-portraits-v1";
+const RACE_ART_ROOT = "/gold-saucer/a4h1/chocobo-racing";
+const RACE_COURSE_ART = {
+  manderville_sprint: `${RACE_ART_ROOT}/courses/manderville-sprint.webp`,
+  crystal_circuit: `${RACE_ART_ROOT}/courses/crystal-circuit.webp`,
+  golden_gauntlet: `${RACE_ART_ROOT}/courses/golden-gauntlet.webp`,
+};
+const RACE_STRATEGY_ART = {
+  steady: `${RACE_ART_ROOT}/pace/steady.webp`,
+  balanced: `${RACE_ART_ROOT}/pace/balanced.webp`,
+  sprint: `${RACE_ART_ROOT}/pace/sprint.webp`,
+};
 const TOSS_TARGET_ART = {
   small_pot: `${TOSS_ART_ROOT}/targets/small-pot.webp`,
   medium_pot: `${TOSS_ART_ROOT}/targets/medium-pot.webp`,
@@ -39,6 +50,14 @@ const SLOT_ART = {
   bomb: `${SAUCER_ART_ROOT}/slots/bomb.webp`,
   potion: `${SAUCER_ART_ROOT}/slots/potion.webp`,
 };
+
+function racePlaceLabel(value) {
+  const place = Number(value || 0);
+  if (place === 1) return "1st";
+  if (place === 2) return "2nd";
+  if (place === 3) return "3rd";
+  return place > 0 ? `${place}th` : "—";
+}
 
 function actionKey(kind, target = "saucer") {
   const suffix = globalThis.crypto?.randomUUID
@@ -419,11 +438,15 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </section>
 
           <section className="panel saucer-racing-panel">
-            <div className="panel-title-row">
+            <div className="saucer-race-hero" aria-hidden="true">
+              <img src={`${RACE_ART_ROOT}/hero.webp`} alt="" />
+              <div className="saucer-race-hero-shade" />
+            </div>
+            <div className="panel-title-row saucer-race-title-row">
               <div><p className="eyebrow">Alpha 4 Attraction</p><h3>Chocobo Racing</h3></div>
               <span className={`small-badge ${Number(racing.races_remaining || 0) > 0 ? "ready" : "locked"}`}>{number(racing.races_remaining)} / {number(racing.daily_races || 3)} races left</span>
             </div>
-            <p className="muted">Race your existing registered Chocobo. Bond level gives a modest performance edge, favored traits help on specific courses, and your pace choice controls race variance.</p>
+            <p className="muted saucer-race-intro">Race your existing registered Chocobo. Bond level gives a modest performance edge, favored traits help on specific courses, and your pace choice controls race variance.</p>
             {!racing.registered ? (
               <div className="saucer-race-locked">
                 <strong>Registered Chocobo Required</strong>
@@ -439,33 +462,57 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
 
                 {lastRace ? (
                   <div className={`saucer-race-result place-${number(lastRaceDetails.placement || 6)}`}>
-                    <div><span>Last Race</span><strong>{number(lastRaceDetails.placement || 0)}{Number(lastRaceDetails.placement) === 1 ? "st" : Number(lastRaceDetails.placement) === 2 ? "nd" : Number(lastRaceDetails.placement) === 3 ? "rd" : "th"} · {lastRaceDetails.course_name || "Circuit"}</strong><small>{lastRaceDetails.strategy_name || "Balanced"} · performance {Number(lastRaceDetails.performance || 0).toFixed(1)}</small></div>
-                    <b className={Number(lastRace.payout || 0) > 0 ? "positive" : ""}>{Number(lastRace.payout || 0) > 0 ? `+${number(lastRace.payout)} MGP` : "No podium payout"}</b>
+                    <div className="saucer-race-result-art">
+                      <img src={Number(lastRaceDetails.placement) === 1 ? `${RACE_ART_ROOT}/results/victory.webp` : `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" />
+                      <span>{racePlaceLabel(lastRaceDetails.placement)}</span>
+                    </div>
+                    <div className="saucer-race-result-copy">
+                      <div><span>Last Race</span><strong>{racePlaceLabel(lastRaceDetails.placement)} · {lastRaceDetails.course_name || "Circuit"}</strong><small>{lastRaceDetails.strategy_name || "Balanced"} · performance {Number(lastRaceDetails.performance || 0).toFixed(1)}</small></div>
+                      <b className={Number(lastRace.payout || 0) > 0 ? "positive" : ""}>{Number(lastRace.payout || 0) > 0 ? `+${number(lastRace.payout)} MGP` : "No podium payout"}</b>
+                    </div>
                   </div>
                 ) : null}
 
+                <div className="saucer-race-section-head">
+                  <div><span className="slot-label">Choose Course</span><small className="muted">Bond level unlocks tougher circuits with larger podium purses.</small></div>
+                  <span className="small-badge">6-racer field</span>
+                </div>
                 <div className="saucer-race-course-grid">
                   {raceCourses.map((course) => (
-                    <button type="button" key={course.id} className={`saucer-race-course ${raceCourse === course.id ? "selected" : ""} ${course.eligible ? "" : "locked"}`} onClick={() => setRaceCourse(course.id)} disabled={Boolean(busy)}>
-                      <span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : `Lv. ${number(course.min_level)}`}</span>
-                      <strong>{course.name}</strong>
-                      <small>{course.description}</small>
-                      <span className="saucer-race-podium">{(course.payouts || []).map((row) => `${row.place}: ${number(row.payout)}`).join(" · ")} MGP</span>
+                    <button type="button" key={course.id} className={`saucer-race-course ${raceCourse === course.id ? "selected" : ""} ${course.eligible ? "" : "locked"}`} onClick={() => setRaceCourse(course.id)} disabled={Boolean(busy)} aria-pressed={raceCourse === course.id}>
+                      <span className="saucer-race-course-art"><img src={RACE_COURSE_ART[course.id] || `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" /></span>
+                      <span className="saucer-race-course-body">
+                        <span className="saucer-race-course-meta"><span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : `Bond Lv. ${number(course.min_level)}`}</span>{raceCourse === course.id ? <span className="small-badge ready">SELECTED</span> : null}</span>
+                        <strong>{course.name}</strong>
+                        <small>{course.description}</small>
+                        <span className="saucer-race-podium">{(course.payouts || []).map((row) => `${row.place}: ${number(row.payout)}`).join(" · ")} MGP</span>
+                      </span>
                     </button>
                   ))}
                 </div>
 
-                <div className="saucer-race-strategies">
-                  <span className="slot-label">Race Pace</span>
-                  <div>
-                    {raceStrategies.map((strategy) => <button type="button" className={`equipment-action-button secondary ${raceStrategy === strategy.id ? "selected" : ""}`} key={strategy.id} disabled={Boolean(busy)} onClick={() => setRaceStrategy(strategy.id)} title={strategy.description}>{strategy.name}</button>)}
-                  </div>
-                  {selectedRaceStrategy ? <small className="muted">{selectedRaceStrategy.description}</small> : null}
+                <div className="saucer-race-section-head">
+                  <div><span className="slot-label">Choose Race Pace</span><small className="muted">Steady lowers variance; Final Sprint raises both ceiling and risk.</small></div>
+                </div>
+                <div className="saucer-race-strategy-grid">
+                  {raceStrategies.map((strategy) => (
+                    <button type="button" className={`saucer-race-strategy ${raceStrategy === strategy.id ? "selected" : ""}`} key={strategy.id} disabled={Boolean(busy)} onClick={() => setRaceStrategy(strategy.id)} aria-pressed={raceStrategy === strategy.id}>
+                      <span className="saucer-race-strategy-art"><img src={RACE_STRATEGY_ART[strategy.id] || `${RACE_ART_ROOT}/pace/balanced.webp`} alt="" aria-hidden="true" /></span>
+                      <span className="saucer-race-strategy-copy"><strong>{strategy.name}</strong><small>{strategy.description}</small></span>
+                    </button>
+                  ))}
                 </div>
 
-                <button type="button" className="equipment-action-button saucer-race-enter" disabled={!actionsAvailable || Boolean(busy) || !raceCanEnter} onClick={() => mutate("chocobo-race", () => submitChocoboRace(selectedRaceCourse?.id, selectedRaceStrategy?.id, csrfToken, actionKey("chocobo-race", `${selectedRaceCourse?.id}-${selectedRaceStrategy?.id}`)), `Entering ${selectedRaceCourse?.name || "Chocobo Racing"}…`)}>
-                  {busy === "chocobo-race" ? "Racing…" : Number(racing.races_remaining || 0) <= 0 ? `Daily reset ${duration(raceResetRemaining)}` : !selectedRaceCourse?.eligible ? `Requires Chocobo Lv. ${number(selectedRaceCourse?.min_level || 1)}` : mgp < Number(selectedRaceCourse?.cost || 0) ? "Not Enough MGP" : `Race ${selectedRaceCourse?.name || "Circuit"} · ${number(selectedRaceCourse?.cost || 0)} MGP`}
-                </button>
+                <div className="saucer-race-entry-strip">
+                  <div>
+                    <span>Selected Entry</span>
+                    <strong>{selectedRaceCourse?.name || "Circuit"} · {selectedRaceStrategy?.name || "Balanced"}</strong>
+                    <small>{number(selectedRaceCourse?.cost || 0)} MGP · {number(racing.races_remaining)} races remaining today</small>
+                  </div>
+                  <button type="button" className="equipment-action-button saucer-race-enter" disabled={!actionsAvailable || Boolean(busy) || !raceCanEnter} onClick={() => mutate("chocobo-race", () => submitChocoboRace(selectedRaceCourse?.id, selectedRaceStrategy?.id, csrfToken, actionKey("chocobo-race", `${selectedRaceCourse?.id}-${selectedRaceStrategy?.id}`)), `Entering ${selectedRaceCourse?.name || "Chocobo Racing"}…`)}>
+                    {busy === "chocobo-race" ? "Racing…" : Number(racing.races_remaining || 0) <= 0 ? `Daily reset ${duration(raceResetRemaining)}` : !selectedRaceCourse?.eligible ? `Requires Chocobo Lv. ${number(selectedRaceCourse?.min_level || 1)}` : mgp < Number(selectedRaceCourse?.cost || 0) ? "Not Enough MGP" : `Race Now · ${number(selectedRaceCourse?.cost || 0)} MGP`}
+                  </button>
+                </div>
               </>
             )}
           </section>

@@ -41,7 +41,7 @@ class GoldSaucerHostedAlpha1Tests(unittest.TestCase):
 
     def test_contract_and_capability_allowlist(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.6.0-gold-saucer-a4")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.6.0-gold-saucer-a4")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.6.0-gold-saucer-a4h1")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 28)
         for action in {"GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY"}:
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)

@@ -10,7 +10,7 @@ const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("v1.5.0 Alpha 2 keeps the v1.4 Dungeon catalog frozen", () => {
   assert.equal(WEB_BUILD, "Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a4");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a4h1");
   assert.match(read("src/player/Dungeons.jsx"), /Dungeons & Delves · v1\.4\.0/);
 });
 

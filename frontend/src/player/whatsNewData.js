@@ -8,6 +8,7 @@ export const MAJOR_UPDATES = [
       { title: "Your Chocobo, not a second system", description: "The circuit uses the companion already registered at the Chocobo Stable, including its name, portrait, Bond level, and existing trait." },
       { title: "Three courses", description: "Manderville Sprint opens at Bond Lv. 1 for 25 MGP, Crystal Circuit at Lv. 5 for 35 MGP, and Golden Gauntlet at Lv. 10 for 50 MGP." },
       { title: "Choose your pace", description: "Steady Pace lowers variance, Balanced keeps a neutral profile, and Final Sprint raises the ceiling while making the result much swingier." },
+      { title: "Racing presentation pass", description: "The Racing panel now uses dedicated Gold Saucer artwork for the circuit entrance, all three courses, all three pace choices, and race results, with a mobile-first card layout." },
       { title: "Traits have a light touch", description: "Each course favors existing Chocobo traits for a modest performance bonus. Bond level helps too, without replacing the uncertainty of a six-racer field." },
       { title: "Three races per UTC day", description: "Race entries reset at 00:00 UTC. Results are committed once by the authoritative Bot and duplicate Portal delivery replays the same result without another charge or payout." },
       { title: "New ledger records", description: "Track races, wins, podiums, win rate, best finish, and best race payout alongside Cactpot, Slots, and Monster Toss records." },

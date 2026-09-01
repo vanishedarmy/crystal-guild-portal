@@ -9,6 +9,7 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
+import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 
 function actionKey(kind, target = "blacksmith") {
   const suffix = globalThis.crypto?.randomUUID
@@ -22,12 +23,6 @@ async function finishedAction(response) {
   if (!action?.id) throw new Error("Crystal Guild did not return a request ID.");
   if (action.status === "completed" || action.status === "failed") return action;
   return waitForPortalAction(action.id, { attempts: 28, delayMs: 650 });
-}
-
-function clampQuantity(value, maximum) {
-  const parsed = Number.parseInt(value, 10);
-  if (!Number.isFinite(parsed)) return 1;
-  return Math.max(1, Math.min(Math.max(1, Number(maximum || 1)), parsed));
 }
 
 function titleCase(value) {
@@ -200,7 +195,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
 
   const craft = (recipe) => {
     const maximum = Math.max(1, Number(recipe.max_quantity || 1));
-    const quantity = clampQuantity(quantities[recipe.id] || 1, maximum);
+    const quantity = clampQuantity(quantities[recipe.id] ?? 1, maximum);
     return runMutation(
       `craft:${recipe.id}`,
       () => submitCraftRecipe(recipe.id, quantity, csrfToken, actionKey("craft", `${recipe.id}:${quantity}`)),
@@ -259,7 +254,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
           <div id="blacksmith-active-panel" className="blacksmith-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-recipes">
             {recipes.map((recipe) => {
               const maximum = Math.max(0, Number(recipe.max_quantity || 0));
-              const quantity = clampQuantity(quantities[recipe.id] || 1, Math.max(1, maximum));
+              const quantity = clampQuantity(quantities[recipe.id] ?? 1, Math.max(1, maximum));
               const busy = busyKey === `craft:${recipe.id}`;
               return (
                 <article className="blacksmith-card" key={recipe.id}>
@@ -287,7 +282,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                     )) : <div className="enough"><span>No materials required</span><strong>Ready</strong></div>}
                   </div>
                   <div className="blacksmith-card-actions">
-                    <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max={Math.max(1, maximum)} value={quantity} disabled={maximum < 1} onChange={(event) => setQuantities((current) => ({ ...current, [recipe.id]: clampQuantity(event.target.value, Math.max(1, maximum)) }))} /></label>
+                    <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max={Math.max(1, maximum)} value={quantityInputValue(quantities, recipe.id)} disabled={maximum < 1} onFocus={() => beginQuantityEdit(setQuantities, quantities, recipe.id)} onChange={(event) => updateQuantityInput(setQuantities, recipe.id, event.target.value, Math.max(1, maximum))} onBlur={(event) => finishQuantityEdit(setQuantities, recipe.id, event.target.value, Math.max(1, maximum))} /></label>
                     <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !recipe.craftable || maximum < 1 || Boolean(busyKey)} onClick={() => craft(recipe)}>
                       {busy ? "Crafting…" : `Craft ${recipe.output?.name || recipe.name} ×${number(quantity)}`}
                     </button>

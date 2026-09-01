@@ -10,6 +10,7 @@ import {
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number, pct } from "../utils/formatters.js";
+import { beginQuantityEdit, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 
 function actionKey(kind, target) {
   const suffix = globalThis.crypto?.randomUUID
@@ -365,7 +366,7 @@ export default function Fellowship({ data, onRefresh }) {
                     </div>
                     <small>Fee: {number(exchange.gil)} Gil per batch · You have {number(exchange.owned)} {exchange.input_name}</small>
                     <div className="fellowship-workshop-controls">
-                      <label><span>Batches</span><input type="number" min="1" max={Math.max(1, maxBatches)} value={workshopBatches[exchange.id] || "1"} disabled={Boolean(busyKey) || maxBatches < 1} onChange={(event) => setWorkshopBatches((current) => ({ ...current, [exchange.id]: event.target.value }))} /></label>
+                      <label><span>Batches</span><input type="number" inputMode="numeric" min="1" max={Math.max(1, maxBatches)} value={quantityInputValue(workshopBatches, exchange.id)} disabled={Boolean(busyKey) || maxBatches < 1} onFocus={() => beginQuantityEdit(setWorkshopBatches, workshopBatches, exchange.id)} onChange={(event) => updateQuantityInput(setWorkshopBatches, exchange.id, event.target.value, Math.max(1, maxBatches))} onBlur={(event) => finishQuantityEdit(setWorkshopBatches, exchange.id, event.target.value, Math.max(1, maxBatches))} /></label>
                       <button type="button" className="equipment-action-button secondary compact" disabled={Boolean(busyKey) || maxBatches < 1} onClick={() => setWorkshopBatches((current) => ({ ...current, [exchange.id]: String(maxBatches) }))}>Use Max</button>
                       <button type="button" className="equipment-action-button" disabled={Boolean(busyKey) || maxBatches < 1} onClick={() => refineWorkshop(exchange)}>{busy ? "Refining…" : "Refine"}</button>
                     </div>

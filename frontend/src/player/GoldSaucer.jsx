@@ -54,6 +54,34 @@ const SLOT_ART = {
   potion: `${SAUCER_ART_ROOT}/slots/potion.webp`,
 };
 
+function asRecord(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function asArray(value) {
+  return Array.isArray(value) ? value.filter((entry) => entry != null) : [];
+}
+
+function asObjectArray(value) {
+  return asArray(value).filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry));
+}
+
+function displayText(value, fallback = "—") {
+  if (value == null || value === "") return fallback;
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return String(value);
+  return fallback;
+}
+
+function displayId(value, fallback = "unknown") {
+  const text = displayText(value, fallback).toLowerCase();
+  return text.replace(/[^a-z0-9_-]+/g, "-");
+}
+
+function triadRarity(value) {
+  const parsed = Math.floor(Number(value || 1));
+  return Number.isFinite(parsed) ? Math.max(1, Math.min(5, parsed)) : 1;
+}
+
 function racePlaceLabel(value) {
   const place = Number(value || 0);
   if (place === 1) return "1st";
@@ -81,7 +109,7 @@ function Reel({ id, label }) {
   return (
     <div className={`saucer-reel symbol-${id || "empty"}`}>
       {art ? <img className="saucer-slot-symbol" src={art} alt="" aria-hidden="true" /> : <span className="saucer-slot-placeholder" aria-hidden="true">✧</span>}
-      <small>{label || id || "—"}</small>
+      <small>{displayText(label, displayText(id))}</small>
     </div>
   );
 }
@@ -90,10 +118,10 @@ function TriadCard({ card, owner = "player", selected = false, disabled = false,
   if (!card) return null;
   const content = (
     <>
-      <span className="triad-card-rarity">{"★".repeat(Math.max(1, Number(card.rarity || 1)))}</span>
-      <span className="triad-card-name">{card.name}</span>
-      <span className="triad-card-values" aria-label={`${card.name}: top ${card.top}, right ${card.right}, bottom ${card.bottom}, left ${card.left}`}>
-        <b className="top">{card.top}</b><b className="right">{card.right}</b><b className="bottom">{card.bottom}</b><b className="left">{card.left}</b>
+      <span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span>
+      <span className="triad-card-name">{displayText(card.name, "Unknown Card")}</span>
+      <span className="triad-card-values" aria-label={`${displayText(card.name, "Unknown Card")}: top ${displayText(card.top, "0")}, right ${displayText(card.right, "0")}, bottom ${displayText(card.bottom, "0")}, left ${displayText(card.left, "0")}`}>
+        <b className="top">{displayText(card.top, "0")}</b><b className="right">{displayText(card.right, "0")}</b><b className="bottom">{displayText(card.bottom, "0")}</b><b className="left">{displayText(card.left, "0")}</b>
       </span>
     </>
   );
@@ -172,20 +200,20 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   }, [state]);
 
   useEffect(() => {
-    const courses = Array.isArray(state?.chocobo_racing?.courses) ? state.chocobo_racing.courses : [];
+    const courses = asObjectArray(asRecord(state?.chocobo_racing).courses);
     if (!courses.length || courses.some((course) => course.id === raceCourse)) return;
     setRaceCourse((courses.find((course) => course.eligible) || courses[0]).id);
   }, [state, raceCourse]);
 
   useEffect(() => {
-    const triad = state?.triple_triad || {};
-    const deck = Array.isArray(triad.deck) ? triad.deck : [];
+    const triad = asRecord(state?.triple_triad);
+    const deck = asArray(triad.deck).filter((cardId) => typeof cardId === "string");
     if (deck.length === 5 && triadDeckDraft.length === 0) setTriadDeckDraft([...deck]);
-    const opponents = Array.isArray(triad.opponents) ? triad.opponents : [];
+    const opponents = asObjectArray(triad.opponents);
     if (opponents.length && !opponents.some((row) => row.id === triadOpponent && row.unlocked)) {
       setTriadOpponent((opponents.find((row) => row.unlocked) || opponents[0]).id);
     }
-    const hand = Array.isArray(triad.match?.player_hand) ? triad.match.player_hand : [];
+    const hand = asObjectArray(asRecord(triad.match).player_hand);
     if (triadSelectedCard && !hand.some((card) => card.id === triadSelectedCard)) setTriadSelectedCard("");
   }, [state, triadDeckDraft.length, triadOpponent, triadSelectedCard]);
 
@@ -261,62 +289,66 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   }
 
   const nowSeconds = Math.floor(clock / 1000);
-  const cactpot = state?.cactpot || {};
-  const ticket = cactpot.ticket || null;
+  const saucerState = asRecord(state);
+  const cactpot = asRecord(saucerState.cactpot);
+  const ticket = Object.keys(asRecord(cactpot.ticket)).length ? asRecord(cactpot.ticket) : null;
   const cactpotRemaining = Math.max(0, Number(cactpot.available_at || 0) - nowSeconds);
-  const slots = state?.slots || {};
+  const slots = asRecord(saucerState.slots);
   const slotsRemaining = Math.max(0, Number(slots.available_at || 0) - nowSeconds);
-  const mgp = Number(state?.mgp ?? state?.points ?? state?.account?.mgp ?? state?.account?.points ?? 0);
-  const currencyCode = String(state?.currency_code || state?.currency_name || "MGP");
-  const dailyAllowanceMgp = Number(state?.daily_allowance_mgp ?? state?.daily_allowance_points ?? 50);
-  const prizes = Array.isArray(state?.prizes) ? state.prizes : [];
-  const history = Array.isArray(state?.history) ? state.history : [];
-  const records = state?.records || {};
+  const account = asRecord(saucerState.account);
+  const mgp = Number(saucerState.mgp ?? saucerState.points ?? account.mgp ?? account.points ?? 0);
+  const currencyCode = String(saucerState.currency_code || saucerState.currency_name || "MGP");
+  const dailyAllowanceMgp = Number(saucerState.daily_allowance_mgp ?? saucerState.daily_allowance_points ?? 50);
+  const prizes = asObjectArray(saucerState.prizes);
+  const history = asObjectArray(saucerState.history);
+  const records = asRecord(saucerState.records);
   const netMgp = Number(records.net_mgp ?? records.net_points ?? 0);
-  const balance = state?.balance || {};
-  const nextAllowanceRemaining = Math.max(0, Number(state?.next_daily_allowance_at || 0) - nowSeconds);
+  const balance = asRecord(saucerState.balance);
+  const nextAllowanceRemaining = Math.max(0, Number(saucerState.next_daily_allowance_at || 0) - nowSeconds);
   const canStartTicket = Boolean(!ticket?.state || ticket.state === "resolved") && cactpotRemaining <= 0 && mgp >= Number(cactpot.cost || 10);
   const canSpin = slotsRemaining <= 0 && mgp >= Number(slots.cost || 15);
-  const toss = state?.monster_toss || {};
-  const tossGame = toss.active_game || null;
-  const tossTargets = Array.isArray(toss.targets) ? toss.targets : [];
-  const tossStyles = Array.isArray(toss.styles) ? toss.styles : [];
+  const toss = asRecord(saucerState.monster_toss);
+  const tossGame = Object.keys(asRecord(toss.active_game)).length ? asRecord(toss.active_game) : null;
+  const tossTargets = asObjectArray(toss.targets);
+  const tossStyles = asObjectArray(toss.styles);
   const canStartToss = Boolean(toss.can_start);
   const tossResetRemaining = Math.max(0, Number(toss.next_daily_reset_at || 0) - nowSeconds);
-  const racing = state?.chocobo_racing || {};
-  const raceCourses = Array.isArray(racing.courses) ? racing.courses : [];
-  const raceStrategies = Array.isArray(racing.strategies) ? racing.strategies : [];
+  const racing = asRecord(saucerState.chocobo_racing);
+  const raceCourses = asObjectArray(racing.courses);
+  const raceStrategies = asObjectArray(racing.strategies);
   const selectedRaceCourse = raceCourses.find((course) => course.id === raceCourse) || raceCourses[0] || null;
   const selectedRaceStrategy = raceStrategies.find((strategy) => strategy.id === raceStrategy) || raceStrategies[0] || null;
   const raceResetRemaining = Math.max(0, Number(racing.next_daily_reset_at || 0) - nowSeconds);
-  const raceCompanion = racing.companion || null;
-  const lastRace = racing.last_race || null;
-  const lastRaceDetails = lastRace?.details || {};
+  const raceCompanion = Object.keys(asRecord(racing.companion)).length ? asRecord(racing.companion) : null;
+  const lastRace = Object.keys(asRecord(racing.last_race)).length ? asRecord(racing.last_race) : null;
+  const lastRaceDetails = asRecord(lastRace?.details);
   const raceCanEnter = Boolean(selectedRaceCourse?.can_enter);
-  const triad = state?.triple_triad || {};
-  const triadCollection = Array.isArray(triad.collection) ? triad.collection : [];
-  const triadOwnedCards = triadCollection.filter((card) => card.owned);
-  const triadOpponents = Array.isArray(triad.opponents) ? triad.opponents : [];
+  const triad = asRecord(saucerState.triple_triad);
+  const triadCollection = asObjectArray(triad.collection);
+  const triadOwnedCards = triadCollection.filter((card) => Boolean(card.owned));
+  const triadOpponents = asObjectArray(triad.opponents);
   const selectedTriadOpponent = triadOpponents.find((row) => row.id === triadOpponent) || triadOpponents[0] || null;
-  const triadMatch = triad.match || null;
+  const triadMatch = Object.keys(asRecord(triad.match)).length ? asRecord(triad.match) : null;
   const triadMatchOpponent = triadOpponents.find((row) => row.id === triadMatch?.opponent_id) || null;
-  const triadBoard = Array.isArray(triadMatch?.board) ? triadMatch.board : Array(9).fill(null);
-  const triadHand = Array.isArray(triadMatch?.player_hand) ? triadMatch.player_hand : [];
+  const triadBoard = Array.isArray(triadMatch?.board) ? triadMatch.board.slice(0, 9) : Array(9).fill(null);
+  while (triadBoard.length < 9) triadBoard.push(null);
+  const triadHand = asObjectArray(triadMatch?.player_hand);
   const triadResetRemaining = Math.max(0, Number(triad.next_daily_reset_at || 0) - nowSeconds);
-  const triadDeckChanged = triadDeckDraft.length === 5 && JSON.stringify(triadDeckDraft) !== JSON.stringify(Array.isArray(triad.deck) ? triad.deck : []);
+  const savedTriadDeck = asArray(triad.deck).filter((cardId) => typeof cardId === "string");
+  const triadDeckChanged = triadDeckDraft.length === 5 && JSON.stringify(triadDeckDraft) !== JSON.stringify(savedTriadDeck);
   const triadCanStart = Boolean(selectedTriadOpponent?.can_start) && triadDeckDraft.length === 5;
-  const futureAttractions = (state.attractions || []).filter((attraction) => attraction.status !== "open");
-  const revealed = new Set(Array.isArray(ticket?.revealed) ? ticket.revealed : []);
+  const futureAttractions = asObjectArray(saucerState.attractions).filter((attraction) => attraction.status !== "open");
+  const revealed = new Set(asArray(ticket?.revealed));
   const lastSlots = slots?.last_spin?.details || null;
   const reels = Array.isArray(lastSlots?.reels) ? lastSlots.reels : [];
   const reelLabels = Array.isArray(lastSlots?.labels) ? lastSlots.labels : [];
   const shownReels = slotAnimating ? slotDisplay.reels : reels;
   const shownLabels = slotAnimating ? slotDisplay.labels : reelLabels;
-  const chosenCells = ticket?.chosen_line != null ? (cactpot.lines || []).find((line) => Number(line.index) === Number(ticket.chosen_line))?.cells || [] : [];
-  const hoverCells = hoveredLine != null ? (cactpot.lines || []).find((line) => Number(line.index) === Number(hoveredLine))?.cells || [] : [];
+  const chosenCells = ticket?.chosen_line != null ? asArray(asObjectArray(cactpot.lines).find((line) => Number(line.index) === Number(ticket.chosen_line))?.cells) : [];
+  const hoverCells = hoveredLine != null ? asArray(asObjectArray(cactpot.lines).find((line) => Number(line.index) === Number(hoveredLine))?.cells) : [];
   const highlightedCells = new Set(hoverCells.length ? hoverCells : chosenCells);
   const cactpotTier = Number(ticket?.payout || 0) >= 1000 ? "jackpot" : Number(ticket?.payout || 0) >= 300 ? "big-win" : "win";
-  const tossThrows = Array.isArray(tossGame?.throws) ? tossGame.throws : [];
+  const tossThrows = asObjectArray(tossGame?.throws);
   const lastTossThrow = tossThrows.length ? tossThrows[tossThrows.length - 1] : null;
   const lastTossHistory = history.find((entry) => entry.game === "monster_toss") || null;
   const lastTossDetails = lastTossHistory?.details || {};
@@ -363,15 +395,15 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               {ticket ? (
                 <>
                   <div className="cactpot-grid" aria-label="Mini Cactpot ticket">
-                    {(ticket.grid || Array(9).fill(null)).map((value, index) => (
+                    {(Array.isArray(ticket.grid) ? ticket.grid : Array(9).fill(null)).map((value, index) => (
                       <button
                         type="button"
                         key={index}
                         className={`cactpot-cell ${value != null ? "revealed" : "hidden"} ${highlightedCells.has(index) ? "line-highlight" : ""}`}
                         disabled={!actionsAvailable || Boolean(busy) || ticket.state !== "reveal" || revealed.has(index)}
                         onClick={() => mutate(`reveal-${index}`, () => submitCactpotReveal(index, csrfToken, actionKey("cactpot-reveal", index)), "Revealing Mini Cactpot cell…")}
-                        aria-label={value != null ? `Cell ${index + 1}: ${value}` : `Reveal cell ${index + 1}`}
-                      >{value != null ? value : "?"}</button>
+                        aria-label={value != null ? `Cell ${index + 1}: ${displayText(value, "?")}` : `Reveal cell ${index + 1}`}
+                      >{value != null ? displayText(value, "?") : "?"}</button>
                     ))}
                   </div>
                   {ticket.state === "reveal" ? <p className="saucer-instruction">Reveal {number(ticket.reveals_remaining)} more cell{Number(ticket.reveals_remaining) === 1 ? "" : "s"}.</p> : null}
@@ -379,7 +411,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     <div className="cactpot-lines">
                       <span className="slot-label">Choose one payout line</span>
                       <div className="cactpot-line-buttons">
-                        {(cactpot.lines || []).map((line) => <button type="button" className="equipment-action-button secondary" key={line.index} disabled={!actionsAvailable || Boolean(busy)} onMouseEnter={() => setHoveredLine(line.index)} onMouseLeave={() => setHoveredLine(null)} onFocus={() => setHoveredLine(line.index)} onBlur={() => setHoveredLine(null)} onClick={() => mutate(`line-${line.index}`, () => submitCactpotLine(line.index, csrfToken, actionKey("cactpot-line", line.index)), "Resolving Mini Cactpot…")}>{LINE_NAMES[line.index] || `Line ${line.index + 1}`}</button>)}
+                        {asObjectArray(cactpot.lines).map((line) => <button type="button" className="equipment-action-button secondary" key={line.index} disabled={!actionsAvailable || Boolean(busy)} onMouseEnter={() => setHoveredLine(line.index)} onMouseLeave={() => setHoveredLine(null)} onFocus={() => setHoveredLine(line.index)} onBlur={() => setHoveredLine(null)} onClick={() => mutate(`line-${line.index}`, () => submitCactpotLine(line.index, csrfToken, actionKey("cactpot-line", line.index)), "Resolving Mini Cactpot…")}>{LINE_NAMES[line.index] || `Line ${line.index + 1}`}</button>)}
                       </div>
                     </div>
                   ) : null}
@@ -434,10 +466,10 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     {tossTargets.map((target) => (
                       <button type="button" key={target.id} className={`monster-toss-choice target ${tossTarget === target.id ? "selected" : ""}`} onClick={() => setTossTarget(target.id)} disabled={Boolean(busy)}>
                         <span className="monster-toss-target-art-wrap">
-                          <img className="monster-toss-target-art" src={TOSS_TARGET_ART[target.id]} alt="" aria-hidden="true" />
+                          <img className="monster-toss-target-art" src={TOSS_TARGET_ART[displayText(target.id, "")]} alt="" aria-hidden="true" />
                           {tossTarget === target.id ? <img className="monster-toss-reticle" src={`${TOSS_ART_ROOT}/reticle.webp`} alt="" aria-hidden="true" /> : null}
                         </span>
-                        <strong>{target.name}</strong>
+                        <strong>{displayText(target.name, "Target")}</strong>
                         <span>{number(target.points)} base pts</span>
                         <small>{Math.round(Number(target.accuracy || 0) * 100)}% base accuracy</small>
                       </button>
@@ -447,9 +479,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   <div className="monster-toss-style-grid" aria-label="Monster Toss throw styles">
                     {tossStyles.map((style) => (
                       <button type="button" key={style.id} className={`monster-toss-choice style ${tossStyle === style.id ? "selected" : ""}`} onClick={() => setTossStyle(style.id)} disabled={Boolean(busy)}>
-                        <img className="monster-toss-style-art" src={TOSS_STYLE_ART[style.id]} alt="" aria-hidden="true" />
-                        <strong>{style.name}</strong>
-                        <small>{style.description}</small>
+                        <img className="monster-toss-style-art" src={TOSS_STYLE_ART[displayText(style.id, "")]} alt="" aria-hidden="true" />
+                        <strong>{displayText(style.name, "Throw Style")}</strong>
+                        <small>{displayText(style.description, "Choose a throwing style.")}</small>
                       </button>
                     ))}
                   </div>
@@ -462,11 +494,11 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   {lastTossThrow ? (
                     <div className={`monster-toss-last-result ${lastTossThrow.hit ? "hit" : "miss"}`}>
                       <img src={`${TOSS_ART_ROOT}/results/${lastTossThrow.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" />
-                      <div><strong>{lastTossThrow.hit ? `HIT +${number(lastTossThrow.points)}` : "MISS"}</strong><span>{lastTossThrow.target_name} · {lastTossThrow.style_name}</span></div>
+                      <div><strong>{lastTossThrow.hit ? `HIT +${number(lastTossThrow.points)}` : "MISS"}</strong><span>{displayText(lastTossThrow.target_name, "Target")} · {displayText(lastTossThrow.style_name, "Throw")}</span></div>
                     </div>
                   ) : null}
 
-                  <div className="monster-toss-log">{tossThrows.slice().reverse().map((entry) => <div key={entry.throw}><span className="monster-toss-log-main"><img src={`${TOSS_ART_ROOT}/results/${entry.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" /><span>Throw {entry.throw}: {entry.target_name} · {entry.style_name}</span></span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
+                  <div className="monster-toss-log">{tossThrows.slice().reverse().map((entry) => <div key={entry.throw}><span className="monster-toss-log-main"><img src={`${TOSS_ART_ROOT}/results/${entry.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" /><span>Throw {displayText(entry.throw, "?")}: {displayText(entry.target_name, "Target")} · {displayText(entry.style_name, "Throw")}</span></span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
                 </>
               ) : (
                 <div className="monster-toss-start">
@@ -481,7 +513,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : mgp < Number(toss.cost || 20) ? "Not Enough MGP" : `Start Game · ${number(toss.cost || 20)} MGP`}</button>
                 </div>
               )}
-              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards</summary><div className="monster-toss-payouts">{(toss.payouts || []).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} MGP</span>)}</div></details>
+              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards</summary><div className="monster-toss-payouts">{asObjectArray(toss.payouts).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} MGP</span>)}</div></details>
             </div>
           </details>
 
@@ -504,9 +536,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             ) : (
               <>
                 <div className="saucer-race-companion">
-                  <img src={`${CHOCOBO_PORTRAIT_ROOT}/${raceCompanion?.portrait_id || "classic_gold"}.webp`} alt={`${raceCompanion?.name || "Registered Chocobo"} portrait`} />
-                  <div><span>Your Racer</span><strong>{raceCompanion?.name || "Chocobo"}</strong><small>Bond Lv. {number(raceCompanion?.level || 1)}</small></div>
-                  <div className="saucer-race-traits">{(raceCompanion?.traits || []).map((trait) => <span className="small-badge" key={typeof trait === "string" ? trait : trait.id}>{String(typeof trait === "string" ? trait : trait.name || trait.id).replaceAll("_", " ")}</span>)}</div>
+                  <img src={`${CHOCOBO_PORTRAIT_ROOT}/${raceCompanion?.portrait_id || "classic_gold"}.webp`} alt={`${displayText(raceCompanion?.name, "Registered Chocobo")} portrait`} />
+                  <div><span>Your Racer</span><strong>{displayText(raceCompanion?.name, "Chocobo")}</strong><small>Bond Lv. {number(raceCompanion?.level || 1)}</small></div>
+                  <div className="saucer-race-traits">{asArray(raceCompanion?.traits).map((trait) => <span className="small-badge" key={typeof trait === "string" ? trait : trait.id}>{String(typeof trait === "string" ? trait : trait.name || trait.id).replaceAll("_", " ")}</span>)}</div>
                 </div>
 
                 {lastRace ? (
@@ -516,7 +548,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                       <span>{racePlaceLabel(lastRaceDetails.placement)}</span>
                     </div>
                     <div className="saucer-race-result-copy">
-                      <div><span>Last Race</span><strong>{racePlaceLabel(lastRaceDetails.placement)} · {lastRaceDetails.course_name || "Circuit"}</strong><small>{lastRaceDetails.strategy_name || "Balanced"} · performance {Number(lastRaceDetails.performance || 0).toFixed(1)}</small></div>
+                      <div><span>Last Race</span><strong>{racePlaceLabel(lastRaceDetails.placement)} · {displayText(lastRaceDetails.course_name, "Circuit")}</strong><small>{displayText(lastRaceDetails.strategy_name, "Balanced")} · performance {Number(lastRaceDetails.performance || 0).toFixed(1)}</small></div>
                       <b className={Number(lastRace.payout || 0) > 0 ? "positive" : ""}>{Number(lastRace.payout || 0) > 0 ? `+${number(lastRace.payout)} MGP` : "No podium payout"}</b>
                     </div>
                   </div>
@@ -529,12 +561,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div className="saucer-race-course-grid">
                   {raceCourses.map((course) => (
                     <button type="button" key={course.id} className={`saucer-race-course ${raceCourse === course.id ? "selected" : ""} ${course.eligible ? "" : "locked"}`} onClick={() => setRaceCourse(course.id)} disabled={Boolean(busy)} aria-pressed={raceCourse === course.id}>
-                      <span className="saucer-race-course-art"><img src={RACE_COURSE_ART[course.id] || `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" /></span>
+                      <span className="saucer-race-course-art"><img src={RACE_COURSE_ART[displayText(course.id, "")] || `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" /></span>
                       <span className="saucer-race-course-body">
                         <span className="saucer-race-course-meta"><span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : `Bond Lv. ${number(course.min_level)}`}</span>{raceCourse === course.id ? <span className="small-badge ready">SELECTED</span> : null}</span>
-                        <strong>{course.name}</strong>
-                        <small>{course.description}</small>
-                        <span className="saucer-race-podium">{(course.payouts || []).map((row) => `${row.place}: ${number(row.payout)}`).join(" · ")} MGP</span>
+                        <strong>{displayText(course.name, "Race Course")}</strong>
+                        <small>{displayText(course.description, "Gold Saucer race course.")}</small>
+                        <span className="saucer-race-podium">{asObjectArray(course.payouts).map((row) => `${row.place}: ${number(row.payout)}`).join(" · ")} MGP</span>
                       </span>
                     </button>
                   ))}
@@ -546,8 +578,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div className="saucer-race-strategy-grid">
                   {raceStrategies.map((strategy) => (
                     <button type="button" className={`saucer-race-strategy ${raceStrategy === strategy.id ? "selected" : ""}`} key={strategy.id} disabled={Boolean(busy)} onClick={() => setRaceStrategy(strategy.id)} aria-pressed={raceStrategy === strategy.id}>
-                      <span className="saucer-race-strategy-art"><img src={RACE_STRATEGY_ART[strategy.id] || `${RACE_ART_ROOT}/pace/balanced.webp`} alt="" aria-hidden="true" /></span>
-                      <span className="saucer-race-strategy-copy"><strong>{strategy.name}</strong><small>{strategy.description}</small></span>
+                      <span className="saucer-race-strategy-art"><img src={RACE_STRATEGY_ART[displayText(strategy.id, "")] || `${RACE_ART_ROOT}/pace/balanced.webp`} alt="" aria-hidden="true" /></span>
+                      <span className="saucer-race-strategy-copy"><strong>{displayText(strategy.name, "Race Pace")}</strong><small>{displayText(strategy.description, "Choose a racing pace.")}</small></span>
                     </button>
                   ))}
                 </div>
@@ -555,10 +587,10 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div className="saucer-race-entry-strip">
                   <div>
                     <span>Selected Entry</span>
-                    <strong>{selectedRaceCourse?.name || "Circuit"} · {selectedRaceStrategy?.name || "Balanced"}</strong>
+                    <strong>{displayText(selectedRaceCourse?.name, "Circuit")} · {displayText(selectedRaceStrategy?.name, "Balanced")}</strong>
                     <small>{number(selectedRaceCourse?.cost || 0)} MGP · {number(racing.races_remaining)} races remaining today</small>
                   </div>
-                  <button type="button" className="equipment-action-button saucer-race-enter" disabled={!actionsAvailable || Boolean(busy) || !raceCanEnter} onClick={() => mutate("chocobo-race", () => submitChocoboRace(selectedRaceCourse?.id, selectedRaceStrategy?.id, csrfToken, actionKey("chocobo-race", `${selectedRaceCourse?.id}-${selectedRaceStrategy?.id}`)), `Entering ${selectedRaceCourse?.name || "Chocobo Racing"}…`)}>
+                  <button type="button" className="equipment-action-button saucer-race-enter" disabled={!actionsAvailable || Boolean(busy) || !raceCanEnter} onClick={() => mutate("chocobo-race", () => submitChocoboRace(selectedRaceCourse?.id, selectedRaceStrategy?.id, csrfToken, actionKey("chocobo-race", `${selectedRaceCourse?.id}-${selectedRaceStrategy?.id}`)), `Entering ${displayText(selectedRaceCourse?.name, "Chocobo Racing")}…`)}>
                     {busy === "chocobo-race" ? "Racing…" : Number(racing.races_remaining || 0) <= 0 ? `Daily reset ${duration(raceResetRemaining)}` : !selectedRaceCourse?.eligible ? `Requires Chocobo Lv. ${number(selectedRaceCourse?.min_level || 1)}` : mgp < Number(selectedRaceCourse?.cost || 0) ? "Not Enough MGP" : `Race Now · ${number(selectedRaceCourse?.cost || 0)} MGP`}
                   </button>
                 </div>
@@ -578,13 +610,13 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               {triadMatch?.state === "active" ? (
                 <div className="triad-match-live">
                   <div className="triad-match-head">
-                    <div><span>Current Match</span><strong>vs {triadMatchOpponent?.name || "Gold Saucer Opponent"}</strong><small>Your cards {number(triadMatch.player_score)} · Opponent {number(triadMatch.npc_score)}</small></div>
+                    <div><span>Current Match</span><strong>vs {displayText(triadMatchOpponent?.name, "Gold Saucer Opponent")}</strong><small>Your cards {number(triadMatch.player_score)} · Opponent {number(triadMatch.npc_score)}</small></div>
                     <span className="small-badge ready">YOUR TURN</span>
                   </div>
                   <div className="triad-table-layout">
                     <div className="triad-board" aria-label="Triple Triad board">
                       {triadBoard.map((cell, index) => cell ? (
-                        <div className={`triad-board-cell occupied owner-${cell.owner}`} key={index} aria-label={`Board cell ${index + 1}: ${cell.card?.name || "card"}, owned by ${cell.owner}`}>
+                        <div className={`triad-board-cell occupied owner-${displayId(cell.owner, "player")}`} key={index} aria-label={`Board cell ${index + 1}: ${displayText(cell.card?.name, "card")}, owned by ${displayText(cell.owner, "player")}`}>
                           <TriadCard card={cell.card} owner={cell.owner} compact />
                         </div>
                       ) : (
@@ -610,7 +642,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <>
                   {triadMatch?.state === "resolved" ? (
                     <div className={`triad-last-result result-${triadMatch.result || "complete"}`}>
-                      <div><span>Last Match</span><strong>{String(triadMatch.result || "complete").toUpperCase()} · {number(triadMatch.player_score)}–{number(triadMatch.npc_score)}</strong><small>vs {triadMatchOpponent?.name || "Gold Saucer Opponent"}</small></div>
+                      <div><span>Last Match</span><strong>{String(triadMatch.result || "complete").toUpperCase()} · {number(triadMatch.player_score)}–{number(triadMatch.npc_score)}</strong><small>vs {displayText(triadMatchOpponent?.name, "Gold Saucer Opponent")}</small></div>
                       <span className="small-badge">Match Complete</span>
                     </div>
                   ) : null}
@@ -641,16 +673,16 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   <div className="triad-opponent-grid">
                     {triadOpponents.map((opponent) => (
                       <button type="button" className={`triad-opponent ${triadOpponent === opponent.id ? "selected" : ""} ${opponent.unlocked ? "" : "locked"}`} key={opponent.id} disabled={Boolean(busy) || !opponent.unlocked} onClick={() => setTriadOpponent(opponent.id)} aria-pressed={triadOpponent === opponent.id}>
-                        <span className="triad-opponent-meta"><span className={`small-badge ${opponent.unlocked ? "ready" : "locked"}`}>{opponent.unlocked ? `${number(opponent.cost)} MGP` : `${number(opponent.unlock_wins)} wins`}</span><small>{opponent.difficulty}</small></span>
-                        <strong>{opponent.name}</strong>
-                        <span>{opponent.description}</span>
+                        <span className="triad-opponent-meta"><span className={`small-badge ${opponent.unlocked ? "ready" : "locked"}`}>{opponent.unlocked ? `${number(opponent.cost)} MGP` : `${number(opponent.unlock_wins)} wins`}</span><small>{displayText(opponent.difficulty, "Opponent")}</small></span>
+                        <strong>{displayText(opponent.name, "Gold Saucer Opponent")}</strong>
+                        <span>{displayText(opponent.description, "Triple Triad challenger.")}</span>
                         <small>Win {number(opponent.win_payout)} · Draw {number(opponent.draw_payout)} MGP</small>
                       </button>
                     ))}
                   </div>
                   <div className="triad-entry-strip">
-                    <div><span>Selected Match</span><strong>{selectedTriadOpponent?.name || "Saucer Attendant"}</strong><small>{number(selectedTriadOpponent?.cost || 0)} MGP · {number(triad.matches_remaining)} matches remaining today</small></div>
-                    <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !triadCanStart || triadDeckChanged} onClick={() => mutate("triad-start", () => submitTriadStart(selectedTriadOpponent?.id, csrfToken, actionKey("triad-start", selectedTriadOpponent?.id)), `Challenging ${selectedTriadOpponent?.name || "Triple Triad opponent"}…`)}>
+                    <div><span>Selected Match</span><strong>{displayText(selectedTriadOpponent?.name, "Saucer Attendant")}</strong><small>{number(selectedTriadOpponent?.cost || 0)} MGP · {number(triad.matches_remaining)} matches remaining today</small></div>
+                    <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !triadCanStart || triadDeckChanged} onClick={() => mutate("triad-start", () => submitTriadStart(selectedTriadOpponent?.id, csrfToken, actionKey("triad-start", selectedTriadOpponent?.id)), `Challenging ${displayText(selectedTriadOpponent?.name, "Triple Triad opponent")}…`)}>
                       {busy === "triad-start" ? "Dealing Cards…" : Number(triad.matches_remaining || 0) <= 0 ? `Daily reset ${duration(triadResetRemaining)}` : triadDeckChanged ? "Save Deck First" : !selectedTriadOpponent?.unlocked ? `Requires ${number(selectedTriadOpponent?.unlock_wins || 0)} Wins` : mgp < Number(selectedTriadOpponent?.cost || 0) ? "Not Enough MGP" : `Start Match · ${number(selectedTriadOpponent?.cost || 0)} MGP`}
                     </button>
                   </div>
@@ -658,7 +690,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   <details className="saucer-balance-notes triad-collection-disclosure">
                     <summary>Card Collection · {number(triad.owned_count)} / {number(triad.total_cards)}</summary>
                     <div className="triad-collection-grid collection-view">
-                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card locked compact" key={card.id}><span className="triad-card-rarity">{"★".repeat(Math.max(1, Number(card.rarity || 1)))}</span><span className="triad-card-name">???</span><span className="triad-card-lock">Locked</span></div>)}
+                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card locked compact" key={card.id}><span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span><span className="triad-card-name">???</span><span className="triad-card-lock">Locked</span></div>)}
                     </div>
                   </details>
                 </>
@@ -679,14 +711,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <article className={`saucer-prize-card ${prize.owned ? "owned" : ""}`} key={prize.id}>
                   <div>
                     <span className={`small-badge ${prize.owned ? "ready" : ""}`}>{prize.owned ? "OWNED" : `${number(prize.cost)} MGP`}</span>
-                    <h4>{prize.name}</h4>
-                    <p className="muted">{prize.description}</p>
+                    <h4>{displayText(prize.name, "Gold Saucer Prize")}</h4>
+                    <p className="muted">{displayText(prize.description, "Cosmetic Gold Saucer reward.")}</p>
                   </div>
                   <button
                     type="button"
                     className="equipment-action-button secondary"
                     disabled={!actionsAvailable || Boolean(busy) || prize.owned || mgp < Number(prize.cost || 0)}
-                    onClick={() => mutate(`prize-${prize.id}`, () => submitSaucerBuy(prize.id, csrfToken, actionKey("saucer-buy", prize.id)), `Claiming ${prize.name}…`)}
+                    onClick={() => mutate(`prize-${prize.id}`, () => submitSaucerBuy(prize.id, csrfToken, actionKey("saucer-buy", prize.id)), `Claiming ${displayText(prize.name, "Gold Saucer prize")}…`)}
                   >{prize.owned ? "Collected" : mgp < Number(prize.cost || 0) ? "Not Enough MGP" : `Unlock · ${number(prize.cost)} MGP`}</button>
                 </article>
               ))}
@@ -701,14 +733,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <div className="saucer-record-grid">
               <div><span>Current Net MGP</span><strong>{netMgp >= 0 ? "+" : ""}{number(netMgp)} MGP</strong></div>
               <div><span>Games Played</span><strong>{number(records.games_played)}</strong></div>
-              <div><span>Prizes Collected</span><strong>{number(state.account?.prizes_bought)}</strong></div>
-              <div><span>Cactpot Tickets</span><strong>{number(state.account?.cactpot_plays)}</strong></div>
-              <div><span>Best Cactpot</span><strong>{number(state.account?.cactpot_best_payout)} MGP</strong></div>
+              <div><span>Prizes Collected</span><strong>{number(account.prizes_bought)}</strong></div>
+              <div><span>Cactpot Tickets</span><strong>{number(account.cactpot_plays)}</strong></div>
+              <div><span>Best Cactpot</span><strong>{number(account.cactpot_best_payout)} MGP</strong></div>
               <div><span>Cactpot High Rolls</span><strong>{number(records.cactpot_high_rolls)}</strong></div>
-              <div><span>Slot Spins</span><strong>{number(state.account?.slots_spins)}</strong></div>
+              <div><span>Slot Spins</span><strong>{number(account.slots_spins)}</strong></div>
               <div><span>Slot Win Rate</span><strong>{Number(records.slots_win_rate_pct || 0).toFixed(1)}%</strong></div>
               <div><span>Triple Matches</span><strong>{number(records.slots_triples)}</strong></div>
-              <div><span>Best Slots</span><strong>{number(state.account?.slots_best_payout)} MGP</strong></div>
+              <div><span>Best Slots</span><strong>{number(account.slots_best_payout)} MGP</strong></div>
               <div><span>Monster Toss Games</span><strong>{number(records.monster_toss_games)}</strong></div>
               <div><span>Best Toss Score</span><strong>{number(records.monster_toss_best_score)}</strong></div>
               <div><span>Toss Accuracy</span><strong>{Number(records.monster_toss_accuracy_pct || 0).toFixed(1)}%</strong></div>
@@ -725,8 +757,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div><span>Triad Cards</span><strong>{number(records.triple_triad_cards_owned)} / {number(triad.total_cards)}</strong></div>
               <div><span>Cards Won</span><strong>{number(records.triple_triad_cards_won)}</strong></div>
               <div><span>Best Triad Streak</span><strong>{number(records.triple_triad_best_streak)}</strong></div>
-              <div><span>Lifetime Earned</span><strong>{number(state.account?.lifetime_earned)} MGP</strong></div>
-              <div><span>Lifetime Spent</span><strong>{number(state.account?.lifetime_spent)} MGP</strong></div>
+              <div><span>Lifetime Earned</span><strong>{number(account.lifetime_earned)} MGP</strong></div>
+              <div><span>Lifetime Spent</span><strong>{number(account.lifetime_spent)} MGP</strong></div>
             </div>
             <details className="saucer-balance-notes">
               <summary>Balance details</summary>
@@ -741,7 +773,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div className="saucer-history-list">
                 {history.map((entry, index) => {
                   const game = String(entry.game || "activity").replaceAll("_", " ");
-                  const details = entry.details || {};
+                  const details = asRecord(entry.details);
                   const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
                     <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : entry.game === "triple_triad" ? `${number(details.player_score)}–${number(details.npc_score)}${details.card_reward_name ? ` · won ${details.card_reward_name}` : ""}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
@@ -757,10 +789,10 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <summary className="saucer-section-summary"><div><p className="eyebrow">Coming Next</p><h3>Future Attractions</h3></div><span className="small-badge">{number(futureAttractions.length)}</span></summary>
               <div className="saucer-section-body saucer-attraction-grid future-only">
                 {futureAttractions.map((attraction) => (
-                  <article className={`saucer-attraction ${attraction.status}`} key={attraction.id}>
+                  <article className={`saucer-attraction ${displayId(attraction.status, "coming-soon")}`} key={displayText(attraction.id, `future-${displayText(attraction.name, "attraction")}`)}>
                     <span className="small-badge locked">COMING SOON</span>
-                    <h4>{attraction.name}</h4>
-                    <p className="muted">{attraction.description}</p>
+                    <h4>{displayText(attraction.name, "Future Attraction")}</h4>
+                    <p className="muted">{displayText(attraction.description, "Coming soon to the Gold Saucer.")}</p>
                   </article>
                 ))}
               </div>

@@ -1,0 +1,55 @@
+{
+  "release": "Crystal Guild v1.6.0 \u2014 Gold Saucer Alpha 5 Web Hotfix 2 \u2014 Gold Saucer + Quantity Input Recovery",
+  "runtime": "1.6.0-gold-saucer-a5",
+  "frontend_asset_revision": "1.6.0-gold-saucer-a5h2",
+  "compatible_bot": "1.6.0-gold-saucer-a5",
+  "local_db_schema": 13,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 29,
+  "twitch_prefix": "!",
+  "currency": "MGP",
+  "web_only": true,
+  "fixes": [
+    "sanitize Gold Saucer live display scalars before React rendering",
+    "retryable/logged profile section render fallback",
+    "default-one quantity replacement on mobile/keyboard entry",
+    "shared quantity behavior for Emporium Buy/Sell, Blacksmith, and Fellowship Workshop"
+  ],
+  "gold_saucer_layout": {
+    "fixed_open": [
+      "Mini Cactpot",
+      "Crystal Slots"
+    ],
+    "collapsible": [
+      "Monster Toss",
+      "Chocobo Racing",
+      "Triple Triad",
+      "Prize Counter",
+      "Saucer Ledger",
+      "Recent Activity",
+      "Future Attractions"
+    ]
+  },
+  "validation": {
+    "frontend_tests": "507/507 PASS",
+    "hosted_web_api_tests": "56/56 PASS",
+    "typescript_parser": "227/227 PASS",
+    "node_syntax": "185/185 PASS",
+    "python_parse": "12/12 PASS",
+    "css_parse": "8/8 PASS",
+    "webp_decode": "701/701 PASS",
+    "public_png_count": 0,
+    "adversarial_gold_saucer_render": "PASS",
+    "quantity_input_simulation": "PASS",
+    "vite_build": "NOT RUN locally \u2014 node_modules / vite executable absent"
+  },
+  "packaging": {
+    "source_baseline": "Crystal Guild v1.6.0 Gold Saucer Alpha 5 Web Hotfix 1",
+    "patch_source_revision": "1.6.0-gold-saucer-a5h1",
+    "changed_or_added_web_files": 65,
+    "deleted_web_files": 0,
+    "web_file_count": 996,
+    "bot_source": "byte-identical canonical Alpha 5 Bot archive",
+    "bot_sha256": "9d992c6db74bc53af7768fecc5f3d7bdd4779e8d817b0fafaf8fbaf5764bc4b5"
+  }
+}

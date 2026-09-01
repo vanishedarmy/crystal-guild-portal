@@ -1,3 +1,13 @@
+# v1.6.0 Gold Saucer Alpha 5 Web Hotfix 2 — Gold Saucer + Quantity Input Recovery
+
+Web-only hotfix. Sanitizes live Gold Saucer display scalars so malformed/legacy nested values cannot blank the whole tab, adds retryable section fallback diagnostics, and fixes Buy/Sell quantity entry so typed digits replace the default 1 on desktop and mobile. Runtime/Bot stay `1.6.0-gold-saucer-a5`; frontend advances to `1.6.0-gold-saucer-a5h2`; schema 13 / sync 1 / protocol 29 unchanged.
+
+# v1.6.0 Gold Saucer Alpha 5 Web Hotfix 1 — Render Recovery
+
+- Gold Saucer is now loaded eagerly with Player Profile to avoid stale lazy-chunk failures after deploy.
+- Partial/legacy Gold Saucer nested payloads are normalized before render.
+- Alpha 5 gameplay, schema 13, protocol 29, MGP balances, and the requested collapsible-floor behavior are unchanged.
+
 # Crystal Guild Web History
 
 ## v1.6.0 — Gold Saucer Alpha 5 — Triple Triad

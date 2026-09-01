@@ -24,7 +24,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-a5"
-FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a5"
+FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a5h2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 29
 ALLOWED_PORTAL_ACTIONS = {

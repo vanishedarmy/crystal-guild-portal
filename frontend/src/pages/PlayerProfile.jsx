@@ -9,6 +9,7 @@ import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import Overview from "../player/Overview.jsx";
+import GoldSaucer from "../player/GoldSaucer.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
 import { campDeadlineMs, campRemainingSeconds } from "../utils/campCountdown.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
@@ -17,7 +18,7 @@ const MODULES = {
   overview: Overview,
   fellowship: lazy(() => import("../player/Fellowship.jsx")),
   chocobo: lazy(() => import("../player/ChocoboStable.jsx")),
-  gold_saucer: lazy(() => import("../player/GoldSaucer.jsx")),
+  gold_saucer: GoldSaucer,
   jobs: lazy(() => import("../player/Jobs.jsx")),
   inventory: lazy(() => import("../player/Inventory.jsx")),
   shop: lazy(() => import("../player/MoogleEmporium.jsx")),

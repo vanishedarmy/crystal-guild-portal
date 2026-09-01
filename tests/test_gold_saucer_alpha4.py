@@ -21,7 +21,7 @@ class GoldSaucerHostedAlpha4Tests(unittest.TestCase):
 
     def test_alpha4_contract_adds_chocobo_race_action(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.6.0-gold-saucer-a5")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.6.0-gold-saucer-a5")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.6.0-gold-saucer-a5h2")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 29)
         self.assertIn("CHOCOBO_RACE", ALLOWED_PORTAL_ACTIONS)
 

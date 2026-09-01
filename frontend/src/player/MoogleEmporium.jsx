@@ -10,6 +10,7 @@ import { duration, formatBonuses, number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
+import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 
 
 const EQUIPMENT_TYPES = new Set(["weapon", "armor", "accessory"]);
@@ -35,12 +36,6 @@ function actionKey(kind, target = "shop") {
     ? globalThis.crypto.randomUUID()
     : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
   return `${kind}:${target}:${suffix}`;
-}
-
-function clampQuantity(value, max = 99) {
-  const parsed = Number.parseInt(value, 10);
-  if (!Number.isFinite(parsed)) return 1;
-  return Math.max(1, Math.min(max, parsed));
 }
 
 function typeLabel(type) {
@@ -207,7 +202,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
 
   const buy = (item) => {
     const max = item.equipment ? 1 : 99;
-    const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] || 1, max);
+    const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] ?? 1, max);
     return runMutation(
       `buy:${item.id}`,
       () => submitBuyItem(item.id, quantity, csrfToken, actionKey("buy", item.id)),
@@ -217,7 +212,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
 
   const sell = (item) => {
     const max = Math.max(1, Number(item.max_sell_quantity || 1));
-    const quantity = clampQuantity(sellQty[item.id] || 1, max);
+    const quantity = clampQuantity(sellQty[item.id] ?? 1, max);
     return runMutation(
       `sell:${item.id}`,
       () => submitSellItem(item.id, quantity, csrfToken, actionKey("sell", item.id)),
@@ -297,7 +292,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
             <div id="moogle-mode-panel" className="moogle-stock-grid" role="tabpanel" tabIndex="0" aria-labelledby={`moogle-mode-${mode} moogle-category-${category}`}>
               {filteredStock.length ? filteredStock.map((item) => {
                 const max = item.equipment ? 1 : 99;
-                const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] || 1, max);
+                const quantity = item.equipment ? 1 : clampQuantity(buyQty[item.id] ?? 1, max);
                 const total = Number(item.price || 0) * quantity;
                 const affordable = Number(shop.gil || 0) >= total;
                 const busy = busyKey === `buy:${item.id}`;
@@ -327,7 +322,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
                     {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv.{number(item.min_level)}</div> : null}
                     <div className="moogle-card-actions">
-                      {!item.equipment ? <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max="99" value={quantity} onChange={(event) => setBuyQty((current) => ({ ...current, [item.id]: clampQuantity(event.target.value, 99) }))} /></label> : <span className="moogle-fixed-quantity">Qty 1</span>}
+                      {!item.equipment ? <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max="99" value={quantityInputValue(buyQty, item.id)} onFocus={() => beginQuantityEdit(setBuyQty, buyQty, item.id)} onChange={(event) => updateQuantityInput(setBuyQty, item.id, event.target.value, 99)} onBlur={(event) => finishQuantityEdit(setBuyQty, item.id, event.target.value, 99)} /></label> : <span className="moogle-fixed-quantity">Qty 1</span>}
                       <button type="button" className="equipment-action-button" disabled={!shopActionsAvailable || shop.combat_locked || !affordable || Boolean(busyKey)} onClick={() => buy(item)}>{busy ? "Buying…" : (affordable ? `Buy ${item.name} · ${number(total)}g` : `Need ${number(total)}g`)}</button>
                     </div>
                   </article>
@@ -338,7 +333,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
             <div id="moogle-mode-panel" className="moogle-sell-grid moogle-sell-panel" role="tabpanel" tabIndex="0" aria-labelledby={`moogle-mode-${mode} moogle-category-${category}`}>
               {filteredSellableItems.length ? filteredSellableItems.map((item) => {
                 const max = Number(item.max_sell_quantity || 0);
-                const quantity = clampQuantity(sellQty[item.id] || 1, Math.max(1, max));
+                const quantity = clampQuantity(sellQty[item.id] ?? 1, Math.max(1, max));
                 const proceeds = Number(item.sell_price || 0) * quantity;
                 const busy = busyKey === `sell:${item.id}`;
                 return (
@@ -351,7 +346,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
                     </div>
                     <div className="moogle-card-actions sell-actions">
-                      <label className="moogle-quantity"><span>Qty</span><input type="number" min="1" max={Math.max(1, max)} value={quantity} disabled={max <= 0} onChange={(event) => setSellQty((current) => ({ ...current, [item.id]: clampQuantity(event.target.value, Math.max(1, max)) }))} /></label>
+                      <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max={Math.max(1, max)} value={quantityInputValue(sellQty, item.id)} disabled={max <= 0} onFocus={() => beginQuantityEdit(setSellQty, sellQty, item.id)} onChange={(event) => updateQuantityInput(setSellQty, item.id, event.target.value, Math.max(1, max))} onBlur={(event) => finishQuantityEdit(setSellQty, item.id, event.target.value, Math.max(1, max))} /></label>
                       <button type="button" className="equipment-action-button secondary" disabled={!shopActionsAvailable || shop.combat_locked || max <= 0 || Boolean(busyKey)} onClick={() => sell(item)}>{busy ? "Selling…" : `Sell ${item.name} · ${number(proceeds)}g`}</button>
                     </div>
                   </article>

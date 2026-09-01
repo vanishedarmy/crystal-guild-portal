@@ -1,15 +1,15 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Hotfix 5 — Triple Triad Full Card Face Sync
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
 
-Hotfix 5 completes the Triple Triad card presentation pass. Owned/player/NPC cards now render the **full 3:4 illustrated card face** instead of a portrait crop with duplicated live values over it. Selection remains visible through the outer highlight only.
+Hotfix 6 removes the wide Triple Triad **Choose Opponent** banner shown between the section heading and the opponent cards. The image is removed from the active render path and is no longer used as an opponent fallback.
 
-## Visual/UI changes
-- Publishes a cache-busted `/gold-saucer/a5h5/triple-triad/` family.
-- Replaces all 15 card portraits with complete **543×724** card faces.
-- Removes visible `triad-card-values`, rarity, name, and shade overlays from full-face cards.
-- Keeps Top/Right/Bottom/Left values in accessible labels for screen readers.
-- Keeps H4 finger-pointer Gold Saucer collapsibles and render-recovery fallbacks intact.
+## UI changes
+- Opponent selection now flows directly from the compact heading into Saucer Attendant, Card Shark, and Crystal Master cards.
+- The collection badge now reads `X / 15 cards collected`.
+- The selected opponent is explicitly marked **SELECTED** in the card metadata.
+- Desktop opponent artwork is shortened to reduce vertical dead space.
+- Mobile opponent cards switch to a compact portrait-left / details-right layout instead of stacking a large image above the copy.
+- The selected-match strip is visually tightened beneath the opponent cards.
 
-## Gameplay sync
-Because the card art contains printed values, the matching Bot updates Chocobo, Moogle, Cactuar, Bomb, and Flan to those printed numbers. The other ten cards already matched. H5 therefore requires the matching Bot and Web deployment.
+No Triple Triad rules, card values, MGP costs/payouts, card collection, schema, or Portal actions change. The complete H5 Triple Triad art family remains packaged and served from `/gold-saucer/a5h5/triple-triad/`; H6 simply stops rendering the `ui/opponents.webp` header.
 
-Contract: runtime/frontend `1.6.0-gold-saucer-a5h5`, schema **13**, hosted sync **1**, Portal protocol **29**, MGP unchanged.
+Contract: runtime/Bot `1.6.0-gold-saucer-a5h5`, frontend `1.6.0-gold-saucer-a5h6`, schema **13**, hosted sync **1**, Portal protocol **29**.

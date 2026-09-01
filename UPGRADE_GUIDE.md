@@ -1,11 +1,11 @@
-# Upgrade Guide — Alpha 5 Hotfix 5
+# Upgrade Guide — Alpha 5 Web Hotfix 6
 
-1. Deploy the matching **H5 Bot and H5 Web together**.
-2. Preserve your existing database, environment variables, and hosted secrets.
-3. No schema migration is required.
-4. Verify `/api/health` reports runtime/frontend `1.6.0-gold-saucer-a5h5`, hosted sync **1**, Portal protocol **29**.
-5. Hard-refresh the Portal once after deploy so `/gold-saucer/a5h5/triple-triad/` is requested.
-6. Open Triple Triad and confirm full card faces show with no duplicate upper-left UI values.
-7. Confirm the five starter cards use their printed values during captures.
+1. Keep the existing **H5 Bot** running; there is no Bot update in H6.
+2. Deploy the H6 Web tree or apply the H5→H6 Web patch.
+3. Preserve hosted secrets, environment variables, and persistent data.
+4. Hard-refresh once after deployment so the frontend revision advances to `1.6.0-gold-saucer-a5h6`.
+5. Open Gold Saucer → Triple Triad and confirm **Choose Opponent** goes directly into the three opponent cards with no wide banner image.
+6. Confirm opponent cards remain readable at desktop and mobile widths and the selected opponent displays **SELECTED**.
+7. Confirm `/api/health` reports runtime `1.6.0-gold-saucer-a5h5`, frontend `1.6.0-gold-saucer-a5h6`, hosted sync **1**, and Portal protocol **29**.
 
-Existing MGP balances, card collection, saved deck, records, and daily counters remain intact.
+No database migration, MGP conversion, card reset, or OAuth change is required.

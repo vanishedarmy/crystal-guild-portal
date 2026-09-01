@@ -1,8 +1,8 @@
-# Asset Optimization Report — Alpha 5 Hotfix 5
+# Asset Optimization Report — Alpha 5 Web Hotfix 6
 
-- Public PNG files: **0**
-- Public WebP files: **800**
-- Decode validation: **800 / 800 PASS**
-- H5 Triple Triad family: **33 WebP / 6,295,714 bytes**
-- H5 full card faces: **15 WebP / 1,892,918 bytes**
-- Each full card face is **543×724**, preserving the generated 3:4 card composition at half source resolution.
+H6 adds **no new artwork** and performs no image recompression.
+
+- Public tree: **800 WebP / 0 PNG**
+- Decode verification: **800 / 800 PASS**
+- Triple Triad full-card/opponent/UI family remains at `/gold-saucer/a5h5/triple-triad/`.
+- The prior `ui/opponents.webp` file remains packaged for historical/archive compatibility but has **no active H6 component reference**.

@@ -1,0 +1,37 @@
+{
+  "release": "Crystal Guild v1.6.0 \u2014 Gold Saucer Alpha 5 Web Hotfix 6 \u2014 Triple Triad Opponent UI Pass",
+  "runtime": "1.6.0-gold-saucer-a5h5",
+  "frontend_asset_revision": "1.6.0-gold-saucer-a5h6",
+  "compatible_bot_runtime": "1.6.0-gold-saucer-a5h5",
+  "local_db_schema": 13,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 29,
+  "currency": "MGP",
+  "prefix": "!",
+  "scope": {
+    "bot_changed": false,
+    "web_changed": true,
+    "schema_migration": false,
+    "protocol_change": false,
+    "mgp_change": false,
+    "new_assets": false
+  },
+  "triple_triad_ui": {
+    "asset_root": "/gold-saucer/a5h5/triple-triad/",
+    "opponent_header_banner_rendered": false,
+    "opponent_banner_active_reference": false,
+    "opponent_portraits_retained": [
+      "saucer_attendant",
+      "card_shark",
+      "crystal_master"
+    ],
+    "full_card_faces_retained": true,
+    "selected_label": "SELECTED",
+    "mobile_layout": "portrait-left/details-right"
+  },
+  "gold_saucer": {
+    "mini_cactpot_fixed_open": true,
+    "crystal_slots_fixed_open": true,
+    "shared_finger_pointers_retained": true
+  }
+}

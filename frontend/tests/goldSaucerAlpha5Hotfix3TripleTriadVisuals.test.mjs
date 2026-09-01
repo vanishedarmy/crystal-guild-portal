@@ -36,5 +36,5 @@ test("Triple Triad artwork UI remains responsive and retains H2 collapse behavio
   assert.match(css, /\.triad-opponent-art/);
   assert.match(css, /@media\(max-width:540px\)/);
   assert.match(component, /<details className="panel saucer-triad-panel saucer-section-disclosure"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a5h5"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a5h6"/);
 });

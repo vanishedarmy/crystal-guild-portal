@@ -42,9 +42,9 @@ test("Gold Saucer disclosures use the shared finger pointers", () => {
   assert.match(css, /saucer-section-disclosure > \.saucer-section-summary::after[\s\S]*?content:\s*none !important/);
 });
 
-test("Hotfix 4 UI uses illustrated opponent and collection context panels", () => {
-  assert.match(component, /triad-opponents-banner/);
-  assert.match(component, /ui\/opponents\.webp/);
+test("Current UI retains illustrated opponent cards and collection context art", () => {
+  assert.match(component, /TRIAD_OPPONENT_ART/);
+  assert.match(component, /triad-opponent-art/);
   assert.match(component, /triad-collection-banner/);
   assert.match(component, /ui\/collection\.webp/);
 });

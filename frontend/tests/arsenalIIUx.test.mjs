@@ -66,5 +66,5 @@ test("Player Guide release identity comes from the shared header and uses Expedi
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
   assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /1\.6\.0-gold-saucer-a5h5/);
+  assert.match(version, /1\.6\.0-gold-saucer-a5h6/);
 });

@@ -1,28 +1,26 @@
-# Validation Report — Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Hotfix 5 — Triple Triad Full Card Face Sync
+# Validation Report — Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
 
 **PASS**
 
 ## Regression suites
-- Bot: **632 / 632 PASS**
-- Frontend: **516 / 516 PASS**
+- Matched H5 Bot: **632 / 632 PASS**
+- Frontend: **519 / 519 PASS**
 - Hosted Web/API: **56 / 56 PASS**
 
 ## Source / asset gates
-- Frontend JS/JSX/MJS TypeScript parser: **228 / 228 PASS**
-- Plain JS/MJS Node syntax: **186 / 186 PASS**
-- Matched Bot + Web Python parse: **122 / 122 PASS**
+- Web Python parse: **12 / 12 PASS**
+- Plain JS/MJS Node syntax: **189 / 189 PASS**
 - CSS parse: **8 / 8 PASS**
 - Public artwork: **0 PNG / 800 WebP**, **800 / 800 decode PASS**
-- H5 Triple Triad family: **33 WebP / 6,295,714 bytes**
-- Full card faces: **15 / 15 at 543×724 / 1,892,918 bytes**
 
-## Focused H5 checks
-- Full-face cards use `object-fit: contain` and a 3:4 presentation ratio.
-- Visible duplicate stat/name/rarity overlays are removed from full-face cards.
-- Authoritative values remain exposed through accessibility labels.
-- All 15 H5 card routes exist; failed card art falls back safely.
-- Shared H4 Gold Saucer finger pointers remain in place.
+## Focused H6 checks
+- `triad-opponents-banner` is absent from the live Triple Triad component.
+- `ui/opponents.webp` is no longer referenced by the live component as a header or fallback.
+- Opponent cards retain the three dedicated opponent portraits.
+- Selected opponent state renders an explicit `SELECTED` label.
+- Desktop and mobile opponent layouts have dedicated compact rules.
+- H5 full-card faces and Gold Saucer finger-pointer disclosures are preserved.
 
-The source-only workspace still does not include installed project `node_modules`, so no local Vite production-build claim is made.
+The source-only workspace does not include installed project `node_modules`, so no local Vite production-build claim is made.
 
-Contract: runtime/frontend `1.6.0-gold-saucer-a5h5`, schema **13**, hosted sync **1**, Portal protocol **29**, MGP canonical.
+Contract: runtime/Bot `1.6.0-gold-saucer-a5h5`, frontend `1.6.0-gold-saucer-a5h6`, schema **13**, hosted sync **1**, Portal protocol **29**, MGP canonical.

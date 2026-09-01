@@ -1,3 +1,8 @@
+## v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
+- Removes the wide Choose Opponent scenic header from the live Triple Triad flow and from opponent fallback routing.
+- Compacts desktop/mobile opponent cards, clarifies collection count, and adds an explicit selected-opponent label.
+- Retains H5 full card faces, H4 shared finger pointers, runtime `1.6.0-gold-saucer-a5h5`, schema 13, sync 1, and protocol 29.
+
 ## v1.6.0 — Gold Saucer Alpha 5 Hotfix 5 — Triple Triad Full Card Face Sync
 - Uses complete Triple Triad card faces and removes duplicate visible stat/name/rarity overlays.
 - Synchronizes the five starter-card gameplay definitions to the printed artwork through the matched H5 Bot.

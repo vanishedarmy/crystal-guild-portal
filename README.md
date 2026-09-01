@@ -1,5 +1,5 @@
-# Crystal Guild Web — Gold Saucer Alpha 5 Hotfix 5
+# Crystal Guild Web — Gold Saucer Alpha 5 Hotfix 6
 
-Current hosted/Bot runtime and frontend revision: `1.6.0-gold-saucer-a5h5`. Schema **13**, hosted sync **1**, Portal protocol **29**, MGP canonical.
+Current hosted/Bot runtime: `1.6.0-gold-saucer-a5h5`. Frontend revision: `1.6.0-gold-saucer-a5h6`. Schema **13**, hosted sync **1**, Portal protocol **29**, MGP canonical.
 
-Hotfix 5 shows complete Triple Triad card faces without duplicate UI values and requires the matching Bot because five starter-card definitions are synchronized to the printed artwork. H4 render recovery, quantity-input fixes, and shared Gold Saucer finger-pointer disclosures are retained.
+Hotfix 6 is a Web-only Triple Triad UI refinement. It removes the wide illustrated header beneath **Choose Opponent**, keeps the three actual opponent portraits as the visual selection surface, clarifies collection/selected state, and makes opponent cards more compact on desktop and easier to scan on mobile. H5 full-card faces, H4 shared Gold Saucer finger pointers, render recovery, and quantity-input fixes are retained.

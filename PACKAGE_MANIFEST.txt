@@ -1,8 +1,8 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Hotfix 5 — Triple Triad Full Card Face Sync
-Frontend revision: 1.6.0-gold-saucer-a5h5
+Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
+Frontend revision: 1.6.0-gold-saucer-a5h6
 Runtime/Bot: 1.6.0-gold-saucer-a5h5
 Schema: 13
 Hosted sync: 1
 Portal Action protocol: 29
-Triple Triad H5 family: /gold-saucer/a5h5/triple-triad/ (33 WebP)
-Full card faces: 15 × 543x724 WebP
+Triple Triad H5 family retained: /gold-saucer/a5h5/triple-triad/ (33 WebP)
+No new image assets in H6.

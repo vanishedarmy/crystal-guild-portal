@@ -704,16 +704,15 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || triadDeckDraft.length !== 5 || !triadDeckChanged} onClick={() => mutate("triad-save-deck", () => submitTriadSetDeck(triadDeckDraft, csrfToken, actionKey("triad-set-deck")), "Saving Triple Triad deck…")}>{busy === "triad-save-deck" ? "Saving…" : triadDeckChanged ? "Save Deck" : "Deck Saved"}</button>
                   </div>
 
-                  <div className="triad-builder-head">
+                  <div className="triad-builder-head triad-opponent-heading">
                     <div><span className="slot-label">Choose Opponent</span><small className="muted">Wins unlock tougher tables, stronger card rewards, and larger MGP purses.</small></div>
-                    <span className="small-badge">{number(triad.owned_count)} / {number(triad.total_cards)} cards</span>
+                    <span className="small-badge triad-collection-count">{number(triad.owned_count)} / {number(triad.total_cards)} cards collected</span>
                   </div>
-                  <div className="triad-context-banner triad-opponents-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/opponents.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
                   <div className="triad-opponent-grid">
                     {triadOpponents.map((opponent) => (
                       <button type="button" className={`triad-opponent ${triadOpponent === opponent.id ? "selected" : ""} ${opponent.unlocked ? "" : "locked"}`} key={opponent.id} disabled={Boolean(busy) || !opponent.unlocked} onClick={() => setTriadOpponent(opponent.id)} aria-pressed={triadOpponent === opponent.id}>
-                        <span className="triad-opponent-art"><ArtImage src={TRIAD_OPPONENT_ART[displayId(opponent.id, "")] || `${TRIAD_ART_ROOT}/ui/opponents.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" /></span>
-                        <span className="triad-opponent-meta"><span className={`small-badge ${opponent.unlocked ? "ready" : "locked"}`}>{opponent.unlocked ? `${number(opponent.cost)} MGP` : `${number(opponent.unlock_wins)} wins`}</span><small>{displayText(opponent.difficulty, "Opponent")}</small></span>
+                        <span className="triad-opponent-art"><ArtImage src={TRIAD_OPPONENT_ART[displayId(opponent.id, "")] || TRIAD_ART_FALLBACK} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" /></span>
+                        <span className="triad-opponent-meta"><span className={`small-badge ${opponent.unlocked ? "ready" : "locked"}`}>{opponent.unlocked ? `${number(opponent.cost)} MGP` : `${number(opponent.unlock_wins)} wins`}</span><span className="triad-opponent-status">{triadOpponent === opponent.id && opponent.unlocked ? "SELECTED" : displayText(opponent.difficulty, "Opponent")}</span></span>
                         <strong>{displayText(opponent.name, "Gold Saucer Opponent")}</strong>
                         <span>{displayText(opponent.description, "Triple Triad challenger.")}</span>
                         <small>Win {number(opponent.win_payout)} · Draw {number(opponent.draw_payout)} MGP</small>

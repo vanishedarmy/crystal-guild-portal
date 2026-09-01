@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-rc2"
-FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-rc2h1"
+HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer"
+FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 29
 ALLOWED_PORTAL_ACTIONS = {

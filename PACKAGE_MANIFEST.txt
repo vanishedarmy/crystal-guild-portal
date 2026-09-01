@@ -1,10 +1,11 @@
-Crystal Guild v1.6.0 Gold Saucer Alpha 5 Web Hotfix 3
-Frontend revision: 1.6.0-gold-saucer-a5h3
+Crystal Guild v1.6.0 Gold Saucer Alpha 5 Web Hotfix 4
+Frontend revision: 1.6.0-gold-saucer-a5h4
 Runtime/Bot: 1.6.0-gold-saucer-a5
 Schema: 13
 Hosted sync: 1
 Portal Action protocol: 29
 Prefix: !
-Primary change: Triple Triad artwork + UI presentation
-Visual family: /gold-saucer/a5h3/triple-triad/ (33 WebP assets)
+Primary changes: Triple Triad artwork render recovery + Gold Saucer shared finger-pointer UI
+Current visual family: /gold-saucer/a5h4/triple-triad/ (33 WebP assets)
+Compatibility visual family retained: /gold-saucer/a5h3/triple-triad/
 Gameplay/economy/backend changes: none

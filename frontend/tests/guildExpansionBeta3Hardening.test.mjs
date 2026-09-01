@@ -19,7 +19,7 @@ test("Beta 3 binds Fellowship contributions to the rendered project", () => {
 
 test("Final player-facing release copy keeps the hardening summary without backend jargon", () => {
   assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /1\.6\.0-gold-saucer-a5h3/);
+  assert.match(version, /1\.6\.0-gold-saucer-a5h4/);
   assert.match(news, /Guild Expansion has arrived/);
   assert.match(news, /Shared progress stays reliable/);
     assert.doesNotMatch(news.split('name: "Guild Expansion"')[1].split('\n  },')[0], /SQLite|transaction|mutex|schema|protocol|replay receipt/i);

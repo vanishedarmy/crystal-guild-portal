@@ -11,7 +11,7 @@ test("lazy guide data is valid and versioned for v1.2.0 Expeditions", async () =
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);
   assert.equal(data.meta.raid_round, 60);
-  assert.equal(data.meta.release, "1.6.0-gold-saucer-a5h3");
+  assert.equal(data.meta.release, "1.6.0-gold-saucer-a5h4");
   assert.ok(data.jobs.length > 0);
   assert.ok(data.achievements.length > 0);
   assert.equal(Object.keys(data.active_abilities).length, data.jobs.length);

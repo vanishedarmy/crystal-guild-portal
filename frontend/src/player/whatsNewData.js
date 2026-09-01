@@ -15,6 +15,7 @@ export const MAJOR_UPDATES = [
       { title: "Gold Saucer render recovery", description: "Hotfix 1 removes the Gold Saucer tab from lazy split-chunk loading and hardens partial live-state handling so a stale module or incomplete payload cannot blank the whole section." },
       { title: "Gold Saucer + quantity recovery", description: "Hotfix 2 sanitizes live Gold Saucer display values, adds a retryable section fallback, and fixes Emporium Buy/Sell quantity fields so typing replaces the starter 1 on desktop and mobile." },
       { title: "Triple Triad artwork pass", description: "Hotfix 3 adds the complete 15-card visual collection, opponent portraits, illustrated board and result states, while keeping all actual card values sourced from the authoritative game data." },
+      { title: "Triple Triad artwork recovery + UI", description: "Hotfix 4 fixes the card-art layer order, cache-busts the complete Triad visual family, keeps illustrated context panels visible on mobile, adds safe image fallbacks, and gives every Gold Saucer disclosure the shared finger-pointer controls used across the Portal." },
       { title: "Additive upgrade", description: "Local schema advances to 13 for Triple Triad collection and persistent match state, hosted sync remains 1, and Portal Action protocol advances to 29 for deck, start, and play actions." },
     ],
     action: { tab: "gold_saucer", label: "Play Triple Triad" },

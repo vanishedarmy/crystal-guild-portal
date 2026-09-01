@@ -1,5 +1,5 @@
-# Hosting Guide — Alpha 5 Web Hotfix 3
+# Hosting Guide — Alpha 5 Web Hotfix 4
 
-Deploy this full Web tree with the existing Alpha 5 Bot runtime. Preserve hosted secrets and persistent state. `/api/health` should report hosted runtime `1.6.0-gold-saucer-a5`, frontend asset revision `1.6.0-gold-saucer-a5h3`, hosted sync schema 1, and Portal protocol 29. No database migration is required.
+Deploy this full Web tree with the existing Alpha 5 Bot runtime. Preserve hosted secrets and persistent state. `/api/health` should report hosted runtime `1.6.0-gold-saucer-a5`, frontend asset revision `1.6.0-gold-saucer-a5h4`, hosted sync schema 1, and Portal protocol 29. No database migration is required.
 
-The new cache-busted Triple Triad visual family is served from `/gold-saucer/a5h3/triple-triad/`.
+The cache-busted Triple Triad visual family is served from `/gold-saucer/a5h4/triple-triad/`. The prior H3 family remains packaged for staggered/cached-client compatibility, while current H4 source routes only to the H4 family.

@@ -1,15 +1,7 @@
-# Crystal Guild v1.3.1 — Asset Optimization Report
+# Asset Report — Gold Saucer Alpha 5 Web Hotfix 4
 
-## Result
-**PASS**
-
-- PNG candidates audited: **390**
-- PNG → lossless WebP conversions accepted: **390**
-- Conversions rejected because WebP was not smaller: **0**
-- Original PNG bytes: **151,212,726** (144.21 MiB)
-- Replacement WebP bytes: **117,726,632** (112.27 MiB)
-- Raw bytes removed: **33,486,094** (31.93 MiB; 22.1%)
-- Pixel/transparency verification: **390 / 390 exact decoded RGBA matches**
-- Existing WebP files audited: **182**; no meaningful safe repack savings found, so originals were retained.
-
-The optimization is format-only. Image dimensions and rendered pixels are unchanged.
+- H4 Triple Triad family: **33 WebP**, **5,743,478 bytes**.
+- H4 files are byte-identical to the validated H3 art family; they are republished at a new path solely for cache invalidation and routing recovery.
+- Public tree: **767 WebP**, all decode successfully; **0 PNG**.
+- Shared Gold Saucer disclosure controls reuse the existing optimized right/down finger WebP assets under `/ui/`.
+- No image recompression was required for H4.

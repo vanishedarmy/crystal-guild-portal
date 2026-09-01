@@ -16,13 +16,15 @@ import {
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number } from "../utils/formatters.js";
+import { DetailsPointer } from "../components/CollapsePointer.jsx";
 
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
 const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
 const CHOCOBO_PORTRAIT_ROOT = "/retro-phase-iii/chocobo-portraits-v1";
 const RACE_ART_ROOT = "/gold-saucer/a4h1/chocobo-racing";
-const TRIAD_ART_ROOT = "/gold-saucer/a5h3/triple-triad";
+const TRIAD_ART_ROOT = "/gold-saucer/a5h4/triple-triad";
+const TRIAD_ART_FALLBACK = `${SAUCER_ART_ROOT}/saucer-lobby.webp`;
 const TRIAD_CARD_ART = Object.fromEntries(["chocobo", "moogle", "cactuar", "bomb", "flan", "tonberry", "coeurl", "ahriman", "malboro", "ifrit", "shiva", "ramuh", "leviathan", "bahamut", "odin"].map((id) => [id, `${TRIAD_ART_ROOT}/cards/${id}.webp`]));
 const TRIAD_OPPONENT_ART = {
   saucer_attendant: `${TRIAD_ART_ROOT}/opponents/saucer_attendant.webp`,
@@ -111,6 +113,24 @@ async function finishedAction(response) {
   return waitForPortalAction(action.id, { attempts: 32, delayMs: 600 });
 }
 
+function ArtImage({ src, fallbackSrc = "", ...props }) {
+  return (
+    <img
+      {...props}
+      src={src}
+      onError={(event) => {
+        const image = event.currentTarget;
+        if (fallbackSrc && image.dataset.fallbackAttempted !== "1") {
+          image.dataset.fallbackAttempted = "1";
+          image.src = fallbackSrc;
+          return;
+        }
+        image.hidden = true;
+      }}
+    />
+  );
+}
+
 function Reel({ id, label }) {
   const art = SLOT_ART[id] || null;
   return (
@@ -127,7 +147,7 @@ function TriadCard({ card, owner = "player", selected = false, disabled = false,
   const art = TRIAD_CARD_ART[cardId] || null;
   const content = (
     <>
-      {art ? <span className="triad-card-art" aria-hidden="true"><img src={art} alt="" /></span> : null}
+      {art ? <span className="triad-card-art" aria-hidden="true"><ArtImage src={art} fallbackSrc={`${TRIAD_ART_ROOT}/cards/card-back.webp`} alt="" /></span> : null}
       <span className="triad-card-shade" aria-hidden="true" />
       <span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span>
       <span className="triad-card-name">{displayText(card.name, "Unknown Card")}</span>
@@ -456,6 +476,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <summary className="saucer-section-summary monster-toss-title-row">
               <div><p className="eyebrow">Alpha 2 Attraction</p><h3>Monster Toss</h3></div>
               <span className={`small-badge ${tossGame ? "ready" : ""}`}>{tossGame ? `${number(tossGame.throws_remaining)} throws left` : `${number(toss.games_remaining)} / ${number(toss.daily_games || 3)} games left`}</span>
+              <DetailsPointer className="saucer-details-pointer" />
             </summary>
             <img className="monster-toss-background" src={`${TOSS_ART_ROOT}/background.webp`} alt="" aria-hidden="true" />
             <div className="monster-toss-scenic-shade" aria-hidden="true" />
@@ -525,7 +546,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canStartToss} onClick={() => mutate("monster-toss-start", () => submitMonsterTossStart(csrfToken, actionKey("monster-toss-start")), "Opening Monster Toss…")}>{busy === "monster-toss-start" ? "Opening…" : Number(toss.games_remaining || 0) <= 0 ? `Daily reset ${duration(tossResetRemaining)}` : mgp < Number(toss.cost || 20) ? "Not Enough MGP" : `Start Game · ${number(toss.cost || 20)} MGP`}</button>
                 </div>
               )}
-              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards</summary><div className="monster-toss-payouts">{asObjectArray(toss.payouts).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} MGP</span>)}</div></details>
+              <details className="saucer-balance-notes monster-toss-rewards"><summary>Score rewards<DetailsPointer className="saucer-details-pointer" /></summary><div className="monster-toss-payouts">{asObjectArray(toss.payouts).filter((row) => Number(row.minimum_score) > 0).map((row) => <span key={row.tier}><b>{number(row.minimum_score)}+</b> → {number(row.payout)} MGP</span>)}</div></details>
             </div>
           </details>
 
@@ -533,6 +554,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <summary className="saucer-section-summary saucer-race-title-row">
               <div><p className="eyebrow">Alpha 4 Attraction</p><h3>Chocobo Racing</h3></div>
               <span className={`small-badge ${Number(racing.races_remaining || 0) > 0 ? "ready" : "locked"}`}>{number(racing.races_remaining)} / {number(racing.daily_races || 3)} races left</span>
+              <DetailsPointer className="saucer-details-pointer" />
             </summary>
             <div className="saucer-race-section-body">
               <div className="saucer-race-hero" aria-hidden="true">
@@ -615,9 +637,10 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <summary className="saucer-section-summary">
               <div><p className="eyebrow">Alpha 5 Attraction</p><h3>Triple Triad</h3></div>
               <span className={`small-badge ${Number(triad.matches_remaining || 0) > 0 ? "ready" : "locked"}`}>{number(triad.matches_remaining)} / {number(triad.daily_matches || 5)} matches left</span>
+              <DetailsPointer className="saucer-details-pointer" />
             </summary>
             <div className="saucer-section-body triad-section-body">
-              <div className="triad-hero" aria-hidden="true"><img src={`${TRIAD_ART_ROOT}/ui/hero.webp`} alt="" /><span /></div>
+              <div className="triad-hero" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/hero.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
               <p className="muted triad-intro">Build a five-card deck, challenge Gold Saucer opponents, and capture adjacent cards by placing a higher number against a lower opposing side. Alpha 5 uses the clean Open rule only—no Same, Plus, or elemental modifiers.</p>
 
               {triadMatch?.state === "active" ? (
@@ -644,7 +667,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                       ))}
                     </div>
                     <div className="triad-hand-panel">
-                      <div className="saucer-race-section-head"><div><span className="slot-label">Your Hand</span><small className="muted">Select a card, then choose an empty board cell.</small></div><span className="triad-hidden-opponent"><img src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} alt="" aria-hidden="true" /><span className="small-badge">{number(triadMatch.npc_cards_remaining)} hidden opponent cards</span></span></div>
+                      <div className="saucer-race-section-head"><div><span className="slot-label">Your Hand</span><small className="muted">Select a card, then choose an empty board cell.</small></div><span className="triad-hidden-opponent"><ArtImage src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" /><span className="small-badge">{number(triadMatch.npc_cards_remaining)} hidden opponent cards</span></span></div>
                       <div className="triad-hand-grid">
                         {triadHand.map((card) => <TriadCard key={card.id} card={card} selected={triadSelectedCard === card.id} disabled={Boolean(busy)} onClick={() => setTriadSelectedCard(card.id)} />)}
                       </div>
@@ -655,13 +678,13 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <>
                   {triadMatch?.state === "resolved" ? (
                     <div className={`triad-last-result result-${triadResultKey}`}>
-                      <img className="triad-result-art" src={`${TRIAD_ART_ROOT}/results/${triadResultKey}.webp`} alt="" aria-hidden="true" />
+                      <ArtImage className="triad-result-art" src={`${TRIAD_ART_ROOT}/results/${triadResultKey}.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" />
                       <div className="triad-result-copy"><span>Last Match</span><strong>{String(triadMatch.result || "complete").toUpperCase()} · {number(triadMatch.player_score)}–{number(triadMatch.npc_score)}</strong><small>vs {displayText(triadMatchOpponent?.name, "Gold Saucer Opponent")}</small></div>
                       <span className="small-badge">Match Complete</span>
                     </div>
                   ) : null}
 
-                  <div className="triad-context-banner triad-deck-banner" aria-hidden="true"><img src={`${TRIAD_ART_ROOT}/ui/deck-builder.webp`} alt="" /><span /></div>
+                  <div className="triad-context-banner triad-deck-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/deck-builder.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
                   <div className="triad-builder-head">
                     <div><span className="slot-label">Deck Builder</span><small className="muted">Choose exactly five owned cards. Your starter deck is granted automatically on first entry.</small></div>
                     <span className={`small-badge ${triadDeckDraft.length === 5 ? "ready" : "locked"}`}>{number(triadDeckDraft.length)} / 5 selected</span>
@@ -685,10 +708,11 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     <div><span className="slot-label">Choose Opponent</span><small className="muted">Wins unlock tougher tables, stronger card rewards, and larger MGP purses.</small></div>
                     <span className="small-badge">{number(triad.owned_count)} / {number(triad.total_cards)} cards</span>
                   </div>
+                  <div className="triad-context-banner triad-opponents-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/opponents.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
                   <div className="triad-opponent-grid">
                     {triadOpponents.map((opponent) => (
                       <button type="button" className={`triad-opponent ${triadOpponent === opponent.id ? "selected" : ""} ${opponent.unlocked ? "" : "locked"}`} key={opponent.id} disabled={Boolean(busy) || !opponent.unlocked} onClick={() => setTriadOpponent(opponent.id)} aria-pressed={triadOpponent === opponent.id}>
-                        <span className="triad-opponent-art"><img src={TRIAD_OPPONENT_ART[displayId(opponent.id, "")] || `${TRIAD_ART_ROOT}/ui/opponents.webp`} alt="" aria-hidden="true" /></span>
+                        <span className="triad-opponent-art"><ArtImage src={TRIAD_OPPONENT_ART[displayId(opponent.id, "")] || `${TRIAD_ART_ROOT}/ui/opponents.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" /></span>
                         <span className="triad-opponent-meta"><span className={`small-badge ${opponent.unlocked ? "ready" : "locked"}`}>{opponent.unlocked ? `${number(opponent.cost)} MGP` : `${number(opponent.unlock_wins)} wins`}</span><small>{displayText(opponent.difficulty, "Opponent")}</small></span>
                         <strong>{displayText(opponent.name, "Gold Saucer Opponent")}</strong>
                         <span>{displayText(opponent.description, "Triple Triad challenger.")}</span>
@@ -703,11 +727,12 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     </button>
                   </div>
 
-                  {Number(triad.owned_count || 0) >= Number(triad.total_cards || 15) ? <div className="triad-context-banner triad-complete-banner"><img src={`${TRIAD_ART_ROOT}/ui/collection-complete.webp`} alt="Collection complete" /><span /></div> : null}
+                  {Number(triad.owned_count || 0) >= Number(triad.total_cards || 15) ? <div className="triad-context-banner triad-complete-banner"><ArtImage src={`${TRIAD_ART_ROOT}/ui/collection-complete.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="Collection complete" /><span /></div> : null}
                   <details className="saucer-balance-notes triad-collection-disclosure">
-                    <summary>Card Collection · {number(triad.owned_count)} / {number(triad.total_cards)}</summary>
+                    <summary>Card Collection · {number(triad.owned_count)} / {number(triad.total_cards)}<DetailsPointer className="saucer-details-pointer" /></summary>
+                    <div className="triad-context-banner triad-collection-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/collection.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
                     <div className="triad-collection-grid collection-view">
-                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card locked compact" key={card.id}><span className="triad-card-art" aria-hidden="true"><img src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} alt="" /></span><span className="triad-card-shade" aria-hidden="true" /><span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span><span className="triad-card-name">???</span><span className="triad-card-lock">Locked</span></div>)}
+                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card locked compact" key={card.id}><span className="triad-card-art" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /></span><span className="triad-card-shade" aria-hidden="true" /><span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span><span className="triad-card-name">???</span><span className="triad-card-lock">Locked</span></div>)}
                     </div>
                   </details>
                 </>
@@ -719,6 +744,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             <summary className="saucer-section-summary">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
               <span className="small-badge">Titles Only · Alpha 5</span>
+              <DetailsPointer className="saucer-details-pointer" />
             </summary>
             <img className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="saucer-section-body">
@@ -745,7 +771,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </details>
 
           <details className="panel saucer-records-panel saucer-section-disclosure">
-            <summary className="saucer-section-summary"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 5</span></summary>
+            <summary className="saucer-section-summary"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">Alpha 5</span><DetailsPointer className="saucer-details-pointer" /></summary>
             <div className="saucer-section-body">
             <div className="saucer-record-grid">
               <div><span>Current Net MGP</span><strong>{netMgp >= 0 ? "+" : ""}{number(netMgp)} MGP</strong></div>
@@ -778,14 +804,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div><span>Lifetime Spent</span><strong>{number(account.lifetime_spent)} MGP</strong></div>
             </div>
             <details className="saucer-balance-notes">
-              <summary>Balance details</summary>
+              <summary>Balance details<DetailsPointer className="saucer-details-pointer" /></summary>
               <p className="muted">Your realized slot return is <b>{Number(records.slots_realized_return_pct || 0).toFixed(1)}%</b>. The current long-run payout target is about <b>{Number(balance.slots_theoretical_return_pct || 87.5).toFixed(1)}%</b>. Short sessions can vary dramatically.</p>
             </details>
             </div>
           </details>
 
           <details className="panel saucer-history-panel saucer-disclosure saucer-section-disclosure">
-            <summary><span><span className="eyebrow">Recent Activity</span><strong>Last Eight Entries</strong></span><span className="small-badge">{number(history.length)}</span></summary>
+            <summary className="saucer-section-summary"><span><span className="eyebrow">Recent Activity</span><strong>Last Eight Entries</strong></span><span className="small-badge">{number(history.length)}</span><DetailsPointer className="saucer-details-pointer" /></summary>
             {history.length ? (
               <div className="saucer-history-list">
                 {history.map((entry, index) => {
@@ -803,7 +829,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
 
           {futureAttractions.length ? (
             <details className="panel saucer-attractions-panel saucer-section-disclosure">
-              <summary className="saucer-section-summary"><div><p className="eyebrow">Coming Next</p><h3>Future Attractions</h3></div><span className="small-badge">{number(futureAttractions.length)}</span></summary>
+              <summary className="saucer-section-summary"><div><p className="eyebrow">Coming Next</p><h3>Future Attractions</h3></div><span className="small-badge">{number(futureAttractions.length)}</span><DetailsPointer className="saucer-details-pointer" /></summary>
               <div className="saucer-section-body saucer-attraction-grid future-only">
                 {futureAttractions.map((attraction) => (
                   <article className={`saucer-attraction ${displayId(attraction.status, "coming-soon")}`} key={displayText(attraction.id, `future-${displayText(attraction.name, "attraction")}`)}>

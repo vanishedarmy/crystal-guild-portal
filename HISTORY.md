@@ -1,3 +1,11 @@
+## v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 4 — Triple Triad Artwork Recovery + Gold Saucer UI
+
+- Fixes the H3 Triple Triad card-art stacking defect that could leave portrait files invisible behind the card background.
+- Republishes all 33 Triple Triad WebP assets at `/gold-saucer/a5h4/triple-triad/` for cache-busted rollout and adds safe image fallbacks.
+- Keeps Triple Triad context artwork visible on mobile and adds opponent/collection scenic context to the live UI.
+- Replaces Gold Saucer text chevrons with the shared right/down finger-pointer assets across major and nested Saucer disclosures.
+- Preserves Mini Cactpot/Crystal Slots fixed-open behavior, Alpha 5 gameplay/MGP, schema 13, hosted sync 1, and Portal protocol 29.
+
 ## v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 3 — Triple Triad Artwork & UI
 
 - Adds the full Triple Triad visual family: 15 cropped authoritative-stat-safe card portraits, card back, three opponent portraits, board/hall scenery, result art, and supporting collection/deck imagery.

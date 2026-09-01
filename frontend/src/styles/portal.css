@@ -10809,3 +10809,34 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
 
 /* v1.7.0 Retainer Alpha 2 — targeted procurement/history */
 .retainer-priority-field{display:grid;gap:5px}.retainer-priority-field>span{font-size:.76rem;color:#dbe6fa}.retainer-priority-field select{width:100%;min-width:0;padding:8px 9px;border:1px solid rgba(204,220,255,.18);border-radius:8px;background:rgba(4,8,18,.82);color:var(--text);font:inherit}.retainer-priority-field small{color:var(--muted)}.retainer-history-list{display:grid;gap:8px}.retainer-history-list article{display:grid;gap:4px;padding:10px 12px;border:1px solid rgba(204,220,255,.12);border-radius:10px;background:rgba(8,13,24,.58)}.retainer-history-list article>div{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.retainer-history-list article span,.retainer-history-list article small{color:var(--muted);line-height:1.4}.retainer-history-list article strong{color:#ffe7a1}@media(max-width:620px){.retainer-history-list article>div{flex-direction:column;gap:2px}}
+
+/* v1.7.0 Retainer Service Alpha 2 — Artwork & UI Hotfix 1 */
+.retainer-hero-panel{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);
+  gap:clamp(16px,3vw,34px);
+  align-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 78% 35%,rgba(129,82,174,.18),transparent 34%),
+    linear-gradient(135deg,rgba(21,31,54,.96),rgba(8,13,24,.97));
+}
+.retainer-hero-copy{position:relative;z-index:2;min-width:0}
+.retainer-office-art{display:block;width:100%;max-height:270px;object-fit:contain;object-position:center;filter:drop-shadow(0 18px 22px rgba(0,0,0,.34))}
+.retainer-profile-panel{overflow:hidden}
+.retainer-profile-art{position:relative;height:220px;margin:-8px -4px 10px;display:grid;place-items:center;background:radial-gradient(circle at 50% 58%,rgba(114,72,160,.14),transparent 62%)}
+.retainer-portrait-art{height:100%;max-width:82%;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(0,0,0,.32))}
+.retainer-rank-crest{position:absolute;right:0;bottom:4px;width:64px;height:86px;object-fit:contain;filter:drop-shadow(0 5px 8px rgba(0,0,0,.4))}
+.retainer-idle-state,.retainer-away-state,.retainer-return-state{position:relative;overflow:hidden;padding-right:min(34%,170px)}
+.retainer-status-art{position:absolute;right:-12px;bottom:-12px;width:min(38%,170px);max-height:150px;object-fit:contain;object-position:right bottom;opacity:.95;filter:drop-shadow(0 8px 10px rgba(0,0,0,.3));pointer-events:none}
+.retainer-assignment-card{grid-template-rows:auto auto auto auto auto 1fr;overflow:hidden;padding:0 14px 14px}
+.retainer-assignment-art-wrap{position:relative;height:142px;margin:0 -14px 3px;overflow:hidden;border-bottom:1px solid rgba(204,220,255,.14);background:#070c15}
+.retainer-assignment-art{display:block;width:100%;height:100%;object-fit:cover;transition:transform .2s ease,filter .2s ease}
+.retainer-assignment-icon{position:absolute;right:8px;bottom:8px;width:48px;height:48px;object-fit:contain;padding:3px;border:1px solid rgba(240,201,92,.32);border-radius:10px;background:rgba(4,8,18,.82);filter:drop-shadow(0 4px 7px rgba(0,0,0,.45))}
+.retainer-assignment-card:not(.locked):hover .retainer-assignment-art{transform:scale(1.025);filter:brightness(1.04)}
+.retainer-assignment-card.locked .retainer-assignment-art{filter:saturate(.4) brightness(.72)}
+@media (prefers-reduced-motion:reduce){.retainer-assignment-art{transition:none}.retainer-assignment-card:not(.locked):hover .retainer-assignment-art{transform:none}}
+@media(max-width:980px){.retainer-hero-panel{grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr)}.retainer-profile-art{height:200px}}
+@media(max-width:700px){.retainer-hero-panel{grid-template-columns:1fr}.retainer-office-art{max-height:230px}.retainer-status-art{opacity:.62}.retainer-idle-state,.retainer-away-state,.retainer-return-state{padding-right:26%}}
+@media(max-width:620px){.retainer-assignment-art-wrap{height:170px}.retainer-profile-art{height:190px}.retainer-status-art{width:115px}.retainer-idle-state,.retainer-away-state,.retainer-return-state{padding-right:95px}}

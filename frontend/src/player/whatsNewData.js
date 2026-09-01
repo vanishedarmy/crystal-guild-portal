@@ -3,7 +3,7 @@ export const MAJOR_UPDATES = [
     version: "v1.7.0 Alpha 2",
     name: "Retainer Service",
     title: "Target the materials your workshop needs",
-    summary: "Retainer Service Alpha 2 adds focused material requests and a persistent eight-haul procurement record while preserving Alpha 1 timers, general prices, rank progression, and one-assignment limits.",
+    summary: "Retainer Service Alpha 2 adds focused material requests, a persistent eight-haul procurement record, and the Artwork & UI Hotfix 1 visual pass while preserving Alpha 1 timers, general prices, rank progression, and one-assignment limits.",
     highlights: [
       { title: "Priority procurement", description: "Choose General mixed haul or nominate one material offered by the assignment. A focused dispatch guarantees one normal reward roll for that material." },
       { title: "Certainty costs Gil", description: "Focused dispatches cost 125 / 325 / 625 / 1,125 / 1,875 Gil. They do not add reward rolls, reduce timers, raise EXP, or change bonus-find odds." },

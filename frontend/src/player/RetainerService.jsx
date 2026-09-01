@@ -9,6 +9,38 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 
+const RETAINER_ART_ROOT = "/retainer/a2h1";
+
+const RETAINER_ASSIGNMENT_ART = {
+  field_gathering: `${RETAINER_ART_ROOT}/assignments/field-gathering.webp`,
+  monster_salvage: `${RETAINER_ART_ROOT}/assignments/monster-salvage.webp`,
+  mineral_survey: `${RETAINER_ART_ROOT}/assignments/mineral-survey.webp`,
+  regional_procurement: `${RETAINER_ART_ROOT}/assignments/regional-procurement.webp`,
+  specialist_acquisition: `${RETAINER_ART_ROOT}/assignments/specialist-acquisition.webp`,
+};
+
+const RETAINER_ASSIGNMENT_ICON = {
+  field_gathering: `${RETAINER_ART_ROOT}/materials/herb.webp`,
+  monster_salvage: `${RETAINER_ART_ROOT}/materials/mushroom.webp`,
+  mineral_survey: `${RETAINER_ART_ROOT}/materials/blue-crystal.webp`,
+  regional_procurement: `${RETAINER_ART_ROOT}/materials/shell.webp`,
+  specialist_acquisition: `${RETAINER_ART_ROOT}/materials/purple-crystal.webp`,
+};
+
+function retainerPortrait(rank) {
+  const value = Number(rank || 1);
+  if (value >= 5) return `${RETAINER_ART_ROOT}/retainers/expert-moogle.webp`;
+  if (value >= 3) return `${RETAINER_ART_ROOT}/retainers/pack-moogle.webp`;
+  return `${RETAINER_ART_ROOT}/retainers/scout-moogle.webp`;
+}
+
+function retainerCrest(rank) {
+  const value = Number(rank || 1);
+  if (value >= 5) return `${RETAINER_ART_ROOT}/badges/rank-iii.webp`;
+  if (value >= 3) return `${RETAINER_ART_ROOT}/badges/rank-ii.webp`;
+  return `${RETAINER_ART_ROOT}/badges/rank-i.webp`;
+}
+
 function actionKey(kind, target = "retainer") {
   const suffix = globalThis.crypto?.randomUUID
     ? globalThis.crypto.randomUUID()
@@ -140,18 +172,25 @@ export default function RetainerService({ data, overview, onRefresh }) {
   return (
     <div className="profile-grid retainer-service-grid">
       <section className="panel span-12 retainer-hero-panel">
-        <div className="panel-title-row">
-          <div>
-            <p className="eyebrow">v1.7.0 Alpha 2</p>
-            <h2>Retainer Service</h2>
+        <div className="retainer-hero-copy">
+          <div className="panel-title-row">
+            <div>
+              <p className="eyebrow">v1.7.0 Alpha 2 · Artwork Pass</p>
+              <h2>Retainer Service</h2>
+            </div>
+            <span className="small-badge">{number(state.gil)} Gil</span>
           </div>
-          <span className="small-badge">{number(state.gil)} Gil</span>
+          <p className="retainer-lead">Dispatch one personal Retainer on timed procurement work for crafting materials. Retainers do not store equipment and never replace your inventory.</p>
+          {message ? <div className="state-message compact-state">{message}</div> : null}
         </div>
-        <p className="retainer-lead">Dispatch one personal Retainer on timed procurement work for crafting materials. Retainers do not store equipment and never replace your inventory.</p>
-        {message ? <div className="state-message compact-state">{message}</div> : null}
+        <img className="retainer-office-art" src={`${RETAINER_ART_ROOT}/retainer-office.webp`} alt="Pixel-art Retainer Office with Moogle guild banners" />
       </section>
 
       <section className="panel span-4 retainer-profile-panel">
+        <div className="retainer-profile-art">
+          <img className="retainer-portrait-art" src={retainerPortrait(retainer.rank)} alt="Your Moogle Retainer" />
+          <img className="retainer-rank-crest" src={retainerCrest(retainer.rank)} alt="" aria-hidden="true" />
+        </div>
         <p className="eyebrow">Your Retainer</p>
         <h3>{String(retainer.name || "Guild Retainer")}</h3>
         <div className="retainer-rank-line"><strong>Rank {number(retainer.rank)} · {String(retainer.rank_name || "Novice")}</strong><span>{number(retainer.xp)} EXP</span></div>
@@ -167,15 +206,17 @@ export default function RetainerService({ data, overview, onRefresh }) {
       <section className="panel span-8 retainer-current-panel">
         <div className="panel-title-row"><h3>Current Assignment</h3><span className={`small-badge ${returned ? "ready" : assignment?.state || "idle"}`}>{assignment ? (returned ? "RETURNED" : String(assignment.state || "active").toUpperCase()) : "IDLE"}</span></div>
         {!assignment || assignment.state === "collected" ? (
-          <div className="retainer-idle-state"><strong>Your Retainer is ready for work.</strong><span>Choose one procurement assignment below. Only one assignment can be active at a time.</span></div>
+          <div className="retainer-idle-state"><img className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/ready.webp`} alt="Moogle Retainer ready for work" /><strong>Your Retainer is ready for work.</strong><span>Choose one procurement assignment below. Only one assignment can be active at a time.</span></div>
         ) : assignment.state === "active" && !returned ? (
           <div className="retainer-away-state">
+            <img className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/in-progress.webp`} alt="Moogle Retainer away on assignment" />
             <div><strong>{assignment.name}</strong><span>{assignment.pool_label}</span>{assignment.priority ? <small>Priority: {assignment.priority.name}</small> : null}</div>
             <div className="retainer-timer"><span>Returns in</span><strong>{duration(remaining)}</strong></div>
             <small>The haul was committed when the Retainer departed and cannot be rerolled by refreshing or reconnecting.</small>
           </div>
         ) : (
           <div className="retainer-return-state">
+            <img className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/completed.webp`} alt="Moogle Retainer returned with a completed haul" />
             <div><strong>{assignment.name} complete</strong><span>Your Retainer is waiting at the desk with the secured material haul.</span></div>
             {Array.isArray(assignment.rewards) && assignment.rewards.length ? (
               <div className="retainer-haul-grid">
@@ -198,6 +239,10 @@ export default function RetainerService({ data, overview, onRefresh }) {
             const dispatching = busy === `dispatch:${option.id}`;
             return (
               <article className={`retainer-assignment-card ${option.unlocked ? "" : "locked"}`} key={option.id}>
+                <div className="retainer-assignment-art-wrap">
+                  <img className="retainer-assignment-art" src={RETAINER_ASSIGNMENT_ART[option.id]} alt="" aria-hidden="true" />
+                  <img className="retainer-assignment-icon" src={RETAINER_ASSIGNMENT_ICON[option.id]} alt="" aria-hidden="true" />
+                </div>
                 <div className="retainer-assignment-head"><strong>{option.name}</strong><span className={`small-badge ${option.unlocked ? "ready" : "locked"}`}>{option.unlocked ? `${number(priorityByAssignment[option.id] ? option.focused_cost_gil : option.cost_gil)} Gil` : `Rank ${number(option.rank_required)}`}</span></div>
                 <p>{option.description}</p>
                 <div className="retainer-assignment-meta"><span>{duration(option.duration_seconds)}</span><span>+{number(option.retainer_xp)} EXP</span></div>

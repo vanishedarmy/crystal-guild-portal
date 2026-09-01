@@ -1,0 +1,233 @@
+{
+  "release": "Crystal Guild v1.7.0 \u2014 Retainer Service Alpha 2 Web Hotfix 1 \u2014 Artwork & UI",
+  "hosted_runtime": "1.7.0-retainer-a2",
+  "frontend_asset_revision": "1.7.0-retainer-a2h1",
+  "compatible_bot_runtime": "1.7.0-retainer-a2",
+  "local_db_schema": 15,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 31,
+  "asset_root": "/retainer/a2h1/",
+  "asset_count": 28,
+  "assets": [
+    {
+      "path": "/retainer/a2h1/assignments/field-gathering.webp",
+      "width": 724,
+      "height": 543,
+      "bytes": 135684,
+      "sha256": "16115d988094ef32680959c88e5f6612cabd63bc34d5d619adad2793f160d93b"
+    },
+    {
+      "path": "/retainer/a2h1/assignments/mineral-survey.webp",
+      "width": 724,
+      "height": 543,
+      "bytes": 93132,
+      "sha256": "4bde1a4a9c46b03d7a7f7f84d663641ff45ada62c59a1439a67516d8355b718c"
+    },
+    {
+      "path": "/retainer/a2h1/assignments/monster-salvage.webp",
+      "width": 593,
+      "height": 543,
+      "bytes": 91456,
+      "sha256": "2a43335d07530fba8d5d24ae0d1f931abe6708fd4faaacd21fea51bea76bd89a"
+    },
+    {
+      "path": "/retainer/a2h1/assignments/regional-procurement.webp",
+      "width": 724,
+      "height": 543,
+      "bytes": 144382,
+      "sha256": "fe33f5c0508a9ed80b1195ce9bb452c5c46a53bb17c96465883813bb89ab8ade"
+    },
+    {
+      "path": "/retainer/a2h1/assignments/specialist-acquisition.webp",
+      "width": 724,
+      "height": 543,
+      "bytes": 104906,
+      "sha256": "55e0175d3cb315317b8b119e947e06cacbf6a3ce0455f24337365000ac0e74af"
+    },
+    {
+      "path": "/retainer/a2h1/badges/rank-i.webp",
+      "width": 483,
+      "height": 1030,
+      "bytes": 91654,
+      "sha256": "b4ca799aeb5583fb8fb937a76aa87c197f459074507d11799f280726d0bc926d"
+    },
+    {
+      "path": "/retainer/a2h1/badges/rank-ii.webp",
+      "width": 482,
+      "height": 1049,
+      "bytes": 90844,
+      "sha256": "78a7f655fce464f693dcb788a3206a986267d7cf40a44b2a0d84f3a9c7ed6f5e"
+    },
+    {
+      "path": "/retainer/a2h1/badges/rank-iii.webp",
+      "width": 483,
+      "height": 979,
+      "bytes": 118200,
+      "sha256": "2f127a105acf6ff8cf1c2974ecbcb716b25f195084a403a7e5e32475f218e569"
+    },
+    {
+      "path": "/retainer/a2h1/materials/arcane-stone.webp",
+      "width": 362,
+      "height": 362,
+      "bytes": 24374,
+      "sha256": "3026b9bed3a75e5287ab0a95ee8857b89c363b96eaeee2835dca639c8c0834b9"
+    },
+    {
+      "path": "/retainer/a2h1/materials/blue-crystal.webp",
+      "width": 329,
+      "height": 362,
+      "bytes": 27336,
+      "sha256": "f1e1a3bca5986d6c5342858ac97094b79a7e9b172d802b9767ed2ef80f64bb1b"
+    },
+    {
+      "path": "/retainer/a2h1/materials/coral.webp",
+      "width": 305,
+      "height": 362,
+      "bytes": 30408,
+      "sha256": "6c9cef66c5c342476b4e509fff24fd4ee682a266b47f3a6e7e317fe7a448416d"
+    },
+    {
+      "path": "/retainer/a2h1/materials/flower.webp",
+      "width": 362,
+      "height": 345,
+      "bytes": 34182,
+      "sha256": "93aa1e13968e1415b35b8dadb02f0b8c7b04dea35bb7f8d0539390dad16388b6"
+    },
+    {
+      "path": "/retainer/a2h1/materials/herb.webp",
+      "width": 362,
+      "height": 355,
+      "bytes": 29958,
+      "sha256": "cbeee1514a435519c09334248f7d6c7d80c51f94ca0b56fb088ee1b15afa9b17"
+    },
+    {
+      "path": "/retainer/a2h1/materials/lumber.webp",
+      "width": 362,
+      "height": 361,
+      "bytes": 22100,
+      "sha256": "11f8399af9db2ca5934f87bb6c7c3ae0bc7bfbf0bb300063c22990f7dc2ff454"
+    },
+    {
+      "path": "/retainer/a2h1/materials/mushroom.webp",
+      "width": 362,
+      "height": 347,
+      "bytes": 20404,
+      "sha256": "0b66e3b30aded76fdc7dd85efca3c6536ae9252083b1042c0defa56e325b5d36"
+    },
+    {
+      "path": "/retainer/a2h1/materials/ore.webp",
+      "width": 350,
+      "height": 362,
+      "bytes": 22242,
+      "sha256": "dee68e6e3d3b071f36c1f20d3ff60b1d409f82b5ae05d681beb10377fb670679"
+    },
+    {
+      "path": "/retainer/a2h1/materials/purple-crystal.webp",
+      "width": 362,
+      "height": 362,
+      "bytes": 20606,
+      "sha256": "c52608252a230e2b1987d208432388e7301314a2194a72f9c657f7786f624792"
+    },
+    {
+      "path": "/retainer/a2h1/materials/reagent.webp",
+      "width": 350,
+      "height": 356,
+      "bytes": 18450,
+      "sha256": "410144b97ef6d8ec950a1b4dbce4ce8638206af7d2384d8a0d2e2578408b6dc0"
+    },
+    {
+      "path": "/retainer/a2h1/materials/shell.webp",
+      "width": 358,
+      "height": 355,
+      "bytes": 22618,
+      "sha256": "b15d245dfc801361bec726d385b7379c38ba93178e1ee574d35d1661699a8d29"
+    },
+    {
+      "path": "/retainer/a2h1/materials/water.webp",
+      "width": 362,
+      "height": 362,
+      "bytes": 16182,
+      "sha256": "028898d7778f4c3e426a18f55074b0847a62eafb25142ed6ca3f8017316a3ebc"
+    },
+    {
+      "path": "/retainer/a2h1/retainer-office.webp",
+      "width": 1444,
+      "height": 1082,
+      "bytes": 429070,
+      "sha256": "00bf54129ebb4b2a11fe8f1e6a38a5d133fd9bd638d489ab6298781004392d29"
+    },
+    {
+      "path": "/retainer/a2h1/retainers/expert-moogle.webp",
+      "width": 1067,
+      "height": 1448,
+      "bytes": 153406,
+      "sha256": "6d02e52f1c5d3d570d9f6772aa7a2843a88f5629102dc3532e86620feffcada5"
+    },
+    {
+      "path": "/retainer/a2h1/retainers/pack-moogle.webp",
+      "width": 1082,
+      "height": 1426,
+      "bytes": 164654,
+      "sha256": "8eff7bec71db2a24da2e8e5c55ad283204a7143a71201f4956e99c74403c50dc"
+    },
+    {
+      "path": "/retainer/a2h1/retainers/scout-moogle.webp",
+      "width": 1005,
+      "height": 1407,
+      "bytes": 136066,
+      "sha256": "4b52577df7f2175bbfad3101f95c62332043d7ab34431e6fc04c7cf3188e5839"
+    },
+    {
+      "path": "/retainer/a2h1/status/completed.webp",
+      "width": 724,
+      "height": 543,
+      "bytes": 80802,
+      "sha256": "2854e0836da98f8ecf74ae6990b87d434ca6817343e3d1a04358456eaee33205"
+    },
+    {
+      "path": "/retainer/a2h1/status/in-progress.webp",
+      "width": 710,
+      "height": 543,
+      "bytes": 70186,
+      "sha256": "88f1cd5e3c3de6ffb1eb77a68f0555bed7b03e92d33caee33136d1a5e484af35"
+    },
+    {
+      "path": "/retainer/a2h1/status/on-break.webp",
+      "width": 724,
+      "height": 528,
+      "bytes": 60078,
+      "sha256": "b52e0caf17fa2226231016fd772874eb8300dd6085e94b8cec86c6d2bb7f76c1"
+    },
+    {
+      "path": "/retainer/a2h1/status/ready.webp",
+      "width": 693,
+      "height": 536,
+      "bytes": 48998,
+      "sha256": "4eecfb2f52537aa4f91e5e461a6233a96f2f2b25eb4949eba0126b370e75fba3"
+    }
+  ],
+  "ui_pass": [
+    "Dedicated illustrated Retainer Office hero",
+    "Rank-sensitive Scout, Pack, and Expert Moogle Retainer portraits",
+    "Three Retainer rank crests integrated into the personal Retainer card",
+    "Ready, in-progress, and completed status illustrations in Current Assignment",
+    "Five illustrated procurement assignment cards",
+    "Route-specific crafting-material icon accents",
+    "Responsive mobile art sizing with reduced-motion-safe assignment hover behavior",
+    "All generated shipping artwork converted to WebP; public PNG count remains zero"
+  ],
+  "gameplay_changes": false,
+  "economy_changes": false,
+  "database_migration": false,
+  "validation": {
+    "frontend": "535/535 PASS",
+    "hosted_web_api": "60/60 PASS",
+    "bot_baseline": "655/655 PASS (unchanged canonical Alpha 2 Bot)",
+    "node_syntax": "194/194 PASS",
+    "python_parse": "14/14 PASS",
+    "webp_decode": "843/843 PASS",
+    "retainer_webp": "28/28 PASS",
+    "public_png_count": 0,
+    "vite_build": "NOT CLAIMED \u2014 source package has no installed node_modules"
+  }
+}

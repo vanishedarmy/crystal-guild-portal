@@ -1,0 +1,27 @@
+{
+  "release": "v1.6.0 Gold Saucer Alpha 5 Web Hotfix 3 — Triple Triad Artwork & UI",
+  "runtime": "1.6.0-gold-saucer-a5",
+  "frontend_asset_revision": "1.6.0-gold-saucer-a5h3",
+  "schema": 13,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 29,
+  "asset_root": "/gold-saucer/a5h3/triple-triad/",
+  "assets": {
+    "card_portraits": 15,
+    "card_backs": 1,
+    "opponent_portraits": 3,
+    "result_scenes": 3,
+    "supporting_ui_scenes": 11,
+    "total_webp": 33
+  },
+  "cards": ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","ahriman","malboro","ifrit","shiva","ramuh","leviathan","bahamut","odin"],
+  "opponents": ["saucer_attendant","card_shark","crystal_master"],
+  "results": ["win","draw","loss"],
+  "rules": {
+    "generated_card_numbers_are_not_used": true,
+    "authoritative_values_remain_live_contract_fields": ["top","right","bottom","left","rarity"],
+    "gold_saucer_collapsible_contract_unchanged": true
+  },
+  "backend_changes": false,
+  "economy_changes": false
+}

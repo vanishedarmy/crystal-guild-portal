@@ -1,6 +1,6 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 2 — Gold Saucer + Quantity Input Recovery
+Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 3 — Triple Triad Artwork & UI
 Hosted runtime: 1.6.0-gold-saucer-a5
-Frontend asset revision: 1.6.0-gold-saucer-a5h2
+Frontend asset revision: 1.6.0-gold-saucer-a5h3
 Compatible Bot runtime: 1.6.0-gold-saucer-a5
 Local DB schema: 13
 Hosted sync schema: 1
@@ -9,3 +9,4 @@ Twitch prefix: !
 Canonical Gold Saucer currency: MGP
 Chocobo Racing visual asset family retained: /gold-saucer/a4h1/chocobo-racing/
 Monster Toss visual asset family retained: /gold-saucer/a2h2/monster-toss/
+Triple Triad visual asset family: /gold-saucer/a5h3/triple-triad/

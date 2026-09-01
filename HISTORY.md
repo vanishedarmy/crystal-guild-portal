@@ -1,3 +1,10 @@
+## v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 3 — Triple Triad Artwork & UI
+
+- Adds the full Triple Triad visual family: 15 cropped authoritative-stat-safe card portraits, card back, three opponent portraits, board/hall scenery, result art, and supporting collection/deck imagery.
+- Triple Triad cards now use generated artwork only as the portrait layer; all top/right/bottom/left values and rarity remain rendered from the Bot contract.
+- Adds illustrated Triple Triad hero, live board backdrop, hidden-opponent card back, opponent portraits, deck-builder banner, collection-complete banner, and Win/Draw/Loss result art.
+- Preserves Alpha 5 H2 Gold Saucer render recovery, quantity-input fixes, collapsible behavior, schema 13, hosted sync 1, and Portal protocol 29.
+
 # v1.6.0 Gold Saucer Alpha 5 Web Hotfix 2 — Gold Saucer + Quantity Input Recovery
 
 Web-only hotfix. Sanitizes live Gold Saucer display scalars so malformed/legacy nested values cannot blank the whole tab, adds retryable section fallback diagnostics, and fixes Buy/Sell quantity entry so typed digits replace the default 1 on desktop and mobile. Runtime/Bot stay `1.6.0-gold-saucer-a5`; frontend advances to `1.6.0-gold-saucer-a5h2`; schema 13 / sync 1 / protocol 29 unchanged.

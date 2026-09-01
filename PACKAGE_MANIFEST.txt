@@ -1,9 +1,10 @@
-Crystal Guild v1.6.0 Gold Saucer Alpha 5 Web Hotfix 2
-Frontend revision: 1.6.0-gold-saucer-a5h2
+Crystal Guild v1.6.0 Gold Saucer Alpha 5 Web Hotfix 3
+Frontend revision: 1.6.0-gold-saucer-a5h3
 Runtime/Bot: 1.6.0-gold-saucer-a5
 Schema: 13
 Hosted sync: 1
 Portal Action protocol: 29
 Prefix: !
-Primary fixes: Gold Saucer render hardening + retryable section recovery; Moogle Emporium mobile/keyboard quantity input
-Gameplay/economy changes: none
+Primary change: Triple Triad artwork + UI presentation
+Visual family: /gold-saucer/a5h3/triple-triad/ (33 WebP assets)
+Gameplay/economy/backend changes: none

@@ -1,13 +1,21 @@
-# Finalization Audit — Gold Saucer Alpha 5 Web Hotfix 2
+# Finalization Audit — Gold Saucer Alpha 5 Web Hotfix 3
 
-**PASS**
+## Scope
+Web-only Triple Triad artwork and presentation pass over the Alpha 5 H2 recovery baseline.
 
-- Gold Saucer H1 eager-load and partial-state protections are retained.
-- H2 additionally sanitizes live scalar display fields so object-shaped legacy/malformed values cannot be passed to React as text children.
-- Shared section boundary now provides retry and browser-console diagnostics instead of a dead-end fallback.
-- Quantity editing no longer appends typed digits to the starter `1`; shared helper covers Emporium Buy/Sell, Blacksmith crafting, and Fellowship Workshop batches.
-- Mini Cactpot and Crystal Slots remain fixed-open; all other requested Gold Saucer sections remain collapsible.
-- Frontend **507/507 PASS**; hosted Web/API **56/56 PASS**.
-- Parser/syntax/CSS/art gates all pass; public tree remains PNG-free with **701/701 WebP** decoding.
-- No DB, `.env`, token, cache, overlay-state, `node_modules`, or compiled Python artifacts are permitted in shipping archives.
-- Frozen contract: runtime/Bot `1.6.0-gold-saucer-a5`; frontend `1.6.0-gold-saucer-a5h2`; schema 13; hosted sync 1; Portal protocol 29; prefix `!`.
+## Safety and continuity
+- No database migration or player-data reset.
+- No MGP balance, entry-cost, payout, daily-limit, card-stat, opponent, or rule changes.
+- No Portal action additions; protocol remains 29.
+- Existing H2 Gold Saucer render recovery and shared quantity-input fixes remain present.
+- Generated card-face numbers were deliberately excluded from shipped portrait crops; authoritative live stats remain the only gameplay values shown by the UI.
+- Mini Cactpot and Crystal Slots remain permanently open; the other requested Gold Saucer sections remain collapsible.
+
+## Package hygiene
+- Runtime `.env`, databases, SQLite files, test state, Python bytecode, and `__pycache__` are excluded from deliverables.
+- `.env.example` remains included where present.
+- Public frontend assets remain PNG-free.
+- Triple Triad assets use a dedicated cache-busted `/gold-saucer/a5h3/triple-triad/` path.
+
+## Validation
+Bot **631/631**, frontend **510/510**, hosted Web/API **56/56**, TS parser **228/228**, Node syntax **186/186**, Python parse **12/12**, CSS parse **8/8**, WebP decode **734/734**.

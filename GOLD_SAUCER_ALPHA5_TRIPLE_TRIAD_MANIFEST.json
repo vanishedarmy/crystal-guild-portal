@@ -1,0 +1,21 @@
+{
+  "release": "v1.6.0 Gold Saucer Alpha 5 — Triple Triad",
+  "runtime": "1.6.0-gold-saucer-a5",
+  "frontend_asset_revision": "1.6.0-gold-saucer-a5",
+  "local_db_schema": 13,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 29,
+  "currency": "MGP",
+  "triple_triad": {
+    "daily_matches": 5,
+    "starter_cards": 5,
+    "catalog_cards": 15,
+    "opponents": 3,
+    "ruleset": "Open",
+    "persistent_match": true
+  },
+  "gold_saucer_layout": {
+    "always_open": ["mini_cactpot", "crystal_slots"],
+    "collapsible": ["monster_toss", "chocobo_racing", "triple_triad", "prize_counter", "saucer_ledger", "recent_activity", "future_attractions"]
+  }
+}

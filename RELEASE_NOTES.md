@@ -1,29 +1,26 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 4 Web Hotfix 1
-## Chocobo Racing Artwork & UI Pass
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 5 — Triple Triad
 
-This Web-only hotfix completes the visual presentation for the Alpha 4 Chocobo Racing circuit without changing gameplay, MGP economics, daily limits, or race resolution.
+## Triple Triad
+- Opens a persistent five-card Triple Triad loop in the Adventurer Portal.
+- Players receive a five-card starter deck and can collect 15 cards across three NPC opponent tiers.
+- Alpha 5 uses the Open ruleset: a higher touching side captures the lower adjacent card. Same, Plus, elemental, and regional rules are deferred.
+- Five completed matches are available per UTC day.
+- MGP entry costs, payouts, card awards, deck changes, and board moves are authoritative and replay-safe.
+- Active matches survive refreshes/reconnects and resume from the exact saved board/hand state.
+- Standard score includes cards remaining in hand, keeping a ten-point total and allowing draws.
 
-### Artwork integration
-- Adds a dedicated Chocobo Racing entrance/hero scene.
-- Adds illustrated cards for Manderville Sprint, Crystal Circuit, and Golden Gauntlet.
-- Adds illustrated pace cards for Steady Pace, Balanced, and Final Sprint.
-- Adds first-place victory artwork and neutral race-complete artwork for non-winning finishes.
-- Ships all nine active assets as optimized WebP under `/gold-saucer/a4h1/chocobo-racing/`.
+## Gold Saucer UI
+- Mini Cactpot and Crystal Slots remain permanently open.
+- Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, Recent Activity, and any future-attraction panel are collapsible.
+- Adds responsive Triple Triad board, hand, deck-builder, opponent, result, and collection views.
+- Adds Triple Triad records to the Saucer Ledger and Triple Triad entries to Recent Activity.
+- Adds cosmetic Prize Counter titles Triad Tactician and Card Hall Master.
 
-### Racing UI pass
-- Rebuilds the racing panel around a clear hierarchy: racer → last result → course → pace → selected entry → Race Now.
-- Course cards expose eligibility/cost, selected state, description, and podium purse while keeping the artwork readable.
-- Pace choices are now illustrated selection cards rather than plain buttons.
-- The last-race panel combines result art, placement, course, pace, performance, and MGP payout.
-- Adds explicit `aria-pressed` state for course and pace choices.
-- Adds narrow-screen layouts and reduced-motion-safe hover behavior.
-
-### Compatibility
-- Hosted runtime: `1.6.0-gold-saucer-a4` unchanged.
-- Frontend asset revision: `1.6.0-gold-saucer-a4h1`.
-- Compatible Bot runtime: `1.6.0-gold-saucer-a4` unchanged.
-- Local DB schema: **12** unchanged.
-- Hosted sync schema: **1** unchanged.
-- Portal Action protocol: **28** unchanged.
-- Twitch prefix: `!`.
-- No database migration, player reset, OAuth/environment change, MGP conversion, race rebalance, or Bot change.
+## Compatibility
+- Hosted/Bot runtime: `1.6.0-gold-saucer-a5`
+- Frontend asset revision: `1.6.0-gold-saucer-a5`
+- Local DB schema: **13**
+- Hosted sync schema: **1**
+- Portal Action protocol: **29**
+- Prefix: `!`
+- Existing MGP balances and Alpha 1–4 attraction economics are unchanged.

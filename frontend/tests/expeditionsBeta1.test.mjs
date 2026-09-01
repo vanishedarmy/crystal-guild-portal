@@ -12,7 +12,7 @@ test("Expeditions Beta 1 route balance remains active under the final v1.3 relea
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
 
   assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /1\.6\.0-gold-saucer-a4h1/);
+  assert.match(version, /1\.6\.0-gold-saucer-a5/);
   assert.match(board, /Lower combat damage and softer hazards/);
   assert.match(board, /Harder combat and hazards for stronger rewards/);
   assert.match(board, /Harder enemy pressure/);

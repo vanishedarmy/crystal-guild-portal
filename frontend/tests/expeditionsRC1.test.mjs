@@ -9,7 +9,7 @@ test("v1.2 publishes the final Expeditions identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /1\.6\.0-gold-saucer-a4h1/);
+  assert.match(version, /1\.6\.0-gold-saucer-a5/);
   assert.match(news, /Expeditions has arrived/);
 });
 

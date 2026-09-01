@@ -1,5 +1,13 @@
 # Crystal Guild Web History
 
+## v1.6.0 — Gold Saucer Alpha 5 — Triple Triad
+
+- Opens persistent Triple Triad with a five-card starter deck, 15-card collection, three opponent tiers, daily MGP matches, and replay-safe card rewards.
+- Adds protocol-29 `TRIAD_SET_DECK`, `TRIAD_START`, and `TRIAD_PLAY` actions and local schema 13 for collection/deck/records plus active match state.
+- Makes all Gold Saucer content panels collapsible except Mini Cactpot and Crystal Slots, which remain permanently open.
+- Adds Triad records/history and the Triad Tactician / Card Hall Master cosmetic titles.
+- Preserves existing MGP balances, Alpha 1–4 attraction economics, hosted sync schema 1, and Alpha 4 Chocobo Racing artwork.
+
 ## v1.6.0 — Gold Saucer Alpha 4 — Chocobo Racing
 
 - Opens Chocobo Racing for players with an existing registered Chocobo.

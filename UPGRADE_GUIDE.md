@@ -1,13 +1,14 @@
-# Upgrade Guide — v1.6.0 Gold Saucer Alpha 4 Web Hotfix 1
+# Upgrade Guide — v1.6.0 Gold Saucer Alpha 5
 
-Supported source: the canonical Alpha 4 Chocobo Racing Web build with the matching Alpha 4 Bot.
+Supported source: canonical Alpha 4 Chocobo Racing / Web H1.
 
-1. Preserve hosted secrets, OAuth state, persistent storage, and the live player database.
-2. Replace the Web source with the full Hotfix 1 Web package, or apply the supplied patch over the canonical Alpha 4 Web source.
-3. Keep the existing Alpha 4 Bot; no Bot replacement is required for this Web-only hotfix.
-4. Redeploy/restart the hosted Web service.
-5. Verify `/api/health` reports hosted runtime `1.6.0-gold-saucer-a4`, frontend asset revision `1.6.0-gold-saucer-a4h1`, hosted sync schema 1, and Portal protocol 28.
-6. Open Gold Saucer → Chocobo Racing and verify the hero scene, three illustrated course cards, three illustrated pace cards, and last-race artwork.
-7. Check a narrow/mobile viewport and confirm the course cards stack, pace cards remain readable, and the Race Now action spans the available width.
+1. Preserve the live database, `.env`, Twitch token storage, hosted secrets, and persistent-disk state.
+2. Deploy the matching Alpha 5 Bot and Web packages together.
+3. Restart the Bot first. It performs the additive schema **12 → 13** migration and creates a verified `pre_schema_13_<timestamp>.db` backup.
+4. Redeploy/restart the Web relay.
+5. Verify `/api/health` reports hosted runtime/frontend `1.6.0-gold-saucer-a5`, hosted sync 1, and Portal protocol 29.
+6. Open Gold Saucer and verify the existing MGP balance is unchanged.
+7. Confirm Mini Cactpot and Crystal Slots are always open; all other Gold Saucer content panels are collapsible.
+8. Open Triple Triad, confirm the starter five-card deck, save a deck, start a Saucer Attendant match, play a card, refresh, and confirm the exact match resumes.
 
-No database migration or player reset is required. Existing MGP balances and Alpha 4 race records are unchanged.
+No player reset, MGP conversion, OAuth change, or new required environment variable is needed.

@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-a4"
-FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a4h1"
+HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer-a5"
+FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer-a5"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 28
+ACTION_PROTOCOL_VERSION = 29
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -37,7 +37,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
-    "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "SAUCER_BUY",
+    "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
     "STREAMER_COMMAND",
 }
 
@@ -93,7 +93,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
-    "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "SAUCER_BUY",
+    "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -768,6 +768,36 @@ class HostedPortalStore:
             if strategy not in {"steady", "balanced", "sprint"}:
                 raise ValueError("Invalid Chocobo Racing strategy.")
             payload = {"course": course, "strategy": strategy}
+        elif kind == "TRIAD_SET_DECK":
+            if set(payload) != {"cards"} or not isinstance(payload.get("cards"), list):
+                raise ValueError("TRIAD_SET_DECK requires only a cards list.")
+            cards = [str(value or "").strip().lower() for value in payload.get("cards") or []]
+            if len(cards) != 5 or len(set(cards)) != 5 or any(not re.fullmatch(r"[a-z0-9_]+", value) for value in cards):
+                raise ValueError("Triple Triad deck must contain five different card IDs.")
+            payload = {"cards": cards}
+        elif kind == "TRIAD_START":
+            if set(payload) != {"opponent"}:
+                raise ValueError("TRIAD_START requires only opponent.")
+            opponent = str(payload.get("opponent") or "").strip().lower()
+            if opponent not in {"saucer_attendant", "card_shark", "crystal_master"}:
+                raise ValueError("Invalid Triple Triad opponent.")
+            payload = {"opponent": opponent}
+        elif kind == "TRIAD_PLAY":
+            if set(payload) != {"card", "cell"}:
+                raise ValueError("TRIAD_PLAY requires only card and cell.")
+            card = str(payload.get("card") or "").strip().lower()
+            if not card or len(card) > 64 or not re.fullmatch(r"[a-z0-9_]+", card):
+                raise ValueError("Invalid Triple Triad card ID.")
+            cell = payload.get("cell")
+            if isinstance(cell, bool):
+                raise ValueError("Invalid Triple Triad cell.")
+            try:
+                cell = int(cell)
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Triple Triad cell.") from None
+            if cell < 0 or cell > 8:
+                raise ValueError("Triple Triad cell must be from 0 to 8.")
+            payload = {"card": card, "cell": cell}
         elif kind == "SAUCER_BUY":
             if set(payload) != {"prize_id"}:
                 raise ValueError("SAUCER_BUY requires only prize_id.")

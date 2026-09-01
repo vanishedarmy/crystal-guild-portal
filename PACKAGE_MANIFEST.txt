@@ -1,12 +1,12 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 4 Web Hotfix 1 — Web Package
-Hosted runtime: 1.6.0-gold-saucer-a4
-Frontend revision: 1.6.0-gold-saucer-a4h1
-Compatible Bot runtime: 1.6.0-gold-saucer-a4
-Local DB schema: 12
+Crystal Guild v1.6.0 — Gold Saucer Alpha 5 — Triple Triad — Web Package
+Hosted runtime: 1.6.0-gold-saucer-a5
+Frontend revision: 1.6.0-gold-saucer-a5
+Compatible Bot runtime: 1.6.0-gold-saucer-a5
+Local DB schema: 13
 Hosted sync schema: 1
-Portal Action protocol: 28
+Portal Action protocol: 29
 Twitch prefix: !
-Alpha 4 feature: Chocobo Racing
-Hotfix 1: Chocobo Racing artwork + responsive UI pass
-Artwork: 9 optimized WebP assets under /gold-saucer/a4h1/chocobo-racing/
-Database migration: none
+Alpha 5 feature: Triple Triad
+UI pass: all Gold Saucer content sections collapsible except Mini Cactpot and Crystal Slots
+Chocobo Racing artwork retained: 9 optimized WebP assets under /gold-saucer/a4h1/chocobo-racing/
+Database migration: additive schema 12 -> 13 performed by Bot

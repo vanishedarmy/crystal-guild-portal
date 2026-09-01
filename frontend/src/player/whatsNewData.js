@@ -1,5 +1,22 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.6.0 Alpha 5",
+    name: "Gold Saucer",
+    title: "Triple Triad opens the card hall",
+    summary: "Gold Saucer Alpha 5 adds a persistent Triple Triad card game with a starter deck, collectible cards, three NPC tiers, MGP stakes, and a cleaner collapsible Gold Saucer floor.",
+    highlights: [
+      { title: "A real five-card deck", description: "Every player starts with Chocobo, Moogle, Cactuar, Bomb, and Flan. Build and save a five-card deck as new cards join the collection." },
+      { title: "Open rules for Alpha 5", description: "Place cards on a 3×3 board and capture adjacent cards when your touching side is higher. Same, Plus, elemental, and regional rules are intentionally deferred." },
+      { title: "Three opponents", description: "Start with the Saucer Attendant, then unlock Card Shark at 3 wins and Crystal Master at 8 wins for stronger decks, larger MGP purses, and higher-tier card rewards." },
+      { title: "Five matches per UTC day", description: "Matches persist through refreshes and Bot restarts. Every play is authoritative and idempotent, so retries cannot duplicate a move, payout, or card reward." },
+      { title: "Collect all fifteen", description: "The first Alpha 5 collection spans fifteen Gold Saucer cards from Chocobo and Moogle through Ifrit, Shiva, Leviathan, Bahamut, and Odin." },
+      { title: "Card-hall records and prizes", description: "The Saucer Ledger tracks matches, wins, win rate, cards owned, cards won, and best streak. Triad Tactician and Card Hall Master join the cosmetic Prize Counter." },
+      { title: "A calmer Gold Saucer floor", description: "Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, Recent Activity, and future-attraction panels are collapsible. Mini Cactpot and Crystal Slots stay permanently open." },
+      { title: "Additive upgrade", description: "Local schema advances to 13 for Triple Triad collection and persistent match state, hosted sync remains 1, and Portal Action protocol advances to 29 for deck, start, and play actions." },
+    ],
+    action: { tab: "gold_saucer", label: "Play Triple Triad" },
+  },
+  {
     version: "v1.6.0 Alpha 4",
     name: "Gold Saucer",
     title: "Chocobo Racing opens the circuit",

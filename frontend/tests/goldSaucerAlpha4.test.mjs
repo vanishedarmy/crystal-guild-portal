@@ -32,11 +32,10 @@ test("Racing UI exposes course gates, pace choices, daily entries and records", 
   assert.match(css, /saucer-race-companion/);
 });
 
-test("Alpha 4 player copy and Guide present Racing as live", () => {
+test("Alpha 4 history and Racing guidance remain available", () => {
   assert.match(whatsNew, /v1\.6\.0 Alpha 4/);
   assert.match(whatsNew, /Chocobo Racing/);
   assert.match(whatsNew, /Portal Action protocol advances to 28/);
   assert.match(guide, /Chocobo Racing/);
   assert.match(guide, /three races per UTC day/i);
-  assert.match(guide, /Triple Triad.*Coming Soon/i);
 });

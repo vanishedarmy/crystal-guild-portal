@@ -1,12 +1,13 @@
-# Finalization Audit — Gold Saucer Alpha 4 Web Hotfix 1
+# Finalization Audit — Gold Saucer Alpha 5 — Triple Triad
 
-- Chocobo Racing artwork family: **9 optimized WebP assets** under `/gold-saucer/a4h1/chocobo-racing/`.
-- UI routing: hero, course selection, pace selection, and result states all consume the new family.
-- Accessibility: decorative artwork uses empty alt text/`aria-hidden`; course and pace selectors expose `aria-pressed`; focus-visible treatment retained.
-- Responsive UI: course cards and result panel collapse cleanly; pace cards remain readable; primary race action becomes full width on narrow screens.
-- Public asset policy: **0 PNG**, **701 / 701 WebP decode PASS**.
-- Regression validation: **494 / 494 frontend PASS**, **53 / 53 hosted Web/API PASS**.
-- Source validation: **223 / 223 TS-parser PASS**, **181 / 181 Node syntax PASS**, **11 / 11 Python parse PASS**, **8 / 8 CSS parse PASS**.
-- Production Vite build is not claimed because this source-only workspace lacks installed `node_modules` (`vite: not found`).
-- Frozen contract: runtime/Bot `1.6.0-gold-saucer-a4`; frontend `1.6.0-gold-saucer-a4h1`; schema 12; hosted sync 1; Portal protocol 28; prefix `!`.
-- No database migration, MGP conversion, race-balance change, player reset, OAuth/environment change, or Bot code change.
+## Scope
+- Triple Triad is live with starter deck, 15-card collection, three NPC tiers, persistent board state, five daily matches, MGP settlement, and card rewards.
+- Web relay accepts and validates protocol-29 Triple Triad deck/start/play actions.
+- Gold Saucer floor is collapsible everywhere except Mini Cactpot and Crystal Slots.
+- Existing Gold Saucer gameplay, MGP balances, Chocobo Racing artwork, and prior records remain intact.
+
+## Frozen contract
+Runtime/Bot/frontend `1.6.0-gold-saucer-a5`; local schema 13; hosted sync 1; Portal protocol 29; prefix `!`.
+
+## Release gate
+Final regression and source-integrity counts are recorded in `VALIDATION_REPORT.md`.

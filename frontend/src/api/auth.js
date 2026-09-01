@@ -173,6 +173,18 @@ export function submitChocoboRace(course, strategy, csrfToken, idempotencyKey) {
   return submitPortalAction("CHOCOBO_RACE", { course: String(course || ""), strategy: String(strategy || "") }, csrfToken, idempotencyKey);
 }
 
+export function submitTriadSetDeck(cards, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRIAD_SET_DECK", { cards: Array.isArray(cards) ? cards.map((value) => String(value || "")) : [] }, csrfToken, idempotencyKey);
+}
+
+export function submitTriadStart(opponent, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRIAD_START", { opponent: String(opponent || "") }, csrfToken, idempotencyKey);
+}
+
+export function submitTriadPlay(card, cell, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRIAD_PLAY", { card: String(card || ""), cell: Number(cell) }, csrfToken, idempotencyKey);
+}
+
 export function submitSaucerBuy(prizeId, csrfToken, idempotencyKey) {
   return submitPortalAction("SAUCER_BUY", { prize_id: String(prizeId || "") }, csrfToken, idempotencyKey);
 }

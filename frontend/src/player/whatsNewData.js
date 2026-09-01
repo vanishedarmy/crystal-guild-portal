@@ -1,13 +1,14 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.6.0 RC1",
+    version: "v1.6.0 RC2",
     name: "Gold Saucer",
     title: "The Gold Saucer enters release candidate",
-    summary: "RC1 freezes the five-attraction Gold Saucer feature set and hardens daily-entry accounting, persistence, replay safety, MGP continuity, and the final Portal presentation before v1.6.0 release.",
+    summary: "RC2 keeps the five-attraction Gold Saucer feature freeze and corrects Mini Cactpot to Crystal Guild’s MGP scale after the final win/draw/loss economy audit.",
     highlights: [
       { title: "Five-attraction feature freeze", description: "Mini Cactpot, Crystal Slots, Monster Toss, Chocobo Racing, and Triple Triad are the complete v1.6.0 attraction set. No additional attraction is held back for this release." },
       { title: "UTC entry accounting hardened", description: "Monster Toss games and Triple Triad matches now consume their daily entry when they start. A persistent game carried across 00:00 UTC remains charged to the day it was entered instead of the day it finishes." },
-      { title: "MGP economy frozen", description: "Welcome/daily MGP, attraction entry costs, payouts, Prize Counter prices, and existing balances remain unchanged from the validated Alpha 5 baseline." },
+      { title: "Mini Cactpot rebalanced", description: "The daily ticket remains 10 MGP, but its payout table is scaled to Crystal Guild’s 400–6,000 MGP Prize Counter. Sum 6 remains a 1,000 MGP jackpot, and the ledger now tracks net wins, draws, and losses." },
+      { title: "Other attraction balance frozen", description: "Crystal Slots, Monster Toss, Chocobo Racing, Triple Triad, Prize Counter prices, MGP grants, card values, and daily limits remain unchanged after the RC2 balance audit." },
       { title: "Triple Triad presentation frozen", description: "The full printed card faces, artwork-synced card values, compact opponent chooser, three NPC tiers, and 15-card collection carry forward unchanged." },
       { title: "Gold Saucer UI frozen", description: "Mini Cactpot and Crystal Slots remain fixed open. Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, and Recent Activity retain the shared finger-pointer collapsibles." },
       { title: "Compatibility freeze", description: "Local schema remains 13, hosted sync remains 1, Portal Action protocol remains 29, and MGP remains the canonical Saucer currency." },

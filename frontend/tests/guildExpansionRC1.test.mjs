@@ -18,9 +18,9 @@ function fellowshipSection(html) {
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
   assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-rc1"/);
-  assert.equal(guideData.meta.version, "v1.6.0 RC1 — Gold Saucer");
-  assert.equal(guideData.meta.release, "1.6.0-gold-saucer-rc1");
+  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-rc2"/);
+  assert.equal(guideData.meta.version, "v1.6.0 RC2 — Gold Saucer");
+  assert.equal(guideData.meta.release, "1.6.0-gold-saucer-rc2");
   assert.equal(manifest.release, "v1.5.1 — Relic Arsenal Complete");
   assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });

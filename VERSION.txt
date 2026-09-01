@@ -1,7 +1,7 @@
-Crystal Guild v1.6.0 — Gold Saucer RC1
-Hosted runtime: 1.6.0-gold-saucer-rc1
-Frontend asset revision: 1.6.0-gold-saucer-rc1
-Compatible Bot runtime: 1.6.0-gold-saucer-rc1
+Crystal Guild v1.6.0 — Gold Saucer RC2
+Hosted runtime: 1.6.0-gold-saucer-rc2
+Frontend asset revision: 1.6.0-gold-saucer-rc2
+Compatible Bot runtime: 1.6.0-gold-saucer-rc2
 Local DB schema: 13
 Hosted sync schema: 1
 Portal Action protocol: 29

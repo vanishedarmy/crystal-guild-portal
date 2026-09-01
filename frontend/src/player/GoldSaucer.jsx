@@ -312,7 +312,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer RC1</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer RC2</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -396,7 +396,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer RC1</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer RC2</p>
           <h2>Gold Saucer</h2>
           <p className="muted">A low-stakes side hall for daily luck, quick games, Chocobo Racing, Triple Triad, cosmetic rewards, and collection records. First visit includes a 500 MGP welcome purse.</p>
         </div>
@@ -770,13 +770,14 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </details>
 
           <details className="panel saucer-records-panel saucer-section-disclosure">
-            <summary className="saucer-section-summary"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">RC1</span><DetailsPointer className="saucer-details-pointer" /></summary>
+            <summary className="saucer-section-summary"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">RC2</span><DetailsPointer className="saucer-details-pointer" /></summary>
             <div className="saucer-section-body">
             <div className="saucer-record-grid">
               <div><span>Current Net MGP</span><strong>{netMgp >= 0 ? "+" : ""}{number(netMgp)} MGP</strong></div>
               <div><span>Games Played</span><strong>{number(records.games_played)}</strong></div>
               <div><span>Prizes Collected</span><strong>{number(account.prizes_bought)}</strong></div>
               <div><span>Cactpot Tickets</span><strong>{number(account.cactpot_plays)}</strong></div>
+              <div><span>Cactpot W / D / L</span><strong>{number(records.cactpot_net_wins)} / {number(records.cactpot_draws)} / {number(records.cactpot_losses)}</strong></div>
               <div><span>Best Cactpot</span><strong>{number(account.cactpot_best_payout)} MGP</strong></div>
               <div><span>Cactpot High Rolls</span><strong>{number(records.cactpot_high_rolls)}</strong></div>
               <div><span>Slot Spins</span><strong>{number(account.slots_spins)}</strong></div>
@@ -804,7 +805,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </div>
             <details className="saucer-balance-notes">
               <summary>Balance details<DetailsPointer className="saucer-details-pointer" /></summary>
-              <p className="muted">Your realized slot return is <b>{Number(records.slots_realized_return_pct || 0).toFixed(1)}%</b>. The current long-run payout target is about <b>{Number(balance.slots_theoretical_return_pct || 87.5).toFixed(1)}%</b>. Short sessions can vary dramatically.</p>
+              <p className="muted">Mini Cactpot now records net wins, draws, and losses against its 10 MGP ticket price. Your realized slot return is <b>{Number(records.slots_realized_return_pct || 0).toFixed(1)}%</b>; the current long-run slot payout target is about <b>{Number(balance.slots_theoretical_return_pct || 87.5).toFixed(1)}%</b>. Short sessions can vary dramatically.</p>
             </details>
             </div>
           </details>

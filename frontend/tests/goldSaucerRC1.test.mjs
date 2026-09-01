@@ -10,11 +10,11 @@ const root = path.resolve(here, "..");
 const component = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const guide = fs.readFileSync(path.join(root, "public/guide-body.html"), "utf8");
 
-test("Gold Saucer RC1 freezes the current release identity", () => {
-  assert.equal(WEB_VERSION, "v1.6.0 RC1");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-rc1");
-  assert.match(component, /v1\.6\.0 · Gold Saucer RC1/);
-  assert.match(guide, /Gold Saucer RC1 freezes local DB schema <b>13<\/b> and Portal Action protocol <b>29<\/b>/);
+test("Gold Saucer RC2 freezes the current release identity", () => {
+  assert.equal(WEB_VERSION, "v1.6.0 RC2");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-rc2");
+  assert.match(component, /v1\.6\.0 · Gold Saucer RC2/);
+  assert.match(guide, /Gold Saucer RC2 freezes local DB schema <b>13<\/b> and Portal Action protocol <b>29<\/b>/);
 });
 
 test("RC1 retains the finished five-attraction floor presentation", () => {

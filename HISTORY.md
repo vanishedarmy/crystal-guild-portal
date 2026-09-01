@@ -1,3 +1,8 @@
+# v1.6.0 — Gold Saucer RC2
+- Final balance candidate: Mini Cactpot payout scale corrected for Crystal Guild’s MGP economy.
+- Saucer Ledger adds Mini Cactpot net W/D/L visibility.
+- All H5/H6 Triple Triad artwork/UI and shared Gold Saucer collapse controls remain unchanged.
+
 ## v1.6.0 — Gold Saucer RC1
 - Freezes all five planned Gold Saucer attractions and the validated MGP economy for release-candidate testing.
 - Matched Bot binds persistent Monster Toss/Triple Triad daily entries to their UTC start day; Web updates counters/copy through the same state contract without a protocol change.

@@ -50,12 +50,12 @@ test("Triple Triad remains readable and responsive", () => {
 });
 
 test("Alpha 5 player copy, Guide, and compatibility contract are current", () => {
-  assert.match(version, /1\.6\.0-gold-saucer-rc1/);
-  assert.match(whatsNew, /v1\.6\.0 RC1/);
+  assert.match(version, /1\.6\.0-gold-saucer-rc2/);
+  assert.match(whatsNew, /v1\.6\.0 RC2/);
   assert.match(whatsNew, /Triple Triad opens the card hall/);
   assert.match(whatsNew, /schema advances to 13/);
   assert.match(whatsNew, /Portal Action protocol advances to 29/);
-  assert.match(guide, /Gold Saucer — v1\.6\.0 RC1/);
+  assert.match(guide, /Gold Saucer — v1\.6\.0 RC2/);
   assert.match(guide, /five matches per UTC day/i);
   assert.match(guide, /Mini Cactpot and Crystal Slots remain permanently open/);
 });

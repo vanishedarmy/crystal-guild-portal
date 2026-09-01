@@ -1,11 +1,13 @@
-# Finalization Audit — Crystal Guild v1.6.0 — Gold Saucer RC1
+# Finalization Audit — Crystal Guild v1.6.0 — Gold Saucer RC2
 
-RC1 freezes the five-attraction Gold Saucer Portal and matched Bot contract for final release-candidate testing.
+RC2 freezes the complete five-attraction Gold Saucer Portal and matched Bot contract after the final win/draw/loss balance pass.
 
-Runtime/Bot `1.6.0-gold-saucer-rc1`; frontend `1.6.0-gold-saucer-rc1`; local DB schema **13**; hosted sync **1**; Portal Action protocol **29**; prefix `!`; MGP canonical.
+Only Mini Cactpot payouts change from RC1; the Web reflects the authoritative RC2 table and adds net Cactpot W/D/L to the Saucer Ledger. All H5/H6 Triple Triad artwork/UI, shared finger-pointer disclosures, and other Gold Saucer attraction economics remain unchanged.
 
-Validated gates: **636/636 Bot**, **521/521 frontend**, **56/56 hosted Web/API**, **12/12 Web Python parse**, **190/190 plain JS/MJS syntax**, **8/8 CSS**, **800/800 WebP decode**, **0 PNG**.
+Runtime/Bot `1.6.0-gold-saucer-rc2`; frontend `1.6.0-gold-saucer-rc2`; local DB schema **13**; hosted sync **1**; Portal Action protocol **29**; prefix `!`; MGP canonical.
 
-H5 Triple Triad visual assets remain served from `/gold-saucer/a5h5/triple-triad/`; RC1 does not duplicate/cache-bust a stable art family merely for version identity.
+Validated gates: **641/641 Bot**, **522/522 frontend**, **56/56 hosted Web/API**, **12/12 Web Python**, **191/191 plain JS/MJS**, **8/8 CSS**, **800/800 WebP decode**, **0 PNG**.
 
-Packaging must exclude live state/secrets/caches.
+H5 Triple Triad visual assets remain served from `/gold-saucer/a5h5/triple-triad/`; RC2 does not duplicate a stable art family for release identity alone.
+
+Packaging excludes live state, secrets, caches, databases, logs, and compiled Python artifacts.

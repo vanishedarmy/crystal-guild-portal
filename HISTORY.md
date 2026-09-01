@@ -1,3 +1,7 @@
+## v1.7.0 — Retainer Service Alpha 1
+
+Adds a Portal-only personal Retainer for Gil-funded timed crafting-material procurement. Alpha 1 includes five assignment routes, Retainer Rank/EXP, committed-at-dispatch rewards, modest bonus finds, restart-safe persistence, and exactly-once collection. Runtime/frontend `1.7.0-retainer-a1`; paired Bot schema 14 / hosted sync 1 / Portal protocol 30. The v1.6.0 Gold Saucer production baseline remains unchanged.
+
 ## v1.6.0 — Gold Saucer
 Promotes the validated RC2/RC2H1 Gold Saucer feature, balance, and regenerated Triple Triad card set into production. The final Web pins shared Gold Saucer disclosure pointers to the right side of narrow-screen headers so long titles/badges cannot wrap the pointer to the left. Runtime/frontend `1.6.0-gold-saucer`; schema 13 / hosted sync 1 / Portal protocol 29 unchanged.
 

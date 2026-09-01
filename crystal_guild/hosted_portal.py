@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.6.0-gold-saucer"
-FRONTEND_ASSET_REVISION = "1.6.0-gold-saucer"
+HOSTED_PORTAL_VERSION = "1.7.0-retainer-a1"
+FRONTEND_ASSET_REVISION = "1.7.0-retainer-a1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 29
+ACTION_PROTOCOL_VERSION = 30
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -38,6 +38,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
     "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
+    "RETAINER_STATE", "RETAINER_DISPATCH", "RETAINER_COLLECT",
     "STREAMER_COMMAND",
 }
 
@@ -81,7 +82,7 @@ MAX_ACTION_HISTORY = 20
 # Read/state requests are safe to collapse because only the newest response matters.
 READ_ONLY_STATE_ACTIONS = {
     "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
-    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE",
+    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE",
 }
 # Gameplay mutations below are also safe to coalesce while one identical request is
 # still pending/processing. This prevents a browser retry from applying a Solo
@@ -94,6 +95,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
+    "RETAINER_DISPATCH", "RETAINER_COLLECT",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -805,6 +807,17 @@ class HostedPortalStore:
             if not prize_id or len(prize_id) > 64 or not re.fullmatch(r"[a-z0-9_]+", prize_id):
                 raise ValueError("Invalid Gold Saucer prize ID.")
             payload = {"prize_id": prize_id}
+        elif kind in {"RETAINER_STATE", "RETAINER_COLLECT"}:
+            if payload:
+                raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "RETAINER_DISPATCH":
+            if set(payload) != {"assignment"}:
+                raise ValueError("RETAINER_DISPATCH requires only assignment.")
+            assignment = str(payload.get("assignment") or "").strip().lower()
+            allowed = {"field_gathering", "monster_salvage", "mineral_survey", "regional_procurement", "specialist_acquisition"}
+            if assignment not in allowed:
+                raise ValueError("Invalid Retainer assignment.")
+            payload = {"assignment": assignment}
         elif kind in {"CRAFTING_STATE", "DAILY_STATE", "CLAIM_DAILY"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")

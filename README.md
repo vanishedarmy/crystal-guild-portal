@@ -1,7 +1,7 @@
-# Crystal Guild Web — v1.6.0 Gold Saucer
+# Crystal Guild Web — v1.7.0 Retainer Service Alpha 1
 
-Production Web baseline for runtime/frontend `1.6.0-gold-saucer`, schema **13**, hosted sync **1**, Portal protocol **29**, and MGP.
+Matched Alpha Web baseline for runtime/frontend `1.7.0-retainer-a1`, paired Bot schema **14**, hosted sync **1**, Portal protocol **30**, and the existing v1.6.0 MGP/Gold Saucer production baseline.
 
-The final Web carries the regenerated uniform 15-card Triple Triad face family from RC2H1, the compact opponent UI, Gold Saucer render/input recovery, shared finger-pointer disclosures, and the final narrow-screen pointer alignment fix. Mini Cactpot and Crystal Slots remain permanently open; the other Gold Saucer sections remain collapsible.
+Retainer Service adds a personal Portal-only procurement desk: dispatch one Retainer with Gil, wait for the persisted assignment timer, then collect the committed crafting-material haul and Retainer EXP. Rewards are fixed before departure and collection is exactly-once.
 
 See `RELEASE_NOTES.md`, `UPGRADE_GUIDE.md`, and `VALIDATION_REPORT.md`.

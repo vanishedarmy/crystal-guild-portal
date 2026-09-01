@@ -26,8 +26,8 @@ test("Guild Expansion exposes Supply Drives, Guild Objectives, and Order rewards
 test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
-  assert.match(version, /WEB_BUILD = "Gold Saucer"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer"/);
-  assert.equal(guideData.meta.version, "v1.6.0 — Gold Saucer");
-  assert.equal(guideData.meta.release, "1.6.0-gold-saucer");
+  assert.match(version, /WEB_BUILD = "Retainer Service Alpha 1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a1"/);
+  assert.equal(guideData.meta.version, "v1.7.0 — Retainer Service Alpha 1");
+  assert.equal(guideData.meta.release, "1.7.0-retainer-a1");
 });

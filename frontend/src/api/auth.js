@@ -189,6 +189,18 @@ export function submitSaucerBuy(prizeId, csrfToken, idempotencyKey) {
   return submitPortalAction("SAUCER_BUY", { prize_id: String(prizeId || "") }, csrfToken, idempotencyKey);
 }
 
+export function submitRetainerState(csrfToken, idempotencyKey) {
+  return submitPortalAction("RETAINER_STATE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitRetainerDispatch(assignment, csrfToken, idempotencyKey) {
+  return submitPortalAction("RETAINER_DISPATCH", { assignment: String(assignment || "") }, csrfToken, idempotencyKey);
+}
+
+export function submitRetainerCollect(csrfToken, idempotencyKey) {
+  return submitPortalAction("RETAINER_COLLECT", {}, csrfToken, idempotencyKey);
+}
+
 export function submitDailyState(csrfToken, idempotencyKey) {
   return submitPortalAction("DAILY_STATE", {}, csrfToken, idempotencyKey);
 }

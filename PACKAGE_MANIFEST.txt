@@ -1,9 +1,9 @@
-Crystal Guild v1.6.0 — Gold Saucer Web
-Frontend revision: 1.6.0-gold-saucer
-Runtime/Bot: 1.6.0-gold-saucer
-Schema: 13
+Crystal Guild v1.7.0 — Retainer Service Alpha 1 Web
+Frontend revision: 1.7.0-retainer-a1
+Runtime/Bot: 1.7.0-retainer-a1
+Paired local DB schema: 14
 Hosted sync: 1
-Portal protocol: 29
-Triple Triad card faces: /gold-saucer/rc2h1/triple-triad/cards/ (15 regenerated WebP)
-Gold Saucer mobile disclosure pointers: fixed right-side alignment at <=760px
-Gold Saucer attraction set: five playable attractions
+Portal protocol: 30
+Feature: Retainer Service — personal timed crafting-material procurement
+Gold Saucer: v1.6.0 production baseline preserved unchanged
+Moogle Emporium Annex: not included in Alpha 1; planned for a later v1.7.0 phase

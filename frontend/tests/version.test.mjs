@@ -4,11 +4,11 @@ import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
 test("Trails & Raids public web identity is centralized", () => {
-  assert.equal(WEB_VERSION, "v1.6.0");
-  assert.equal(WEB_BUILD, "Gold Saucer");
-  assert.equal(WEB_RELEASE, "v1.6.0 — Gold Saucer");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.6.0 — Gold Saucer");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer");
+  assert.equal(WEB_VERSION, "v1.7.0");
+  assert.equal(WEB_BUILD, "Retainer Service Alpha 1");
+  assert.equal(WEB_RELEASE, "v1.7.0 — Retainer Service Alpha 1");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.7.0 — Retainer Service Alpha 1");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-retainer-a1");
 });
 
 

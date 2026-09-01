@@ -1,3 +1,10 @@
-# Portal Actions — v1.6.0 Gold Saucer RC1
+# Portal Actions — v1.7.0 Retainer Service Alpha 1
 
-Portal Action protocol remains **29**. RC1 introduces no action type or payload change. Existing Gold Saucer actions—including `MONSTER_TOSS_START`, `MONSTER_TOSS_THROW`, `CHOCOBO_RACE`, `TRIAD_SET_DECK`, `TRIAD_START`, `TRIAD_PLAY`, and `SAUCER_BUY`—remain compatible with the matched RC1 Bot.
+Portal Action protocol is **30**.
+
+Alpha 1 adds:
+- `RETAINER_STATE` with `{}`
+- `RETAINER_DISPATCH` with exactly `{ "assignment": "<assignment_id>" }`
+- `RETAINER_COLLECT` with `{}`
+
+Valid assignment IDs are `field_gathering`, `monster_salvage`, `mineral_survey`, `regional_procurement`, and `specialist_acquisition`. Hosted validation rejects unknown fields and unknown assignment IDs. The local Bot performs all authoritative Gil, timer, reward, inventory, Retainer EXP, and exactly-once settlement work.

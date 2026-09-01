@@ -1,5 +1,21 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.7.0 Alpha 1",
+    name: "Retainer Service",
+    title: "Send a Retainer for crafting materials",
+    summary: "Retainer Service opens a new Portal-only procurement loop: pay Gil, send one personal Retainer on a timed assignment, then collect a committed crafting-material haul when they return.",
+    highlights: [
+      { title: "One personal procurement agent", description: "Every adventurer can use a lightweight Guild Retainer focused entirely on material acquisition—no gear storage, equipment management, or Retainer combat." },
+      { title: "Five timed assignments", description: "Choose from 30-minute Field Gathering through 8-hour Specialist Acquisition routes, each with its own Gil cost, Retainer EXP reward, and material pool." },
+      { title: "Rewards fixed at dispatch", description: "The haul is committed before departure and persisted through refreshes, reconnects, and Bot restarts, so a result cannot be rerolled." },
+      { title: "Exactly-once collection", description: "Returned materials and Retainer EXP are granted once by the authoritative Bot; duplicate Portal delivery safely replays the committed result." },
+      { title: "Retainer Rank progression", description: "Assignments build Retainer EXP from Novice through Master, unlocking longer routes with broader crafting-material pools and a modest bonus-find chance." },
+      { title: "Prestige drops stay prestigious", description: "Alpha 1 Retainer pools intentionally exclude Relic and Artifact materials, preserving their existing content paths." },
+      { title: "Upgrade contract", description: "Local schema advances to 14 and Portal Action protocol to 30. Hosted sync remains 1; v1.6.0 Gold Saucer gameplay and MGP balance are unchanged." },
+    ],
+    action: { tab: "retainer", label: "Open Retainer Service" },
+  },
+  {
     version: "v1.6.0",
     name: "Gold Saucer",
     title: "The Gold Saucer is open",

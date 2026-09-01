@@ -20,9 +20,9 @@ class GoldSaucerHostedAlpha5Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_alpha5_contract_adds_triple_triad_actions(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.6.0-gold-saucer")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.6.0-gold-saucer")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 29)
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-retainer-a1")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a1")
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 30)
         for action in ("TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY"):
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)
 

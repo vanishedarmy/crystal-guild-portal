@@ -1,18 +1,18 @@
-# Crystal Guild v1.6.0 — Gold Saucer Web
+# Crystal Guild v1.7.0 — Retainer Service Alpha 1 Web
 
-## Production release
+## Alpha 1
 
-The final Web promotes RC2H1 into production and preserves the complete Gold Saucer UI/art baseline. All 15 regenerated Triple Triad card faces retain the canonical RC2 card parameters.
+Retainer Service joins Guild Services as a Portal-only material-procurement feature. Every player has one lightweight personal Retainer and may run one timed assignment at a time.
 
-### Final mobile fix
+The Portal shows Retainer Rank/EXP, lifetime assignment/material statistics, current assignment status and return countdown, secured returned hauls, bonus finds, and five procurement routes with Gil costs and rank gates.
 
-Gold Saucer disclosure headers now use a narrow-screen grid that reserves the last column for the shared finger pointer. Long section titles and badges can no longer wrap the pointer onto a new line at the left edge of the viewport.
+Rewards are authoritative on the local Bot and committed at dispatch, so refreshes and reconnects cannot reroll them. Collection is exactly-once. Retainers do not store equipment or enter combat.
 
 ### Release contract
 
-- Runtime/frontend: `1.6.0-gold-saucer`
-- Schema: **13**
+- Runtime/frontend: `1.7.0-retainer-a1`
+- Paired Bot schema: **14**
 - Hosted sync: **1**
-- Portal protocol: **29**
-- Triple Triad card family: `/gold-saucer/rc2h1/triple-triad/cards/`
-- MGP/gameplay/balance: unchanged from RC2
+- Portal protocol: **30**
+- Gold Saucer/MGP behavior: unchanged from v1.6.0 production
+- Moogle Emporium Annex: deferred to a later v1.7.0 phase

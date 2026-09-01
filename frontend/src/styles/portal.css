@@ -10775,3 +10775,29 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
   }
   .triad-opponent-art { min-height: 128px; }
 }
+
+/* v1.6.0 Gold Saucer — production mobile disclosure alignment.
+   Keep the shared finger pointer anchored at the right edge instead of allowing
+   it to wrap onto a new line at the left side of narrow viewports. */
+@media (max-width: 760px) {
+  .saucer-section-disclosure > .saucer-section-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: .5rem;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+  .saucer-section-disclosure > .saucer-section-summary > :first-child {
+    min-width: 0;
+  }
+  .saucer-section-disclosure > .saucer-section-summary > .small-badge {
+    margin: 0;
+    justify-self: end;
+  }
+  .saucer-section-disclosure > .saucer-section-summary > .saucer-details-pointer {
+    margin: 0;
+    justify-self: end;
+    align-self: center;
+  }
+}

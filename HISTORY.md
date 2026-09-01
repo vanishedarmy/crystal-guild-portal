@@ -1,3 +1,6 @@
+## v1.6.0 — Gold Saucer
+Promotes the validated RC2/RC2H1 Gold Saucer feature, balance, and regenerated Triple Triad card set into production. The final Web pins shared Gold Saucer disclosure pointers to the right side of narrow-screen headers so long titles/badges cannot wrap the pointer to the left. Runtime/frontend `1.6.0-gold-saucer`; schema 13 / hosted sync 1 / Portal protocol 29 unchanged.
+
 ## 2026-09-01 — v1.6.0 Gold Saucer RC2 Web Hotfix 1
 - Replaced all 15 Triple Triad card faces with the finalized uniform regenerated Batch 1 + Batch 2 artwork.
 - Normalized the card face display to 5:7 and shipped all new faces at 530×742 WebP.

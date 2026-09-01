@@ -313,7 +313,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   if (!isOwnProfile) {
     return (
       <section className="panel gold-saucer-panel">
-        <p className="eyebrow">v1.6.0 · Gold Saucer RC2</p>
+        <p className="eyebrow">v1.6.0 · Gold Saucer</p>
         <h2>Gold Saucer</h2>
         <p className="muted">Gold Saucer play and balances are private to the signed-in adventurer. Open your own profile to enter the floor.</p>
       </section>
@@ -397,7 +397,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
       <section className="panel gold-saucer-hero saucer-scenic-panel">
         <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
-          <p className="eyebrow">v1.6.0 · Gold Saucer RC2</p>
+          <p className="eyebrow">v1.6.0 · Gold Saucer</p>
           <h2>Gold Saucer</h2>
           <p className="muted">A low-stakes side hall for daily luck, quick games, Chocobo Racing, Triple Triad, cosmetic rewards, and collection records. First visit includes a 500 MGP welcome purse.</p>
         </div>
@@ -771,7 +771,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           </details>
 
           <details className="panel saucer-records-panel saucer-section-disclosure">
-            <summary className="saucer-section-summary"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">RC2</span><DetailsPointer className="saucer-details-pointer" /></summary>
+            <summary className="saucer-section-summary"><div><p className="eyebrow">Personal Records</p><h3>Saucer Ledger</h3></div><span className="small-badge">v1.6.0</span><DetailsPointer className="saucer-details-pointer" /></summary>
             <div className="saucer-section-body">
             <div className="saucer-record-grid">
               <div><span>Current Net MGP</span><strong>{netMgp >= 0 ? "+" : ""}{number(netMgp)} MGP</strong></div>

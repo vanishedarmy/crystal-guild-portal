@@ -1,3 +1,8 @@
+## v1.6.0 — Gold Saucer RC1
+- Freezes all five planned Gold Saucer attractions and the validated MGP economy for release-candidate testing.
+- Matched Bot binds persistent Monster Toss/Triple Triad daily entries to their UTC start day; Web updates counters/copy through the same state contract without a protocol change.
+- Retains H5 full Triple Triad card faces, H6 compact opponent UI, shared finger-pointer collapsibles, schema 13, hosted sync 1, and Portal protocol 29.
+
 ## v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
 - Removes the wide Choose Opponent scenic header from the live Triple Triad flow and from opponent fallback routing.
 - Compacts desktop/mobile opponent cards, clarifies collection count, and adds an explicit selected-opponent label.

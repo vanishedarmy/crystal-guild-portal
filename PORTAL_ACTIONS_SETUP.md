@@ -1,3 +1,3 @@
-# Portal Actions — Alpha 5 Web Hotfix 6
+# Portal Actions — v1.6.0 Gold Saucer RC1
 
-Portal Action protocol remains **29**. Runtime/Bot remains `1.6.0-gold-saucer-a5h5` and frontend revision advances to `1.6.0-gold-saucer-a5h6`. H6 changes Triple Triad presentation only and adds no action type, payload field, database state, or settlement behavior.
+Portal Action protocol remains **29**. RC1 introduces no action type or payload change. Existing Gold Saucer actions—including `MONSTER_TOSS_START`, `MONSTER_TOSS_THROW`, `CHOCOBO_RACE`, `TRIAD_SET_DECK`, `TRIAD_START`, `TRIAD_PLAY`, and `SAUCER_BUY`—remain compatible with the matched RC1 Bot.

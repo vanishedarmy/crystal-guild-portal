@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.6.0 RC1",
+    name: "Gold Saucer",
+    title: "The Gold Saucer enters release candidate",
+    summary: "RC1 freezes the five-attraction Gold Saucer feature set and hardens daily-entry accounting, persistence, replay safety, MGP continuity, and the final Portal presentation before v1.6.0 release.",
+    highlights: [
+      { title: "Five-attraction feature freeze", description: "Mini Cactpot, Crystal Slots, Monster Toss, Chocobo Racing, and Triple Triad are the complete v1.6.0 attraction set. No additional attraction is held back for this release." },
+      { title: "UTC entry accounting hardened", description: "Monster Toss games and Triple Triad matches now consume their daily entry when they start. A persistent game carried across 00:00 UTC remains charged to the day it was entered instead of the day it finishes." },
+      { title: "MGP economy frozen", description: "Welcome/daily MGP, attraction entry costs, payouts, Prize Counter prices, and existing balances remain unchanged from the validated Alpha 5 baseline." },
+      { title: "Triple Triad presentation frozen", description: "The full printed card faces, artwork-synced card values, compact opponent chooser, three NPC tiers, and 15-card collection carry forward unchanged." },
+      { title: "Gold Saucer UI frozen", description: "Mini Cactpot and Crystal Slots remain fixed open. Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, and Recent Activity retain the shared finger-pointer collapsibles." },
+      { title: "Compatibility freeze", description: "Local schema remains 13, hosted sync remains 1, Portal Action protocol remains 29, and MGP remains the canonical Saucer currency." },
+    ],
+    action: { tab: "gold_saucer", label: "Enter Gold Saucer" },
+  },
+  {
     version: "v1.6.0 Alpha 5",
     name: "Gold Saucer",
     title: "Triple Triad opens the card hall",

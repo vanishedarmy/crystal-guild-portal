@@ -1,16 +1,11 @@
-# Finalization Audit — Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
+# Finalization Audit — Crystal Guild v1.6.0 — Gold Saucer RC1
 
-H6 is a Web-only UI hotfix on the canonical H5 Bot/runtime. No gameplay definitions, database schema, Portal protocol, MGP economy, or persistent player state change.
+RC1 freezes the five-attraction Gold Saucer Portal and matched Bot contract for final release-candidate testing.
 
-The referenced wide Choose Opponent header image is removed from the active render path, not merely hidden by CSS. Opponent card fallbacks no longer route through that image.
+Runtime/Bot `1.6.0-gold-saucer-rc1`; frontend `1.6.0-gold-saucer-rc1`; local DB schema **13**; hosted sync **1**; Portal Action protocol **29**; prefix `!`; MGP canonical.
 
-Runtime/Bot `1.6.0-gold-saucer-a5h5`; frontend `1.6.0-gold-saucer-a5h6`; local DB schema **13**; hosted sync **1**; Portal Action protocol **29**; prefix `!`; MGP canonical.
+Validated gates: **636/636 Bot**, **521/521 frontend**, **56/56 hosted Web/API**, **12/12 Web Python parse**, **190/190 plain JS/MJS syntax**, **8/8 CSS**, **800/800 WebP decode**, **0 PNG**.
 
-Release gates: **632/632 Bot**, **519/519 frontend**, **56/56 hosted Web/API**, **800/800 WebP decode**.
+H5 Triple Triad visual assets remain served from `/gold-saucer/a5h5/triple-triad/`; RC1 does not duplicate/cache-bust a stable art family merely for version identity.
 
-## Packaging verification
-- Full Web archive: integrity PASS.
-- H5→H6 Web patch: integrity PASS and simulated application matches the full H6 Web tree exactly.
-- Complete archive: integrity PASS.
-- Complete `Bot/` tree is byte-identical to the canonical H5 Bot package.
-- Safety scan excludes live `.env`, SQLite/database files, overlay runtime state, `__pycache__`, and `.pyc` artifacts.
+Packaging must exclude live state/secrets/caches.

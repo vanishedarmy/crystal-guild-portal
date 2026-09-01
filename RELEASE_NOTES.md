@@ -1,15 +1,15 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
+# Crystal Guild v1.6.0 — Gold Saucer RC1 — Web
 
-Hotfix 6 removes the wide Triple Triad **Choose Opponent** banner shown between the section heading and the opponent cards. The image is removed from the active render path and is no longer used as an opponent fallback.
+The Web enters release candidate with the complete five-attraction Gold Saucer floor. The current H5 full Triple Triad card-face family and H6 compact opponent chooser are retained unchanged.
 
-## UI changes
-- Opponent selection now flows directly from the compact heading into Saucer Attendant, Card Shark, and Crystal Master cards.
-- The collection badge now reads `X / 15 cards collected`.
-- The selected opponent is explicitly marked **SELECTED** in the card metadata.
-- Desktop opponent artwork is shortened to reduce vertical dead space.
-- Mobile opponent cards switch to a compact portrait-left / details-right layout instead of stacking a large image above the copy.
-- The selected-match strip is visually tightened beneath the opponent cards.
+## RC1 presentation freeze
 
-No Triple Triad rules, card values, MGP costs/payouts, card collection, schema, or Portal actions change. The complete H5 Triple Triad art family remains packaged and served from `/gold-saucer/a5h5/triple-triad/`; H6 simply stops rendering the `ui/opponents.webp` header.
+- Mini Cactpot and Crystal Slots remain permanently open.
+- Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, and Recent Activity remain collapsible with the shared finger-pointer controls.
+- Triple Triad keeps full printed card faces, no duplicate visible stat overlay, the compact three-opponent chooser, and safe image fallbacks.
+- The Player Guide and What's New panel now identify the release as RC1 and document the UTC start-day daily-entry hardening.
+- No future attraction is advertised as required for v1.6.0; all five planned attractions are open.
 
-Contract: runtime/Bot `1.6.0-gold-saucer-a5h5`, frontend `1.6.0-gold-saucer-a5h6`, schema **13**, hosted sync **1**, Portal protocol **29**.
+## Contract
+
+Runtime/frontend `1.6.0-gold-saucer-rc1`; local schema **13**; hosted sync **1**; Portal protocol **29**; MGP canonical. No Web asset family, gameplay value, or database shape changes in RC1.

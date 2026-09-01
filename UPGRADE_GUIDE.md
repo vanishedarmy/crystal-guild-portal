@@ -1,11 +1,10 @@
-# Upgrade Guide — Alpha 5 Web Hotfix 6
+# Upgrade Guide — v1.6.0 Gold Saucer RC1 Web
 
-1. Keep the existing **H5 Bot** running; there is no Bot update in H6.
-2. Deploy the H6 Web tree or apply the H5→H6 Web patch.
-3. Preserve hosted secrets, environment variables, and persistent data.
-4. Hard-refresh once after deployment so the frontend revision advances to `1.6.0-gold-saucer-a5h6`.
-5. Open Gold Saucer → Triple Triad and confirm **Choose Opponent** goes directly into the three opponent cards with no wide banner image.
-6. Confirm opponent cards remain readable at desktop and mobile widths and the selected opponent displays **SELECTED**.
-7. Confirm `/api/health` reports runtime `1.6.0-gold-saucer-a5h5`, frontend `1.6.0-gold-saucer-a5h6`, hosted sync **1**, and Portal protocol **29**.
+1. Deploy the matched RC1 Bot first or in the same maintenance window.
+2. Replace the Web tree with the full RC1 Web package or apply the H6 → RC1 Web patch.
+3. Preserve hosted environment variables, OAuth configuration, sync keys, and persistent data.
+4. Hard-refresh once after deployment.
+5. Confirm `/api/health` reports runtime `1.6.0-gold-saucer-rc1`, frontend `1.6.0-gold-saucer-rc1`, hosted sync **1**, and Portal protocol **29**.
+6. Open Gold Saucer and confirm all five attractions render, Triple Triad full card faces remain visible, and existing MGP/records/collection data are intact.
 
-No database migration, MGP conversion, card reset, or OAuth change is required.
+No schema migration is introduced by RC1.

@@ -1,7 +1,7 @@
-Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 6 — Triple Triad Opponent UI Pass
-Hosted runtime: 1.6.0-gold-saucer-a5h5
-Frontend asset revision: 1.6.0-gold-saucer-a5h6
-Compatible Bot runtime: 1.6.0-gold-saucer-a5h5
+Crystal Guild v1.6.0 — Gold Saucer RC1
+Hosted runtime: 1.6.0-gold-saucer-rc1
+Frontend asset revision: 1.6.0-gold-saucer-rc1
+Compatible Bot runtime: 1.6.0-gold-saucer-rc1
 Local DB schema: 13
 Hosted sync schema: 1
 Portal Action protocol: 29

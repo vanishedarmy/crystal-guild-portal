@@ -1,3 +1,13 @@
+# RC2 Web Hotfix 1 Finalization Audit
+
+- Web-only artwork change; no Bot/gameplay/schema/protocol change.
+- 15 regenerated card faces use a dedicated cache-busted asset root.
+- No source PNG files are placed in the public Web tree.
+- Card display ratio is normalized to 5:7 to match the finalized art template.
+- Exact RC2 canonical Top/Right/Bottom/Left parameters verified for all 15 regenerated faces.
+- Frontend 524/524 and hosted 56/56 automated suites pass.
+- All 815 public WebP assets decode successfully; public tree remains PNG-free.
+
 # Finalization Audit — Crystal Guild v1.6.0 — Gold Saucer RC2
 
 RC2 freezes the complete five-attraction Gold Saucer Portal and matched Bot contract after the final win/draw/loss balance pass.

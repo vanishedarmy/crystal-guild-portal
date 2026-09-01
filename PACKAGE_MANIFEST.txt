@@ -1,9 +1,10 @@
 Crystal Guild v1.6.0 — Gold Saucer RC2 Web
-Frontend revision: 1.6.0-gold-saucer-rc2
+Frontend revision: 1.6.0-gold-saucer-rc2h1
 Runtime/Bot: 1.6.0-gold-saucer-rc2
 Schema: 13
 Hosted sync: 1
 Portal protocol: 29
-Triple Triad H5 family retained: /gold-saucer/a5h5/triple-triad/ (33 WebP)
+Triple Triad card faces: /gold-saucer/rc2h1/triple-triad/cards/ (15 regenerated WebP)
+Triple Triad supporting H5/H6 family retained: /gold-saucer/a5h5/triple-triad/
 RC2 UI/accounting: Mini Cactpot W/D/L ledger visibility
 Gold Saucer attraction set frozen at five playable attractions

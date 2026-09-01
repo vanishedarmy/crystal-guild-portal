@@ -1,3 +1,11 @@
+# v1.6.0 Gold Saucer RC2 Web Hotfix 1 — Regenerated Triple Triad Cards
+
+This Web-only hotfix replaces all 15 Triple Triad card faces with the finalized two-batch regenerated artwork. Every card uses one uniform purple/gold Crystal Guild template, the same four diamond value positions, the same nameplate/branding language, and a normalized 5:7 presentation.
+
+The printed values match the existing authoritative RC2 Triple Triad parameters exactly. No card stats, rarity, deck rules, opponent decks, rewards, MGP values, schema, hosted sync schema, or Portal Action protocol changed. Runtime/Bot remains `1.6.0-gold-saucer-rc2`; frontend assets advance to `1.6.0-gold-saucer-rc2h1`.
+
+The new card family is cache-busted at `/gold-saucer/rc2h1/triple-triad/cards/`. Existing H6 Triple Triad UI, opponent, result, board, card-back, and Gold Saucer collapse behavior remain unchanged.
+
 # Crystal Guild v1.6.0 — Gold Saucer RC2 — Web
 
 RC2 is the matched Web balance candidate for the complete five-attraction Gold Saucer.

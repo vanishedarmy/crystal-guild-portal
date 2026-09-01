@@ -24,8 +24,9 @@ const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
 const CHOCOBO_PORTRAIT_ROOT = "/retro-phase-iii/chocobo-portraits-v1";
 const RACE_ART_ROOT = "/gold-saucer/a4h1/chocobo-racing";
 const TRIAD_ART_ROOT = "/gold-saucer/a5h5/triple-triad";
+const TRIAD_CARD_ART_ROOT = "/gold-saucer/rc2h1/triple-triad/cards";
 const TRIAD_ART_FALLBACK = `${SAUCER_ART_ROOT}/saucer-lobby.webp`;
-const TRIAD_CARD_ART = Object.fromEntries(["chocobo", "moogle", "cactuar", "bomb", "flan", "tonberry", "coeurl", "ahriman", "malboro", "ifrit", "shiva", "ramuh", "leviathan", "bahamut", "odin"].map((id) => [id, `${TRIAD_ART_ROOT}/cards/${id}.webp`]));
+const TRIAD_CARD_ART = Object.fromEntries(["chocobo", "moogle", "cactuar", "bomb", "flan", "tonberry", "coeurl", "ahriman", "malboro", "ifrit", "shiva", "ramuh", "leviathan", "bahamut", "odin"].map((id) => [id, `${TRIAD_CARD_ART_ROOT}/${id}.webp`]));
 const TRIAD_OPPONENT_ART = {
   saucer_attendant: `${TRIAD_ART_ROOT}/opponents/saucer_attendant.webp`,
   card_shark: `${TRIAD_ART_ROOT}/opponents/card_shark.webp`,

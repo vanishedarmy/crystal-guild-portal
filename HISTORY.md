@@ -1,3 +1,9 @@
+## 2026-09-01 — v1.6.0 Gold Saucer RC2 Web Hotfix 1
+- Replaced all 15 Triple Triad card faces with the finalized uniform regenerated Batch 1 + Batch 2 artwork.
+- Normalized the card face display to 5:7 and shipped all new faces at 530×742 WebP.
+- Preserved every authoritative Triple Triad card value and all RC2 gameplay/economy behavior.
+- Frontend asset revision advanced to `1.6.0-gold-saucer-rc2h1`; Bot/runtime remains RC2.
+
 # v1.6.0 — Gold Saucer RC2
 - Final balance candidate: Mini Cactpot payout scale corrected for Crystal Guild’s MGP economy.
 - Saucer Ledger adds Mini Cactpot net W/D/L visibility.

@@ -12,7 +12,7 @@ const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","a
 
 test("Hotfix 5 uses the full cache-busted Triple Triad card faces", () => {
   assert.match(component, /TRIAD_ART_ROOT = "\/gold-saucer\/a5h5\/triple-triad"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-rc2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-rc2h1"/);
   for (const id of cards) {
     const p = path.join(artRoot, `${id}.webp`);
     assert.ok(fs.existsSync(p), `${id} H5 full-face art missing`);
@@ -27,6 +27,6 @@ test("Hotfix 5 removes visible duplicate stat overlays and preserves accessible 
   assert.doesNotMatch(triadCard, /className="triad-card-values"/);
   assert.doesNotMatch(triadCard, /className="triad-card-rarity"/);
   assert.doesNotMatch(triadCard, /className="triad-card-name"/);
-  assert.match(css, /\.triad-card\.full-face[\s\S]*?aspect-ratio:\s*3 \/ 4/);
+  assert.match(css, /\.triad-card\.full-face[\s\S]*?aspect-ratio:\s*5 \/ 7/);
   assert.match(css, /\.triad-card\.full-face \.triad-card-art img[\s\S]*?object-fit:\s*contain/);
 });

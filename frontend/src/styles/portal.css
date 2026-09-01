@@ -10604,9 +10604,9 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
 }
 
 
-/* v1.6.0 Gold Saucer Alpha 5 Hotfix 5 — full Triple Triad card-face sync */
+/* v1.6.0 Gold Saucer RC2 Web Hotfix 1 — regenerated uniform Triple Triad card faces */
 .triad-card.full-face {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 7;
   padding: 0;
   background: #080711;
   border-color: rgba(218,170,255,.46);

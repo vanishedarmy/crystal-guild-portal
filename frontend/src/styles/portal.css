@@ -10487,7 +10487,7 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
 /* v1.6.0 Gold Saucer Alpha 5 Hotfix 3 — Triple Triad artwork/UI */
 .triad-hero{position:relative;overflow:hidden;min-height:clamp(160px,24vw,290px);border:1px solid rgba(203,155,255,.28);border-radius:16px;background:#0c0717;isolation:isolate}.triad-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 54%}.triad-hero>span{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,5,15,.02) 30%,rgba(5,8,20,.88) 100%),linear-gradient(90deg,rgba(10,4,20,.30),transparent 35%,transparent 65%,rgba(10,4,20,.30))}.triad-intro{margin-top:-2px}
 .triad-card{isolation:isolate;border-color:rgba(206,158,255,.38);background:linear-gradient(160deg,rgba(49,25,76,.96),rgba(12,11,30,.98));box-shadow:inset 0 0 18px rgba(170,102,255,.09),0 5px 14px rgba(0,0,0,.18)}.triad-card.owner-npc{background:linear-gradient(160deg,rgba(105,34,67,.96),rgba(45,12,35,.98));border-color:rgba(236,104,153,.48)}.triad-card-art{position:absolute;inset:0;z-index:-2;overflow:hidden}.triad-card-art img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.9) contrast(1.02)}.triad-card-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(4,6,17,.06) 30%,rgba(4,7,18,.20) 58%,rgba(5,7,18,.92) 100%),linear-gradient(90deg,rgba(4,6,17,.34),transparent 32%,transparent 72%,rgba(4,6,17,.16))}.triad-card.owner-npc .triad-card-shade{background:linear-gradient(180deg,rgba(30,4,18,.05) 30%,rgba(43,7,26,.20) 58%,rgba(27,5,20,.92) 100%)}.triad-card-name{position:relative;z-index:2;max-width:100%;padding:.34rem .42rem .18rem;margin:-.1rem -.15rem -.15rem;border-radius:6px;background:linear-gradient(90deg,rgba(11,8,27,.92),rgba(30,14,48,.72));color:#fff0c8;text-shadow:0 1px 3px #000}.triad-card-rarity,.triad-card-values{z-index:3}.triad-card-rarity{padding:2px 4px;border-radius:6px;background:rgba(12,7,25,.68)}.triad-card-values{filter:drop-shadow(0 1px 2px #000)}.triad-card-values b{display:grid;place-items:center;min-width:18px;height:18px;padding:1px;border-radius:50%;background:rgba(19,9,34,.84);box-shadow:0 0 0 1px rgba(255,221,127,.35)}.triad-card-values .top{margin-top:-2px}.triad-card.selected{border-color:#ffd96b;box-shadow:0 0 0 2px rgba(255,217,107,.24),0 0 20px rgba(175,99,255,.28),inset 0 0 20px rgba(240,201,92,.12)}.triad-card.locked{background:#0d0d19;border-color:rgba(119,110,148,.28)}.triad-card.locked .triad-card-art img{filter:saturate(.25) brightness(.34)}.triad-card.locked .triad-card-shade{background:rgba(3,4,10,.42)}.triad-card.locked .triad-card-name,.triad-card.locked .triad-card-lock{z-index:2}
-.triad-board{position:relative;background-image:linear-gradient(rgba(7,8,24,.55),rgba(7,8,24,.72)),url('/gold-saucer/a5h4/triple-triad/ui/board.webp');background-size:cover;background-position:center;box-shadow:inset 0 0 38px rgba(122,66,190,.22),0 12px 32px rgba(0,0,0,.18)}.triad-board-cell{background:rgba(13,10,34,.58);backdrop-filter:blur(1px)}.triad-board-cell.empty.playable{background:rgba(240,201,92,.09);box-shadow:inset 0 0 18px rgba(240,201,92,.08)}
+.triad-board{position:relative;background-image:linear-gradient(rgba(7,8,24,.55),rgba(7,8,24,.72)),url('/gold-saucer/a5h5/triple-triad/ui/board.webp');background-size:cover;background-position:center;box-shadow:inset 0 0 38px rgba(122,66,190,.22),0 12px 32px rgba(0,0,0,.18)}.triad-board-cell{background:rgba(13,10,34,.58);backdrop-filter:blur(1px)}.triad-board-cell.empty.playable{background:rgba(240,201,92,.09);box-shadow:inset 0 0 18px rgba(240,201,92,.08)}
 .triad-hidden-opponent{display:flex;align-items:center;gap:8px}.triad-hidden-opponent>img{width:32px;height:44px;object-fit:cover;border-radius:5px;border:1px solid rgba(240,201,92,.38);box-shadow:0 4px 10px rgba(0,0,0,.35)}
 .triad-context-banner{position:relative;overflow:hidden;min-height:110px;border:1px solid rgba(157,112,235,.24);border-radius:14px;background:#0d0919}.triad-context-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}.triad-context-banner>span{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,6,15,.10),rgba(5,8,20,.78))}.triad-deck-banner{min-height:130px}.triad-complete-banner{min-height:150px}.triad-complete-banner img{object-position:center 44%}
 .triad-opponent{padding:0;overflow:hidden;background:linear-gradient(160deg,rgba(25,12,43,.96),rgba(7,12,27,.96))}.triad-opponent-art{display:block;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid rgba(157,112,235,.22);background:#0d0819}.triad-opponent-art img{width:100%;height:100%;object-fit:cover;object-position:center 35%;transition:transform .2s ease,filter .2s ease}.triad-opponent:hover:not(:disabled) .triad-opponent-art img{transform:scale(1.025)}.triad-opponent.locked .triad-opponent-art img{filter:saturate(.25) brightness(.48)}.triad-opponent>.triad-opponent-meta,.triad-opponent>strong,.triad-opponent>span:not(.triad-opponent-art):not(.triad-opponent-meta),.triad-opponent>small{margin-left:13px;margin-right:13px}.triad-opponent>.triad-opponent-meta{margin-top:4px}.triad-opponent>small:last-child{margin-bottom:13px}
@@ -10601,4 +10601,73 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
   .saucer-section-disclosure > .saucer-section-summary {
     padding-right: 0;
   }
+}
+
+
+/* v1.6.0 Gold Saucer Alpha 5 Hotfix 5 — full Triple Triad card-face sync */
+.triad-card.full-face {
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  background: #080711;
+  border-color: rgba(218,170,255,.46);
+  display: block;
+}
+.triad-card.full-face .triad-card-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  background: #080711;
+}
+.triad-card.full-face .triad-card-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+.triad-card.full-face .triad-card-name,
+.triad-card.full-face .triad-card-rarity,
+.triad-card.full-face .triad-card-values,
+.triad-card.full-face .triad-card-shade {
+  display: none !important;
+}
+.triad-card.full-face.selected {
+  border-color: #ffd96b;
+  box-shadow: 0 0 0 3px rgba(255,217,107,.30), 0 0 20px rgba(175,99,255,.32);
+}
+.triad-card.full-face:focus-visible {
+  outline: 2px solid #f0c95c;
+  outline-offset: 3px;
+}
+.triad-board .triad-card.full-face {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+.triad-board .triad-card.full-face .triad-card-art img { object-fit: contain; }
+.triad-card.full-face.locked .triad-card-art img { filter: saturate(.4) brightness(.58); }
+.triad-card.full-face.locked .triad-card-lock {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(4,5,13,.82);
+  color: #e8def7;
+  font-size: .68rem;
+  white-space: nowrap;
+}
+.triad-card-missing {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #d9c8f5;
+  font: 700 1.4rem/1 var(--display);
+}
+@media(max-width:540px){
+  .triad-card.full-face,.triad-card.full-face.compact{min-height:0}
 }

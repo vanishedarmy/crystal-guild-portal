@@ -1,7 +1,8 @@
-# Asset Report — Gold Saucer Alpha 5 Web Hotfix 4
+# Asset Optimization Report — Alpha 5 Hotfix 5
 
-- H4 Triple Triad family: **33 WebP**, **5,743,478 bytes**.
-- H4 files are byte-identical to the validated H3 art family; they are republished at a new path solely for cache invalidation and routing recovery.
-- Public tree: **767 WebP**, all decode successfully; **0 PNG**.
-- Shared Gold Saucer disclosure controls reuse the existing optimized right/down finger WebP assets under `/ui/`.
-- No image recompression was required for H4.
+- Public PNG files: **0**
+- Public WebP files: **800**
+- Decode validation: **800 / 800 PASS**
+- H5 Triple Triad family: **33 WebP / 6,295,714 bytes**
+- H5 full card faces: **15 WebP / 1,892,918 bytes**
+- Each full card face is **543×724**, preserving the generated 3:4 card composition at half source resolution.

@@ -7,7 +7,7 @@ const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta
 
 test("Alpha 3 publishes the MGP Web identity without advancing protocol", () => {
   assert.equal(WEB_VERSION, "v1.6.0 Alpha 5");
-  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a5h4");
+  assert.equal(WEB_ASSET_REVISION, "1.6.0-gold-saucer-a5h5");
   const manifest = JSON.parse(read("../GOLD_SAUCER_ALPHA3_MGP_MANIFEST.json"));
   assert.equal(manifest.currency.code, "MGP");
   assert.equal(manifest.portal_action_protocol, 27);

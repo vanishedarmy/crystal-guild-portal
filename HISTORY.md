@@ -1,3 +1,8 @@
+## v1.6.0 — Gold Saucer Alpha 5 Hotfix 5 — Triple Triad Full Card Face Sync
+- Uses complete Triple Triad card faces and removes duplicate visible stat/name/rarity overlays.
+- Synchronizes the five starter-card gameplay definitions to the printed artwork through the matched H5 Bot.
+- Runtime/frontend `1.6.0-gold-saucer-a5h5`; schema 13 / sync 1 / protocol 29 unchanged.
+
 ## v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 4 — Triple Triad Artwork Recovery + Gold Saucer UI
 
 - Fixes the H3 Triple Triad card-art stacking defect that could leave portrait files invisible behind the card background.

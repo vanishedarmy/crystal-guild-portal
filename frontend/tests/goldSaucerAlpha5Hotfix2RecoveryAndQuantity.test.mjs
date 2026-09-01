@@ -16,7 +16,7 @@ const version = fs.readFileSync(path.join(root, "src/version.js"), "utf8");
 test("Alpha 5 Hotfix 2 sanitizes live Gold Saucer display scalars", () => {
   assert.match(saucer, /function displayText\(value, fallback = "—"\)/);
   assert.match(saucer, /function triadRarity\(value\)/);
-  assert.match(saucer, /displayText\(card\.name, "Unknown Card"\)/);
+  assert.match(saucer, /displayText\(card\?\.name, "Unknown Card"\)/);
   assert.match(saucer, /displayText\(course\.description, "Gold Saucer race course\."\)/);
   assert.match(saucer, /displayText\(opponent\.description, "Triple Triad challenger\."\)/);
   assert.match(saucer, /const details = asRecord\(entry\.details\)/);
@@ -51,6 +51,6 @@ test("Alpha 5 Hotfix 2 error boundary is retryable and logs the captured excepti
 });
 
 test("Alpha 5 Hotfix 2 advances only the frontend cache revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a5h4"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.6\.0-gold-saucer-a5h5"/);
   assert.match(version, /WEB_VERSION = "v1\.6\.0 Alpha 5"/);
 });

@@ -1,22 +1,15 @@
-# Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Web Hotfix 4
-## Triple Triad Artwork Recovery + Gold Saucer UI Pass
+# Crystal Guild v1.6.0 — Gold Saucer Alpha 5 Hotfix 5 — Triple Triad Full Card Face Sync
 
-### Triple Triad artwork recovery
-- Fixes the H3 card-art stacking defect: `.triad-card-art` was placed at a negative z-index behind the card's opaque background, so packaged portraits could be present but invisible.
-- Moves card artwork into the visible card stacking layer while keeping the shade, name, rarity, and authoritative four-side values above it.
-- Republishes the complete **33-WebP** Triple Triad family at the cache-busted `/gold-saucer/a5h4/triple-triad/` path. The H4 images are byte-identical to the validated H3 artwork; only the route changes for cache recovery.
-- Adds resilient image fallback behavior for card, hero, opponent, result, deck, and collection imagery.
-- Keeps illustrated context banners visible at mobile widths instead of suppressing them below 540px.
-- Adds opponent-selection and collection context artwork directly to their live UI sections.
+Hotfix 5 completes the Triple Triad card presentation pass. Owned/player/NPC cards now render the **full 3:4 illustrated card face** instead of a portrait crop with duplicated live values over it. Selection remains visible through the outer highlight only.
 
-### Gold Saucer disclosure UI
-- Replaces the Gold Saucer-specific text chevrons with the shared right/down finger-pointer image controls already used by the Portal.
-- Applies the shared pointer treatment to Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, Recent Activity, Future Attractions, Triple Triad Card Collection, Monster Toss Score Rewards, and the Saucer Ledger balance details.
-- Preserves the requested floor rule: **Mini Cactpot and Crystal Slots stay permanently open**; the remaining major Saucer sections remain collapsible.
-- Tightens disclosure header spacing and mobile wrapping so the badge and finger pointer remain easy to tap/read.
+## Visual/UI changes
+- Publishes a cache-busted `/gold-saucer/a5h5/triple-triad/` family.
+- Replaces all 15 card portraits with complete **543×724** card faces.
+- Removes visible `triad-card-values`, rarity, name, and shade overlays from full-face cards.
+- Keeps Top/Right/Bottom/Left values in accessible labels for screen readers.
+- Keeps H4 finger-pointer Gold Saucer collapsibles and render-recovery fallbacks intact.
 
-### Preserved contract
-- Retains H1/H2 Gold Saucer render recovery and retryable failure handling.
-- Retains the H2 quantity-input fix for Emporium Buy/Sell, Blacksmith crafting, and Fellowship Workshop batches.
-- Runtime/Bot remains `1.6.0-gold-saucer-a5`; frontend advances to `1.6.0-gold-saucer-a5h4`.
-- Schema **13**, hosted sync **1**, Portal Action protocol **29**, prefix `!`, MGP balances/economy, Triple Triad rules/stats, and all gameplay are unchanged.
+## Gameplay sync
+Because the card art contains printed values, the matching Bot updates Chocobo, Moogle, Cactuar, Bomb, and Flan to those printed numbers. The other ten cards already matched. H5 therefore requires the matching Bot and Web deployment.
+
+Contract: runtime/frontend `1.6.0-gold-saucer-a5h5`, schema **13**, hosted sync **1**, Portal protocol **29**, MGP unchanged.

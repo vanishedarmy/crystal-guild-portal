@@ -23,7 +23,7 @@ const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
 const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
 const CHOCOBO_PORTRAIT_ROOT = "/retro-phase-iii/chocobo-portraits-v1";
 const RACE_ART_ROOT = "/gold-saucer/a4h1/chocobo-racing";
-const TRIAD_ART_ROOT = "/gold-saucer/a5h4/triple-triad";
+const TRIAD_ART_ROOT = "/gold-saucer/a5h5/triple-triad";
 const TRIAD_ART_FALLBACK = `${SAUCER_ART_ROOT}/saucer-lobby.webp`;
 const TRIAD_CARD_ART = Object.fromEntries(["chocobo", "moogle", "cactuar", "bomb", "flan", "tonberry", "coeurl", "ahriman", "malboro", "ifrit", "shiva", "ramuh", "leviathan", "bahamut", "odin"].map((id) => [id, `${TRIAD_ART_ROOT}/cards/${id}.webp`]));
 const TRIAD_OPPONENT_ART = {
@@ -141,26 +141,26 @@ function Reel({ id, label }) {
   );
 }
 
+function triadAccessibleLabel(card) {
+  const name = displayText(card?.name, "Unknown Card");
+  const rarity = triadRarity(card?.rarity);
+  return `${name}, ${rarity}-star card. Top ${displayText(card?.top, "0")}, right ${displayText(card?.right, "0")}, bottom ${displayText(card?.bottom, "0")}, left ${displayText(card?.left, "0")}.`;
+}
+
 function TriadCard({ card, owner = "player", selected = false, disabled = false, onClick = null, compact = false }) {
   if (!card) return null;
   const cardId = displayId(card.id, "unknown");
   const art = TRIAD_CARD_ART[cardId] || null;
-  const content = (
-    <>
-      {art ? <span className="triad-card-art" aria-hidden="true"><ArtImage src={art} fallbackSrc={`${TRIAD_ART_ROOT}/cards/card-back.webp`} alt="" /></span> : null}
-      <span className="triad-card-shade" aria-hidden="true" />
-      <span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span>
-      <span className="triad-card-name">{displayText(card.name, "Unknown Card")}</span>
-      <span className="triad-card-values" aria-label={`${displayText(card.name, "Unknown Card")}: top ${displayText(card.top, "0")}, right ${displayText(card.right, "0")}, bottom ${displayText(card.bottom, "0")}, left ${displayText(card.left, "0")}`}>
-        <b className="top">{displayText(card.top, "0")}</b><b className="right">{displayText(card.right, "0")}</b><b className="bottom">{displayText(card.bottom, "0")}</b><b className="left">{displayText(card.left, "0")}</b>
-      </span>
-    </>
-  );
+  const label = triadAccessibleLabel(card);
+  const content = art
+    ? <span className="triad-card-art" aria-hidden="true"><ArtImage src={art} fallbackSrc={`${TRIAD_ART_ROOT}/cards/card-back.webp`} alt="" /></span>
+    : <span className="triad-card-missing" aria-hidden="true">?</span>;
   if (onClick) {
-    return <button type="button" className={`triad-card owner-${owner} ${selected ? "selected" : ""} ${compact ? "compact" : ""}`} disabled={disabled} onClick={onClick} aria-pressed={selected}>{content}</button>;
+    return <button type="button" className={`triad-card full-face owner-${owner} ${selected ? "selected" : ""} ${compact ? "compact" : ""}`} disabled={disabled} onClick={onClick} aria-pressed={selected} aria-label={label}>{content}</button>;
   }
-  return <div className={`triad-card owner-${owner} ${selected ? "selected" : ""} ${compact ? "compact" : ""}`}>{content}</div>;
+  return <div className={`triad-card full-face owner-${owner} ${selected ? "selected" : ""} ${compact ? "compact" : ""}`} role="img" aria-label={label}>{content}</div>;
 }
+
 
 export default function GoldSaucer({ data, overview, onRefresh }) {
   const { auth } = usePortalAuth();
@@ -732,7 +732,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     <summary>Card Collection · {number(triad.owned_count)} / {number(triad.total_cards)}<DetailsPointer className="saucer-details-pointer" /></summary>
                     <div className="triad-context-banner triad-collection-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/collection.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
                     <div className="triad-collection-grid collection-view">
-                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card locked compact" key={card.id}><span className="triad-card-art" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /></span><span className="triad-card-shade" aria-hidden="true" /><span className="triad-card-rarity">{"★".repeat(triadRarity(card.rarity))}</span><span className="triad-card-name">???</span><span className="triad-card-lock">Locked</span></div>)}
+                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card full-face locked compact" key={card.id} role="img" aria-label="Locked Triple Triad card"><span className="triad-card-art" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /></span><span className="triad-card-lock">Locked</span></div>)}
                     </div>
                   </details>
                 </>

@@ -10840,3 +10840,46 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
 @media(max-width:980px){.retainer-hero-panel{grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr)}.retainer-profile-art{height:200px}}
 @media(max-width:700px){.retainer-hero-panel{grid-template-columns:1fr}.retainer-office-art{max-height:230px}.retainer-status-art{opacity:.62}.retainer-idle-state,.retainer-away-state,.retainer-return-state{padding-right:26%}}
 @media(max-width:620px){.retainer-assignment-art-wrap{height:170px}.retainer-profile-art{height:190px}.retainer-status-art{width:115px}.retainer-idle-state,.retainer-away-state,.retainer-return-state{padding-right:95px}}
+
+/* v1.7.0 Retainer Service Alpha 2 — Artwork & UI Hotfix 2
+   Restore the intended 12-column Retainer layout and keep portrait artwork
+   subordinate to the profile copy at every responsive breakpoint. */
+.retainer-service-grid{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:1rem;
+  align-items:start;
+}
+.retainer-profile-panel,.retainer-current-panel,.retainer-assignments-panel,.retainer-history-panel{min-width:0}
+.retainer-profile-art{
+  box-sizing:border-box;
+  width:100%;
+  height:clamp(136px,12vw,176px);
+  max-height:176px;
+  margin:-2px 0 12px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.retainer-portrait-art{
+  display:block;
+  width:auto !important;
+  height:100% !important;
+  max-width:min(72%,210px);
+  max-height:176px;
+  object-fit:contain;
+  object-position:center bottom;
+}
+.retainer-rank-crest{right:4px;bottom:6px;width:46px;height:64px}
+@media(max-width:980px){
+  .retainer-profile-art{height:158px;max-height:158px}
+  .retainer-portrait-art{max-width:180px;max-height:158px}
+}
+@media(max-width:620px){
+  .retainer-service-grid{gap:.75rem}
+  .retainer-profile-art{height:136px;max-height:136px;margin:0 0 10px}
+  .retainer-portrait-art{max-width:150px;max-height:136px}
+  .retainer-rank-crest{width:40px;height:56px}
+}
+

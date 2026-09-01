@@ -16,7 +16,7 @@ class RetainerHostedAlpha2Tests(unittest.TestCase):
 
     def test_alpha2_contract(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-retainer-a2")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a2h1")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a2h2")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 31)
 
     def test_dispatch_accepts_optional_bounded_priority(self):

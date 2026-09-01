@@ -1,3 +1,8 @@
+## 2026-09-01 — v1.7.0 Retainer Service Alpha 2 Artwork & UI Hotfix 2
+- Restores the Retainer Service container as an explicit 12-column CSS grid so desktop `span-4` / `span-8` panels render at their intended widths.
+- Hard-bounds Moogle Retainer portrait and rank-crest sizing on desktop, tablet, and mobile to prevent oversized/cropped profile artwork.
+- Keeps all 28 H1 WebP assets unchanged; frontend asset revision advances to `1.7.0-retainer-a2h2`. Runtime/schema/sync/protocol remain `1.7.0-retainer-a2` / 15 / 1 / 31.
+
 ## v1.7.0 — Retainer Service Alpha 2
 
 Adds targeted material procurement and an eight-entry recent-haul history to Retainer Service. Focused dispatches preserve the existing roll count/timers/EXP but pay a Gil premium to guarantee one normal roll of the selected route material. Runtime/frontend `1.7.0-retainer-a2`; paired Bot schema 15 / hosted sync 1 / Portal protocol 31. Artwork remains deferred to the next pass.

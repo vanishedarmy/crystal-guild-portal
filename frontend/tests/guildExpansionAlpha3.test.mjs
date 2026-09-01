@@ -27,7 +27,7 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
   assert.match(version, /WEB_BUILD = "Retainer Service Alpha 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h2"/);
   assert.equal(guideData.meta.version, "v1.7.0 — Retainer Service Alpha 2");
   assert.equal(guideData.meta.release, "1.7.0-retainer-a2");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 31/);

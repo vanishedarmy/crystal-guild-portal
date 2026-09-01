@@ -12,7 +12,7 @@ test("Trails & Raids identity is current", () => {
   assert.equal(WEB_VERSION, "v1.7.0");
   assert.equal(WEB_BUILD, "Retainer Service Alpha 2");
   assert.equal(WEB_RELEASE, "v1.7.0 — Retainer Service Alpha 2");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-retainer-a2h1");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-retainer-a2h2");
   assert.equal(JSON.parse(read("package.json")).version, "1.7.0-alpha.2");
 });
 

@@ -7680,6 +7680,12 @@ main h1,
   margin-top: .8rem;
 }
 
+.recovery-potency-note {
+  margin: .55rem 0 0;
+  font-size: .72rem;
+  line-height: 1.35;
+}
+
 .recovery-quick-action {
   display: flex;
   align-items: center;

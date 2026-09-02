@@ -17,6 +17,9 @@ test("Portal Phase 5 exposes live Inventory and Recovery actions without combat 
   assert.match(inventory, /use recovery items on them outside battle/);
   assert.match(api, /target_username/);
   assert.match(inventory, /recovery-quick-action/);
+  assert.match(inventory, /Effective now/);
+  assert.match(inventory, /Item potency is fixed/);
+  assert.match(inventory, /formatItemUse\(catalogItem\.use\)/);
   assert.doesNotMatch(inventory, /Show usable now/);
   assert.doesNotMatch(inventory, />Battle only</);
   assert.match(inventory, /campRemainingSeconds/);

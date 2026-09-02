@@ -30,7 +30,7 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 
 test("Fellowship UX remains present in the final release", () => {
   assert.match(version, /WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
-  assert.match(version, /1\.7\.0-emporium-annex-a3/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h1/);
   assert.match(news, /Guild Expansion has arrived/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

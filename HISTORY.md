@@ -1,3 +1,8 @@
+## 2026-09-02 — v1.7.0 Alpha 3 Item Recovery Hotfix 1
+- Verified the canonical Potion, MP/AP restorative, revival and full-restoration values without changing balance.
+- Recover & Equip now distinguishes fixed item potency from effective recovery capped by the target’s missing resource.
+- Field-use results explicitly identify capped recovery. Runtime/frontend: `1.7.0-emporium-annex-a3h1`; schema 15 and Portal protocol 31 remain unchanged.
+
 ## 2026-09-01 — v1.7.0 Moogle Emporium Annex Alpha 3
 
 - Adds the one-time shared Moogle Emporium Annex at Fellowship LVL 3 for 20,000 Gil, 12 Mythril Ore, and 20 crafted items.

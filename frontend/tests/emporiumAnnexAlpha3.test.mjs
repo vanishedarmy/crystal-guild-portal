@@ -27,5 +27,5 @@ test("Alpha 3 Annex status stays fluid on narrow Emporium layouts", async () => 
 test("Alpha 3 release identity is visible in the frontend", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   assert.match(version, /Moogle Emporium Annex Alpha 3/);
-  assert.match(version, /1\.7\.0-emporium-annex-a3/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h1/);
 });

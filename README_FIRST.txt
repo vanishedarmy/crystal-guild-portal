@@ -1,5 +1,9 @@
-Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 Web
-Runtime: 1.7.0-emporium-annex-a3 | Frontend asset revision: 1.7.0-emporium-annex-a3
-Paired Bot DB schema: 15 | Hosted sync: 1 | Portal protocol: 31
+Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — Item Recovery Hotfix 1
+Runtime: 1.7.0-emporium-annex-a3h1
+Schema: 15 | Hosted sync: 1 | Portal protocol: 31 | Prefix: !
 
-Alpha 3 must be deployed with the matching Bot. The shared Fellowship Annex expands each personal Moogle Emporium rotation from 9 to 12 items after construction. Preserve hosted secrets and persistent state when upgrading.
+Hotfix 1 verifies the complete restorative-item contract and clarifies max-HP/MP/AP capping in Recover & Equip. Item potency is unchanged; the Portal now shows both declared potency and the amount that can effectively fit before the target reaches maximum.
+
+The Moogle Emporium Annex remains the Alpha 3 feature baseline: once built, personal Emporium rotations expand from 9 to 12 stock slots.
+
+Upgrade Bot and Web together. Preserve the existing database and live secrets.

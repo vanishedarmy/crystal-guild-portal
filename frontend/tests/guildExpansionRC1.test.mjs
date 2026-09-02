@@ -18,9 +18,9 @@ function fellowshipSection(html) {
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
   assert.match(version, /WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h1"/);
   assert.equal(guideData.meta.version, "v1.7.0 — Moogle Emporium Annex Alpha 3");
-  assert.equal(guideData.meta.release, "1.7.0-emporium-annex-a3");
+  assert.equal(guideData.meta.release, "1.7.0-emporium-annex-a3h1");
   assert.equal(manifest.release, "v1.5.1 — Relic Arsenal Complete");
   assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });

@@ -36,5 +36,5 @@ test("Retainer artwork hotfix ships routed WebP assets", () => {
   assert.match(component, /retainerPortrait/);
   assert.match(component, /retainerCrest/);
   assert.match(css, /Retainer Service Alpha 2 — Artwork & UI Hotfix 1/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h1"/);
 });

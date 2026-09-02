@@ -1,4 +1,4 @@
-Crystal Guild v1.7.0 — Production Final
+Crystal Guild v1.7.0 — Moogle Retainer
 Runtime: 1.7.0
 Frontend asset revision: 1.7.0-final
 Paired Bot runtime: 1.7.0

@@ -11,7 +11,7 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Production Final"/);
+  assert.match(version, /WEB_BUILD = "Moogle Retainer"/);
   assert.match(version, /1\.7\.0-final/);
   assert.match(news, /name: "Expeditions"/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));

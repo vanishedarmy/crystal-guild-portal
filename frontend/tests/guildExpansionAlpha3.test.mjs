@@ -26,9 +26,9 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Production Final"/);
+  assert.match(version, /WEB_BUILD = "Moogle Retainer"/);
   assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-final"/);
-  assert.equal(guideData.meta.version, "v1.7.0 — Production Final");
+  assert.equal(guideData.meta.version, "v1.7.0 — Moogle Retainer");
   assert.equal(guideData.meta.release, "1.7.0-final");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 31/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);

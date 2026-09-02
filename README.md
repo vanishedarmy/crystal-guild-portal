@@ -1,4 +1,4 @@
-# Crystal Guild Web v1.7.0 — Production Final
+# Crystal Guild Web v1.7.0 — Moogle Retainer
 
 Production Web runtime: **1.7.0** with frontend asset revision **1.7.0-final**. Pair with the v1.7.0 production Bot. Local database schema remains **15**, hosted sync **1**, Portal Action protocol **31**, Twitch prefix `!`.
 

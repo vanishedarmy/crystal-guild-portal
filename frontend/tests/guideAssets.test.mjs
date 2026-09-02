@@ -6,7 +6,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("lazy guide data is valid and versioned for v1.2.0 Expeditions", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.7.0 — Production Final");
+  assert.equal(data.meta.version, "v1.7.0 — Moogle Retainer");
   assert.equal(data.meta.encounter_rally, 60);
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);
@@ -72,7 +72,7 @@ test("GuidePage cache-busts lazy assets and uses the shared release label", asyn
   assert.match(legacy, /releaseLabel/);
   assert.match(legacy, /activeAbilityBlock/);
   assert.match(version, /1\.7\.0/);
-  assert.match(version, /Production Final/);
+  assert.match(version, /Moogle Retainer/);
 });
 
 

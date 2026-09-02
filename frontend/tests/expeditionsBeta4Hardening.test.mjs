@@ -8,7 +8,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("Expeditions carries forward Beta 4 hardening in player-facing language", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(version, /WEB_BUILD = "Production Final"/);
+  assert.match(version, /WEB_BUILD = "Moogle Retainer"/);
   assert.match(version, /1\.7\.0-final/);
   assert.match(news, /Journeys stay saved/);
   assert.match(news, /Active Expeditions keep their current stage/);

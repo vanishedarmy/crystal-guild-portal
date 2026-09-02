@@ -1,3 +1,3 @@
-# Trails & Raids compatibility
+# Streamer Dashboard — Crystal Guild v1.7.0 Moogle Retainer
 
-The Streamer Dashboard remains compatible with Portal Action protocol **25** and existing owner recovery controls. `!clearadventures` continues to clear active Dungeon runs while preserving completed Dungeon records. Beta 3 adds no new streamer commands; active Raid shared-state hardening is automatic.
+The Streamer Dashboard uses the current Portal Action protocol **31** and preserves the established owner recovery controls. `!clearadventures` clears active Adventure/Dungeon runtime state while preserving completed records. Raid shared-state reconciliation, settlement protection, and recovery behavior are automatic and require no additional streamer commands.

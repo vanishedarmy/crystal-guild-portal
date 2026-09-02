@@ -7,16 +7,27 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const component = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
-const manifest = JSON.parse(fs.readFileSync(path.resolve(root, "../GOLD_SAUCER_ALPHA2_VISUAL_MANIFEST.json"), "utf8"));
 const publicRoot = path.join(root, "public");
 
-test("Monster Toss visual hotfix ships seventeen active separate WebP assets", () => {
-  assert.equal(manifest.asset_count, 17);
-  assert.equal(manifest.frontend_asset_revision, "1.6.0-gold-saucer-a2h2");
-  for (const asset of manifest.assets) {
-    assert.match(asset.route, /\.webp$/);
-    assert.equal(fs.existsSync(path.join(publicRoot, asset.route.replace(/^\//, ""))), true, asset.route);
-  }
+test("Monster Toss ships the complete active WebP asset set", () => {
+  const assetRoot = path.join(publicRoot, "gold-saucer/a2h2/monster-toss");
+  const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = path.join(dir, entry.name);
+    return entry.isDirectory() ? walk(full) : [full];
+  });
+  const webp = walk(assetRoot).filter((file) => file.endsWith(".webp"));
+  assert.equal(webp.length, 17);
+  for (const route of [
+    "background.webp",
+    "targets/small-pot.webp",
+    "targets/medium-pot.webp",
+    "targets/large-pot.webp",
+    "targets/golden-cactuar.webp",
+    "results/hit.webp",
+    "results/miss.webp",
+    "results/jackpot.webp",
+    "results/bullseye.webp",
+  ]) assert.equal(fs.existsSync(path.join(assetRoot, route)), true, route);
 });
 
 test("Monster Toss component routes each target and throw style to artwork", () => {
@@ -25,9 +36,9 @@ test("Monster Toss component routes each target and throw style to artwork", () 
   for (const style of ["safe", "normal", "power"]) assert.match(component, new RegExp(`${style}:`));
   assert.match(component, /monster-toss-background/);
   assert.doesNotMatch(component, /monster-toss-marquee/);
-  assert.equal(manifest.assets.some((asset) => asset.route.endsWith("/marquee.webp")), false);
+  assert.equal(fs.existsSync(path.join(publicRoot, "gold-saucer/a2h2/monster-toss/marquee.webp")), false);
   assert.match(component, /monster-toss-reticle/);
-  for (const route of ["results/hit.webp", "results/miss.webp", "results/jackpot.webp", "results/bullseye.webp"]) assert.equal(manifest.assets.some((asset) => asset.route.endsWith(route)), true, route);
+  for (const route of ["results/hit.webp", "results/miss.webp", "results/jackpot.webp", "results/bullseye.webp"]) assert.equal(fs.existsSync(path.join(publicRoot, `gold-saucer/a2h2/monster-toss/${route}`)), true, route);
   assert.match(component, /results\/\$\{/);
 });
 

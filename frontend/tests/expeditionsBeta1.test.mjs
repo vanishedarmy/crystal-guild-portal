@@ -11,7 +11,7 @@ test("Expeditions Beta 1 route balance remains active under the final v1.3 relea
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
 
-  assert.match(version, /WEB_BUILD = "Production Final"/);
+  assert.match(version, /WEB_BUILD = "Moogle Retainer"/);
   assert.match(version, /1\.7\.0-final/);
   assert.match(board, /Lower combat damage and softer hazards/);
   assert.match(board, /Harder combat and hazards for stronger rewards/);

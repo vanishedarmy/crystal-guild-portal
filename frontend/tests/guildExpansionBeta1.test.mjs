@@ -14,7 +14,7 @@ test("Guild Expansion publishes the complete player-facing Guild summary", async
 
 test("Guild Expansion public identity is current", async () => {
   const version = await text("../src/version.js");
-  assert.match(version, /WEB_BUILD = "Production Final"/);
+  assert.match(version, /WEB_BUILD = "Moogle Retainer"/);
   assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-final"/);
 });
 

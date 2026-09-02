@@ -1,7 +1,7 @@
 export const MAJOR_UPDATES = [
   {
     version: "v1.7.0",
-    name: "Production Final",
+    name: "Moogle Retainer",
     title: "Retainers, the Emporium Annex, and a hardened Portal",
     summary: "v1.7.0 finalizes Retainer Service and the Moogle Emporium Annex, then closes the release with cloud-storage, mobile UI, text-spacing, and hosted Portal performance hardening.",
     highlights: [
@@ -9,7 +9,7 @@ export const MAJOR_UPDATES = [
       { title: "Three extra shop choices", description: "Completed construction expands each personalized Emporium rotation from 9 to 12 items while preserving the existing job, level, price, and rarity weighting rules." },
       { title: "Small Guild project", description: "The Annex unlocks at Fellowship LVL 3 and requires 20,000 Gil, 12 Mythril Ore, and 20 crafted items alongside the level requirement." },
       { title: "Immediate activation", description: "When construction completes, existing 9-slot cached rotations are invalidated automatically so the next shop refresh immediately receives the 12-slot Annex layout." },
-      { title: "Compatibility preserved", description: "Local schema remains 15, hosted sync remains 1, Portal Action protocol remains 31, and Retainer Service Alpha 2 progression carries forward unchanged." },
+      { title: "Compatibility preserved", description: "Local schema remains 15, hosted sync remains 1, Portal Action protocol remains 31, and existing Retainer progression carries forward unchanged." },
     ],
     action: { tab: "shop", label: "Open Moogle Emporium" },
   },

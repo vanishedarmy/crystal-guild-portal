@@ -1,4 +1,4 @@
-Crystal Guild v1.7.0 — Production Final
+Crystal Guild v1.7.0 — Moogle Retainer
 Web runtime: 1.7.0
 Frontend asset revision: 1.7.0-final
 Paired Bot runtime: 1.7.0
@@ -6,4 +6,5 @@ Schema: 15
 Hosted sync: 1
 Portal protocol: 31
 Prefix: !
-Scope: production-final UI, performance, responsive-layout and text-spacing baseline
+Scope: Moogle Retainer UI, performance, responsive-layout and text-spacing baseline
+Package hygiene: pre-release manifests/reports and generated report directories are excluded; active source, tests, setup tools, and required asset manifests are retained.

@@ -127,7 +127,7 @@ export default function TrophyHall({ data, onDetail }) {
             <ClickableCard className="trophy-record-card" detail={{ type: "job", job }} key={job.id || job.name} onOpen={onDetail}>
               <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
               <strong>{job.name}</strong>
-              <span>{job.mastery?.name || "JLv.50 Mastery"}</span>
+              <span>{job.mastery?.name || "JLv. 50 Mastery"}</span>
             </ClickableCard>
           )) : <div className="muted">No Jobs mastered yet.</div>}
         </div>

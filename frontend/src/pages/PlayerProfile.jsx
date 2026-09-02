@@ -1,7 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPlayer } from "../api/players.js";
-import DetailDialog from "../components/DetailDialog.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PortalLinkPanel from "../components/PortalLinkPanel.jsx";
@@ -9,18 +8,18 @@ import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import Overview from "../player/Overview.jsx";
-import GoldSaucer from "../player/GoldSaucer.jsx";
-import RetainerService from "../player/RetainerService.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
 import { campDeadlineMs, campRemainingSeconds } from "../utils/campCountdown.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
+
+const DetailDialog = lazy(() => import("../components/DetailDialog.jsx"));
 
 const MODULES = {
   overview: Overview,
   fellowship: lazy(() => import("../player/Fellowship.jsx")),
   chocobo: lazy(() => import("../player/ChocoboStable.jsx")),
-  gold_saucer: GoldSaucer,
-  retainer: RetainerService,
+  gold_saucer: lazy(() => import("../player/GoldSaucer.jsx")),
+  retainer: lazy(() => import("../player/RetainerService.jsx")),
   jobs: lazy(() => import("../player/Jobs.jsx")),
   inventory: lazy(() => import("../player/Inventory.jsx")),
   shop: lazy(() => import("../player/MoogleEmporium.jsx")),
@@ -183,8 +182,8 @@ export default function PlayerProfile() {
                 <h1 className="display-name">{overview.identity.display_name}</h1>
                 <div className="profile-handle">@{overview.identity.username}</div>
                 <div className="profile-jobline">
-                  <span>Lv.{number(overview.identity.level)} {overview.job.name}</span>
-                  {overview.job.level ? <span>JLv.{number(overview.job.level)}</span> : null}
+                  <span>Lv. {number(overview.identity.level)} {overview.job.name}</span>
+                  {overview.job.level ? <span>JLv. {number(overview.job.level)}</span> : null}
                   <span className={`status-badge ${displayedStatusState}`}>{statusText}</span>
                 </div>
                 <div className="profile-title">“{overview.identity.title}”</div>
@@ -269,7 +268,11 @@ export default function PlayerProfile() {
           </div>
         </section>
       </main>
-      <DetailDialog detail={detail} onClose={() => setDetail(null)} />
+      {detail ? (
+        <Suspense fallback={null}>
+          <DetailDialog detail={detail} onClose={() => setDetail(null)} />
+        </Suspense>
+      ) : null}
       <footer className="site-footer">
         <span>Crystal Guild</span>
         <span><a href="/fellowship">Fellowship</a> · <a href="/guide">Player Guide</a> · <a href="/privacy">Privacy Policy</a> · Profiles update automatically from Twitch chat</span>

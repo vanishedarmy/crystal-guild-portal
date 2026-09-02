@@ -1,16 +1,19 @@
-# Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — UI Compactness Hotfix 4
+# Crystal Guild v1.7.0 — Final Hardening & Performance Hotfix 5
 
-Hotfix 4 is a narrow UI pass based on the verified Cloud Storage Hotfix 3 complete baseline. It changes presentation only.
+Hotfix 5 is the final v1.7.0 stabilization pass over the verified UI Compactness Hotfix 4 Web baseline. Gameplay and data contracts are frozen.
 
-## UI changes
+## Hardening and performance
 
-- Blacksmith tab subtitles no longer repeat **Active**; they read simply **Craft items** and **Upgrade equipment**.
-- The registered Chocobo companion card now hugs its content instead of stretching to the neighboring management card, with tighter internal spacing.
-- Moogle Emporium buy cards no longer show long item-description paragraphs; equipment cards retain stat boosts, comparisons, Job eligibility, level requirements, price, ownership, and purchase controls.
-- Blacksmith recipe cards use tighter padding/material rows and no longer stretch to match the tallest card in a row.
-- The Fellowship level card is bounded and tightened on mobile so its level/progress display cannot extend beyond the viewport.
-- Crystal Guild Connection is reduced to the connection heading/status plus a compact **Refresh connection** action; the redundant linked-account explanation is removed.
+- Artwork/static binary responses stream in bounded chunks instead of being retained indefinitely in the Web process cache.
+- Static responses include ETags so unchanged browser requests can return `304 Not Modified`.
+- Gold Saucer, Retainer Service, and the profile detail dialog are loaded only when needed instead of entering the initial profile module path eagerly.
+- Image-heavy feature views consistently use browser lazy loading and asynchronous decoding; critical header/lobby imagery remains eager.
+- Dynamic cards, badges, controls, and grids receive overflow/min-width safeguards so long labels cannot force horizontal layout breaks.
 
-No prices, item stats, recipes, Fellowship progression, Chocobo progression, Portal actions, Retainer behavior, Annex behavior, Gold Saucer behavior, or database state changed.
+## UI text consistency
 
-Web runtime/frontend revision: `1.7.0-emporium-annex-a3h4`. Pair with Bot `1.7.0-emporium-annex-a3h3`. Schema remains **15**, hosted sync **1**, Portal Action protocol **31**, prefix `!`.
+- Visible level labels are normalized to readable spacing such as **Lv. 8** and **JLv. 50** across Portal views, Player Guide copy, and generated Trophy Hall metadata.
+- Crafted/Retainer quantity labels use readable multiplication spacing where appropriate (for example **× 1**). Mathematical dimensions such as **3×3** remain compact by design.
+- No item values, descriptions intended as gameplay rules, prices, rewards, or progression requirements were altered by the spacing pass.
+
+Web runtime/frontend revision: `1.7.0-emporium-annex-a3h5`. Pair with Bot `1.7.0-emporium-annex-a3h3`. Schema remains **15**, hosted sync **1**, Portal Action protocol **31**, prefix `!`.

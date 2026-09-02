@@ -183,13 +183,13 @@ export default function RetainerService({ data, overview, onRefresh }) {
           <p className="retainer-lead">Dispatch one personal Retainer on timed procurement work for crafting materials. Retainers do not store equipment and never replace your inventory.</p>
           {message ? <div className="state-message compact-state">{message}</div> : null}
         </div>
-        <img className="retainer-office-art" src={`${RETAINER_ART_ROOT}/retainer-office.webp`} alt="Pixel-art Retainer Office with Moogle guild banners" />
+        <img loading="lazy" decoding="async" className="retainer-office-art" src={`${RETAINER_ART_ROOT}/retainer-office.webp`} alt="Pixel-art Retainer Office with Moogle guild banners" />
       </section>
 
       <section className="panel span-4 retainer-profile-panel">
         <div className="retainer-profile-art">
-          <img className="retainer-portrait-art" src={retainerPortrait(retainer.rank)} alt="Your Moogle Retainer" />
-          <img className="retainer-rank-crest" src={retainerCrest(retainer.rank)} alt="" aria-hidden="true" />
+          <img loading="lazy" decoding="async" className="retainer-portrait-art" src={retainerPortrait(retainer.rank)} alt="Your Moogle Retainer" />
+          <img loading="lazy" decoding="async" className="retainer-rank-crest" src={retainerCrest(retainer.rank)} alt="" aria-hidden="true" />
         </div>
         <p className="eyebrow">Your Retainer</p>
         <h3>{String(retainer.name || "Guild Retainer")}</h3>
@@ -206,29 +206,29 @@ export default function RetainerService({ data, overview, onRefresh }) {
       <section className="panel span-8 retainer-current-panel">
         <div className="panel-title-row"><h3>Current Assignment</h3><span className={`small-badge ${returned ? "ready" : assignment?.state || "idle"}`}>{assignment ? (returned ? "RETURNED" : String(assignment.state || "active").toUpperCase()) : "IDLE"}</span></div>
         {!assignment || assignment.state === "collected" ? (
-          <div className="retainer-idle-state"><img className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/ready.webp`} alt="Moogle Retainer ready for work" /><strong>Your Retainer is ready for work.</strong><span>Choose one procurement assignment below. Only one assignment can be active at a time.</span></div>
+          <div className="retainer-idle-state"><img loading="lazy" decoding="async" className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/ready.webp`} alt="Moogle Retainer ready for work" /><strong>Your Retainer is ready for work.</strong><span>Choose one procurement assignment below. Only one assignment can be active at a time.</span></div>
         ) : assignment.state === "active" && !returned ? (
           <div className="retainer-away-state">
-            <img className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/in-progress.webp`} alt="Moogle Retainer away on assignment" />
+            <img loading="lazy" decoding="async" className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/in-progress.webp`} alt="Moogle Retainer away on assignment" />
             <div><strong>{assignment.name}</strong><span>{assignment.pool_label}</span>{assignment.priority ? <small>Priority: {assignment.priority.name}</small> : null}</div>
             <div className="retainer-timer"><span>Returns in</span><strong>{duration(remaining)}</strong></div>
             <small>The haul was committed when the Retainer departed and cannot be rerolled by refreshing or reconnecting.</small>
           </div>
         ) : (
           <div className="retainer-return-state">
-            <img className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/completed.webp`} alt="Moogle Retainer returned with a completed haul" />
+            <img loading="lazy" decoding="async" className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/completed.webp`} alt="Moogle Retainer returned with a completed haul" />
             <div><strong>{assignment.name} complete</strong><span>Your Retainer is waiting at the desk with the secured material haul.</span></div>
             {Array.isArray(assignment.rewards) && assignment.rewards.length ? (
               <div className="retainer-haul-grid">
                 {assignment.rewards.map((item) => <div key={item.item_id}><strong>{item.name}</strong><span>x{number(item.quantity)} · {String(item.rarity || "common")}</span></div>)}
               </div>
             ) : null}
-            {assignment.bonus ? <div className="retainer-bonus-find">Bonus find: <strong>{assignment.bonus.name} x{number(assignment.bonus.quantity)}</strong></div> : null}
+            {assignment.bonus ? <div className="retainer-bonus-find">Bonus find: <strong>{assignment.bonus.name} × {number(assignment.bonus.quantity)}</strong></div> : null}
             <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={collect}>{busy === "collect" ? "Collecting…" : "Collect Materials"}</button>
           </div>
         )}
         {assignment?.state === "collected" && Array.isArray(assignment.rewards) && assignment.rewards.length ? (
-          <div className="retainer-last-haul"><small>Last collected haul</small><span>{assignment.rewards.map((item) => `${item.name} x${number(item.quantity)}`).join(" · ")}</span></div>
+          <div className="retainer-last-haul"><small>Last collected haul</small><span>{assignment.rewards.map((item) => `${item.name} × ${number(item.quantity)}`).join(" · ")}</span></div>
         ) : null}
       </section>
 
@@ -240,8 +240,8 @@ export default function RetainerService({ data, overview, onRefresh }) {
             return (
               <article className={`retainer-assignment-card ${option.unlocked ? "" : "locked"}`} key={option.id}>
                 <div className="retainer-assignment-art-wrap">
-                  <img className="retainer-assignment-art" src={RETAINER_ASSIGNMENT_ART[option.id]} alt="" aria-hidden="true" />
-                  <img className="retainer-assignment-icon" src={RETAINER_ASSIGNMENT_ICON[option.id]} alt="" aria-hidden="true" />
+                  <img loading="lazy" decoding="async" className="retainer-assignment-art" src={RETAINER_ASSIGNMENT_ART[option.id]} alt="" aria-hidden="true" />
+                  <img loading="lazy" decoding="async" className="retainer-assignment-icon" src={RETAINER_ASSIGNMENT_ICON[option.id]} alt="" aria-hidden="true" />
                 </div>
                 <div className="retainer-assignment-head"><strong>{option.name}</strong><span className={`small-badge ${option.unlocked ? "ready" : "locked"}`}>{option.unlocked ? `${number(priorityByAssignment[option.id] ? option.focused_cost_gil : option.cost_gil)} Gil` : `Rank ${number(option.rank_required)}`}</span></div>
                 <p>{option.description}</p>
@@ -257,7 +257,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
 
       <section className="panel span-12 retainer-history-panel">
         <div className="panel-title-row"><div><p className="eyebrow">Procurement Record</p><h3>Recent Retainer Hauls</h3></div><span className="small-badge">Last 8</span></div>
-        {Array.isArray(state.history) && state.history.length ? <div className="retainer-history-list">{state.history.map((entry) => <article key={entry.assignment_id}><div><strong>{entry.name}</strong><span>{entry.priority ? `Priority: ${entry.priority.name}` : "General haul"} · {number(entry.cost_gil)} Gil · +{number(entry.retainer_xp)} EXP</span></div><small>{(entry.rewards || []).map((item) => `${item.name} x${number(item.quantity)}`).join(" · ")}{entry.bonus ? ` · Bonus: ${entry.bonus.name} x${number(entry.bonus.quantity)}` : ""}</small></article>)}</div> : <div className="retainer-idle-state"><strong>No collected hauls yet.</strong><span>Your eight most recent Retainer collections will appear here.</span></div>}
+        {Array.isArray(state.history) && state.history.length ? <div className="retainer-history-list">{state.history.map((entry) => <article key={entry.assignment_id}><div><strong>{entry.name}</strong><span>{entry.priority ? `Priority: ${entry.priority.name}` : "General haul"} · {number(entry.cost_gil)} Gil · +{number(entry.retainer_xp)} EXP</span></div><small>{(entry.rewards || []).map((item) => `${item.name} × ${number(item.quantity)}`).join(" · ")}{entry.bonus ? ` · Bonus: ${entry.bonus.name} × ${number(entry.bonus.quantity)}` : ""}</small></article>)}</div> : <div className="retainer-idle-state"><strong>No collected hauls yet.</strong><span>Your eight most recent Retainer collections will appear here.</span></div>}
       </section>
     </div>
   );

@@ -111,7 +111,7 @@ function soloVentureSummary(summary) {
   if (treasure) {
     return `Solo Venture: Found ${item.name || loot[0] || "treasure"}.`;
   }
-  const enemyLabel = `${enemy.name || "an enemy"}${enemy.level ? ` Lv.${number(enemy.level)}` : ""}`;
+  const enemyLabel = `${enemy.name || "an enemy"}${enemy.level ? ` Lv. ${number(enemy.level)}` : ""}`;
   if (summary.outcome === "victory") {
     return `Solo Venture: Victory over ${enemyLabel} — +${number(rewards.xp)} XP · +${number(rewards.jp)} JP · +${number(rewards.gil)} Gil.`;
   }
@@ -179,7 +179,7 @@ function SoloVentureResult({ summary, cooldownRemaining, resultId, onConfirm, co
         <div>
           <p className="eyebrow">Last Solo Venture</p>
           <h3>{treasure ? "Treasure found" : `${resultLabel} · ${enemy.name || "Encounter"}`}</h3>
-          <p className="muted">{summary.region_name}{!treasure && enemy.level ? ` · Enemy Lv.${number(enemy.level)}` : ""}</p>
+          <p className="muted">{summary.region_name}{!treasure && enemy.level ? ` · Enemy Lv. ${number(enemy.level)}` : ""}</p>
         </div>
         <span className={`small-badge ${treasure || victory ? "success" : ""}`}>{resultLabel}</span>
       </div>
@@ -188,7 +188,7 @@ function SoloVentureResult({ summary, cooldownRemaining, resultId, onConfirm, co
         <div className="solo-result-highlight">
           <span>Chest reward</span>
           <strong>{item.name || loot[0] || "Treasure"}</strong>
-          <small>{[item.category, item.level ? `Lv.${number(item.level)}` : "", item.rarity].filter(Boolean).join(" · ")}</small>
+          <small>{[item.category, item.level ? `Lv. ${number(item.level)}` : "", item.rarity].filter(Boolean).join(" · ")}</small>
         </div>
       ) : (
         <div className="solo-result-grid">
@@ -233,7 +233,7 @@ function HuntResult({ result, onConfirm, confirming }) {
   if (!summary) {
     return (
       <section className={`panel hunt-result-panel legacy ${result?.won ? "won" : "lost"}`} aria-live="polite">
-        <img className="panel-scenic-art hunt-result-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
+        <img loading="lazy" className="panel-scenic-art hunt-result-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
         <div className="panel-title-row">
           <div><p className="eyebrow">Last Hunt Result</p><h2>{result?.hunt_name || result?.monster_name || "Hunt Result"}</h2></div>
           <span className={`small-badge ${result?.won ? "success" : ""}`}>{result?.won ? "Victory" : "Failed"}</span>
@@ -257,14 +257,14 @@ function HuntResult({ result, onConfirm, confirming }) {
 
   return (
     <section className={`panel hunt-result-panel ${victory ? "won" : "lost"}`} aria-live="polite" aria-labelledby="last-hunt-result-title">
-      <img className="panel-scenic-art hunt-result-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
+      <img loading="lazy" className="panel-scenic-art hunt-result-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
       <div className="hunt-result-identity">
         <MonsterPortrait monster={monster} name={monster.name} className="hunt-result-portrait" />
         <div className="panel-title-row hunt-result-title-row">
         <div>
           <p className="eyebrow">Last Hunt Result · {summary.rank || "C"}-Rank</p>
           <h2 id="last-hunt-result-title">{summary.hunt_name || "Named Mark"}</h2>
-          <p className="muted">{monster.name || "Unknown Mark"}{monster.level ? ` · Mark Lv.${number(monster.level)}` : ""} · {number(summary.rounds || 0)} round{Number(summary.rounds || 0) === 1 ? "" : "s"}</p>
+          <p className="muted">{monster.name || "Unknown Mark"}{monster.level ? ` · Mark Lv. ${number(monster.level)}` : ""} · {number(summary.rounds || 0)} round{Number(summary.rounds || 0) === 1 ? "" : "s"}</p>
         </div>
         <span className={`hunt-result-outcome ${victory ? "victory" : "defeat"}`}>{victory ? "Mark Slain" : "Hunt Failed"}</span>
       </div>
@@ -324,7 +324,7 @@ function HuntRecord({ data }) {
       <div className="content-grid adventure-record-grid">
         {[...(data?.hunts || [])].sort(compareByLevel).map((hunt) => (
           <article className="hunt-card" key={hunt.id || hunt.name}>
-            <div className="slot-label">{hunt.rank}-Rank · Lv.{number(hunt.min_level)}</div>
+            <div className="slot-label">{hunt.rank}-Rank · Lv. {number(hunt.min_level)}</div>
             <div className="job-name">{hunt.name}</div>
             <div className="card-meta">{hunt.monster}</div>
             <div className="card-actions"><span className="small-badge">{number(hunt.clears)} clears</span></div>
@@ -591,7 +591,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           <div>
             <p className="eyebrow">{encounter.kind === "hunt" ? `${encounter.hunt?.rank || ""}-Rank Active Hunt` : encounter.kind === "solo_venture" ? "Solo Venture Encounter" : "Active Rally Venture"}</p>
             <h2>{encounter.hunt?.name || encounter.monster?.name}</h2>
-            <p className="muted">{encounter.monster?.name} · Lv.{number(encounter.monster?.level)} · {encounter.region?.name}</p>
+            <p className="muted">{encounter.monster?.name} · Lv. {number(encounter.monster?.level)} · {encounter.region?.name}</p>
           </div>
           <span className="small-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
         </div>
@@ -742,7 +742,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                   <div className="solo-enemy-layout">
                     <MonsterPortrait monster={expedition.combat.enemy} name={expedition.combat.enemy?.name} className="solo-enemy-portrait" eager />
                     <div className="solo-enemy-copy">
-                      <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv.{number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
+                      <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv. {number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
                       <div className="vital-label"><span>HP</span><span>{number(expedition.combat.enemy?.hp)} / {number(expedition.combat.enemy?.max_hp)}</span></div>
                       <ProgressBar value={pct(expedition.combat.enemy?.hp, expedition.combat.enemy?.max_hp)} className="hp" />
                       <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing an action"}</strong></div>
@@ -831,7 +831,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 <div className="solo-result-highlight">
                   <span>Stage {number(expedition.stage)} cleared</span>
                   <strong>{expedition.treasure?.name || expedition.last_stage?.monster?.name || "The road is clear"}</strong>
-                  <small>{expedition.treasure ? [expedition.treasure.category, expedition.treasure.level ? `Lv.${number(expedition.treasure.level)}` : "", expedition.treasure.rarity].filter(Boolean).join(" · ") : expedition.last_stage?.rewards ? `+${number(expedition.last_stage.rewards.xp)} XP · +${number(expedition.last_stage.rewards.jp)} JP secured · ${number(expedition.last_stage.rewards.gil)} Gil in spoils` : "Choose whether to return or continue."}</small>
+                  <small>{expedition.treasure ? [expedition.treasure.category, expedition.treasure.level ? `Lv. ${number(expedition.treasure.level)}` : "", expedition.treasure.rarity].filter(Boolean).join(" · ") : expedition.last_stage?.rewards ? `+${number(expedition.last_stage.rewards.xp)} XP · +${number(expedition.last_stage.rewards.jp)} JP secured · ${number(expedition.last_stage.rewards.gil)} Gil in spoils` : "Choose whether to return or continue."}</small>
                 </div>
                 <div className="solo-choice-actions">
                   <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:return", "solo-return", "run", (idem) => submitSoloExpeditionReturn(csrfToken, idem), "Returned to the Guild.")}>{busy === "solo:return" ? "Returning…" : "Return to Guild — Bank Spoils"}</button>
@@ -894,7 +894,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 <img src={`/retro-phase-ii/regions-hd/${region.id}.webp`} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="card-status-row adventure-region-head">
-                <div className="slot-label">Lv.{number(region.min_level)}+</div>
+                <div className="slot-label">Lv. {number(region.min_level)}+</div>
                 <span className={`small-badge ${region.current ? "success" : !region.unlocked ? "locked" : ""}`}>{region.current ? "Current" : region.unlocked ? "Unlocked" : "Locked"}</span>
               </div>
               <h3>{region.name}</h3>
@@ -942,14 +942,14 @@ export default function Hunts({ data, overview, onRefresh }) {
 
       {activeHunt ? (
         <section className="panel timed-hunt-panel" aria-live="polite">
-          <img className="panel-scenic-art timed-hunt-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
+          <img loading="lazy" className="panel-scenic-art timed-hunt-scenic-art" src="/trails-raids/h4/hunt-active.webp" alt="" aria-hidden="true" decoding="async" />
           <div className="timed-hunt-identity">
             <MonsterPortrait monster={activeHunt.monster} name={activeHunt.monster?.name} className="timed-hunt-portrait" />
             <div className="panel-title-row timed-hunt-title-row">
             <div>
               <p className="eyebrow">Hunt in Progress · {activeHunt.rank}-Rank</p>
               <h2>{activeHunt.name}</h2>
-              <p className="muted">{activeHunt.monster?.name} · Mark Lv.{number(activeHunt.monster?.level)}</p>
+              <p className="muted">{activeHunt.monster?.name} · Mark Lv. {number(activeHunt.monster?.level)}</p>
             </div>
             <span className="small-badge success">Auto Hunt</span>
           </div>
@@ -993,7 +993,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 <div className="hunt-card-identity">
                   <MonsterPortrait monster={hunt.monster} name={hunt.monster?.name} className="hunt-card-portrait" />
                   <div className="adventure-hunt-head">
-                    <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv.{number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
+                    <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv. {number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
                     <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : "Locked"}</span>
                   </div>
                 </div>

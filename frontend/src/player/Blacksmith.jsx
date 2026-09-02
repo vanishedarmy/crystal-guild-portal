@@ -259,13 +259,13 @@ export default function Blacksmith({ data, overview, onRefresh }) {
               return (
                 <article className="blacksmith-card" key={recipe.id}>
                   <div className="blacksmith-card-head">
-                    <div><span className="slot-label">Recipe · Lv.{number(recipe.min_level)}</span><h3>{recipe.name}</h3></div>
+                    <div><span className="slot-label">Recipe · Lv. {number(recipe.min_level)}</span><h3>{recipe.name}</h3></div>
                     <span className={`small-badge ${recipe.craftable ? "ready" : ""}`}>{recipe.craftable ? `Up to ${number(maximum)}` : "Missing requirements"}</span>
                   </div>
                   <div className="blacksmith-output">
                     <ItemArtwork item={recipe.output} className="blacksmith-output-artwork" />
                     <span>Creates</span>
-                    <strong className={`rarity-${recipe.output?.rarity || "common"}`}>{recipe.output?.name} x{number(recipe.output?.quantity || 1)}</strong>
+                    <strong className={`rarity-${recipe.output?.rarity || "common"}`}>{recipe.output?.name} × {number(recipe.output?.quantity || 1)}</strong>
                     <small>Owned {number(recipe.output?.owned || 0)} · {titleCase(recipe.output?.type)}</small>
                   </div>
                   {recipe.output?.description ? <p className="blacksmith-description">{recipe.output.description}</p> : null}
@@ -284,7 +284,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                   <div className="blacksmith-card-actions">
                     <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max={Math.max(1, maximum)} value={quantityInputValue(quantities, recipe.id)} disabled={maximum < 1} onFocus={() => beginQuantityEdit(setQuantities, quantities, recipe.id)} onChange={(event) => updateQuantityInput(setQuantities, recipe.id, event.target.value, Math.max(1, maximum))} onBlur={(event) => finishQuantityEdit(setQuantities, recipe.id, event.target.value, Math.max(1, maximum))} /></label>
                     <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !recipe.craftable || maximum < 1 || Boolean(busyKey)} onClick={() => craft(recipe)}>
-                      {busy ? "Crafting…" : `Craft ${recipe.output?.name || recipe.name} ×${number(quantity)}`}
+                      {busy ? "Crafting…" : `Craft ${recipe.output?.name || recipe.name} × ${number(quantity)}`}
                     </button>
                   </div>
                 </article>
@@ -318,7 +318,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
                       <article className="blacksmith-card forge-card" key={item.item_id}>
                         <ItemArtwork item={item} className="blacksmith-forge-artwork" />
                         <div className="blacksmith-card-head">
-                          <div><span className="slot-label">{titleCase(item.type)} · Lv.{number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span><h3 className={`rarity-${item.rarity || "common"}`}>{item.name} +{number(item.current_upgrade)}</h3></div>
+                          <div><span className="slot-label">{titleCase(item.type)} · Lv. {number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span><h3 className={`rarity-${item.rarity || "common"}`}>{item.name} +{number(item.current_upgrade)}</h3></div>
                           <span className="small-badge">{item.maxed ? "MAX" : `Next +${number(item.next_upgrade)}`}</span>
                         </div>
                         {item.description ? <p className="blacksmith-description">{item.description}</p> : null}

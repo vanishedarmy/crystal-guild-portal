@@ -114,7 +114,7 @@ function DetailBody({ detail }) {
     const ready = (ability) => Boolean(job.owned && level >= Number(ability.level || 0));
     return (
       <div className="detail-body job-detail-body">
-        <p className="eyebrow">{humanizeLabel(job.tier)} {humanizeLabel(job.combat_type || "physical")} Job · {job.owned ? `JLv.${job.level}` : "Not learned"}</p>
+        <p className="eyebrow">{humanizeLabel(job.tier)} {humanizeLabel(job.combat_type || "physical")} Job · {job.owned ? `JLv. ${job.level}` : "Not learned"}</p>
         <h2>{job.name}</h2>
         <section className="detail-section">
           <div className="data-label">Combat Identity</div>
@@ -139,10 +139,10 @@ function DetailBody({ detail }) {
           <div className="job-detail-ability-list">
             {activeAbilities.length ? activeAbilities.map((ability) => (
               <div className={`job-detail-ability ${ready(ability) ? "ready" : "locked"}`} key={ability.id || ability.name}>
-                <div className="job-detail-ability-head"><strong>JLv.{ability.level} · {ability.name}</strong><span>{ability.cost} {String(ability.resource || job.resource_mode || "mp").toUpperCase()} · {humanizeLabel(ability.target)}</span></div>
+                <div className="job-detail-ability-head"><strong>JLv. {ability.level} · {ability.name}</strong><span>{ability.cost} {String(ability.resource || job.resource_mode || "mp").toUpperCase()} · {humanizeLabel(ability.target)}</span></div>
                 {abilityTraitLabels(ability).length ? <div className="ability-trait-row">{abilityTraitLabels(ability).map((label) => <span className="small-badge ability-trait" key={label}>{label}</span>)}</div> : null}
                 <p>{ability.description}</p>
-                <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : `Unlocks at JLv.${ability.level}`}</span>
+                <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : `Unlocks at JLv. ${ability.level}`}</span>
               </div>
             )) : <span className="muted">Battle ability reference unavailable.</span>}
           </div>
@@ -152,13 +152,13 @@ function DetailBody({ detail }) {
           <div className="job-detail-ability-list">
             {passiveAbilities.length ? passiveAbilities.map((ability) => (
               <div className={`job-detail-ability ${ready(ability) ? "ready" : "locked"}`} key={`${ability.level}-${ability.name}`}>
-                <div className="job-detail-ability-head"><strong>JLv.{ability.level} · {ability.name}</strong><span>{ready(ability) ? "Learned" : "Locked"}</span></div>
+                <div className="job-detail-ability-head"><strong>JLv. {ability.level} · {ability.name}</strong><span>{ready(ability) ? "Learned" : "Locked"}</span></div>
                 <p>{ability.description}</p>
               </div>
             )) : <span className="muted">No passive Job milestones listed.</span>}
           </div>
         </section>
-        <section className="detail-section"><div className="data-label">JLv.50 Cross-Job Mastery</div><p><strong>{job.mastery?.name || "—"}</strong><br />{job.mastery?.description || ""}</p></section>
+        <section className="detail-section"><div className="data-label">JLv. 50 Cross-Job Mastery</div><p><strong>{job.mastery?.name || "—"}</strong><br />{job.mastery?.description || ""}</p></section>
       </div>
     );
   }

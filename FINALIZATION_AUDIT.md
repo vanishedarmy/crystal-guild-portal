@@ -1,18 +1,16 @@
-# Finalization Audit — Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — UI Compactness Hotfix 4
+# Finalization Audit — Crystal Guild v1.7.0 — Final Hardening & Performance Hotfix 5
 
-**Decision: PASS — selective Web polish baseline.**
+**Decision: PASS — final v1.7.0 stabilization candidate.**
 
-Hotfix 4 is presentation-only. It carries forward the Cloud Storage Hotfix 3 Bot unchanged and updates only the Web/UI tree.
+Hotfix 5 carries forward the Cloud Storage Hotfix 3 Bot unchanged and hardens only the Web/UI tree.
 
 ## Frozen scope
 
-1. remove redundant Active text from Blacksmith view subtitles;
-2. condense the registered Chocobo companion summary;
-3. remove long Emporium buy-card descriptions;
-4. condense Blacksmith recipe cards;
-5. bound/tighten Fellowship level display on mobile;
-6. simplify Crystal Guild Connection to status + refresh.
+1. bound hosted static-art memory behavior and add browser ETag revalidation;
+2. defer optional heavy Player Profile modules until opened;
+3. normalize image loading/decoding behavior;
+4. add defensive overflow/min-width rules for dynamic UI;
+5. normalize user-facing level/quantity spacing;
+6. preserve all v1.7.0 gameplay, economy, schema, and Portal protocol behavior.
 
-No economy, combat, item, recipe, Retainer, Fellowship progression, Gold Saucer, Moogle Emporium Annex, cloud-storage, schema, or Portal protocol behavior changed.
-
-Validation: **549/549 frontend**, **61/61 hosted Web/API**, **15/15 Web Python parse**, **201/201 JS/MJS syntax**, **8/8 CSS checks**, **843/843 WebP decode**, **0 public PNGs**.
+Validation: **554/554 frontend**, **63/63 hosted Web/API**, paired unchanged Bot baseline **668/668**, **15/15 Web Python parse**, **202/202 JS/MJS syntax**, **8/8 CSS**, **843/843 WebP decode**, **0 public PNGs**.

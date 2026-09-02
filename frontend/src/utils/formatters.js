@@ -134,7 +134,7 @@ export function formatItemTraits(item = {}) {
 export function formatEquipmentRequirements(item = {}) {
   const parts = [];
   const level = Number(item.min_level);
-  if (Number.isFinite(level) && level > 0) parts.push(`Lv.${number(level)}`);
+  if (Number.isFinite(level) && level > 0) parts.push(`Lv. ${number(level)}`);
   const jobs = Array.isArray(item.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
   parts.push(jobs.length ? jobs.join(" / ") : "All Jobs");
   return parts.join(" · ");

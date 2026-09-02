@@ -28,10 +28,10 @@ function sec(n){n=Math.max(0,Math.floor(Number(n||0)));const u=[["w",Math.floor(
 function reqText(r){
   const amount=fmtInt(r.amount??1);
   switch(r.type){
-    case'character_level':return `Reach Character Lv.${amount}`;
-    case'job_level':return r.job_id?`Reach ${jobName(r.job_id)} JLv.${amount}`:`Reach JLv.${amount} on any Job`;
-    case'monster_kills':return `Defeat ${monsterName(r.monster_id)} ×${amount}`;
-    case'monster_record_defeats':return `Defeat ${monsterName(r.monster_id)} ×${amount}`;
+    case'character_level':return `Reach Character Lv. ${amount}`;
+    case'job_level':return r.job_id?`Reach ${jobName(r.job_id)} JLv. ${amount}`:`Reach JLv. ${amount} on any Job`;
+    case'monster_kills':return `Defeat ${monsterName(r.monster_id)} × ${amount}`;
+    case'monster_record_defeats':return `Defeat ${monsterName(r.monster_id)} × ${amount}`;
     case'hunt_clear':return `Clear ${huntName(r.hunt_id)}`;
     case'hunt_rank_clears':return `Clear ${amount} unique ${r.rank}-Rank Hunts`;
     case'hunt_rank_total':return `Complete ${amount} total ${r.rank}-Rank Hunts`;
@@ -44,11 +44,11 @@ function reqText(r){
     case'quest_count':return `Complete ${amount} Job unlock quests`;
     case'ventures':return `Complete ${amount} Ventures`;
     case'job_battles':return `${amount} battles on one Job`;
-    case'boss_clear':return `Defeat ${bossName(r.boss_id)} ×${amount}`;
+    case'boss_clear':return `Defeat ${bossName(r.boss_id)} × ${amount}`;
     case'boss_unique':return `Defeat ${amount} unique raid bosses`;
     case'gil':return `Hold ${amount} gil`;
     case'hunt_seals':return `Hold ${amount} Hunt Seals`;
-    case'item_quantity':return `Own ${itemName(r.item_id)} ×${amount}`;
+    case'item_quantity':return `Own ${itemName(r.item_id)} × ${amount}`;
     case'item_upgrade':return `Forge ${itemName(r.item_id)} to +${amount}`;
     case'relic_complete':return `Complete ${byId(D.relics,r.relic_id)?.name||fallbackName(r.relic_id)}`;
     case'stat':return `${metricLabel(r.field)} ≥ ${amount}`;
@@ -116,7 +116,7 @@ function statNotes(it){
   return bits.join(' • ')||'—';
 }
 function costText(cost){if(!cost)return'—';let b=[];if(cost.gil)b.push(`${fmtInt(cost.gil)} gil`);if(cost.hunt_seals)b.push(`${fmtInt(cost.hunt_seals)} Seals`);for(const x of
-  cost.items||[])b.push(`${itemName(x.item_id)} ×${x.quantity}`);return b.join(' • ')||'None'}
+  cost.items||[])b.push(`${itemName(x.item_id)} × ${x.quantity}`);return b.join(' • ')||'None'}
 
 const [releaseVersion,releaseBuild='']=releaseLabel.split(/\s+—\s+/,2);
 const versionSide=$('#versionSide');if(versionSide)versionSide.textContent=releaseLabel;
@@ -228,7 +228,7 @@ function jobOverview(j){let portrait=guideJobPortraitPath(j);return `<button typ
   signature • ${esc(j.attack_name||'Standard attack')}</p><div class="growth-mini"><span>STR<b>${j.growth.str}</b></span><span>VIT<b>${j.growth.vit}</b></span><span>MAG<b>${j.growth.mag}</b></span>
   </div><div class="card-spacer"></div><div class="card-open-hint"><span>${esc(j.mastery?.name||'No Mastery')}</span><b>Open Job →</b></div></button>`;}
 function masteryOverview(j){let m=j.mastery||{};return `<button type="button" class="card mastery-overview searchable" data-open-mastery="${esc(j.id)}
-  " aria-label="Open ${esc(m.name||j.name+' Mastery')} details"><div class="statline"><span class="badge gold">JLv.50 Mastery</span><span class="badge">${esc(humanizeLabel(j.combat_type))}</span></div><h3>
+  " aria-label="Open ${esc(m.name||j.name+' Mastery')} details"><div class="statline"><span class="badge gold">JLv. 50 Mastery</span><span class="badge">${esc(humanizeLabel(j.combat_type))}</span></div><h3>
   ${esc(m.name||'Unnamed Mastery')}</h3><p class="mastery-source">From ${esc(j.name)}</p><p>${esc(m.description||'No description available.')}</p><div class="card-spacer"></div>
   <div class="card-open-hint"><span>Cross-Job passive</span><b>Open Mastery →</b></div></button>`;}
 function renderJobs(){let q=$('#jobSearch').value.toLowerCase(),t=$('#jobTier').value;let js=D.jobs.filter(j=>(!t||j.tier===t||(t==='advanced'&&j.tier==='elite'))&&JSON.stringify(j).toLowerCase().includes(q));
@@ -245,7 +245,7 @@ function growthBlock(j){return `<div class="info-growth">${Object.entries(j.grow
 function effectChips(effects){let e=Object.entries(effects||{});return e.length?`<div class="effect-chips">${e.map(([k,v])=>`<span class="effect-chip">${esc(effectText(k,v))}</span>`).join('')}</div>
   `:'';}
 function activeAbilityTraits(a){let labels=[];if(a.element)labels.push(a.element);for(let e of (a.effects||[])){if(e.type==='status'&&e.status)labels.push(humanizeLabel(e.status));if(e.type==='heal')labels.push('Healing');if(e.type==='cleanse')labels.push('Cleanse');if(e.type==='drain')labels.push('HP Drain');if(e.type==='restore_mp')labels.push('MP Restore');if(e.type==='restore_ap')labels.push('AP Restore');if(e.type==='revive')labels.push('Revive');if(e.type==='damage'&&Number(e.pierce||0)>0)labels.push('Piercing');if(e.type==='damage'&&Number(e.crit_bonus||0)>0)labels.push('High Crit');}return [...new Set(labels)];}
-function activeAbilityBlock(j){let list=D.active_abilities?.[j.id]||[];if(!list.length)return '<p class="muted">No Active Battle abilities are listed for this Job.</p>';return `<div class="info-ability-list">${list.map(a=>{let resource=String(a.resource||'mp').toUpperCase();let cost=Number(a.cost??a.mp??0);let traits=activeAbilityTraits(a);return `<div class="info-ability"><div class="levelpill">JLv.${a.level}</div><div><b>${esc(a.name)}</b> <span class="badge">${cost} ${esc(resource)}</span> <span class="badge">${esc(humanizeLabel(a.target))}</span>${traits.length?`<div class="effect-chips">${traits.map(x=>`<span class="effect-chip">${esc(x)}</span>`).join('')}</div>`:''}<p>${esc(a.description)}</p></div></div>`;}).join('')}</div>`;}
+function activeAbilityBlock(j){let list=D.active_abilities?.[j.id]||[];if(!list.length)return '<p class="muted">No Active Battle abilities are listed for this Job.</p>';return `<div class="info-ability-list">${list.map(a=>{let resource=String(a.resource||'mp').toUpperCase();let cost=Number(a.cost??a.mp??0);let traits=activeAbilityTraits(a);return `<div class="info-ability"><div class="levelpill">JLv. ${a.level}</div><div><b>${esc(a.name)}</b> <span class="badge">${cost} ${esc(resource)}</span> <span class="badge">${esc(humanizeLabel(a.target))}</span>${traits.length?`<div class="effect-chips">${traits.map(x=>`<span class="effect-chip">${esc(x)}</span>`).join('')}</div>`:''}<p>${esc(a.description)}</p></div></div>`;}).join('')}</div>`;}
 function openInfo(kind,id,trigger){lastInfoFocus=trigger||document.activeElement;let ok=false;if(kind==='job'||kind==='mastery'){let j=D.jobs.find(x=>x.id===id);if(j){
   kind==='job'?renderJobInfo(j):renderMasteryInfo(j);ok=true}}else if(kind==='relic'){let r=D.relics.find(x=>x.id===id);if(r){renderRelicInfo(r);ok=true}}else if(kind==='boss'){let
   b=D.bosses.find(x=>x.id===id);if(b){renderBossInfo(b);ok=true}}if(!ok)return;infoOverlay.classList.add('open');infoOverlay.setAttribute('aria-hidden','false');
@@ -253,18 +253,18 @@ function openInfo(kind,id,trigger){lastInfoFocus=trigger||document.activeElement
 function closeInfo(){if(!infoOverlay.classList.contains('open'))return;infoOverlay.classList.remove('open');infoOverlay.setAttribute('aria-hidden','true');document.body.classList.remove('info-open');
   lastInfoFocus?.focus?.();}
 function renderJobInfo(j){let mastery=j.mastery||{};infoKicker.textContent='Job Profile';infoTitle.textContent=j.name;infoBadges.innerHTML=`<span class="badge ${j.tier==='starter'?'core':'gold'}">
-  ${esc(humanizeLabel(j.tier))}</span><span class="badge">${esc(humanizeLabel(j.combat_type))}</span><span class="badge">JLv.1–50</span>`;infoBody.innerHTML=`<section class="info-section"><div class="info-section-title">
+  ${esc(humanizeLabel(j.tier))}</span><span class="badge">${esc(humanizeLabel(j.combat_type))}</span><span class="badge">JLv. 1–50</span>`;infoBody.innerHTML=`<section class="info-section"><div class="info-section-title">
   Combat Identity</div><div class="info-hero-stat"><div class="info-stat"><span>Signature</span><b>${esc(j.signature)}</b></div><div class="info-stat"><span>Signature Chance</span><b>
   ${pct(j.signature_chance)}</b></div><div class="info-stat"><span>Signature Power</span><b>×${j.signature_multiplier}</b></div><div class="info-stat"><span>Base Damage</span><b>×${j.damage_mod}</b>
   </div></div><p class="muted" style="margin-top:10px"><b>Attack:</b> ${esc(j.attack_name||'Standard attack')} • <b>Critical bonus:</b> ${pct(j.crit_bonus||0)}</p></section>
   <section class="info-section"><div class="info-section-title">Unlock Requirement</div><div class="callout">${esc(unlockText(j))}</div></section><section class="info-section">
   <div class="info-section-title">Stat Growth</div>${growthBlock(j)}</section><section class="info-section"><div class="info-section-title">Battle Abilities</div><p class="muted">Use these with <code>!ability &lt;name&gt; [target]</code>. Magic techniques spend MP; physical techniques spend AP. Current MP/AP persist between encounters and recover through camp/items.</p>${activeAbilityBlock(j)}</section><section class="info-section"><div class="info-section-title">Passive Job Milestones</div><div class="info-ability-list">
-  ${(j.abilities||[]).map(a=>`<div class="info-ability"><div class="levelpill">JLv.${a.level}</div><div><b>${esc(a.name)}</b><p>${esc(a.description)}</p>${effectChips(a.effects)}</div></div>
-  `).join('')}</div></section><section class="info-section"><div class="info-section-title">JLv.50 Cross-Job Mastery</div><div class="info-mastery-feature"><span class="badge gold">MASTERED</span><h3>
+  ${(j.abilities||[]).map(a=>`<div class="info-ability"><div class="levelpill">JLv. ${a.level}</div><div><b>${esc(a.name)}</b><p>${esc(a.description)}</p>${effectChips(a.effects)}</div></div>
+  `).join('')}</div></section><section class="info-section"><div class="info-section-title">JLv. 50 Cross-Job Mastery</div><div class="info-mastery-feature"><span class="badge gold">MASTERED</span><h3>
   ${esc(mastery.name||'—')}</h3><p>${esc(mastery.description||'')}</p>${effectChips(mastery.effects)}<div class="info-actions">
   <button type="button" class="info-action" data-modal-mastery="${esc(j.id)}">Open Mastery Card</button></div></div></section>`;}
 function renderMasteryInfo(j){let m=j.mastery||{};infoKicker.textContent='Cross-Job Mastery';infoTitle.textContent=m.name||`${j.name} Mastery`;infoBadges.innerHTML=`<span class="badge gold">
-  JLv.50</span><span class="badge">Source: ${esc(j.name)}</span><span class="badge">2 equip slots</span>`;infoBody.innerHTML=`<section class="info-section"><div class="info-mastery-feature">
+  JLv. 50</span><span class="badge">Source: ${esc(j.name)}</span><span class="badge">2 equip slots</span>`;infoBody.innerHTML=`<section class="info-section"><div class="info-mastery-feature">
   <span class="badge gold">MASTERED PASSIVE</span><h3>${esc(m.name||'—')}</h3><p>${esc(m.description||'')}</p>${effectChips(m.effects)}</div></section><section class="info-section">
   <div class="info-section-title">How to Unlock</div><div class="callout"><b>Master ${esc(j.name)} to Job Level 50.</b><br>Once mastered, this passive can be equipped while playing another Job.</div>
   </section><section class="info-section"><div class="info-section-title">Equip the Mastery</div><p>Choose either of your two Mastery slots:</p><code class="info-command">!mastery ${esc(j.id)}
@@ -283,12 +283,12 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){infoPanel.addE
 function guideMonsterPortraitPath(id){return monsterPortraitPath(id);}
 const monsterRegions={};D.regions.forEach(r=>(r.encounters||[]).forEach(e=>(monsterRegions[e.monster_id]??=[]).push(r.name)));
 $('#regionGrid').innerHTML=[...D.regions].sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||''))).map(r=>{let total=r.encounters.reduce((a,x)=>a+x.weight,0);let ents=[...r.encounters].sort((a,b)=>b.weight-a.weight).map(e=>`${monsterName(e.monster_id)}
-  <span class="muted">(${Math.round(e.weight/total*100)}%)</span>`).join(' • ');return `<div class="card searchable guide-region-card"><div class="guide-region-art" aria-hidden="true"><img src="/retro-phase-ii/regions-hd/${esc(r.id)}.webp" alt="" loading="lazy" decoding="async"></div><div class="statline"><span class="badge gold">Min Lv.${r.min_level}</span>
+  <span class="muted">(${Math.round(e.weight/total*100)}%)</span>`).join(' • ');return `<div class="card searchable guide-region-card"><div class="guide-region-art" aria-hidden="true"><img src="/retro-phase-ii/regions-hd/${esc(r.id)}.webp" alt="" loading="lazy" decoding="async"></div><div class="statline"><span class="badge gold">Min Lv. ${r.min_level}</span>
   <span class="badge">${r.encounters.length} encounters</span></div><h3>${esc(r.name)}</h3><p>${esc(r.description)}</p><p>${ents}</p></div>`}).join('');
 D.regions.forEach(r=>$('#monsterRegion').insertAdjacentHTML('beforeend',`<option>${esc(r.name)}</option>`));
 function renderMonsters(){let q=$('#monsterSearch').value.toLowerCase(),r=$('#monsterRegion').value;let ms=D.monsters.filter(m=>(!r||(monsterRegions[m.id]||[]).includes(r))&&([m.name,m.weakness,
   m.special?.name,m.combat_profile,m.active_skill,...(monsterRegions[m.id]||[]),...(m.drops||[]).map(x=>itemName(x.item_id))].join(' ').toLowerCase().includes(q))).sort((a,b)=>Number(a.level||0)-Number(b.level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#monsterRows').innerHTML=ms.map(m=>{let portrait=guideMonsterPortraitPath(m.id);return `<tr class="searchable"><td>
-  <div class="guide-monster-table-identity">${portrait?`<div class="guide-monster-thumb"><img src="${portrait}" alt="${esc(m.name)} monster portrait" loading="lazy" decoding="async"></div>`:`<div class="guide-monster-thumb fallback" aria-hidden="true">?</div>`}<div><span class="table-primary">${esc(m.name)}</span><span class="table-sub">${esc(m.combat_profile||'Balanced')} combat style</span></div></div></td><td><span class="table-pill gold">Lv.${m.level}</span></td><td>
+  <div class="guide-monster-table-identity">${portrait?`<div class="guide-monster-thumb"><img src="${portrait}" alt="${esc(m.name)} monster portrait" loading="lazy" decoding="async"></div>`:`<div class="guide-monster-thumb fallback" aria-hidden="true">?</div>`}<div><span class="table-primary">${esc(m.name)}</span><span class="table-sub">${esc(m.combat_profile||'Balanced')} combat style</span></div></div></td><td><span class="table-pill gold">Lv. ${m.level}</span></td><td>
   <span class="table-primary">${fmtInt(m.hp)}</span><span class="table-sub">base HP</span></td><td>${m.weakness?`<span class="table-pill crystal">${esc(m.weakness)}</span>
   `:'<span class="muted">—</span>'}</td><td><span class="table-primary">${esc(m.active_skill||'Basic attacks')}</span><span class="table-sub">${esc(m.combat_profile||'Balanced')}</span></td><td>
   <div class="table-stack">${(monsterRegions[m.id]||[]).map(x=>`<span class="table-pill">
@@ -299,7 +299,7 @@ $('#monsterSearch').oninput=renderMonsters;$('#monsterRegion').onchange=renderMo
 // Hunts
 let activeHunt='';$('#huntTabs').innerHTML=['All','C','B','A','S'].map((x,i)=>`<button class="tab ${i===0?'active':''}" data-rank="${x==='All'?'':x}">${x}</button>`).join('');
 function renderHunts(){let hs=D.hunts.filter(h=>!activeHunt||h.rank===activeHunt).sort((a,b)=>Number(a.min_level||0)-Number(b.min_level||0)||String(a.name||'').localeCompare(String(b.name||'')));$('#huntGrid').innerHTML=hs.map(h=>{let portrait=guideMonsterPortraitPath(h.monster_id);return `<div class="card searchable guide-hunt-art-card">${portrait?`<div class="guide-hunt-art"><img src="${portrait}" alt="${esc(monsterName(h.monster_id))} monster portrait" loading="lazy" decoding="async"></div>`:''}<div class="statline"><span class="badge gold">
-  ${h.rank}-Rank</span><span class="badge">Min Lv.${h.min_level}</span><span class="badge">Timer ${sec(h.cooldown_seconds)}</span></div><h3>${esc(h.name)}</h3><p><b>Mark:</b>
+  ${h.rank}-Rank</span><span class="badge">Min Lv. ${h.min_level}</span><span class="badge">Timer ${sec(h.cooldown_seconds)}</span></div><h3>${esc(h.name)}</h3><p><b>Mark:</b>
   ${esc(monsterName(h.monster_id))}</p>${(h.requirements||[]).length?`<p><b>Requires:</b> ${(h.requirements||[]).map(reqText).map(esc).join(' • ')}</p>`:''}<p><b>Rewards:</b> ${fmtInt(h.rewards.xp)}
   XP • ${fmtInt(h.rewards.jp)} JP • ${fmtInt(h.rewards.gil)} gil • ${h.rewards.seals} Seals</p><p><b>First clear:</b> ${esc(itemName(h.first_clear_item))} • Title: <span class="gold">
   ${esc(titleName(h.first_clear_title))}</span></p></div>`}).join('')}
@@ -368,7 +368,7 @@ function itemJobs(i){
 function itemRow(i){
   const lv=itemLevelValue(i);
   const lvText=lv!=null&&!Number.isNaN(lv)
-    ?`<span class="table-pill gold">Lv.${lv}</span>`
+    ?`<span class="table-pill gold">Lv. ${lv}</span>`
     :'<span class="muted">—</span>';
   const price=i.price!=null
     ?`<span class="table-primary">${fmtInt(i.price)}</span>`
@@ -462,20 +462,20 @@ $('#itemRarity').onchange=renderItems;
 renderItems();
 
 // Recipes
-$('#recipeGrid').innerHTML=D.recipes.map(r=>`<div class="card searchable"><div class="statline"><span class="badge gold">Lv.${r.min_level}</span><span class="badge">
+$('#recipeGrid').innerHTML=D.recipes.map(r=>`<div class="card searchable"><div class="statline"><span class="badge gold">Lv. ${r.min_level}</span><span class="badge">
   ${r.known_by_default?'Guild Recipe':'Discoverable'}</span></div><h3>${esc(r.name)}</h3><p><b>Cost:</b> ${fmtInt(r.gil||0)} gil${r.hunt_seals?` • ${r.hunt_seals} Seals`:''}</p><p><b>Materials:</b>
-  ${(r.materials||[]).map(x=>`${esc(itemName(x.item_id))} ×${x.quantity}`).join(' • ')||'None'}</p>
-  <p><b>Creates:</b> ${esc(itemName(r.output.item_id))} ×${r.output.quantity}</p>${r.discovery?`<p><b>
+  ${(r.materials||[]).map(x=>`${esc(itemName(x.item_id))} × ${x.quantity}`).join(' • ')||'None'}</p>
+  <p><b>Creates:</b> ${esc(itemName(r.output.item_id))} × ${r.output.quantity}</p>${r.discovery?`<p><b>
   Discovery:</b> ${esc(JSON.stringify(r.discovery))}</p>`:''}</div>`).join('');
 
 // Forge
 let cumulative=0;$('#forgeRows').innerHTML=D.forge.map(f=>{cumulative=f.level*f.bonus_per_level;return `<tr><td><span class="table-primary">Forge +${f.level}</span><span class="table-sub">
   upgrade tier</span></td><td><span class="table-primary">${fmtInt(f.gil)}</span><span class="table-sub">gil</span></td><td><div class="table-stack">${f.materials.map(x=>`<span class="table-pill">
-  ${esc(itemName(x.item_id))} ×${x.quantity}</span>`).join('')}</div></td><td><span class="table-pill green">+${Math.round(cumulative*100)}% total</span></td></tr>`}).join('');
+  ${esc(itemName(x.item_id))} × ${x.quantity}</span>`).join('')}</div></td><td><span class="table-pill green">+${Math.round(cumulative*100)}% total</span></td></tr>`}).join('');
 
 // Seal shop
 $('#sealRows').innerHTML=D.seal_shop.map(s=>`<tr><td><span class="table-primary">${esc(s.name)}</span><span class="table-sub">Quartermaster offer</span></td><td><span class="table-pill">
-  ${esc(itemName(s.item_id))} ×${s.quantity}</span></td><td><span class="table-pill gold">${s.cost} Seals</span></td><td><span class="table-pill">Lv.${s.min_level}</span></td></tr>`).join('');
+  ${esc(itemName(s.item_id))} × ${s.quantity}</span></td><td><span class="table-pill gold">${s.cost} Seals</span></td><td><span class="table-pill">Lv. ${s.min_level}</span></td></tr>`).join('');
 
 // Relics — independent responsive dossiers
 const relicJobs=[...new Set(D.relics.map(r=>r.job_id))].sort((a,b)=>jobName(a).localeCompare(jobName(b)));
@@ -501,14 +501,14 @@ $('#relicSearch').oninput=renderRelics;$('#relicJob').onchange=renderRelics;rend
 // Bosses — independent raid dossiers
 const tiers=[...new Set(D.bosses.map(b=>b.tier))];tiers.forEach(x=>$('#bossTier').insertAdjacentHTML('beforeend',`<option>${esc(x)}</option>`));
 function bossOverview(b){let art=bossArtworkPath(b);return `<button type="button" class="card boss-overview searchable" data-open-boss="${esc(b.id)}" aria-label="Open ${esc(b.name)} raid boss details">${art?`<div class="boss-art-frame"><img src="${esc(art)}" alt="${esc(b.name)} artwork" loading="lazy" decoding="async"></div>`:''}<div class="statline">
-  <span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}</span><span class="badge">Lv.${b.recommended_level}</span></div><h3>${esc(b.name)}</h3><div class="boss-hp">
+  <span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}</span><span class="badge">Lv. ${b.recommended_level}</span></div><h3>${esc(b.name)}</h3><div class="boss-hp">
   ${fmtInt(b.hp)}<small>HP</small></div><p class="boss-signature"><b>${esc(b.signature)}</b> signature</p><p>${esc(b.description||'')}</p><div class="card-spacer"></div><div class="card-open-hint">
   <span>${b.phases.length} phases • Enrage R${b.enrage_round}</span><b>Open Boss →</b></div></button>`;}
 function renderBosses(){let q=$('#bossSearch').value.toLowerCase(),t=$('#bossTier').value;let bs=D.bosses.filter(b=>(!t||b.tier===t)&&([b.name,b.tier,b.signature,b.description,
   ...(b.drops||[]).map(d=>itemName(d.item_id)),...(b.phases||[]).map(p=>p.name)].join(' ').toLowerCase().includes(q)));
   $('#bossGrid').innerHTML=bs.map(bossOverview).join('')||'<div class="command-empty">No raid bosses match this filter.</div>';}
 function renderBossInfo(b){let art=bossArtworkPath(b);infoKicker.textContent=b.encounter_type||'Raid Boss';infoTitle.textContent=b.name;infoBadges.innerHTML=`<span class="badge ${/ultimate/i.test(b.tier)?'owner':'gold'}">${esc(humanizeLabel(b.tier))}
-  </span><span class="badge">Recommended Lv.${b.recommended_level}</span><span class="badge">${b.phases.length} phases</span>${b.encounter_name?`<span class="badge">${esc(b.encounter_name)}</span>`:''}`;infoBody.innerHTML=`${art?`<div class="info-boss-art"><img src="${esc(art)}" alt="${esc(b.name)} artwork" decoding="async"></div>`:''}<section class="info-section">
+  </span><span class="badge">Recommended Lv. ${b.recommended_level}</span><span class="badge">${b.phases.length} phases</span>${b.encounter_name?`<span class="badge">${esc(b.encounter_name)}</span>`:''}`;infoBody.innerHTML=`${art?`<div class="info-boss-art"><img src="${esc(art)}" alt="${esc(b.name)} artwork" decoding="async"></div>`:''}<section class="info-section">
   <div class="info-section-title">Threat Profile</div><p>${esc(b.description||'')}</p><div class="info-hero-stat"><div class="info-stat"><span>Boss HP</span><b>${fmtInt(b.hp)}</b></div>
   <div class="info-stat"><span>Signature</span><b>${esc(b.signature)}</b></div><div class="info-stat"><span>Attacks / Round</span><b>${b.attacks_per_round}</b></div><div class="info-stat"><span>
   Party Attack</span><b>Every ${b.aoe_every} rounds</b></div><div class="info-stat"><span>Enrage</span><b>Round ${b.enrage_round}</b></div><div class="info-stat"><span>Victory XP</span><b>${fmtInt(b.xp)}</b>
@@ -525,19 +525,19 @@ function condText(c){
   if(!c)return'—';
   if(c.type==='stat')return `${metricLabel(c.field)} ≥ ${fmtInt(c.amount)}`;
   if(c.type==='record_stat')return `${metricLabel(c.metric)} ≥ ${fmtInt(c.amount)}`;
-  if(c.type==='monster_record_defeats')return `KO'd by ${monsterName(c.monster_id)} ×${fmtInt(c.amount)}`;
-  if(c.type==='boss_clear')return `Defeat ${bossName(c.boss_id)} ×${fmtInt(c.amount)}`;
+  if(c.type==='monster_record_defeats')return `KO'd by ${monsterName(c.monster_id)} × ${fmtInt(c.amount)}`;
+  if(c.type==='boss_clear')return `Defeat ${bossName(c.boss_id)} × ${fmtInt(c.amount)}`;
   if(c.type==='boss_unique')return `Defeat ${fmtInt(c.amount)} unique raid bosses`;
-  if(c.type==='hunt_rank_total')return `${c.rank}-Rank Hunt clears ×${fmtInt(c.amount)}`;
+  if(c.type==='hunt_rank_total')return `${c.rank}-Rank Hunt clears × ${fmtInt(c.amount)}`;
   if(c.type==='job_battles')return `${fmtInt(c.amount)} battles on one Job`;
   if(c.type==='bestiary_unique')return `Discover ${fmtInt(c.amount)} unique Bestiary entries`;
-  if(c.type==='job_level')return c.job_id?reqText(c):`Reach JLv.${fmtInt(c.amount)} on any Job`;
+  if(c.type==='job_level')return c.job_id?reqText(c):`Reach JLv. ${fmtInt(c.amount)} on any Job`;
   if(c.type==='monster_kills')return reqText(c);
   if(c.type==='hunt_total')return `Complete ${fmtInt(c.amount)} Hunts`;
   if(c.type==='hunt_rank_clears')return reqText(c);
   if(c.type==='mastery_count')return `Master ${fmtInt(c.amount)} Jobs`;
   if(c.type==='quest_count')return `Complete ${fmtInt(c.amount)} Job unlock quests`;
-  if(c.type==='character_level')return `Reach Character Lv.${fmtInt(c.amount)}`;
+  if(c.type==='character_level')return `Reach Character Lv. ${fmtInt(c.amount)}`;
   if(c.type==='gil')return `Hold ${fmtInt(c.amount)} gil`;
   return `${humanizeLabel(c.type)}${c.amount==null?'':` ≥ ${fmtInt(c.amount)}`}`;
 }

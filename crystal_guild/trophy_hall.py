@@ -67,8 +67,8 @@ def build_trophy_hall(snapshot: dict[str, Any]) -> dict[str, Any]:
     relics_completed = int(career.get("relics_completed") or len(completed_relics))
     achievement_points = int(achievement_summary.get("points") or 0)
     milestone_specs = (
-        ("level", "Veteran Adventurer", level, 50, "Reach Character Lv.50"),
-        ("level_cap", "Legend of the Guild", level, 99, "Reach Character Lv.99"),
+        ("level", "Veteran Adventurer", level, 50, "Reach Character Lv. 50"),
+        ("level_cap", "Legend of the Guild", level, 99, "Reach Character Lv. 99"),
         ("boss_hunter", "Boss Hunter", boss_clears, 10, "Record 10 boss victories"),
         ("boss_slayer", "Boss Slayer", boss_clears, 50, "Record 50 boss victories"),
         ("job_master", "Master of Arms", jobs_mastered, 5, "Master 5 Jobs"),
@@ -116,7 +116,7 @@ def build_trophy_hall(snapshot: dict[str, Any]) -> dict[str, Any]:
         job = mastered_jobs[0]
         featured.append({
             "type": "job", "name": job.get("name"), "eyebrow": "Job Mastery",
-            "meta": str((job.get("mastery") or {}).get("name") or "JLv.50 Mastered"), "rank": "crystal", "job": job,
+            "meta": str((job.get("mastery") or {}).get("name") or "JLv. 50 Mastered"), "rank": "crystal", "job": job,
         })
     if equipped_title:
         featured.append({

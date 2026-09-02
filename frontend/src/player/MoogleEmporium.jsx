@@ -332,7 +332,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       </div>
                     ) : null}
                     {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
-                    {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv.{number(item.min_level)}</div> : null}
+                    {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv. {number(item.min_level)}</div> : null}
                     <div className="moogle-card-actions">
                       {!item.equipment ? <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max="99" value={quantityInputValue(buyQty, item.id)} onFocus={() => beginQuantityEdit(setBuyQty, buyQty, item.id)} onChange={(event) => updateQuantityInput(setBuyQty, item.id, event.target.value, 99)} onBlur={(event) => finishQuantityEdit(setBuyQty, item.id, event.target.value, 99)} /></label> : <span className="moogle-fixed-quantity">Qty 1</span>}
                       <button type="button" className="equipment-action-button" disabled={!shopActionsAvailable || shop.combat_locked || !affordable || Boolean(busyKey)} onClick={() => buy(item)}>{busy ? "Buying…" : (affordable ? `Buy ${item.name} · ${number(total)}g` : `Need ${number(total)}g`)}</button>

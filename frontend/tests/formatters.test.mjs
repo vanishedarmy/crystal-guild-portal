@@ -51,8 +51,8 @@ test("formats Portal equipment traits and requirements", () => {
     }),
     "Fire-aspected basic attacks · 15% chance to inflict Silence for 2 rounds · 10% lifesteal · Immune to Poison · 75% Slow resistance",
   );
-  assert.equal(formatEquipmentRequirements({ min_level: 24, allowed_jobs: ["Warrior", "Paladin"] }), "Lv.24 · Warrior / Paladin");
-  assert.equal(formatEquipmentRequirements({ min_level: 10, allowed_jobs: [] }), "Lv.10 · All Jobs");
+  assert.equal(formatEquipmentRequirements({ min_level: 24, allowed_jobs: ["Warrior", "Paladin"] }), "Lv. 24 · Warrior / Paladin");
+  assert.equal(formatEquipmentRequirements({ min_level: 10, allowed_jobs: [] }), "Lv. 10 · All Jobs");
 });
 
 test("formats material purpose without equipment-stat language", () => {

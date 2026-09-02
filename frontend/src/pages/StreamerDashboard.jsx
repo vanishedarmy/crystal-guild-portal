@@ -536,7 +536,7 @@ export default function StreamerDashboard() {
                     <Link className="streamer-player-row" key={player.username} to={`/player/${encodeURIComponent(player.username)}`}>
                       <span className={`streamer-status-dot ${player.status}`} aria-label={player.status_label} />
                       <span className="streamer-player-identity"><strong>{player.display_name}</strong><small>@{player.username} · {player.title}</small></span>
-                      <span className="streamer-player-job"><strong>{player.job_name}</strong><small>Lv.{number(player.level)} · JLv.{number(player.job_level)} · {player.region}</small></span>
+                      <span className="streamer-player-job"><strong>{player.job_name}</strong><small>Lv. {number(player.level)} · JLv. {number(player.job_level)} · {player.region}</small></span>
                       <span className={`streamer-hp ${hpTone(player)}`}><span className="streamer-hp-line"><strong>{number(player.hp_current)} / {number(player.hp_max)}</strong><small>{hpPercent}%</small></span><span className="streamer-hp-track"><span style={{ width: `${hpPercent}%` }} /></span></span>
                       <span className="streamer-player-record"><strong>{number(player.boss_clears)}</strong><small>Clears</small></span>
                     </Link>

@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.7.0-emporium-annex-a3h4"
-FRONTEND_ASSET_REVISION = "1.7.0-emporium-annex-a3h4"
+HOSTED_PORTAL_VERSION = "1.7.0-emporium-annex-a3h5"
+FRONTEND_ASSET_REVISION = "1.7.0-emporium-annex-a3h5"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 31
 ALLOWED_PORTAL_ACTIONS = {
@@ -2336,6 +2336,18 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
     def _compressible(content_type: str) -> bool:
         return content_type.startswith("text/") or "javascript" in content_type or "json" in content_type
 
+    @staticmethod
+    def _static_cache_control(path: Path) -> str:
+        name = path.name
+        if name.startswith("guide-") or name == "guide.css":
+            # Guide assets keep stable filenames and change between releases; always revalidate.
+            return "no-cache"
+        if path.suffix.lower() in {".js", ".css"} and any(char.isdigit() for char in name):
+            return "public, max-age=31536000, immutable"
+        if path.suffix.lower() == ".html":
+            return "no-cache"
+        return "public, max-age=3600"
+
     def _serve_file(self, path: Path) -> None:
         if not path.exists() or not path.is_file():
             self.send_error(HTTPStatus.NOT_FOUND)
@@ -2354,13 +2366,44 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         }
         content_type = content_types.get(path.suffix.lower(), "application/octet-stream")
         stat = path.stat()
+        etag = f'"{stat.st_mtime_ns:x}-{stat.st_size:x}"'
+        cache_control = self._static_cache_control(path)
+
+        if self.headers.get("If-None-Match", "").strip() == etag:
+            self.send_response(HTTPStatus.NOT_MODIFIED)
+            self._security_headers()
+            self.send_header("Cache-Control", cache_control)
+            self.send_header("ETag", etag)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+
+        # Artwork is the overwhelming majority of the Web package. Do not retain
+        # image bytes in the process-wide static cache; stream them in bounded
+        # chunks so a fully browsed Portal cannot grow RAM toward the asset tree size.
+        if not self._compressible(content_type):
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(stat.st_size))
+            self._security_headers()
+            self.send_header("Cache-Control", cache_control)
+            self.send_header("ETag", etag)
+            self.end_headers()
+            with path.open("rb") as source:
+                while True:
+                    chunk = source.read(128 * 1024)
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+            return
+
         cache_key = path.resolve()
         with self.portal.static_cache_lock:
             cached = self.portal.static_cache.get(cache_key)
             signature = (stat.st_mtime_ns, stat.st_size)
             if not cached or cached[:2] != signature:
                 body = path.read_bytes()
-                compressed = gzip.compress(body, compresslevel=5) if len(body) >= 1400 and self._compressible(content_type) else None
+                compressed = gzip.compress(body, compresslevel=5) if len(body) >= 1400 else None
                 cached = (signature[0], signature[1], content_type, body, compressed)
                 self.portal.static_cache[cache_key] = cached
         _, _, content_type, raw_body, gzip_body = cached
@@ -2370,20 +2413,12 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
         self._security_headers()
+        self.send_header("Cache-Control", cache_control)
+        self.send_header("ETag", etag)
         if gzip_body is not None:
             self.send_header("Vary", "Accept-Encoding")
         if body is gzip_body:
             self.send_header("Content-Encoding", "gzip")
-        name = path.name
-        if name.startswith("guide-") or name == "guide.css":
-            # Guide assets keep stable filenames and change between releases; always revalidate.
-            self.send_header("Cache-Control", "no-cache")
-        elif path.suffix.lower() in {".js", ".css"} and any(char.isdigit() for char in name):
-            self.send_header("Cache-Control", "public, max-age=31536000, immutable")
-        elif path.suffix.lower() == ".html":
-            self.send_header("Cache-Control", "no-cache")
-        else:
-            self.send_header("Cache-Control", "public, max-age=3600")
         self.end_headers()
         self.wfile.write(body)
 

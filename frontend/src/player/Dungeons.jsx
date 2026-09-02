@@ -132,7 +132,7 @@ export default function Dungeons({
     <>
       {results.map((result) => <DungeonResult key={result.result_id} result={result} onConfirm={onConfirmResult} confirming={busy === `ack-result:${result.result_id}`} />)}
       <section className={`panel dungeon-board-panel ${active ? "dungeon-active" : ""}`}>
-        <img className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
+        <img loading="lazy" decoding="async" className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
         <div className="panel-title-row dungeon-board-title-row">
           <div>
             <p className="eyebrow">Dungeons & Delves · v1.4.0</p>
@@ -145,7 +145,7 @@ export default function Dungeons({
         {open ? (
           active ? (
             <div className="dungeon-run-shell">
-              {active.art ? <img className="dungeon-run-art" src={active.art} alt="" aria-hidden="true" draggable="false" /> : null}
+              {active.art ? <img loading="lazy" decoding="async" className="dungeon-run-art" src={active.art} alt="" aria-hidden="true" draggable="false" /> : null}
               <div className="dungeon-room-content">
               <div className="dungeon-room-header">
                 <div><span className="slot-label">Room {number(active.room_number)} of {number(active.room_count)} · {active.room?.type_label}</span><h3>{active.room?.name}</h3><p className="muted">{active.room?.description}</p></div>
@@ -168,7 +168,7 @@ export default function Dungeons({
                     <div className="solo-enemy-layout">
                       <MonsterPortrait monsterName={combat.enemy?.name} className="solo-enemy-portrait" />
                       <div className="solo-enemy-copy">
-                        <div className="solo-combat-head"><div><span>Dungeon Foe</span><h3>{combat.enemy?.name} · Lv.{number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)} / {number(combat.max_rounds || 12)}</span></div>
+                        <div className="solo-combat-head"><div><span>Dungeon Foe</span><h3>{combat.enemy?.name} · Lv. {number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)} / {number(combat.max_rounds || 12)}</span></div>
                         <div className="vital-label"><span>HP</span><span>{number(combat.enemy?.hp)} / {number(combat.enemy?.max_hp)}</span></div>
                         <ProgressBar value={pct(combat.enemy?.hp, combat.enemy?.max_hp)} className="hp" />
                         <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{combat.enemy?.intent || "Preparing an action"}</strong></div>
@@ -232,11 +232,11 @@ export default function Dungeons({
             <div className="dungeon-card-grid">
               {dungeons.map((dungeon) => (
                 <article key={dungeon.id} className={`dungeon-card ${dungeon.unlocked ? "unlocked" : "locked"}`}>
-                  {dungeon.art ? <img className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
+                  {dungeon.art ? <img loading="lazy" decoding="async" className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
                   <div className="dungeon-card-content">
-                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · {dungeon.identity || `Lv.${number(dungeon.min_level)}+`}</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
+                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · {dungeon.identity || `Lv. ${number(dungeon.min_level)}+`}</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
                   <div className="dungeon-card-stats">
-                    <span><strong>Recommended</strong> Lv.{number(dungeon.recommended_level || dungeon.min_level)} · Entry Lv.{number(dungeon.min_level)}</span>
+                    <span><strong>Recommended</strong> Lv. {number(dungeon.recommended_level || dungeon.min_level)} · Entry Lv. {number(dungeon.min_level)}</span>
                     <span><strong>Length</strong> {number(dungeon.rooms)} chambers</span>
                     <span><strong>Route Choices &amp; Events</strong> {number(dungeon.choice_rooms || 0)} choices · {number(dungeon.event_rooms || 0)} Events</span>
                     <span><strong>Record</strong> {number(dungeon.record?.clears || dungeon.progress?.[0] || 0)} clears · Best {number(dungeon.record?.best_rooms || dungeon.progress?.[1] || 0)}/{number(dungeon.rooms)}</span>

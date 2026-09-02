@@ -1,0 +1,35 @@
+{
+  "release": "v1.7.0 Final Hardening & Performance Hotfix 5",
+  "web_runtime": "1.7.0-emporium-annex-a3h5",
+  "frontend_revision": "1.7.0-emporium-annex-a3h5",
+  "paired_bot_runtime": "1.7.0-emporium-annex-a3h3",
+  "local_db_schema": 15,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 31,
+  "prefix": "!",
+  "baseline": "v1.7.0 Moogle Emporium Annex Alpha 3 UI Compactness Hotfix 4 Web + Cloud Storage Hotfix 3 Bot",
+  "gameplay_changes": false,
+  "performance": {
+    "binary_static_streaming": true,
+    "stream_chunk_bytes": 131072,
+    "etag_revalidation": true,
+    "optional_profile_module_lazy_loading": true,
+    "image_loading_policy_hardened": true
+  },
+  "ui": {
+    "overflow_hardening": true,
+    "level_spacing_normalized": true,
+    "quantity_spacing_normalized": true
+  },
+  "validation": {
+    "bot_baseline": "668/668",
+    "frontend": "554/554",
+    "hosted": "63/63",
+    "web_python": "15/15",
+    "js_mjs": "202/202",
+    "css": "8/8",
+    "webp": "843/843",
+    "public_png_count": 0,
+    "ui_level_spacing": "PASS"
+  }
+}

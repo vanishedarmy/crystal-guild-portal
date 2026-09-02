@@ -7,7 +7,7 @@ const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta
 
 test("Gold Saucer H2 identity and authoritative presentation contract are wired", () => {
   assert.equal(WEB_VERSION, "v1.7.0");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h4");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h5");
   const source = read("src/player/GoldSaucer.jsx");
   assert.match(source, /const spinSlots = async/);
   assert.match(source, /finishedAction\(response\)/);

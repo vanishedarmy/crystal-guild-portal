@@ -116,7 +116,7 @@ async function finishedAction(response) {
 
 function ArtImage({ src, fallbackSrc = "", ...props }) {
   return (
-    <img
+    <img loading="lazy" decoding="async"
       {...props}
       src={src}
       onError={(event) => {
@@ -136,7 +136,7 @@ function Reel({ id, label }) {
   const art = SLOT_ART[id] || null;
   return (
     <div className={`saucer-reel symbol-${id || "empty"}`}>
-      {art ? <img className="saucer-slot-symbol" src={art} alt="" aria-hidden="true" /> : <span className="saucer-slot-placeholder" aria-hidden="true">✧</span>}
+      {art ? <img loading="lazy" decoding="async" className="saucer-slot-symbol" src={art} alt="" aria-hidden="true" /> : <span className="saucer-slot-placeholder" aria-hidden="true">✧</span>}
       <small>{displayText(label, displayText(id))}</small>
     </div>
   );
@@ -395,7 +395,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   return (
     <section className="gold-saucer-shell">
       <section className="panel gold-saucer-hero saucer-scenic-panel">
-        <img className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
+        <img loading="lazy" decoding="async" className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
           <p className="eyebrow">v1.6.0 · Gold Saucer</p>
           <h2>Gold Saucer</h2>
@@ -419,7 +419,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
         <>
           <div className="saucer-game-grid">
             <section className="panel saucer-game-card cactpot-card saucer-scenic-panel">
-              <img className="saucer-scenic-art saucer-cactpot-art" src={`${SAUCER_ART_ROOT}/mini-cactpot.webp`} alt="" aria-hidden="true" />
+              <img loading="lazy" decoding="async" className="saucer-scenic-art saucer-cactpot-art" src={`${SAUCER_ART_ROOT}/mini-cactpot.webp`} alt="" aria-hidden="true" />
               <div className="panel-title-row">
                 <div><p className="eyebrow">Daily Attraction</p><h3>Mini Cactpot</h3></div>
                 <span className={`small-badge ${cactpotRemaining <= 0 && (!ticket || ticket.state === "resolved") ? "ready" : ""}`}>{ticket?.state === "reveal" ? `${number(ticket.reveals_remaining)} reveals left` : ticket?.state === "line" ? "Choose a line" : cactpotRemaining > 0 ? `Next ${duration(cactpotRemaining)}` : "Daily ticket ready"}</span>
@@ -459,7 +459,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </section>
 
             <section className="panel saucer-game-card slots-card saucer-scenic-panel">
-              <img className="saucer-scenic-art saucer-slots-art" src={`${SAUCER_ART_ROOT}/crystal-slots.webp`} alt="" aria-hidden="true" />
+              <img loading="lazy" decoding="async" className="saucer-scenic-art saucer-slots-art" src={`${SAUCER_ART_ROOT}/crystal-slots.webp`} alt="" aria-hidden="true" />
               <div className="panel-title-row">
                 <div><p className="eyebrow">Quick Attraction</p><h3>Crystal Slots</h3></div>
                 <span className="small-badge">{number(slots.cost || 15)} MGP / spin</span>
@@ -479,7 +479,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <span className={`small-badge ${tossGame ? "ready" : ""}`}>{tossGame ? `${number(tossGame.throws_remaining)} throws left` : `${number(toss.games_remaining)} / ${number(toss.daily_games || 3)} games left`}</span>
               <DetailsPointer className="saucer-details-pointer" />
             </summary>
-            <img className="monster-toss-background" src={`${TOSS_ART_ROOT}/background.webp`} alt="" aria-hidden="true" />
+            <img loading="lazy" decoding="async" className="monster-toss-background" src={`${TOSS_ART_ROOT}/background.webp`} alt="" aria-hidden="true" />
             <div className="monster-toss-scenic-shade" aria-hidden="true" />
             <div className="monster-toss-content saucer-section-body">
               <p className="muted monster-toss-intro">Five throws per game. Choose a target, then choose Safe, Normal, or Power. Harder targets and riskier throws score more, while every hit and payout remains Bot-authoritative.</p>
@@ -487,11 +487,11 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <>
                   <div className="monster-toss-status-art">
                     <div className="monster-toss-score-art">
-                      <img src={`${TOSS_ART_ROOT}/ui/scoreboard.webp`} alt="" aria-hidden="true" />
+                      <img loading="lazy" decoding="async" src={`${TOSS_ART_ROOT}/ui/scoreboard.webp`} alt="" aria-hidden="true" />
                       <div className="monster-toss-score-overlay"><span>Current Score</span><strong>{number(tossGame.score)}</strong></div>
                     </div>
                     <div className="monster-toss-throws-art">
-                      <img src={`${TOSS_ART_ROOT}/ui/throws-left.webp`} alt="" aria-hidden="true" />
+                      <img loading="lazy" decoding="async" src={`${TOSS_ART_ROOT}/ui/throws-left.webp`} alt="" aria-hidden="true" />
                       <div className="monster-toss-throws-overlay"><strong>{number(tossGame.throws_remaining)}</strong><span>throws left</span></div>
                     </div>
                   </div>
@@ -500,8 +500,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     {tossTargets.map((target) => (
                       <button type="button" key={target.id} className={`monster-toss-choice target ${tossTarget === target.id ? "selected" : ""}`} onClick={() => setTossTarget(target.id)} disabled={Boolean(busy)}>
                         <span className="monster-toss-target-art-wrap">
-                          <img className="monster-toss-target-art" src={TOSS_TARGET_ART[displayText(target.id, "")]} alt="" aria-hidden="true" />
-                          {tossTarget === target.id ? <img className="monster-toss-reticle" src={`${TOSS_ART_ROOT}/reticle.webp`} alt="" aria-hidden="true" /> : null}
+                          <img loading="lazy" decoding="async" className="monster-toss-target-art" src={TOSS_TARGET_ART[displayText(target.id, "")]} alt="" aria-hidden="true" />
+                          {tossTarget === target.id ? <img loading="lazy" decoding="async" className="monster-toss-reticle" src={`${TOSS_ART_ROOT}/reticle.webp`} alt="" aria-hidden="true" /> : null}
                         </span>
                         <strong>{displayText(target.name, "Target")}</strong>
                         <span>{number(target.points)} base pts</span>
@@ -513,7 +513,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   <div className="monster-toss-style-grid" aria-label="Monster Toss throw styles">
                     {tossStyles.map((style) => (
                       <button type="button" key={style.id} className={`monster-toss-choice style ${tossStyle === style.id ? "selected" : ""}`} onClick={() => setTossStyle(style.id)} disabled={Boolean(busy)}>
-                        <img className="monster-toss-style-art" src={TOSS_STYLE_ART[displayText(style.id, "")]} alt="" aria-hidden="true" />
+                        <img loading="lazy" decoding="async" className="monster-toss-style-art" src={TOSS_STYLE_ART[displayText(style.id, "")]} alt="" aria-hidden="true" />
                         <strong>{displayText(style.name, "Throw Style")}</strong>
                         <small>{displayText(style.description, "Choose a throwing style.")}</small>
                       </button>
@@ -521,25 +521,25 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   </div>
 
                   <div className="monster-toss-throw-stage">
-                    <img className="monster-toss-projectile" src={`${TOSS_ART_ROOT}/projectile.webp`} alt="" aria-hidden="true" />
+                    <img loading="lazy" decoding="async" className="monster-toss-projectile" src={`${TOSS_ART_ROOT}/projectile.webp`} alt="" aria-hidden="true" />
                     <button type="button" className="equipment-action-button monster-toss-throw-button" disabled={!actionsAvailable || Boolean(busy)} onClick={() => mutate("monster-toss-throw", () => submitMonsterTossThrow(tossTarget, tossStyle, csrfToken, actionKey("monster-toss-throw", `${tossTarget}-${tossStyle}`)), "Throwing…")}>{busy === "monster-toss-throw" ? "Throwing…" : "Take Throw"}</button>
                   </div>
 
                   {lastTossThrow ? (
                     <div className={`monster-toss-last-result ${lastTossThrow.hit ? "hit" : "miss"}`}>
-                      <img src={`${TOSS_ART_ROOT}/results/${lastTossThrow.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" />
+                      <img loading="lazy" decoding="async" src={`${TOSS_ART_ROOT}/results/${lastTossThrow.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" />
                       <div><strong>{lastTossThrow.hit ? `HIT +${number(lastTossThrow.points)}` : "MISS"}</strong><span>{displayText(lastTossThrow.target_name, "Target")} · {displayText(lastTossThrow.style_name, "Throw")}</span></div>
                     </div>
                   ) : null}
 
-                  <div className="monster-toss-log">{tossThrows.slice().reverse().map((entry) => <div key={entry.throw}><span className="monster-toss-log-main"><img src={`${TOSS_ART_ROOT}/results/${entry.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" /><span>Throw {displayText(entry.throw, "?")}: {displayText(entry.target_name, "Target")} · {displayText(entry.style_name, "Throw")}</span></span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
+                  <div className="monster-toss-log">{tossThrows.slice().reverse().map((entry) => <div key={entry.throw}><span className="monster-toss-log-main"><img loading="lazy" decoding="async" src={`${TOSS_ART_ROOT}/results/${entry.hit ? "hit" : "miss"}.webp`} alt="" aria-hidden="true" /><span>Throw {displayText(entry.throw, "?")}: {displayText(entry.target_name, "Target")} · {displayText(entry.style_name, "Throw")}</span></span><strong className={entry.hit ? "positive" : ""}>{entry.hit ? `HIT +${number(entry.points)}` : "MISS"}</strong></div>)}</div>
                 </>
               ) : (
                 <div className="monster-toss-start">
-                  <img className="monster-toss-play-banner" src={`${TOSS_ART_ROOT}/ui/play-banner.webp`} alt="Play Monster Toss" />
+                  <img loading="lazy" decoding="async" className="monster-toss-play-banner" src={`${TOSS_ART_ROOT}/ui/play-banner.webp`} alt="Play Monster Toss" />
                   {lastTossHistory ? (
                     <div className={`monster-toss-final-result tier-${lastTossTier}`}>
-                      <img src={lastTossResultArt} alt="" aria-hidden="true" />
+                      <img loading="lazy" decoding="async" src={lastTossResultArt} alt="" aria-hidden="true" />
                       <div><span>Last Game</span><strong>{number(lastTossDetails.score || 0)} pts · {number(lastTossHistory.payout || 0)} MGP</strong><small>{String(lastTossTier).replaceAll("_", " ")}</small></div>
                     </div>
                   ) : null}
@@ -559,7 +559,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </summary>
             <div className="saucer-race-section-body">
               <div className="saucer-race-hero" aria-hidden="true">
-                <img src={`${RACE_ART_ROOT}/hero.webp`} alt="" />
+                <img loading="lazy" decoding="async" src={`${RACE_ART_ROOT}/hero.webp`} alt="" />
                 <div className="saucer-race-hero-shade" />
               </div>
             <p className="muted saucer-race-intro">Race your existing registered Chocobo. Bond level gives a modest performance edge, favored traits help on specific courses, and your pace choice controls race variance.</p>
@@ -571,7 +571,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             ) : (
               <>
                 <div className="saucer-race-companion">
-                  <img src={`${CHOCOBO_PORTRAIT_ROOT}/${raceCompanion?.portrait_id || "classic_gold"}.webp`} alt={`${displayText(raceCompanion?.name, "Registered Chocobo")} portrait`} />
+                  <img loading="lazy" decoding="async" src={`${CHOCOBO_PORTRAIT_ROOT}/${raceCompanion?.portrait_id || "classic_gold"}.webp`} alt={`${displayText(raceCompanion?.name, "Registered Chocobo")} portrait`} />
                   <div><span>Your Racer</span><strong>{displayText(raceCompanion?.name, "Chocobo")}</strong><small>Bond Lv. {number(raceCompanion?.level || 1)}</small></div>
                   <div className="saucer-race-traits">{asArray(raceCompanion?.traits).map((trait) => <span className="small-badge" key={typeof trait === "string" ? trait : trait.id}>{String(typeof trait === "string" ? trait : trait.name || trait.id).replaceAll("_", " ")}</span>)}</div>
                 </div>
@@ -579,7 +579,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 {lastRace ? (
                   <div className={`saucer-race-result place-${number(lastRaceDetails.placement || 6)}`}>
                     <div className="saucer-race-result-art">
-                      <img src={Number(lastRaceDetails.placement) === 1 ? `${RACE_ART_ROOT}/results/victory.webp` : `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" />
+                      <img loading="lazy" decoding="async" src={Number(lastRaceDetails.placement) === 1 ? `${RACE_ART_ROOT}/results/victory.webp` : `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" />
                       <span>{racePlaceLabel(lastRaceDetails.placement)}</span>
                     </div>
                     <div className="saucer-race-result-copy">
@@ -596,7 +596,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div className="saucer-race-course-grid">
                   {raceCourses.map((course) => (
                     <button type="button" key={course.id} className={`saucer-race-course ${raceCourse === course.id ? "selected" : ""} ${course.eligible ? "" : "locked"}`} onClick={() => setRaceCourse(course.id)} disabled={Boolean(busy)} aria-pressed={raceCourse === course.id}>
-                      <span className="saucer-race-course-art"><img src={RACE_COURSE_ART[displayText(course.id, "")] || `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" /></span>
+                      <span className="saucer-race-course-art"><img loading="lazy" decoding="async" src={RACE_COURSE_ART[displayText(course.id, "")] || `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" /></span>
                       <span className="saucer-race-course-body">
                         <span className="saucer-race-course-meta"><span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : `Bond Lv. ${number(course.min_level)}`}</span>{raceCourse === course.id ? <span className="small-badge ready">SELECTED</span> : null}</span>
                         <strong>{displayText(course.name, "Race Course")}</strong>
@@ -613,7 +613,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div className="saucer-race-strategy-grid">
                   {raceStrategies.map((strategy) => (
                     <button type="button" className={`saucer-race-strategy ${raceStrategy === strategy.id ? "selected" : ""}`} key={strategy.id} disabled={Boolean(busy)} onClick={() => setRaceStrategy(strategy.id)} aria-pressed={raceStrategy === strategy.id}>
-                      <span className="saucer-race-strategy-art"><img src={RACE_STRATEGY_ART[displayText(strategy.id, "")] || `${RACE_ART_ROOT}/pace/balanced.webp`} alt="" aria-hidden="true" /></span>
+                      <span className="saucer-race-strategy-art"><img loading="lazy" decoding="async" src={RACE_STRATEGY_ART[displayText(strategy.id, "")] || `${RACE_ART_ROOT}/pace/balanced.webp`} alt="" aria-hidden="true" /></span>
                       <span className="saucer-race-strategy-copy"><strong>{displayText(strategy.name, "Race Pace")}</strong><small>{displayText(strategy.description, "Choose a racing pace.")}</small></span>
                     </button>
                   ))}
@@ -746,7 +746,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <span className="small-badge">Titles Only · Alpha 5</span>
               <DetailsPointer className="saucer-details-pointer" />
             </summary>
-            <img className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
+            <img loading="lazy" decoding="async" className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="saucer-section-body">
             <p className="muted">Spend MGP on collectible titles. Gold Saucer prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
             <div className="saucer-prize-grid">

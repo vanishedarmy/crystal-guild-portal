@@ -187,12 +187,12 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         {publicChocobo ? (
           <div className="chocobo-companion-card">
             <div className="chocobo-portrait">
-              <img src={portraitFor(publicChocobo.portrait_id).src} alt={`${publicChocobo.name} Chocobo portrait`} />
+              <img loading="lazy" decoding="async" src={portraitFor(publicChocobo.portrait_id).src} alt={`${publicChocobo.name} Chocobo portrait`} />
             </div>
             <div>
               <span className="slot-label">Registered Companion</span>
               <h3>{publicChocobo.name}</h3>
-              <p className="muted">Lv.{number(publicChocobo.level)} · {(publicChocobo.traits || []).map((trait) => trait.name).join(" · ") || "No trait listed"}{publicChocobo.specialization ? ` · ${publicChocobo.specialization.name} Tier ${number(publicChocobo.specialization.tier)}` : ""}</p>
+              <p className="muted">Lv. {number(publicChocobo.level)} · {(publicChocobo.traits || []).map((trait) => trait.name).join(" · ") || "No trait listed"}{publicChocobo.specialization ? ` · ${publicChocobo.specialization.name} Tier ${number(publicChocobo.specialization.tier)}` : ""}</p>
               {Number(publicChocobo.xp_next || 0) > 0 ? <ProgressBar value={pct(publicChocobo.xp_current, publicChocobo.xp_next)} /> : null}
             </div>
           </div>
@@ -236,12 +236,12 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         <div className="chocobo-owned-layout">
           <div className="chocobo-companion-card featured">
             <div className="chocobo-portrait">
-              <img src={portraitFor(companion.portrait_id).src} alt={`${companion.name} Chocobo portrait`} />
+              <img loading="lazy" decoding="async" src={portraitFor(companion.portrait_id).src} alt={`${companion.name} Chocobo portrait`} />
             </div>
             <div className="chocobo-companion-copy">
               <span className="slot-label">Registered Companion</span>
               <h3>{companion.name}</h3>
-              <div className="chocobo-level-line"><strong>Lv.{number(companion.level)}</strong><span>Bond XP {number(companion.total_xp)}</span></div>
+              <div className="chocobo-level-line"><strong>Lv. {number(companion.level)}</strong><span>Bond XP {number(companion.total_xp)}</span></div>
               {Number(companion.xp_next || 0) > 0 ? (
                 <div className="vital-row">
                   <div className="vital-label"><span>Next Level</span><span>{number(companion.xp_current)} / {number(companion.xp_next)}</span></div>
@@ -330,7 +330,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
                       onClick={() => setPortraitChoice(portrait.id)}
                       disabled={Boolean(busy)}
                     >
-                      <img src={portrait.src} alt="" aria-hidden="true" />
+                      <img loading="lazy" decoding="async" src={portrait.src} alt="" aria-hidden="true" />
                       <span>{portrait.name}</span>
                       {applied ? <small>Applied</small> : null}
                     </button>

@@ -282,7 +282,7 @@ export const MAJOR_UPDATES = [
     highlights: [
       { title: "Expanded Job abilities", description: "Arsenal established the six-ability active Battle foundation that Arsenal II now builds upon." },
       { title: "Elements matter more", description: "Fire, Ice, Lightning, Wind, Water, Holy, and Dark techniques now clearly show their element alongside effects such as Poison, Slow, Stun, Blind, Weaken, and Vulnerable." },
-      { title: "Hunts start earlier", description: "New C-rank marks begin at Lv.2, giving newer Guild members a Hunt progression before the original Lv.10 marks." },
+      { title: "Hunts start earlier", description: "New C-rank marks begin at Lv. 2, giving newer Guild members a Hunt progression before the original Lv. 10 marks." },
       { title: "Earlier world bosses", description: "New lower-level raid targets create a smoother road toward Bomb King and the larger world bosses." },
       { title: "More practical crafting", description: "New low-level recipes turn common monster drops and basic supplies into useful potions, status cures, MP/AP restoratives, and battle items." },
     ],

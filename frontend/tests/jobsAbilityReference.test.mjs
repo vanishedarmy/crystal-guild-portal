@@ -43,7 +43,7 @@ test("Jobs cards stay compact while exposing an explicit details pop-out", () =>
   assert.doesNotMatch(source, /JobAbilityReference/);
   assert.doesNotMatch(source, /Battle Abilities/);
   assert.doesNotMatch(source, /Passive Job Milestones/);
-  assert.doesNotMatch(source, /JLv\.50 Cross-Job Mastery/);
+  assert.doesNotMatch(source, /JLv\. 50 Cross-Job Mastery/);
 });
 
 test("Job detail dialog carries the richer Player Guide information", () => {
@@ -52,7 +52,7 @@ test("Job detail dialog carries the richer Player Guide information", () => {
   assert.match(detail, /Stat Growth/);
   assert.match(detail, /Battle Abilities/);
   assert.match(detail, /Passive Job Milestones/);
-  assert.match(detail, /JLv\.50 Cross-Job Mastery/);
+  assert.match(detail, /JLv\. 50 Cross-Job Mastery/);
 });
 
 test("Job ability reference remains readable inside the details pop-out", () => {

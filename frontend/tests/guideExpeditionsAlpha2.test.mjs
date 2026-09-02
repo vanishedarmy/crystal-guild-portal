@@ -9,11 +9,11 @@ test("Player Guide exposes a dedicated Expeditions section", () => {
   assert.match(body, /href="#expeditions"[\s\S]*?>\s*Expeditions/);
   assert.match(body, /<section class="section searchable" id="expeditions">/);
   assert.match(body, /Fellowship LVL 6 \+ Guild Hall Lv\. 1/);
-  assert.match(body, /Emerald Wilds · Lv\.1–12/);
-  assert.match(body, /Ashen Highlands · Lv\.8–20/);
-  assert.match(body, /Mistfen Marshes · Lv\.15–28/);
-  assert.match(body, /Frostveil Reach · Lv\.22–38/);
-  assert.match(body, /The Astral Scar · Lv\.30\+/);
+  assert.match(body, /Emerald Wilds · Lv\. 1–12/);
+  assert.match(body, /Ashen Highlands · Lv\. 8–20/);
+  assert.match(body, /Mistfen Marshes · Lv\. 15–28/);
+  assert.match(body, /Frostveil Reach · Lv\. 22–38/);
+  assert.match(body, /The Astral Scar · Lv\. 30\+/);
   assert.match(body, /Scout[\s\S]*3 stages/);
   assert.match(body, /Journey[\s\S]*5 stages/);
   assert.match(body, /Deep Expedition[\s\S]*8 stages/);
@@ -26,5 +26,5 @@ test("Player Guide exposes a dedicated Expeditions section", () => {
 });
 
 test("Guide asset revision advances for Expeditions guide hotfix", () => {
-  assert.match(version, /1\.7\.0-emporium-annex-a3h4/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h5/);
 });

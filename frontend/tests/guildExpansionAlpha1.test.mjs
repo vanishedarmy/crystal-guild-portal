@@ -32,7 +32,7 @@ test("Player Guide explains facility play without backend implementation jargon"
 test("Final release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.7\.0"/);
   assert.match(version, /WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h4"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h5"/);
   assert.match(whatsNew, /name: "Guild Expansion"/);
   assert.match(whatsNew, /Build the Guild together/);
   assert.match(whatsNew, /The Crystal Guild Airship/);

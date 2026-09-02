@@ -60,7 +60,7 @@ export default function Bestiary({ data }) {
               const discovered = Boolean(monster?.discovered);
               return (
                 <tr className={discovered ? "" : "locked"} key={`${monster?.id || monsterName(monster)}-${index}`}>
-                  <td data-label="Monster"><div className="bestiary-monster-cell"><MonsterPortrait monster={monster} name={monsterName(monster)} discovered={discovered} className="bestiary-monster-thumb" /><div className="bestiary-monster-copy"><strong>{discovered ? monsterName(monster) : "Undiscovered"}</strong>{discovered ? <small>Lv.{number(monster?.level)}</small> : <small>???</small>}</div></div></td>
+                  <td data-label="Monster"><div className="bestiary-monster-cell"><MonsterPortrait monster={monster} name={monsterName(monster)} discovered={discovered} className="bestiary-monster-thumb" /><div className="bestiary-monster-copy"><strong>{discovered ? monsterName(monster) : "Undiscovered"}</strong>{discovered ? <small>Lv. {number(monster?.level)}</small> : <small>???</small>}</div></div></td>
                   <td data-label="Level">{discovered ? number(monster?.level) : "—"}</td>
                   <td data-label="Defeats">{number(monster?.defeats)}</td>
                   <td data-label="Weakness">{discovered ? String(monster?.weakness || "—") : "—"}</td>

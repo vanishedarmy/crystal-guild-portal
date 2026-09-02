@@ -60,5 +60,5 @@ test("Forge Gear prioritizes equipped, then forged, then unforged equipment by l
   assert.match(smith, /Currently Equipped/);
   assert.match(smith, /Forged Gear/);
   assert.match(smith, /Unforged Gear/);
-  assert.match(smith, /Lv\.\{number\(item\.min_level\)\}/);
+  assert.match(smith, /Lv\. \{number\(item\.min_level\)\}/);
 });

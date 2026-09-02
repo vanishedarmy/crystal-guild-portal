@@ -55,7 +55,7 @@ export default function RecruitPanel({ onRecruited }) {
       <div>
         <p className="eyebrow">Start Here</p>
         <h2>Join the Crystal Guild</h2>
-        <p>Recruit your persistent Lv.1 Adventurer right here. You can still use <strong>!recruit</strong> in Twitch chat too.</p>
+        <p>Recruit your persistent Lv. 1 Adventurer right here. You can still use <strong>!recruit</strong> in Twitch chat too.</p>
         {auth.authenticated ? (
           <small>Signed in as {auth.twitch?.display_name || auth.twitch?.login || "Twitch adventurer"}. Recruitment will also be announced in Twitch chat.</small>
         ) : (

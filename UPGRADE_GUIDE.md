@@ -1,10 +1,10 @@
-# Upgrade to v1.7.0 Alpha 3 — UI Compactness Hotfix 4
+# Upgrade to v1.7.0 — Final Hardening & Performance Hotfix 5
 
-This is a **Web-only** update from the Cloud Storage Hotfix 3 complete baseline.
+This is a **Web-only** update from UI Compactness Hotfix 4.
 
-1. Keep the existing `1.7.0-emporium-annex-a3h3` Bot.
-2. Replace/deploy the Web source with Hotfix 4 (`1.7.0-emporium-annex-a3h4`).
-3. Preserve hosted secrets and persistent state.
-4. Do not replace or reset the live database.
+1. Keep the existing `1.7.0-emporium-annex-a3h3` Cloud Storage Hotfix 3 Bot.
+2. Replace/deploy the Web source with Hotfix 5 (`1.7.0-emporium-annex-a3h5`).
+3. Preserve hosted secrets, persistent state, and the live database.
+4. Do not reset player data or rerun any schema migration manually.
 
 No schema migration or Portal protocol change is required.

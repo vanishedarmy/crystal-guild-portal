@@ -41,7 +41,7 @@ function equipmentDelta(item, current) {
 function eligibility(item, overview) {
   if (!overview) return { eligible: true, reason: "" };
   const requiredLevel = Number(item.min_level || 1);
-  if (Number(overview.identity?.level || 1) < requiredLevel) return { eligible: false, reason: `Requires Lv.${requiredLevel}` };
+  if (Number(overview.identity?.level || 1) < requiredLevel) return { eligible: false, reason: `Requires Lv. ${requiredLevel}` };
   const allowed = Array.isArray(item.allowed_job_ids) ? item.allowed_job_ids : [];
   if (allowed.length && !allowed.includes(overview.job?.id)) return { eligible: false, reason: `Not usable by ${overview.job?.name || "current Job"}` };
   return { eligible: true, reason: "" };

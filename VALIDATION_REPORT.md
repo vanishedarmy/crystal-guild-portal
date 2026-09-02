@@ -1,10 +1,10 @@
-# Validation Report — Crystal Guild v1.7.0 — UI Compactness Hotfix 4
+# Validation Report — Crystal Guild v1.7.0 — Final Hardening & Performance Hotfix 5
 
 **Result: PASS**
 
 ## Release contract
 
-- Web runtime/frontend: `1.7.0-emporium-annex-a3h4`
+- Web runtime/frontend: `1.7.0-emporium-annex-a3h5`
 - Paired Bot runtime: `1.7.0-emporium-annex-a3h3`
 - Local DB schema: **15**
 - Hosted sync schema: **1**
@@ -14,24 +14,28 @@
 
 ## Automated regression
 
-- Frontend: **549 / 549 PASS**
-- Hosted Web/API: **61 / 61 PASS**
+- Frontend: **554 / 554 PASS**
+- Hosted Web/API: **63 / 63 PASS**
+- Paired Bot baseline: **668 / 668 PASS** (unchanged Cloud Storage Hotfix 3)
 - Web Python parse: **15 / 15 PASS**
-- JS/MJS syntax: **201 / 201 PASS**
+- JS/MJS syntax: **202 / 202 PASS**
 - CSS structural checks: **8 / 8 PASS**
 - WebP decode: **843 / 843 PASS**
 - Public PNG count: **0**
+- Active UI level-spacing scan: **PASS**
 
-## Focused UI checks
+## Focused hardening checks
 
-**PASS** — Blacksmith Recipes/Forge Gear subtitles contain no redundant `Active ·` prefix.
+**PASS** — binary artwork is streamed without entering the process-wide static byte cache.
 
-**PASS** — Registered Companion and recipe grids use start alignment/content-sized cards rather than row stretching.
+**PASS** — ETag revalidation returns `304 Not Modified` with an empty body when the requested asset is unchanged.
 
-**PASS** — Emporium buy-card markup omits the long item-description paragraph while retaining stat summaries and requirements.
+**PASS** — optional Gold Saucer/Retainer/detail modules are code-split from the initial Player Profile path.
 
-**PASS** — Fellowship mobile level card is max-width bounded, overflow-safe, and its progress track remains inside the card.
+**PASS** — image-heavy feature views use explicit loading/decoding policies.
 
-**PASS** — Crystal Guild Connection omits the linked-account explanatory sentence and exposes **Refresh connection**.
+**PASS** — final overflow/min-width CSS safeguards are present for dynamic grids, cards, badges, controls, and long labels.
 
-The source package contains no installed `node_modules`, so no local Vite production-build claim is made.
+**PASS** — active Portal, Guide, and generated Trophy Hall strings contain no `Lv.<number>` / `JLv.<number>` joins without a separating space.
+
+The source package contains no installed `node_modules`, so no local Vite production-build result is claimed.

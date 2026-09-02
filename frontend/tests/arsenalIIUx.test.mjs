@@ -67,5 +67,5 @@ test("Player Guide release identity comes from the shared header and uses Expedi
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
   assert.match(version, /WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
-  assert.match(version, /1\.7\.0-emporium-annex-a3h4/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h5/);
 });

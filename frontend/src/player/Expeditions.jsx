@@ -229,7 +229,7 @@ export default function Expeditions({
                 const progress = region?.progress || {};
                 return (
                   <button type="button" key={region.id} data-region={region.id} className={`expedition-region-card ${selected ? "selected" : ""} ${!region.unlocked ? "locked" : ""}`} onClick={() => setSelectedRegion(region.id)} disabled={!region.unlocked}>
-                    <div className="expedition-region-card-head"><span>Lv.{number(region.min_level)}{Number(region.recommended_max_level || 99) < 99 ? `–${number(region.recommended_max_level)}` : "+"}</span><b>{number(progress.progress || 0)}%</b></div>
+                    <div className="expedition-region-card-head"><span>Lv. {number(region.min_level)}{Number(region.recommended_max_level || 99) < 99 ? `–${number(region.recommended_max_level)}` : "+"}</span><b>{number(progress.progress || 0)}%</b></div>
                     <strong>{region.name}</strong>
                     <small>{region.identity} · {region.hazard}</small>
                     <small>{number(progress.landmarks_found || 0)} / {number(REGION_LANDMARK_COUNT)} landmarks charted</small>
@@ -314,7 +314,7 @@ export default function Expeditions({
               <div><span>Completion stipend</span><strong>+{number(active.legendary_contract ? STIPEND_SEALS.legendary : active.boss_contract ? STIPEND_SEALS.boss : STIPEND_SEALS[active.depth?.id] || 0)} Seals</strong></div>
             </div>
             <ExpeditionCache cache={active.cache} />
-            {(active.cache?.items || []).length ? <p className="expedition-loot-line"><strong>Cache:</strong> {active.cache.items.map((row) => `${row.name || row.id} x${number(row.quantity)}`).join(" · ")}</p> : null}
+            {(active.cache?.items || []).length ? <p className="expedition-loot-line"><strong>Cache:</strong> {active.cache.items.map((row) => `${row.name || row.id} × ${number(row.quantity)}`).join(" · ")}</p> : null}
             <ExpeditionJournal history={active.history || []} />
 
             {active.status === "travel" ? (
@@ -332,7 +332,7 @@ export default function Expeditions({
                 <div className="expedition-combatants">
                   <article>
                     <MonsterPortrait monster={active.combat.enemy} name={active.combat.enemy?.name} className="solo-enemy-portrait" eager />
-                    <div><span className="slot-label">{active.combat.boss ? "REGIONAL BOSS" : "Enemy"} · Round {number(active.combat.round)}</span><h3>{active.combat.enemy?.name} · Lv.{number(active.combat.enemy?.level)}</h3><div className="vital-label"><span>HP</span><span>{number(active.combat.enemy?.hp)} / {number(active.combat.enemy?.max_hp)}</span></div><ProgressBar value={pct(active.combat.enemy?.hp, active.combat.enemy?.max_hp)} className="hp" /><small>Intent: {active.combat.enemy?.intent}</small></div>
+                    <div><span className="slot-label">{active.combat.boss ? "REGIONAL BOSS" : "Enemy"} · Round {number(active.combat.round)}</span><h3>{active.combat.enemy?.name} · Lv. {number(active.combat.enemy?.level)}</h3><div className="vital-label"><span>HP</span><span>{number(active.combat.enemy?.hp)} / {number(active.combat.enemy?.max_hp)}</span></div><ProgressBar value={pct(active.combat.enemy?.hp, active.combat.enemy?.max_hp)} className="hp" /><small>Intent: {active.combat.enemy?.intent}</small></div>
                   </article>
                   <article>
                     <JobPortrait jobName={active.combat.player?.job_name} className="solo-hero-portrait" />

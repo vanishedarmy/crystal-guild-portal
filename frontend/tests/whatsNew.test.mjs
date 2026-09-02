@@ -49,7 +49,7 @@ test("Arsenal What's New copy summarizes the combat/content expansion", async ()
   assert.match(data, /Arsenal/);
   assert.match(data, /six-ability active Battle foundation/);
   assert.match(data, /Fire, Ice, Lightning, Wind, Water, Holy, and Dark/);
-  assert.match(data, /New C-rank marks begin at Lv\.2/);
+  assert.match(data, /New C-rank marks begin at Lv\. 2/);
   assert.match(data, /lower-level raid targets/);
   assert.match(data, /low-level recipes/);
 });

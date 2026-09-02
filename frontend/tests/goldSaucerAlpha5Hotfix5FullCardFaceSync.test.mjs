@@ -12,7 +12,7 @@ const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","a
 
 test("Hotfix 5 uses the full cache-busted Triple Triad card faces", () => {
   assert.match(component, /TRIAD_ART_ROOT = "\/gold-saucer\/a5h5\/triple-triad"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h4"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h5"/);
   for (const id of cards) {
     const p = path.join(artRoot, `${id}.webp`);
     assert.ok(fs.existsSync(p), `${id} H5 full-face art missing`);

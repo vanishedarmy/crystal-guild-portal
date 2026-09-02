@@ -51,6 +51,7 @@ class PortalServerCase(unittest.TestCase):
         (static / "guide-data.json").write_text("{\"meta\":{\"version\":\"v1.1.15 — Wayfarer\"}}", encoding="utf-8")
         (static / "guide.css").write_text(".guide{}", encoding="utf-8")
         (static / "raid-overlay.html").write_text("<title>Crystal Guild Raid Overlay</title>", encoding="utf-8")
+        (static / "art.webp").write_bytes(b"RIFF" + (b"x" * 4096))
         store = HostedPortalStore(root / "mirror.db")
         self.store = store
         self.server = HostedPortalHTTPServer(("127.0.0.1", 0), HostedPortalHandler, store, static, SYNC_KEY)
@@ -83,6 +84,27 @@ class PortalServerCase(unittest.TestCase):
             status, _, headers = self.get(path)
             self.assertEqual(status, 200)
             self.assertEqual(headers.get("Cache-Control"), "no-cache")
+
+    def test_binary_artwork_streams_without_process_cache_growth(self):
+        request = urllib.request.Request(self.base + "/art.webp")
+        with urllib.request.urlopen(request, timeout=3) as response:
+            self.assertEqual(response.status, 200)
+            self.assertEqual(response.headers.get("Content-Type"), "image/webp")
+            self.assertTrue(response.headers.get("ETag"))
+            self.assertEqual(len(response.read()), 4100)
+        self.assertFalse(any(path.name == "art.webp" for path in self.server.static_cache))
+
+    def test_static_etag_returns_not_modified_without_body(self):
+        status, _, headers = self.get("/index.html")
+        self.assertEqual(status, 200)
+        etag = headers.get("ETag")
+        self.assertTrue(etag)
+        request = urllib.request.Request(self.base + "/index.html", headers={"If-None-Match": etag})
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            urllib.request.urlopen(request, timeout=3)
+        self.assertEqual(caught.exception.code, 304)
+        self.assertEqual(caught.exception.headers.get("ETag"), etag)
+        self.assertEqual(caught.exception.headers.get("Cache-Control"), "no-cache")
 
 
     def test_streamer_dashboard_is_public_read_only_aggregate(self):
@@ -188,8 +210,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.7.0-emporium-annex-a3h4", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.7.0-emporium-annex-a3h4")
+        self.assertIn("1.7.0-emporium-annex-a3h5", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.7.0-emporium-annex-a3h5")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

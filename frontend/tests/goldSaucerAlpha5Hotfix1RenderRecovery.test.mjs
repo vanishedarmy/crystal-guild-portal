@@ -9,10 +9,9 @@ const saucer = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "ut
 const profile = fs.readFileSync(path.join(root, "src/pages/PlayerProfile.jsx"), "utf8");
 const version = fs.readFileSync(path.join(root, "src/version.js"), "utf8");
 
-test("Alpha 5 Hotfix 1 keeps Gold Saucer out of the lazy split-chunk path", () => {
-  assert.match(profile, /import GoldSaucer from "\.\.\/player\/GoldSaucer\.jsx";/);
-  assert.match(profile, /gold_saucer:\s*GoldSaucer/);
-  assert.doesNotMatch(profile, /gold_saucer:\s*lazy\(/);
+test("final hardening returns Gold Saucer to the lazy split-chunk path", () => {
+  assert.doesNotMatch(profile, /import GoldSaucer from/);
+  assert.match(profile, /gold_saucer:\s*lazy\(\(\) => import\("\.\.\/player\/GoldSaucer\.jsx"\)\)/);
 });
 
 test("Alpha 5 Hotfix 1 normalizes partial Gold Saucer payloads before render", () => {
@@ -33,6 +32,6 @@ test("Alpha 5 Hotfix 1 preserves the requested collapsible Gold Saucer contract"
 });
 
 test("Alpha 5 Hotfix 1 behavior remains under the current frontend revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h4"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h5"/);
   assert.match(version, /WEB_VERSION = "v1\.7\.0"/);
 });

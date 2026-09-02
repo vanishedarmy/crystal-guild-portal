@@ -176,7 +176,7 @@ export default function Fellowship({ data, onRefresh }) {
     runMutation(
       `contribute:item:${req.asset_id}`,
       () => submitFellowshipItem(req.asset_id, amount, project.id, csrfToken, actionKey("fellowship-item", `${project.id}:${req.asset_id}:${amount}`)),
-      `Contributed ${req.label} x${number(amount)}.`,
+      `Contributed ${req.label} × ${number(amount)}.`,
     );
   };
 

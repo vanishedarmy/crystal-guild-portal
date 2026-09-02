@@ -11042,3 +11042,45 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
   .fellowship-level-card { padding: .62rem .68rem; }
   .fellowship-level-card > strong { font-size: clamp(1.45rem, 7vw, 1.85rem); }
 }
+
+/* v1.7.0 Final Hardening & Performance Hotfix 5
+   Keep dynamic labels inside their cards on narrow screens. Long player/item names,
+   generated badges, and action copy should wrap rather than create horizontal overflow. */
+.profile-content,
+.profile-content > *,
+.panel,
+.panel-title-row > *,
+.content-grid > *,
+.current-loadout-card,
+.inventory-card,
+.moogle-card,
+.blacksmith-card,
+.chocobo-companion-card,
+.retainer-service-grid > * {
+  min-width: 0;
+}
+.small-badge,
+.slot-label,
+.card-meta,
+.item-meta,
+.muted,
+.state-message,
+.equipment-action-button,
+.profile-tabs button,
+.portal-link-copy,
+code {
+  overflow-wrap: anywhere;
+}
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+@media (max-width: 620px) {
+  .panel-title-row {
+    min-width: 0;
+  }
+  .panel-title-row > .small-badge {
+    max-width: 100%;
+  }
+}

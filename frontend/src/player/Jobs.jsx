@@ -204,7 +204,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                 </div>
               </div>
               <div className="job-name">{job.name}</div>
-              <div className="card-meta">{job.owned ? `JLv.${job.level}` : "Not learned"} · {job.signature}</div>
+              <div className="card-meta">{job.owned ? `JLv. ${job.level}` : "Not learned"} · {job.signature}</div>
               {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
             </div>
           </div>
@@ -276,7 +276,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                         </div>
                       </div>
                       <div className="job-name">{job.name}</div>
-                      <div className="card-meta">{job.owned ? `JLv.${job.level} · ${job.signature}` : unlocked ? `Ready to learn · ${job.signature}` : `Signature: ${job.signature}`}</div>
+                      <div className="card-meta">{job.owned ? `JLv. ${job.level} · ${job.signature}` : unlocked ? `Ready to learn · ${job.signature}` : `Signature: ${job.signature}`}</div>
                       {job.owned ? <div className="job-progress"><ProgressBar value={pct(job.jp, job.jp_next)} /></div> : null}
                     </div>
                   </div>
@@ -332,9 +332,9 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
 
       {isOwnProfile && view === "masteries" ? (
         <>
-          <div className="character-help-line">Master a Job at JLv.50 to use its Mastery while playing another Job. You have two Mastery slots.</div>
+          <div className="character-help-line">Master a Job at JLv. 50 to use its Mastery while playing another Job. You have two Mastery slots.</div>
           {locks.mastery_change ? <div className="character-lock-note">Finish the active encounter or raid before changing Masteries.</div> : null}
-          {!masteredJobs.length ? <div className="state-message compact-state">No Jobs mastered yet. Reach JLv.50 on a Job to unlock its Mastery.</div> : null}
+          {!masteredJobs.length ? <div className="state-message compact-state">No Jobs mastered yet. Reach JLv. 50 on a Job to unlock its Mastery.</div> : null}
           <div className="mastery-management-grid">
             {[1, 2].map((slot) => {
               const selected = masteryChoice[slot] || "";

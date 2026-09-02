@@ -5061,18 +5061,18 @@ button.featured-trophy {
 .blacksmith-search span { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .blacksmith-search input { width: 100%; min-width: 0; }
 .blacksmith-summary-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 4px 0 12px; color: var(--muted); font-size: .86rem; }
-.blacksmith-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.blacksmith-card { min-width: 0; border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: var(--panel-soft); display: grid; gap: 12px; }
-.blacksmith-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.blacksmith-card-head h3 { margin: 3px 0 0; font-size: 1.08rem; }
+.blacksmith-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.blacksmith-card { min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--panel-soft); display: grid; gap: 8px; }
+.blacksmith-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.blacksmith-card-head h3 { margin: 2px 0 0; font-size: 1rem; }
 .blacksmith-output { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: baseline; }
 .blacksmith-output > span { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
 .blacksmith-output small { grid-column: 2; color: var(--muted); }
 .blacksmith-description { margin: 0; color: var(--muted); line-height: 1.45; }
 .blacksmith-costs { display: flex; flex-wrap: wrap; gap: 7px; }
 .blacksmith-costs span { border: 1px solid var(--line); border-radius: 999px; padding: 5px 8px; font-size: .78rem; }
-.blacksmith-material-list { display: grid; gap: 6px; }
-.blacksmith-material-list > div { display: flex; justify-content: space-between; gap: 10px; padding: 7px 9px; border-radius: 9px; background: var(--panel); font-size: .84rem; }
+.blacksmith-material-list { display: grid; gap: 4px; }
+.blacksmith-material-list > div { display: flex; justify-content: space-between; gap: 8px; padding: 5px 7px; border-radius: 8px; background: var(--panel); font-size: .8rem; }
 .blacksmith-material-list .missing strong { color: var(--danger); }
 .blacksmith-card-actions { display: flex; justify-content: flex-end; align-items: end; gap: 10px; margin-top: auto; }
 .blacksmith-forge-price { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 3px 10px; }
@@ -5081,12 +5081,20 @@ button.featured-trophy {
 .blacksmith-next-bonus, .blacksmith-maxed { font-size: .86rem; color: var(--muted); }
 .blacksmith-card-actions.forge-action .equipment-action-button { width: 100%; }
 
+@media (max-width: 1180px) {
+  .blacksmith-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 900px) {
   .daily-reward-copy { align-items: stretch; flex-direction: column; }
   .daily-reward-actions { justify-content: flex-start; min-width: 0; }
   .daily-reward-actions .muted { text-align: left; }
   .blacksmith-toolbar { grid-template-columns: 1fr auto; }
   .blacksmith-toolbar .character-view-tabs { grid-column: 1 / -1; }
+  .blacksmith-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
   .blacksmith-grid { grid-template-columns: 1fr; }
 }
 
@@ -7788,10 +7796,13 @@ main h1,
 }
 .forge-group-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
-@media (max-width: 900px) {
+@media (max-width: 1180px) {
+  .forge-group-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
   .forge-group-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
@@ -7912,22 +7923,22 @@ main h1,
   align-items: center;
   gap: .45rem;
 }
-.blacksmith-material-artwork { width: 28px; height: 28px; }
+.blacksmith-material-artwork { width: 24px; height: 24px; }
 .forge-card:has(.blacksmith-forge-artwork) {
   position: relative;
-  padding-left: 104px;
-  min-height: 150px;
+  padding-left: 86px;
+  min-height: 0;
 }
 .blacksmith-forge-artwork {
   position: absolute;
-  left: 18px;
-  top: 20px;
-  width: 72px;
-  height: 72px;
+  left: 12px;
+  top: 14px;
+  width: 60px;
+  height: 60px;
 }
 @media (max-width: 720px) {
-  .forge-card:has(.blacksmith-forge-artwork) { padding-left: 84px; }
-  .blacksmith-forge-artwork { left: 12px; top: 18px; width: 60px; height: 60px; }
+  .forge-card:has(.blacksmith-forge-artwork) { padding-left: 74px; }
+  .blacksmith-forge-artwork { left: 10px; top: 12px; width: 52px; height: 52px; }
 }
 
 /* v1.1.19 Retro Phase III — Chocobo Portrait Selection */
@@ -11141,4 +11152,28 @@ textarea {
   }
   .forge-group-disclosure > .forge-group-heading > div { min-width: 0; }
   .forge-group-heading-meta { align-self: start; }
+}
+
+
+/* v1.7.0 Moogle Retainer — Blacksmith Forge UI Hotfix 2
+   Compact three-column forge cards; Currently Equipped stays flat while
+   Forged/Unforged retain Weapon → Armor → Accessory grouping. */
+.blacksmith-panel .blacksmith-summary-row { margin-bottom: .6rem; }
+.blacksmith-panel .blacksmith-toolbar { margin-top: .85rem; margin-bottom: .7rem; gap: .6rem; }
+.forge-grid { gap: .65rem; }
+.forge-grid .forge-group { gap: .5rem; }
+.forge-group + .forge-group { margin-top: .15rem; padding-top: .65rem; }
+.forge-group-heading { gap: .65rem; }
+.forge-group-heading p { margin-top: .1rem; line-height: 1.3; }
+.forge-group-body { gap: .55rem; }
+.forge-type-group { gap: .35rem; }
+.forge-type-group + .forge-type-group { margin-top: .05rem; padding-top: .5rem; }
+.forge-type-heading { padding: 0 .1rem; }
+.forge-equipped-grid { align-items: start; }
+.forge-card .blacksmith-next-bonus,
+.forge-card .blacksmith-maxed { font-size: .8rem; line-height: 1.35; }
+.forge-card .blacksmith-forge-price { gap: 2px 7px; }
+.forge-card .equipment-action-button { min-height: 36px; padding-block: .45rem; }
+@media (max-width: 720px) {
+  .blacksmith-panel .blacksmith-toolbar { margin-top: .7rem; }
 }

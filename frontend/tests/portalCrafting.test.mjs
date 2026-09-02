@@ -46,18 +46,22 @@ test("Overview adds Daily Guild Provisions with a local 24-hour countdown", asyn
 test("Phase 7 Blacksmith and Daily layouts collapse without horizontal-scrolling rails", async () => {
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
   const phase = css.slice(css.indexOf("v1.1.7 Portal Actions Phase 7"));
-  assert.match(phase, /blacksmith-grid[\s\S]*repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(phase, /@media \(max-width: 900px\)[\s\S]*blacksmith-grid[\s\S]*grid-template-columns: 1fr/);
+  assert.match(phase, /blacksmith-grid[\s\S]*repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(phase, /@media \(max-width: 1180px\)[\s\S]*blacksmith-grid[\s\S]*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(phase, /@media \(max-width: 720px\)[\s\S]*blacksmith-grid[\s\S]*grid-template-columns: 1fr/);
   assert.match(phase, /@media \(max-width: 560px\)/);
   assert.doesNotMatch(phase, /overflow-x:\s*(auto|scroll)/);
 });
 
 
-test("Forge Gear prioritizes equipped, then forged, then unforged and sorts Weapon, Armor, Accessory", async () => {
+test("Forge Gear keeps Currently Equipped flat and groups only forged/unforged by Weapon, Armor, Accessory", async () => {
   const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
   assert.match(smith, /const groupA = a\.equipped \? 0 : a\.current_upgrade > 0 \? 1 : 2/);
-  assert.match(smith, /forgeTypeRank\(a\.type\) - forgeTypeRank\(b\.type\)[\s\S]*a\.min_level - b\.min_level/);
+  assert.match(smith, /if \(groupA === 0\) return Number\(a\.inventory_order/);
+  assert.match(smith, /return forgeTypeRank\(a\.type\) - forgeTypeRank\(b\.type\)[\s\S]*a\.min_level - b\.min_level/);
   assert.match(smith, /FORGE_TYPE_SEQUENCE = \["weapon", "armor", "accessory"\]/);
+  assert.match(smith, /group\.id === "equipped" \? \[\] : forgeTypeGroups\(group\.items\)/);
+  assert.match(smith, /forge-equipped-grid/);
   assert.match(smith, /Currently Equipped/);
   assert.match(smith, /Forged Gear/);
   assert.match(smith, /Unforged Gear/);

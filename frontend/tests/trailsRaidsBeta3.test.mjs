@@ -25,7 +25,7 @@ test("Beta 3 player-facing copy documents shared-state and timer hardening",()=>
 
 test("Beta 3 features remain under RC1 runtime identity",()=>{
   const version=read("src/version.js"), manifest=read("../UI_SHARED_ASSET_MANIFEST.json");
-  assert.match(version,/Moogle Emporium Annex Alpha 3/);
-  assert.match(version,/1\.7\.0-emporium-annex-a3h5/);
+  assert.match(version,/Production Final/);
+  assert.match(version,/1\.7\.0-final/);
   assert.match(manifest,/v1\.5\.1 — Relic Arsenal Complete/);
 });

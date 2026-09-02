@@ -1,3 +1,9 @@
+# Crystal Guild v1.7.0 Production Final
+
+- Production identity promoted to Bot/Web runtime `1.7.0`; frontend asset revision `1.7.0-final`.
+- Feature freeze: Retainer Service + Moogle Emporium Annex + carried-forward Gold Saucer production.
+- Final hardening includes Render backup safety, Web static-art streaming, ETag revalidation, lazy loading, responsive UI cleanup, and text-spacing consistency.
+
 # v1.7.0 — Final Hardening & Performance Hotfix 5
 
 - Final Web stabilization pass: bounded artwork streaming, ETag revalidation, lazy optional profile modules, image-loading policy cleanup, defensive overflow rules, and user-facing level/quantity spacing consistency.

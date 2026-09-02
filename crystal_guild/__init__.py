@@ -1,1 +1,1 @@
-__version__ = "1.7.0-emporium-annex-a3h5"
+__version__ = "1.7.0"

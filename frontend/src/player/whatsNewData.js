@@ -1,9 +1,9 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.7.0 Alpha 3",
-    name: "Moogle Emporium Annex",
-    title: "Build more room for Moogle merchandise",
-    summary: "Alpha 3 adds a one-time shared Fellowship construction project that expands every adventurer's personal Moogle Emporium rotation from 9 to 12 stock slots once the Annex is built.",
+    version: "v1.7.0",
+    name: "Production Final",
+    title: "Retainers, the Emporium Annex, and a hardened Portal",
+    summary: "v1.7.0 finalizes Retainer Service and the Moogle Emporium Annex, then closes the release with cloud-storage, mobile UI, text-spacing, and hosted Portal performance hardening.",
     highlights: [
       { title: "One shared Annex", description: "The Moogle Emporium Annex is a permanent Guild facility. Complete it once and the benefit applies to every recruited adventurer." },
       { title: "Three extra shop choices", description: "Completed construction expands each personalized Emporium rotation from 9 to 12 items while preserving the existing job, level, price, and rarity weighting rules." },

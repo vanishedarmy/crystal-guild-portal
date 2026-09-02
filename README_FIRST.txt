@@ -1,6 +1,7 @@
-Crystal Guild v1.7.0 — Final Hardening & Performance Hotfix 5
-Web runtime/frontend: 1.7.0-emporium-annex-a3h5
-Paired Bot runtime: 1.7.0-emporium-annex-a3h3
+Crystal Guild v1.7.0 — Production Final
+Web runtime: 1.7.0
+Frontend asset revision: 1.7.0-final
+Paired Bot runtime: 1.7.0
 Schema: 15 | Hosted sync: 1 | Portal protocol: 31 | Prefix: !
 
-Deploy this Web tree with the existing Cloud Storage Hotfix 3 Bot. Preserve the live database, persistent state, and all existing secrets/environment variables. This pass is Web/UI/performance-only; no migration is required.
+Deploy Bot and Web together for the production-final identity. Preserve the live database, persistent state, and all existing secrets/environment variables.

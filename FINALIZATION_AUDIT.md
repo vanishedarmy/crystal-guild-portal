@@ -1,16 +1,29 @@
-# Finalization Audit — Crystal Guild v1.7.0 — Final Hardening & Performance Hotfix 5
+# Finalization Audit — Crystal Guild v1.7.0 Production Final
 
-**Decision: PASS — final v1.7.0 stabilization candidate.**
+**Decision: PASS — production release baseline.**
 
-Hotfix 5 carries forward the Cloud Storage Hotfix 3 Bot unchanged and hardens only the Web/UI tree.
+## Frozen release contract
 
-## Frozen scope
+- Bot runtime: `1.7.0`
+- Web runtime: `1.7.0`
+- Frontend asset revision: `1.7.0-final`
+- Local database schema: **15**
+- Hosted sync schema: **1**
+- Portal Action protocol: **31**
+- Twitch prefix: `!`
 
-1. bound hosted static-art memory behavior and add browser ETag revalidation;
-2. defer optional heavy Player Profile modules until opened;
-3. normalize image loading/decoding behavior;
-4. add defensive overflow/min-width rules for dynamic UI;
-5. normalize user-facing level/quantity spacing;
-6. preserve all v1.7.0 gameplay, economy, schema, and Portal protocol behavior.
+## Feature freeze
 
-Validation: **554/554 frontend**, **63/63 hosted Web/API**, paired unchanged Bot baseline **668/668**, **15/15 Web Python parse**, **202/202 JS/MJS syntax**, **8/8 CSS**, **843/843 WebP decode**, **0 public PNGs**.
+v1.7.0 closes with the complete Retainer Service and Moogle Emporium Annex feature set. Retainers provide personal timed material procurement with priority targeting and recent-haul history. The shared Moogle Emporium Annex expands personal shop rotations from 9 to 12 stock slots after construction. Gold Saucer production content carries forward unchanged.
+
+The release also includes the final Render storage hardening, item-recovery verification and concise copy, Retainer artwork/UI, mobile/compactness fixes, text-spacing consistency, lazy loading, bounded static-art streaming, and browser ETag revalidation.
+
+## Upgrade safety
+
+No schema change is introduced by the production promotion. Existing schema-15 databases, player progression, inventories, Gil/MGP, Fellowship state, facilities, Retainer assignments/history, Gold Saucer records, Chocobo state, and raid/dungeon records are preserved. Keep the live database and secrets in place.
+
+## Validation
+
+Bot **668/668**, frontend **554/554**, hosted Web/API **63/63**, Python parse **132/132**, JS/MJS **202/202**, CSS **8/8**, WebP **843/843**, public PNG **0**.
+
+The production package is feature-frozen. Future feature work should branch from this v1.7.0 baseline.

@@ -9,8 +9,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("RC1 identity and Dungeon catalog remain feature frozen", () => {
-  assert.equal(WEB_BUILD, "Moogle Emporium Annex Alpha 3");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h5");
+  assert.equal(WEB_BUILD, "Production Final");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-final");
   const board=read("src/player/Dungeons.jsx");
   assert.match(board,/Dungeons & Delves · v1.4.0/);
 });

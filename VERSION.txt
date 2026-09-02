@@ -1,7 +1,7 @@
-Crystal Guild v1.7.0 — Final Hardening & Performance Hotfix 5 Web
-Runtime: 1.7.0-emporium-annex-a3h5
-Frontend asset revision: 1.7.0-emporium-annex-a3h5
-Paired Bot runtime: 1.7.0-emporium-annex-a3h3
+Crystal Guild v1.7.0 — Production Final
+Runtime: 1.7.0
+Frontend asset revision: 1.7.0-final
+Paired Bot runtime: 1.7.0
 Local DB schema: 15
 Hosted sync: 1
 Portal Action protocol: 31

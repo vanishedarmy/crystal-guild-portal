@@ -32,6 +32,14 @@ test("formats Portal consumable effects into player-readable summaries", () => {
     formatItemUse({ effects: [{ type: "damage", amount: 220, element: "Fire" }] }),
     "Deals 220 Fire damage",
   );
+  assert.equal(
+    formatItemUse({ effects: [
+      { type: "heal_hp", fraction: 1 },
+      { type: "restore_mp", fraction: 1 },
+      { type: "restore_ap", fraction: 1 },
+    ] }),
+    "Restores All Stats",
+  );
 });
 
 test("formats Portal item usage availability", () => {

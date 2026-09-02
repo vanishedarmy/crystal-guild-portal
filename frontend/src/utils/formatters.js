@@ -92,7 +92,24 @@ function formatItemEffect(effect = {}) {
 export function formatItemUse(use = {}) {
   const effects = Array.isArray(use?.effects) ? use.effects : [];
   if (!effects.length) return "No usable effect";
-  return effects.map((effect) => formatItemEffect(effect)).filter(Boolean).join(" · ");
+
+  const fullResources = new Set();
+  for (const effect of effects) {
+    const type = String(effect?.type || "").toLowerCase();
+    const fraction = Number(effect?.fraction);
+    if (Number.isFinite(fraction) && fraction >= 1 && ["heal_hp", "restore_mp", "restore_ap"].includes(type)) {
+      fullResources.add(type);
+    }
+  }
+
+  const restoresAllStats = ["heal_hp", "restore_mp", "restore_ap"].every((type) => fullResources.has(type));
+  if (!restoresAllStats) return effects.map((effect) => formatItemEffect(effect)).filter(Boolean).join(" · ");
+
+  const remaining = effects
+    .filter((effect) => !fullResources.has(String(effect?.type || "").toLowerCase()))
+    .map((effect) => formatItemEffect(effect))
+    .filter(Boolean);
+  return ["Restores All Stats", ...remaining].join(" · ");
 }
 
 export function formatItemAvailability(use = {}) {

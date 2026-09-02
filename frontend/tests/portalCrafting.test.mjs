@@ -53,12 +53,22 @@ test("Phase 7 Blacksmith and Daily layouts collapse without horizontal-scrolling
 });
 
 
-test("Forge Gear prioritizes equipped, then forged, then unforged equipment by level", async () => {
+test("Forge Gear prioritizes equipped, then forged, then unforged and sorts Weapon, Armor, Accessory", async () => {
   const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
   assert.match(smith, /const groupA = a\.equipped \? 0 : a\.current_upgrade > 0 \? 1 : 2/);
-  assert.match(smith, /groupA - groupB[\s\S]*a\.min_level - b\.min_level/);
+  assert.match(smith, /forgeTypeRank\(a\.type\) - forgeTypeRank\(b\.type\)[\s\S]*a\.min_level - b\.min_level/);
+  assert.match(smith, /FORGE_TYPE_SEQUENCE = \["weapon", "armor", "accessory"\]/);
   assert.match(smith, /Currently Equipped/);
   assert.match(smith, /Forged Gear/);
   assert.match(smith, /Unforged Gear/);
+  assert.match(smith, /forge-group-disclosure/);
+  assert.match(smith, /DetailsPointer/);
   assert.match(smith, /Lv\. \{number\(item\.min_level\)\}/);
+});
+
+test("Forged and unforged Blacksmith sections use shared collapsible pointer styling", async () => {
+  const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
+  assert.match(css, /forge-group-disclosure > \.forge-group-heading/);
+  assert.match(css, /forge-type-heading/);
+  assert.match(css, /forge-group-heading-meta \.details-collapse-pointer/);
 });

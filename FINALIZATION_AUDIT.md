@@ -1,42 +1,18 @@
-# Finalization Audit — Crystal Guild v1.7.0 Moogle Emporium Annex Alpha 3 — Item Usage Copy Hotfix 2
+# Finalization Audit — Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — UI Compactness Hotfix 4
 
-**Decision: PASS — canonical Alpha 3 Hotfix 2 baseline.**
+**Decision: PASS — selective Web polish baseline.**
 
-## Release contract
+Hotfix 4 is presentation-only. It carries forward the Cloud Storage Hotfix 3 Bot unchanged and updates only the Web/UI tree.
 
-- Runtime/frontend: `1.7.0-emporium-annex-a3h2`
-- Local database schema: **15**
-- Hosted sync: **1**
-- Portal Action protocol: **31**
-- Command prefix: `!`
-- Baseline: Item Recovery Integrity Hotfix 1
+## Frozen scope
 
-## Scope freeze
+1. remove redundant Active text from Blacksmith view subtitles;
+2. condense the registered Chocobo companion summary;
+3. remove long Emporium buy-card descriptions;
+4. condense Blacksmith recipe cards;
+5. bound/tighten Fellowship level display on mobile;
+6. simplify Crystal Guild Connection to status + refresh.
 
-Hotfix 2 is deliberately narrow:
+No economy, combat, item, recipe, Retainer, Fellowship progression, Gold Saucer, Moogle Emporium Annex, cloud-storage, schema, or Portal protocol behavior changed.
 
-1. Recover & Equip shows only the declared restorative effect.
-2. “Effective now” and explanatory recovery jargon are removed from the item buttons.
-3. Field-use success messages report only the restored amount/effect.
-4. The trailing technical HP/MP/AP snapshot is removed from field-use success text.
-5. Regression coverage prevents the removed wording from returning.
-
-Restorative values, max-resource behavior, inventory consumption, battle item behavior, Moogle Emporium Annex, Retainer Service, Gold Saucer, Fellowship, Guild systems, and player progression are unchanged.
-
-## Regression and source gates
-
-- Bot: **664/664 PASS**
-- Frontend: **544/544 PASS**
-- Hosted Web/API: **61/61 PASS**
-- Bot Python parse: **117/117 PASS**
-- Web Python parse: **15/15 PASS**
-- JS/MJS syntax: **200/200 PASS**
-- CSS structural checks: **8/8 PASS**
-- WebP decode: **843/843 PASS**
-- Public PNG count: **0**
-
-The source-only Web package does not contain installed `node_modules`, so no local Vite production-build pass is claimed.
-
-## Compatibility
-
-Schema **15**, hosted sync **1**, and Portal protocol **31** remain unchanged. Existing databases, player progression, inventories, Gil/MGP, Retainer state, Fellowship facilities, and Emporium Annex completion state are preserved.
+Validation: **549/549 frontend**, **61/61 hosted Web/API**, **15/15 Web Python parse**, **201/201 JS/MJS syntax**, **8/8 CSS checks**, **843/843 WebP decode**, **0 public PNGs**.

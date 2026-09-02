@@ -1,8 +1,6 @@
-Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — Item Usage Copy Hotfix 2
-Runtime: 1.7.0-emporium-annex-a3h2
-Database schema: 15
-Hosted sync schema: 1
-Portal Action protocol: 31
-Twitch prefix: !
+Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — UI Compactness Hotfix 4
+Web runtime/frontend: 1.7.0-emporium-annex-a3h4
+Paired Bot runtime: 1.7.0-emporium-annex-a3h3
+Schema: 15 | Hosted sync: 1 | Portal protocol: 31 | Prefix: !
 
-Upgrade Bot and Web together. Preserve the existing database and live secrets. No migration is required.
+This is a Web-only selective UI polish pass. Deploy this Web tree with the existing Cloud Storage Hotfix 3 Bot. Preserve the live database and all existing secrets/environment variables.

@@ -1,11 +1,16 @@
-# Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — Item Usage Copy Hotfix 2
+# Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — UI Compactness Hotfix 4
 
-Hotfix 2 trims the recovery-item copy introduced in Hotfix 1.
+Hotfix 4 is a narrow UI pass based on the verified Cloud Storage Hotfix 3 complete baseline. It changes presentation only.
 
-Recover & Equip now shows only each item's declared effect, such as **Restores 50 HP**, **Restores 500 HP**, **Restores 65% max MP**, or **Revives with 30% HP**. The extra “Effective now,” potency, cap, and overheal explanation text has been removed.
+## UI changes
 
-Field-use results are also shorter. After an item is used, the result reports the amount or resource actually restored without the previous potency/cap explanation or trailing HP/MP/AP snapshot.
+- Blacksmith tab subtitles no longer repeat **Active**; they read simply **Craft items** and **Upgrade equipment**.
+- The registered Chocobo companion card now hugs its content instead of stretching to the neighboring management card, with tighter internal spacing.
+- Moogle Emporium buy cards no longer show long item-description paragraphs; equipment cards retain stat boosts, comparisons, Job eligibility, level requirements, price, ownership, and purchase controls.
+- Blacksmith recipe cards use tighter padding/material rows and no longer stretch to match the tallest card in a row.
+- The Fellowship level card is bounded and tightened on mobile so its level/progress display cannot extend beyond the viewport.
+- Crystal Guild Connection is reduced to the connection heading/status plus a compact **Refresh connection** action; the redundant linked-account explanation is removed.
 
-No restorative values changed. Potion remains **50 HP**, Hi-Potion **200 HP**, Mega-Potion **500 HP**, and X-Potion **1,000 HP**. The existing MP/AP percentage restoratives, Phoenix Down, Tent, Elixir, and Megalixir behavior are unchanged.
+No prices, item stats, recipes, Fellowship progression, Chocobo progression, Portal actions, Retainer behavior, Annex behavior, Gold Saucer behavior, or database state changed.
 
-Runtime/frontend revision: `1.7.0-emporium-annex-a3h2`. Local database schema remains **15**, hosted sync remains **1**, Portal Action protocol remains **31**, and Twitch prefix remains `!`. No migration, item rebalance, inventory rewrite, artwork change, or Annex change is required.
+Web runtime/frontend revision: `1.7.0-emporium-annex-a3h4`. Pair with Bot `1.7.0-emporium-annex-a3h3`. Schema remains **15**, hosted sync **1**, Portal Action protocol **31**, prefix `!`.

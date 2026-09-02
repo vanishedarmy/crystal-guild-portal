@@ -88,20 +88,20 @@ export default function PortalLinkPanel({ username }) {
 
   const latest = pingActions[0] || null;
   const latestText = latest?.status === "completed" && latest?.result?.ok !== false
-    ? "Connection verified."
+    ? "Connection refreshed."
     : latest?.result?.message
-      || (latest?.status === "processing" ? "Checking connection…" : latest?.status === "pending" ? "Waiting for Crystal Guild…" : "");
+      || (latest?.status === "processing" ? "Refreshing connection…" : latest?.status === "pending" ? "Waiting for Crystal Guild…" : "");
   const latestFinished = latest?.status === "completed" || latest?.status === "failed";
   const displayedMessage = latestFinished && latestText ? latestText : (message || latestText);
 
   const testLink = async () => {
     if (!auth.actions_enabled || busy) return;
     setBusy(true);
-    setMessage("Checking connection…");
+    setMessage("Refreshing connection…");
     try {
       const response = await submitPortalPing(auth.csrf_token, actionKey());
       const action = response.action;
-      setMessage(action?.status === "completed" ? "Connection verified." : "Waiting for Crystal Guild…");
+      setMessage(action?.status === "completed" ? "Connection refreshed." : "Waiting for Crystal Guild…");
       await refreshActions();
     } catch (error) {
       setMessage(error.message);
@@ -117,15 +117,10 @@ export default function PortalLinkPanel({ username }) {
           <strong>Crystal Guild Connection</strong>
           <span className="portal-link-badge">{auth.actions_enabled ? "ONLINE" : "OFFLINE"}</span>
         </div>
-        <span>
-          {auth.actions_enabled
-            ? "Your Twitch account is linked to this adventurer. Character actions are available."
-            : "Your Twitch account is linked to this adventurer. Character actions will be available when Crystal Guild reconnects."}
-        </span>
         {displayedMessage ? <small aria-live="polite">{displayedMessage}</small> : null}
       </div>
       <button type="button" className="portal-link-test" disabled={!auth.actions_enabled || busy} onClick={testLink}>
-        {busy ? "Checking…" : "Check connection"}
+        {busy ? "Refreshing…" : "Refresh connection"}
       </button>
     </aside>
   );

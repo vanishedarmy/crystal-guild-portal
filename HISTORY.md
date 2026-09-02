@@ -1,3 +1,4 @@
+- UI Compactness Hotfix 4: selective Portal polish for Blacksmith tabs, registered Chocobo card density, Emporium buy-card descriptions, recipe-card spacing, Fellowship level mobile bounds, and the Crystal Guild connection strip. Web runtime/frontend: `1.7.0-emporium-annex-a3h4`; paired Bot remains `1.7.0-emporium-annex-a3h3`; schema 15 and Portal protocol 31 unchanged.
 - Item Usage Copy Hotfix 2: recovery cards now show the declared effect only and field-use results use concise restored-amount/effect wording. Runtime/frontend: `1.7.0-emporium-annex-a3h2`; schema 15 and Portal protocol 31 remain unchanged.
 ## 2026-09-02 — v1.7.0 Alpha 3 Item Recovery Hotfix 1
 - Verified the canonical Potion, MP/AP restorative, revival and full-restoration values without changing balance.

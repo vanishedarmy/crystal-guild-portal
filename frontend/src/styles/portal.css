@@ -10953,3 +10953,92 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
   .moogle-annex-status > div:nth-child(2) { justify-items: start; }
   .moogle-annex-status > small { grid-column: auto; }
 }
+
+
+/* v1.7.0 Alpha 3 UI Compactness Hotfix 4 — selective polish pass. */
+
+/* Chocobo companion summary should hug its content instead of stretching to the side-card height. */
+.chocobo-owned-layout { align-items: start; }
+.chocobo-companion-card.featured {
+  min-height: 0;
+  align-self: start;
+  padding: 13px;
+  gap: 12px;
+}
+.chocobo-companion-card.featured .chocobo-companion-copy { gap: 7px; }
+.chocobo-companion-card.featured .vital-row { gap: .28rem; }
+.chocobo-companion-card.featured .chocobo-traits { gap: 6px; }
+.chocobo-companion-card.featured .chocobo-trait-card { padding: 8px 10px; }
+
+/* Recipe cards keep all information but use less dead space and no forced row stretching. */
+.blacksmith-grid { align-items: start; }
+.blacksmith-card {
+  padding: 13px;
+  gap: 8px;
+}
+.blacksmith-card-head { gap: 8px; }
+.blacksmith-card-head h3 { margin-top: 2px; }
+.blacksmith-output { gap: 1px 8px; }
+.blacksmith-description { line-height: 1.35; font-size: .9rem; }
+.blacksmith-costs { gap: 5px; }
+.blacksmith-costs span { padding: 4px 7px; }
+.blacksmith-material-list { gap: 5px; }
+.blacksmith-material-list > div {
+  min-height: 32px;
+  padding: 5px 8px;
+}
+.blacksmith-card-actions { gap: 8px; }
+
+/* Connection status is a compact status + refresh control, not an explanatory banner. */
+.portal-link-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  padding: .58rem .75rem;
+  gap: .65rem;
+}
+.portal-link-copy { gap: .18rem; }
+.portal-link-test {
+  width: auto;
+  min-width: 0;
+  min-height: 34px;
+  padding: .45rem .65rem;
+}
+@media (max-width: 700px) {
+  .portal-link-panel {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  .portal-link-test { width: auto; }
+}
+
+/* Keep the Fellowship level card fully inside narrow mobile viewports. */
+@media (max-width: 760px) {
+  .fellowship-level-card {
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    padding: .72rem .78rem;
+  }
+  .fellowship-level-card > strong {
+    max-width: 100%;
+    font-size: clamp(1.55rem, 7.5vw, 2.05rem);
+    overflow-wrap: anywhere;
+  }
+  .fellowship-level-progress,
+  .fellowship-level-progress .progress-track {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .fellowship-level-card small {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 430px) {
+  .fellowship-level-card { padding: .62rem .68rem; }
+  .fellowship-level-card > strong { font-size: clamp(1.45rem, 7vw, 1.85rem); }
+}

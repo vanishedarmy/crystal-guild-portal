@@ -32,7 +32,7 @@ test("Portal action controls render only on the signed-in player's own profile",
   assert.match(panel, /Crystal Guild Connection/);
   assert.match(panel, /ONLINE/);
   assert.match(panel, /OFFLINE/);
-  assert.match(panel, /Check connection/);
+  assert.match(panel, /Refresh connection/);
   assert.match(panel, /action\.type === "PING"/);
   assert.doesNotMatch(panel, /Phase 3 is active|secure relay|authoritative Bot|Test secure link|Moogle Emporium stock ready|Portal link verified/);
   assert.match(inventory, /isOwnProfile/);

@@ -43,9 +43,9 @@ test("current release identity is v1.3.1 everywhere relevant", () => {
   const py = fs.readFileSync(path.join(webRoot, "crystal_guild", "__init__.py"), "utf8");
   const overlay = fs.readFileSync(path.join(publicRoot, "raid-overlay.html"), "utf8");
   const index = fs.readFileSync(path.join(frontend, "index.html"), "utf8");
-  assert.match(version, /1\.7\.0-emporium-annex-a3h2/);
-  assert.match(py, /1\.7\.0-emporium-annex-a3h2/);
-  assert.match(overlay, /1\.7\.0-emporium-annex-a3h2/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h4/);
+  assert.match(py, /1\.7\.0-emporium-annex-a3h4/);
+  assert.match(overlay, /1\.7\.0-emporium-annex-a3h4/);
   assert.ok(!overlay.includes("1.4.0-dungeons-delves-b2"));
   assert.match(index, /type="image\/webp" href="\/crystal-guild-portal-roundel\.webp"/);
 });

@@ -8,7 +8,7 @@ test("Trails & Raids public web identity is centralized", () => {
   assert.equal(WEB_BUILD, "Moogle Emporium Annex Alpha 3");
   assert.equal(WEB_RELEASE, "v1.7.0 — Moogle Emporium Annex Alpha 3");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.7.0 — Moogle Emporium Annex Alpha 3");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h2");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h4");
 });
 
 

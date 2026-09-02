@@ -23,13 +23,14 @@ test("Moogle Emporium separates Buy and Sell into Weapons Armor and Items", asyn
   assert.match(source, /mode === "sell"/);
 });
 
-test("Blacksmith has an explicit active Recipes Forge Gear switch", async () => {
+test("Blacksmith has a clear Recipes Forge Gear switch without redundant active copy", async () => {
   const source = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
   assert.match(source, /blacksmith-view-switch/);
   assert.match(source, /aria-selected=\{view === "recipes"\}/);
   assert.match(source, /aria-selected=\{view === "forge"\}/);
-  assert.match(source, /Active · Craft items/);
-  assert.match(source, /Active · Upgrade equipment/);
+  assert.match(source, /<small>Craft items<\/small>/);
+  assert.match(source, /<small>Upgrade equipment<\/small>/);
+  assert.doesNotMatch(source, /Active · (?:Craft items|Upgrade equipment)/);
 });
 
 test("Adventure Board exposes Camp through the existing START_REST Portal action", async () => {
@@ -66,5 +67,5 @@ test("Player Guide release identity comes from the shared header and uses Expedi
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
   assert.match(version, /WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
-  assert.match(version, /1\.7\.0-emporium-annex-a3h2/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h4/);
 });

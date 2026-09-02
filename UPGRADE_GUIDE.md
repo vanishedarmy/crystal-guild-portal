@@ -1,13 +1,10 @@
-# Upgrade to v1.7.0 Alpha 3 — Item Usage Copy Hotfix 2
+# Upgrade to v1.7.0 Alpha 3 — UI Compactness Hotfix 4
 
-Upgrade **Bot and Web together** from **Item Recovery Integrity Hotfix 1**.
+This is a **Web-only** update from the Cloud Storage Hotfix 3 complete baseline.
 
-- Runtime/frontend: `1.7.0-emporium-annex-a3h2`
-- Local DB schema: **15** (unchanged)
-- Hosted sync: **1** (unchanged)
-- Portal Action protocol: **31** (unchanged)
-- Prefix: `!`
+1. Keep the existing `1.7.0-emporium-annex-a3h3` Bot.
+2. Replace/deploy the Web source with Hotfix 4 (`1.7.0-emporium-annex-a3h4`).
+3. Preserve hosted secrets and persistent state.
+4. Do not replace or reset the live database.
 
-Preserve the existing database and live secrets. No migration or player reset is required.
-
-This hotfix changes recovery-item wording only. Restorative values and all Moogle Emporium Annex, Retainer Service, Gold Saucer, combat, and progression behavior remain unchanged.
+No schema migration or Portal protocol change is required.

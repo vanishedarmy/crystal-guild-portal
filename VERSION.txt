@@ -1,3 +1,7 @@
-Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — Item Usage Copy Hotfix 2 Web
-Runtime: 1.7.0-emporium-annex-a3h2
-Frontend asset revision: 1.7.0-emporium-annex-a3h2
+Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3 — UI Compactness Hotfix 4 Web
+Runtime: 1.7.0-emporium-annex-a3h4
+Frontend asset revision: 1.7.0-emporium-annex-a3h4
+Paired Bot runtime: 1.7.0-emporium-annex-a3h3
+Local DB schema: 15
+Hosted sync: 1
+Portal Action protocol: 31

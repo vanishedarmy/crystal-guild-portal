@@ -331,7 +331,6 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                         })() : null}
                       </div>
                     ) : null}
-                    {item.description ? <p className="moogle-item-description">{item.description}</p> : null}
                     {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
                     {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv.{number(item.min_level)}</div> : null}
                     <div className="moogle-card-actions">

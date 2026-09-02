@@ -29,5 +29,5 @@ test("completed Hunt result keeps the scenic image layer",()=>{
 test("production scenic CSS contains real newlines, not escaped newline text",()=>assert.doesNotMatch(css,/\\n/));
 test("stable production identity is current",()=>{
   assert.match(version,/WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
-  assert.match(version,/WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h2"/);
+  assert.match(version,/WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3h4"/);
 });

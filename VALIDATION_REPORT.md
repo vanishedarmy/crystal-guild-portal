@@ -1,35 +1,37 @@
-# Validation Report — Crystal Guild v1.7.0 — Item Usage Copy Hotfix 2
+# Validation Report — Crystal Guild v1.7.0 — UI Compactness Hotfix 4
 
 **Result: PASS**
 
 ## Release contract
 
-- Runtime/frontend revision: `1.7.0-emporium-annex-a3h2`
+- Web runtime/frontend: `1.7.0-emporium-annex-a3h4`
+- Paired Bot runtime: `1.7.0-emporium-annex-a3h3`
 - Local DB schema: **15**
 - Hosted sync schema: **1**
 - Portal Action protocol: **31**
 - Twitch command prefix: `!`
-- Baseline: Item Recovery Integrity Hotfix 1
-- Item values changed: **no**
+- Gameplay/data changes: **none**
 
 ## Automated regression
 
-- Bot: **664 / 664 PASS**
-- Frontend: **544 / 544 PASS**
+- Frontend: **549 / 549 PASS**
 - Hosted Web/API: **61 / 61 PASS**
-- Bot Python parse: **117 / 117 PASS**
 - Web Python parse: **15 / 15 PASS**
-- JS/MJS syntax: **200 / 200 PASS**
+- JS/MJS syntax: **201 / 201 PASS**
 - CSS structural checks: **8 / 8 PASS**
 - WebP decode: **843 / 843 PASS**
 - Public PNG count: **0**
 
-## Item-usage copy checks
+## Focused UI checks
 
-**PASS.** Recover & Equip renders the declared item effect only through the shared item formatter. The UI contains no current-recovery preview line and no explanatory potency/cap note.
+**PASS** — Blacksmith Recipes/Forge Gear subtitles contain no redundant `Active ·` prefix.
 
-**PASS.** Field-use results report the amount/resource restored without technical cap wording or a trailing HP/MP/AP status snapshot.
+**PASS** — Registered Companion and recipe grids use start alignment/content-sized cards rather than row stretching.
 
-**PASS.** The restorative-value regression remains intact: Potion **50 HP**, Hi-Potion **200 HP**, Mega-Potion **500 HP**, X-Potion **1,000 HP**, with the existing MP/AP percentage restoratives and revive/full-rest items unchanged.
+**PASS** — Emporium buy-card markup omits the long item-description paragraph while retaining stat summaries and requirements.
 
-No database migration, inventory rewrite, player reset, item rebalance, artwork change, or Moogle Emporium Annex behavior change is required.
+**PASS** — Fellowship mobile level card is max-width bounded, overflow-safe, and its progress track remains inside the card.
+
+**PASS** — Crystal Guild Connection omits the linked-account explanatory sentence and exposes **Refresh connection**.
+
+The source package contains no installed `node_modules`, so no local Vite production-build claim is made.

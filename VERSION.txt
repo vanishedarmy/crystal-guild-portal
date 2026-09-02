@@ -1,3 +1,3 @@
-Crystal Guild v1.7.0 — Retainer Service Alpha 2 Web — Artwork & UI Hotfix 2
+Crystal Guild v1.7.0 — Retainer Service Alpha 2 Web — Mobile Visual Pass Hotfix 3
 Runtime: 1.7.0-retainer-a2
-Frontend asset revision: 1.7.0-retainer-a2h2
+Frontend asset revision: 1.7.0-retainer-a2h3

@@ -1,3 +1,10 @@
+## 2026-09-01 — v1.7.0 Retainer Service Alpha 2 Mobile Visual Pass Hotfix 3
+- Fixes the Gold Saucer hero at narrow desktop/mobile-landscape widths by replacing the unbounded `auto` balance track with a bounded 220–360px track.
+- Ensures the title/intro column keeps usable width and the long MGP note wraps inside its own card instead of crushing the hero copy.
+- Preserves the existing <=900px one-column stack and adds explicit full-width balance behavior on mobile.
+- Selective responsive audit confirmed existing Gold Saucer disclosure pointers, Chocobo Racing, Triple Triad, and Retainer Hotfix 2 breakpoints remain intact; no additional redesign was introduced.
+- Frontend asset revision advances to `1.7.0-retainer-a2h3`. Runtime/schema/sync/protocol remain `1.7.0-retainer-a2` / 15 / 1 / 31.
+
 ## 2026-09-01 — v1.7.0 Retainer Service Alpha 2 Artwork & UI Hotfix 2
 - Restores the Retainer Service container as an explicit 12-column CSS grid so desktop `span-4` / `span-8` panels render at their intended widths.
 - Hard-bounds Moogle Retainer portrait and rank-crest sizing on desktop, tablet, and mobile to prevent oversized/cropped profile artwork.

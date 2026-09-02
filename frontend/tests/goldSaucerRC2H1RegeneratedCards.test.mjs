@@ -11,7 +11,7 @@ const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","a
 
 test("RC2 H1 routes Triple Triad to regenerated uniform card family", () => {
   assert.match(source, /TRIAD_CARD_ART_ROOT = "\/gold-saucer\/rc2h1\/triple-triad\/cards"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h3"/);
   assert.match(css, /\.triad-card\.full-face[\s\S]*?aspect-ratio:\s*5\s*\/\s*7/);
 });
 

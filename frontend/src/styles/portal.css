@@ -10883,3 +10883,40 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
   .retainer-rank-crest{width:40px;height:56px}
 }
 
+
+/* v1.7.0 Retainer Service Alpha 2 — Mobile Visual Pass Hotfix 3
+   Keep the Gold Saucer hero's balance note from claiming its max-content width
+   and crushing the title/intro column at narrow desktop and mobile-landscape widths. */
+.gold-saucer-hero{
+  grid-template-columns:minmax(0,1fr) minmax(220px,360px);
+}
+.gold-saucer-hero>div:not(.saucer-balance),
+.saucer-balance{
+  min-width:0;
+}
+.saucer-balance{
+  box-sizing:border-box;
+  width:100%;
+  max-width:360px;
+  justify-self:end;
+}
+.saucer-balance small{
+  line-height:1.45;
+  overflow-wrap:break-word;
+}
+@media(max-width:900px){
+  .gold-saucer-hero{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .saucer-balance{
+    width:100%;
+    max-width:none;
+    justify-self:stretch;
+    text-align:left;
+  }
+}
+@media(max-width:620px){
+  .gold-saucer-hero{gap:.75rem}
+  .saucer-balance{padding:.75rem .8rem}
+  .saucer-balance strong{font-size:1.35rem}
+}

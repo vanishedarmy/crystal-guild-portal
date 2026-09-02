@@ -17,5 +17,5 @@ test("Retainer artwork layout uses the intended 12-column grid", () => {
 test("Retainer portrait is hard-bounded instead of scaling across a full-width panel", () => {
   assert.match(css, /\.retainer-profile-art\{[^}]*max-height:176px/s);
   assert.match(css, /\.retainer-portrait-art\{[^}]*max-width:min\(72%,210px\)[^}]*max-height:176px/s);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h3"/);
 });

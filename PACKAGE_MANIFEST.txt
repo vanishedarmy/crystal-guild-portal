@@ -1,11 +1,12 @@
-Crystal Guild v1.7.0 — Retainer Service Alpha 2 Web — Artwork & UI Hotfix 2
-Frontend revision: 1.7.0-retainer-a2h2
+Crystal Guild v1.7.0 — Retainer Service Alpha 2 Web — Mobile Visual Pass Hotfix 3
+Frontend revision: 1.7.0-retainer-a2h3
 Runtime/Bot: 1.7.0-retainer-a2
 Paired local DB schema: 15
 Hosted sync: 1
 Portal protocol: 31
 Feature: Retainer Service — general or priority-targeted timed crafting-material procurement + eight-entry haul history
-Visual fix: restored 12-column Retainer page grid and bounded Retainer portrait sizing across desktop/tablet/mobile
+Selective UI fix: Gold Saucer hero balance track is bounded, title copy can no longer collapse, and <=900px stacks cleanly
+Retainer Hotfix 2 grid/portrait correction preserved unchanged
 Artwork root: /retainer/a2h1/ (unchanged; no image content changes)
-Gold Saucer: v1.6.0 production baseline preserved unchanged
+Gold Saucer: v1.6.0 production gameplay/economy preserved unchanged
 Moogle Emporium Annex: not included in Alpha 2; planned for a later v1.7.0 phase

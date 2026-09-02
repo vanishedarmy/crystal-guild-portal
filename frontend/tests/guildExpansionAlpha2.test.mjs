@@ -27,7 +27,7 @@ test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   assert.match(version, /WEB_BUILD = "Retainer Service Alpha 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h3"/);
   assert.equal(guideData.meta.version, "v1.7.0 — Retainer Service Alpha 2");
   assert.equal(guideData.meta.release, "1.7.0-retainer-a2");
 });

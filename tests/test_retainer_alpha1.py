@@ -39,7 +39,7 @@ class RetainerHostedAlpha1Tests(unittest.TestCase):
 
     def test_retainer_contract_advances_release_and_protocol(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-retainer-a2")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a2h2")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a2h3")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 31)
         for action in ("RETAINER_STATE", "RETAINER_DISPATCH", "RETAINER_COLLECT"):
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)

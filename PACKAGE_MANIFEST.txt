@@ -1,12 +1,11 @@
-Crystal Guild v1.7.0 — Retainer Service Alpha 2 Web — Mobile Visual Pass Hotfix 3
-Frontend revision: 1.7.0-retainer-a2h3
-Runtime/Bot: 1.7.0-retainer-a2
-Paired local DB schema: 15
-Hosted sync: 1
-Portal protocol: 31
-Feature: Retainer Service — general or priority-targeted timed crafting-material procurement + eight-entry haul history
-Selective UI fix: Gold Saucer hero balance track is bounded, title copy can no longer collapse, and <=900px stacks cleanly
-Retainer Hotfix 2 grid/portrait correction preserved unchanged
-Artwork root: /retainer/a2h1/ (unchanged; no image content changes)
-Gold Saucer: v1.6.0 production gameplay/economy preserved unchanged
-Moogle Emporium Annex: not included in Alpha 2; planned for a later v1.7.0 phase
+Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3
+Runtime: 1.7.0-emporium-annex-a3
+Local DB schema: 15
+Hosted sync schema: 1
+Portal Action protocol: 31
+Command prefix: !
+Baseline: v1.7.0 Retainer Service Alpha 2 Mobile Visual Hotfix 3
+Feature set: v1.6.0 Gold Saucer production + Retainer Service Alpha 2 + Moogle Emporium Annex Alpha 3
+Moogle Emporium Annex: one-time Fellowship facility; Fellowship LVL 3; 20,000 Gil + 12 Mythril Ore + 20 crafted items; expands personal rotations from 9 to 12 stock slots
+Retainer Service: one personal procurement Retainer; optional priority procurement; Rank/EXP; eight-entry collection history; restart-safe exactly-once collection
+Compatibility: no DB schema migration; no Portal Action protocol change; existing player/Fellowship/Gold Saucer/Retainer data preserved

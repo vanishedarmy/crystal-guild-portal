@@ -20,8 +20,8 @@ class GoldSaucerHostedAlpha2Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_alpha2_contract_and_actions(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-retainer-a2")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-retainer-a2h3")
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.0-emporium-annex-a3")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.0-emporium-annex-a3")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 31)
         self.assertIn("MONSTER_TOSS_START", ALLOWED_PORTAL_ACTIONS)
         self.assertIn("MONSTER_TOSS_THROW", ALLOWED_PORTAL_ACTIONS)

@@ -1,7 +1,9 @@
-# Upgrade to v1.7.0 Retainer Service Alpha 2 Mobile Visual Pass Hotfix 3
+# Upgrade to v1.7.0 Moogle Emporium Annex Alpha 3
 
-This is a **Web-only responsive UI hotfix** over Artwork & UI Hotfix 2. Replace the Web source with the Hotfix 3 Web package, or apply the supplied Hotfix 2 → Hotfix 3 Web overlay patch. The Bot does not need to change.
+Upgrade **Bot and Web together** from the verified v1.7.0 Retainer Service Alpha 2 Mobile Visual Hotfix 3 baseline.
 
-Runtime remains `1.7.0-retainer-a2`, local schema remains **15**, hosted sync remains **1**, and Portal Action protocol remains **31**. Preserve the existing database and secrets. No migration or player reset is required.
+Alpha 3 uses runtime `1.7.0-emporium-annex-a3`, local schema **15**, hosted sync **1**, and Portal Action protocol **31**. No database schema migration is required. The existing `fellowship_facilities` table receives the new `emporium_annex` facility row through the normal idempotent static-row seeding path, so existing player progression, inventory, Gil, MGP, Fellowship state, Retainer state/history, active adventures, and shop data are preserved.
 
-Retainer artwork remains under `/retainer/a2h1/` and is unchanged. Gold Saucer gameplay, MGP balance, rewards, limits, records, and Triple Triad card data are unchanged.
+The Annex is a one-time Fellowship construction project unlocked at Fellowship LVL 3. It requires **20,000 Gil**, **12 Mythril Ore**, **20 crafted items**, and the LVL 3 requirement. After completion, each personal Moogle Emporium rotation expands from **9 to 12 stock slots**. Existing nine-slot cached rotations are automatically invalidated when the Annex becomes active and are rebuilt using the established shop rules.
+
+Prices, sell values, shop refresh timing, level/job eligibility, and the existing weighted item selection model are unchanged. Preserve your existing database and secrets; do not overwrite live environment files with packaged examples.

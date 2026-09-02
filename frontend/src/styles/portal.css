@@ -10920,3 +10920,30 @@ button.triad-board-cell.empty{cursor:pointer;transition:border-color .15s ease,b
   .saucer-balance{padding:.75rem .8rem}
   .saucer-balance strong{font-size:1.35rem}
 }
+
+
+/* v1.7.0 Alpha 3 — Moogle Emporium Annex */
+.moogle-annex-status {
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.85rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 0.9rem;
+  align-items: center;
+  border: 1px solid rgba(230, 203, 136, 0.22);
+  border-radius: 10px 16px 10px 16px;
+  background: rgba(8, 19, 32, 0.58);
+}
+.moogle-annex-status > div { min-width: 0; display: grid; gap: 0.12rem; }
+.moogle-annex-status > div:nth-child(2) { justify-items: end; }
+.moogle-annex-status > div:nth-child(2) strong { color: var(--gold-bright); font-size: 0.78rem; letter-spacing: 0.08em; }
+.moogle-annex-status > div:nth-child(2) span { color: var(--crystal-soft); font-size: 0.78rem; }
+.moogle-annex-status > small { grid-column: 1 / -1; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
+.moogle-annex-status.open { border-color: rgba(143, 219, 255, 0.28); background: rgba(8, 29, 42, 0.62); }
+@media (max-width: 620px) {
+  .moogle-annex-status { grid-template-columns: 1fr; align-items: start; }
+  .moogle-annex-status > div:nth-child(2) { justify-items: start; }
+  .moogle-annex-status > small { grid-column: auto; }
+}

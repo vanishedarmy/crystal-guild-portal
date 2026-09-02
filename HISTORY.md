@@ -1,3 +1,9 @@
+## 2026-09-01 — v1.7.0 Moogle Emporium Annex Alpha 3
+
+- Adds the one-time shared Moogle Emporium Annex at Fellowship LVL 3 for 20,000 Gil, 12 Mythril Ore, and 20 crafted items.
+- Completing the Annex expands personal Moogle Emporium rotations from 9 to 12 stock slots and immediately reconciles cached nine-slot rotations.
+- Prices, sell values, refresh timing, schema 15, hosted sync 1, and Portal Action protocol 31 remain unchanged. Runtime/frontend advance to `1.7.0-emporium-annex-a3`.
+
 ## 2026-09-01 — v1.7.0 Retainer Service Alpha 2 Mobile Visual Pass Hotfix 3
 - Fixes the Gold Saucer hero at narrow desktop/mobile-landscape widths by replacing the unbounded `auto` balance track with a bounded 220–360px track.
 - Ensures the title/intro column keeps usable width and the long MGP note wraps inside its own card instead of crushing the hero copy.

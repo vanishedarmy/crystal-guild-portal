@@ -11,10 +11,10 @@ const whatsNew = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
 const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
 const version = await readFile(new URL("version.js", SRC), "utf8");
 
-test("Guild Expansion presents the five-facility Guild Board", () => {
+test("Guild Expansion presents the major facilities plus the Moogle Emporium Annex", () => {
   assert.match(page, /Guild Hall Foundation/);
   assert.match(page, /Guild Facilities/);
-  assert.match(page, /Lv\. 0–3/);
+  assert.match(page, /Moogle Emporium Annex/);
   assert.match(page, /Future Construction/);
   assert.match(page, /facility\.locked/);
 });
@@ -31,8 +31,8 @@ test("Player Guide explains facility play without backend implementation jargon"
 
 test("Final release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.7\.0"/);
-  assert.match(version, /WEB_BUILD = "Retainer Service Alpha 2"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-retainer-a2h3"/);
+  assert.match(version, /WEB_BUILD = "Moogle Emporium Annex Alpha 3"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-emporium-annex-a3"/);
   assert.match(whatsNew, /name: "Guild Expansion"/);
   assert.match(whatsNew, /Build the Guild together/);
   assert.match(whatsNew, /The Crystal Guild Airship/);

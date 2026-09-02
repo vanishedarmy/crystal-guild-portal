@@ -112,6 +112,9 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const filteredStock = useMemo(() => displayedStock.filter((item) => shopCategory(item) === category), [displayedStock, category]);
   const filteredSellableItems = useMemo(() => sellableItems.filter((item) => shopCategory(item) === category), [sellableItems, category]);
 
+  const annexUnlocked = Boolean(shop?.annex_unlocked);
+  const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 12 : 9));
+
   const shopActionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
@@ -269,6 +272,16 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           {busyKey === "shop-state" ? "Refreshing…" : "Refresh stock"}
         </button>
       </div>
+
+      {shop ? (
+        <div className={`moogle-annex-status ${annexUnlocked ? "open" : "closed"}`}>
+          <div><span className="panel-kicker">Guild Expansion</span><strong>Moogle Emporium Annex</strong></div>
+          <div><strong>{annexUnlocked ? "OPEN" : "NOT BUILT"}</strong><span>{number(stockSlots)} stock slots</span></div>
+          <small>{annexUnlocked
+            ? "The completed Annex adds three extra choices to every personal Emporium rotation."
+            : "The Fellowship can construct the Annex to expand personal rotations from 9 to 12 items."}</small>
+        </div>
+      ) : null}
 
       {!shop && shopActionsAvailable ? <div className="state-message compact-state">Loading your current Moogle rotation…</div> : null}
       {!shop && !shopActionsAvailable ? <div className="state-message compact-state">Current stock becomes available when Crystal Guild reconnects.</div> : null}

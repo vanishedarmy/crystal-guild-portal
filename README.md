@@ -1,9 +1,9 @@
-# Crystal Guild Web — v1.7.0 Moogle Emporium Annex Alpha 3
+# Crystal Guild v1.7.0 — Moogle Emporium Annex Alpha 3
 
-Current Web baseline: **Moogle Emporium Annex Alpha 3 — Mobile Visual Pass Hotfix 3**. Runtime remains `1.7.0-emporium-annex-a3h1`; frontend asset revision is `1.7.0-emporium-annex-a3h1h3`, paired Bot schema **15**, hosted sync **1**, Portal protocol **31**, with the existing v1.6.0 MGP/Gold Saucer production gameplay baseline preserved.
+Current baseline: **Item Usage Copy Hotfix 2** (`1.7.0-emporium-annex-a3h2`), local DB schema **15**, hosted sync **1**, Portal Action protocol **31**, Twitch prefix `!`.
 
-Retainer Service adds a personal Portal-only procurement desk with optional targeted material procurement. Dispatch one Retainer with Gil, optionally nominate a Priority material from that route, wait for the persisted assignment timer, then collect the committed crafting-material haul and Retainer EXP. Alpha 2 also keeps the eight most recent collected hauls. Rewards are fixed before departure and collection is exactly-once.
+The Moogle Emporium Annex remains the Alpha 3 feature: a shared Fellowship facility that expands personal Emporium rotations from 9 to 12 stock slots after construction. Retainer Service and the v1.6.0 Gold Saucer production systems remain intact.
 
-Hotfix 3 is a deliberately narrow responsive UI pass. It fixes the Gold Saucer hero at intermediate/mobile-landscape widths by bounding the Current Balance track instead of allowing its long note to size the grid at max-content width. At <=900px the hero stacks into one column. The Retainer Hotfix 2 grid and portrait corrections remain intact.
+Hotfix 2 is wording-only. Recover & Equip shows concise restorative effects, and field-use results report the restored amount/effect without technical recovery jargon.
 
 See `RELEASE_NOTES.md`, `UPGRADE_GUIDE.md`, and `VALIDATION_REPORT.md`.

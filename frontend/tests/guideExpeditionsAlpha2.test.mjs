@@ -26,5 +26,5 @@ test("Player Guide exposes a dedicated Expeditions section", () => {
 });
 
 test("Guide asset revision advances for Expeditions guide hotfix", () => {
-  assert.match(version, /1\.7\.0-emporium-annex-a3h1/);
+  assert.match(version, /1\.7\.0-emporium-annex-a3h2/);
 });

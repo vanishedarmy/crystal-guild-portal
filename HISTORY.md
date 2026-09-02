@@ -1,3 +1,4 @@
+- Item Usage Copy Hotfix 2: recovery cards now show the declared effect only and field-use results use concise restored-amount/effect wording. Runtime/frontend: `1.7.0-emporium-annex-a3h2`; schema 15 and Portal protocol 31 remain unchanged.
 ## 2026-09-02 — v1.7.0 Alpha 3 Item Recovery Hotfix 1
 - Verified the canonical Potion, MP/AP restorative, revival and full-restoration values without changing balance.
 - Recover & Equip now distinguishes fixed item potency from effective recovery capped by the target’s missing resource.

@@ -48,12 +48,10 @@ function eligibility(item, overview) {
 }
 function stateActionResult(action, fallback) { return action?.result?.message || fallback; }
 function quickRecoveryText(item, catalogItem) {
-  const potency = catalogItem?.use?.effects?.length
+  const text = catalogItem?.use?.effects?.length
     ? formatItemUse(catalogItem.use)
     : String(catalogItem?.description || item?.description || "Recovery item").replace(/\s+/g, " ").trim();
-  const effective = String(item?.preview || "").replace(/\s+/g, " ").trim();
-  const raw = effective ? `${potency} · Effective now ${effective}` : potency;
-  return raw.length > 96 ? `${raw.slice(0, 93).trimEnd()}…` : raw;
+  return text.length > 96 ? `${text.slice(0, 93).trimEnd()}…` : text;
 }
 
 export default function Inventory({ data, overview, onDetail, onRefresh }) {
@@ -187,7 +185,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
             <span className="recovery-usable-summary">Camp: 15m LIVE · 1h OFFLINE · {recoveryItems.length ? `${recoveryItems.length} recovery ${recoveryItems.length === 1 ? "item" : "items"} ready` : "no item recovery needed"}</span>
           </div>
           {recoveryMessage ? <div className="recovery-result" aria-live="polite">{recoveryMessage}</div> : null}
-          {recoveryItems.length ? <><div className="recovery-quick-grid">{recoveryItems.map((item) => { const target = String(recoveryTarget || "").trim().replace(/^@/, ""); const busy = busyKey === `use:${item.id}:${target || "self"}`; const catalogItem = recoveryCatalogById.get(item.id); return <button type="button" className="recovery-quick-action" key={item.id} aria-label={`Use ${item.name}${target ? ` on ${target}` : ""}`} disabled={!recoveryActionsAvailable || Boolean(busyKey)} onClick={() => useRecoveryItem(item)}><ItemArtwork item={item} className="recovery-item-artwork" /><span className="recovery-quick-copy"><strong className={`item-name rarity-${item.rarity}`}>{item.name}</strong><small>{target ? (catalogItem?.description || item.description || "Field recovery item") : quickRecoveryText(item, catalogItem)}</small></span><span className="recovery-quick-meta">Owned {number(item.quantity)} · {busy ? "Using…" : target ? `Use on @${target}` : "Use"}</span></button>; })}</div><p className="muted recovery-potency-note">Item potency is fixed. “Effective now” is capped by the HP, MP, or AP currently missing before the target reaches maximum.</p></> : <div className="muted recovery-empty">{recoveryState ? "No recovery item can be used right now." : "Recovery options will appear here when available."}</div>}
+          {recoveryItems.length ? <><div className="recovery-quick-grid">{recoveryItems.map((item) => { const target = String(recoveryTarget || "").trim().replace(/^@/, ""); const busy = busyKey === `use:${item.id}:${target || "self"}`; const catalogItem = recoveryCatalogById.get(item.id); return <button type="button" className="recovery-quick-action" key={item.id} aria-label={`Use ${item.name}${target ? ` on ${target}` : ""}`} disabled={!recoveryActionsAvailable || Boolean(busyKey)} onClick={() => useRecoveryItem(item)}><ItemArtwork item={item} className="recovery-item-artwork" /><span className="recovery-quick-copy"><strong className={`item-name rarity-${item.rarity}`}>{item.name}</strong><small>{quickRecoveryText(item, catalogItem)}</small></span><span className="recovery-quick-meta">Owned {number(item.quantity)} · {busy ? "Using…" : target ? `Use on @${target}` : "Use"}</span></button>; })}</div></> : <div className="muted recovery-empty">{recoveryState ? "No recovery item can be used right now." : "Recovery options will appear here when available."}</div>}
         </section>
       ) : null}
 

@@ -8,7 +8,7 @@ const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta
 test("Gold Saucer Alpha 1 public identity and tab are wired", () => {
   assert.equal(WEB_VERSION, "v1.7.0");
   assert.equal(WEB_BUILD, "Moogle Emporium Annex Alpha 3");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h1");
+  assert.equal(WEB_ASSET_REVISION, "1.7.0-emporium-annex-a3h2");
   const profile = read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /gold_saucer.*Gold Saucer/s);
   assert.match(profile, /\.\.\/player\/GoldSaucer\.jsx/);

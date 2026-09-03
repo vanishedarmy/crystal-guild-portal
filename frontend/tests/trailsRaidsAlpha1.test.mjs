@@ -12,14 +12,14 @@ test("Trails & Raids identity is current", () => {
   assert.equal(WEB_VERSION, "v1.7.1 Alpha 1");
   assert.equal(WEB_BUILD, "Resynthesis");
   assert.equal(WEB_RELEASE, "v1.7.1 Alpha 1 — Resynthesis");
-  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a1");
-  assert.equal(JSON.parse(read("package.json")).version, "1.7.1-alpha.1");
+  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a1h1");
+  assert.equal(JSON.parse(read("package.json")).version, "1.7.1-alpha.1-hotfix.1");
 });
 
 test("Ifrit guide data declares Inferno Crucible and the four Alpha 1 mechanics", () => {
   const data = JSON.parse(read("public/guide-data.json"));
   const ifrit = data.bosses.find((boss) => boss.id === "ifrit");
-  assert.equal(data.meta.release, "1.7.1-resynthesis-a1");
+  assert.equal(data.meta.release, "1.7.1-resynthesis-a1h1");
   assert.equal(ifrit.encounter_type, "Trial");
   assert.equal(ifrit.encounter_name, "Inferno Crucible");
   assert.equal(ifrit.raid_script, "ifrit_inferno_crucible");

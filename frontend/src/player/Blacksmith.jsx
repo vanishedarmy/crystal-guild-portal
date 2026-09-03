@@ -242,7 +242,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
 
   const resynthesize = (item) => {
     const recovery = (item.recovery || []).map((entry) => `${entry.name} × ${number(entry.quantity)}`).join(", ");
-    const prompt = `Resynthesize ${item.name}${Number(item.upgrade_level || 0) > 0 ? ` +${number(item.upgrade_level)}` : ""}?\n\nThis permanently destroys one copy and returns ${recovery || "crafting materials"}.`;
+    const prompt = `Resynthesize ${item.name}${Number(item.upgrade_level || 0) > 0 ? ` +${number(item.upgrade_level)}` : ""}?\n\nWARNING: This permanently destroys the selected gear and returns ${recovery || "crafting materials"}.\n\nThis action cannot be undone.`;
     if (!window.confirm(prompt)) return null;
     return runMutation(
       `resynthesis:${item.item_id}`,
@@ -477,6 +477,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             <span><strong>{number(state.resynthesis_count || 0)}</strong> items resynthesized</span>
             <span>Weapons and armor only · Relic and Artifact gear protected</span>
           </div>
+          <div className="resynthesis-warning" role="note"><strong>Warning:</strong> Resynthesizing permanently destroys the selected gear.</div>
           <div id="blacksmith-active-panel" className="resynthesis-shell" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-resynthesis">
             {resynthesisGroups.map((group) => (
               <section className="forge-type-group" key={`resynthesis-${group.type}`} aria-label={`${titleCase(group.type)} resynthesis`}>

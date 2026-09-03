@@ -19,7 +19,9 @@ test("resynthesis uses an explicit destructive confirmation and typed Portal act
   const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
   const api = await readFile(new URL("api/auth.js", SRC), "utf8");
   assert.match(smith, /window\.confirm\(prompt\)/);
-  assert.match(smith, /permanently destroys one copy/);
+  assert.match(smith, /Resynthesizing permanently destroys the selected gear/);
+  assert.match(smith, /WARNING: This permanently destroys the selected gear/);
+  assert.match(smith, /This action cannot be undone/);
   assert.match(api, /RESYNTHESIZE_ITEM/);
   assert.match(api, /submitResynthesizeItem/);
 });

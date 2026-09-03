@@ -51,6 +51,6 @@ test("Alpha 5 Hotfix 2 error boundary is retryable and logs the captured excepti
 });
 
 test("Alpha 5 Hotfix 2 advances only the frontend cache revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a1h1"/);
   assert.match(version, /WEB_VERSION = "v1\.7\.1 Alpha 1"/);
 });

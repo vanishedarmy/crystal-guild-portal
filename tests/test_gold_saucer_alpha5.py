@@ -21,7 +21,7 @@ class GoldSaucerHostedAlpha5Tests(unittest.TestCase):
 
     def test_alpha5_contract_adds_triple_triad_actions(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.1-resynthesis-a1")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.1-resynthesis-a1")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.1-resynthesis-a1h1")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 32)
         for action in ("TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY"):
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)

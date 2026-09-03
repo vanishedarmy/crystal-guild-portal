@@ -12,7 +12,7 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
   assert.match(version, /WEB_BUILD = "Resynthesis"/);
-  assert.match(version, /1\.7\.1-resynthesis-a1/);
+  assert.match(version, /1\.7\.1-resynthesis-a2/);
   assert.match(news, /name: "Expeditions"/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

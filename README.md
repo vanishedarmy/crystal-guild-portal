@@ -1,6 +1,6 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 1
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2
 
-Web package for the v1.7.1 Resynthesis Alpha 1 candidate. Runtime/frontend identity: `1.7.1-resynthesis-a1`; local database schema **15**; hosted sync **1**; Portal Action protocol **32**; command prefix `!`.
+Web package for the v1.7.1 Resynthesis Alpha 2 candidate. Runtime/frontend identity: `1.7.1-resynthesis-a2`; local database schema **15**; hosted sync **1**; Portal Action protocol **32**; command prefix `!`.
 
 This update adds the Blacksmith **Resynthesize Gear** service for deterministic weapon/armor material recovery while preserving all v1.7.0 Moogle Retainer progression and systems. Upgrade Bot and Web together and preserve the existing database, persistent storage, and secrets.
 

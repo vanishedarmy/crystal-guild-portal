@@ -330,7 +330,8 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const account = asRecord(saucerState.account);
   const mgp = Number(saucerState.mgp ?? saucerState.points ?? account.mgp ?? account.points ?? 0);
   const currencyCode = String(saucerState.currency_code || saucerState.currency_name || "MGP");
-  const dailyAllowanceMgp = Number(saucerState.daily_allowance_mgp ?? saucerState.daily_allowance_points ?? 50);
+  const dailyAllowanceMgp = Number(saucerState.daily_allowance_mgp ?? saucerState.daily_allowance_points ?? 125);
+  const dailyRewardMgp = Number(saucerState.daily_reward_mgp ?? saucerState.daily_reward_points ?? 50);
   const prizes = asObjectArray(saucerState.prizes);
   const history = asObjectArray(saucerState.history);
   const records = asRecord(saucerState.records);
@@ -404,7 +405,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
         <div className="saucer-balance">
           <span>Current Balance</span>
           <strong>{number(mgp)} {currencyCode}</strong>
-          <small>Manderville Gold Saucer Points (MGP) cannot be purchased with Gil. After your welcome day, the floor grants {number(dailyAllowanceMgp)} MGP once per UTC day so you can always play again.</small>
+          <small>Manderville Gold Saucer Points (MGP) cannot be purchased with Gil. After your welcome day, the floor grants {number(dailyAllowanceMgp)} MGP once per UTC day, and every UTC day also includes a {number(dailyRewardMgp)} MGP daily reward.</small>
         </div>
       </section>
 
@@ -806,7 +807,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </div>
             <details className="saucer-balance-notes">
               <summary>Balance details<DetailsPointer className="saucer-details-pointer" /></summary>
-              <p className="muted">Mini Cactpot now records net wins, draws, and losses against its 10 MGP ticket price. Your realized slot return is <b>{Number(records.slots_realized_return_pct || 0).toFixed(1)}%</b>; the current long-run slot payout target is about <b>{Number(balance.slots_theoretical_return_pct || 87.5).toFixed(1)}%</b>. Short sessions can vary dramatically.</p>
+              <p className="muted">Mini Cactpot now records net wins, draws, and losses against its 10 MGP ticket price. Your realized slot return is <b>{Number(records.slots_realized_return_pct || 0).toFixed(1)}%</b>; the current long-run slot payout target is about <b>{Number(balance.slots_theoretical_return_pct || 97.1).toFixed(1)}%</b>. Short sessions can vary dramatically.</p>
             </details>
             </div>
           </details>
@@ -818,7 +819,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 {history.map((entry, index) => {
                   const game = String(entry.game || "activity").replaceAll("_", " ");
                   const details = asRecord(entry.details);
-                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : game;
+                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "daily_reward" ? "Daily MGP reward" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
                     <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : entry.game === "triple_triad" ? `${number(details.player_score)}–${number(details.npc_score)}${details.card_reward_name ? ` · won ${details.card_reward_name}` : ""}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
                     <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} MGP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} MGP` : "—"}</b>

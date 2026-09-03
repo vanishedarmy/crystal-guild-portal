@@ -1,11 +1,5 @@
-# Upgrade to v1.7.1 Resynthesis Alpha 1 Hotfix 1
+# Upgrade to v1.7.1 Resynthesis Alpha 2
 
-This is a Web-only UI safety hotfix.
+Deploy Bot and Web together. Preserve the existing database and secrets. No database migration is required; schema remains 15 and Portal protocol remains 32.
 
-1. Keep the existing v1.7.1 Resynthesis Alpha 1 Bot and database.
-2. Deploy the Hotfix 1 Web package or apply the Alpha 1 → Hotfix 1 Web patch.
-3. Preserve hosted environment variables and secrets.
-4. Confirm the Web reports runtime `1.7.1-resynthesis-a1` and frontend asset revision `1.7.1-resynthesis-a1h1`.
-5. Open Blacksmith → Resynthesize Gear and verify the permanent-destruction warning appears before the gear list and again in the confirmation prompt.
-
-No database migration, protocol change, player reset, or item rebalance is required.
+Existing MGP balances, Gold Saucer history, prizes, Triple Triad collection/decks, Chocobo records, Resynthesis state, Retainers, Guild progression, and inventory are preserved. The new daily 50 MGP reward is tracked through the existing Gold Saucer history ledger and is granted exactly once per UTC day.

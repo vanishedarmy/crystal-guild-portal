@@ -6,9 +6,9 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Gold Saucer Alpha 1 public identity and tab are wired", () => {
-  assert.equal(WEB_VERSION, "v1.7.1 Alpha 1");
+  assert.equal(WEB_VERSION, "v1.7.1 Alpha 2");
   assert.equal(WEB_BUILD, "Resynthesis");
-  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a1h1");
+  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a2");
   const profile = read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /gold_saucer.*Gold Saucer/s);
   assert.match(profile, /\.\.\/player\/GoldSaucer\.jsx/);
@@ -39,6 +39,6 @@ test("Player Guide documents Alpha 1 and no longer says only eight relic questli
   assert.match(guide, /Chocobo Racing/);
   assert.match(guide, /Triple Triad/);
   assert.match(guide, /Prize Counter/);
-  assert.match(guide, /daily.*50 MGP/i);
+  assert.match(guide, /125 MGP floor allowance/i);
   assert.doesNotMatch(guide, /Eight three-stage endgame weapon questlines/);
 });

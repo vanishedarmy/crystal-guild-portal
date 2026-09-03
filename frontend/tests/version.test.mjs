@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
-test("v1.7.1 Resynthesis Alpha 1 web identity is centralized", () => {
-  assert.equal(WEB_VERSION, "v1.7.1 Alpha 1");
+test("v1.7.1 Resynthesis Alpha 2 web identity is centralized", () => {
+  assert.equal(WEB_VERSION, "v1.7.1 Alpha 2");
   assert.equal(WEB_BUILD, "Resynthesis");
-  assert.equal(WEB_RELEASE, "v1.7.1 Alpha 1 — Resynthesis");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.7.1 Alpha 1 — Resynthesis");
-  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a1h1");
+  assert.equal(WEB_RELEASE, "v1.7.1 Alpha 2 — Resynthesis");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.7.1 Alpha 2 — Resynthesis");
+  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a2");
 });
 
 

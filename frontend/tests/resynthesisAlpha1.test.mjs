@@ -28,7 +28,7 @@ test("resynthesis uses an explicit destructive confirmation and typed Portal act
 
 test("resynthesis cards retain the compact three-column Blacksmith layout", async () => {
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
-  assert.match(css, /v1\.7\.1 Resynthesis Alpha 1/);
+  assert.match(css, /v1\.7\.1 Resynthesis Alpha 2/);
   assert.match(css, /blacksmith-view-switch \{ grid-template-columns: repeat\(3/);
   assert.match(css, /resynthesis-grid/);
   assert.match(css, /resynthesis-recovery-list/);

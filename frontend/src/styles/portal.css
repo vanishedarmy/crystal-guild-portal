@@ -11251,7 +11251,7 @@ textarea {
   .blacksmith-recipe-grid .blacksmith-output-artwork { width: 34px; height: 34px; }
 }
 
-/* v1.7.1 Resynthesis Alpha 1 — Blacksmith material-recovery service */
+/* v1.7.1 Resynthesis Alpha 2 — Blacksmith material-recovery service */
 .blacksmith-view-switch { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .resynthesis-warning {
   display: flex;

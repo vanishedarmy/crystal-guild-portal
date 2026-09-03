@@ -11250,3 +11250,66 @@ textarea {
   }
   .blacksmith-recipe-grid .blacksmith-output-artwork { width: 34px; height: 34px; }
 }
+
+/* v1.7.1 Resynthesis Alpha 1 — Blacksmith material-recovery service */
+.blacksmith-view-switch { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.resynthesis-shell {
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+}
+.resynthesis-grid { align-items: start; }
+.resynthesis-card:has(.blacksmith-forge-artwork) {
+  position: relative;
+  min-height: 0;
+  padding-left: 78px;
+}
+.resynthesis-card .blacksmith-forge-artwork {
+  left: 10px;
+  top: 12px;
+  width: 54px;
+  height: 54px;
+}
+.resynthesis-recovery {
+  display: grid;
+  gap: 5px;
+}
+.resynthesis-recovery > span {
+  color: var(--muted);
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.resynthesis-recovery-list {
+  display: grid;
+  gap: 4px;
+}
+.resynthesis-recovery-list > div {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .38rem;
+  min-height: 30px;
+  padding: 3px 6px;
+  border-radius: 8px;
+  background: rgba(8, 22, 47, .72);
+  border: 1px solid rgba(143, 219, 255, .10);
+}
+.resynthesis-recovery-list strong { font-size: .8rem; }
+.resynthesis-recovery-list span { color: var(--gold-soft); font-size: .8rem; }
+.resynthesis-note {
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.35;
+}
+.resynthesis-card .equipment-action-button { min-height: 34px; padding-block: .42rem; }
+@media (max-width: 720px) {
+  .blacksmith-view-switch button { padding-inline: .55rem; }
+  .blacksmith-view-switch button > span { font-size: .88rem; }
+  .blacksmith-view-switch button small { font-size: .7rem; }
+  .resynthesis-card:has(.blacksmith-forge-artwork) { padding-left: 70px; }
+  .resynthesis-card .blacksmith-forge-artwork { width: 48px; height: 48px; }
+}
+@media (max-width: 560px) {
+  .blacksmith-view-switch { grid-template-columns: 1fr; }
+}

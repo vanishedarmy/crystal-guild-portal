@@ -175,7 +175,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
         <div className="retainer-hero-copy">
           <div className="panel-title-row">
             <div>
-              <p className="eyebrow">v1.7.0 Alpha 2 · Artwork Pass</p>
+              <p className="eyebrow">Moogle Retainer · Procurement Service</p>
               <h2>Retainer Service</h2>
             </div>
             <span className="small-badge">{number(state.gil)} Gil</span>

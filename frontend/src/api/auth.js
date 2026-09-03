@@ -141,6 +141,10 @@ export function submitForgeItem(itemId, csrfToken, idempotencyKey) {
   return submitPortalAction("FORGE_ITEM", { item_id: itemId }, csrfToken, idempotencyKey);
 }
 
+export function submitResynthesizeItem(itemId, csrfToken, idempotencyKey) {
+  return submitPortalAction("RESYNTHESIZE_ITEM", { item_id: itemId }, csrfToken, idempotencyKey);
+}
+
 export function submitGoldSaucerState(csrfToken, idempotencyKey) {
   return submitPortalAction("GOLD_SAUCER_STATE", {}, csrfToken, idempotencyKey);
 }

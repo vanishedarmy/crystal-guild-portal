@@ -23,16 +23,16 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.7.0"
-FRONTEND_ASSET_REVISION = "1.7.0-final"
+HOSTED_PORTAL_VERSION = "1.7.1-resynthesis-a1"
+FRONTEND_ASSET_REVISION = "1.7.1-resynthesis-a1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 31
+ACTION_PROTOCOL_VERSION = 32
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "WORKSHOP_EXCHANGE",
-    "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
+    "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "RESYNTHESIZE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
@@ -846,6 +846,13 @@ class HostedPortalStore:
             item_id = str(payload.get("item_id") or "").strip()
             if not item_id or len(item_id) > 100 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", item_id):
                 raise ValueError("Invalid forge item ID.")
+            payload = {"item_id": item_id}
+        elif kind == "RESYNTHESIZE_ITEM":
+            if set(payload) != {"item_id"}:
+                raise ValueError("RESYNTHESIZE_ITEM requires only item_id.")
+            item_id = str(payload.get("item_id") or "").strip()
+            if not item_id or len(item_id) > 100 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", item_id):
+                raise ValueError("Invalid resynthesis item ID.")
             payload = {"item_id": item_id}
         elif kind in {"CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT"}:
             if payload:

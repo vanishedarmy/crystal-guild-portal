@@ -3,6 +3,7 @@ import {
   submitCraftingState,
   submitCraftRecipe,
   submitForgeItem,
+  submitResynthesizeItem,
   waitForPortalAction,
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
@@ -65,7 +66,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
   const actionsAvailable = Boolean(
     isOwnProfile
     && auth.actions_enabled
-    && ["CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM"].every((kind) => capabilities.has(kind))
+    && ["CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "RESYNTHESIZE_ITEM"].every((kind) => capabilities.has(kind))
   );
   const csrfToken = auth.csrf_token || "";
 
@@ -197,13 +198,27 @@ export default function Blacksmith({ data, overview, onRefresh }) {
     { id: "unforged", title: "Unforged Gear", description: "Owned +0 gear grouped as Weapon, Armor, then Accessory.", collapsible: true, items: forgeItems.filter((item) => !item.equipped && item.current_upgrade === 0) },
   ]), [forgeItems]);
 
+  const resynthesisItems = useMemo(() => {
+    let values = Array.isArray(state?.resynthesis_items) ? [...state.resynthesis_items] : [];
+    const needle = query.trim().toLowerCase();
+    if (needle) values = values.filter((item) => [item.name, item.type, ...(item.recovery || []).map((entry) => entry.name)]
+      .some((value) => String(value || "").toLowerCase().includes(needle)));
+    return values.sort((a, b) => forgeTypeRank(a.type) - forgeTypeRank(b.type)
+      || Number(a.min_level || 1) - Number(b.min_level || 1)
+      || String(a.name || "").localeCompare(String(b.name || "")));
+  }, [state?.resynthesis_items, query]);
+
+  const resynthesisGroups = useMemo(() => ["weapon", "armor"]
+    .map((type) => ({ type, items: resynthesisItems.filter((item) => String(item.type || "").toLowerCase() === type) }))
+    .filter((group) => group.items.length), [resynthesisItems]);
+
   if (!isOwnProfile) {
     return (
       <section className="panel blacksmith-panel">
         <div className="panel-title-row"><h2>Guild Blacksmith</h2><span className="small-badge">Personal workshop</span></div>
         <div className="moogle-access-note">
           <strong>This workshop view belongs to its adventurer.</strong>
-          <span>Sign in with the Twitch account linked to this character to compare materials, craft recipes, and forge owned equipment.</span>
+          <span>Sign in with the Twitch account linked to this character to compare materials, craft recipes, forge equipment, and resynthesize unwanted gear.</span>
         </div>
       </section>
     );
@@ -224,6 +239,51 @@ export default function Blacksmith({ data, overview, onRefresh }) {
     () => submitForgeItem(item.item_id, csrfToken, actionKey("forge", item.item_id)),
     "Forge upgrade complete.",
   );
+
+  const resynthesize = (item) => {
+    const recovery = (item.recovery || []).map((entry) => `${entry.name} × ${number(entry.quantity)}`).join(", ");
+    const prompt = `Resynthesize ${item.name}${Number(item.upgrade_level || 0) > 0 ? ` +${number(item.upgrade_level)}` : ""}?\n\nThis permanently destroys one copy and returns ${recovery || "crafting materials"}.`;
+    if (!window.confirm(prompt)) return null;
+    return runMutation(
+      `resynthesis:${item.item_id}`,
+      () => submitResynthesizeItem(item.item_id, csrfToken, actionKey("resynthesis", item.item_id)),
+      "Resynthesis complete.",
+    );
+  };
+
+  const renderResynthesisCard = (item) => {
+    const busy = busyKey === `resynthesis:${item.item_id}`;
+    return (
+      <article className="blacksmith-card resynthesis-card" key={item.item_id}>
+        <ItemArtwork item={item} className="blacksmith-forge-artwork" />
+        <div className="blacksmith-card-head">
+          <div>
+            <span className="slot-label">{titleCase(item.type)} · Lv. {number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span>
+            <h3 className={`rarity-${item.rarity || "common"}`}>{item.name}{Number(item.upgrade_level || 0) > 0 ? ` +${number(item.upgrade_level)}` : ""}</h3>
+          </div>
+          <span className="small-badge">Owned {number(item.owned)}</span>
+        </div>
+        <div className="resynthesis-recovery">
+          <span>Materials Recovered</span>
+          <div className="resynthesis-recovery-list">
+            {(item.recovery || []).map((entry) => (
+              <div key={entry.item_id}>
+                <ItemArtwork item={{ ...entry, type: "material" }} className="blacksmith-material-artwork" />
+                <strong>{entry.name}</strong>
+                <span>× {number(entry.quantity)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        {Number(item.upgrade_level || 0) > 0 && Number(item.owned || 0) > 1 ? <small className="resynthesis-note">Forge-material recovery applies when the final owned copy is broken down.</small> : null}
+        <div className="blacksmith-card-actions forge-action">
+          <button type="button" className="equipment-action-button" title={item.reason || "Permanently break down one copy into crafting materials."} disabled={!actionsAvailable || !item.resynthesizable || Boolean(busyKey)} onClick={() => resynthesize(item)}>
+            {busy ? "Resynthesizing…" : item.resynthesizable ? "Resynthesize" : item.reason || "Unavailable"}
+          </button>
+        </div>
+      </article>
+    );
+  };
 
   const renderForgeCard = (item) => {
     const busy = busyKey === `forge:${item.item_id}`;
@@ -278,8 +338,8 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>
         <strong>{actionsAvailable ? "Blacksmith connection ready" : "Blacksmith controls unavailable"}</strong>
         <span>{actionsAvailable
-          ? "Recipe costs, owned materials, Fellowship Workshop discounts, and forge levels are checked again before every action."
-          : "Crafting and forging return when Crystal Guild reconnects."}</span>
+          ? "Recipe costs, forge levels, and resynthesis eligibility are checked again before every action."
+          : "Crafting, forging, and resynthesis return when Crystal Guild reconnects."}</span>
         {message ? <small aria-live="polite">{message}</small> : null}
       </div>
 
@@ -287,8 +347,9 @@ export default function Blacksmith({ data, overview, onRefresh }) {
         <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith views" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setView)}>
           <button type="button" role="tab" id="blacksmith-tab-recipes" data-tab-value="recipes" tabIndex={view === "recipes" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Recipes</span><small>Craft items</small></button>
           <button type="button" role="tab" id="blacksmith-tab-forge" data-tab-value="forge" tabIndex={view === "forge" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}><span>Forge Gear</span><small>Upgrade equipment</small></button>
+          <button type="button" role="tab" id="blacksmith-tab-resynthesis" data-tab-value="resynthesis" tabIndex={view === "resynthesis" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "resynthesis"} className={view === "resynthesis" ? "active" : ""} onClick={() => setView("resynthesis")}><span>Resynthesize Gear</span><small>Recover materials</small></button>
         </div>
-        <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : "Equipment…"} /></label>
+        <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : view === "resynthesis" ? "Gear or recovered material…" : "Equipment…"} /></label>
         <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busyKey)} onClick={() => loadState()}>
           {busyKey === "state" ? "Refreshing…" : "Refresh"}
         </button>
@@ -296,7 +357,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
 
       {!state && actionsAvailable ? <div className="state-message compact-state">Opening your Blacksmith ledger…</div> : null}
       {!state && !actionsAvailable ? <div className="state-message compact-state">Live Blacksmith data becomes available when Crystal Guild is online.</div> : null}
-      {state?.combat_locked ? <div className="moogle-combat-lock">Crafting and forging are locked while this adventurer is committed to an active encounter or raid.</div> : null}
+      {state?.combat_locked ? <div className="moogle-combat-lock">Blacksmith actions are locked while this adventurer is committed to an active encounter or raid.</div> : null}
 
       {state && view === "recipes" ? (
         <>
@@ -407,6 +468,29 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             })}
           </div>
           {!forgeItems.length ? <div className="state-message compact-state">No owned equipment matches that search.</div> : null}
+        </>
+      ) : null}
+
+      {state && view === "resynthesis" ? (
+        <>
+          <div className="blacksmith-summary-row">
+            <span><strong>{number(state.resynthesis_count || 0)}</strong> items resynthesized</span>
+            <span>Weapons and armor only · Relic and Artifact gear protected</span>
+          </div>
+          <div id="blacksmith-active-panel" className="resynthesis-shell" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-resynthesis">
+            {resynthesisGroups.map((group) => (
+              <section className="forge-type-group" key={`resynthesis-${group.type}`} aria-label={`${titleCase(group.type)} resynthesis`}>
+                <div className="forge-type-heading">
+                  <strong>{titleCase(group.type)}</strong>
+                  <span>{number(group.items.length)}</span>
+                </div>
+                <div className="forge-group-grid resynthesis-grid">
+                  {group.items.map(renderResynthesisCard)}
+                </div>
+              </section>
+            ))}
+          </div>
+          {!resynthesisItems.length ? <div className="state-message compact-state">No resynthesizable weapons or armor match that search.</div> : null}
         </>
       ) : null}
     </section>

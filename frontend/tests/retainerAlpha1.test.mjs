@@ -43,6 +43,6 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
   assert.match(guide, /Priority material/);
-  assert.equal(guideData.meta.version, "v1.7.0 — Moogle Retainer");
-  assert.equal(guideData.meta.release, "1.7.0-final");
+  assert.equal(guideData.meta.version, "v1.7.1 Alpha 1 — Resynthesis");
+  assert.equal(guideData.meta.release, "1.7.1-resynthesis-a1");
 });

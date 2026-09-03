@@ -133,7 +133,7 @@ const COMMAND_GROUPS=[
   {id:'jobs',name:'Jobs & Progression',description:'Switch Jobs, inspect abilities, equip Masteries, and manage titles.',categories:['Jobs','Cosmetics']},
   {id:'gear',name:'Inventory & Economy',description:'Manage gear and inventory, buy or sell items, and check currencies.',categories:['Inventory','Economy']},
   {id:'hunts',name:'Hunts & Quests',description:'Take notorious marks and complete unlock quests.',categories:['Hunts','Quests']},
-  {id:'craft',name:'Crafting & Relics',description:'Use the Blacksmith, forge upgrades, spend Hunt Seals, and awaken Relic weapons.',categories:['Crafting','Hunt Seals','Relics']},
+  {id:'craft',name:'Crafting & Relics',description:'Craft, forge, resynthesize gear, spend Hunt Seals, and awaken Relic weapons.',categories:['Crafting','Hunt Seals','Relics']},
   {id:'raids',name:'Raids & Bosses',description:'Browse bosses, join raids, queue round actions, use Limit Breaks and Summons, revive allies, and inspect contributions.',categories:['Raids']}
 ];
 const ALL_COMMANDS=D.commands;
@@ -982,7 +982,7 @@ function setupGuideSectionAccordions(){
   const sectionGroups={
     quickstart:'Begin',commands:'Begin',progression:'Begin','fellowship-guide':'Begin',stats:'Begin',combat:'Begin',party:'Begin',recovery:'Begin',
     jobs:'Build Your Hero',regions:'Build Your Hero',bestiary:'Build Your Hero',hunts:'Build Your Hero',quests:'Build Your Hero',
-    items:'Gear & Endgame',crafting:'Gear & Endgame',forge:'Gear & Endgame',quartermaster:'Gear & Endgame',relics:'Gear & Endgame',raids:'Gear & Endgame',bosses:'Gear & Endgame',
+    items:'Gear & Endgame',crafting:'Gear & Endgame',forge:'Gear & Endgame',resynthesis:'Gear & Endgame',quartermaster:'Gear & Endgame',relics:'Gear & Endgame',raids:'Gear & Endgame',bosses:'Gear & Endgame',
     completion:'Completion',faq:'Completion'
   };
   const stateKey=id=>`cg-guide-section-${id}`;

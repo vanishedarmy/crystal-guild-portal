@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.7.1 Alpha 1",
+    name: "Resynthesis",
+    title: "Break down unwanted gear into useful materials",
+    summary: "Resynthesis adds a third Guild Blacksmith service for permanently dismantling unwanted weapons and armor into deterministic crafting materials.",
+    highlights: [
+      { title: "Weapons and armor", description: "Unequipped weapons and armor can be resynthesized one copy at a time. Accessories remain outside the service for this first pass." },
+      { title: "Useful material recovery", description: "Each eligible item shows its exact recovery before confirmation. Salvage is deterministic rather than a random junk roll." },
+      { title: "Forged gear stays bounded", description: "The final owned copy of forged gear returns a modest portion of forge materials. Duplicate copies cannot multiply a single forge investment." },
+      { title: "Prestige gear protected", description: "Relic, Artifact, unsellable, and protected quest equipment cannot be resynthesized, and an equipped last copy must be unequipped first." },
+      { title: "Economy stays separated", description: "Selling remains the Gil path; Resynthesis is the material path. Base salvage resale is intentionally worth less than selling the original gear directly." },
+      { title: "Upgrade contract", description: "Local schema remains 15, hosted sync remains 1, and Portal Action protocol advances to 32 for RESYNTHESIZE_ITEM." },
+    ],
+    action: { tab: "blacksmith", label: "Open Guild Blacksmith" },
+  },
+  {
     version: "v1.7.0",
     name: "Moogle Retainer",
     title: "Retainers, the Emporium Annex, and a hardened Portal",

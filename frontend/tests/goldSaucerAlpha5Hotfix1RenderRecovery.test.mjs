@@ -32,6 +32,6 @@ test("Alpha 5 Hotfix 1 preserves the requested collapsible Gold Saucer contract"
 });
 
 test("Alpha 5 Hotfix 1 behavior remains under the current frontend revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.0-final"/);
-  assert.match(version, /WEB_VERSION = "v1\.7\.0"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a1"/);
+  assert.match(version, /WEB_VERSION = "v1\.7\.1 Alpha 1"/);
 });

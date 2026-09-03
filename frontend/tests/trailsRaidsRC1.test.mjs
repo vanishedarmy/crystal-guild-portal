@@ -9,8 +9,8 @@ const read=(p)=>fs.readFileSync(path.join(ROOT,p),"utf8");
 
 test("Trails & Raids public identity is current",()=>{
   const version=read("src/version.js");
-  assert.match(version,/WEB_BUILD = "Moogle Retainer"/);
-  assert.match(version,/1\.7\.0-final/);
+  assert.match(version,/WEB_BUILD = "Resynthesis"/);
+  assert.match(version,/1\.7\.1-resynthesis-a1/);
   const manifest=read("../UI_SHARED_ASSET_MANIFEST.json");
   assert.match(manifest,/v1\.5\.1 — Relic Arsenal Complete/);
 });

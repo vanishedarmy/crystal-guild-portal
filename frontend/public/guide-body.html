@@ -472,11 +472,11 @@
      <section class="section searchable" id="retainer-service">
       <div class="section-title">
        <div>
-        <span class="eyebrow">v1.7.0 Alpha 2</span>
+        <span class="eyebrow">Moogle Retainer</span>
         <h2>Retainer Service</h2>
        </div>
       </div>
-      <p>Retainers are personal procurement agents for crafting materials. They do not store equipment, equip gear, or enter combat. Alpha 2 adds optional targeted procurement and an eight-entry recent-haul record.</p>
+      <p>Retainers are personal procurement agents for crafting materials. They do not store equipment, equip gear, or enter combat. Optional targeted procurement and an eight-entry recent-haul record are included.</p>
       <div class="guide-grid two">
        <div class="guide-card">
         <h3>Dispatch &amp; Return</h3>
@@ -487,7 +487,7 @@
         <p>When the timer finishes, collect the secured haul from the Portal. Collection is exactly-once. Completed assignments award Retainer EXP, unlocking longer procurement routes with broader material pools. The Portal records the eight most recent collected hauls. Relic and Artifact materials remain excluded.</p>
        </div>
       </div>
-      <div class="note"><b>Alpha 2 assignments:</b> General prices remain Field Gathering (30m / 100 Gil), Monster Salvage (1h / 250 Gil), Mineral Survey (2h / 500 Gil, Rank 2), Regional Procurement (4h / 900 Gil, Rank 3), and Specialist Acquisition (8h / 1,500 Gil, Rank 4). Priority prices are 125 / 325 / 625 / 1,125 / 1,875 Gil respectively.</div>
+      <div class="note"><b>Assignments:</b> General prices remain Field Gathering (30m / 100 Gil), Monster Salvage (1h / 250 Gil), Mineral Survey (2h / 500 Gil, Rank 2), Regional Procurement (4h / 900 Gil, Rank 3), and Specialist Acquisition (8h / 1,500 Gil, Rank 4). Priority prices are 125 / 325 / 625 / 1,125 / 1,875 Gil respectively.</div>
      </section>
      <section class="section searchable" id="gold-saucer">
       <h2>Gold Saucer</h2>
@@ -930,7 +930,7 @@
         The complete item catalog, organized by level band and class/job: consumables, materials, weapons, armor, accessories and raid trophies.
        </p>
        <div class="callout">
-        <b>Portal character controls:</b> If you sign in with Twitch and open your own Adventurer profile, you can manage Jobs and Masteries, equipment and recovery, shop through the Moogle Emporium, contribute to Fellowship projects, craft and forge at the Guild Blacksmith, claim Daily Guild Provisions, and use the <b>Adventure Board</b> for interactive Solo Ventures, travel, and Hunts. The shared <b>Moogle Emporium Annex</b> is a one-time Fellowship construction project; once completed, every personal Emporium rotation expands from 9 to 12 stock slots. Rally Ventures are started and joined in Twitch chat. Crystal Guild checks identity, cooldowns, requirements, resources, and availability before applying any change. Active Battle turn commands and raids remain Twitch-first.
+        <b>Portal character controls:</b> If you sign in with Twitch and open your own Adventurer profile, you can manage Jobs and Masteries, equipment and recovery, shop through the Moogle Emporium, contribute to Fellowship projects, craft, forge, and resynthesize gear at the Guild Blacksmith, claim Daily Guild Provisions, and use the <b>Adventure Board</b> for interactive Solo Ventures, travel, and Hunts. The shared <b>Moogle Emporium Annex</b> is a one-time Fellowship construction project; once completed, every personal Emporium rotation expands from 9 to 12 stock slots. Rally Ventures are started and joined in Twitch chat. Crystal Guild checks identity, cooldowns, requirements, resources, and availability before applying any change. Active Battle turn commands and raids remain Twitch-first.
        </div>
        <div class="toolbar item-catalog-toolbar">
         <input class="search" id="itemSearch" placeholder="Search items"/>
@@ -1012,7 +1012,7 @@
        Recipes turn monster drops into useful items and equipment. Some recipes are known from the start; others must be discovered. Rare drops use bad-luck protection. Selling returns 70% of material value, 50% of gear value and 40% of consumable value.
       </p>
       <div class="callout">
-       <b>Adventurer Portal:</b> Open the <b>Blacksmith</b> tab on your own signed-in profile to compare known recipes against your live material, Gil and Hunt Seal totals, then craft directly without retyping recipe names in chat.
+       <b>Adventurer Portal:</b> Open the <b>Blacksmith</b> tab on your own signed-in profile to craft recipes, forge upgrades, or resynthesize unwanted weapons and armor into crafting materials.
       </div>
       <div class="grid" id="recipeGrid">
       </div>
@@ -1054,6 +1054,9 @@
       </div>
       <div class="callout">
        The Portal <b>Blacksmith</b> tab also shows each owned gear piece's current forge level, next material/Gil cost, and any Fellowship Workshop discount before you commit the upgrade.
+      </div>
+      <div class="callout">
+       <b>Resynthesis:</b> Unwanted <b>weapons and armor</b> can be permanently broken down for deterministic crafting materials. Equipped last copies must be unequipped first; accessories, Relic gear, Artifact gear, and protected quest equipment cannot be resynthesized. Forged gear returns a modest amount of forge material when its final owned copy is broken down. Use <code>!resynthesize &lt;item&gt;</code> in chat or the <b>Resynthesize Gear</b> Blacksmith tab.
       </div>
      </section>
      <section class="section searchable" id="quartermaster">

@@ -9,8 +9,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("v1.5.0 Alpha 2 keeps the v1.4 Dungeon catalog frozen", () => {
-  assert.equal(WEB_BUILD, "Moogle Retainer");
-  assert.equal(WEB_ASSET_REVISION, "1.7.0-final");
+  assert.equal(WEB_BUILD, "Resynthesis");
+  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a1");
   assert.match(read("src/player/Dungeons.jsx"), /Dungeons & Delves · v1\.4\.0/);
 });
 

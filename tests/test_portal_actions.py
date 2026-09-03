@@ -527,6 +527,7 @@ class PortalActionServerCase(unittest.TestCase):
             ("CRAFTING_STATE", {}, "crafting-state"),
             ("CRAFT_RECIPE", {"recipe_id": "hi_potion_batch", "quantity": 2}, "craft-recipe"),
             ("FORGE_ITEM", {"item_id": "hunters_axe"}, "forge-item"),
+            ("RESYNTHESIZE_ITEM", {"item_id": "hunters_axe"}, "resynthesize-item"),
             ("DAILY_STATE", {}, "daily-state"),
             ("CLAIM_DAILY", {}, "claim-daily"),
         ):
@@ -551,6 +552,9 @@ class PortalActionServerCase(unittest.TestCase):
             ("FORGE_ITEM", {}),
             ("FORGE_ITEM", {"item_id": "hunter axe"}),
             ("FORGE_ITEM", {"item_id": "hunters_axe", "quantity": 1}),
+            ("RESYNTHESIZE_ITEM", {}),
+            ("RESYNTHESIZE_ITEM", {"item_id": "hunter axe"}),
+            ("RESYNTHESIZE_ITEM", {"item_id": "hunters_axe", "quantity": 1}),
             ("DAILY_STATE", {"force": True}),
             ("CLAIM_DAILY", {"command": "!daily"}),
         )

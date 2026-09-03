@@ -7,13 +7,13 @@ const SRC = new URL("../src/", import.meta.url);
 test("Portal Phase 7 exposes typed Blacksmith and Daily actions without arbitrary command relay", async () => {
   const api = await readFile(new URL("api/auth.js", SRC), "utf8");
   for (const token of [
-    "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
-    "submitCraftingState", "submitCraftRecipe", "submitForgeItem", "submitDailyState", "submitClaimDaily",
+    "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "RESYNTHESIZE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
+    "submitCraftingState", "submitCraftRecipe", "submitForgeItem", "submitResynthesizeItem", "submitDailyState", "submitClaimDaily",
   ]) assert.match(api, new RegExp(token));
   assert.doesNotMatch(api, /submit(?:ReadyAll|Attack|Raid)|submitPortalAction\(.*(?:READYALL|ATTACK|RAID_ACTION)/);
 });
 
-test("signed-in owners get a visual Blacksmith workspace with recipe and forge comparisons", async () => {
+test("signed-in owners get a visual Blacksmith workspace with recipe, forge, and resynthesis comparisons", async () => {
   const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
   const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
   assert.match(profile, /blacksmith: lazy/);
@@ -22,6 +22,10 @@ test("signed-in owners get a visual Blacksmith workspace with recipe and forge c
   assert.match(smith, /submitCraftingState/);
   assert.match(smith, /submitCraftRecipe/);
   assert.match(smith, /submitForgeItem/);
+  assert.match(smith, /submitResynthesizeItem/);
+  assert.match(smith, /Resynthesize Gear/);
+  assert.match(smith, /Materials Recovered/);
+  assert.match(smith, /window\.confirm/);
   assert.match(smith, /Workshop facility discounts are already included/);
   assert.match(smith, /material\.owned/);
   assert.match(smith, /current_upgrade/);

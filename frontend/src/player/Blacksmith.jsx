@@ -304,7 +304,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             <span><strong>{number(state.known_recipe_count)}</strong> / {number(state.recipe_total)} recipes discovered</span>
             <span>Craft quantity is capped at 20 per action.</span>
           </div>
-          <div id="blacksmith-active-panel" className="blacksmith-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-recipes">
+          <div id="blacksmith-active-panel" className="blacksmith-grid blacksmith-recipe-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-recipes">
             {recipes.map((recipe) => {
               const maximum = Math.max(0, Number(recipe.max_quantity || 0));
               const quantity = clampQuantity(quantities[recipe.id] ?? 1, Math.max(1, maximum));

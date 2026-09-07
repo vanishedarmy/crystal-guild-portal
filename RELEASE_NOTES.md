@@ -1,14 +1,12 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 4
 
-Alpha 2 keeps the Resynthesis feature set intact and rebalances Gold Saucer MGP upward so daily play feels materially rewarding.
+Hotfix 4 restores useful at-a-glance information to Moogle Emporium item cards without bringing back the long flavor paragraphs removed during the compactness pass.
 
-- Daily recovery allowance: **125 MGP** after the welcome day.
-- Separate daily Gold Saucer reward: **50 MGP** once per UTC day, including the welcome day.
-- Mini Cactpot: 10 MGP entry unchanged; sum-6 jackpot raised to **1,250 MGP**.
-- Crystal Slots: 15 MGP entry unchanged; pair payout raised to 23 MGP for about **97.1% theoretical RTP**.
-- Monster Toss: 20 MGP entry unchanged; score payouts raised to **8 / 18 / 35 / 60 / 90 MGP**.
-- Chocobo Racing entries unchanged; podiums now **120/70/35**, **190/105/50**, and **300/160/75 MGP**.
-- Triple Triad entries unchanged; win purses now **100 / 150 / 240 MGP**. Draws still refund entry.
-- Prize Counter prices rise from **500 MGP** at the entry tier to **9,000 MGP** for the top prestige title.
+- Buy cards for usable items now show the canonical short effect summary.
+- Sell rows show the same compact effect summary before a player disposes of an item.
+- Examples include **Restores 200 HP**, **Removes Blind**, **Grants Evade for 2 rounds**, **Deals 450 Earth damage**, and **Restores All Stats**.
+- The text comes from the shared item-effect formatter already used by Inventory, so Emporium and Inventory stay consistent.
+- Effect copy is capped to two visual lines to preserve the compact three-column shop layout.
+- Item prices, stock rotation, rarity weighting, level/job eligibility, actual effects, sell values, Gold Saucer balance, Resynthesis, and progression are unchanged.
 
-Runtime/frontend: `1.7.1-resynthesis-a2`. Local schema **15**, hosted sync **1**, Portal protocol **32**, prefix `!`. No migration or player reset.
+This is Web-only. Web runtime/frontend remains `1.7.1-resynthesis-a2`; paired Bot remains `1.7.1-resynthesis-a2h3`. Local schema **15**, hosted sync **1**, Portal protocol **32**, prefix `!`. No migration or player reset.

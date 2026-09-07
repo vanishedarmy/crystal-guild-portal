@@ -9,6 +9,7 @@ export const MAJOR_UPDATES = [
       { title: "Better attraction payouts", description: "Mini Cactpot reaches 1,250 MGP, Crystal Slots targets about 97.1% return, Monster Toss pays more for strong scores, and all three Chocobo Racing podiums are richer." },
       { title: "Triple Triad pays skill", description: "Win purses rise to 100 / 150 / 240 MGP for Saucer Attendant, Card Shark, and Crystal Master. Draws still refund the exact entry fee." },
       { title: "Prize Counter scales with earnings", description: "Cosmetic-title prices rise from 500 MGP at the entry tier to 9,000 MGP for Card Hall Master, preserving long-term Gold Saucer goals." },
+      { title: "Emporium item clarity", description: "Moogle Emporium item cards now show a compact effect line such as Restores 200 HP, Removes Blind, or Deals 450 Earth damage without restoring the old long flavor paragraphs." },
       { title: "No migration", description: "Local schema remains 15, hosted sync remains 1, and Portal Action protocol remains 32." },
     ],
     action: { tab: "gold_saucer", label: "Enter Gold Saucer" },

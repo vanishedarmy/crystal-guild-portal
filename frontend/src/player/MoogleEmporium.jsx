@@ -6,7 +6,7 @@ import {
   waitForPortalAction,
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
-import { duration, formatBonuses, number } from "../utils/formatters.js";
+import { duration, formatBonuses, formatItemUse, number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
@@ -318,6 +318,9 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     </div>
                     <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span></div>
                     <div className="card-meta">Owned {number(item.owned)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</div>
+                    {Array.isArray(item?.use?.effects) && item.use.effects.length ? (
+                      <p className="moogle-item-brief">{formatItemUse(item.use)}</p>
+                    ) : null}
                     {item.equipment && Object.keys(itemBonuses(item)).length ? (
                       <div className="moogle-stat-summary">
                         <span className="moogle-stat-label">Stat boosts</span>
@@ -355,6 +358,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       <span className="slot-label">{typeLabel(item.type)}</span>
                       <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
                       <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
+                      {Array.isArray(item?.use?.effects) && item.use.effects.length ? <small className="moogle-item-brief">{formatItemUse(item.use)}</small> : null}
                       {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
                     </div>
                     <div className="moogle-card-actions sell-actions">

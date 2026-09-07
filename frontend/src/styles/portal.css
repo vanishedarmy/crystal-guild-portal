@@ -4731,6 +4731,20 @@ button.featured-trophy {
   font-size: 0.76rem;
   line-height: 1.42;
 }
+/* v1.7.1 Alpha 2 Hotfix 4 — compact Emporium item-purpose copy. */
+.moogle-item-brief {
+  margin: 0.05rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.77rem;
+  line-height: 1.32;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.moogle-sell-copy .moogle-item-brief {
+  color: var(--muted);
+}
 .moogle-stat-summary {
   min-width: 0;
   margin-top: 0.08rem;

@@ -1,7 +1,7 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 4
 
-Web package for the v1.7.1 Resynthesis Alpha 2 candidate. Runtime/frontend identity: `1.7.1-resynthesis-a2`; local database schema **15**; hosted sync **1**; Portal Action protocol **32**; command prefix `!`.
+Web-only Moogle Emporium item-information hotfix on the v1.7.1 Alpha 2 Web baseline. The Web runtime and frontend asset revision remain `1.7.1-resynthesis-a2`; the paired Bot is v1.7.1 Alpha 2 Hotfix 3 (`1.7.1-resynthesis-a2h3`). Local schema remains **15**, hosted sync **1**, Portal Action protocol **32**, and the command prefix remains `!`.
 
-This update adds the Blacksmith **Resynthesize Gear** service for deterministic weapon/armor material recovery while preserving all v1.7.0 Moogle Retainer progression and systems. Upgrade Bot and Web together and preserve the existing database, persistent storage, and secrets.
+Moogle Emporium usable-item cards now show a compact canonical effect line in both Buy and Sell views. The old long flavor-description paragraphs remain excluded. No prices, stock weighting, item effects, inventory rules, Gold Saucer balance, Resynthesis behavior, or progression data change.
 
 See `RELEASE_NOTES.md`, `UPGRADE_GUIDE.md`, and `VALIDATION_REPORT.md`.

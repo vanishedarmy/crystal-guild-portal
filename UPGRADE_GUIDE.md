@@ -1,5 +1,5 @@
-# Upgrade to v1.7.1 Resynthesis Alpha 2
+# Upgrade to v1.7.1 Resynthesis Alpha 2 Hotfix 4
 
-Deploy Bot and Web together. Preserve the existing database and secrets. No database migration is required; schema remains 15 and Portal protocol remains 32.
+Deploy the Hotfix 4 **Web** over the existing Alpha 2 Web. Keep the current Hotfix 3 Bot unchanged. Preserve the live database, hosted secrets, persistent state, OAuth/session configuration, and all player data.
 
-Existing MGP balances, Gold Saucer history, prizes, Triple Triad collection/decks, Chocobo records, Resynthesis state, Retainers, Guild progression, and inventory are preserved. The new daily 50 MGP reward is tracked through the existing Gold Saucer history ledger and is granted exactly once per UTC day.
+No database migration, protocol change, player reset, stock refresh, or item rebalance is required. After deployment, open Moogle Emporium → Items and verify usable items display a short effect line such as `Restores 200 HP`, `Removes Blind`, `Grants Evade for 2 rounds`, or `Deals 450 Earth damage`.

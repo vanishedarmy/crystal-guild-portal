@@ -28,6 +28,6 @@ test("completed Hunt result keeps the scenic image layer",()=>{
 });
 test("production scenic CSS contains real newlines, not escaped newline text",()=>assert.doesNotMatch(css,/\\n/));
 test("stable production identity is current",()=>{
-  assert.match(version,/WEB_BUILD = "Resynthesis"/);
-  assert.match(version,/WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a2"/);
+  assert.match(version,/WEB_BUILD = "Resynthesis H5"/);
+  assert.match(version,/WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a2h5"/);
 });

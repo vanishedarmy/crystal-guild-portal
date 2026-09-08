@@ -1,8 +1,6 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 4
-Web runtime: 1.7.1-resynthesis-a2
-Frontend asset revision: 1.7.1-resynthesis-a2
-Paired Bot runtime: 1.7.1-resynthesis-a2h3
-Database schema: 15
-Hosted sync: 1
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Venture & Equipment UX
+Web runtime/frontend: 1.7.1-resynthesis-a2h5
+Paired Bot runtime: 1.7.1-resynthesis-a2h5
+Local DB schema: 15
+Hosted sync schema: 1
 Portal Action protocol: 32
-Command prefix: !

@@ -31,8 +31,8 @@ test("Player Guide explains facility play without backend implementation jargon"
 
 test("Final release identity and launch summary are current", () => {
   assert.match(version, /WEB_VERSION = "v1\.7\.1 Alpha 2"/);
-  assert.match(version, /WEB_BUILD = "Resynthesis"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a2"/);
+  assert.match(version, /WEB_BUILD = "Resynthesis H5"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a2h5"/);
   assert.match(whatsNew, /name: "Guild Expansion"/);
   assert.match(whatsNew, /Build the Guild together/);
   assert.match(whatsNew, /The Crystal Guild Airship/);

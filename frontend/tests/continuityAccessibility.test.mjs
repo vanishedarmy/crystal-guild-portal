@@ -16,12 +16,13 @@ test("Cloud Continuity adds a keyboard skip path and grouped profile navigation"
   assert.match(css, /prefers-contrast:\s*more/);
 });
 
-test("level-oriented Portal lists are explicitly ascending", async () => {
+test("level-oriented Portal lists use the intended sort direction", async () => {
   const inventory = await readFile(new URL("player/Inventory.jsx", SRC), "utf8");
   const hunts = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   const shop = await readFile(new URL("player/MoogleEmporium.jsx", SRC), "utf8");
   const blacksmith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
-  assert.match(inventory, /sort\(compareItemsByLevel\)/);
+  assert.match(inventory, /compareGearByLevel/);
+  assert.match(inventory, /itemLevel\(right\) - itemLevel\(left\)/);
   assert.match(hunts, /\.sort\(compareByLevel\)/);
   assert.match(hunts, /regions = \[\.\.\.\(state\?\.regions \|\| \[\]\)\]\.sort/);
   assert.match(shop, /sort\(compareShopItems\)/);

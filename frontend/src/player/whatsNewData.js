@@ -1,18 +1,20 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.7.1 Alpha 2",
+    version: "v1.7.1 Alpha 2 H5",
     name: "Resynthesis",
-    title: "Gold Saucer MGP rewards step up",
-    summary: "Alpha 2 rebalances Gold Saucer earnings upward while raising Prize Counter goals, keeping attraction entry fees and the Resynthesis service unchanged.",
+    title: "Gold Saucer MGP rewards step up — plus gear & Venture polish",
+    summary: "Alpha 2 keeps the richer Gold Saucer economy and Resynthesis service while Hotfix 5 makes Stream Ventures battle-only and tightens equipment organization throughout the Portal.",
     highlights: [
-      { title: "Daily MGP support", description: "The daily recovery allowance rises to 125 MGP and the Saucer now grants a separate 50 MGP daily reward once per UTC day." },
+      { title: "Stream Ventures battle-only", description: "Rally Ventures now resolve as 100% encounters. The chest branch is removed from Stream Ventures; Portal Solo Venture retains its separate encounter/treasure roll." },
+      { title: "Favorite and sort gear", description: "Weapons, armor, and accessories sort from highest item level to lowest, and your own Portal inventory can move favorite gear into a dedicated Favorites view." },
+      { title: "Equipment clarity", description: "Equipment cards show item level, weapon cards list recommended Jobs best-first, and named 'replaces' comparison copy has been removed." },
+      { title: "Collapsible activity", description: "Recent Activity can now collapse on the Adventurer Overview and Streamer Dashboard." },
+      { title: "Daily MGP support", description: "The daily recovery allowance is 125 MGP and the Saucer grants a separate 50 MGP daily reward once per UTC day." },
       { title: "Better attraction payouts", description: "Mini Cactpot reaches 1,250 MGP, Crystal Slots targets about 97.1% return, Monster Toss pays more for strong scores, and all three Chocobo Racing podiums are richer." },
-      { title: "Triple Triad pays skill", description: "Win purses rise to 100 / 150 / 240 MGP for Saucer Attendant, Card Shark, and Crystal Master. Draws still refund the exact entry fee." },
       { title: "Prize Counter scales with earnings", description: "Cosmetic-title prices rise from 500 MGP at the entry tier to 9,000 MGP for Card Hall Master, preserving long-term Gold Saucer goals." },
-      { title: "Emporium item clarity", description: "Moogle Emporium item cards now show a compact effect line such as Restores 200 HP, Removes Blind, or Deals 450 Earth damage without restoring the old long flavor paragraphs." },
-      { title: "No migration", description: "Local schema remains 15, hosted sync remains 1, and Portal Action protocol remains 32." },
+      { title: "No migration", description: "Local schema remains 15, hosted sync remains 1, and Portal Action protocol remains 32. Gear Favorites are browser-local presentation state." },
     ],
-    action: { tab: "gold_saucer", label: "Enter Gold Saucer" },
+    action: { tab: "inventory", label: "Review Equipment" },
   },
   {
     version: "v1.7.1 Alpha 1",

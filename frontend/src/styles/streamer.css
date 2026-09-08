@@ -1574,3 +1574,10 @@ summary:has(> .details-collapse-pointer)::after { content: none !important; disp
   height: 1.35rem !important;
   flex-basis: 1.35rem !important;
 }
+
+
+/* v1.7.1 Resynthesis Alpha 2 Hotfix 5 — collapsible Recent Activity ledger. */
+.streamer-collapsible-ledger > summary { list-style:none; cursor:pointer; }
+.streamer-collapsible-ledger > summary::-webkit-details-marker { display:none; }
+.streamer-collapsible-ledger:not([open]) > summary { margin-bottom:0; border-bottom-color:transparent; }
+.streamer-collapsible-ledger .streamer-heading-tools { display:inline-flex; align-items:center; gap:.55rem; }

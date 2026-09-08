@@ -11341,3 +11341,23 @@ textarea {
 @media (max-width: 560px) {
   .blacksmith-view-switch { grid-template-columns: 1fr; }
 }
+
+
+/* v1.7.1 Resynthesis Alpha 2 Hotfix 5 — equipment favorites + compact gear metadata. */
+.inventory-view-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.55rem; margin:.9rem 0 .75rem; }
+.inventory-view-tabs button { min-height:42px; border:1px solid rgba(151,199,239,.32); background:rgba(5,18,33,.72); color:var(--text); border-radius:4px; padding:.55rem .8rem; font:inherit; cursor:pointer; }
+.inventory-view-tabs button.active { border-color:rgba(231,204,119,.72); background:rgba(231,204,119,.10); color:var(--gold-soft,#ead99f); }
+.inventory-view-tabs button span { margin-left:.4rem; opacity:.82; }
+.inventory-favorites-panel { display:grid; gap:.7rem; }
+.inventory-favorites-heading { margin-bottom:0; }
+.inventory-action-card.is-favorite { box-shadow:inset 0 0 0 1px rgba(231,204,119,.22); }
+.weapon-job-recommendation { display:block; color:var(--gold-soft,#ead99f); font-size:.72rem; line-height:1.35; overflow-wrap:anywhere; }
+.gear-favorite-button { min-height:38px; padding:.45rem .7rem; border:1px solid rgba(151,199,239,.35); border-radius:4px; background:rgba(5,18,33,.78); color:var(--text); cursor:pointer; }
+.gear-favorite-button.active { border-color:rgba(231,204,119,.72); color:var(--gold-soft,#ead99f); }
+.equipment-card-actions { grid-template-columns:minmax(0,1fr) auto auto; }
+.overview-recent-activity > summary { list-style:none; cursor:pointer; }
+.overview-recent-activity > summary::-webkit-details-marker { display:none; }
+.overview-activity-summary-meta { display:inline-flex; align-items:center; gap:.55rem; }
+.overview-recent-activity:not([open]) > summary { margin-bottom:0; }
+@media (max-width:760px) { .equipment-card-actions { grid-template-columns:1fr 1fr; } .equipment-compare { grid-column:1/-1; } }
+@media (max-width:520px) { .inventory-view-tabs { grid-template-columns:1fr; } .equipment-card-actions { grid-template-columns:1fr; } .equipment-compare { grid-column:auto; } .gear-favorite-button, .equipment-card-actions .equipment-action-button { width:100%; } }

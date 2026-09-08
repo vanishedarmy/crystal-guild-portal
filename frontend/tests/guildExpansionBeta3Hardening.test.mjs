@@ -18,7 +18,7 @@ test("Beta 3 binds Fellowship contributions to the rendered project", () => {
 });
 
 test("Final player-facing release copy keeps the hardening summary without backend jargon", () => {
-  assert.match(version, /WEB_BUILD = "Resynthesis"/);
+  assert.match(version, /WEB_BUILD = "Resynthesis H5"/);
   assert.match(version, /1\.7\.1-resynthesis-a2/);
   assert.match(news, /Guild Expansion has arrived/);
   assert.match(news, /Shared progress stays reliable/);

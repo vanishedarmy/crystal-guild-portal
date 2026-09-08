@@ -57,9 +57,21 @@ function shopLevel(item) {
 }
 
 function compareShopItems(left, right) {
+  const leftEquipment = EQUIPMENT_TYPES.has(String(left?.type || "").toLowerCase());
+  const rightEquipment = EQUIPMENT_TYPES.has(String(right?.type || "").toLowerCase());
+  if (leftEquipment && rightEquipment) return shopLevel(right) - shopLevel(left)
+    || String(left?.type || "").localeCompare(String(right?.type || ""))
+    || String(left?.name || "").localeCompare(String(right?.name || ""));
   return shopLevel(left) - shopLevel(right)
     || String(left?.type || "").localeCompare(String(right?.type || ""))
     || String(left?.name || "").localeCompare(String(right?.name || ""));
+}
+
+function weaponRecommendation(item) {
+  const jobs = Array.isArray(item?.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
+  if (!jobs.length) return "All Jobs";
+  if (jobs.length === 1) return `Best: ${jobs[0]}`;
+  return `Best: ${jobs[0]} · Also: ${jobs.slice(1).join(", ")}`;
 }
 
 async function finishedAction(response) {
@@ -329,12 +341,11 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                           const slot = String(item.type || "").toLowerCase();
                           const current = currentBySlot.get(slot);
                           if (!current?.id) return <small>Compared with empty {typeLabel(slot).toLowerCase()} slot: all listed boosts are gained.</small>;
-                          const upgrade = current.upgrade_level ? ` +${current.upgrade_level}` : "";
-                          return <small>Vs. {current.name}{upgrade}: {equipmentDelta(item, current)}</small>;
+                          return <small>Compared with current {typeLabel(slot).toLowerCase()}: {equipmentDelta(item, current)}</small>;
                         })() : null}
                       </div>
                     ) : null}
-                    {Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
+                    {String(item.type || "").toLowerCase() === "weapon" ? <div className="moogle-requirement weapon-job-recommendation">{weaponRecommendation(item)}</div> : Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
                     {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv. {number(item.min_level)}</div> : null}
                     <div className="moogle-card-actions">
                       {!item.equipment ? <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max="99" value={quantityInputValue(buyQty, item.id)} onFocus={() => beginQuantityEdit(setBuyQty, buyQty, item.id)} onChange={(event) => updateQuantityInput(setBuyQty, item.id, event.target.value, 99)} onBlur={(event) => finishQuantityEdit(setBuyQty, item.id, event.target.value, 99)} /></label> : <span className="moogle-fixed-quantity">Qty 1</span>}

@@ -31,6 +31,10 @@ function DetailBody({ detail }) {
     const equipped = Boolean(item.id) && (type === "equipment" || Boolean(item.equipped));
     const quantity = Number(item.quantity || 0);
     const requirements = item.id && ["weapon", "armor", "accessory"].includes(itemType) ? formatEquipmentRequirements(item) : "";
+    const allowedJobs = Array.isArray(item.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
+    const weaponJobs = itemType === "weapon"
+      ? (!allowedJobs.length ? "All Jobs" : allowedJobs.length === 1 ? `Best: ${allowedJobs[0]}` : `Best: ${allowedJobs[0]} · Also: ${allowedJobs.slice(1).join(", ")}`)
+      : "";
 
     const Section = ({ label, children }) => (
       <section className="detail-section"><div className="data-label">{label}</div><p>{children}</p></section>
@@ -69,6 +73,7 @@ function DetailBody({ detail }) {
     } else if (itemType === "accessory") {
       content = (
         <>
+          <Section label="Item Level">Lv. {number(item.min_level || 1)}</Section>
           {hasBonuses ? <Section label="Bonuses">{formatBonuses(item.bonuses)}</Section> : null}
           {traits ? <Section label="Special Effect">{traits}</Section> : null}
           {requirements ? <Section label="Equipment Requirements">{requirements}</Section> : null}
@@ -78,7 +83,9 @@ function DetailBody({ detail }) {
     } else if (itemType === "weapon" || itemType === "armor") {
       content = (
         <>
+          <Section label="Item Level">Lv. {number(item.min_level || 1)}</Section>
           {hasBonuses ? <Section label="Stat Bonuses">{formatBonuses(item.bonuses)}</Section> : null}
+          {weaponJobs ? <Section label="Recommended Jobs">{weaponJobs}</Section> : null}
           {traits ? <Section label="Special Traits">{traits}</Section> : null}
           {item.relic_stage ? <Section label="Relic Stage">Stage {number(item.relic_stage)}</Section> : null}
           {requirements ? <Section label="Equipment Requirements">{requirements}</Section> : null}

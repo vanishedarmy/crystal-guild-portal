@@ -49,7 +49,7 @@ test("Portal Phase 2 inventory retains equip, unequip, eligibility, and comparis
   assert.match(inventory, /equipmentDelta/);
   assert.match(inventory, /Requires Lv\./);
   assert.match(inventory, /Not usable by/);
-  assert.match(inventory, /Replaces:/);
+  assert.doesNotMatch(inventory, /Replaces:/);
   assert.match(inventory, /Accessories/);
   assert.match(inventory, /waitForPortalAction/);
   assert.doesNotMatch(inventory, /Bot re-checks|action relay|Waiting for the Bot|still queued/);
@@ -75,7 +75,8 @@ test("Arsenal II gives the Moogle Emporium dedicated Buy/Sell and category tabs"
   assert.match(shop, /Stat boosts/);
   assert.match(shop, /formatBonuses\(itemBonuses\(item\)\)/);
   assert.match(shop, /equipmentDelta\(item, current\)/);
-  assert.match(shop, /Vs\. \{current\.name\}/);
+  assert.match(shop, /Compared with current/);
+  assert.doesNotMatch(shop, /Vs\. \{current\.name\}/);
   assert.match(shop, /mergeItemListWithCatalog/);
   assert.doesNotMatch(shop, /authoritative Crystal Guild Bot|local Bot|action relay|still queued|synchronized with the Bot/);
   assert.doesNotMatch(shop, /!readyall|!venture|JOIN_ENCOUNTER/);

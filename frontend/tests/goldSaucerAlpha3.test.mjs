@@ -7,7 +7,7 @@ const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta
 
 test("Production Web publishes the canonical MGP identity", () => {
   assert.equal(WEB_VERSION, "v1.7.1 Alpha 2");
-  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a2");
+  assert.equal(WEB_ASSET_REVISION, "1.7.1-resynthesis-a2h5");
 });
 
 test("Gold Saucer prefers canonical MGP fields and keeps compatibility fallbacks", () => {

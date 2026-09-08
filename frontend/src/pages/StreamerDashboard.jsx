@@ -552,15 +552,15 @@ export default function StreamerDashboard() {
                 <div className="streamer-leader-grid"><LeaderCard label="Highest Level" leader={dashboard.leaders?.level} /><LeaderCard label="Boss Clears" leader={dashboard.leaders?.boss_clears} /><LeaderCard label="Jobs Mastered" leader={dashboard.leaders?.mastered_jobs} /><LeaderCard label="Achievements" leader={dashboard.leaders?.achievements} /></div>
               </section>
 
-              <section className="streamer-panel streamer-ledger-panel" id="activity">
-                <div className="streamer-panel-heading"><div><span>Live Ledger</span><h2>Recent Activity</h2></div><small>Recent gil and item changes</small></div>
+              <details className="streamer-panel streamer-ledger-panel streamer-collapsible-ledger" id="activity" open>
+                <summary className="streamer-panel-heading"><div><span>Live Ledger</span><h2>Recent Activity</h2></div><span className="streamer-heading-tools"><small>Recent gil and item changes</small><DetailsPointer /></span></summary>
                 <div className="streamer-activity-list">
                   {(dashboard.activity || []).slice(0, 8).map((item, index) => (
                     <div className="streamer-activity" key={`${item.username}-${item.created_at}-${index}`}><span className="streamer-activity-glyph">{item.kind === "item" ? "◇" : "G"}</span><span><strong>{item.display_name}</strong><small>{item.kind === "item" ? item.asset : humanizeLabel(item.asset)} · {activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</small></span><b className={item.amount >= 0 ? "good-text" : "danger-text"}>{item.amount >= 0 ? "+" : ""}{number(item.amount)}</b></div>
                   ))}
                   {!dashboard.activity?.length ? <div className="streamer-empty">No recent Guild activity.</div> : null}
                 </div>
-              </section>
+              </details>
             </section>
 
             <section className="streamer-panel streamer-command-panel" id="commands">

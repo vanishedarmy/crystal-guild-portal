@@ -17,6 +17,7 @@ import CollapsePointer from "../components/CollapsePointer.jsx";
 const GROUP_ORDER = ["weapon", "armor", "accessory", "item", "material"];
 const GROUP_LABELS = { weapon: "Weapons", armor: "Armor", accessory: "Accessories", item: "Consumables", material: "Materials" };
 const INVENTORY_GROUP_STATE_KEY = "crystal-guild:inventory-groups:v1";
+const GEAR_FAVORITES_KEY_PREFIX = "crystal-guild:gear-favorites:v1";
 const EQUIPMENT_GROUPS = new Set(["weapon", "armor", "accessory"]);
 const STAT_LABELS = { attack: "ATK", magic_power: "M.PWR", str: "STR", vit: "VIT", mag: "MAG", spr: "SPR", dex: "DEX", lck: "LCK", hp: "HP" };
 
@@ -29,8 +30,20 @@ function groupForItem(item) {
   return "item";
 }
 function slotLabel(item) { const base = GROUP_LABELS[groupForItem(item)] || "Items"; return item.equipped ? `${base} · Equipped` : base; }
-function itemLevel(item) { const value = Number(item?.min_level ?? item?.level ?? item?.shop_level); return Number.isFinite(value) ? value : Number.POSITIVE_INFINITY; }
-function compareItemsByLevel(left, right) { return Number(Boolean(right?.equipped)) - Number(Boolean(left?.equipped)) || itemLevel(left) - itemLevel(right) || String(left?.name || "").localeCompare(String(right?.name || "")); }
+function itemLevel(item) {
+  const value = Number(item?.min_level ?? item?.level ?? item?.shop_level ?? 1);
+  return Number.isFinite(value) ? Math.max(1, value) : 1;
+}
+function compareGearByLevel(left, right) {
+  return itemLevel(right) - itemLevel(left) || String(left?.name || "").localeCompare(String(right?.name || ""));
+}
+function compareInventoryItems(left, right) { return String(left?.name || "").localeCompare(String(right?.name || "")); }
+function weaponRecommendation(item) {
+  const jobs = Array.isArray(item?.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
+  if (!jobs.length) return "All Jobs";
+  if (jobs.length === 1) return `Best: ${jobs[0]}`;
+  return `Best: ${jobs[0]} · Also: ${jobs.slice(1).join(", ")}`;
+}
 function actionKey(kind, target = "self") { const suffix = globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}:${Math.random().toString(36).slice(2)}`; return `${kind}:${target}:${suffix}`; }
 function itemBonuses(item) { return item?.effective_bonuses || item?.bonuses || {}; }
 function equipmentDelta(item, current) {
@@ -57,6 +70,8 @@ function quickRecoveryText(item, catalogItem) {
 export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const { auth } = usePortalAuth();
   const [search, setSearch] = useState("");
+  const [inventoryView, setInventoryView] = useState("inventory");
+  const [favoriteIds, setFavoriteIds] = useState(() => new Set());
   const [busyKey, setBusyKey] = useState("");
   const [actionMessage, setActionMessage] = useState("");
   const [recoveryState, setRecoveryState] = useState(null);
@@ -84,8 +99,31 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const recoveryQuantities = useMemo(() => new Map((recoveryState?.items || []).map((item) => [item.id, Number(item.quantity || 0)])), [recoveryState]);
   const recoveryCatalogById = useMemo(() => new Map((data.items || []).map((item) => [item.id, item])), [data.items]);
   const displayedItems = useMemo(() => data.items.map((item) => recoveryQuantities.has(item.id) ? { ...item, quantity: recoveryQuantities.get(item.id) } : item).filter((item) => Number(item.quantity || 0) > 0), [data.items, recoveryQuantities]);
+  const favoriteStorageKey = `${GEAR_FAVORITES_KEY_PREFIX}:${String(data.player?.username || "unknown").toLowerCase()}`;
+  useEffect(() => {
+    if (!isOwnProfile) { setFavoriteIds(new Set()); return; }
+    try {
+      const stored = JSON.parse(globalThis.localStorage?.getItem(favoriteStorageKey) || "[]");
+      setFavoriteIds(new Set(Array.isArray(stored) ? stored.map(String) : []));
+    } catch { setFavoriteIds(new Set()); }
+  }, [favoriteStorageKey, isOwnProfile]);
+  const toggleFavorite = (itemId) => setFavoriteIds((current) => {
+    const next = new Set(current);
+    if (next.has(String(itemId))) next.delete(String(itemId)); else next.add(String(itemId));
+    try { globalThis.localStorage?.setItem(favoriteStorageKey, JSON.stringify([...next])); } catch {}
+    return next;
+  });
   const filtered = useMemo(() => { const term = search.trim().toLowerCase(); return displayedItems.filter((item) => !term || item.name.toLowerCase().includes(term)); }, [displayedItems, search]);
-  const grouped = useMemo(() => { const buckets = new Map(GROUP_ORDER.map((group) => [group, []])); for (const item of filtered) buckets.get(groupForItem(item))?.push(item); return GROUP_ORDER.map((group) => ({ key: group, label: GROUP_LABELS[group], items: [...(buckets.get(group) || [])].sort(compareItemsByLevel) })); }, [filtered]);
+  const favoriteGear = useMemo(() => filtered.filter((item) => EQUIPMENT_GROUPS.has(groupForItem(item)) && favoriteIds.has(String(item.id))).sort(compareGearByLevel), [filtered, favoriteIds]);
+  const grouped = useMemo(() => {
+    const buckets = new Map(GROUP_ORDER.map((group) => [group, []]));
+    for (const item of filtered) {
+      const group = groupForItem(item);
+      if (isOwnProfile && EQUIPMENT_GROUPS.has(group) && favoriteIds.has(String(item.id))) continue;
+      buckets.get(group)?.push(item);
+    }
+    return GROUP_ORDER.map((group) => ({ key: group, label: GROUP_LABELS[group], items: [...(buckets.get(group) || [])].sort(EQUIPMENT_GROUPS.has(group) ? compareGearByLevel : compareInventoryItems) }));
+  }, [filtered, favoriteIds, isOwnProfile]);
   const toggleGroup = (group) => setOpenGroups((current) => {
     const next = { ...current, [group]: current[group] === false };
     try { globalThis.localStorage?.setItem(INVENTORY_GROUP_STATE_KEY, JSON.stringify(next)); } catch {}
@@ -155,6 +193,36 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
     setRecoveryMessage(message); const state = finished?.result?.data?.recovery_state; if (state) setRecoveryState(state); if (finished?.status === "completed") onRefresh?.();
   });
 
+  const renderInventoryCard = (item, groupKey, index, { favorite = false } = {}) => {
+    const upgrade = item.upgrade_level ? ` +${item.upgrade_level}` : "";
+    const rawType = String(item.type || "").toLowerCase();
+    const isHeldConsumable = groupKey === "item" && !["accessory", "weapon", "armor", "material"].includes(rawType);
+    const isEquipment = EQUIPMENT_GROUPS.has(groupKey);
+    const current = isEquipment ? currentBySlot.get(groupKey) : null;
+    const canUse = eligibility(item, overview);
+    const itemBusy = busyKey === `equip:${item.id}` || busyKey === `unequip:${groupKey}`;
+    const isFavorite = favorite || favoriteIds.has(String(item.id));
+    return (
+      <article className={`inventory-card inventory-action-card ${item.equipped ? "is-equipped" : ""} ${isFavorite ? "is-favorite" : ""}`} key={`${groupKey}-${item.id || item.name}-${index}`}>
+        <button type="button" className="inventory-card-detail" onClick={() => onDetail?.({ type: "inventory", inventoryGroup: groupKey, item })}>
+          <ItemArtwork item={item} className="inventory-item-artwork" />
+          <span className="slot-label">{slotLabel(item)}{isEquipment ? ` · Lv. ${number(itemLevel(item))}` : ""}</span>
+          {item.equipped ? <span className="inventory-equipped-chip">Equipped now</span> : null}
+          <span className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</span>
+          <span className="card-meta">Quantity {number(item.quantity)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</span>
+          <span className="item-meta">{isHeldConsumable ? (item.use?.effects?.length ? formatItemUse(item.use) : item.description || "Consumable item") : formatBonuses(itemBonuses(item))}</span>
+          {rawType === "weapon" ? <small className="weapon-job-recommendation">{weaponRecommendation(item)}</small> : null}
+          {isHeldConsumable && item.description ? <span className="inventory-consumable-description">{item.description}</span> : null}
+        </button>
+        {isEquipment ? <div className="equipment-card-actions">
+          <div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <small>{equipmentDelta(item, current)}</small>}</div>
+          {isOwnProfile ? <button type="button" className={`gear-favorite-button ${isFavorite ? "active" : ""}`} aria-pressed={isFavorite} onClick={() => toggleFavorite(item.id)}>{isFavorite ? "★ Favorited" : "☆ Favorite"}</button> : null}
+          {isOwnProfile ? item.equipped ? <button type="button" className="equipment-action-button secondary" disabled={!equipmentActionsAvailable || Boolean(busyKey)} onClick={() => unequip(groupKey)}>{itemBusy ? "Working…" : `Unequip ${item.name}`}</button> : <button type="button" className="equipment-action-button" disabled={!equipmentActionsAvailable || !canUse.eligible || Boolean(busyKey)} title={!canUse.eligible ? canUse.reason : undefined} onClick={() => equip(item)}>{itemBusy ? "Working…" : canUse.eligible ? `Equip ${item.name}` : canUse.reason}</button> : null}
+        </div> : null}
+      </article>
+    );
+  };
+
   const targetingOther = Boolean(String(recoveryTarget || "").trim());
   const recoveryItems = (recoveryState?.items || []).filter((item) => item.field_usable && (targetingOther || item.usable_now));
   const stateLabel = recoveryState?.state_label || (overview?.status?.label || "READY");
@@ -198,29 +266,42 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
             const upgrade = item?.upgrade_level ? ` +${item.upgrade_level}` : "";
             const label = GROUP_LABELS[slot]?.replace(/s$/, "") || slot;
             const bonuses = item?.effective_bonuses || item?.bonuses || {};
-            return <article className={`current-loadout-card ${item?.id ? "filled" : "empty"}`} key={slot}><div className="current-loadout-card-head"><span className="slot-label">{label}</span><span className={`loadout-status ${item?.id ? "equipped" : "empty"}`}>{item?.id ? "Equipped" : "Empty"}</span></div><strong className={item?.id ? `rarity-${item.rarity || "common"}` : "muted"}>{item?.id ? `${item.name}${upgrade}` : "Nothing equipped"}</strong><span className="item-meta">{item?.id ? formatBonuses(bonuses) : "No stat bonuses"}</span>{item?.id ? <button type="button" className="current-loadout-detail" onClick={() => onDetail?.({ type: "equipment", item })}>View {item.name}</button> : null}</article>;
+            return <article className={`current-loadout-card ${item?.id ? "filled" : "empty"}`} key={slot}><div className="current-loadout-card-head"><span className="slot-label">{label}{item?.id ? ` · Lv. ${number(itemLevel(item))}` : ""}</span><span className={`loadout-status ${item?.id ? "equipped" : "empty"}`}>{item?.id ? "Equipped" : "Empty"}</span></div><strong className={item?.id ? `rarity-${item.rarity || "common"}` : "muted"}>{item?.id ? `${item.name}${upgrade}` : "Nothing equipped"}</strong><span className="item-meta">{item?.id ? formatBonuses(bonuses) : "No stat bonuses"}</span>{item?.id && slot === "weapon" ? <small className="weapon-job-recommendation">{weaponRecommendation(item)}</small> : null}{item?.id ? <button type="button" className="current-loadout-detail" onClick={() => onDetail?.({ type: "equipment", item })}>View {item.name}</button> : null}</article>;
           })}
         </div>
       </section>
 
-      <div className="toolbar"><label className="search-box"><span>Search Inventory</span><input type="search" placeholder="Item name" value={search} onChange={(event) => setSearch(event.target.value)} /></label></div>
-      <div className="inventory-section-list">
-        {grouped.map((group) => {
-          const isOpen = openGroups[group.key] !== false;
-          const contentId = `inventory-group-${group.key}`;
-          return (
-            <section className={`inventory-group ${isOpen ? "is-open" : "is-collapsed"}`} key={group.key}>
-              <button type="button" className="panel-title-row inventory-group-heading inventory-group-toggle" aria-expanded={isOpen} aria-controls={contentId} onClick={() => toggleGroup(group.key)}>
-                <h3>{group.label}</h3>
-                <span className="inventory-group-toggle-meta"><span className="small-badge">{group.items.length} {group.items.length === 1 ? "stack" : "stacks"}</span><CollapsePointer open={isOpen} className="inventory-group-toggle-icon" /></span>
-              </button>
-              <div id={contentId} hidden={!isOpen}>
-                {group.items.length ? <div className="content-grid">{group.items.map((item, index) => { const upgrade = item.upgrade_level ? ` +${item.upgrade_level}` : ""; const rawType = String(item.type || "").toLowerCase(); const isHeldConsumable = group.key === "item" && !["accessory", "weapon", "armor", "material"].includes(rawType); const isEquipment = EQUIPMENT_GROUPS.has(group.key); const current = isEquipment ? currentBySlot.get(group.key) : null; const canUse = eligibility(item, overview); const itemBusy = busyKey === `equip:${item.id}` || busyKey === `unequip:${group.key}`; return <article className={`inventory-card inventory-action-card ${item.equipped ? "is-equipped" : ""}`} key={`${group.key}-${item.id || item.name}-${index}`}><button type="button" className="inventory-card-detail" onClick={() => onDetail?.({ type: "inventory", inventoryGroup: group.key, item })}><ItemArtwork item={item} className="inventory-item-artwork" /><span className="slot-label">{slotLabel(item)}</span>{item.equipped ? <span className="inventory-equipped-chip">Equipped now</span> : null}<span className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</span><span className="card-meta">Quantity {number(item.quantity)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</span><span className="item-meta">{isHeldConsumable ? (item.use?.effects?.length ? formatItemUse(item.use) : item.description || "Consumable item") : formatBonuses(itemBonuses(item))}</span>{isHeldConsumable && item.description ? <span className="inventory-consumable-description">{item.description}</span> : null}</button>{isEquipment ? <div className="equipment-card-actions"><div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <><span>Replaces: <strong>{current?.id ? `${current.name}${current.upgrade_level ? ` +${current.upgrade_level}` : ""}` : "Empty slot"}</strong></span><small>{equipmentDelta(item, current)}</small></>}</div>{isOwnProfile ? item.equipped ? <button type="button" className="equipment-action-button secondary" disabled={!equipmentActionsAvailable || Boolean(busyKey)} onClick={() => unequip(group.key)}>{itemBusy ? "Working…" : `Unequip ${item.name}`}</button> : <button type="button" className="equipment-action-button" disabled={!equipmentActionsAvailable || !canUse.eligible || Boolean(busyKey)} title={!canUse.eligible ? canUse.reason : undefined} onClick={() => equip(item)}>{itemBusy ? "Working…" : canUse.eligible ? `Equip ${item.name}` : canUse.reason}</button> : null}</div> : null}</article>; })}</div> : <div className="muted inventory-group-empty">No {group.label.toLowerCase()} match the current search.</div>}
-              </div>
-            </section>
-          );
-        })}
-      </div>
+      {isOwnProfile ? (
+        <div className="inventory-view-tabs" role="tablist" aria-label="Inventory gear views">
+          <button type="button" role="tab" aria-selected={inventoryView === "inventory"} className={inventoryView === "inventory" ? "active" : ""} onClick={() => setInventoryView("inventory")}>Inventory</button>
+          <button type="button" role="tab" aria-selected={inventoryView === "favorites"} className={inventoryView === "favorites" ? "active" : ""} onClick={() => setInventoryView("favorites")}>Favorites <span>{favoriteGear.length}</span></button>
+        </div>
+      ) : null}
+      <div className="toolbar"><label className="search-box"><span>Search {inventoryView === "favorites" ? "Favorites" : "Inventory"}</span><input type="search" placeholder="Item name" value={search} onChange={(event) => setSearch(event.target.value)} /></label></div>
+      {isOwnProfile && inventoryView === "favorites" ? (
+        <section className="inventory-favorites-panel">
+          <div className="panel-title-row inventory-favorites-heading"><h3>Favorite Gear</h3><span className="small-badge">{favoriteGear.length} {favoriteGear.length === 1 ? "item" : "items"}</span></div>
+          {favoriteGear.length ? <div className="content-grid">{favoriteGear.map((item, index) => renderInventoryCard(item, groupForItem(item), index, { favorite: true }))}</div> : <div className="muted inventory-group-empty">Favorite a weapon, armor piece, or accessory to keep it here.</div>}
+        </section>
+      ) : (
+        <div className="inventory-section-list">
+          {grouped.map((group) => {
+            const isOpen = openGroups[group.key] !== false;
+            const contentId = `inventory-group-${group.key}`;
+            return (
+              <section className={`inventory-group ${isOpen ? "is-open" : "is-collapsed"}`} key={group.key}>
+                <button type="button" className="panel-title-row inventory-group-heading inventory-group-toggle" aria-expanded={isOpen} aria-controls={contentId} onClick={() => toggleGroup(group.key)}>
+                  <h3>{group.label}</h3>
+                  <span className="inventory-group-toggle-meta"><span className="small-badge">{group.items.length} {group.items.length === 1 ? "stack" : "stacks"}</span><CollapsePointer open={isOpen} className="inventory-group-toggle-icon" /></span>
+                </button>
+                <div id={contentId} hidden={!isOpen}>
+                  {group.items.length ? <div className="content-grid">{group.items.map((item, index) => renderInventoryCard(item, group.key, index))}</div> : <div className="muted inventory-group-empty">No {group.label.toLowerCase()} match the current search.</div>}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }

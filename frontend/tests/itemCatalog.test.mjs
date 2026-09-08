@@ -44,8 +44,8 @@ test("Adventurer Portal inventory surfaces consumable effects and descriptions",
   assert.match(inventory, /isHeldConsumable/);
   assert.match(inventory, /formatItemUse\(item\.use\)/);
   assert.match(inventory, /Consumable item/);
-  assert.match(inventory, /inventoryGroup: group\.key/);
-  assert.match(inventory, /group\.key === "item"/);
+  assert.match(inventory, /inventoryGroup: groupKey/);
+  assert.match(inventory, /groupKey === "item"/);
   assert.match(inventory, /inventory-consumable-description/);
   assert.match(inventory, /\{item\.description\}/);
   assert.match(detail, /itemType === "consumable"/);

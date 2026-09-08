@@ -6,12 +6,12 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("lazy guide data is valid and versioned for v1.2.0 Expeditions", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.7.1 Alpha 2 — Resynthesis");
+  assert.equal(data.meta.version, "v1.7.1 Alpha 2 — Resynthesis H5");
   assert.equal(data.meta.encounter_rally, 60);
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);
   assert.equal(data.meta.raid_round, 60);
-  assert.equal(data.meta.release, "1.7.1-resynthesis-a2");
+  assert.equal(data.meta.release, "1.7.1-resynthesis-a2h5");
   assert.ok(data.jobs.length > 0);
   assert.ok(data.achievements.length > 0);
   assert.equal(Object.keys(data.active_abilities).length, data.jobs.length);
@@ -47,13 +47,13 @@ test("lazy guide markup documents Active Battle and keeps the organized guide sh
   assert.match(markup, /Silence/i);
   assert.match(markup, /Blind/i);
   assert.match(markup, /never shorten the deadline/i);
-  assert.match(markup, /70% ENCOUNTER/i);
-  assert.match(markup, /30% TREASURE CHEST/i);
+  assert.match(markup, /100% ENCOUNTER/i);
+  assert.doesNotMatch(markup, /70% ENCOUNTER/i);
   assert.match(markup, /80% ENCOUNTER/i);
   assert.match(markup, /20% TREASURE/i);
   assert.match(markup, /three stages|3 stages/i);
   assert.match(markup, /Enemy Intent/i);
-  assert.match(markup, /5 levels below through 2 levels above/i);
+  assert.match(markup, /Rally Ventures no longer roll a chest outcome/i);
   assert.match(markup, /Hunts are personal timed assignments/i);
   assert.match(markup, /named C\/B\/A\/S marks/i);
   assert.match(markup, /no rally/i);

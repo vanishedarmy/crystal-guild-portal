@@ -179,7 +179,7 @@
        Use
        <code>
         !venture
-       </code>. A Venture can produce an <b>ENCOUNTER</b> or a <b>TREASURE CHEST</b>. Encounter Ventures open a rally window so others can use <code>!join</code>; treasure Ventures immediately award a level-appropriate item. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only, player-paced mode with its own 7-minute cooldown. Each stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, enemies stay roughly within <b>Lv.-2 through Lv.+5</b>, and a run can continue for up to <b>three stages</b>. Encounter rounds wait for your Attack, Ability, Item, or Defend choice and never post automatic Twitch chat announcements.
+       </code>. A Stream/Rally Venture always produces an <b>ENCOUNTER</b> and opens a rally window so others can use <code>!join</code>. Rally Ventures are started and joined in Twitch chat with <code>!venture</code> and <code>!join</code>. Treasure rolls remain part of the separate Portal Solo Venture mode. The Adventurer Portal <b>Adventure Board</b> offers travel, Hunts, and <b>Solo Venture</b>, a separate website-only, player-paced mode with its own 7-minute cooldown. Each stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, enemies stay roughly within <b>Lv.-2 through Lv.+5</b>, and a run can continue for up to <b>three stages</b>. Encounter rounds wait for your Attack, Ability, Item, or Defend choice and never post automatic Twitch chat announcements.
       </div>
       <div class="step">
        <b>
@@ -653,10 +653,10 @@
      </section>
      <section class="section searchable" id="party">
       <h2>Joinable Active Encounters</h2>
-      <p class="lead">Venture ENCOUNTERS are shared mini-events. A Venture may instead uncover a TREASURE CHEST, which awards the initiating hero an item immediately and does not open a rally.</p>
+      <p class="lead">Stream/Rally Venture ENCOUNTERS are shared mini-events. Every Rally Venture now opens an encounter; treasure outcomes are reserved for the separate Portal Solo Venture mode.</p>
       <div class="grid">
-       <div class="card"><h3>Rally Venture Roll</h3><p><code>!venture</code> is a Twitch-chat activity and currently resolves as <b>70% ENCOUNTER</b> or <b>30% TREASURE CHEST</b>.</p></div>
-       <div class="card"><h3>Treasure Chest</h3><p>Chest loot is selected from roughly <b>5 levels below through 2 levels above</b> the venturing hero. Consumables, weapons, armor and accessories are eligible; Relic-progression weapons are not.</p></div>
+       <div class="card"><h3>Rally Venture Roll</h3><p><code>!venture</code> is a Twitch-chat activity and now resolves as <b>100% ENCOUNTER</b>. The Rally chest branch has been removed.</p></div>
+       <div class="card"><h3>Solo Venture Treasure</h3><p>Treasure remains available through Portal Solo Venture stages at the listed Solo Venture rate. Rally Ventures no longer roll a chest outcome.</p></div>
       </div>
       <div class="callout"><b>Portal-only Solo Venture — Wayfarer:</b> the Adventure Board has a private, player-paced run on a separate <b>7-minute</b> cooldown. Every stage rolls <b>80% ENCOUNTER / 20% TREASURE</b>, with enemy selection roughly <b>two levels below through five levels above</b> the hero. A run lasts up to <b>three stages</b>. After Stage I or II, choose <b>Return to Guild</b> to bank your expedition spoils or <b>Press On</b> for a deeper reward multiplier. Stage II adds <b>+15% XP/JP/Gil</b>; Stage III adds <b>+30%</b> and improves chest rarity weighting. XP/JP earned from defeated enemies is secured immediately, while Gil and ordinary item spoils remain at risk until you return. Defeat recovers 50% of unbanked Gil but loses loose item spoils; Retreat preserves secured progression but abandons all unbanked spoils. Fellowship Renown scales modestly with depth and remains below Rally Venture value.</div>
       <div class="grid">
@@ -664,7 +664,7 @@
        <div class="card"><h3>Enemy Intent</h3><p>Solo battles telegraph the enemy's prepared action before you commit your turn. A dangerous named technique may make Defend, healing, control, or an aggressive finishing attempt the better choice.</p></div>
        <div class="card"><h3>Persistent Run State</h3><p>HP, MP, AP, and consumed items carry through the run. A Solo Venture can wait safely for your next decision, even if you leave the Portal and return later. Guild resupply, recovery, Job changes, and equipment changes are locked until you return or retreat.</p></div>
       </div>
-      <div class="callout"><b>Rally reward bonus:</b> Rally Venture encounter victories reward each participant with <b>+5% XP, JP, and Gil per enemy level above that hero</b>, capped at <b>+50%</b>. The bonus is personal to each hero's risk. Equal- or lower-level enemies give no Rally bonus, and treasure rewards are unchanged.</div>
+      <div class="callout"><b>Rally reward bonus:</b> Rally Venture encounter victories reward each participant with <b>+5% XP, JP, and Gil per enemy level above that hero</b>, capped at <b>+50%</b>. The bonus is personal to each hero's risk. Equal- or lower-level enemies give no Rally bonus. Rally Ventures are encounter-only; Solo Venture keeps its separate treasure outcomes.</div>
       <div class="grid">
        <div class="card"><h3>1. Rally</h3><p>If <code>!venture</code> rolls an ENCOUNTER, it selects a monster and opens a <b>60-second</b> rally in Twitch chat. The initiator joins automatically, and the rolled monster can be no more than <b>ten levels above</b> that initiating hero.</p></div>
        <div class="card"><h3>2. Join</h3><p>Other eligible viewers use <code>!join</code> or <code>!venture</code> in Twitch chat. Joining consumes that hero's normal Venture cooldown.</p></div>

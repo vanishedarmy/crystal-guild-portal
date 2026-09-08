@@ -11364,3 +11364,300 @@ textarea {
 .overview-recent-activity:not([open]) > summary { margin-bottom:0; }
 @media (max-width:760px) { .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-action-button { grid-column:2; width:100%; } }
 @media (max-width:520px) { .inventory-view-tabs { grid-template-columns:1fr; } .inventory-equipment-grid { grid-template-columns:1fr; } .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-card-actions .equipment-action-button { grid-column:2; width:100%; } }
+
+/* v1.7.1 Resynthesis A2H5 — targeted Retainer mobile UX cleanup.
+   Mobile becomes action-first: current work and the procurement board come before
+   profile/history, decorative artwork is subordinate to controls, and every
+   Retainer section has an in-page jump target. */
+.retainer-mobile-nav { display: none; }
+.retainer-profile-copy { min-width: 0; }
+#retainer-current,
+#retainer-assignments,
+#retainer-profile,
+#retainer-history { scroll-margin-top: 9.5rem; }
+
+@media (max-width: 760px) {
+  .retainer-service-grid {
+    gap: .65rem;
+  }
+  .retainer-service-grid > .panel {
+    padding: .88rem;
+    border-radius: 14px;
+  }
+
+  .retainer-hero-panel {
+    order: 1;
+    grid-template-columns: minmax(0, 1fr) 108px;
+    gap: .75rem;
+    min-height: 0;
+    align-items: center;
+  }
+  .retainer-hero-panel .panel-title-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: .45rem .65rem;
+    margin-bottom: .45rem;
+  }
+  .retainer-hero-panel .panel-title-row > div { min-width: 0; }
+  .retainer-hero-panel h2 { font-size: 1.12rem; }
+  .retainer-hero-panel .eyebrow { margin-bottom: .15rem; }
+  .retainer-lead {
+    margin: .3rem 0 0;
+    font-size: .83rem;
+    line-height: 1.42;
+  }
+  .retainer-office-art {
+    width: 108px;
+    max-height: 92px;
+    justify-self: end;
+    object-position: center bottom;
+  }
+  .retainer-hero-panel .compact-state {
+    margin-top: .55rem;
+    padding: .55rem .65rem;
+    font-size: .8rem;
+  }
+
+  .retainer-mobile-nav {
+    order: 2;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .4rem;
+    padding: .42rem;
+    border: 1px solid rgba(143, 219, 255, .14);
+    border-radius: 12px;
+    background: rgba(5, 13, 24, .78);
+  }
+  .retainer-mobile-nav a {
+    min-width: 0;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    padding: .45rem .28rem;
+    border: 1px solid rgba(143, 219, 255, .12);
+    border-radius: 9px;
+    background: rgba(22, 49, 68, .46);
+    color: var(--text);
+    font-size: .72rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    touch-action: manipulation;
+  }
+  .retainer-mobile-nav a:focus-visible {
+    outline: 2px solid var(--crystal-soft);
+    outline-offset: 2px;
+  }
+
+  .retainer-current-panel { order: 3; }
+  .retainer-assignments-panel { order: 4; }
+  .retainer-profile-panel { order: 5; }
+  .retainer-history-panel { order: 6; }
+
+  .retainer-current-panel .panel-title-row,
+  .retainer-assignments-panel .panel-title-row,
+  .retainer-history-panel .panel-title-row {
+    margin-bottom: .65rem;
+    gap: .55rem;
+  }
+  .retainer-current-panel .panel-title-row { flex-wrap: nowrap; }
+  .retainer-current-panel .small-badge { flex: 0 0 auto; }
+
+  .retainer-idle-state,
+  .retainer-away-state,
+  .retainer-return-state {
+    min-height: 0;
+    padding: .72rem;
+    padding-right: .72rem;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-content: start;
+    align-items: start;
+    gap: .45rem .72rem;
+  }
+  .retainer-status-art {
+    position: static;
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    align-self: start;
+    width: 72px;
+    height: 72px;
+    max-height: 72px;
+    object-fit: contain;
+    object-position: center;
+    opacity: 1;
+  }
+  .retainer-idle-state > strong,
+  .retainer-idle-state > span,
+  .retainer-away-state > div,
+  .retainer-away-state > small {
+    grid-column: 2;
+  }
+  .retainer-timer {
+    grid-column: 2;
+    width: 100%;
+    padding: .58rem .65rem;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+  }
+  .retainer-timer strong { font-size: 1.05rem; }
+  .retainer-return-state > div:first-of-type { grid-column: 2; }
+  .retainer-return-state > .retainer-haul-grid,
+  .retainer-return-state > .retainer-bonus-find,
+  .retainer-return-state > .equipment-action-button {
+    grid-column: 1 / -1;
+  }
+  .retainer-haul-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .retainer-last-haul { font-size: .83rem; }
+
+  .retainer-assignment-grid {
+    grid-template-columns: 1fr;
+    gap: .62rem;
+  }
+  .retainer-assignment-card {
+    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto auto;
+    column-gap: .72rem;
+    row-gap: .42rem;
+    padding: .62rem;
+    border-radius: 12px;
+    align-items: start;
+  }
+  .retainer-assignment-art-wrap {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    width: 96px;
+    height: 96px;
+    margin: 0;
+    border: 1px solid rgba(204,220,255,.14);
+    border-radius: 10px;
+  }
+  .retainer-assignment-icon {
+    right: 5px;
+    bottom: 5px;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+  }
+  .retainer-assignment-head,
+  .retainer-assignment-card > p,
+  .retainer-assignment-meta,
+  .retainer-assignment-card > small {
+    grid-column: 2;
+    min-width: 0;
+  }
+  .retainer-assignment-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: .35rem;
+  }
+  .retainer-assignment-head strong { line-height: 1.25; }
+  .retainer-assignment-head .small-badge { justify-self: end; }
+  .retainer-assignment-card p { font-size: .8rem; line-height: 1.35; }
+  .retainer-assignment-card > small { font-size: .74rem; line-height: 1.3; }
+  .retainer-assignment-meta { gap: .35rem; }
+  .retainer-assignment-meta span { padding: .25rem .42rem; font-size: .7rem; }
+  .retainer-priority-field,
+  .retainer-assignment-card > .equipment-action-button {
+    grid-column: 1 / -1;
+  }
+  .retainer-priority-field { margin-top: .12rem; }
+  .retainer-priority-field select,
+  .retainer-assignment-card > .equipment-action-button,
+  .retainer-return-state > .equipment-action-button,
+  .retainer-assignments-panel .panel-title-row > .equipment-action-button {
+    min-height: 44px;
+  }
+  .retainer-priority-field select { font-size: 16px; }
+
+  .retainer-profile-panel {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: .7rem .85rem;
+    align-items: start;
+  }
+  .retainer-profile-art {
+    grid-column: 1;
+    grid-row: 1;
+    width: 96px;
+    height: 96px;
+    max-height: 96px;
+    margin: 0;
+    border: 1px solid rgba(204,220,255,.11);
+    border-radius: 12px;
+    background: radial-gradient(circle at 50% 58%,rgba(114,72,160,.17),rgba(5,10,22,.45) 68%);
+  }
+  .retainer-portrait-art {
+    max-width: 88px !important;
+    max-height: 94px;
+  }
+  .retainer-rank-crest {
+    right: 1px;
+    bottom: 2px;
+    width: 30px;
+    height: 42px;
+  }
+  .retainer-profile-copy {
+    grid-column: 2;
+    min-width: 0;
+  }
+  .retainer-profile-copy .eyebrow { margin: 0 0 .15rem; }
+  .retainer-profile-copy h3 { font-size: 1rem; }
+  .retainer-profile-copy > small {
+    display: block;
+    margin-top: .35rem;
+    color: var(--muted);
+    font-size: .73rem;
+    line-height: 1.35;
+  }
+  .retainer-rank-line {
+    display: grid;
+    gap: .1rem;
+    margin: .42rem 0 .35rem;
+  }
+  .retainer-rank-line strong { font-size: .82rem; line-height: 1.3; }
+  .retainer-rank-line span { font-size: .73rem; }
+  .retainer-stat-grid {
+    grid-column: 1 / -1;
+    margin-top: .1rem;
+  }
+  .retainer-stat-grid > div { padding: .58rem .3rem; }
+  .retainer-stat-grid strong { font-size: 1rem; }
+  .retainer-stat-grid span { font-size: .66rem; line-height: 1.2; }
+
+  .retainer-history-list { gap: .5rem; }
+  .retainer-history-list article { padding: .62rem .68rem; }
+  .retainer-history-list article > div { gap: .12rem; }
+  .retainer-history-list article span,
+  .retainer-history-list article small {
+    font-size: .76rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 520px) {
+  .retainer-hero-panel { grid-template-columns: minmax(0, 1fr); }
+  .retainer-office-art { display: none; }
+  .retainer-hero-panel .panel-title-row { grid-template-columns: minmax(0, 1fr) auto; }
+}
+
+@media (max-width: 420px) {
+  .retainer-mobile-nav { gap: .28rem; padding: .32rem; }
+  .retainer-mobile-nav a { min-height: 42px; font-size: .67rem; padding-inline: .18rem; }
+  .retainer-idle-state,
+  .retainer-away-state,
+  .retainer-return-state { grid-template-columns: 58px minmax(0, 1fr); gap: .4rem .58rem; }
+  .retainer-status-art { width: 58px; height: 58px; max-height: 58px; }
+  .retainer-haul-grid { grid-template-columns: 1fr; }
+  .retainer-assignment-card { grid-template-columns: 78px minmax(0, 1fr); column-gap: .58rem; }
+  .retainer-assignment-art-wrap { width: 78px; height: 78px; }
+  .retainer-assignment-card > p { font-size: .77rem; }
+  .retainer-profile-panel { grid-template-columns: 82px minmax(0, 1fr); gap: .6rem .7rem; }
+  .retainer-profile-art { width: 82px; height: 82px; max-height: 82px; }
+  .retainer-portrait-art { max-width: 76px !important; max-height: 80px; }
+}

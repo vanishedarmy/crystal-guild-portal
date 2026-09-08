@@ -186,16 +186,25 @@ export default function RetainerService({ data, overview, onRefresh }) {
         <img loading="lazy" decoding="async" className="retainer-office-art" src={`${RETAINER_ART_ROOT}/retainer-office.webp`} alt="Pixel-art Retainer Office with Moogle guild banners" />
       </section>
 
-      <section className="panel span-4 retainer-profile-panel">
+      <nav className="retainer-mobile-nav" aria-label="Retainer page sections">
+        <a href="#retainer-current">Current</a>
+        <a href="#retainer-assignments">Assignments</a>
+        <a href="#retainer-profile">Retainer</a>
+        <a href="#retainer-history">History</a>
+      </nav>
+
+      <section className="panel span-4 retainer-profile-panel" id="retainer-profile">
         <div className="retainer-profile-art">
           <img loading="lazy" decoding="async" className="retainer-portrait-art" src={retainerPortrait(retainer.rank)} alt="Your Moogle Retainer" />
           <img loading="lazy" decoding="async" className="retainer-rank-crest" src={retainerCrest(retainer.rank)} alt="" aria-hidden="true" />
         </div>
-        <p className="eyebrow">Your Retainer</p>
-        <h3>{String(retainer.name || "Guild Retainer")}</h3>
-        <div className="retainer-rank-line"><strong>Rank {number(retainer.rank)} · {String(retainer.rank_name || "Novice")}</strong><span>{number(retainer.xp)} EXP</span></div>
-        <ProgressBar value={rankProgress} />
-        <small>{retainer.max_rank ? "Maximum Retainer Rank reached." : `${number(retainer.xp_into_rank)} / ${number(retainer.xp_to_next)} EXP toward the next rank`}</small>
+        <div className="retainer-profile-copy">
+          <p className="eyebrow">Your Retainer</p>
+          <h3>{String(retainer.name || "Guild Retainer")}</h3>
+          <div className="retainer-rank-line"><strong>Rank {number(retainer.rank)} · {String(retainer.rank_name || "Novice")}</strong><span>{number(retainer.xp)} EXP</span></div>
+          <ProgressBar value={rankProgress} />
+          <small>{retainer.max_rank ? "Maximum Retainer Rank reached." : `${number(retainer.xp_into_rank)} / ${number(retainer.xp_to_next)} EXP toward the next rank`}</small>
+        </div>
         <div className="retainer-stat-grid">
           <div><strong>{number(retainer.assignments_completed)}</strong><span>Assignments</span></div>
           <div><strong>{number(retainer.materials_found)}</strong><span>Materials</span></div>
@@ -203,7 +212,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
         </div>
       </section>
 
-      <section className="panel span-8 retainer-current-panel">
+      <section className="panel span-8 retainer-current-panel" id="retainer-current">
         <div className="panel-title-row"><h3>Current Assignment</h3><span className={`small-badge ${returned ? "ready" : assignment?.state || "idle"}`}>{assignment ? (returned ? "RETURNED" : String(assignment.state || "active").toUpperCase()) : "IDLE"}</span></div>
         {!assignment || assignment.state === "collected" ? (
           <div className="retainer-idle-state"><img loading="lazy" decoding="async" className="retainer-status-art" src={`${RETAINER_ART_ROOT}/status/ready.webp`} alt="Moogle Retainer ready for work" /><strong>Your Retainer is ready for work.</strong><span>Choose one procurement assignment below. Only one assignment can be active at a time.</span></div>
@@ -232,7 +241,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
         ) : null}
       </section>
 
-      <section className="panel span-12 retainer-assignments-panel">
+      <section className="panel span-12 retainer-assignments-panel" id="retainer-assignments">
         <div className="panel-title-row"><div><p className="eyebrow">Procurement Board</p><h3>Assignments</h3></div><button type="button" className="equipment-action-button secondary compact" disabled={Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Refreshing…" : "Refresh"}</button></div>
         <div className="retainer-assignment-grid">
           {(Array.isArray(state.assignments) ? state.assignments : []).map((option) => {
@@ -255,7 +264,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
         </div>
       </section>
 
-      <section className="panel span-12 retainer-history-panel">
+      <section className="panel span-12 retainer-history-panel" id="retainer-history">
         <div className="panel-title-row"><div><p className="eyebrow">Procurement Record</p><h3>Recent Retainer Hauls</h3></div><span className="small-badge">Last 8</span></div>
         {Array.isArray(state.history) && state.history.length ? <div className="retainer-history-list">{state.history.map((entry) => <article key={entry.assignment_id}><div><strong>{entry.name}</strong><span>{entry.priority ? `Priority: ${entry.priority.name}` : "General haul"} · {number(entry.cost_gil)} Gil · +{number(entry.retainer_xp)} EXP</span></div><small>{(entry.rewards || []).map((item) => `${item.name} × ${number(item.quantity)}`).join(" · ")}{entry.bonus ? ` · Bonus: ${entry.bonus.name} × ${number(entry.bonus.quantity)}` : ""}</small></article>)}</div> : <div className="retainer-idle-state"><strong>No collected hauls yet.</strong><span>Your eight most recent Retainer collections will appear here.</span></div>}
       </section>

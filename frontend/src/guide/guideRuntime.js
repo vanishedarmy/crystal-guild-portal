@@ -758,13 +758,49 @@ function setupCompletionCatalogs(){
 }
 setupCompletionCatalogs();
 
-// Responsive navigation.
-const navOpen=$('#navOpen'),navClose=$('#navClose'),navBackdrop=$('#navBackdrop');
-function setGuideNav(open){document.body.classList.toggle('nav-open',open);navOpen?.setAttribute('aria-expanded',String(open));}
-navOpen?.addEventListener('click',()=>setGuideNav(true));navClose?.addEventListener('click',()=>setGuideNav(false));navBackdrop?.addEventListener('click',()=>setGuideNav(false));
-$$('#guideNav a').forEach(a=>a.addEventListener('click',()=>{if(window.innerWidth<=1024)setGuideNav(false)}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')setGuideNav(false)});
-window.addEventListener('resize',()=>{if(window.innerWidth>1024)setGuideNav(false)});
+// Responsive navigation. Keep the off-canvas drawer out of the mobile tab
+// order while closed, return focus after dismissing it, and trap Tab inside it
+// while open. Desktop navigation remains permanently available.
+const navOpen=$('#navOpen'),navClose=$('#navClose'),navBackdrop=$('#navBackdrop'),navPanel=$('#guideNav');
+const guideNavIsMobile=()=>window.innerWidth<=1024;
+function syncGuideNavAccessibility(open){
+  if(!navPanel)return;
+  if(!guideNavIsMobile()){
+    navPanel.removeAttribute('aria-hidden');
+    navPanel.removeAttribute('inert');
+    return;
+  }
+  navPanel.setAttribute('aria-hidden',String(!open));
+  if(open)navPanel.removeAttribute('inert');
+  else navPanel.setAttribute('inert','');
+}
+function setGuideNav(open,{restoreFocus=false}={}){
+  const next=Boolean(open&&guideNavIsMobile());
+  document.body.classList.toggle('nav-open',next);
+  navOpen?.setAttribute('aria-expanded',String(next));
+  syncGuideNavAccessibility(next);
+  if(next)requestAnimationFrame(()=>navClose?.focus());
+  else if(restoreFocus)requestAnimationFrame(()=>navOpen?.focus());
+}
+navOpen?.addEventListener('click',()=>setGuideNav(true));
+navClose?.addEventListener('click',()=>setGuideNav(false,{restoreFocus:true}));
+navBackdrop?.addEventListener('click',()=>setGuideNav(false,{restoreFocus:true}));
+$$('#guideNav a').forEach(a=>a.addEventListener('click',()=>{if(guideNavIsMobile())setGuideNav(false)}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&document.body.classList.contains('nav-open')){e.preventDefault();setGuideNav(false,{restoreFocus:true});return;}
+  if(e.key!=='Tab'||!document.body.classList.contains('nav-open')||!navPanel)return;
+  const focusable=[...navPanel.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(node=>!node.hasAttribute('hidden'));
+  if(!focusable.length)return;
+  const first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+window.addEventListener('resize',()=>{
+  if(!guideNavIsMobile())document.body.classList.remove('nav-open');
+  syncGuideNavAccessibility(document.body.classList.contains('nav-open'));
+  navOpen?.setAttribute('aria-expanded',String(document.body.classList.contains('nav-open')&&guideNavIsMobile()));
+});
+syncGuideNavAccessibility(false);
 
 // Turn dense desktop tables into labeled cards on narrow screens.
 function labelResponsiveTables(){
@@ -773,10 +809,32 @@ function labelResponsiveTables(){
 }
 const tableObserver=new MutationObserver(labelResponsiveTables);$$('.datatable tbody').forEach(t=>tableObserver.observe(t,{childList:true,subtree:true}));labelResponsiveTables();
 
-// Global search: navigates/filter-highlights broad sections without destroying local table filters.
-$('#globalSearch').addEventListener('input',e=>{let q=e.target.value.trim().toLowerCase();let sections=$$('.section.searchable');if(!q){sections.forEach(s=>s.classList.remove('hidden'));
-  $('#searchCount').textContent='';return}let n=0;sections.forEach(s=>{let hit=s.textContent.toLowerCase().includes(q);s.classList.toggle('hidden',!hit);if(hit)n++});
-  $('#searchCount').textContent=`${n} section${n===1?'':'s'} match`;});
+// Global search: filter broad sections without destroying local table filters.
+// The explicit clear control is especially useful on mobile, where the search
+// field stays sticky above long sections.
+const globalGuideSearch=$('#globalSearch'),globalGuideSearchClear=$('#globalSearchClear'),globalGuideSearchCount=$('#searchCount');
+function filterGlobalGuide(){
+  const q=globalGuideSearch?.value.trim().toLowerCase()||'';
+  const sections=$$('.section.searchable');
+  if(!q){
+    sections.forEach(section=>section.classList.remove('hidden'));
+    if(globalGuideSearchCount)globalGuideSearchCount.textContent='';
+    if(globalGuideSearchClear)globalGuideSearchClear.hidden=true;
+    return;
+  }
+  let n=0;
+  sections.forEach(section=>{const hit=section.textContent.toLowerCase().includes(q);section.classList.toggle('hidden',!hit);if(hit)n++;});
+  if(globalGuideSearchCount)globalGuideSearchCount.textContent=`${n} section${n===1?'':'s'} match`;
+  if(globalGuideSearchClear)globalGuideSearchClear.hidden=false;
+}
+globalGuideSearch?.addEventListener('input',filterGlobalGuide);
+globalGuideSearchClear?.addEventListener('click',()=>{
+  if(!globalGuideSearch)return;
+  globalGuideSearch.value='';
+  globalGuideSearch.dispatchEvent(new Event('input',{bubbles:true}));
+  globalGuideSearch.focus();
+});
+filterGlobalGuide();
 
 
 if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
@@ -980,12 +1038,14 @@ function setupGuideSectionAccordions(){
   content.classList.add('guide-accordion-content');
 
   const sectionGroups={
-    quickstart:'Begin',commands:'Begin',progression:'Begin','fellowship-guide':'Begin',stats:'Begin',combat:'Begin',party:'Begin',recovery:'Begin',
+    quickstart:'Begin',commands:'Begin',progression:'Begin','fellowship-guide':'Begin',stats:'Begin',chocobos:'Begin','retainer-service':'Begin','gold-saucer':'Begin',
+    expeditions:'Adventure',dungeons:'Adventure',combat:'Adventure',party:'Adventure',recovery:'Adventure',
     jobs:'Build Your Hero',regions:'Build Your Hero',bestiary:'Build Your Hero',hunts:'Build Your Hero',quests:'Build Your Hero',
     items:'Gear & Endgame',crafting:'Gear & Endgame',forge:'Gear & Endgame',resynthesis:'Gear & Endgame',quartermaster:'Gear & Endgame',relics:'Gear & Endgame',raids:'Gear & Endgame',bosses:'Gear & Endgame',
     completion:'Completion',faq:'Completion'
   };
   const stateKey=id=>`cg-guide-section-${id}`;
+  const mobileGuideAccordion=()=>window.matchMedia('(max-width:760px)').matches;
   let searchActive=false;
 
   function storedState(id){
@@ -1096,16 +1156,48 @@ function setupGuideSectionAccordions(){
     const saved=storedState(id);
     details.open=saved?saved==='open':false;
     updateDisclosureState(details);
-    details.addEventListener('toggle',()=>{
-      updateDisclosureState(details);
-      if(!searchActive)saveState(id,details.open);
-      updateToolbar();
-    });
     disclosures.push(details);
   });
 
+  function setCurrentGuideSection(id=''){
+    $$('#guideNav a[href^="#"]').forEach(link=>link.toggleAttribute('aria-current',Boolean(id&&link.hash===`#${id}`)));
+    const mobileTitle=$('.mobile-title b');
+    const current=disclosures.find(details=>details.dataset.guideSection===id);
+    if(mobileTitle)mobileTitle.textContent=current?.querySelector(':scope > summary h2')?.textContent.trim()||'Guide Sections';
+  }
+  function closeOtherMobileSections(current){
+    if(!mobileGuideAccordion()||searchActive||!current?.open)return;
+    disclosures.forEach(other=>{
+      if(other===current||!other.open)return;
+      other.open=false;
+      updateDisclosureState(other);
+      saveState(other.dataset.guideSection,false);
+    });
+  }
+  disclosures.forEach(details=>details.addEventListener('toggle',()=>{
+    updateDisclosureState(details);
+    closeOtherMobileSections(details);
+    if(details.open)setCurrentGuideSection(details.dataset.guideSection);
+    if(!searchActive)saveState(details.dataset.guideSection,details.open);
+    updateToolbar();
+  }));
+
+  const groupOrder=['Begin','Adventure','Build Your Hero','Gear & Endgame','Completion','Player Guide'];
+  const jumpGroups=new Map(groupOrder.map(group=>[group,[]]));
+  disclosures.forEach(details=>{
+    const id=details.dataset.guideSection;
+    const group=sectionGroups[id]||'Player Guide';
+    const title=details.querySelector(':scope > summary h2')?.textContent.trim()||id;
+    if(!jumpGroups.has(group))jumpGroups.set(group,[]);
+    jumpGroups.get(group).push({id,title});
+  });
+  const jumpOptions=[...jumpGroups.entries()].filter(([,items])=>items.length).map(([group,items])=>
+    `<optgroup label="${esc(group)}">${items.map(item=>`<option value="${esc(item.id)}">${esc(item.title)}</option>`).join('')}</optgroup>`
+  ).join('');
+
   const toolbar=document.createElement('div');
   toolbar.className='guide-section-toolbar';
+  toolbar.id='guideIndex';
   toolbar.setAttribute('aria-label','Player Guide section controls');
   toolbar.innerHTML=[
     '<div class="guide-section-toolbar-copy">',
@@ -1113,12 +1205,25 @@ function setupGuideSectionAccordions(){
     '<strong>Browse by section</strong>',
     `<span id="guideSectionCount">${disclosures.length} sections</span>`,
     '</div>',
+    '<label class="guide-section-jump"><span>Jump to section</span><select id="guideSectionJump"><option value="">Choose a section…</option>',
+    jumpOptions,
+    '</select></label>',
     '<div class="guide-section-toolbar-actions">',
     '<button class="guide-section-control" type="button" data-guide-sections="expand">Expand All</button>',
     '<button class="guide-section-control" type="button" data-guide-sections="collapse">Collapse All</button>',
     '</div>'
   ].join('');
   content.before(toolbar);
+
+  disclosures.forEach(details=>{
+    const body=details.querySelector(':scope > .guide-section-body')||details.querySelector(':scope > .catalog-panel');
+    if(!body||body.querySelector(':scope > .guide-back-index'))return;
+    const back=document.createElement('a');
+    back.className='guide-back-index';
+    back.href='#guideIndex';
+    back.textContent='Back to guide index';
+    body.appendChild(back);
+  });
 
   function updateToolbar(){
     const count=toolbar.querySelector('#guideSectionCount');
@@ -1141,6 +1246,23 @@ function setupGuideSectionAccordions(){
     if(!button)return;
     setAll(button.dataset.guideSections==='expand');
   });
+  const sectionJump=toolbar.querySelector('#guideSectionJump');
+  sectionJump?.addEventListener('change',()=>{
+    const id=sectionJump.value;
+    if(!id)return;
+    const details=disclosures.find(item=>item.dataset.guideSection===id);
+    if(details){
+      details.open=true;
+      closeOtherMobileSections(details);
+      updateDisclosureState(details);
+      saveState(id,true);
+      setCurrentGuideSection(id);
+    }
+    sectionJump.value='';
+    const nextHash=`#${id}`;
+    if(location.hash===nextHash)document.getElementById(id)?.scrollIntoView({block:'start'});
+    else location.hash=id;
+  });
 
   function disclosureForHash(){
     const raw=decodeURIComponent(location.hash.replace(/^#/,''));
@@ -1151,9 +1273,11 @@ function setupGuideSectionAccordions(){
   }
   function openHashSection(){
     const details=disclosureForHash();
-    if(!details)return;
+    if(!details){if(location.hash==='#guideIndex')setCurrentGuideSection('');return;}
     details.open=true;
+    closeOtherMobileSections(details);
     updateDisclosureState(details);
+    setCurrentGuideSection(details.dataset.guideSection);
     if(!searchActive)saveState(details.dataset.guideSection,true);
     updateToolbar();
   }
@@ -1163,7 +1287,7 @@ function setupGuideSectionAccordions(){
     const id=decodeURIComponent(link.hash.replace(/^#/,''));
     const section=document.getElementById(id)?.closest('.section')||document.getElementById(id);
     const details=section?.querySelector(':scope > .guide-section-accordion');
-    if(details){details.open=true;updateDisclosureState(details);saveState(details.dataset.guideSection,true);}
+    if(details){details.open=true;closeOtherMobileSections(details);updateDisclosureState(details);saveState(details.dataset.guideSection,true);setCurrentGuideSection(id);}
   }));
 
   const globalSearch=$('#globalSearch');

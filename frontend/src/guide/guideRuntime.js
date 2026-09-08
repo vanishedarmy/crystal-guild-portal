@@ -762,6 +762,7 @@ setupCompletionCatalogs();
 // order while closed, return focus after dismissing it, and trap Tab inside it
 // while open. Desktop navigation remains permanently available.
 const navOpen=$('#navOpen'),navClose=$('#navClose'),navBackdrop=$('#navBackdrop'),navPanel=$('#guideNav');
+let guideNavReturnFocus=navOpen;
 const guideNavIsMobile=()=>window.innerWidth<=1024;
 function syncGuideNavAccessibility(open){
   if(!navPanel)return;
@@ -774,15 +775,17 @@ function syncGuideNavAccessibility(open){
   if(open)navPanel.removeAttribute('inert');
   else navPanel.setAttribute('inert','');
 }
-function setGuideNav(open,{restoreFocus=false}={}){
+function setGuideNav(open,{restoreFocus=false,trigger=null}={}){
   const next=Boolean(open&&guideNavIsMobile());
+  if(next&&trigger)guideNavReturnFocus=trigger;
   document.body.classList.toggle('nav-open',next);
   navOpen?.setAttribute('aria-expanded',String(next));
+  $$('[data-guide-nav-open]').forEach(button=>button.setAttribute('aria-expanded',String(next)));
   syncGuideNavAccessibility(next);
   if(next)requestAnimationFrame(()=>navClose?.focus());
-  else if(restoreFocus)requestAnimationFrame(()=>navOpen?.focus());
+  else if(restoreFocus)requestAnimationFrame(()=>guideNavReturnFocus?.focus());
 }
-navOpen?.addEventListener('click',()=>setGuideNav(true));
+navOpen?.addEventListener('click',()=>setGuideNav(true,{trigger:navOpen}));
 navClose?.addEventListener('click',()=>setGuideNav(false,{restoreFocus:true}));
 navBackdrop?.addEventListener('click',()=>setGuideNav(false,{restoreFocus:true}));
 $$('#guideNav a').forEach(a=>a.addEventListener('click',()=>{if(guideNavIsMobile())setGuideNav(false)}));
@@ -1205,6 +1208,7 @@ function setupGuideSectionAccordions(){
     '<strong>Browse by section</strong>',
     `<span id="guideSectionCount">${disclosures.length} sections</span>`,
     '</div>',
+    '<button class="guide-index-nav-button" type="button" data-guide-nav-open aria-controls="guideNav" aria-expanded="false"><span aria-hidden="true">☰</span><span>All sections</span></button>',
     '<label class="guide-section-jump"><span>Jump to section</span><select id="guideSectionJump"><option value="">Choose a section…</option>',
     jumpOptions,
     '</select></label>',
@@ -1214,6 +1218,12 @@ function setupGuideSectionAccordions(){
     '</div>'
   ].join('');
   content.before(toolbar);
+
+  const indexNavOpen=toolbar.querySelector('[data-guide-nav-open]');
+  indexNavOpen?.addEventListener('click',()=>{
+    guideNavReturnFocus=indexNavOpen;
+    setGuideNav(true,{trigger:indexNavOpen});
+  });
 
   disclosures.forEach(details=>{
     const body=details.querySelector(':scope > .guide-section-body')||details.querySelector(':scope > .catalog-panel');

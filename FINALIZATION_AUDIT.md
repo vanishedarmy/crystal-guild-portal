@@ -1,7 +1,7 @@
-# Finalization Audit — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Mobile UI/UX Cleanup
+# Finalization Audit — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Player Guide Mobile Top Cleanup
 
-**Decision: PASS — targeted Retainer and Player Guide mobile cleanup.**
+**Decision: PASS — focused Player Guide phone-entry cleanup.**
 
-The Retainer page now prioritizes active work and dispatch controls, bounds decorative artwork, and provides mobile section jumping without altering Retainer gameplay. The Player Guide adds direct section selection, single-open mobile accordion behavior, search clearing, back-to-index navigation, and proper off-canvas focus/inert handling while preserving desktop navigation and all Guide data.
+The phone Guide now enters through one compact identity block and one practical navigation/search toolbox instead of stacking the shared header, a second Guide header, oversized flavor hero, stat strip, search surface, and a large collapse control. The existing accessible section drawer and direct jump selector remain available, while desktop keeps its full hero and navigation presentation.
 
-Release identity remains Bot/Web `1.7.1-resynthesis-a2h5`; schema **15**; hosted sync **1**; Portal protocol **32**. No player reset or migration.
+The prior Retainer mobile pass and all Hotfix 5 gameplay/UI corrections remain intact. Release identity remains Bot/Web `1.7.1-resynthesis-a2h5`; schema **15**; hosted sync **1**; Portal protocol **32**. No player reset or migration.

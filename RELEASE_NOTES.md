@@ -1,31 +1,27 @@
 # Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5
 
-## Mobile UI/UX Cleanup — Retainer Service & Player Guide
+## Player Guide Mobile Top Cleanup
 
-### Retainer Service
-- Mobile uses an **action-first order**: Current Assignment → Assignments → Retainer → History.
-- A compact four-item jump bar links directly to Current, Assignments, Retainer, and History.
-- Retainer status artwork is no longer absolutely overlaid on narrow screens; it occupies a bounded thumbnail column beside readable status copy.
-- Procurement cards use a compact mobile image/content layout instead of tall full-width artwork cards.
-- Priority selectors and primary Retainer actions meet mobile touch sizing, with 16px select text to avoid browser zoom-on-focus behavior.
-- The Retainer profile becomes a short portrait + progression summary with its three lifetime statistics below it.
-- The Retainer hero is reduced on narrow screens and decorative office artwork is removed on very small phones.
-- Long history/reward copy remains wrap-safe and no horizontal overflow is introduced.
+This focused Web revision removes the overbuilt stack at the top of the Player Guide on phones and replaces it with a compact, task-first entry experience.
 
-### Player Guide
-- Added a **Jump to section** selector grouped by Begin, Adventure, Build Your Hero, Gear & Endgame, and Completion.
-- Phone-sized layouts use **single-section accordion behavior**, preventing several enormous Guide sections from remaining open at once.
-- Every expanded major section gains a **Back to guide index** control on mobile.
-- Guide search now has an explicit **Clear** action and an `aria-live` result count.
-- The mobile navigation drawer is removed from the tab order while closed, moves focus into the drawer when opened, traps Tab while active, and restores focus when dismissed.
-- Current Guide navigation receives an active-state marker for assistive technology and visual orientation.
-- Mobile hero/search/index spacing is reduced while preserving full Guide copy and existing responsive data-card behavior.
-- Expand All remains available on desktop but is intentionally hidden on phone layouts; Collapse All remains available.
+### Mobile Player Guide
+- The redundant **Guide Sections** second header is hidden on phone layouts; the shared Crystal Guild site header remains the only page header.
+- The oversized flavor hero and horizontally scrolling stat chips are replaced on phones by a compact **Player Guide** introduction. Desktop keeps the full existing hero presentation.
+- The Guide index is reduced to **Browse by section**, a compact **All sections** drawer control, and the existing grouped section picker.
+- The full-width **Collapse All** control is removed from phone layouts; single-section accordion behavior already provides the more useful mobile interaction.
+- Browse controls and Guide search are visually joined into one compact toolbox and appear before the first Guide section.
+- The search field, Clear action, section picker, and drawer control retain mobile touch sizing and accessible labels.
+- The new **All sections** control opens the existing accessible Guide drawer and receives focus back after the drawer is dismissed.
+- Phone section content begins substantially higher on the page, with no decorative spacer band or oversized stat strip consuming the first viewport.
 
-### Preserved Hotfix 5 behavior
+### Preserved mobile work
+- Retainer action-first navigation/order, compact cards, bounded art, and touch sizing remain unchanged.
+- Guide single-open mobile sections, Back to guide index controls, search result announcements, drawer inert/focus trapping, and current-section state remain intact.
+
+### Preserved Hotfix 5 gameplay/UI behavior
 - Rally/Stream Venture remains **100% Encounter / 0% Treasure Chest**.
 - Solo Venture remains **80% Encounter / 20% Treasure**.
 - Weapon + Armor Best use, ☆/★ Favorites, item-level sorting, and removal of `Replaces X` remain intact.
-- The paired Bot includes the prior Solo Venture treasure → Treasure Seekers/Treasure Hunters progress correction.
+- The paired Bot retains the Solo Venture treasure → Treasure Seekers/Treasure Hunters progress correction.
 
 Runtime/frontend remains `1.7.1-resynthesis-a2h5`; paired Bot remains `1.7.1-resynthesis-a2h5`; schema **15**; hosted sync **1**; Portal protocol **32**. No database migration or player reset.

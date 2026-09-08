@@ -1,4 +1,4 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Mobile UI/UX Cleanup
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Player Guide Mobile Top Cleanup
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local DB schema: 15

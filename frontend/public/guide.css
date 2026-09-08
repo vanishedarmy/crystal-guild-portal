@@ -2664,3 +2664,209 @@ button, input, select, textarea { font: inherit; }
   .guide-section-summary h2 { font-size: 16px; }
   .guide-section-summary > .guide-section-lead-full { font-size: 10.5px !important; }
 }
+
+/* v1.7.1 Resynthesis A2H5 — focused Player Guide mobile top-of-page cleanup.
+   Phones get one compact identity block and one practical tool surface instead
+   of stacking a second navigation bar, oversized flavor hero, stat strip,
+   search bar, and full-width collapse control before the first section. */
+.guide-mobile-intro { display: none; }
+.guide-index-nav-button { display: none; }
+
+@media (max-width: 760px) {
+  html { scroll-padding-top: 14px; }
+
+  /* The shared site header is already the phone header. The Guide's older
+     second header is redundant once the index exposes the drawer directly. */
+  .mobile-top { display: none !important; }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .hero {
+    order: 1;
+    margin: 0;
+    padding: 14px var(--guide-gutter) 13px;
+    border-bottom: 1px solid rgba(83, 101, 143, .68);
+    background: linear-gradient(135deg, rgba(19, 42, 91, .95), rgba(7, 13, 38, .98));
+    box-shadow: inset 0 -1px 0 rgba(143, 231, 255, .06);
+    overflow: hidden;
+  }
+  .hero::after { display: none; }
+  .guide-desktop-intro { display: none; }
+  .guide-mobile-intro {
+    display: grid;
+    gap: 3px;
+    max-width: 44rem;
+  }
+  .guide-mobile-intro-kicker {
+    color: var(--gold);
+    font-family: var(--font-label);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+  .guide-mobile-intro strong {
+    color: #f8fbff;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 5.8vw, 25px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: .015em;
+  }
+  .guide-mobile-intro p {
+    margin: 2px 0 0;
+    color: #c3cee4;
+    font-size: 12px;
+    line-height: 1.38;
+  }
+
+  /* Reorder the useful controls so browsing comes before the free-text search.
+     The two surfaces visually read as one compact Guide toolbox. */
+  .guide-section-toolbar {
+    order: 2;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+    margin: 10px var(--guide-gutter) 0;
+    padding: 10px 10px 9px;
+    border-radius: 13px 13px 0 0;
+    border-bottom-color: transparent;
+    background: linear-gradient(180deg, rgba(14, 29, 52, .98), rgba(10, 22, 42, .98));
+    box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  }
+  .guide-section-toolbar-copy {
+    grid-column: 1 / -1;
+    display: block;
+    min-width: 0;
+  }
+  .guide-section-toolbar-kicker,
+  .guide-section-toolbar-copy #guideSectionCount { display: none; }
+  .guide-section-toolbar-copy strong {
+    display: block;
+    color: #f6f8ff;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+  .guide-section-toolbar-copy strong::after {
+    content: " — search or jump directly";
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .guide-index-nav-button {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+    min-height: 46px;
+    padding: .45rem .65rem;
+    border: 1px solid rgba(125,228,255,.27);
+    border-radius: 10px;
+    background: rgba(20, 47, 75, .72);
+    color: var(--crystal);
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .guide-index-nav-button > span:first-child { font-size: 16px; line-height: 1; }
+
+  .guide-section-jump {
+    grid-column: 2;
+    width: 100%;
+    min-width: 0;
+    gap: 0;
+  }
+  .guide-section-jump > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .guide-section-jump select {
+    min-height: 46px;
+    padding-top: .45rem;
+    padding-bottom: .45rem;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .guide-section-toolbar-actions { display: none !important; }
+
+  .topsearch {
+    order: 3;
+    position: relative;
+    top: auto;
+    z-index: 9;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    margin: 0 var(--guide-gutter) 10px;
+    padding: 0 10px 10px;
+    border: 1px solid rgba(83, 101, 143, .8);
+    border-top: 0;
+    border-radius: 0 0 13px 13px;
+    background: linear-gradient(180deg, rgba(10, 22, 42, .98), rgba(8, 18, 35, .98));
+    box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    backdrop-filter: none;
+  }
+  .topsearch .search {
+    min-height: 46px;
+    padding: .55rem .7rem;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .guide-search-clear { min-height: 46px; }
+  .topsearch .resultcount {
+    grid-column: 1 / -1;
+    min-height: 0;
+    padding: 0 2px;
+    font-size: 10.5px;
+  }
+  .topsearch .resultcount:empty { display: none; }
+
+  .content.guide-accordion-content {
+    order: 4;
+    padding-top: 2px;
+  }
+  .content.guide-accordion-content > .section { scroll-margin-top: 14px; }
+}
+
+@media (max-width: 420px) {
+  .guide-mobile-intro strong { font-size: 21px; }
+  .guide-mobile-intro p { font-size: 11.5px; }
+  .guide-section-toolbar {
+    grid-template-columns: 42px minmax(0, 1fr);
+    padding-inline: 9px;
+  }
+  .guide-index-nav-button {
+    grid-template-columns: 1fr;
+    width: 42px;
+    padding: 0;
+  }
+  .guide-index-nav-button > span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .guide-section-toolbar-copy strong::after { display: block; margin-top: 2px; }
+}

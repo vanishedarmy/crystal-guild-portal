@@ -4,7 +4,7 @@ import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
 import WhatsNew from "./WhatsNew.jsx";
-import { formatBonuses, number, timeAgo } from "../utils/formatters.js";
+import { formatBestUse, formatBonuses, number, timeAgo } from "../utils/formatters.js";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
 
 function EquipmentCard({ item, onDetail }) {
@@ -14,7 +14,7 @@ function EquipmentCard({ item, onDetail }) {
       <div className="slot-label">{humanizeLabel(item.slot)} · Lv. {number(item.min_level || 1)}</div>
       <div className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</div>
       <div className="item-meta">{formatBonuses(item.bonuses)}</div>
-      {item.slot === "weapon" && Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <small className="weapon-job-recommendation">Best: {item.allowed_jobs[0]}{item.allowed_jobs.length > 1 ? ` · Also: ${item.allowed_jobs.slice(1).join(", ")}` : ""}</small> : null}
+      {["weapon", "armor"].includes(String(item.slot || "").toLowerCase()) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
     </ClickableCard>
   );
 }

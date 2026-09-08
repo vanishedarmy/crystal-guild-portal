@@ -6,7 +6,7 @@ import {
   waitForPortalAction,
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
-import { duration, formatBonuses, formatItemUse, number } from "../utils/formatters.js";
+import { duration, formatBestUse, formatBonuses, formatItemUse, number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
@@ -65,13 +65,6 @@ function compareShopItems(left, right) {
   return shopLevel(left) - shopLevel(right)
     || String(left?.type || "").localeCompare(String(right?.type || ""))
     || String(left?.name || "").localeCompare(String(right?.name || ""));
-}
-
-function weaponRecommendation(item) {
-  const jobs = Array.isArray(item?.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
-  if (!jobs.length) return "All Jobs";
-  if (jobs.length === 1) return `Best: ${jobs[0]}`;
-  return `Best: ${jobs[0]} · Also: ${jobs.slice(1).join(", ")}`;
 }
 
 async function finishedAction(response) {
@@ -345,7 +338,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                         })() : null}
                       </div>
                     ) : null}
-                    {String(item.type || "").toLowerCase() === "weapon" ? <div className="moogle-requirement weapon-job-recommendation">{weaponRecommendation(item)}</div> : Array.isArray(item.allowed_jobs) && item.allowed_jobs.length ? <div className="moogle-requirement">Jobs: {item.allowed_jobs.join(", ")}</div> : null}
+                    {["weapon", "armor"].includes(String(item.type || "").toLowerCase()) ? <div className="moogle-requirement equipment-job-recommendation">{formatBestUse(item)}</div> : null}
                     {Number(item.min_level || 1) > 1 ? <div className="moogle-requirement">Requires Lv. {number(item.min_level)}</div> : null}
                     <div className="moogle-card-actions">
                       {!item.equipment ? <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max="99" value={quantityInputValue(buyQty, item.id)} onFocus={() => beginQuantityEdit(setBuyQty, buyQty, item.id)} onChange={(event) => updateQuantityInput(setBuyQty, item.id, event.target.value, 99)} onBlur={(event) => finishQuantityEdit(setBuyQty, item.id, event.target.value, 99)} /></label> : <span className="moogle-fixed-quantity">Qty 1</span>}
@@ -369,6 +362,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       <span className="slot-label">{typeLabel(item.type)}</span>
                       <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
                       <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
+                      {["weapon", "armor"].includes(String(item.type || "").toLowerCase()) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
                       {Array.isArray(item?.use?.effects) && item.use.effects.length ? <small className="moogle-item-brief">{formatItemUse(item.use)}</small> : null}
                       {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
                     </div>

@@ -867,7 +867,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         </div>
         <p className="muted">Use <code>!venture</code>; join an open rally with <code>!join</code>.</p>
         <div className="solo-venture-rules rally-venture-rules" aria-label="Rally Venture rules">
-          <span><strong>70 / 30</strong>Encounter / Treasure</span>
+          <span><strong>100% Encounter / 0% Treasure Chest</strong>Battle-only Rally Venture</span>
           <span><strong>+10</strong>Enemy level cap</span>
           <span><strong>+5% / level</strong>XP / JP / Gil reward bonus</span>
           <span><strong>+50%</strong>Maximum reward bonus</span>

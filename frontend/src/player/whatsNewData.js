@@ -7,7 +7,7 @@ export const MAJOR_UPDATES = [
     highlights: [
       { title: "Stream Ventures battle-only", description: "Rally Ventures now resolve as 100% encounters. The chest branch is removed from Stream Ventures; Portal Solo Venture retains its separate encounter/treasure roll." },
       { title: "Favorite and sort gear", description: "Weapons, armor, and accessories sort from highest item level to lowest, and your own Portal inventory can move favorite gear into a dedicated Favorites view." },
-      { title: "Equipment clarity", description: "Equipment cards show item level, weapon cards list recommended Jobs best-first, and named 'replaces' comparison copy has been removed." },
+      { title: "Equipment clarity", description: "Equipment cards show item level, weapon and armor cards list Best use Jobs in compatibility-priority order, and named 'replaces' comparison copy has been removed." },
       { title: "Collapsible activity", description: "Recent Activity can now collapse on the Adventurer Overview and Streamer Dashboard." },
       { title: "Daily MGP support", description: "The daily recovery allowance is 125 MGP and the Saucer grants a separate 50 MGP daily reward once per UTC day." },
       { title: "Better attraction payouts", description: "Mini Cactpot reaches 1,250 MGP, Crystal Slots targets about 97.1% return, Monster Toss pays more for strong scores, and all three Chocobo Racing podiums are richer." },

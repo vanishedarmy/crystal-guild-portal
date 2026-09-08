@@ -11351,13 +11351,16 @@ textarea {
 .inventory-favorites-panel { display:grid; gap:.7rem; }
 .inventory-favorites-heading { margin-bottom:0; }
 .inventory-action-card.is-favorite { box-shadow:inset 0 0 0 1px rgba(231,204,119,.22); }
+.inventory-equipment-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); align-items:start; }
+.inventory-equipment-grid > .inventory-action-card { align-self:start; height:auto; }
+.equipment-job-recommendation,
 .weapon-job-recommendation { display:block; color:var(--gold-soft,#ead99f); font-size:.72rem; line-height:1.35; overflow-wrap:anywhere; }
-.gear-favorite-button { min-height:38px; padding:.45rem .7rem; border:1px solid rgba(151,199,239,.35); border-radius:4px; background:rgba(5,18,33,.78); color:var(--text); cursor:pointer; }
+.gear-favorite-button { width:38px; min-width:38px; min-height:38px; padding:0; display:grid; place-items:center; border:1px solid rgba(151,199,239,.35); border-radius:4px; background:rgba(5,18,33,.78); color:var(--text); font-size:1.12rem; line-height:1; cursor:pointer; }
 .gear-favorite-button.active { border-color:rgba(231,204,119,.72); color:var(--gold-soft,#ead99f); }
-.equipment-card-actions { grid-template-columns:minmax(0,1fr) auto auto; }
+.equipment-card-actions { grid-template-columns:minmax(0,1fr) 38px auto; }
 .overview-recent-activity > summary { list-style:none; cursor:pointer; }
 .overview-recent-activity > summary::-webkit-details-marker { display:none; }
 .overview-activity-summary-meta { display:inline-flex; align-items:center; gap:.55rem; }
 .overview-recent-activity:not([open]) > summary { margin-bottom:0; }
-@media (max-width:760px) { .equipment-card-actions { grid-template-columns:1fr 1fr; } .equipment-compare { grid-column:1/-1; } }
-@media (max-width:520px) { .inventory-view-tabs { grid-template-columns:1fr; } .equipment-card-actions { grid-template-columns:1fr; } .equipment-compare { grid-column:auto; } .gear-favorite-button, .equipment-card-actions .equipment-action-button { width:100%; } }
+@media (max-width:760px) { .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-action-button { grid-column:2; width:100%; } }
+@media (max-width:520px) { .inventory-view-tabs { grid-template-columns:1fr; } .inventory-equipment-grid { grid-template-columns:1fr; } .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-card-actions .equipment-action-button { grid-column:2; width:100%; } }

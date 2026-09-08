@@ -11,7 +11,7 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { campRemainingSeconds } from "../utils/campCountdown.js";
-import { duration, formatBonuses, formatItemUse, number, pct } from "../utils/formatters.js";
+import { duration, formatBestUse, formatBonuses, formatItemUse, number, pct } from "../utils/formatters.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 
 const GROUP_ORDER = ["weapon", "armor", "accessory", "item", "material"];
@@ -38,12 +38,6 @@ function compareGearByLevel(left, right) {
   return itemLevel(right) - itemLevel(left) || String(left?.name || "").localeCompare(String(right?.name || ""));
 }
 function compareInventoryItems(left, right) { return String(left?.name || "").localeCompare(String(right?.name || "")); }
-function weaponRecommendation(item) {
-  const jobs = Array.isArray(item?.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
-  if (!jobs.length) return "All Jobs";
-  if (jobs.length === 1) return `Best: ${jobs[0]}`;
-  return `Best: ${jobs[0]} · Also: ${jobs.slice(1).join(", ")}`;
-}
 function actionKey(kind, target = "self") { const suffix = globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}:${Math.random().toString(36).slice(2)}`; return `${kind}:${target}:${suffix}`; }
 function itemBonuses(item) { return item?.effective_bonuses || item?.bonuses || {}; }
 function equipmentDelta(item, current) {
@@ -211,12 +205,12 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
           <span className={`item-name rarity-${item.rarity}`}>{item.name}{upgrade}</span>
           <span className="card-meta">Quantity {number(item.quantity)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</span>
           <span className="item-meta">{isHeldConsumable ? (item.use?.effects?.length ? formatItemUse(item.use) : item.description || "Consumable item") : formatBonuses(itemBonuses(item))}</span>
-          {rawType === "weapon" ? <small className="weapon-job-recommendation">{weaponRecommendation(item)}</small> : null}
+          {["weapon", "armor"].includes(rawType) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
           {isHeldConsumable && item.description ? <span className="inventory-consumable-description">{item.description}</span> : null}
         </button>
         {isEquipment ? <div className="equipment-card-actions">
           <div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <small>{equipmentDelta(item, current)}</small>}</div>
-          {isOwnProfile ? <button type="button" className={`gear-favorite-button ${isFavorite ? "active" : ""}`} aria-pressed={isFavorite} onClick={() => toggleFavorite(item.id)}>{isFavorite ? "★ Favorited" : "☆ Favorite"}</button> : null}
+          {isOwnProfile ? <button type="button" className={`gear-favorite-button ${isFavorite ? "active" : ""}`} aria-pressed={isFavorite} aria-label={isFavorite ? `Remove ${item.name} from Favorites` : `Add ${item.name} to Favorites`} title={isFavorite ? "Remove from Favorites" : "Add to Favorites"} onClick={() => toggleFavorite(item.id)}>{isFavorite ? "★" : "☆"}</button> : null}
           {isOwnProfile ? item.equipped ? <button type="button" className="equipment-action-button secondary" disabled={!equipmentActionsAvailable || Boolean(busyKey)} onClick={() => unequip(groupKey)}>{itemBusy ? "Working…" : `Unequip ${item.name}`}</button> : <button type="button" className="equipment-action-button" disabled={!equipmentActionsAvailable || !canUse.eligible || Boolean(busyKey)} title={!canUse.eligible ? canUse.reason : undefined} onClick={() => equip(item)}>{itemBusy ? "Working…" : canUse.eligible ? `Equip ${item.name}` : canUse.reason}</button> : null}
         </div> : null}
       </article>
@@ -266,7 +260,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
             const upgrade = item?.upgrade_level ? ` +${item.upgrade_level}` : "";
             const label = GROUP_LABELS[slot]?.replace(/s$/, "") || slot;
             const bonuses = item?.effective_bonuses || item?.bonuses || {};
-            return <article className={`current-loadout-card ${item?.id ? "filled" : "empty"}`} key={slot}><div className="current-loadout-card-head"><span className="slot-label">{label}{item?.id ? ` · Lv. ${number(itemLevel(item))}` : ""}</span><span className={`loadout-status ${item?.id ? "equipped" : "empty"}`}>{item?.id ? "Equipped" : "Empty"}</span></div><strong className={item?.id ? `rarity-${item.rarity || "common"}` : "muted"}>{item?.id ? `${item.name}${upgrade}` : "Nothing equipped"}</strong><span className="item-meta">{item?.id ? formatBonuses(bonuses) : "No stat bonuses"}</span>{item?.id && slot === "weapon" ? <small className="weapon-job-recommendation">{weaponRecommendation(item)}</small> : null}{item?.id ? <button type="button" className="current-loadout-detail" onClick={() => onDetail?.({ type: "equipment", item })}>View {item.name}</button> : null}</article>;
+            return <article className={`current-loadout-card ${item?.id ? "filled" : "empty"}`} key={slot}><div className="current-loadout-card-head"><span className="slot-label">{label}{item?.id ? ` · Lv. ${number(itemLevel(item))}` : ""}</span><span className={`loadout-status ${item?.id ? "equipped" : "empty"}`}>{item?.id ? "Equipped" : "Empty"}</span></div><strong className={item?.id ? `rarity-${item.rarity || "common"}` : "muted"}>{item?.id ? `${item.name}${upgrade}` : "Nothing equipped"}</strong><span className="item-meta">{item?.id ? formatBonuses(bonuses) : "No stat bonuses"}</span>{item?.id && ["weapon", "armor"].includes(slot) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}{item?.id ? <button type="button" className="current-loadout-detail" onClick={() => onDetail?.({ type: "equipment", item })}>View {item.name}</button> : null}</article>;
           })}
         </div>
       </section>
@@ -281,7 +275,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
       {isOwnProfile && inventoryView === "favorites" ? (
         <section className="inventory-favorites-panel">
           <div className="panel-title-row inventory-favorites-heading"><h3>Favorite Gear</h3><span className="small-badge">{favoriteGear.length} {favoriteGear.length === 1 ? "item" : "items"}</span></div>
-          {favoriteGear.length ? <div className="content-grid">{favoriteGear.map((item, index) => renderInventoryCard(item, groupForItem(item), index, { favorite: true }))}</div> : <div className="muted inventory-group-empty">Favorite a weapon, armor piece, or accessory to keep it here.</div>}
+          {favoriteGear.length ? <div className="content-grid inventory-equipment-grid">{favoriteGear.map((item, index) => renderInventoryCard(item, groupForItem(item), index, { favorite: true }))}</div> : <div className="muted inventory-group-empty">Favorite a weapon, armor piece, or accessory to keep it here.</div>}
         </section>
       ) : (
         <div className="inventory-section-list">
@@ -295,7 +289,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
                   <span className="inventory-group-toggle-meta"><span className="small-badge">{group.items.length} {group.items.length === 1 ? "stack" : "stacks"}</span><CollapsePointer open={isOpen} className="inventory-group-toggle-icon" /></span>
                 </button>
                 <div id={contentId} hidden={!isOpen}>
-                  {group.items.length ? <div className="content-grid">{group.items.map((item, index) => renderInventoryCard(item, group.key, index))}</div> : <div className="muted inventory-group-empty">No {group.label.toLowerCase()} match the current search.</div>}
+                  {group.items.length ? <div className={`content-grid ${EQUIPMENT_GROUPS.has(group.key) ? "inventory-equipment-grid" : ""}`}>{group.items.map((item, index) => renderInventoryCard(item, group.key, index))}</div> : <div className="muted inventory-group-empty">No {group.label.toLowerCase()} match the current search.</div>}
                 </div>
               </section>
             );

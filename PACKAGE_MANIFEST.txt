@@ -1,6 +1,9 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Venture & Equipment UX
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Armor Best Use & Equipment UX Corrections
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local DB schema: 15
 Hosted sync schema: 1
 Portal Action protocol: 32
+Frontend regression: 568/568 PASS
+Hosted Web/API: 65/65 PASS
+Paired Bot regression: 688/688 PASS

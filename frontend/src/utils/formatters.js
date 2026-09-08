@@ -148,6 +148,13 @@ export function formatItemTraits(item = {}) {
   return traits.join(" · ");
 }
 
+export function formatBestUse(item = {}) {
+  const jobs = Array.isArray(item.allowed_jobs) ? item.allowed_jobs.filter(Boolean) : [];
+  if (!jobs.length) return "All Jobs";
+  if (jobs.length === 1) return `Best: ${jobs[0]}`;
+  return `Best: ${jobs[0]} · Also: ${jobs.slice(1).join(", ")}`;
+}
+
 export function formatEquipmentRequirements(item = {}) {
   const parts = [];
   const level = Number(item.min_level);

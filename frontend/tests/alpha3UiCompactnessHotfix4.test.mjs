@@ -19,7 +19,7 @@ test("blacksmith tab subtitles are concise", () => {
 test("Emporium buy cards omit long item description copy", () => {
   assert.doesNotMatch(emp, /className="moogle-item-description"/);
   assert.match(emp, /className="moogle-stat-summary"/);
-  assert.match(emp, /Jobs: \{item\.allowed_jobs\.join/);
+  assert.match(emp, /formatBestUse\(item\)/);
   assert.match(emp, /Requires Lv\./);
 });
 

@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  fetchGearFavorites,
+  saveGearFavorites,
   submitEquipItem,
   submitRecoveryState,
   submitStartRest,
@@ -17,7 +19,9 @@ import CollapsePointer from "../components/CollapsePointer.jsx";
 const GROUP_ORDER = ["weapon", "armor", "accessory", "item", "material"];
 const GROUP_LABELS = { weapon: "Weapons", armor: "Armor", accessory: "Accessories", item: "Consumables", material: "Materials" };
 const INVENTORY_GROUP_STATE_KEY = "crystal-guild:inventory-groups:v1";
-const GEAR_FAVORITES_KEY_PREFIX = "crystal-guild:gear-favorites:v1";
+const LEGACY_GEAR_FAVORITES_KEY_PREFIX = "crystal-guild:gear-favorites:v1";
+const LEGACY_PENDING_GEAR_FAVORITES_KEY_PREFIX = "crystal-guild:gear-favorites-pending:v2";
+const PENDING_GEAR_FAVORITES_KEY_PREFIX = "crystal-guild:gear-favorites-pending:v3";
 const EQUIPMENT_GROUPS = new Set(["weapon", "armor", "accessory"]);
 const STAT_LABELS = { attack: "ATK", magic_power: "M.PWR", str: "STR", vit: "VIT", mag: "MAG", spr: "SPR", dex: "DEX", lck: "LCK", hp: "HP" };
 
@@ -54,6 +58,21 @@ function eligibility(item, overview) {
   return { eligible: true, reason: "" };
 }
 function stateActionResult(action, fallback) { return action?.result?.message || fallback; }
+function storedFavoriteList(key) {
+  try {
+    const stored = JSON.parse(globalThis.localStorage?.getItem(key) || "[]");
+    return Array.isArray(stored) ? stored.map(String) : [];
+  } catch { return []; }
+}
+function favoriteSignature(ids) { return [...ids].map(String).sort().join("\n"); }
+function favoriteActionKey() {
+  const suffix = globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
+  return `gear-favorites:${suffix}`;
+}
+function hasStoredFavoriteState(key) {
+  try { return globalThis.localStorage?.getItem(key) != null; } catch { return false; }
+}
+
 function quickRecoveryText(item, catalogItem) {
   const text = catalogItem?.use?.effects?.length
     ? formatItemUse(catalogItem.use)
@@ -66,6 +85,8 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const [search, setSearch] = useState("");
   const [inventoryView, setInventoryView] = useState("inventory");
   const [favoriteIds, setFavoriteIds] = useState(() => new Set());
+  const [favoriteSyncReady, setFavoriteSyncReady] = useState(false);
+  const [favoriteSyncMessage, setFavoriteSyncMessage] = useState("");
   const [busyKey, setBusyKey] = useState("");
   const [actionMessage, setActionMessage] = useState("");
   const [recoveryState, setRecoveryState] = useState(null);
@@ -82,6 +103,9 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   });
   const recoveryLoadedFor = useRef("");
   const expiryRefreshFor = useRef(0);
+  const favoriteSaveQueue = useRef(Promise.resolve());
+  const favoriteLatestSignature = useRef("");
+  const favoriteSyncMounted = useRef(true);
 
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === String(data.player?.username || "").toLowerCase());
   const capabilities = new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []);
@@ -93,20 +117,174 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const recoveryQuantities = useMemo(() => new Map((recoveryState?.items || []).map((item) => [item.id, Number(item.quantity || 0)])), [recoveryState]);
   const recoveryCatalogById = useMemo(() => new Map((data.items || []).map((item) => [item.id, item])), [data.items]);
   const displayedItems = useMemo(() => data.items.map((item) => recoveryQuantities.has(item.id) ? { ...item, quantity: recoveryQuantities.get(item.id) } : item).filter((item) => Number(item.quantity || 0) > 0), [data.items, recoveryQuantities]);
-  const favoriteStorageKey = `${GEAR_FAVORITES_KEY_PREFIX}:${String(data.player?.username || "unknown").toLowerCase()}`;
-  useEffect(() => {
-    if (!isOwnProfile) { setFavoriteIds(new Set()); return; }
+  const favoriteStorageKey = `${LEGACY_GEAR_FAVORITES_KEY_PREFIX}:${String(data.player?.username || "unknown").toLowerCase()}`;
+  const legacyPendingFavoriteStorageKey = `${LEGACY_PENDING_GEAR_FAVORITES_KEY_PREFIX}:${String(data.player?.username || "unknown").toLowerCase()}`;
+  const pendingFavoriteStorageKey = `${PENDING_GEAR_FAVORITES_KEY_PREFIX}:${String(data.player?.username || "unknown").toLowerCase()}`;
+
+  const commitFavoriteSave = async (favorites) => {
+    const response = await saveGearFavorites(favorites, auth.csrf_token, favoriteActionKey());
+    const accepted = response?.action;
+    if (!accepted?.id) return { committed: false, pending: true, action: null };
+    if (accepted.status === "completed") {
+      if (accepted.result?.ok === false) throw new Error(accepted.result?.message || "Favorites could not be saved by Crystal Guild.");
+      return { committed: true, pending: false, action: accepted };
+    }
+    if (accepted.status === "failed") throw new Error(accepted.result?.message || "Favorites could not be saved by Crystal Guild.");
+    const finished = await waitForPortalAction(accepted.id, { attempts: 40, delayMs: 500 });
+    if (!finished) return { committed: false, pending: true, action: accepted };
+    if (finished.status === "failed" || finished.result?.ok === false) {
+      throw new Error(finished.result?.message || "Favorites could not be saved by Crystal Guild.");
+    }
+    return { committed: finished.status === "completed", pending: finished.status !== "completed", action: finished };
+  };
+
+  const clearFavoriteMigrationState = () => {
     try {
-      const stored = JSON.parse(globalThis.localStorage?.getItem(favoriteStorageKey) || "[]");
-      setFavoriteIds(new Set(Array.isArray(stored) ? stored.map(String) : []));
-    } catch { setFavoriteIds(new Set()); }
-  }, [favoriteStorageKey, isOwnProfile]);
-  const toggleFavorite = (itemId) => setFavoriteIds((current) => {
-    const next = new Set(current);
-    if (next.has(String(itemId))) next.delete(String(itemId)); else next.add(String(itemId));
-    try { globalThis.localStorage?.setItem(favoriteStorageKey, JSON.stringify([...next])); } catch {}
-    return next;
-  });
+      globalThis.localStorage?.removeItem(pendingFavoriteStorageKey);
+      globalThis.localStorage?.removeItem(legacyPendingFavoriteStorageKey);
+      globalThis.localStorage?.removeItem(favoriteStorageKey);
+    } catch {}
+  };
+
+  const queueFavoriteSave = (nextIds) => {
+    const favorites = [...nextIds].map(String);
+    const signature = favoriteSignature(favorites);
+    favoriteLatestSignature.current = signature;
+    try { globalThis.localStorage?.setItem(pendingFavoriteStorageKey, JSON.stringify(favorites)); } catch {}
+    setFavoriteSyncMessage("Sharing Favorites across devices…");
+    favoriteSaveQueue.current = favoriteSaveQueue.current
+      .catch(() => null)
+      .then(() => commitFavoriteSave(favorites))
+      .then(({ committed, pending }) => {
+        if (!favoriteSyncMounted.current || favoriteLatestSignature.current !== signature) return;
+        if (committed) {
+          clearFavoriteMigrationState();
+          setFavoriteSyncMessage("Favorites saved to your Guild profile and synced across devices.");
+          onRefresh?.();
+        } else if (pending) {
+          setFavoriteSyncMessage("Favorites are shared across devices; the Guild database save is still pending.");
+        }
+      })
+      .catch((error) => {
+        if (!favoriteSyncMounted.current || favoriteLatestSignature.current !== signature) return;
+        setFavoriteSyncMessage(error?.message || "Favorites could not sync. This browser will keep the pending change for retry.");
+      });
+  };
+
+  useEffect(() => {
+    favoriteSyncMounted.current = true;
+    if (!isOwnProfile) {
+      setFavoriteIds(new Set());
+      setFavoriteSyncReady(false);
+      setFavoriteSyncMessage("");
+      return () => { favoriteSyncMounted.current = false; };
+    }
+    const controller = new AbortController();
+    let active = true;
+    const legacyBrowser = storedFavoriteList(favoriteStorageKey);
+    const legacyPending = storedFavoriteList(legacyPendingFavoriteStorageKey);
+    const legacy = [...new Set([...legacyBrowser, ...legacyPending])];
+    const pendingExists = hasStoredFavoriteState(pendingFavoriteStorageKey);
+    const pending = storedFavoriteList(pendingFavoriteStorageKey);
+    const localInitial = pendingExists ? pending : legacy;
+    setFavoriteIds(new Set(localInitial));
+    setFavoriteSyncReady(false);
+    setFavoriteSyncMessage(localInitial.length ? "Syncing Favorites…" : "Loading synced Favorites…");
+
+    (async () => {
+      try {
+        const remote = await fetchGearFavorites(controller.signal);
+        if (!active) return;
+        const remoteIds = Array.isArray(remote?.favorites) ? remote.favorites.map(String) : [];
+        let desired;
+        let shouldSave = false;
+        if (pendingExists) {
+          desired = [...new Set(pending)];
+          shouldSave = true;
+        } else {
+          desired = [...new Set([...remoteIds, ...legacy])];
+          shouldSave = Boolean(remote?.needs_authoritative_save)
+            || (legacy.length > 0 && favoriteSignature(desired) !== favoriteSignature(remoteIds));
+        }
+        setFavoriteIds(new Set(desired));
+        favoriteLatestSignature.current = favoriteSignature(desired);
+        if (shouldSave) {
+          try { globalThis.localStorage?.setItem(pendingFavoriteStorageKey, JSON.stringify(desired)); } catch {}
+          const result = await commitFavoriteSave(desired);
+          if (!active) return;
+          if (result.committed) {
+            clearFavoriteMigrationState();
+            setFavoriteSyncMessage(legacy.length ? "Existing Favorites migrated to your Guild profile and synced across devices." : "Favorites saved to your Guild profile and synced across devices.");
+            onRefresh?.();
+          } else {
+            setFavoriteSyncMessage("Favorites are shared across devices; the Guild database save is still pending.");
+          }
+        } else {
+          clearFavoriteMigrationState();
+          setFavoriteSyncMessage("Favorites loaded from your Guild profile.");
+        }
+      } catch (error) {
+        if (!active || error?.name === "AbortError") return;
+        setFavoriteSyncMessage("Favorites sync is temporarily unavailable. This browser's saved Favorites are still shown.");
+      } finally {
+        if (active) setFavoriteSyncReady(true);
+      }
+    })();
+
+    return () => {
+      active = false;
+      favoriteSyncMounted.current = false;
+      controller.abort();
+    };
+  }, [favoriteStorageKey, legacyPendingFavoriteStorageKey, pendingFavoriteStorageKey, isOwnProfile, auth.csrf_token]);
+
+  useEffect(() => {
+    if (!isOwnProfile) return undefined;
+    let active = true;
+    const refreshSyncedFavorites = async () => {
+      try {
+        const remote = await fetchGearFavorites();
+        if (!active) return;
+        const remoteIds = Array.isArray(remote?.favorites) ? remote.favorites.map(String) : [];
+        const pendingExists = hasStoredFavoriteState(pendingFavoriteStorageKey);
+        const localPending = pendingExists ? storedFavoriteList(pendingFavoriteStorageKey) : [];
+        if (pendingExists && favoriteSignature(localPending) !== favoriteSignature(remoteIds)) {
+          // Keep this browser's newest optimistic write until the hosted mirror
+          // catches up; another device still receives that mirror immediately.
+          return;
+        }
+        if (pendingExists && !remote?.needs_authoritative_save) clearFavoriteMigrationState();
+        setFavoriteIds(new Set(remoteIds));
+        favoriteLatestSignature.current = favoriteSignature(remoteIds);
+        setFavoriteSyncMessage(remote?.needs_authoritative_save
+          ? "Favorites are shared across devices; the Guild database save is still pending."
+          : "Favorites loaded from your Guild profile.");
+      } catch {}
+    };
+    const onVisible = () => { if (document.visibilityState !== "hidden") refreshSyncedFavorites(); };
+    const timer = window.setInterval(refreshSyncedFavorites, 8000);
+    window.addEventListener("focus", refreshSyncedFavorites);
+    window.addEventListener("pageshow", refreshSyncedFavorites);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      window.removeEventListener("focus", refreshSyncedFavorites);
+      window.removeEventListener("pageshow", refreshSyncedFavorites);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [isOwnProfile, pendingFavoriteStorageKey]);
+
+  const toggleFavorite = (itemId) => {
+    if (!favoriteSyncReady) return;
+    const id = String(itemId);
+    setFavoriteIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      queueFavoriteSave(next);
+      return next;
+    });
+  };
   const filtered = useMemo(() => { const term = search.trim().toLowerCase(); return displayedItems.filter((item) => !term || item.name.toLowerCase().includes(term)); }, [displayedItems, search]);
   const favoriteGear = useMemo(() => filtered.filter((item) => EQUIPMENT_GROUPS.has(groupForItem(item)) && favoriteIds.has(String(item.id))).sort(compareGearByLevel), [filtered, favoriteIds]);
   const grouped = useMemo(() => {
@@ -210,7 +388,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
         </button>
         {isEquipment ? <div className="equipment-card-actions">
           <div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <small>{equipmentDelta(item, current)}</small>}</div>
-          {isOwnProfile ? <button type="button" className={`gear-favorite-button ${isFavorite ? "active" : ""}`} aria-pressed={isFavorite} aria-label={isFavorite ? `Remove ${item.name} from Favorites` : `Add ${item.name} to Favorites`} title={isFavorite ? "Remove from Favorites" : "Add to Favorites"} onClick={() => toggleFavorite(item.id)}>{isFavorite ? "★" : "☆"}</button> : null}
+          {isOwnProfile ? <button type="button" className={`gear-favorite-button ${isFavorite ? "active" : ""}`} aria-pressed={isFavorite} aria-label={isFavorite ? `Remove ${item.name} from Favorites` : `Add ${item.name} to Favorites`} title={!favoriteSyncReady ? "Syncing Favorites…" : isFavorite ? "Remove from Favorites" : "Add to Favorites"} disabled={!favoriteSyncReady} onClick={() => toggleFavorite(item.id)}>{isFavorite ? "★" : "☆"}</button> : null}
           {isOwnProfile ? item.equipped ? <button type="button" className="equipment-action-button secondary" disabled={!equipmentActionsAvailable || Boolean(busyKey)} onClick={() => unequip(groupKey)}>{itemBusy ? "Working…" : `Unequip ${item.name}`}</button> : <button type="button" className="equipment-action-button" disabled={!equipmentActionsAvailable || !canUse.eligible || Boolean(busyKey)} title={!canUse.eligible ? canUse.reason : undefined} onClick={() => equip(item)}>{itemBusy ? "Working…" : canUse.eligible ? `Equip ${item.name}` : canUse.reason}</button> : null}
         </div> : null}
       </article>
@@ -271,6 +449,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
           <button type="button" role="tab" aria-selected={inventoryView === "favorites"} className={inventoryView === "favorites" ? "active" : ""} onClick={() => setInventoryView("favorites")}>Favorites <span>{favoriteGear.length}</span></button>
         </div>
       ) : null}
+      {isOwnProfile && favoriteSyncMessage ? <div className="inventory-favorites-sync" aria-live="polite">{favoriteSyncMessage}</div> : null}
       <div className="toolbar"><label className="search-box"><span>Search {inventoryView === "favorites" ? "Favorites" : "Inventory"}</span><input type="search" placeholder="Item name" value={search} onChange={(event) => setSearch(event.target.value)} /></label></div>
       {isOwnProfile && inventoryView === "favorites" ? (
         <section className="inventory-favorites-panel">

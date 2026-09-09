@@ -26,9 +26,9 @@ from .trophy_hall import build_trophy_hall
 HOSTED_PORTAL_VERSION = "1.7.1-resynthesis-a2h5"
 FRONTEND_ASSET_REVISION = "1.7.1-resynthesis-a2h5"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 32
+ACTION_PROTOCOL_VERSION = 33
 ALLOWED_PORTAL_ACTIONS = {
-    "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
+    "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "WORKSHOP_EXCHANGE",
@@ -83,6 +83,9 @@ MAX_ACTION_HISTORY = 20
 READ_ONLY_STATE_ACTIONS = {
     "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
     "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE",
+    # Preference writes are deliberately queue-budget neutral: they never affect
+    # combat, Long Rest, or gameplay progression and are last-write-wins.
+    "SET_GEAR_FAVORITES",
 }
 # Gameplay mutations below are also safe to coalesce while one identical request is
 # still pending/processing. This prevents a browser retry from applying a Solo
@@ -533,25 +536,94 @@ class HostedPortalStore:
                 normalized.append(item_id)
         return normalized
 
-    def gear_favorites(self, twitch_id: str) -> dict[str, Any]:
+    def _authoritative_gear_favorites(self, twitch_id: str) -> tuple[list[str], bool, int]:
         identity = str(twitch_id or "").strip()
         if not identity.isdigit():
             raise ValueError("Invalid Twitch identity.")
         with self._lock, self._connect() as conn:
             row = conn.execute(
-                "SELECT gear_favorites_json,updated_at FROM portal_user_preferences WHERE twitch_id=?",
+                "SELECT snapshot_json,synced_at FROM portal_players WHERE twitch_id=? LIMIT 1",
                 (identity,),
             ).fetchone()
         if not row:
-            return {"favorites": [], "updated_at": 0}
+            return [], False, 0
         try:
-            parsed = json.loads(str(row["gear_favorites_json"] or "[]"))
-            favorites = self._normalize_gear_favorites(parsed)
+            snapshot = json.loads(str(row["snapshot_json"] or "{}"))
+            inventory = snapshot.get("inventory") if isinstance(snapshot, dict) else None
+            if not isinstance(inventory, dict) or "favorite_item_ids" not in inventory:
+                return [], False, int(row["synced_at"] or 0)
+            favorites = self._normalize_gear_favorites(inventory.get("favorite_item_ids"))
+            return favorites, True, int(row["synced_at"] or 0)
         except (json.JSONDecodeError, ValueError, TypeError):
-            favorites = []
-        return {"favorites": favorites, "updated_at": int(row["updated_at"] or 0)}
+            return [], False, int(row["synced_at"] or 0)
+
+    def gear_favorites(self, twitch_id: str) -> dict[str, Any]:
+        identity = str(twitch_id or "").strip()
+        if not identity.isdigit():
+            raise ValueError("Invalid Twitch identity.")
+        canonical, canonical_present, synced_at = self._authoritative_gear_favorites(identity)
+        with self._lock, self._connect() as conn:
+            row = conn.execute(
+                "SELECT gear_favorites_json,updated_at FROM portal_user_preferences WHERE twitch_id=?",
+                (identity,),
+            ).fetchone()
+        pending: list[str] | None = None
+        pending_updated_at = 0
+        if row:
+            pending_updated_at = int(row["updated_at"] or 0)
+            try:
+                pending = self._normalize_gear_favorites(json.loads(str(row["gear_favorites_json"] or "[]")))
+            except (json.JSONDecodeError, ValueError, TypeError):
+                pending = []
+
+        # The hosted preference row is now only a migration/pending mirror. A
+        # newer mirror wins while the Bot action is being processed. Once a new
+        # Bot snapshot arrives, the local player database is authoritative.
+        if pending is not None and canonical_present and set(canonical) == set(pending):
+            chosen = canonical
+            source = "bot"
+            needs_authoritative_save = False
+            with self._lock, self._connect() as conn:
+                conn.execute("DELETE FROM portal_user_preferences WHERE twitch_id=?", (identity,))
+                conn.commit()
+            pending_updated_at = 0
+        elif pending is not None and pending_updated_at > synced_at:
+            chosen = pending
+            source = "pending"
+            needs_authoritative_save = True
+        elif canonical_present and canonical:
+            chosen = canonical
+            source = "bot"
+            needs_authoritative_save = False
+        elif pending:
+            # Preserve Favorites written by the previous hosted-only hotfix long
+            # enough to migrate them into the new authoritative player DB.
+            chosen = pending
+            source = "legacy_migration"
+            needs_authoritative_save = True
+        elif canonical_present:
+            chosen = canonical
+            source = "bot"
+            needs_authoritative_save = False
+        else:
+            chosen = pending or []
+            source = "legacy" if pending is not None else "none"
+            needs_authoritative_save = bool(pending)
+
+        return {
+            "favorites": chosen,
+            "authoritative_favorites": canonical if canonical_present else [],
+            "authoritative_available": canonical_present,
+            "pending": source in {"pending", "legacy_migration"},
+            "needs_authoritative_save": needs_authoritative_save,
+            "source": source,
+            "updated_at": max(synced_at, pending_updated_at),
+        }
 
     def set_gear_favorites(self, twitch_id: str, favorites: Any) -> dict[str, Any]:
+        # Transitional hosted mirror only. The Bot/local player DB is the source
+        # of truth; this row keeps devices visually consistent while the queued
+        # preference action is in flight and migrates the prior hosted-only data.
         identity = str(twitch_id or "").strip()
         if not identity.isdigit():
             raise ValueError("Invalid Twitch identity.")
@@ -1074,6 +1146,10 @@ class HostedPortalStore:
             if result_id <= 0:
                 raise ValueError("Invalid Adventure result ID.")
             payload = {"result_id": result_id}
+        elif kind == "SET_GEAR_FAVORITES":
+            if set(payload) != {"favorites"}:
+                raise ValueError("SET_GEAR_FAVORITES requires only favorites.")
+            payload = {"favorites": self._normalize_gear_favorites(payload.get("favorites"))}
         encoded = json.dumps(payload, separators=(",", ":"), sort_keys=True, ensure_ascii=False)
         if len(encoded.encode("utf-8")) > MAX_ACTION_BYTES:
             raise ValueError("Action payload is too large.")
@@ -1086,6 +1162,17 @@ class HostedPortalStore:
             ).fetchone()
             if existing:
                 return self._public_action(existing)
+
+            if kind == "SET_GEAR_FAVORITES":
+                superseded_pref = json.dumps(
+                    {"ok": False, "message": "A newer Favorites update replaced this pending request.", "data": {"coalesced": True}},
+                    separators=(",", ":"), sort_keys=True, ensure_ascii=False,
+                )
+                conn.execute(
+                    "UPDATE portal_actions SET status='failed',result_json=?,lease_hash=NULL,lease_until=0,worker_id=NULL,updated_at=? "
+                    "WHERE twitch_id=? AND action_type='SET_GEAR_FAVORITES' AND status='pending'",
+                    (superseded_pref, now, twitch_id),
+                )
 
             # State panels can refresh automatically while Render or the Bot is
             # waking. Older builds used a fresh idempotency key for each refresh,
@@ -1690,7 +1777,13 @@ class HostedPortalStore:
             snapshot = self._snapshot_cache.get(username)
             if snapshot is not None:
                 self._snapshot_cache.move_to_end(username)
-                return build_trophy_hall(snapshot) if module == "trophies" else snapshot.get(module)
+                if module == "trophies":
+                    return build_trophy_hall(snapshot)
+                value = snapshot.get(module)
+                if module == "inventory" and isinstance(value, dict):
+                    value = dict(value)
+                    value.pop("favorite_item_ids", None)
+                return value
         with self._connect() as conn:
             row = conn.execute(
                 """
@@ -1708,7 +1801,13 @@ class HostedPortalStore:
         with self._lock:
             self._alias_cache[lookup] = username
             self._cache_snapshot(username, snapshot)
-        return build_trophy_hall(snapshot) if module == "trophies" else snapshot.get(module)
+        if module == "trophies":
+            return build_trophy_hall(snapshot)
+        value = snapshot.get(module)
+        if module == "inventory" and isinstance(value, dict):
+            value = dict(value)
+            value.pop("favorite_item_ids", None)
+        return value
 
 
 def validate_snapshot_payload(payload: dict[str, Any]) -> None:
@@ -2326,8 +2425,21 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             return
         try:
             payload = self._read_json(MAX_ACTION_BYTES)
-            result = self.portal.store.set_gear_favorites(session["twitch_id"], payload.get("favorites"))
-            self._json({"ok": True, **result})
+            normalized = self.portal.store._normalize_gear_favorites(payload.get("favorites"))
+            idem = self.headers.get("Idempotency-Key", "").strip() or f"gear-favorites:{random_token(16)}"
+            action = self.portal.store.create_action(
+                session["twitch_id"],
+                "SET_GEAR_FAVORITES",
+                {"favorites": normalized},
+                idem,
+                trusted_username=session.get("login"),
+                trusted_display_name=session.get("display_name"),
+            )
+            # Only publish the hosted pending mirror after the authoritative
+            # Bot action has been accepted. This prevents a failed queue write
+            # from making another device display state that can never persist.
+            mirror = self.portal.store.set_gear_favorites(session["twitch_id"], normalized)
+            self._json({"ok": True, **mirror, "action": action}, HTTPStatus.ACCEPTED)
         except (ValueError, json.JSONDecodeError) as exc:
             self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
 

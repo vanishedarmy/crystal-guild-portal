@@ -1,9 +1,7 @@
-# Upgrade to v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Player Guide Mobile Top Cleanup
+# Upgrade — Hotfix 5 Gear Favorites Authority Fix
 
-If you already installed the **Mobile UI/UX Cleanup** build, this revision is **Web-only**. Deploy the revised Web package or apply the incremental Web patch to that build's Web tree.
+**Deploy the matching Bot and Web together.** Local schema advances **15 → 16** and Portal Action protocol advances **32 → 33**. The Bot performs the additive database migration and verified pre-migration backup automatically.
 
-For a clean replacement, use the refreshed Complete archive. It contains the same byte-identical verified Treasure Seekers Bot plus the revised Web tree.
+The Web now uses the Bot-synced player snapshot as the canonical Favorites list. The hosted preference row is only a pending/migration bridge, and public inventory APIs remove the private favorite IDs. Existing browser-local or prior hosted-only Favorites are migrated into the player database automatically when encountered.
 
-Preserve the live database, Twitch tokens, secrets, and persistent runtime files. No database migration is required: schema remains **15**, hosted sync **1**, Portal protocol **32**.
-
-Guide assets use stable filenames with the existing asset revision/revalidation behavior. A normal reload should receive the revised Guide markup/CSS; use a hard refresh only if an intermediary browser/CDN cache is unusually persistent.
+Preserve the live player database, Twitch tokens, secrets, and persistent runtime files. No player reset is performed and hosted sync schema remains **1**.

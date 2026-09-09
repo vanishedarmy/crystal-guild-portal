@@ -13,12 +13,29 @@ export async function logoutPortal(csrfToken) {
     method: "POST",
     headers: {
       "X-Crystal-Guild-CSRF": csrfToken || "",
+      "Idempotency-Key": idempotencyKey || "",
     },
   });
 }
 
 export function fetchPortalActions(signal) {
   return getJson("/api/actions", { signal });
+}
+
+export function fetchGearFavorites(signal) {
+  return getJson("/api/me/gear-favorites", { signal });
+}
+
+export function saveGearFavorites(favorites, csrfToken, idempotencyKey) {
+  return getJson("/api/me/gear-favorites", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Crystal-Guild-CSRF": csrfToken || "",
+      "Idempotency-Key": idempotencyKey || "",
+    },
+    body: JSON.stringify({ favorites: Array.isArray(favorites) ? favorites.map(String) : [] }),
+  });
 }
 
 export async function submitPortalAction(type, payload, csrfToken, idempotencyKey) {

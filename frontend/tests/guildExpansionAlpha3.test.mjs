@@ -30,6 +30,6 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   assert.match(version, /WEB_ASSET_REVISION = "1\.7\.1-resynthesis-a2h5"/);
   assert.equal(guideData.meta.version, "v1.7.1 Alpha 2 — Resynthesis H5");
   assert.equal(guideData.meta.release, "1.7.1-resynthesis-a2h5");
-  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 32/);
+  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 33/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

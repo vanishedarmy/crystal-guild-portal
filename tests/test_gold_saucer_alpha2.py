@@ -22,7 +22,7 @@ class GoldSaucerHostedAlpha2Tests(unittest.TestCase):
     def test_alpha2_contract_and_actions(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.1-resynthesis-a2h5")
         self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.1-resynthesis-a2h5")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 32)
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 33)
         self.assertIn("MONSTER_TOSS_START", ALLOWED_PORTAL_ACTIONS)
         self.assertIn("MONSTER_TOSS_THROW", ALLOWED_PORTAL_ACTIONS)
 

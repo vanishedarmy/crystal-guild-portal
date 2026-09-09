@@ -1,10 +1,8 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Player Guide Mobile Top Cleanup
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Gear Favorites Authority Fix
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
-Local DB schema: 15
+Local player DB schema: 16
 Hosted sync schema: 1
-Portal Action protocol: 32
-Frontend regression: 578/578 PASS
-Hosted Web/API: 65/65 PASS
-Paired Bot regression baseline: 689/689 PASS; Bot unchanged
-Database migration: none
+Portal Action protocol: 33
+Baseline: Hotfix 5 Cross-Device Gear Favorites
+Deployment: Bot + Web together

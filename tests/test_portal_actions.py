@@ -132,6 +132,107 @@ class PortalActionServerCase(unittest.TestCase):
             self.assertFalse(has_key(payload, "twitch_id"), path)
             self.assertNotIn(TWITCH_ID, json.dumps(payload), path)
 
+    def test_gear_favorites_are_account_scoped_and_shared_across_sessions(self):
+        status, initial, _ = self.request(
+            "/api/me/gear-favorites", headers=self.user_headers()
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(initial["favorites"], [])
+
+        status, saved, _ = self.request(
+            "/api/me/gear-favorites",
+            method="POST",
+            payload={"favorites": ["mage_staff", "black_robe", "mage_staff"]},
+            headers=self.user_headers(csrf=True),
+        )
+        self.assertEqual(status, 202)
+        self.assertEqual(saved["favorites"], ["mage_staff", "black_robe"])
+        self.assertEqual(saved["action"]["type"], "SET_GEAR_FAVORITES")
+        self.assertEqual(saved["action"]["status"], "pending")
+
+        second_token, _ = self.store.create_session(
+            {"twitch_id": TWITCH_ID, "login": "van", "display_name": "Van"}, 3600
+        )
+        status, shared, _ = self.request(
+            "/api/me/gear-favorites", headers={"Cookie": f"cg_session={second_token}"}
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(shared["favorites"], ["mage_staff", "black_robe"])
+
+    def test_synced_bot_favorites_are_authoritative_and_private_from_public_inventory(self):
+        payload = snapshot_payload()
+        payload["snapshot"]["inventory"]["favorite_item_ids"] = ["hunters_axe", "chain_mail"]
+        self.store.upsert_player(payload)
+
+        status, owner, _ = self.request("/api/me/gear-favorites", headers=self.user_headers())
+        self.assertEqual(status, 200)
+        self.assertEqual(owner["favorites"], ["hunters_axe", "chain_mail"])
+        self.assertEqual(owner["source"], "bot")
+        self.assertFalse(owner["needs_authoritative_save"])
+
+        status, public_inventory, _ = self.request("/api/player/van/inventory")
+        self.assertEqual(status, 200)
+        self.assertNotIn("favorite_item_ids", public_inventory)
+
+    def test_pending_hosted_favorites_are_cleared_after_matching_bot_snapshot_arrives(self):
+        self.store.set_gear_favorites(TWITCH_ID, ["hunters_axe", "chain_mail"])
+        payload = snapshot_payload()
+        payload["snapshot"]["inventory"]["favorite_item_ids"] = ["hunters_axe", "chain_mail"]
+        self.store.upsert_player(payload)
+
+        state = self.store.gear_favorites(TWITCH_ID)
+        self.assertEqual(state["favorites"], ["hunters_axe", "chain_mail"])
+        self.assertEqual(state["source"], "bot")
+        self.assertFalse(state["pending"])
+        with self.store._connect() as conn:
+            row = conn.execute("SELECT 1 FROM portal_user_preferences WHERE twitch_id=?", (TWITCH_ID,)).fetchone()
+        self.assertIsNone(row)
+
+    def test_previous_hosted_only_favorites_are_preserved_for_authoritative_migration(self):
+        payload = snapshot_payload()
+        payload["snapshot"]["inventory"]["favorite_item_ids"] = []
+        self.store.upsert_player(payload)
+        self.store.set_gear_favorites(TWITCH_ID, ["mage_staff", "black_robe"])
+
+        state = self.store.gear_favorites(TWITCH_ID)
+        self.assertEqual(state["favorites"], ["mage_staff", "black_robe"])
+        self.assertTrue(state["needs_authoritative_save"])
+        self.assertIn(state["source"], {"pending", "legacy_migration"})
+
+    def test_favorites_post_queues_authoritative_bot_write_with_exact_payload(self):
+        status, saved, _ = self.request(
+            "/api/me/gear-favorites",
+            method="POST",
+            payload={"favorites": ["hunters_axe", "chain_mail"]},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "favorites-authority-001"},
+        )
+        self.assertEqual(status, 202)
+        self.assertEqual(saved["action"]["type"], "SET_GEAR_FAVORITES")
+        claimed = self.store.claim_actions("bot:test", limit=1)
+        self.assertEqual(len(claimed), 1)
+        self.assertEqual(claimed[0]["type"], "SET_GEAR_FAVORITES")
+        self.assertEqual(claimed[0]["payload"], {"favorites": ["hunters_axe", "chain_mail"]})
+        self.assertEqual(claimed[0]["protocol_version"], ACTION_PROTOCOL_VERSION)
+
+    def test_gear_favorites_write_requires_csrf_and_rejects_invalid_ids(self):
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            self.request(
+                "/api/me/gear-favorites",
+                method="POST",
+                payload={"favorites": ["mage_staff"]},
+                headers=self.user_headers(),
+            )
+        self.assertEqual(caught.exception.code, 403)
+
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            self.request(
+                "/api/me/gear-favorites",
+                method="POST",
+                payload={"favorites": ["../../bad"]},
+                headers=self.user_headers(csrf=True),
+            )
+        self.assertEqual(caught.exception.code, 400)
+
     def test_unlinked_twitch_session_can_recruit_but_cannot_use_other_actions(self):
         new_id = "123456789"
         token, csrf = self.store.create_session(

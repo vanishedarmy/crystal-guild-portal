@@ -1,5 +1,5 @@
 # Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5
 
-Web half of the combined **Venture & Equipment UX** hotfix. Runtime/frontend `1.7.1-resynthesis-a2h5`; paired Bot `1.7.1-resynthesis-a2h5`; schema **15**; hosted sync **1**; Portal protocol **32**.
+Current correction: **Gear Favorites Authority Fix**. Runtime/frontend `1.7.1-resynthesis-a2h5`; paired Bot `1.7.1-resynthesis-a2h5`; local player DB schema **16**; hosted sync **1**; Portal protocol **33**.
 
-Equipment now shows item level, sorts gear highest-to-lowest, supports browser-local Favorites, lists recommended Jobs on weapons, removes named replacement copy, and makes Recent Activity collapsible. Emporium Item Info from Hotfix 4 remains intact.
+The signed-in Favorites endpoint now writes through to authoritative Crystal Guild player state and reads canonical values from the normal Bot snapshot. Deploy with the matching Bot.

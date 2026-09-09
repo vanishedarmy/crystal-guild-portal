@@ -1,14 +1,17 @@
-# Validation Report — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Player Guide Mobile Top Cleanup
+# Validation Report — Hotfix 5 Gear Favorites Authority Fix
 
 **PASS**
 
-- Runtime/frontend contract: `1.7.1-resynthesis-a2h5`
-- Local DB schema: **15**; hosted sync: **1**; Portal protocol: **32**
-- Frontend regression: **578 / 578 PASS**
-- Hosted Web/API regression: **65 / 65 PASS**
-- Paired Treasure Seekers Bot: unchanged from the verified **689 / 689 PASS** build
-- Focused mobile top cleanup coverage: **4 / 4 PASS**
-- The focused checks verify compact mobile intro, removal of the redundant phone Guide header, toolbox ordering, hidden phone Collapse All control, and accessible All sections drawer focus restoration.
-- Source-only Web package does not ship `node_modules`; therefore no local Vite production-build result is claimed.
+- Runtime/frontend: `1.7.1-resynthesis-a2h5`
+- Local DB schema: **16**
+- Hosted sync schema: **1**
+- Portal Action protocol: **33**
+- Bot regression: **696 / 696 PASS**
+- Hosted Web/API regression: **71 / 71 PASS**
+- Frontend regression: **582 / 582 PASS**
+- Focused authoritative Favorites persistence/replay/clear tests: **PASS**
+- Simulated schema 15 → 16 migration + verified `pre_schema_16` backup: **PASS**
+- Public inventory privacy check for `favorite_item_ids`: **PASS**
+- Prior hosted/browser Favorites migration path: **PASS**
 
-No database migration or player reset required.
+No player reset is required. The schema migration is additive and automatically backed up before application.

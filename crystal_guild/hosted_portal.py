@@ -273,6 +273,11 @@ class HostedPortalStore:
                 ON portal_actions(status, created_at);
                 CREATE INDEX IF NOT EXISTS idx_portal_actions_player
                 ON portal_actions(twitch_id, created_at DESC);
+                CREATE TABLE IF NOT EXISTS portal_user_preferences (
+                    twitch_id TEXT PRIMARY KEY,
+                    gear_favorites_json TEXT NOT NULL DEFAULT '[]',
+                    updated_at INTEGER NOT NULL
+                );
                 """
             )
             columns = {row["name"] for row in conn.execute("PRAGMA table_info(portal_players)").fetchall()}
@@ -510,6 +515,57 @@ class HostedPortalStore:
         with self._lock, self._connect() as conn:
             conn.execute("DELETE FROM portal_sessions WHERE session_hash=?", (digest,))
             conn.commit()
+
+    @staticmethod
+    def _normalize_gear_favorites(favorites: Any) -> list[str]:
+        if not isinstance(favorites, list):
+            raise ValueError("Favorites must be an array.")
+        if len(favorites) > 256:
+            raise ValueError("Too many favorite items.")
+        normalized: list[str] = []
+        seen: set[str] = set()
+        for raw in favorites:
+            item_id = str(raw or "").strip()
+            if not re.fullmatch(r"[A-Za-z0-9_.:-]{1,80}", item_id):
+                raise ValueError("Favorite item ID is invalid.")
+            if item_id not in seen:
+                seen.add(item_id)
+                normalized.append(item_id)
+        return normalized
+
+    def gear_favorites(self, twitch_id: str) -> dict[str, Any]:
+        identity = str(twitch_id or "").strip()
+        if not identity.isdigit():
+            raise ValueError("Invalid Twitch identity.")
+        with self._lock, self._connect() as conn:
+            row = conn.execute(
+                "SELECT gear_favorites_json,updated_at FROM portal_user_preferences WHERE twitch_id=?",
+                (identity,),
+            ).fetchone()
+        if not row:
+            return {"favorites": [], "updated_at": 0}
+        try:
+            parsed = json.loads(str(row["gear_favorites_json"] or "[]"))
+            favorites = self._normalize_gear_favorites(parsed)
+        except (json.JSONDecodeError, ValueError, TypeError):
+            favorites = []
+        return {"favorites": favorites, "updated_at": int(row["updated_at"] or 0)}
+
+    def set_gear_favorites(self, twitch_id: str, favorites: Any) -> dict[str, Any]:
+        identity = str(twitch_id or "").strip()
+        if not identity.isdigit():
+            raise ValueError("Invalid Twitch identity.")
+        normalized = self._normalize_gear_favorites(favorites)
+        now = int(time.time())
+        encoded = json.dumps(normalized, separators=(",", ":"), ensure_ascii=False)
+        with self._lock, self._connect() as conn:
+            conn.execute(
+                "INSERT INTO portal_user_preferences(twitch_id,gear_favorites_json,updated_at) VALUES (?,?,?) "
+                "ON CONFLICT(twitch_id) DO UPDATE SET gear_favorites_json=excluded.gear_favorites_json,updated_at=excluded.updated_at",
+                (identity, encoded, now),
+            )
+            conn.commit()
+        return {"favorites": normalized, "updated_at": now}
 
     @staticmethod
     def _public_action(row: sqlite3.Row) -> dict[str, Any]:
@@ -1907,6 +1963,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         if path == "/api/actions":
             self._action_history()
             return
+        if path == "/api/me/gear-favorites":
+            self._gear_favorites()
+            return
         if path == "/api/health":
             health = self.portal.store.health()
             health["portal_auth_configured"] = self.portal.oauth_config.enabled
@@ -1951,6 +2010,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             return
         if path == "/api/actions":
             self._submit_action()
+            return
+        if path == "/api/me/gear-favorites":
+            self._set_gear_favorites()
             return
         if path in {"/api/actions/claim", "/api/actions/result"}:
             if not self._authorized():
@@ -2240,6 +2302,34 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
         except Exception as exc:
             self._json({"error": f"Could not queue Portal action: {exc}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
+
+    def _gear_favorites(self) -> None:
+        session = self._session()
+        if not session:
+            self._json({"error": "Sign in with Twitch before viewing Favorites."}, HTTPStatus.UNAUTHORIZED)
+            return
+        if not session.get("player"):
+            self._json({"error": "Create your Crystal Guild adventurer before using Favorites."}, HTTPStatus.FORBIDDEN)
+            return
+        self._json(self.portal.store.gear_favorites(session["twitch_id"]))
+
+    def _set_gear_favorites(self) -> None:
+        session = self._session()
+        if not session:
+            self._json({"error": "Sign in with Twitch before changing Favorites."}, HTTPStatus.UNAUTHORIZED)
+            return
+        if not session.get("player"):
+            self._json({"error": "Create your Crystal Guild adventurer before using Favorites."}, HTTPStatus.FORBIDDEN)
+            return
+        if not self._csrf_valid(session):
+            self._json({"error": "Invalid session protection token."}, HTTPStatus.FORBIDDEN)
+            return
+        try:
+            payload = self._read_json(MAX_ACTION_BYTES)
+            result = self.portal.store.set_gear_favorites(session["twitch_id"], payload.get("favorites"))
+            self._json({"ok": True, **result})
+        except (ValueError, json.JSONDecodeError) as exc:
+            self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
 
     def _action_history(self) -> None:
         session = self._session()

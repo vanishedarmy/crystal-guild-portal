@@ -41,12 +41,13 @@ test("Adventure Board uses clearer player-facing wording", async () => {
   assert.match(board, /Up to three private stages/);
 });
 
-test("Adventure Board uses Bot-synchronized local timers and polls while a live encounter, Solo Venture, field Expedition, Dungeon, or timed Hunt is active", async () => {
+test("Adventure Board uses Bot-synchronized local timers and uses live revisions, exact deadlines, and slow fallback refreshes for active adventures", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(board, /window\.setInterval\(\(\) => setClock\(Date\.now\(\)\), 1000\)/);
   assert.match(board, /const expeditionActive = Boolean\(state\?\.solo_venture\?\.expedition\)/);
   assert.match(board, /!state\?\.encounter && !state\?\.active_hunt && !expeditionActive && !fieldExpeditionActive && !dungeonActive/);
-  assert.match(board, /fieldExpeditionActive \? 8000 : expeditionActive \? 5000 : dungeonActive \? 5000 : 4000/);
+  assert.match(board, /fieldExpeditionActive \? 30000 : expeditionActive \? 30000 : dungeonActive \? 30000 : 30000/);
+  assert.match(board, /crystal-guild-live-revision/);
   assert.match(board, /window\.setTimeout\(\(\) => void loadState\(\{ quiet: true \}\), waitMs\)/);
   assert.match(board, /const authoritativeClock = clock \+ serverOffsetMs/);
   assert.match(board, /setServerOffsetMs\(Number\(next\.server_now \|\| 0\) > 0/);

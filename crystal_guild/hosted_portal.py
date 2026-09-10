@@ -105,7 +105,7 @@ MAX_MANIFEST_PLAYERS = 10000
 USERNAME_RE = re.compile(r"^[A-Za-z0-9_]{1,25}$")
 SSE_REFRESH_COALESCE_SECONDS = 0.08
 DYNAMIC_GZIP_LEVEL = 3
-PORTAL_SYNC_STALE_SECONDS = max(30, int(os.getenv("PORTAL_SYNC_STALE_SECONDS", "90")))
+PORTAL_SYNC_STALE_SECONDS = max(30, int(os.getenv("PORTAL_SYNC_STALE_SECONDS", "150")))
 FORBIDDEN_KEYS = {
     "token",
     "oauth",
@@ -173,6 +173,7 @@ class HostedPortalStore:
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = threading.RLock()
         self._condition = threading.Condition(self._lock)
+        self._action_condition = threading.Condition(self._lock)
         self._revision = 0
         self._directory_cache: list[dict[str, Any]] = []
         self._alias_cache: dict[str, str] = {}
@@ -1155,7 +1156,7 @@ class HostedPortalStore:
             raise ValueError("Action payload is too large.")
         now = int(time.time())
         action_id = f"pa_{random_token(18)}"
-        with self._lock, self._connect() as conn:
+        with self._action_condition, self._connect() as conn:
             existing = conn.execute(
                 "SELECT * FROM portal_actions WHERE twitch_id=? AND idempotency_key=?",
                 (twitch_id, idem),
@@ -1299,6 +1300,7 @@ class HostedPortalStore:
             )
             conn.commit()
             row = conn.execute("SELECT * FROM portal_actions WHERE action_id=?", (action_id,)).fetchone()
+            self._action_condition.notify_all()
         return self._public_action(row)
 
     def list_actions(self, twitch_id: str, limit: int = MAX_ACTION_HISTORY) -> list[dict[str, Any]]:
@@ -1310,11 +1312,68 @@ class HostedPortalStore:
             ).fetchall()
         return [self._public_action(row) for row in rows]
 
-    def claim_actions(self, worker_id: str, limit: int = 8, lease_seconds: int = 30) -> list[dict[str, Any]]:
+    def action_for_user(self, twitch_id: str, action_id: str) -> dict[str, Any] | None:
+        identity = str(twitch_id or "").strip()
+        key = str(action_id or "").strip()
+        if not identity or not key:
+            return None
+        with self._lock, self._connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM portal_actions WHERE twitch_id=? AND action_id=?",
+                (identity, key),
+            ).fetchone()
+        return self._public_action(row) if row else None
+
+    def wait_for_action(self, twitch_id: str, action_id: str, timeout: float = 0.0) -> dict[str, Any] | None:
+        deadline = time.monotonic() + max(0.0, float(timeout))
+        identity = str(twitch_id or "").strip()
+        key = str(action_id or "").strip()
+        if not identity or not key:
+            return None
+        with self._action_condition:
+            while True:
+                with self._connect() as conn:
+                    row = conn.execute(
+                        "SELECT * FROM portal_actions WHERE twitch_id=? AND action_id=?",
+                        (identity, key),
+                    ).fetchone()
+                action = self._public_action(row) if row else None
+                if action is None or action.get("status") in {"completed", "failed"}:
+                    return action
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    return action
+                self._action_condition.wait(timeout=remaining)
+
+    def wait_for_pending_actions(self, timeout: float = 0.0) -> bool:
+        deadline = time.monotonic() + max(0.0, float(timeout))
+        with self._action_condition:
+            while True:
+                with self._connect() as conn:
+                    row = conn.execute(
+                        """
+                        SELECT 1 FROM portal_actions a
+                        LEFT JOIN portal_players p
+                          ON p.twitch_id=a.twitch_id AND lower(p.username)=lower(a.username)
+                        WHERE a.status='pending'
+                          AND (a.action_type IN ('RECRUIT','STREAMER_COMMAND') OR p.username IS NOT NULL)
+                        LIMIT 1
+                        """
+                    ).fetchone()
+                if row:
+                    return True
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    return False
+                self._action_condition.wait(timeout=remaining)
+
+    def claim_actions(self, worker_id: str, limit: int = 8, lease_seconds: int = 30, wait_seconds: float = 0.0) -> list[dict[str, Any]]:
         worker = str(worker_id or "").strip()[:120]
         if not worker:
             raise ValueError("worker_id is required.")
         safe_limit = min(25, max(1, int(limit)))
+        if wait_seconds > 0:
+            self.wait_for_pending_actions(wait_seconds)
         now = int(time.time())
         lease_until = now + max(10, min(120, int(lease_seconds)))
         claimed: list[dict[str, Any]] = []
@@ -1396,7 +1455,7 @@ class HostedPortalStore:
         if len(encoded.encode("utf-8")) > MAX_ACTION_RESULT_BYTES:
             raise ValueError("Action result is too large.")
         now = int(time.time())
-        with self._lock, self._connect() as conn:
+        with self._action_condition, self._connect() as conn:
             row = conn.execute(
                 "SELECT status,lease_hash FROM portal_actions WHERE action_id=?",
                 (action_id,),
@@ -1415,6 +1474,7 @@ class HostedPortalStore:
                 (status, encoded, now, action_id),
             )
             conn.commit()
+            self._action_condition.notify_all()
         return True
 
     def upsert_player(self, payload: dict[str, Any]) -> tuple[bool, str]:
@@ -1541,6 +1601,12 @@ class HostedPortalStore:
             self._fellowship_cache = snapshot
             self._last_sync = max(self._last_sync, int(row["synced_at"] or 0))
         return dict(snapshot)
+
+    def sync_presence(self) -> dict[str, bool]:
+        with self._lock, self._connect() as conn:
+            fellowship = conn.execute("SELECT 1 FROM portal_fellowship WHERE singleton_id=1").fetchone() is not None
+            overlay = conn.execute("SELECT 1 FROM portal_overlay WHERE singleton_id=1").fetchone() is not None
+        return {"fellowship": fellowship, "overlay": overlay}
 
     def apply_manifest(self, usernames: list[str], owner_twitch_id: str = "") -> tuple[int, list[str]]:
         normalized = {str(name).strip().lower() for name in usernames if str(name).strip()}
@@ -2062,6 +2128,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         if path == "/api/actions":
             self._action_history()
             return
+        if path.startswith("/api/actions/"):
+            self._action_status(parsed, path)
+            return
         if path == "/api/me/gear-favorites":
             self._gear_favorites()
             return
@@ -2070,22 +2139,22 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             health["portal_auth_configured"] = self.portal.oauth_config.enabled
             health["portal_actions_enabled"] = bool(self.portal.actions_enabled and self.portal.oauth_config.enabled)
             health["action_protocol_version"] = ACTION_PROTOCOL_VERSION
-            self._json(health)
+            self._json(health, cache_control="no-cache", conditional=True)
             return
         if path == "/api/players":
             search = parse_qs(parsed.query).get("search", [""])[0]
-            self._json({"players": self.portal.store.list_players(search)})
+            self._json({"players": self.portal.store.list_players(search)}, cache_control="no-cache", conditional=True)
             return
         if path == "/api/streamer":
-            self._json(self.portal.store.streamer_dashboard())
+            self._json(self.portal.store.streamer_dashboard(), cache_control="no-cache", conditional=True)
             return
         if path == "/api/fellowship":
             payload = self.portal.store.fellowship()
-            self._json(payload if payload is not None else {"available": False})
+            self._json(payload if payload is not None else {"available": False}, cache_control="no-cache", conditional=True)
             return
         if path == "/api/overlay/state":
             payload = self.portal.store.overlay()
-            self._json(payload if payload is not None else {"available": False, "active": False, "status": "IDLE"})
+            self._json(payload if payload is not None else {"available": False, "active": False, "status": "IDLE"}, cache_control="no-cache", conditional=True)
             return
         if path == "/api/events":
             self._events()
@@ -2126,12 +2195,17 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                         raise ValueError("Unsupported Portal action protocol version.")
                     worker_id = str(payload.get("worker_id") or "").strip()
                     limit = int(payload.get("limit") or 8)
+                    try:
+                        wait_seconds = max(0.0, min(25.0, float(payload.get("wait_seconds") or 0.0)))
+                    except (TypeError, ValueError):
+                        wait_seconds = 0.0
                     actions = self.portal.store.claim_actions(
                         worker_id,
                         limit=limit,
                         lease_seconds=self.portal.action_lease_seconds,
+                        wait_seconds=wait_seconds,
                     )
-                    self._json({"ok": True, "protocol_version": ACTION_PROTOCOL_VERSION, "actions": actions})
+                    self._json({"ok": True, "protocol_version": ACTION_PROTOCOL_VERSION, "actions": actions, "long_poll": wait_seconds > 0})
                 else:
                     if int(payload.get("protocol_version") or ACTION_PROTOCOL_VERSION) != ACTION_PROTOCOL_VERSION:
                         raise ValueError("Unsupported Portal action protocol version.")
@@ -2172,7 +2246,14 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             else:
                 usernames, owner_twitch_id = validate_manifest_payload(payload)
                 removed, missing = self.portal.store.apply_manifest(usernames, owner_twitch_id)
-                self._json({"ok": True, "removed": removed, "missing": missing})
+                presence = self.portal.store.sync_presence()
+                self._json({
+                    "ok": True,
+                    "removed": removed,
+                    "missing": missing,
+                    "needs_fellowship": not presence["fellowship"],
+                    "needs_overlay": not presence["overlay"],
+                })
         except (ValueError, json.JSONDecodeError) as exc:
             self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
         except Exception as exc:
@@ -2320,7 +2401,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                     "action_capabilities": sorted(ALLOWED_PORTAL_ACTIONS - {"STREAMER_COMMAND"}),
                     "streamer_authorized": False,
                     **sync,
-                }
+                },
+                cache_control="private, no-cache",
+                conditional=True,
             )
             return
         player = session.get("player")
@@ -2350,7 +2433,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                 "action_protocol_version": ACTION_PROTOCOL_VERSION,
                 "action_capabilities": sorted(capabilities),
                 **sync,
-            }
+            },
+            cache_control="private, no-cache",
+            conditional=True,
         )
 
     def _logout(self) -> None:
@@ -2410,7 +2495,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         if not session.get("player"):
             self._json({"error": "Create your Crystal Guild adventurer before using Favorites."}, HTTPStatus.FORBIDDEN)
             return
-        self._json(self.portal.store.gear_favorites(session["twitch_id"]))
+        self._json(self.portal.store.gear_favorites(session["twitch_id"]), cache_control="private, no-cache", conditional=True)
 
     def _set_gear_favorites(self) -> None:
         session = self._session()
@@ -2443,12 +2528,36 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         except (ValueError, json.JSONDecodeError) as exc:
             self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
 
+    def _action_status(self, parsed, path: str) -> None:
+        session = self._session()
+        if not session:
+            self._json({"error": "Sign in with Twitch before viewing Portal actions."}, HTTPStatus.UNAUTHORIZED)
+            return
+        action_id = unquote(path[len("/api/actions/"):]).strip()
+        if not action_id or len(action_id) > 120:
+            self._json({"error": "Invalid Portal action ID."}, HTTPStatus.BAD_REQUEST)
+            return
+        query = parse_qs(parsed.query)
+        try:
+            wait_seconds = max(0.0, min(25.0, float(query.get("wait", ["0"])[0] or 0.0)))
+        except (TypeError, ValueError):
+            wait_seconds = 0.0
+        action = self.portal.store.wait_for_action(session["twitch_id"], action_id, wait_seconds)
+        if action is None:
+            self._json({"error": "Portal action not found."}, HTTPStatus.NOT_FOUND)
+            return
+        self._json(
+            {"action": action},
+            cache_control="private, no-cache",
+            conditional=wait_seconds <= 0,
+        )
+
     def _action_history(self) -> None:
         session = self._session()
         if not session:
             self._json({"error": "Sign in with Twitch before viewing Portal actions."}, HTTPStatus.UNAUTHORIZED)
             return
-        self._json({"actions": self.portal.store.list_actions(session["twitch_id"])})
+        self._json({"actions": self.portal.store.list_actions(session["twitch_id"])}, cache_control="private, no-cache", conditional=True)
 
     def _player_api(self, path: str) -> None:
         parts = [part for part in path.split("/") if part]
@@ -2477,7 +2586,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         if payload is None:
             self._json({"error": "Hero not found."}, HTTPStatus.NOT_FOUND)
             return
-        self._json(payload)
+        self._json(payload, cache_control="no-cache", conditional=True)
 
     def _events(self) -> None:
         self.send_response(HTTPStatus.OK)
@@ -2497,7 +2606,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
                 {"revision": revision, "ts": int(time.time()), **self.portal.store.sync_state()},
             )
             while True:
-                next_revision = self.portal.store.wait_for_revision(revision, timeout=10.0)
+                next_revision = self.portal.store.wait_for_revision(revision, timeout=20.0)
                 if next_revision != revision:
                     # Briefly coalesce a multi-player sync batch without making
                     # the Portal feel sluggish after the source revision changes.
@@ -2646,18 +2755,32 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         payload: dict[str, Any],
         status: HTTPStatus = HTTPStatus.OK,
         extra_headers: list[tuple[str, str]] | None = None,
+        *,
+        cache_control: str = "no-store",
+        conditional: bool = False,
     ) -> None:
         raw_body = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        etag = f'"{hashlib.sha256(raw_body).hexdigest()[:32]}"' if conditional and status == HTTPStatus.OK else ""
+        if etag and self.headers.get("If-None-Match", "").strip() == etag:
+            self.send_response(HTTPStatus.NOT_MODIFIED)
+            self.send_header("Cache-Control", cache_control)
+            self.send_header("ETag", etag)
+            self.send_header("Content-Length", "0")
+            self._security_headers()
+            self.end_headers()
+            return
         accepts_gzip = "gzip" in self.headers.get("Accept-Encoding", "").lower()
         compressed = len(raw_body) >= 1400 and accepts_gzip
         body = gzip.compress(raw_body, compresslevel=DYNAMIC_GZIP_LEVEL) if compressed else raw_body
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", cache_control)
         self._security_headers()
         for name, value in extra_headers or []:
             self.send_header(name, value)
+        if etag:
+            self.send_header("ETag", etag)
         if compressed:
             self.send_header("Content-Encoding", "gzip")
             self.send_header("Vary", "Accept-Encoding")

@@ -989,6 +989,64 @@ class PortalActionServerCase(unittest.TestCase):
         self.assertFalse(auth["can_recruit"])
 
 
+    def test_single_action_long_poll_wakes_on_completion(self):
+        action = self.store.create_action(TWITCH_ID, "PING", {}, "long-poll-action-wake")
+        observed = {}
+        def waiter():
+            observed["action"] = self.store.wait_for_action(TWITCH_ID, action["id"], 2.0)
+        thread = threading.Thread(target=waiter)
+        thread.start()
+        time.sleep(0.08)
+        claimed = self.store.claim_actions("worker-long-poll", limit=1)
+        self.assertEqual(len(claimed), 1)
+        self.assertTrue(self.store.complete_action(claimed[0]["id"], claimed[0]["lease_token"], True, "done", {}))
+        thread.join(timeout=1.5)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(observed["action"]["status"], "completed")
+
+    def test_claim_long_poll_ignores_unclaimable_orphan_actions(self):
+        now = int(time.time())
+        with self.store._lock, self.store._connect() as conn:
+            conn.execute(
+                "INSERT INTO portal_actions(action_id,twitch_id,username,action_type,payload_json,idempotency_key,status,created_at,updated_at) VALUES (?,?,?,?,?,?,'pending',?,?)",
+                ("pa_orphan", "111", "missinghero", "PING", "{}", "orphan-long-poll", now, now),
+            )
+            conn.commit()
+        started = time.monotonic()
+        claimed = self.store.claim_actions("worker-orphan", wait_seconds=0.15)
+        elapsed = time.monotonic() - started
+        self.assertEqual(claimed, [])
+        self.assertGreaterEqual(elapsed, 0.10)
+
+    def test_claim_http_long_poll_wakes_when_user_queues_action(self):
+        result = {}
+        def claim_worker():
+            try:
+                result["response"] = self.request(
+                    "/api/actions/claim", method="POST",
+                    payload={"worker_id": "http-worker", "limit": 1, "protocol_version": ACTION_PROTOCOL_VERSION, "wait_seconds": 2},
+                    headers={"X-Crystal-Guild-Key": SYNC_KEY},
+                )
+            except Exception as exc:
+                result["error"] = exc
+        thread = threading.Thread(target=claim_worker)
+        thread.start()
+        time.sleep(0.10)
+        status, queued, _ = self.request(
+            "/api/actions", method="POST", payload={"type": "PING", "payload": {}},
+            headers={**self.user_headers(csrf=True), "Idempotency-Key": "http-long-poll-wake"},
+        )
+        self.assertEqual(status, 202)
+        self.assertEqual(queued["action"]["status"], "pending")
+        thread.join(timeout=2.5)
+        self.assertFalse(thread.is_alive())
+        self.assertNotIn("error", result)
+        status, payload, _ = result["response"]
+        self.assertEqual(status, 200)
+        self.assertTrue(payload["long_poll"])
+        self.assertEqual(len(payload["actions"]), 1)
+
+
 class PortalAuthHelpersTests(unittest.TestCase):
     def test_safe_return_path_stays_same_origin(self):
         self.assertEqual(safe_return_path("/player/van"), "/player/van")

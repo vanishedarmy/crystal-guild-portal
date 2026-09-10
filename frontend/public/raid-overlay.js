@@ -54,7 +54,7 @@ function renderAdds(entries){
 }
 async function refresh(){
   try{
-    const r=await fetch('/api/overlay/state?ts='+Date.now(),{cache:'no-store'});if(!r.ok){hide();return}
+    const r=await fetch('/api/overlay/state',{cache:'no-store'});if(!r.ok){hide();return}
     const s=await r.json();const synced=Number(s.synced_at||0);if(!s.available||(synced&&Date.now()/1000-synced>120)){hide();return}
     const state=safeStatus(s.status);if(!s.active){hide();return}
     wrap.style.display='grid';wrap.dataset.state=state;wrap.classList.toggle('enraged',Boolean(s.enraged)&&state==='ACTIVE');
@@ -69,4 +69,20 @@ async function refresh(){
     renderLeaders(s.top);renderAdds(s.adds);
   }catch{hide()}
 }
-setInterval(refresh,700);refresh();
+let refreshQueued=false,lastEventAt=0,eventSource=null;
+function queueRefresh(){if(refreshQueued)return;refreshQueued=true;setTimeout(()=>{refreshQueued=false;refresh()},120)}
+function noteEvent(){lastEventAt=Date.now()}
+function streamFresh(){return Boolean(eventSource&&eventSource.readyState===EventSource.OPEN&&lastEventAt&&Date.now()-lastEventAt<50000)}
+function connectEvents(){
+  if(!('EventSource' in window))return;
+  eventSource=new EventSource('/api/events');
+  eventSource.addEventListener('open',noteEvent);
+  eventSource.addEventListener('ready',noteEvent);
+  eventSource.addEventListener('heartbeat',noteEvent);
+  eventSource.addEventListener('refresh',event=>{noteEvent(event);queueRefresh()});
+  eventSource.onerror=()=>{};
+}
+connectEvents();
+setInterval(()=>{if(document.visibilityState==='visible'&&!streamFresh())refresh()},60000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&!streamFresh())queueRefresh()});
+refresh();

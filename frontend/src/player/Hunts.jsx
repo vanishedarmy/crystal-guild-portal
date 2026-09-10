@@ -425,7 +425,7 @@ export default function Hunts({ data, overview, onRefresh }) {
     const retryBootstrap = () => {
       if (document.visibilityState === "visible") void loadState({ quiet: true });
     };
-    const timer = window.setInterval(retryBootstrap, 5000);
+    const timer = window.setInterval(retryBootstrap, 30000);
     return () => window.clearInterval(timer);
   }, [actionsAvailable, state, loadState]);
 
@@ -442,8 +442,16 @@ export default function Hunts({ data, overview, onRefresh }) {
     const refreshActive = () => {
       if (document.visibilityState === "visible") void loadState({ quiet: true });
     };
-    const timer = window.setInterval(refreshActive, state?.active_hunt ? 10000 : fieldExpeditionActive ? 8000 : expeditionActive ? 5000 : dungeonActive ? 5000 : 4000);
-    return () => window.clearInterval(timer);
+    const timer = window.setInterval(refreshActive, state?.active_hunt ? 60000 : fieldExpeditionActive ? 30000 : expeditionActive ? 30000 : dungeonActive ? 30000 : 30000);
+    window.addEventListener("crystal-guild-live-revision", refreshActive);
+    window.addEventListener("focus", refreshActive);
+    window.addEventListener("pageshow", refreshActive);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("crystal-guild-live-revision", refreshActive);
+      window.removeEventListener("focus", refreshActive);
+      window.removeEventListener("pageshow", refreshActive);
+    };
   }, [actionsAvailable, state?.encounter?.id, state?.encounter?.state, state?.active_hunt?.id, state?.solo_venture?.expedition?.updated_at, state?.expeditions?.active?.travel_ready_at, state?.expeditions?.active?.status, state?.dungeons?.active?.run_id, state?.dungeons?.active?.room_number, state?.dungeons?.active?.status, loadState]);
 
   useEffect(() => {

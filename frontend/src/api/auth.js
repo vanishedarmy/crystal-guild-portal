@@ -1,4 +1,8 @@
-import { getJson } from "./client.js";
+import { clearJsonCache, getJson } from "./client.js";
+
+export function resetPortalApiCache() {
+  clearJsonCache();
+}
 
 export function fetchAuthStatus(signal) {
   return getJson("/api/auth/status", { signal });
@@ -20,6 +24,16 @@ export async function logoutPortal(csrfToken) {
 
 export function fetchPortalActions(signal) {
   return getJson("/api/actions", { signal });
+}
+
+export function fetchPortalAction(actionId, { waitSeconds = 0, signal } = {}) {
+  const id = encodeURIComponent(String(actionId || ""));
+  const wait = Math.max(0, Math.min(25, Number(waitSeconds) || 0));
+  const suffix = wait > 0 ? `?wait=${encodeURIComponent(String(wait))}` : "";
+  return getJson(`/api/actions/${id}${suffix}`, {
+    signal,
+    timeoutMs: Math.max(12000, (wait * 1000) + 5000),
+  });
 }
 
 export function fetchGearFavorites(signal) {
@@ -103,14 +117,32 @@ export function submitSellItem(itemId, quantity, csrfToken, idempotencyKey) {
   return submitPortalAction("SELL_ITEM", { item_id: itemId, quantity }, csrfToken, idempotencyKey);
 }
 
-export async function waitForPortalAction(actionId, { attempts = 24, delayMs = 750 } = {}) {
-  for (let attempt = 0; attempt < attempts; attempt += 1) {
-    const payload = await fetchPortalActions();
+export async function waitForPortalAction(actionId, { attempts = 24, delayMs = 750, signal } = {}) {
+  const budgetMs = Math.max(1000, (Number(attempts) || 24) * Math.max(100, Number(delayMs) || 750));
+  const deadline = Date.now() + budgetMs;
+  let singleActionSupported = true;
+  while (Date.now() < deadline) {
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    const remainingMs = Math.max(1, deadline - Date.now());
+    try {
+      if (singleActionSupported) {
+        const waitSeconds = Math.max(1, Math.min(20, Math.floor(remainingMs / 1000)));
+        const payload = await fetchPortalAction(actionId, { waitSeconds, signal });
+        const action = payload?.action || null;
+        if (action && (action.status === "completed" || action.status === "failed")) return action;
+        continue;
+      }
+    } catch (error) {
+      if (error?.name === "AbortError") throw error;
+      if (!/not found|404/i.test(String(error?.message || ""))) throw error;
+      singleActionSupported = false;
+    }
+    const payload = await fetchPortalActions(signal);
     const action = Array.isArray(payload.actions)
       ? payload.actions.find((entry) => entry.id === actionId)
       : null;
     if (action && (action.status === "completed" || action.status === "failed")) return action;
-    await new Promise((resolve) => window.setTimeout(resolve, delayMs));
+    await new Promise((resolve) => window.setTimeout(resolve, Math.min(delayMs, Math.max(1, deadline - Date.now()))));
   }
   return null;
 }

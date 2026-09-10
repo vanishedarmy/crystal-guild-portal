@@ -19,10 +19,10 @@ test("player-profile exit navigation uses full document links", async () => {
 
 test("Portal auth status refreshes in the background and when the tab returns", async () => {
   const hook = await readFile(new URL("hooks/usePortalAuth.js", SRC), "utf8");
-  assert.match(hook, /AUTH_POLL_MS = 3000/);
-  assert.match(hook, /window\.setInterval\(refreshSharedAuth, AUTH_POLL_MS\)/);
-  assert.match(hook, /window\.addEventListener\("focus", refreshSharedAuth\)/);
-  assert.match(hook, /window\.addEventListener\("pageshow", refreshSharedAuth\)/);
+  assert.match(hook, /AUTH_POLL_MS = 120000/);
+  assert.match(hook, /window\.setInterval\(\(\) =>/);
+  assert.match(hook, /window\.addEventListener\("focus", refreshOnReturn\)/);
+  assert.match(hook, /window\.addEventListener\("pageshow", refreshOnReturn\)/);
   assert.match(hook, /visibilitychange/);
   assert.match(hook, /const subscribers = new Set\(\)/);
 });
@@ -41,7 +41,7 @@ test("Portal action history stays idle unless an action is pending", async () =>
   const panel = await readFile(new URL("components/PortalLinkPanel.jsx", SRC), "utf8");
   assert.match(panel, /const hasPending = useMemo/);
   assert.match(panel, /if \(!isOwnProfile \|\| !hasPending\) return undefined/);
-  assert.match(panel, /window\.setInterval\(pollPending, 1500\)/);
+  assert.match(panel, /waitForPortalAction\(pending\.id/);
   assert.match(panel, /actionRefreshInFlight\.current/);
   assert.match(panel, /\}, \[isOwnProfile, refreshActions\]\);/);
   assert.doesNotMatch(panel, /\}, \[isOwnProfile, refreshActions, actions\]\);/);

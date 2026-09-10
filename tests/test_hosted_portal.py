@@ -107,6 +107,55 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(caught.exception.headers.get("Cache-Control"), "no-cache")
 
 
+    def test_dynamic_json_etag_returns_not_modified_without_body(self):
+        status, _, headers = self.get("/api/players")
+        self.assertEqual(status, 200)
+        etag = headers.get("ETag")
+        self.assertTrue(etag)
+        request = urllib.request.Request(self.base + "/api/players", headers={"If-None-Match": etag})
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            urllib.request.urlopen(request, timeout=3)
+        self.assertEqual(caught.exception.code, 304)
+        self.assertEqual(caught.exception.headers.get("ETag"), etag)
+        self.assertEqual(caught.exception.headers.get("Content-Length"), "0")
+        self.assertEqual(caught.exception.read(), b"")
+
+    def test_manifest_reports_only_missing_shared_snapshots_for_recovery(self):
+        manifest = {"schema_version": 1, "sync_version": "http-efficiency-test", "usernames": []}
+        status, result = self.post("/api/sync/manifest", manifest)
+        self.assertEqual(status, 200)
+        self.assertTrue(result["needs_fellowship"])
+        self.assertTrue(result["needs_overlay"])
+        fellowship = {
+            "schema_version": 1, "sync_version": "http-efficiency-test",
+            "fellowship": {
+                "level": 1, "level_label": "LVL 1", "renown": 0,
+                "level_progress": {"level": 1, "current": 0, "start": 0, "next": 1000, "maxed": False},
+                "member_count": 0, "active_project": None, "available_projects": [],
+                "facilities": [], "orders": {"period": "2026-W37", "orders": [], "completed": 0, "total": 0},
+                "deeds": [], "deeds_complete": 0, "leaders": [], "recent_activity": [],
+                "totals": {"gil_donated": 0, "materials_donated": 0},
+                "expedition_board_complete": False, "rank_ladder": [], "effects": {},
+            },
+        }
+        overlay = {
+            "schema_version": 1, "sync_version": "http-efficiency-test",
+            "overlay": {
+                "active": False, "status": "IDLE", "boss": "", "tier": "",
+                "encounter_type": "", "encounter_name": "", "hp": 0, "max_hp": 0,
+                "round": 0, "phase": "", "signature": "", "raiders": 0, "alive": 0,
+                "ready_actions": 0, "actionable_raiders": 0, "enraged": False,
+                "summon_gauge": 0, "top": [], "adds": [], "mechanic": None,
+                "last_mechanic": None, "next_round_at": 0, "updated_at": int(time.time()),
+            },
+        }
+        self.assertEqual(self.post("/api/sync/fellowship", fellowship)[0], 200)
+        self.assertEqual(self.post("/api/sync/overlay", overlay)[0], 200)
+        status, result = self.post("/api/sync/manifest", manifest)
+        self.assertEqual(status, 200)
+        self.assertFalse(result["needs_fellowship"])
+        self.assertFalse(result["needs_overlay"])
+
     def test_streamer_dashboard_is_public_read_only_aggregate(self):
         payload = snapshot_payload("van")
         overview = payload["snapshot"]["overview"]
@@ -245,10 +294,10 @@ class PortalServerCase(unittest.TestCase):
 
     def test_health_reports_portal_sync_offline_when_heartbeat_is_stale(self):
         now = int(time.time())
-        self.store._last_sync = now - 120
+        self.store._last_sync = now - 180
         health = self.store.health()
         self.assertFalse(health["sync_connected"])
-        self.assertGreaterEqual(health["sync_age_seconds"], 120)
+        self.assertGreaterEqual(health["sync_age_seconds"], 180)
 
         self.store._last_sync = now
         health = self.store.health()

@@ -1,10 +1,10 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — UI Revert & Button Fit
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — HTTP Response Efficiency
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local player DB schema: 16
 Hosted sync schema: 1
 Portal Action protocol: 33
-Visual baseline: Hotfix 5 Gear Favorites Authority Fix
-Reverted: Unified PC/Mobile/SNES UI Pass
-Retained UI scope: button/control fit only
-Deployment: Web-only if already on schema-16/protocol-33 Bot; Complete package available for full replacement
+Baseline: Hotfix 5 Full Rest & Combat Continuity
+Transport: SSE-first; conditional JSON ETags/304; long-poll action delivery; slow recovery polling
+Database migration: none
+Deployment: Bot + Web together

@@ -262,7 +262,8 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
       } catch {}
     };
     const onVisible = () => { if (document.visibilityState !== "hidden") refreshSyncedFavorites(); };
-    const timer = window.setInterval(refreshSyncedFavorites, 8000);
+    const timer = window.setInterval(refreshSyncedFavorites, 120000);
+    window.addEventListener("crystal-guild-live-revision", refreshSyncedFavorites);
     window.addEventListener("focus", refreshSyncedFavorites);
     window.addEventListener("pageshow", refreshSyncedFavorites);
     document.addEventListener("visibilitychange", onVisible);
@@ -271,6 +272,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
       window.clearInterval(timer);
       window.removeEventListener("focus", refreshSyncedFavorites);
       window.removeEventListener("pageshow", refreshSyncedFavorites);
+      window.removeEventListener("crystal-guild-live-revision", refreshSyncedFavorites);
       document.removeEventListener("visibilitychange", onVisible);
     };
   }, [isOwnProfile, pendingFavoriteStorageKey]);

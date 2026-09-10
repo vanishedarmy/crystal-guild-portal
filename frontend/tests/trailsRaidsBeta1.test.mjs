@@ -8,7 +8,7 @@ const read=(p)=>fs.readFileSync(path.join(ROOT,p),"utf8");
 
 test("Beta 1 Trial Board loads persistent Trial Chronicle records",()=>{
   const jsx=read("src/player/Raids.jsx");
-  for(const term of ["Trial Chronicle","trial_summary","recordData","/records\\?ts=","Adventurer Record","tracked wipe"]) assert.match(jsx,new RegExp(term));
+  for(const term of ["Trial Chronicle","trial_summary","recordData","/records","Adventurer Record","tracked wipe"]) assert.match(jsx,new RegExp(term));
 });
 
 test("Beta 1 Records page exposes the Trial Chronicle",()=>{

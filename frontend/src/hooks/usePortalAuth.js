@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { fetchAuthStatus, logoutPortal } from "../api/auth.js";
+import { fetchAuthStatus, logoutPortal, resetPortalApiCache } from "../api/auth.js";
 
 const AUTH_EVENT = "crystal-guild-auth-changed";
-const AUTH_POLL_MS = 3000;
+const AUTH_POLL_MS = 120000;
+const AUTH_FOCUS_STALE_MS = 15000;
 
 const INITIAL_AUTH = {
   loading: true,
@@ -15,13 +16,17 @@ let sharedAuth = INITIAL_AUTH;
 let sharedError = "";
 let sharedController = null;
 let pollTimer = null;
+let lastAuthRefreshAt = 0;
 const subscribers = new Set();
 
 function publish() {
   subscribers.forEach((listener) => listener(sharedAuth, sharedError));
 }
 
-function refreshSharedAuth() {
+function refreshSharedAuth(force = false) {
+  const now = Date.now();
+  if (!force && lastAuthRefreshAt && now - lastAuthRefreshAt < AUTH_FOCUS_STALE_MS) return sharedController;
+  lastAuthRefreshAt = now;
   sharedController?.abort();
   const controller = new AbortController();
   sharedController = controller;
@@ -51,15 +56,21 @@ function refreshSharedAuth() {
 }
 
 function refreshWhenVisible() {
-  if (document.visibilityState === "visible") refreshSharedAuth();
+  if (document.visibilityState === "visible") refreshSharedAuth(false);
+}
+
+function refreshOnReturn() {
+  refreshSharedAuth(false);
 }
 
 function startSharedRefresh() {
   if (pollTimer) return;
-  refreshSharedAuth();
-  pollTimer = window.setInterval(refreshSharedAuth, AUTH_POLL_MS);
-  window.addEventListener("focus", refreshSharedAuth);
-  window.addEventListener("pageshow", refreshSharedAuth);
+  refreshSharedAuth(true);
+  pollTimer = window.setInterval(() => {
+    if (document.visibilityState === "visible") refreshSharedAuth(false);
+  }, AUTH_POLL_MS);
+  window.addEventListener("focus", refreshOnReturn);
+  window.addEventListener("pageshow", refreshOnReturn);
   document.addEventListener("visibilitychange", refreshWhenVisible);
 }
 
@@ -69,12 +80,13 @@ function stopSharedRefresh() {
   pollTimer = null;
   sharedController?.abort();
   sharedController = null;
-  window.removeEventListener("focus", refreshSharedAuth);
-  window.removeEventListener("pageshow", refreshSharedAuth);
+  window.removeEventListener("focus", refreshOnReturn);
+  window.removeEventListener("pageshow", refreshOnReturn);
   document.removeEventListener("visibilitychange", refreshWhenVisible);
 }
 
 export function notifyAuthChanged() {
+  resetPortalApiCache();
   window.dispatchEvent(new Event(AUTH_EVENT));
 }
 
@@ -83,7 +95,7 @@ export function usePortalAuth() {
 
   useEffect(() => {
     const listener = (auth, error) => setState({ auth, error });
-    const handleAuthEvent = () => refreshSharedAuth();
+    const handleAuthEvent = () => refreshSharedAuth(true);
     subscribers.add(listener);
     listener(sharedAuth, sharedError);
     if (subscribers.size === 1) startSharedRefresh();
@@ -112,7 +124,7 @@ export function usePortalAuth() {
   return {
     auth: state.auth,
     authError: state.error,
-    refreshAuth: refreshSharedAuth,
+    refreshAuth: () => refreshSharedAuth(true),
     logout,
   };
 }

@@ -19,7 +19,7 @@ test("Arsenal Hotfix 3 makes Solo Venture requests resumable and keeps active ru
   assert.match(board, /sessionStorage/);
   assert.match(board, /stateInflight/);
   assert.match(board, /expeditionActive = Boolean\(state\?\.solo_venture\?\.expedition\)/);
-  assert.match(board, /expeditionActive \? 5000 : dungeonActive \? 5000 : 4000/);
+  assert.match(board, /expeditionActive \? 30000 : dungeonActive \? 30000 : 30000/);
   assert.match(board, /Retry or refresh safely resumes the same request/);
   assert.match(board, /submitSoloExpeditionAction\("attack", csrfToken, idem\)/);
   assert.match(board, /submitSoloExpeditionContinue\(csrfToken, idem\)/);
@@ -30,7 +30,7 @@ test("Arsenal Hotfix 3 makes Solo Venture requests resumable and keeps active ru
 test("Arsenal Hotfix 3 retries initial Adventure Board recovery instead of showing a false READY state", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(board, /retryBootstrap/);
-  assert.match(board, /window\.setInterval\(retryBootstrap, 5000\)/);
+  assert.match(board, /window\.setInterval\(retryBootstrap, 30000\)/);
   assert.match(board, /const boardStateReady = Boolean\(state\)/);
   assert.match(board, /Checking your venture/);
   assert.match(board, /!boardStateReady \|\| !state\?\.solo_venture\?\.ready/);

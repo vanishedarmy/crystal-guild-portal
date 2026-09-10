@@ -61,26 +61,29 @@ export default function Raids({ username = "" }) {
   useEffect(() => {
     let cancelled = false;
     const refresh = async () => {
-      try { const payload = await getJson(`/api/overlay/state?ts=${Date.now()}`, { timeoutMs: 7000 }); if (!cancelled) setState(payload); }
+      try { const payload = await getJson(`/api/overlay/state`, { timeoutMs: 7000 }); if (!cancelled) setState(payload); }
       catch { if (!cancelled) setState((previous) => previous || { available: false, active: false, status: "IDLE" }); }
     };
-    refresh(); const poll = window.setInterval(refresh, 2500); const clock = window.setInterval(() => setNow(Date.now()), 1000);
-    return () => { cancelled = true; window.clearInterval(poll); window.clearInterval(clock); };
+    refresh(); const poll = window.setInterval(refresh, 60000); const clock = window.setInterval(() => setNow(Date.now()), 1000);
+    window.addEventListener("crystal-guild-live-revision", refresh);
+    window.addEventListener("focus", refresh);
+    return () => { cancelled = true; window.clearInterval(poll); window.clearInterval(clock); window.removeEventListener("crystal-guild-live-revision", refresh); window.removeEventListener("focus", refresh); };
   }, []);
   useEffect(() => {
     if (!username) { setRecordData(null); return undefined; }
     let cancelled = false;
     const refreshRecords = async () => {
       try {
-        const payload = await getJson(`/api/player/${encodeURIComponent(username)}/records?ts=${Date.now()}`, { timeoutMs: 7000 });
+        const payload = await getJson(`/api/player/${encodeURIComponent(username)}/records`, { timeoutMs: 7000 });
         if (!cancelled) setRecordData(payload);
       } catch {
         if (!cancelled) setRecordData((previous) => previous || null);
       }
     };
     refreshRecords();
-    const poll = window.setInterval(refreshRecords, 10000);
-    return () => { cancelled = true; window.clearInterval(poll); };
+    const poll = window.setInterval(refreshRecords, 120000);
+    window.addEventListener("crystal-guild-live-revision", refreshRecords);
+    return () => { cancelled = true; window.clearInterval(poll); window.removeEventListener("crystal-guild-live-revision", refreshRecords); };
   }, [username]);
   const active = Boolean(state?.available && state?.active);
   const finalStatus = String(state?.status || "").toUpperCase();

@@ -32,8 +32,9 @@ test("hosted Favorites are only migration or pending state while Bot snapshot is
 });
 
 test("cross-device refresh and rapid favorite toggles preserve latest player choice", () => {
-  assert.match(inventory, /window\.setInterval\(refreshSyncedFavorites, 8000\)/);
+  assert.match(inventory, /window\.setInterval\(refreshSyncedFavorites, 120000\)/);
   assert.match(inventory, /window\.addEventListener\("focus", refreshSyncedFavorites\)/);
+  assert.match(inventory, /crystal-guild-live-revision/);
   assert.match(inventory, /setFavoriteIds\(\(current\) =>/);
   assert.match(inventory, /queueFavoriteSave\(next\)/);
 });

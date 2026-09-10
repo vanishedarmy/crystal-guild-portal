@@ -3,7 +3,7 @@ import { getJson } from "../api/client.js";
 import { reconnectDelay, streamIsFresh } from "../utils/livePolicy.js";
 
 const HEALTH_POLL_MS = 20000;
-const HEARTBEAT_STALE_MS = 35000;
+const HEARTBEAT_STALE_MS = 50000;
 const WATCHDOG_MS = 5000;
 const REFRESH_DEBOUNCE_MS = 180;
 
@@ -22,6 +22,7 @@ export function useLiveUpdates(onRefresh) {
     let refreshTimer = null;
     let healthTimer = null;
     let watchdogTimer = null;
+    let initialHealthTimer = null;
     let attempts = 0;
     let lastEventAt = 0;
     let lastRevision = null;
@@ -44,7 +45,10 @@ export function useLiveUpdates(onRefresh) {
       }
       const changed = lastRevision !== null && revision !== lastRevision;
       lastRevision = revision;
-      if (changed || force) queueRefresh();
+      if (changed || force) {
+        window.dispatchEvent(new CustomEvent("crystal-guild-live-revision", { detail: { revision } }));
+        queueRefresh();
+      }
     };
 
     const notePortalSync = (payload) => {
@@ -189,8 +193,8 @@ export function useLiveUpdates(onRefresh) {
     document.addEventListener("visibilitychange", handleVisibility);
     healthTimer = setInterval(() => { void pollHealth(false); }, HEALTH_POLL_MS);
     watchdogTimer = setInterval(watchdog, WATCHDOG_MS);
-    void pollHealth(true);
     connect();
+    initialHealthTimer = setTimeout(() => { void pollHealth(false); }, 2500);
 
     return () => {
       stopped = true;
@@ -199,6 +203,7 @@ export function useLiveUpdates(onRefresh) {
       if (refreshTimer) clearTimeout(refreshTimer);
       if (healthTimer) clearInterval(healthTimer);
       if (watchdogTimer) clearInterval(watchdogTimer);
+      if (initialHealthTimer) clearTimeout(initialHealthTimer);
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
       document.removeEventListener("visibilitychange", handleVisibility);

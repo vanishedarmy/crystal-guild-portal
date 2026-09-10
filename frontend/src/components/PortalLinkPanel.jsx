@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { fetchPortalActions, submitPortalPing } from "../api/auth.js";
+import { fetchPortalActions, submitPortalPing, waitForPortalAction } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 
 function actionKey() {
@@ -51,12 +51,17 @@ export default function PortalLinkPanel({ username }) {
 
   useEffect(() => {
     if (!isOwnProfile || !hasPending) return undefined;
-    const pollPending = () => {
-      if (document.visibilityState === "visible") void refreshActions();
-    };
-    const timer = window.setInterval(pollPending, 1500);
-    return () => window.clearInterval(timer);
-  }, [isOwnProfile, hasPending, refreshActions]);
+    const pending = pingActions.find((action) => action.status === "pending" || action.status === "processing");
+    if (!pending?.id) return undefined;
+    let cancelled = false;
+    void waitForPortalAction(pending.id, { attempts: 45, delayMs: 1000 })
+      .then((finished) => {
+        if (cancelled || !finished) return;
+        void refreshActions();
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [isOwnProfile, hasPending, pingActions, refreshActions]);
 
   useEffect(() => {
     if (!isOwnProfile) return undefined;

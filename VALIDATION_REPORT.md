@@ -1,38 +1,27 @@
-# Validation Report — Hotfix 5 Unified PC/Mobile UI/UX + SNES FF Pass
+# Validation Report — UI Revert & Button Fit
 
 **PASS**
 
 ## Release contract
-
 - Runtime/frontend: `1.7.1-resynthesis-a2h5`
 - Local DB schema: **16**
 - Hosted sync schema: **1**
 - Portal Action protocol: **33**
-- Database migration for this UI pass: **none**
+- New database migration: **none**
 - Player reset: **none**
+- Bot gameplay/backend changes in this correction: **none**
 
-## Shipping-archive regression
-
-- Frontend: **602 / 602 PASS**
+## Regression
+- Frontend: **588 / 588 PASS**
 - Hosted Web/API: **71 / 71 PASS**
-- Paired Bot discovered suite: **693 / 693 PASS** (Bot source unchanged)
-- Unified responsive/SNES focused tests: **20 / 20 PASS**
+- Paired Bot: **693 / 693 PASS**
+- Focused UI revert/button-fit checks: **6 / 6 PASS** (included in frontend total)
 
-## Source and asset gates
-
-- Bot Python AST: **123 / 123 PASS**
-- Web Python AST: **16 / 16 PASS**
-- JS/MJS syntax: **211 / 211 PASS**
-- CSS parse: **9 / 9 PASS**
-- Public WebP decode: **843 / 843 PASS**
-- Public PNG count: **0**
-- Player Job portrait containment: **PASS** — native 3:4 composition remains uncropped.
-
-## Packaging gates
-
-- Full Web archive tree equals verified Web source tree: **PASS**
-- Complete Web tree equals verified Web source tree: **PASS**
-- Complete Bot tree equals the previously verified Gear Favorites Authority Fix Bot archive: **PASS**
-- Incremental Web patch reconstructs the final Web tree exactly: **PASS**
-- ZIP CRC/integrity checks: **PASS**
-- Safety exclusions: **PASS**
+## Scope checks
+- Unified `ui-system-pass.css` is absent.
+- Unified UI regression file is absent.
+- Existing design styles load unchanged before the new fit-only stylesheet.
+- Profile/tab controls wrap instead of clipping.
+- Mobile primary action rows use wrap-safe 44px touch targets.
+- Compact icon/disclosure controls are exempt from stretching.
+- Player Guide receives fit-only control rules with no Unified SNES visual-system block.

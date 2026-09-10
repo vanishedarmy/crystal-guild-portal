@@ -1,7 +1,17 @@
-# Upgrade — Hotfix 5 Unified PC/Mobile UI/UX + SNES FF Pass
+# Upgrade Guide — UI Revert & Button Fit
 
-This is a **Web-focused UI update** on top of the Gear Favorites Authority Fix. If Bot schema **16** / Portal protocol **33** is already installed, deploy the Web package or incremental Web patch only.
+Runtime remains `1.7.1-resynthesis-a2h5`. Local player DB schema remains **16**, hosted sync remains **1**, and Portal Action protocol remains **33**. There is no new migration and no player reset.
 
-For a clean replacement, the Complete archive contains the unchanged authoritative-Favorites Bot paired with the revised Web tree.
+## If you installed the Unified PC/Mobile/SNES UI Pass
 
-Preserve the live player database, Twitch tokens, secrets, and persistent runtime files. This UI pass does not change the database schema, hosted sync schema, or Portal action protocol and performs no player reset.
+Use the incremental **Revert-from-Unified-UI Web patch** or replace the Web tree with the full Web package. The patch removes the unified UI-system stylesheet/test/audit and restores the previous design while retaining only the targeted button-fit safety layer.
+
+The Bot does not need to change if you are already running the Gear Favorites Authority Fix Bot.
+
+## If you never installed the Unified UI Pass
+
+Use the smaller incremental **Button-Fit-from-Gear-Favorites-Authority Web patch**. It adds only the targeted control-fit rules and release metadata.
+
+## Full replacement
+
+The Complete package pairs the unchanged verified schema-16/protocol-33 Bot with the reverted/button-fit Web tree. Preserve your live database, secrets, token storage, and persistent runtime files as usual.

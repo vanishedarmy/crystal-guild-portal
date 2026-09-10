@@ -1,4 +1,4 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Unified PC/Mobile UI/UX + SNES FF Pass
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — UI Revert & Button Fit
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local player DB schema: 16

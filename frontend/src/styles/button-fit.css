@@ -1,0 +1,218 @@
+/* Hotfix 5 — targeted control-fit pass.
+   Layout safety only: preserve the existing visual design while preventing
+   buttons/tabs/actions from clipping, overflowing, or crowding narrow views. */
+
+:where(
+  button,
+  .primary-link,
+  .ghost-button,
+  .portal-auth-button,
+  .portal-link-test,
+  .equipment-action-button,
+  .overview-quick-action,
+  .recovery-quick-action,
+  .recruit-button
+) {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* User-facing button copy must be allowed to fit instead of forcing width. */
+:where(
+  .profile-content,
+  .streamer-dashboard,
+  .fellowship-view,
+  .gold-saucer-view,
+  .retainer-service-grid
+) :where(button, .primary-link, .ghost-button) {
+  overflow-wrap: anywhere;
+}
+
+/* Action collections should never lose a control beyond the card edge. */
+:where(
+  .card-actions,
+  .equipment-card-actions,
+  .blacksmith-card-actions,
+  .chocobo-footer-actions,
+  .chocobo-portrait-heading-actions,
+  .chocobo-portrait-picker-actions,
+  .daily-reward-actions,
+  .expedition-choice-actions,
+  .expedition-contract-actions,
+  .fellowship-contribution-controls,
+  .fellowship-workshop-controls,
+  .management-job-actions,
+  .mastery-management-actions,
+  .moogle-card-actions,
+  .raid-board-title-actions,
+  .recovery-actions-row,
+  .section-collapse-actions,
+  .sell-actions,
+  .solo-choice-actions,
+  .streamer-overlay-actions,
+  .triad-deck-actions,
+  .venture-action-row
+) {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Tab/filter rails may wrap before labels are clipped. This restores the
+   pre-system-pass behavior for the player tab bar and protects other tabs. */
+:where(
+  .profile-tabs,
+  .achievement-view-tabs,
+  .blacksmith-view-switch,
+  .character-management-tabs,
+  .filter-row,
+  .hunt-rank-filters,
+  .inventory-view-tabs,
+  .moogle-category-tabs,
+  .moogle-commerce-tabs
+) {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+:where(
+  .profile-tabs,
+  .achievement-view-tabs,
+  .blacksmith-view-switch,
+  .character-management-tabs,
+  .filter-row,
+  .hunt-rank-filters,
+  .inventory-view-tabs,
+  .moogle-category-tabs,
+  .moogle-commerce-tabs
+) > :where(button, [role="tab"]) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Keep compact/icon controls compact. */
+:where(
+  .dialog-close,
+  .details-collapse-pointer,
+  .inventory-group-toggle,
+  .section-collapse-button,
+  .dungeon-board-collapse-toggle,
+  .raid-board-collapse-toggle
+) {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+@media (max-width: 720px) {
+  /* Real action buttons get a practical touch target and can wrap to another
+     row rather than becoming squeezed or overflowing. */
+  :where(
+    .card-actions,
+    .equipment-card-actions,
+    .blacksmith-card-actions,
+    .chocobo-footer-actions,
+    .daily-reward-actions,
+    .expedition-choice-actions,
+    .expedition-contract-actions,
+    .management-job-actions,
+    .mastery-management-actions,
+    .moogle-card-actions,
+    .recovery-actions-row,
+    .sell-actions,
+    .solo-choice-actions,
+    .triad-deck-actions,
+    .venture-action-row
+  ) > :where(button, .primary-link, .ghost-button) {
+    flex: 1 1 9rem;
+    min-height: 44px;
+    white-space: normal;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  /* Two/three-option tab groups fill available width without cutting labels. */
+  :where(
+    .achievement-view-tabs,
+    .blacksmith-view-switch,
+    .character-management-tabs,
+    .hunt-rank-filters,
+    .inventory-view-tabs,
+    .moogle-category-tabs,
+    .moogle-commerce-tabs
+  ) > :where(button, [role="tab"]) {
+    flex: 1 1 min(10rem, 46%);
+    min-height: 44px;
+    white-space: normal;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  /* Title rows with an attached action may stack rather than squeeze the
+     action off-screen. */
+  :where(
+    .panel-title-row,
+    .blacksmith-title-row,
+    .chocobo-title-row,
+    .dungeon-board-title-row,
+    .hunt-board-title-row,
+    .hunt-result-title-row,
+    .moogle-title-row,
+    .saucer-race-title-row,
+    .timed-hunt-title-row
+  ) {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  :where(
+    .panel-title-row,
+    .blacksmith-title-row,
+    .chocobo-title-row,
+    .dungeon-board-title-row,
+    .hunt-board-title-row,
+    .hunt-result-title-row,
+    .moogle-title-row,
+    .saucer-race-title-row,
+    .timed-hunt-title-row
+  ) > :where(button, .primary-link, .ghost-button) {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Very narrow phones: action text gets the full card width when needed. */
+  :where(
+    .card-actions,
+    .equipment-card-actions,
+    .blacksmith-card-actions,
+    .chocobo-footer-actions,
+    .daily-reward-actions,
+    .expedition-choice-actions,
+    .expedition-contract-actions,
+    .management-job-actions,
+    .mastery-management-actions,
+    .moogle-card-actions,
+    .recovery-actions-row,
+    .sell-actions,
+    .solo-choice-actions,
+    .triad-deck-actions,
+    .venture-action-row
+  ) > :where(button, .primary-link, .ghost-button) {
+    flex-basis: 100%;
+  }
+
+  :where(
+    .achievement-view-tabs,
+    .blacksmith-view-switch,
+    .character-management-tabs,
+    .hunt-rank-filters,
+    .inventory-view-tabs,
+    .moogle-category-tabs,
+    .moogle-commerce-tabs
+  ) > :where(button, [role="tab"]) {
+    flex-basis: 100%;
+  }
+}

@@ -8,7 +8,7 @@ import "./styles/retro-phase-ii.css";
 import "./styles/character-identity.css";
 import "./styles/monster-identity.css";
 import "./styles/environment-pass.css";
-import "./styles/ui-system-pass.css";
+import "./styles/button-fit.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

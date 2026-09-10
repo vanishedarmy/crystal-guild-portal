@@ -1,32 +1,24 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — UI Revert & Button Fit
 
-## Unified PC/Mobile UI/UX + SNES FF Pass
+This correction **reverts the Unified PC/Mobile/SNES UI Pass in full** and restores the Web presentation to the verified **Gear Favorites Authority Fix** visual baseline.
 
-This Web-focused pass audits the entire Crystal Guild Portal and resolves accumulated responsive overrides through one final shared visual system.
+The authoritative Favorites backend remains unchanged:
+- player DB schema **16**
+- Portal Action protocol **33**
+- `player_gear_favorites` remains the canonical cross-device source of truth
+- no player reset and no new database migration
 
-### Layout and control consistency
+## Retained UI correction — control fit only
 
-- Shared desktop/mobile spacing, panel, card, control, and touch-target scales now apply across the Portal.
-- Buttons use predictable placement and sizing; heading actions remain compact while primary card actions become full-width on phones where appropriate.
-- Dense desktop grids retain useful multi-column layouts but collapse before cards become tall/narrow on mobile.
-- Tab and filter groups become horizontal touch rails when wrapping would create large button walls.
-- Tables and dialogs are viewport-safe instead of forcing page-level overflow.
+No new visual theme is introduced. The only presentation changes beyond the restored baseline are layout-safety rules for controls:
 
-### Image and content containment
+- action rows wrap before buttons can leave their card or panel;
+- long button labels may wrap instead of clipping;
+- profile/navigation tabs return to the earlier wrap-safe behavior instead of the clipped one-line rail;
+- compact tab/filter groups wrap cleanly at narrow widths;
+- mobile action buttons retain practical 44px touch targets;
+- very narrow phones allow primary action buttons to use the full card width when needed;
+- icon/disclosure controls remain compact and are not stretched by the mobile rules;
+- Player Guide controls receive the same fit-only treatment without changing its design.
 
-- Job portraits preserve their native 3:4 composition without crop/stretch across desktop, tablet, phone, and short landscape layouts.
-- Retainer, Raid, Dungeon, Expedition, Hunt, and scenic artwork is bounded so images cannot push essential content or controls out of place.
-- Mobile scenic artwork is visually subordinate to interactive content.
-
-### SNES / FF visual language
-
-- Primary Portal windows use a unified dark-blue Final Fantasy-inspired double-edge treatment with crisp square geometry and pixel-like shadows.
-- Nested cards use a consistent secondary window language instead of mixed glass/rounded treatments.
-- Control geometry and spacing are tightened while preserving current typography, pointer hands, pixel assets, and SNES/FF6 artwork.
-- The Player Guide receives the same window/control treatment and responsive density rules.
-
-### Compatibility
-
-The Gear Favorites Authority Fix remains intact: Favorites stay in authoritative player state under schema **16** / Portal protocol **33**. Treasure Seekers Solo progress, Rally 100% Encounter / 0% Treasure, Solo 80% / 20%, Weapon + Armor Best use, mobile Guide/Retainer improvements, ☆/★ controls, level-descending equipment sorting, and removal of `Replaces X` remain unchanged.
-
-Runtime/frontend remains `1.7.1-resynthesis-a2h5`; hosted sync remains **1**. This UI pass requires no database migration and no player reset.
+The earlier Retainer mobile cleanup, Player Guide mobile top cleanup, Treasure Seekers Solo progress fix, Armor/Weapon Best Use presentation, Rally 100/0 and Solo 80/20 rules remain intact because they predate the reverted visual-system pass.

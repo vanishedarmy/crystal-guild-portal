@@ -1,7 +1,7 @@
-# Upgrade — Hotfix 5 Gear Favorites Authority Fix
+# Upgrade — Hotfix 5 Unified PC/Mobile UI/UX + SNES FF Pass
 
-**Deploy the matching Bot and Web together.** Local schema advances **15 → 16** and Portal Action protocol advances **32 → 33**. The Bot performs the additive database migration and verified pre-migration backup automatically.
+This is a **Web-focused UI update** on top of the Gear Favorites Authority Fix. If Bot schema **16** / Portal protocol **33** is already installed, deploy the Web package or incremental Web patch only.
 
-The Web now uses the Bot-synced player snapshot as the canonical Favorites list. The hosted preference row is only a pending/migration bridge, and public inventory APIs remove the private favorite IDs. Existing browser-local or prior hosted-only Favorites are migrated into the player database automatically when encountered.
+For a clean replacement, the Complete archive contains the unchanged authoritative-Favorites Bot paired with the revised Web tree.
 
-Preserve the live player database, Twitch tokens, secrets, and persistent runtime files. No player reset is performed and hosted sync schema remains **1**.
+Preserve the live player database, Twitch tokens, secrets, and persistent runtime files. This UI pass does not change the database schema, hosted sync schema, or Portal action protocol and performs no player reset.

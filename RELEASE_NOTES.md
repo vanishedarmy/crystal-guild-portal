@@ -1,20 +1,32 @@
 # Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5
 
-## Gear Favorites Authority Fix
+## Unified PC/Mobile UI/UX + SNES FF Pass
 
-Gear Favorites are now part of the authoritative Crystal Guild player state instead of relying on a hosted/browser preference copy.
+This Web-focused pass audits the entire Crystal Guild Portal and resolves accumulated responsive overrides through one final shared visual system.
 
-- New local table `player_gear_favorites` stores each player's equipment Favorites.
-- New Portal action `SET_GEAR_FAVORITES` writes the complete favorite set to the Bot database using replay-safe action receipts.
-- Player inventory snapshots carry the owner's private `favorite_item_ids` to the hosted Portal; public inventory endpoints strip that private preference field.
-- Desktop, mobile, and other signed-in browsers read the same synced player-state list.
-- The prior hosted-only preference row remains only as a temporary migration/pending mirror while a Bot write is in flight.
-- Existing browser-local and prior hosted-only Favorites are preserved as migration sources and promoted into the authoritative player profile.
-- Empty Favorites are authoritative too, so clearing the final star on one device propagates correctly.
-- Returning to an open Equipment tab rechecks synced Favorites; rapid taps use last-write-wins behavior without stale-state loss.
+### Layout and control consistency
 
-## Compatibility
+- Shared desktop/mobile spacing, panel, card, control, and touch-target scales now apply across the Portal.
+- Buttons use predictable placement and sizing; heading actions remain compact while primary card actions become full-width on phones where appropriate.
+- Dense desktop grids retain useful multi-column layouts but collapse before cards become tall/narrow on mobile.
+- Tab and filter groups become horizontal touch rails when wrapping would create large button walls.
+- Tables and dialogs are viewport-safe instead of forcing page-level overflow.
 
-Treasure Seekers Solo progress, Rally 100% Encounter / 0% Treasure, Solo 80% / 20%, Weapon + Armor Best use, mobile Guide/Retainer cleanup, ☆/★ controls, level-descending gear, and removal of `Replaces X` remain intact.
+### Image and content containment
 
-Runtime/frontend remains `1.7.1-resynthesis-a2h5`. Local schema advances to **16**, hosted sync remains **1**, and Portal Action protocol advances to **33**. The migration is automatic and creates a verified pre-schema-16 backup. No player reset.
+- Job portraits preserve their native 3:4 composition without crop/stretch across desktop, tablet, phone, and short landscape layouts.
+- Retainer, Raid, Dungeon, Expedition, Hunt, and scenic artwork is bounded so images cannot push essential content or controls out of place.
+- Mobile scenic artwork is visually subordinate to interactive content.
+
+### SNES / FF visual language
+
+- Primary Portal windows use a unified dark-blue Final Fantasy-inspired double-edge treatment with crisp square geometry and pixel-like shadows.
+- Nested cards use a consistent secondary window language instead of mixed glass/rounded treatments.
+- Control geometry and spacing are tightened while preserving current typography, pointer hands, pixel assets, and SNES/FF6 artwork.
+- The Player Guide receives the same window/control treatment and responsive density rules.
+
+### Compatibility
+
+The Gear Favorites Authority Fix remains intact: Favorites stay in authoritative player state under schema **16** / Portal protocol **33**. Treasure Seekers Solo progress, Rally 100% Encounter / 0% Treasure, Solo 80% / 20%, Weapon + Armor Best use, mobile Guide/Retainer improvements, ☆/★ controls, level-descending equipment sorting, and removal of `Replaces X` remain unchanged.
+
+Runtime/frontend remains `1.7.1-resynthesis-a2h5`; hosted sync remains **1**. This UI pass requires no database migration and no player reset.

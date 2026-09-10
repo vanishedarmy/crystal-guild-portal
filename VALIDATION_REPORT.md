@@ -1,4 +1,4 @@
-# Validation Report — UI Revert & Button Fit
+# Validation Report — Full Rest & Combat Continuity
 
 **PASS**
 
@@ -9,19 +9,16 @@
 - Portal Action protocol: **33**
 - New database migration: **none**
 - Player reset: **none**
-- Bot gameplay/backend changes in this correction: **none**
 
-## Regression
+## Source regression
+- Bot: **704 / 704 PASS**
 - Frontend: **588 / 588 PASS**
 - Hosted Web/API: **71 / 71 PASS**
-- Paired Bot: **693 / 693 PASS**
-- Focused UI revert/button-fit checks: **6 / 6 PASS** (included in frontend total)
 
-## Scope checks
-- Unified `ui-system-pass.css` is absent.
-- Unified UI regression file is absent.
-- Existing design styles load unchanged before the new fit-only stylesheet.
-- Profile/tab controls wrap instead of clipping.
-- Mobile primary action rows use wrap-safe 44px touch targets.
-- Compact icon/disclosure controls are exempt from stretching.
-- Player Guide receives fit-only control rules with no Unified SNES visual-system block.
+## Focused behavior
+- Full Rest restores HP and both MP/AP families across Job switches.
+- Same-family Jobs with different resource maxima resolve fully after Rest.
+- Portal snapshots interpret the full-resource state at the selected Job's maximum.
+- Rally/normal encounter, Solo Venture, Expedition, Dungeon, Hunt, admin encounter, and admin Raid paths no longer use round count as a defeat condition.
+- Technical auto-resolution watchdogs preserve living combat instead of forcing defeat.
+- Dungeon public/UI state uses unlimited round telemetry and no obsolete denominator.

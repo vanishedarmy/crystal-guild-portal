@@ -1,3 +1,0 @@
-UI_AUDIT.md
-frontend/src/styles/ui-system-pass.css
-frontend/tests/unifiedUiUxPass.test.mjs

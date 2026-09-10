@@ -609,7 +609,7 @@
        <div class="card"><h3>The Forgotten Ossuary</h3><p>An eight-chamber crypt built around undead encounters, grave offerings, a Crossroads decision, a collapsing vault, a miniboss, sanctuary recovery, and the Sealed Belfry boss.</p></div>
        <div class="card"><h3>The Emberglass Foundry</h3><p>An eight-chamber mountain forge for stronger adventurers, with furnace creatures, salvage, a Crossroads through the cooling galleries or Forge Heart, a buried miniboss, recovery, and an Inferno Drake finale.</p></div>
        <div class="card"><h3>The Whiteglass Bastion</h3><p>A nine-chamber Frostveil fortress built around endurance, two route decisions, a whiteout hazard, an Iron Giant miniboss, warded recovery, and a Behemoth in the command sanctum.</p></div>
-       <div class="card"><h3>The Riftglass Observatory</h3><p>A ten-chamber Astral Scar observatory built around anomalies and pressure, with two Crossroads, a weighted Event chamber, a Death Machine miniboss, sanctuary recovery, and a Crystal Wolf finale. Its higher-pressure encounters can open with special statuses or resource strain and may impose tighter round limits.</p></div>
+       <div class="card"><h3>The Riftglass Observatory</h3><p>A ten-chamber Astral Scar observatory built around anomalies and pressure, with two Crossroads, a weighted Event chamber, a Death Machine miniboss, sanctuary recovery, and a Crystal Wolf finale. Its higher-pressure encounters can open with special statuses or resource strain, but they do not impose a round-count defeat limit.</p></div>
        <div class="card"><h3>Crossroads &amp; route effects</h3><p>Some chambers stop the run and ask you to choose a route. Some choices can also affect a later room: ward the next hazard, weaken or strengthen the next foe, or increase the next combat payout. The Board previews these effects before you choose and keeps pending route effects visible until they are consumed.</p></div>
        <div class="card"><h3>Persistent condition</h3><p>Your HP, MP, AP, consumed battle items, current chamber, discoveries, and Dungeon Cache carry forward. Refreshing the Portal or restarting the Bot does not discard an active run.</p></div>
        <div class="card"><h3>Player-paced battles</h3><p>Combat waits for <b>Attack</b>, <b>Ability</b>, <b>Use Item</b>, or <b>Defend</b>. One choice resolves one full round. There is no Dungeon battle timer and routine Dungeon play stays out of Twitch chat.</p></div>
@@ -617,7 +617,7 @@
        <div class="card"><h3>Reading an active delve</h3><p>The active Dungeon view keeps <b>room progress, delve style, current state, carried Cache, route consequences, and settlement risk</b> together. On mobile, battle actions and route choices stack into touch-friendly rows rather than requiring horizontal scanning.</p></div>
        <div class="card"><h3>Tabs, retries &amp; current state</h3><p>Dungeon actions are bound to the exact run, chamber, and saved state shown in the Portal. If another tab advances the delve first, an older tab fails closed instead of spending a second turn; refresh that tab to continue from the latest Dungeon state. Retrying the same pending action is safe and does not resolve it twice.</p></div>
        <div class="card"><h3>Existing systems stay connected</h3><p>Dungeon enemies count toward your Bestiary and monster defeats, existing Job abilities and battle items work normally, and Dungeon access comes from permanent Expedition exploration instead of another currency.</p></div>
-       <div class="card"><h3>Events &amp; encounter rules</h3><p>Some chambers now resolve a Dungeon Event when entered. Outcomes can restore or drain resources, alter the Dungeon Cache, add discoveries, or change the next hazard/combat. Higher-level minibosses and bosses can also begin with special statuses, opening pressure, or tighter round limits; these rules are shown on the active battle card.</p></div>
+       <div class="card"><h3>Events &amp; encounter rules</h3><p>Some chambers now resolve a Dungeon Event when entered. Outcomes can restore or drain resources, alter the Dungeon Cache, add discoveries, or change the next hazard/combat. Higher-level minibosses and bosses can also begin with special statuses or opening pressure; these rules are shown on the active battle card. Round count itself is never a defeat condition.</p></div>
        <div class="card"><h3>Dungeon records &amp; first clears</h3><p>Each delve has its own identity and one-time first-clear reward. The Dungeon Board shows clears, best chamber reached, route count, and whether that first-clear bonus has already been claimed.</p></div>
       </div>
       <div class="callout"><b>Quick flow:</b> unlock a Dungeon → enter → clear rooms and make Crossroads choices → manage HP/MP/AP and temporary Cache → continue or retreat → defeat the final boss to bank everything and record the clear.</div>
@@ -633,7 +633,7 @@
        <div class="card"><h3>Defend</h3><p><code>!defend</code> reduces incoming damage for the round and restores battle resources: 6% MP for magic users and 8% AP for physical users. Dual-resource Jobs recover both. <code>!guard</code> works too.</p></div>
        <div class="card"><h3>Item</h3><p><code>!use &lt;item&gt; [target]</code> can queue supported healing, MP/AP recovery, cleanse, damage, or revival items. Outside battle, field recovery items can be used on yourself normally; while the stream is LIVE you can support another adventurer with <code>!use &lt;item&gt; | &lt;username&gt;</code> or the Portal target field. The item is consumed only when its effect resolves.</p></div>
       </div>
-      <div class="callout"><b>Venture round timer:</b> 30 seconds by default. You may replace your queued action before resolution. If you submit nothing, your hero automatically uses <b>Attack</b> so one AFK player cannot stall the fight.</div>
+      <div class="callout"><b>Venture round timer:</b> 30 seconds by default. You may replace your queued action before resolution. If you submit nothing, your hero automatically uses <b>Attack</b> so one AFK player cannot stall the fight. <b>Round count is never a defeat condition:</b> combat continues until the enemy is defeated, the participating hero/party is KO'd, or a supported retreat/withdrawal is deliberately initiated.</div>
       <div class="grid">
        <div class="card"><h3>Battle Status</h3><p><code>!encounter</code> shows enemy HP, combat style and statuses, the round timer, queued actions, and party HP/MP/AP.</p></div>
        <div class="card"><h3>Recent Round Log</h3><p><code>!battlelog</code> (aliases <code>!roundlog</code> and <code>!combatlog</code>) shows the latest resolved rounds on demand. Automatic round announcements stay short instead of flooding chat.</p></div>
@@ -701,7 +701,7 @@
          <code>
           !camp
          </code>
-         starts a stream-aware rest: <b>15 minutes while the channel is LIVE</b> and <b>1 hour while OFFLINE</b>. Existing Fellowship/Infirmary Camp-time reductions can shorten those base timers. You cannot Venture, Hunt, join encounters or raid while resting. When complete, you return at full current maximum HP, MP and AP.
+         starts a stream-aware rest: <b>15 minutes while the channel is LIVE</b> and <b>1 hour while OFFLINE</b>. Existing Fellowship/Infirmary Camp-time reductions can shorten those base timers. You cannot Venture, Hunt, join encounters or raid while resting. When complete, you return at full maximum HP and both Job resource families are fully refreshed, so switching between MP- and AP-based Jobs after resting does not expose a stale depleted pool.
         </p>
        </div>
        <div class="card">
@@ -712,7 +712,7 @@
          <code>
           !use tent
          </code>
-         consumes a Tent, clears an active camp timer and fully restores the HP, MP and AP used by your current Job, even from KO.
+         consumes a Tent, clears an active camp timer and performs the same full-character recovery: maximum HP plus fully refreshed MP and AP resource families, even from KO.
         </p>
        </div>
        <div class="card">
@@ -728,7 +728,7 @@
          Long Rest &mdash; 8 Hours
         </h3>
         <p>
-         If you make no intentional Twitch command or Portal gameplay action for <b>8 hours</b>, a Long Rest resolves automatically: full HP and the current Job's MP/AP are restored, and an ordinary Camp rest is cleared. The background game daemon checks the timer regularly, normally applying the refresh within one minute of the threshold. Passive Portal status polling does not keep the timer awake.
+         If you make no intentional Twitch command or Portal gameplay action for <b>8 hours</b>, a Long Rest resolves automatically: full HP plus both MP and AP resource families are fully refreshed, and an ordinary Camp rest is cleared. The background game daemon checks the timer regularly, normally applying the refresh within one minute of the threshold. Passive Portal status polling does not keep the timer awake.
         </p>
        </div>
        <div class="card">
@@ -736,7 +736,7 @@
          Stream Start Refresh
         </h3>
         <p>
-         When Twitch reports a new Crystal Guild stream session as <b>LIVE</b>, every registered hero is refreshed to full HP and current-Job MP/AP once for that stream session. Reconnects and repeated LIVE checks do not repeat the heal.
+         When Twitch reports a new Crystal Guild stream session as <b>LIVE</b>, every registered hero receives the same full-character refresh—maximum HP plus fully refreshed MP/AP resource families—once for that stream session. Reconnects and repeated LIVE checks do not repeat the heal.
         </p>
        </div>
        <div class="card">

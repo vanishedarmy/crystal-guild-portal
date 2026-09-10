@@ -1,24 +1,19 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — UI Revert & Button Fit
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Full Rest & Combat Continuity
 
-This correction **reverts the Unified PC/Mobile/SNES UI Pass in full** and restores the Web presentation to the verified **Gear Favorites Authority Fix** visual baseline.
+This correction fixes two core combat-state rules.
 
-The authoritative Favorites backend remains unchanged:
-- player DB schema **16**
-- Portal Action protocol **33**
-- `player_gear_favorites` remains the canonical cross-device source of truth
-- no player reset and no new database migration
+## Full-character Rest
 
-## Retained UI correction — control fit only
+Camp completion, Long Rest, Tent, stream-start recovery, and full-recovery administration now restore the character as a whole. HP is restored to maximum and both persistent Job-resource families are marked fully refreshed. Because MP/AP maxima can differ between Jobs, the database stores an explicit full-resource state rather than one Job's concrete number. Selecting any MP- or AP-based Job after the Rest therefore resolves that family at that Job's own maximum. Ordinary Job switching does not refill a legitimately depleted resource.
 
-No new visual theme is introduced. The only presentation changes beyond the restored baseline are layout-safety rules for controls:
+## Combat continuity
 
-- action rows wrap before buttons can leave their card or panel;
-- long button labels may wrap instead of clipping;
-- profile/navigation tabs return to the earlier wrap-safe behavior instead of the clipped one-line rail;
-- compact tab/filter groups wrap cleanly at narrow widths;
-- mobile action buttons retain practical 44px touch targets;
-- very narrow phones allow primary action buttons to use the full card width when needed;
-- icon/disclosure controls remain compact and are not stretched by the mobile rules;
-- Player Guide controls receive the same fit-only treatment without changing its design.
+Round count is telemetry, not a defeat condition. Rally/normal encounters, Solo Ventures, Expeditions, Dungeons, Hunts, and admin-assisted encounter/Raid resolution no longer manufacture a loss after a fixed number of rounds. Combat ends only when the enemy is defeated, the hero/participating party is KO'd, or a supported retreat/withdrawal is deliberately initiated. Technical auto-resolution watchdogs may pause an automated resolver, but preserve the living battle instead of converting it into defeat.
 
-The earlier Retainer mobile cleanup, Player Guide mobile top cleanup, Treasure Seekers Solo progress fix, Armor/Weapon Best Use presentation, Rally 100/0 and Solo 80/20 rules remain intact because they predate the reverted visual-system pass.
+Dungeon pressure encounters retain opening statuses/resource strain, but their former round-count loss mechanics and UI denominator are removed. Player Guide/What's New copy now documents the same rule.
+
+## Compatibility
+
+The UI Revert & Button Fit presentation remains intact. Authoritative cross-device Gear Favorites remain under schema **16** / Portal protocol **33**. Treasure Seekers Solo progress, Rally 100% Encounter / 0% Treasure, Solo 80% / 20%, Weapon + Armor Best use, mobile Guide/Retainer cleanup, ☆/★ controls, level-descending gear, and removal of `Replaces X` remain intact.
+
+Runtime/frontend remains `1.7.1-resynthesis-a2h5`; hosted sync remains **1**. This correction requires no database migration and no player reset.

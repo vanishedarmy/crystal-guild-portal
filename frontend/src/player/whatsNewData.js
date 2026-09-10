@@ -199,7 +199,7 @@ export const MAJOR_UPDATES = [
       { title: "Four persistent delves", description: "Explore the Forgotten Ossuary, Emberglass Foundry, Whiteglass Bastion, and Riftglass Observatory, each with its own unlock path, identity, rooms, minibosses, and finale." },
       { title: "Your condition carries forward", description: "HP, MP/AP, consumed items, discoveries, route effects, and temporary Dungeon Cache persist between chambers and survive reconnects or Bot restarts." },
       { title: "Choose the route", description: "Crossroads and Dungeon Events can trade safety for treasure, alter later hazards or encounters, and create different runs through the same delve." },
-      { title: "Player-paced combat", description: "Dungeon battles wait for Attack, Ability, Item, or Defend, with pressure encounters able to introduce round limits, opening resource strain, or enemy statuses." },
+      { title: "Player-paced combat", description: "Dungeon battles wait for Attack, Ability, Item, or Defend. Pressure encounters can introduce opening resource strain or enemy statuses, but round count alone never ends a living fight." },
       { title: "Safe across tabs and retries", description: "Dungeon actions are bound to the exact run, chamber, and saved revision shown in the Portal, while duplicate delivery of the same action safely replays the single committed result." },
       { title: "Built for desktop and mobile", description: "The Dungeon Board, route choices, combat controls, Cache risk, records, and disclosure pointer are consolidated for readable touch-friendly play." },
     ],

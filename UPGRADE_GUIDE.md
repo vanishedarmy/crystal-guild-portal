@@ -1,17 +1,13 @@
-# Upgrade Guide — UI Revert & Button Fit
+# Upgrade Guide — Full Rest & Combat Continuity
 
-Runtime remains `1.7.1-resynthesis-a2h5`. Local player DB schema remains **16**, hosted sync remains **1**, and Portal Action protocol remains **33**. There is no new migration and no player reset.
+Deploy **Bot and Web together** for this correction. The Bot contains the Rest/resource and encounter-continuity fixes; the Web removes obsolete Dungeon round-limit presentation and updates player-facing Guide copy.
 
-## If you installed the Unified PC/Mobile/SNES UI Pass
+Preserve the live player database, token database, environment secrets, and persistent runtime files. Local schema remains **16**, hosted sync remains **1**, and Portal Action protocol remains **33**. No migration or player reset is performed by this correction. If upgrading from a pre-Favorites-authority installation, complete the existing **15 → 16** migration first using its verified `backups/pre_schema_16_*.db` backup path before applying this package.
 
-Use the incremental **Revert-from-Unified-UI Web patch** or replace the Web tree with the full Web package. The patch removes the unified UI-system stylesheet/test/audit and restores the previous design while retaining only the targeted button-fit safety layer.
+After deployment, verify:
 
-The Bot does not need to change if you are already running the Gear Favorites Authority Fix Bot.
-
-## If you never installed the Unified UI Pass
-
-Use the smaller incremental **Button-Fit-from-Gear-Favorites-Authority Web patch**. It adds only the targeted control-fit rules and release metadata.
-
-## Full replacement
-
-The Complete package pairs the unchanged verified schema-16/protocol-33 Bot with the reverted/button-fit Web tree. Preserve your live database, secrets, token storage, and persistent runtime files as usual.
+1. Complete a Camp/Rest while on an MP Job, switch to an AP Job, and confirm AP is at that Job's full maximum. Repeat in the opposite direction.
+2. Switch between two Jobs with different maxima for the same resource family after Rest and confirm each resolves at its own maximum.
+3. Let a living encounter advance beyond round 12; it must continue while both sides remain alive.
+4. Dungeon combat displays `Round N` without a `/ 12` or other defeat-limit denominator.
+5. An explicit retreat still resolves through its normal retreat path.

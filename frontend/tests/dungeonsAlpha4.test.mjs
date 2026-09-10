@@ -30,5 +30,6 @@ test("Player Guide documents Riftglass and event encounter rules", () => {
   assert.match(guide, /Death Machine miniboss/);
   assert.match(guide, /Crystal Wolf finale/);
   assert.match(guide, /Events &amp; encounter rules/);
-  assert.match(guide, /tighter round limits/);
+  assert.match(guide, /do not impose a round-count defeat limit/);
+  assert.match(guide, /Round count itself is never a defeat condition/);
 });

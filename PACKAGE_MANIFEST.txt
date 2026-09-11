@@ -1,10 +1,11 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — HTTP Response Efficiency
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Mobile Control Fit Correction
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local player DB schema: 16
 Hosted sync schema: 1
 Portal Action protocol: 33
-Baseline: Hotfix 5 Full Rest & Combat Continuity
-Transport: SSE-first; conditional JSON ETags/304; long-poll action delivery; slow recovery polling
+Baseline: Hotfix 5 HTTP Response Efficiency
+Scope: Web-only mobile control placement/fit correction
 Database migration: none
-Deployment: Bot + Web together
+Bot/backend change: none
+Deployment: Web only when HTTP Response Efficiency Bot is already installed

@@ -1,8 +1,8 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — HTTP Response Efficiency
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Mobile Control Fit Correction
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local player DB schema: 16
 Hosted sync schema: 1
 Portal Action protocol: 33
 
-Deploy Bot and Web together. This transport-focused hotfix makes SSE the primary live-update path, adds conditional JSON revalidation, and sharply reduces fallback polling while preserving immediate event/deadline refresh behavior. Preserve hosted secrets and persistent runtime files. No schema migration or player reset is performed.
+Web-focused UI correction on top of HTTP Response Efficiency. The Bot/backend is unchanged. This fixes a mobile CSS selector leak that pushed unrelated action buttons into a second grid column, then adds focused phone layouts for Mini Cactpot, combat actions/pickers, Jobs, Hunts, Daily Provisions, and Blacksmith controls. No visual redesign, schema migration, protocol change, or player reset.

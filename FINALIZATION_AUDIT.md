@@ -1,9 +1,11 @@
-# Finalization Audit — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — HTTP Response Efficiency
+# Finalization Audit — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Mobile Control Fit Correction
 
-**Decision: PASS — response reduction is event-first and preserves gameplay responsiveness.**
+**Decision: PASS — targeted mobile controls now use intentional layouts instead of inheriting an Equipment-only grid placement rule.**
 
-The optimization reduces both idle response count and repeated response bytes rather than simply slowing every request. Live SSE revisions and exact gameplay deadlines remain the fast path; HTTP timers are recovery paths. Bot action delivery uses long polling, hosted sync heartbeats avoid redundant shared snapshot uploads, and unchanged dynamic JSON can terminate as 304 with no body.
+The correction is presentation-only. It preserves the current Crystal Guild theme and does not reintroduce the reverted Unified/SNES visual-system pass. The root mobile selector leak is scoped correctly, and screenshot-led layouts have explicit phone behavior for Cactpot choices, combat commands/pickers, Job management, Hunt actions, Daily Provisions, and Blacksmith controls.
 
-No gameplay, economy, progression, combat outcome, visual design, database schema, hosted sync schema, or Portal action protocol semantics are changed.
+Final extracted-package regression: **601/601 frontend**, **76/76 hosted Web/API**, and the unchanged paired Bot **708/708 (+30 subtests)**.
 
-Runtime/frontend contract: `1.7.1-resynthesis-a2h5`.
+HTTP Response Efficiency transport behavior and all backend/gameplay systems are unchanged.
+
+Runtime/frontend contract: `1.7.1-resynthesis-a2h5`; schema **16**; hosted sync **1**; Portal protocol **33**.

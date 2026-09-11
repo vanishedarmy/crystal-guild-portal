@@ -11364,7 +11364,7 @@ textarea {
 .overview-recent-activity > summary::-webkit-details-marker { display:none; }
 .overview-activity-summary-meta { display:inline-flex; align-items:center; gap:.55rem; }
 .overview-recent-activity:not([open]) > summary { margin-bottom:0; }
-@media (max-width:760px) { .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-action-button { grid-column:2; width:100%; } }
+@media (max-width:760px) { .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-card-actions .equipment-action-button { grid-column:2; width:100%; } }
 @media (max-width:520px) { .inventory-view-tabs { grid-template-columns:1fr; } .inventory-equipment-grid { grid-template-columns:1fr; } .equipment-card-actions { grid-template-columns:38px minmax(0,1fr); } .equipment-compare { grid-column:1/-1; } .equipment-card-actions .equipment-action-button { grid-column:2; width:100%; } }
 
 /* v1.7.1 Resynthesis A2H5 — targeted Retainer mobile UX cleanup.

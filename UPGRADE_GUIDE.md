@@ -1,11 +1,9 @@
-# Upgrade — HTTP Response Efficiency
+# Upgrade — Mobile Control Fit Correction
 
-**Deploy Bot and Web together.** The transport changes are coordinated even though runtime, database schema, and Portal protocol numbers remain unchanged.
+This is a **Web-only** correction on top of **HTTP Response Efficiency**. If that Bot is already installed, do not replace it; deploy only the incremental Web patch or the full Web package.
 
-Current contract: runtime `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal Action protocol **33**, Twitch command prefix `!`.
+Current contract remains runtime `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal Action protocol **33**, Twitch prefix `!`.
 
-If you are currently running **Full Rest & Combat Continuity**, apply both incremental patches. For a clean replacement, use the Complete archive. Preserve `crystal_guild.db`, backups, Twitch/token data, environment secrets, and other persistent runtime files.
+The patch changes only Web CSS, release metadata, and focused frontend regression coverage. Preserve hosted secrets and persistent runtime files as usual. No database migration, protocol change, environment-variable change, or player reset is performed.
 
-No database migration or player reset is performed. `PORTAL_SYNC_HEARTBEAT_SECONDS` now defaults to **60** and the hosted Web stale threshold defaults to **150** seconds; existing explicit environment overrides may be reviewed if you want the packaged defaults.
-
-Existing installations that previously completed the schema **15 → 16** Gear Favorites migration retain that state and its verified `backups/pre_schema_16_*.db` backup; this HTTP-efficiency release adds no further migration.
+For a clean replacement install, the Complete archive pairs the unchanged HTTP Response Efficiency Bot with the corrected Web tree.

@@ -1,10 +1,14 @@
-# Validation Report — HTTP Response Efficiency
+# Validation Report — Mobile Control Fit Correction
 
-**PASS — source regression complete before packaging.**
+**PASS — final shipping archive validated after extraction.**
 
-- Bot: **705 / 705 PASS**
-- Frontend: **595 / 595 PASS**
+- Frontend: **601 / 601 PASS**
 - Hosted Web/API: **76 / 76 PASS**
-- Focused coverage includes Bot long-poll transport, manifest-only idle heartbeat/recovery, dynamic ETag → 304/no-body behavior, single-action browser long polling, action wake-up, orphan-action protection, SSE-first fallback policy, and reduced high-frequency timers.
+- Paired Bot: **708 / 708 PASS** (+ **30 subtests**) — Bot source is unchanged from HTTP Response Efficiency.
+- Focused screenshot-led mobile regressions: **6 / 6 PASS** (included in frontend total)
 
-Release contract remains schema **16**, hosted sync **1**, Portal protocol **33**. No migration/reset. Final packaging and extracted-archive gates are recorded in the external packaging report.
+Focused coverage verifies the Equipment selector no longer leaks `grid-column: 2` globally and explicitly guards the Mini Cactpot, combat command/picker, Jobs, Hunts, Daily Provisions, and Blacksmith mobile layouts.
+
+Packaging gates: incremental Web patch reconstruction, full Web tree match, Complete Web tree match, unchanged Complete Bot tree match, and ZIP CRC/integrity all pass.
+
+Release contract remains runtime `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal protocol **33**. No migration/reset.

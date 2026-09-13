@@ -1,14 +1,14 @@
-# Validation Report — Mobile Control Fit Correction
+# Validation Report — Desktop Item Control Fit Correction
 
-**PASS — final shipping archive validated after extraction.**
+**PASS — source regression complete; shipping archive validated after packaging.**
 
-- Frontend: **601 / 601 PASS**
+- Frontend: **607 / 607 PASS**
 - Hosted Web/API: **76 / 76 PASS**
-- Paired Bot: **708 / 708 PASS** (+ **30 subtests**) — Bot source is unchanged from HTTP Response Efficiency.
-- Focused screenshot-led mobile regressions: **6 / 6 PASS** (included in frontend total)
+- Paired Bot: **705 / 705 PASS** — Bot source is unchanged from Mobile Control Fit Correction / HTTP Response Efficiency.
+- Focused desktop Recovery/Battle-item regressions: **6 / 6 PASS** (included in frontend total)
 
-Focused coverage verifies the Equipment selector no longer leaks `grid-column: 2` globally and explicitly guards the Mini Cactpot, combat command/picker, Jobs, Hunts, Daily Provisions, and Blacksmith mobile layouts.
+Focused coverage verifies wider Recovery command columns, compact 40px Recovery artwork, two-row Recovery metadata placement, compact battle-item button height/padding, three-column large-desktop battle inventory, and preserved two-line effect context. Ability grids are explicitly excluded from the compact item selector.
 
-Packaging gates: incremental Web patch reconstruction, full Web tree match, Complete Web tree match, unchanged Complete Bot tree match, and ZIP CRC/integrity all pass.
+Source gates: **16/16 Web Python AST**, **214/214 JS/MJS syntax**, **9/9 CSS structural files**, **843/843 public WebP decode**, **0 public PNGs**.
 
 Release contract remains runtime `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal protocol **33**. No migration/reset.

@@ -1,11 +1,11 @@
-# Finalization Audit — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Mobile Control Fit Correction
+# Finalization Audit — Crystal Guild v1.7.1 Resynthesis Alpha 2 Hotfix 5 — Desktop Item Control Fit Correction
 
-**Decision: PASS — targeted mobile controls now use intentional layouts instead of inheriting an Equipment-only grid placement rule.**
+**Decision: PASS — desktop item-use controls are compact and readable without changing the existing design or gameplay.**
 
-The correction is presentation-only. It preserves the current Crystal Guild theme and does not reintroduce the reverted Unified/SNES visual-system pass. The root mobile selector leak is scoped correctly, and screenshot-led layouts have explicit phone behavior for Cactpot choices, combat commands/pickers, Job management, Hunt actions, Daily Provisions, and Blacksmith controls.
+The correction is presentation-only. Recovery/Camp commands no longer squeeze artwork, item copy, and `Owned · Use` metadata into narrow desktop cards. Solo Venture and Dungeon battle inventories now use compact item-command tiles, with a three-column layout on large desktops and preserved item name, quantity/target, Use state, and short effect context. Ability choices are intentionally untouched.
 
-Final extracted-package regression: **601/601 frontend**, **76/76 hosted Web/API**, and the unchanged paired Bot **708/708 (+30 subtests)**.
+Mobile Control Fit, HTTP Response Efficiency, Full Rest & Combat Continuity, and all backend/player-state behavior remain unchanged.
 
-HTTP Response Efficiency transport behavior and all backend/gameplay systems are unchanged.
+Final extracted-package regression: **607/607 frontend**, **76/76 hosted Web/API**, and the unchanged paired Bot **705/705**. Exact patch/tree reconstruction is recorded in the shipping packaging report.
 
 Runtime/frontend contract: `1.7.1-resynthesis-a2h5`; schema **16**; hosted sync **1**; Portal protocol **33**.

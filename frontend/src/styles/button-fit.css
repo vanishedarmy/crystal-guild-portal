@@ -387,3 +387,115 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Hotfix 5 — desktop recovery + battle-item density correction.
+   Presentation-only: keep the current theme while making item-use controls read
+   as compact commands instead of oversized content cards on desktop. */
+@media (min-width: 900px) {
+  /* Camp / Recovery: fewer, wider columns prevent item names and metadata from
+     being squeezed into awkward fragments, while each clickable command is
+     shorter and easier to scan. */
+  .recovery-quick-grid {
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: .55rem;
+  }
+
+  .recovery-quick-action:has(.recovery-item-artwork) {
+    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "art copy"
+      "art meta";
+    align-items: center;
+    column-gap: .62rem;
+    row-gap: .12rem;
+    min-height: 68px;
+    padding: .5rem .62rem;
+  }
+
+  .recovery-quick-action .recovery-item-artwork {
+    grid-area: art;
+    width: 40px;
+    height: 40px;
+  }
+
+  .recovery-quick-action .recovery-quick-copy {
+    grid-area: copy;
+    gap: .12rem;
+  }
+
+  .recovery-quick-action .recovery-quick-copy strong {
+    font-size: .88rem;
+    line-height: 1.05;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .recovery-quick-action .recovery-quick-copy small {
+    font-size: .68rem;
+    line-height: 1.2;
+  }
+
+  .recovery-quick-action .recovery-quick-meta {
+    grid-area: meta;
+    justify-self: start;
+    font-size: .62rem;
+    line-height: 1.15;
+    letter-spacing: .045em;
+    white-space: normal;
+  }
+
+  /* Solo Venture / Dungeon battle inventory: compact command tiles. Abilities
+     keep their existing layout; this only targets the item picker grid. */
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) {
+    gap: .5rem;
+  }
+
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) .solo-action-option {
+    min-height: 70px;
+    padding: .52rem .62rem;
+    gap: .18rem;
+    border-radius: 9px;
+  }
+
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) .solo-action-option > span:first-child {
+    align-items: baseline;
+    flex-wrap: nowrap;
+  }
+
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) .solo-action-option > span:first-child > strong {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) .solo-action-option > span:first-child > small {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) .solo-action-option > span:nth-child(2) {
+    font-size: .72rem;
+    line-height: 1.1;
+  }
+
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) .solo-action-option > small:last-child {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: .7rem;
+    line-height: 1.25;
+  }
+}
+
+@media (min-width: 1120px) {
+  /* Large desktop: three compact battle-item commands per row instead of two
+     oversized half-width panels. */
+  .solo-action-picker .solo-action-grid:not(.solo-ability-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,22 +1,23 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Mobile Control Fit Correction
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Desktop Item Control Fit Correction
 
-This Web-focused correction fixes the mobile control-placement problems visible in the Gold Saucer, active combat, Jobs, Hunts, Daily Guild Provisions, and Blacksmith while preserving the existing reverted visual design and HTTP Response Efficiency work.
+This Web-only correction addresses the oversized/squeezed item-use controls shown in the desktop Camp/Recovery and Solo Venture battle-inventory views while preserving the existing Crystal Guild theme.
 
-## Root cause fixed
-An Equipment Favorites media rule accidentally targeted every `.equipment-action-button` at mobile widths instead of only Equipment-card actions. The leaked `grid-column: 2` declaration could create an implicit empty first column anywhere those buttons appeared, producing the detached right-side button stacks shown on mobile.
+## Camp / Recovery item controls
+- Desktop Recovery commands use wider minimum card widths so item names such as Potion, Hi-Potion, Mega-Potion, and X-Potion do not break into awkward fragments.
+- The item artwork is reduced from the previous 52px command footprint to a compact 40px presentation.
+- Item name/effect copy and `Owned · Use` metadata now share a compact two-row command layout instead of fighting for three horizontal columns.
+- Command height and padding are reduced while retaining the full clickable card and existing item artwork/theme.
+- Mobile Recovery behavior is unchanged.
 
-The selector is now scoped to `.equipment-card-actions .equipment-action-button` only.
-
-## Focused mobile layout corrections
-- Mini Cactpot payout choices use a compact two-column decision grid; only extremely narrow screens collapse to one column.
-- Dungeon/Solo combat command bars use a balanced 2×2 action grid on normal phone widths.
-- Ability/Item picker Close controls remain attached to the picker heading instead of reading like another primary full-width action.
-- Job cards keep portrait/identity content together and place View/Switch actions in one intentional row when space permits; very narrow phones fall back to one column.
-- Hunt cards keep the clear/availability badge aligned with the Hunt identity and give Dispatch a deliberate full-width footer action.
-- Daily Guild Provisions places claim/status and Refresh together in a clean two-button action row, falling back to one column on narrow phones.
-- Blacksmith service tabs occupy their own full-width band; Search and Refresh sit beneath them instead of competing for the same horizontal space. Very narrow phones use a 2+1 tab arrangement so `Resynthesize Gear` is never crushed into a narrow column.
+## Solo Venture / Dungeon battle inventory
+- Battle **items only** use a denser desktop command presentation; Ability choices retain their existing layout.
+- Item buttons reduce their previous 94px minimum height to a compact 70px desktop minimum.
+- Large desktop widths use three battle-item commands per row instead of oversized two-column half-page panels.
+- Name, quantity/target, Use state, and short effect context remain visible.
+- Effect text is capped at two visible lines for consistent command height; the existing item title/tooltip still carries the complete description.
+- Disabled/unusable item behavior is unchanged.
 
 ## Compatibility
-HTTP Response Efficiency remains intact: SSE-first refresh, conditional ETags/304, long-poll Portal action delivery, reduced fallback polling, and manifest-first sync heartbeats are unchanged. Full Rest & Combat Continuity, authoritative cross-device Gear Favorites, Treasure Seekers, Rally 100/0, Solo 80/20, and the reverted visual design remain intact.
+The prior Mobile Control Fit Correction, HTTP Response Efficiency transport changes, Full Rest & Combat Continuity, authoritative cross-device Gear Favorites, Treasure Seekers, Rally 100/0, Solo 80/20, and current visual design remain unchanged.
 
 Runtime remains `1.7.1-resynthesis-a2h5`; local schema **16**, hosted sync **1**, Portal protocol **33**. No migration or player reset.

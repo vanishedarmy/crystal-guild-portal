@@ -112,6 +112,61 @@ export function formatItemUse(use = {}) {
   return ["Restores All Stats", ...remaining].join(" · ");
 }
 
+// Battle inventory ordering is purpose-first so emergency/recovery tools are
+// presented before setup/support items and direct-damage consumables. The
+// classifier intentionally understands both structured item effects (when
+// available) and the compact combat payload used by Solo/Dungeon/Expedition
+// views, which currently carries target + description rather than the full
+// catalog use object.
+export function battleItemPurpose(item = {}) {
+  const effects = Array.isArray(item?.use?.effects)
+    ? item.use.effects
+    : Array.isArray(item?.effects)
+      ? item.effects
+      : [];
+  const effectTypes = new Set(effects.map((effect) => String(effect?.type || "").toLowerCase()).filter(Boolean));
+  const target = String(item?.target || item?.use?.target || "").toLowerCase();
+  const id = String(item?.id || "").toLowerCase();
+  const text = `${item?.name || ""} ${item?.description || ""} ${item?.reason || ""}`.toLowerCase();
+
+  if (
+    effectTypes.has("heal_hp")
+    || effectTypes.has("restore_mp")
+    || effectTypes.has("restore_ap")
+    || effectTypes.has("revive")
+    || /\b(restores?|restore|revives?|revive|heals?|heal|recovery|recover)\b/.test(text)
+    || /(?:^|_)(potion|ether|elixir|megalixir|phoenix_down|stamina_draught|warriors_tonic|heros_brew)(?:$|_)/.test(id)
+  ) return "restorative";
+
+  if (
+    effectTypes.has("cleanse")
+    || /\b(removes?|remove|cleanses?|cleanse|cures?|cure)\b/.test(text)
+    || /(?:^|_)(antidote|remedy|panacea|eye_drops|echo_herbs|chronos_tear|smelling_salts)(?:$|_)/.test(id)
+  ) return "cure";
+
+  if (
+    effectTypes.has("damage")
+    || target === "enemy"
+    || /\b(deals?|damage|thrown? at|strikes? the enemy|enemy damage)\b/.test(text)
+  ) return "damage";
+
+  return "support";
+}
+
+const BATTLE_ITEM_PURPOSE_ORDER = Object.freeze({ restorative: 0, cure: 1, support: 2, damage: 3 });
+
+export function compareBattleItems(a = {}, b = {}) {
+  const aPurpose = battleItemPurpose(a);
+  const bPurpose = battleItemPurpose(b);
+  const purposeDelta = (BATTLE_ITEM_PURPOSE_ORDER[aPurpose] ?? 2) - (BATTLE_ITEM_PURPOSE_ORDER[bPurpose] ?? 2);
+  if (purposeDelta) return purposeDelta;
+  return String(a?.name || a?.id || "").localeCompare(String(b?.name || b?.id || ""), undefined, { sensitivity: "base" });
+}
+
+export function sortBattleItems(items = []) {
+  return Array.isArray(items) ? [...items].sort(compareBattleItems) : [];
+}
+
 export function formatItemAvailability(use = {}) {
   if (!use || typeof use !== "object") return "—";
   const target = humanizeLabel(use.target, "Target");

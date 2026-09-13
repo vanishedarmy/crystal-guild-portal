@@ -1,23 +1,26 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Desktop Item Control Fit Correction
+# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Battle Item Purpose Sort
 
-This Web-only correction addresses the oversized/squeezed item-use controls shown in the desktop Camp/Recovery and Solo Venture battle-inventory views while preserving the existing Crystal Guild theme.
+This Web-only correction makes battle inventory scanning faster by sorting consumables by **what they are used for** instead of treating every item as one flat alphabetical list.
 
-## Camp / Recovery item controls
-- Desktop Recovery commands use wider minimum card widths so item names such as Potion, Hi-Potion, Mega-Potion, and X-Potion do not break into awkward fragments.
-- The item artwork is reduced from the previous 52px command footprint to a compact 40px presentation.
-- Item name/effect copy and `Owned · Use` metadata now share a compact two-row command layout instead of fighting for three horizontal columns.
-- Command height and padding are reduced while retaining the full clickable card and existing item artwork/theme.
-- Mobile Recovery behavior is unchanged.
+## Battle inventory order
+Battle items now appear in this order:
 
-## Solo Venture / Dungeon battle inventory
-- Battle **items only** use a denser desktop command presentation; Ability choices retain their existing layout.
-- Item buttons reduce their previous 94px minimum height to a compact 70px desktop minimum.
-- Large desktop widths use three battle-item commands per row instead of oversized two-column half-page panels.
-- Name, quantity/target, Use state, and short effect context remain visible.
-- Effect text is capped at two visible lines for consistent command height; the existing item title/tooltip still carries the complete description.
-- Disabled/unusable item behavior is unchanged.
+1. **Restorative / revive** — HP, MP, AP recovery and revival items such as Potion, Ether, Phoenix Down, Stamina Draught, and Warrior’s Tonic.
+2. **Status cures** — Antidote, Chronos Tear, Echo Herbs, Eye Drops, Remedy, Smelling Salts, and similar cleanse items.
+3. **Buffs / support** — Iron Tonic, Regen Tonic, Smoke Bomb, Swiftwater, War Horn, Mage’s Incense, and other non-damage setup items.
+4. **Direct damage** — Arctic Wind, Bomb Fragment, Earth Drum, Lightning Marble, Water Gem, and similar enemy-targeted damage items.
+
+Items remain **alphabetical inside their purpose group** for predictable scanning.
+
+## Shared behavior
+- Solo Venture battle inventory uses the new ordering.
+- Dungeon battle inventory uses the same ordering.
+- Expedition battle items use the same ordering.
+- Disabled items remain in their proper purpose group instead of being moved elsewhere just because the current Job cannot use them.
+- The sorter understands structured effect metadata when present and also handles the compact battle payload used by the Portal.
+- Sorting copies the array and does not mutate the authoritative combat snapshot.
 
 ## Compatibility
-The prior Mobile Control Fit Correction, HTTP Response Efficiency transport changes, Full Rest & Combat Continuity, authoritative cross-device Gear Favorites, Treasure Seekers, Rally 100/0, Solo 80/20, and current visual design remain unchanged.
+Desktop Item Control Fit, Mobile Control Fit, HTTP Response Efficiency, Full Rest & Combat Continuity, authoritative Gear Favorites, and all existing item effects remain unchanged.
 
 Runtime remains `1.7.1-resynthesis-a2h5`; local schema **16**, hosted sync **1**, Portal protocol **33**. No migration or player reset.

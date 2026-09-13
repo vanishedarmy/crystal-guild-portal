@@ -11,7 +11,7 @@ import {
 import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
-import { duration, number, pct } from "../utils/formatters.js";
+import { duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 
@@ -345,7 +345,7 @@ export default function Expeditions({
                   <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => doRequest("expedition:defend", "expedition-action", `defend:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("defend", csrfToken, idem), "Defend resolved.")}>Defend</button>
                 </div>
                 {(active.combat.abilities || []).length ? <div className="expedition-option-grid">{active.combat.abilities.map((ability) => <button type="button" key={ability.id} className="expedition-combat-option" disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => doRequest(`expedition:ability:${ability.id}`, "expedition-action", `ability:${ability.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}><strong>{ability.name}</strong><small>{ability.cost_label || ability.cost || "Ability"}</small><span>{ability.usable ? "Use" : ability.reason}</span></button>)}</div> : null}
-                {(active.combat.items || []).length ? <div className="expedition-option-grid">{active.combat.items.map((item) => <button type="button" key={item.id} className="expedition-combat-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => doRequest(`expedition:item:${item.id}`, "expedition-action", `item:${item.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}><strong>{item.name}</strong><small>Qty {number(item.quantity)}</small><span>{item.usable ? "Use" : item.reason}</span></button>)}</div> : null}
+                {(active.combat.items || []).length ? <div className="expedition-option-grid">{sortBattleItems(active.combat.items).map((item) => <button type="button" key={item.id} className="expedition-combat-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => doRequest(`expedition:item:${item.id}`, "expedition-action", `item:${item.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}><strong>{item.name}</strong><small>Qty {number(item.quantity)}</small><span>{item.usable ? "Use" : item.reason}</span></button>)}</div> : null}
                 <button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Expedition encounter? Your Chocobo will rescue you, but part of the Expedition Cache may be lost.")) doRequest("expedition:retreat", "expedition-retreat", String(active.stage), (idem) => submitExpeditionRetreat(csrfToken, idem), "Chocobo rescue complete."); }}>Retreat · Chocobo Rescue</button>
               </div>
             ) : null}

@@ -1,14 +1,14 @@
-# Validation Report — Desktop Item Control Fit Correction
+# Validation Report — Battle Item Purpose Sort
 
-**PASS — source regression complete; shipping archive validated after packaging.**
+**PASS — shipping archive validated after extraction.**
 
-- Frontend: **607 / 607 PASS**
+- Frontend: **612 / 612 PASS**
 - Hosted Web/API: **76 / 76 PASS**
-- Paired Bot: **705 / 705 PASS** — Bot source is unchanged from Mobile Control Fit Correction / HTTP Response Efficiency.
-- Focused desktop Recovery/Battle-item regressions: **6 / 6 PASS** (included in frontend total)
+- Paired Bot: **708 / 708 PASS** (+ 30 subtests) — Bot source is unchanged from the current backend baseline.
+- Focused purpose-sort regressions: **5 / 5 PASS** (included in frontend total)
 
-Focused coverage verifies wider Recovery command columns, compact 40px Recovery artwork, two-row Recovery metadata placement, compact battle-item button height/padding, three-column large-desktop battle inventory, and preserved two-line effect context. Ability grids are explicitly excluded from the compact item selector.
+Focused coverage verifies restorative → cure → support → damage ordering, disabled restorative classification, structured-effect classification for future items, alphabetical ordering inside a purpose group, and non-mutating sort behavior.
 
-Source gates: **16/16 Web Python AST**, **214/214 JS/MJS syntax**, **9/9 CSS structural files**, **843/843 public WebP decode**, **0 public PNGs**.
+Solo Venture, Dungeon, and Expedition battle-item selectors all use the same shared semantic sorter. No item-effect, inventory, encounter, transport, or player-state behavior changed.
 
 Release contract remains runtime `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal protocol **33**. No migration/reset.

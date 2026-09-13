@@ -20,7 +20,7 @@ import Expeditions from "./Expeditions.jsx";
 import Dungeons from "./Dungeons.jsx";
 import Raids from "./Raids.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
-import { duration, number, pct } from "../utils/formatters.js";
+import { duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 
@@ -817,7 +817,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                   <div className="solo-action-picker">
                     <div className="panel-title-row"><div><p className="eyebrow">Battle Inventory</p><h3>Choose an item</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid">
-                      {(expedition.combat.items || []).length ? (expedition.combat.items || []).map((item) => (
+                      {(expedition.combat.items || []).length ? sortBattleItems(expedition.combat.items || []).map((item) => (
                         <button key={item.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`solo:item:${item.id}`, "solo-item", item.id, (idem) => submitSoloExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}>
                           <span><strong>{item.name}</strong><small>Qty {number(item.quantity)} · {item.target}</small></span>
                           <span>{item.usable ? "Use" : item.reason}</span>

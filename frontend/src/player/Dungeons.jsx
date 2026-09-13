@@ -9,7 +9,7 @@ import {
 import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
-import { number, pct } from "../utils/formatters.js";
+import { number, pct, sortBattleItems } from "../utils/formatters.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 
@@ -120,7 +120,7 @@ export default function Dungeons({
   const results = pendingResults.filter((row) => row?.kind === "dungeon");
   const combat = active?.combat || null;
   const abilities = (combat?.abilities || []).filter((ability) => ability.usable);
-  const items = combat?.items || [];
+  const items = useMemo(() => sortBattleItems(combat?.items || []), [combat?.items]);
 
   const toggleBoard = (event) => {
     const next = !open;

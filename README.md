@@ -1,5 +1,5 @@
 # Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5
 
-Current correction: **Desktop Item Control Fit Correction**. Runtime/frontend `1.7.1-resynthesis-a2h5`; paired Bot `1.7.1-resynthesis-a2h5`; local player DB schema **16**; hosted sync **1**; Portal protocol **33**.
+Current correction: **Battle Item Purpose Sort**. Runtime/frontend `1.7.1-resynthesis-a2h5`; paired Bot `1.7.1-resynthesis-a2h5`; local player DB schema **16**; hosted sync **1**; Portal protocol **33**.
 
-This Web-only correction preserves the current Crystal Guild visual design and the prior Mobile Control Fit/HTTP Response Efficiency work. Desktop Recovery/Camp item commands and Solo Venture/Dungeon battle-item choices are tightened into more readable command-sized controls without changing item behavior, abilities, backend state, or mobile composition.
+This Web-only correction keeps the existing Desktop Item Control Fit presentation and sorts battle inventories by combat purpose instead of a flat alphabetical list: restorative/revive → status cures → buffs/support → direct damage. Alphabetical ordering is retained inside each group.

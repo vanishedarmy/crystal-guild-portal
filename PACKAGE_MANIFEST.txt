@@ -1,11 +1,11 @@
-Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Desktop Item Control Fit Correction
+Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Battle Item Purpose Sort
 Web runtime/frontend: 1.7.1-resynthesis-a2h5
 Paired Bot runtime: 1.7.1-resynthesis-a2h5
 Local player DB schema: 16
 Hosted sync schema: 1
 Portal Action protocol: 33
-Baseline: Hotfix 5 Mobile Control Fit Correction
-Scope: Web-only desktop Recovery/Camp and battle-item control density correction
+Baseline: Hotfix 5 Desktop Item Control Fit Correction
+Scope: Web-only active-battle item purpose sorting for Solo Venture, Dungeons, and Expeditions
 Database migration: none
 Bot/backend change: none
-Deployment: Web only when Mobile Control Fit Correction / HTTP Response Efficiency Bot is already installed
+Deployment: Web only when Desktop Item Control Fit Correction is already installed

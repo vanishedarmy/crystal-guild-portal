@@ -12,6 +12,7 @@ import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { number, pct, sortBattleItems } from "../utils/formatters.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 function defaultOpen(active) {
   if (active) return true;
@@ -139,7 +140,7 @@ export default function Dungeons({
             <h2>{active ? active.name : "Dungeon Board"}</h2>
             <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
           </div>
-          <button type="button" className="section-collapse-button dungeon-board-collapse-toggle" aria-label={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} title={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} aria-expanded={open} onClick={toggleBoard}><CollapsePointer open={open} /></button>
+          <div className="context-help-actions"><ContextHelp topic="dungeons" /><button type="button" className="section-collapse-button dungeon-board-collapse-toggle" aria-label={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} title={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} aria-expanded={open} onClick={toggleBoard}><CollapsePointer open={open} /></button></div>
         </div>
 
         {open ? (

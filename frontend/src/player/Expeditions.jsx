@@ -14,6 +14,7 @@ import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 const DEPTH_COPY = {
   scout: "3 stages · short survey",
@@ -175,6 +176,7 @@ export default function Expeditions({
             {boardOpen ? <p className="muted">Choose a region and route, then bring your Expedition Cache home safely.</p> : null}
           </div>
           <div className="section-collapse-actions">
+            <ContextHelp topic="expeditions" />
             <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
             <button type="button" className="section-collapse-button" aria-expanded={boardOpen} aria-label={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} title={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)}><CollapsePointer open={boardOpen} /></button>
           </div>

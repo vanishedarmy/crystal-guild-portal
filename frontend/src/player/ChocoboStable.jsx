@@ -12,6 +12,7 @@ import ProgressBar from "../components/ProgressBar.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 function actionKey(kind, target = "chocobo") {
   const suffix = globalThis.crypto?.randomUUID
@@ -218,6 +219,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
           <p className="muted">A registered Chocobo is required to launch Expeditions from the Adventure Board.</p>
         </div>
         <div className="chocobo-stable-status">
+          <ContextHelp topic="chocobo" />
           <span className={`small-badge ${stable?.unlocked ? "ready" : "locked"}`}>{stable?.unlocked ? "STABLE OPEN" : "STABLE LOCKED"}</span>
           <span className="small-badge">{number(state?.gil ?? overview?.identity?.gil ?? 0)} Gil</span>
         </div>

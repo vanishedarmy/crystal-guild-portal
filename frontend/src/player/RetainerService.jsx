@@ -8,6 +8,7 @@ import {
 import ProgressBar from "../components/ProgressBar.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 const RETAINER_ART_ROOT = "/retainer/a2h1";
 
@@ -178,7 +179,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
               <p className="eyebrow">Moogle Retainer · Procurement Service</p>
               <h2>Retainer Service</h2>
             </div>
-            <span className="small-badge">{number(state.gil)} Gil</span>
+            <div className="context-help-actions"><ContextHelp topic="retainer" /><span className="small-badge">{number(state.gil)} Gil</span></div>
           </div>
           <p className="retainer-lead">Dispatch one personal Retainer on timed procurement work for crafting materials. Retainers do not store equipment and never replace your inventory.</p>
           {message ? <div className="state-message compact-state">{message}</div> : null}

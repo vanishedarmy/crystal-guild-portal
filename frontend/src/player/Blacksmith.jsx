@@ -12,6 +12,7 @@ import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 function actionKey(kind, target = "blacksmith") {
   const suffix = globalThis.crypto?.randomUUID
@@ -329,10 +330,10 @@ export default function Blacksmith({ data, overview, onRefresh }) {
           <p className="eyebrow">Guild Workshop</p>
           <h2>Guild Blacksmith</h2>
         </div>
-        <div className="blacksmith-wallet">
+        <div className="context-help-actions"><ContextHelp topic="blacksmith" /><div className="blacksmith-wallet">
           <span><strong>{number(state?.gil ?? overview?.identity?.gil ?? 0)}</strong> Gil</span>
           <span><strong>{number(state?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong> Seals</span>
-        </div>
+        </div></div>
       </div>
 
       <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>

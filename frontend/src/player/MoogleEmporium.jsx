@@ -11,6 +11,7 @@ import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 
 const EQUIPMENT_TYPES = new Set(["weapon", "armor", "accessory"]);
@@ -250,9 +251,9 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           <p className="eyebrow">Kupo commerce, regrettably legitimate</p>
           <h2>Moogle Emporium</h2>
         </div>
-        <div className="moogle-wallet" aria-label={`${number(shop?.gil ?? overview?.identity?.gil ?? 0)} Gil`}>
+        <div className="context-help-actions"><ContextHelp topic="emporium" /><div className="moogle-wallet" aria-label={`${number(shop?.gil ?? overview?.identity?.gil ?? 0)} Gil`}>
           <strong>{number(shop?.gil ?? overview?.identity?.gil ?? 0)}</strong><span>Gil</span>
-        </div>
+        </div></div>
       </div>
 
       <div className={`equipment-action-status ${shopActionsAvailable ? "ready" : "offline"}`}>

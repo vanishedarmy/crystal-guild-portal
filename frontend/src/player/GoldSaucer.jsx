@@ -17,6 +17,7 @@ import {
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number } from "../utils/formatters.js";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 const LINE_NAMES = ["Top Row", "Middle Row", "Bottom Row", "Left Column", "Center Column", "Right Column", "Down Diagonal", "Up Diagonal"];
 const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
@@ -399,7 +400,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
         <img loading="lazy" decoding="async" className="saucer-scenic-art saucer-lobby-art" src={`${SAUCER_ART_ROOT}/saucer-lobby.webp`} alt="" aria-hidden="true" />
         <div>
           <p className="eyebrow">v1.6.0 · Gold Saucer</p>
-          <h2>Gold Saucer</h2>
+          <div className="context-help-title-line"><h2>Gold Saucer</h2><ContextHelp topic="gold_saucer" /></div>
           <p className="muted">A low-stakes side hall for daily luck, quick games, Chocobo Racing, Triple Triad, cosmetic rewards, and collection records. First visit includes a 500 MGP welcome purse.</p>
         </div>
         <div className="saucer-balance">

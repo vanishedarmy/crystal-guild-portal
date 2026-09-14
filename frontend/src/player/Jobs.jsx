@@ -14,6 +14,7 @@ import { humanizeLabel } from "../utils/displayLabels.js";
 import { pct } from "../utils/formatters.js";
 import { loadGuideData, mergeJobsWithCatalog } from "../utils/itemCatalog.js";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 const STANCES = [
   { id: "balanced", name: "Balanced", description: "Neutral offense and defense. A dependable default for any Job." },
@@ -220,7 +221,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
     <section className="panel character-management-panel">
       <div className="panel-title-row">
         <div><p className="eyebrow">Character setup</p><h2>Jobs & Battle Style</h2></div>
-        <span className="small-badge">{owned} / {jobs.length} learned</span>
+        <div className="context-help-actions"><ContextHelp topic="jobs" /><span className="small-badge">{owned} / {jobs.length} learned</span></div>
       </div>
 
       {isOwnProfile ? (

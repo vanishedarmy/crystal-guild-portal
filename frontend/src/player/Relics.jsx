@@ -2,11 +2,12 @@ import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import RelicArtwork from "../components/RelicArtwork.jsx";
 import { number, pct } from "../utils/formatters.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 export default function Relics({ data, onDetail }) {
   return (
     <section className="panel relic-arsenal-panel">
-      <div className="panel-title-row"><div><p className="eyebrow">18-Job Collection</p><h2>Relic Arsenal</h2></div><span className="small-badge">{data.relics.filter((relic) => relic.completed).length} / {data.relics.length} complete</span></div>
+      <div className="panel-title-row"><div><p className="eyebrow">18-Job Collection</p><h2>Relic Arsenal</h2></div><div className="context-help-actions"><ContextHelp topic="relics" /><span className="small-badge">{data.relics.filter((relic) => relic.completed).length} / {data.relics.length} complete</span></div></div>
       <div className="relic-grid">
         {data.relics.map((relic) => (
           <ClickableCard className="relic-card" key={relic.id || relic.name} detail={{ type: "relic", relic }} onOpen={onDetail}>

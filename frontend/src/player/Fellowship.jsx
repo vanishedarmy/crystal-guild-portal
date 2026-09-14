@@ -11,6 +11,7 @@ import {
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number, pct } from "../utils/formatters.js";
 import { beginQuantityEdit, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 function actionKey(kind, target) {
   const suffix = globalThis.crypto?.randomUUID
@@ -229,14 +230,17 @@ export default function Fellowship({ data, onRefresh }) {
               <span className="panel-kicker">Fellowship Contributions</span>
               <h2>{project?.name || "Active Guild Project"}</h2>
             </div>
-            <button
-              type="button"
-              className="equipment-action-button secondary"
-              disabled={!contributionAvailable || Boolean(busyKey)}
-              onClick={() => loadState()}
-            >
-              {busyKey === "state" ? "Refreshing…" : "Refresh"}
-            </button>
+            <div className="context-help-actions">
+              <ContextHelp topic="fellowship" />
+              <button
+                type="button"
+                className="equipment-action-button secondary"
+                disabled={!contributionAvailable || Boolean(busyKey)}
+                onClick={() => loadState()}
+              >
+                {busyKey === "state" ? "Refreshing…" : "Refresh"}
+              </button>
+            </div>
           </div>
 
           <div className={`equipment-action-status ${contributionAvailable ? "ready" : "offline"}`}>

@@ -15,6 +15,7 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { campRemainingSeconds } from "../utils/campCountdown.js";
 import { duration, formatBestUse, formatBonuses, formatItemUse, number, pct } from "../utils/formatters.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 const GROUP_ORDER = ["weapon", "armor", "accessory", "item", "material"];
 const GROUP_LABELS = { weapon: "Weapons", armor: "Armor", accessory: "Accessories", item: "Consumables", material: "Materials" };
@@ -403,7 +404,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
 
   return (
     <section className="panel inventory-phase-five">
-      <div className="panel-title-row"><h2>Equipment, Inventory & Recovery</h2><span className="small-badge">{filtered.length} shown · {displayedItems.length} stacks</span></div>
+      <div className="panel-title-row"><h2>Equipment, Inventory & Recovery</h2><div className="context-help-actions"><ContextHelp topic="inventory" /><span className="small-badge">{filtered.length} shown · {displayedItems.length} stacks</span></div></div>
 
       {isOwnProfile ? (
         <section className="recovery-dashboard" aria-label="Recovery">

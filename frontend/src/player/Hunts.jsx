@@ -23,6 +23,7 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
+import ContextHelp from "../components/ContextHelp.jsx";
 
 const volatileAdventureActionKeys = new Map();
 
@@ -643,9 +644,12 @@ export default function Hunts({ data, overview, onRefresh }) {
             <h2>Choose Your Next Adventure</h2>
             <p className="muted">Current activity first. Then choose a personal adventure, contract, travel, or recovery.</p>
           </div>
-          <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
-            {busy === "state" ? "Refreshing…" : "Refresh Board"}
-          </button>
+          <div className="context-help-actions">
+            <ContextHelp topic="adventure_board" />
+            <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
+              {busy === "state" ? "Refreshing…" : "Refresh Board"}
+            </button>
+          </div>
         </div>
         <div className={`equipment-action-status compact-status ${actionsAvailable ? "ready" : "offline"}`} role="status">
           <strong>{actionsAvailable ? "Online" : "Offline"}</strong>
@@ -664,7 +668,7 @@ export default function Hunts({ data, overview, onRefresh }) {
       <section className={`panel adventure-camp-panel ${state?.camp?.resting ? "camp-active" : ""}`}>
         <div className="panel-title-row">
           <div><p className="eyebrow">Camp & Recovery</p><h2>{state?.camp?.resting ? `Resting · ${duration(remainingUntil(state.camp.until, authoritativeClock))}` : "Set Up Camp"}</h2></div>
-          <span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span>
+          <div className="context-help-actions"><ContextHelp topic="camp_recovery" /><span className={`small-badge ${state?.camp?.resting ? "success" : state?.camp?.can_start ? "ready" : ""}`}>{state?.camp?.resting ? "Resting" : state?.camp?.can_start ? "Ready" : "Unavailable"}</span></div>
         </div>
         <p className="muted">Full recovery for HP and current Job resources. Base time: 15m LIVE · 1h OFFLINE before Fellowship bonuses.</p>
         {state?.camp ? (
@@ -710,9 +714,9 @@ export default function Hunts({ data, overview, onRefresh }) {
             <p className="eyebrow">Solo Venture · Portal Only</p>
             <h2>{expedition ? `Stage ${number(expedition.stage)} of ${number(expedition.max_stages)}` : !boardStateReady ? "Checking your venture…" : soloRemaining > 0 ? `Ready in ${duration(soloRemaining)}` : "Take the road alone"}</h2>
           </div>
-          <span className={`small-badge ${expedition || (boardStateReady && state?.solo_venture?.ready && soloRemaining <= 0) ? "success" : ""}`}>
+          <div className="context-help-actions"><ContextHelp topic="solo_venture" /><span className={`small-badge ${expedition || (boardStateReady && state?.solo_venture?.ready && soloRemaining <= 0) ? "success" : ""}`}>
             {expedition ? (expedition.status === "combat" ? "In Battle" : "Stage Cleared") : !boardStateReady ? "Checking" : soloRemaining > 0 ? "Recovering" : state?.solo_venture?.ready ? "Ready" : "Unavailable"}
-          </span>
+          </span></div>
         </div>
 
         {!expedition ? (
@@ -871,7 +875,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         <img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp" alt="" aria-hidden="true" loading="eager" decoding="async" />
         <div className="panel-title-row">
           <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
-          <span className="small-badge">Live Stream</span>
+          <div className="context-help-actions"><ContextHelp topic="rally_venture" /><span className="small-badge">Live Stream</span></div>
         </div>
         <p className="muted">Use <code>!venture</code>; join an open rally with <code>!join</code>.</p>
         <div className="solo-venture-rules rally-venture-rules" aria-label="Rally Venture rules">
@@ -891,6 +895,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         <div className="panel-title-row section-collapsible-title-row">
           <div><p className="eyebrow">World Map</p><h2>Travel Regions</h2></div>
           <div className="section-collapse-actions">
+            <ContextHelp topic="travel_regions" />
             <span className="small-badge success">Current · {currentRegion.name}</span>
             <button type="button" className="section-collapse-button" aria-expanded={regionsOpen} aria-label={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} title={regionsOpen ? "Collapse Travel Regions" : "Expand Travel Regions"} onClick={(event) => toggleWithViewportAnchor(event, setRegionsOpen)}><CollapsePointer open={regionsOpen} /></button>
           </div>
@@ -984,6 +989,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         <div className="panel-title-row hunt-board-title-row section-collapsible-title-row">
           <div><p className="eyebrow">Guild Hunt Board</p><h2>Named Marks</h2></div>
           <div className="section-collapse-actions">
+            <ContextHelp topic="hunts" />
             <div className="hunt-seal-wallet"><strong>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)}</strong><span>Hunt Seals</span></div>
             <button type="button" className="section-collapse-button" aria-expanded={huntBoardOpen} aria-label={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} title={huntBoardOpen ? "Collapse Hunt Board" : "Expand Hunt Board"} onClick={(event) => toggleWithViewportAnchor(event, setHuntBoardOpen)}><CollapsePointer open={huntBoardOpen} /></button>
           </div>

@@ -643,3 +643,103 @@
 .context-help-title-line > h3 {
   margin-right: 0;
 }
+
+/* Hotfix 5 — mobile contextual-help/disclosure alignment.
+   Keep contextual help and the collapse pointer as one compact utility pair
+   instead of allowing status/badge layout rules to separate them. */
+@media (max-width: 760px) {
+  .context-help-button {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    font-size: 15px;
+  }
+
+  :where(
+    .section-collapse-button,
+    .dungeon-board-collapse-toggle,
+    .raid-board-collapse-toggle
+  ) {
+    width: 34px !important;
+    height: 34px;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px;
+    padding: .16rem;
+  }
+
+  :where(
+    .section-collapse-button,
+    .dungeon-board-collapse-toggle,
+    .raid-board-collapse-toggle
+  ) .collapse-pointer-icon {
+    width: 1.28rem;
+    height: 1.28rem;
+  }
+
+  :where(
+    .section-collapse-actions,
+    .context-help-actions,
+    .raid-board-title-actions
+  ):has(> .section-collapse-button) {
+    align-items: center;
+    justify-content: flex-end;
+    gap: .32rem;
+    flex-wrap: nowrap;
+  }
+
+  :where(
+    .section-collapse-actions,
+    .context-help-actions,
+    .raid-board-title-actions
+  ):has(> .section-collapse-button) > .context-help {
+    order: 20;
+    margin: 0;
+  }
+
+  :where(
+    .section-collapse-actions,
+    .context-help-actions,
+    .raid-board-title-actions
+  ):has(> .section-collapse-button) > .section-collapse-button {
+    order: 30;
+    margin: 0;
+  }
+
+  .section-collapse-actions:has(> .section-collapse-button) > :not(.context-help):not(.section-collapse-button) {
+    order: 10;
+  }
+
+  .section-collapse-actions:has(> .section-collapse-button) > :not(.context-help):not(.section-collapse-button):first-of-type {
+    margin-right: auto;
+  }
+
+  /* Dungeons use a two-column title grid; the utility pair owns the small
+     right column rather than positioning its children independently. */
+  .dungeon-board-title-row {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .dungeon-board-title-row > .context-help-actions:has(> .dungeon-board-collapse-toggle) {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+    width: auto;
+  }
+
+  .dungeon-board-title-row .dungeon-board-collapse-toggle {
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: auto;
+    align-self: auto;
+  }
+
+  /* Raid status is intentionally hidden at this breakpoint; keep the two
+     utility controls together at the right edge of the title row. */
+  .raid-board-title-actions:has(> .raid-board-collapse-toggle) {
+    margin-left: auto;
+    width: auto;
+  }
+}

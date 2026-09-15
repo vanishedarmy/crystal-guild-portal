@@ -63,10 +63,10 @@ test("major management and service pages expose one unobtrusive quick-help entry
   }
 });
 
-test("help control stays visually small on desktop while retaining a touch-safe mobile target", () => {
+test("help control stays visually small on desktop and becomes a compact mobile utility", () => {
   const css = read("src/styles/button-fit.css");
   assert.match(css, /\.context-help-button\s*\{[\s\S]*?width:\s*30px;[\s\S]*?height:\s*30px;/);
-  assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*?\.context-help-button\s*\{[\s\S]*?width:\s*40px;[\s\S]*?height:\s*40px;/);
+  assert.match(css, /Hotfix 5 — mobile contextual-help\/disclosure alignment[\s\S]*?\.context-help-button\s*\{[\s\S]*?width:\s*34px;[\s\S]*?height:\s*34px;/);
   assert.match(css, /\.context-help-popover\s*\{[\s\S]*?position:\s*fixed;/);
   assert.match(css, /max-height:\s*min\(64vh,\s*460px\)/);
 });

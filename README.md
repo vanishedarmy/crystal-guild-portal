@@ -1,5 +1,11 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5 — Personalized Chat Results + Raid XP Boost
+# Crystal Guild v1.7.1 — Mobile Help & Disclosure Alignment
 
-Current focused update: **Personalized Chat Results + Raid XP Boost**. Rally Venture and Raid settlements now provide individual @-mentioned Twitch results, and all configured Raid Victory XP values are 50% higher.
+Focused Web-only correction for contextual Quick Help and collapsible section controls on mobile.
 
-Runtime/frontend `1.7.1-resynthesis-a2h5`; local schema **16**; hosted sync **1**; Portal protocol **33**. No migration/reset.
+- `?` help and the collapse pointer stay adjacent as one utility pair.
+- Status/badge/wallet information remains on the opposite side when present.
+- Mobile help and pointer buttons use matching compact 34px visual controls.
+- Dungeon and Trial/Raid title headers receive explicit alignment protection.
+- Desktop layout and all backend/gameplay behavior are unchanged.
+
+Runtime/frontend remains `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal protocol **33**.

@@ -1,11 +1,17 @@
-# Upgrade Guide — Personalized Chat Results + Raid XP Boost
+# Upgrade Guide — Mobile Help & Disclosure Alignment
 
-**Deploy Bot and Web together.** Both components changed: the Bot owns Twitch settlement formatting/rewards, while the Web carries the matching Raid XP information.
+This is a **Web-only** correction on top of **Personalized Chat Results + Raid XP Boost**.
 
-Current contract: runtime `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal Action protocol **33**, Twitch prefix `!`.
+If that build is already installed, deploy the incremental Web patch only. The Bot does not need to change.
 
-If **Contextual Quick Help** is currently installed, apply both incremental patches from that baseline. For a clean replacement, use the Complete archive. Preserve your live database, backups, tokens, secrets, and runtime state.
+The update changes only mobile control-fit CSS, focused frontend regression coverage, and release metadata. It does not modify gameplay, Raid XP, Twitch settlement behavior, authoritative player state, database schema, hosted sync, or Portal actions.
 
-No migration or reset occurs. Existing Raid clears, records, inventory, progression, Fellowship state, Ventures, and all saved player data remain intact. The XP increase applies to Raid victories resolved after this update; historical rewards are not retroactively changed.
+Release contract:
+- runtime/frontend `1.7.1-resynthesis-a2h5`
+- local DB schema **16**
+- hosted sync schema **1**
+- Portal Action protocol **33**
+- database migration: **none**
+- player reset: **none**
 
-Compatibility note: installations that previously completed the schema **15 → 16** Gear Favorites migration keep that database and verified `backups/pre_schema_16_*.db` backup unchanged; this release adds no schema migration.
+For a clean replacement, use the Full Web package or Complete package while preserving live databases, secrets, tokens, and persistent runtime state as usual.

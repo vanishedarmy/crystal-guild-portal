@@ -170,7 +170,7 @@ export const CONTEXT_HELP = {
     summary: "Hire up to three unlocked Final Fantasy Heroes with Hunt Seals—one each for Hunt, Venture, and Raid assignments.",
     bullets: [
       "Hunt Seals are earned from Hunts and are the same established currency used by the Quartermaster and other Guild systems.",
-      "Hunt, Venture, and Raid each have an independent contract slot; each slot is consumed only when its matching assignment actually begins.",
+      "Hunt, Venture, and Raid each have an independent contract slot. A hired Hero stays reserved, then remains Deployed and unavailable from assignment start until that job actually resolves.",
       "A Hero already on contract cannot take another job, and Heroes that do not support the selected assignment type display unavailable.",
       "If all three job slots are reserved, the entire roster displays unavailable until a contract is completed or cancelled. Each unavailable card now states whether the cause is progression, mission eligibility, an occupied slot, or an active contract.",
       "Alpha 2 fees are 5 / 6 / 5 / 7 / 9 / 12 Hunt Seals for Aerith / Tifa / Zidane / Yuna / Balthier / Cloud. Cancelling does not refund Hunt Seals.",

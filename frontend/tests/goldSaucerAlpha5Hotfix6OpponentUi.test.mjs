@@ -24,6 +24,6 @@ test("Hotfix 6 makes opponent selection compact and explicit", () => {
 });
 
 test("Hotfix 6 is a Web-only asset revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-rc1"/);
   assert.match(component, /TRIAD_ART_ROOT = "\/gold-saucer\/a5h5\/triple-triad"/);
 });

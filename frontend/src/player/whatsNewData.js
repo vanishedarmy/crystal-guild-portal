@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.8.0 RC1",
+    name: "Merc Service Hardening",
+    title: "Merc deployments now stay locked through mission resolution",
+    summary: "RC1 hardens Merc contract lifecycle, restart recovery, and pre-start failure handling without changing the Alpha 2 Hunt Seal balance or Hero identities.",
+    highlights: [
+      { title: "Deployed through resolution", description: "Once a matching Hunt, Venture, or Raid begins, that Hero and mission slot remain visibly Deployed and unavailable until the assignment actually resolves." },
+      { title: "No mid-mission rebooking", description: "Deployed Heroes cannot be cancelled or hired into another slot while their active assignment is still running." },
+      { title: "Restart recovery", description: "Timed Hunt deployment state survives runtime checkpoint recovery, so a Bot restart does not accidentally reopen the Hero or Hunt slot." },
+      { title: "Safer setup failures", description: "If a Solo Venture fails during pre-start setup, the already-paid Merc reservation is restored instead of being silently consumed." },
+      { title: "Three independent slots preserved", description: "Hunt, Venture, and Raid remain separate Merc assignment slots, and resolving one mission leaves the other two untouched." },
+      { title: "Compatibility", description: "Local schema remains 17, hosted sync remains 1, Portal Action protocol remains 34, and no player reset is required." },
+    ],
+    action: { tab: "mercs", label: "Open Hero Merc Service" },
+  },
+  {
     version: "v1.8.0 Alpha 2",
     name: "Merc Service Balance & UX",
     title: "Merc contracts get clearer, cleaner, and better balanced",

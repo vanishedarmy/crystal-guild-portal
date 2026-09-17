@@ -10,9 +10,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 
 test("Alpha 2 release identity is current", () => {
-  assert.equal(WEB_VERSION, "v1.8.0 Alpha 2");
-  assert.equal(WEB_RELEASE, "v1.8.0 Alpha 2 — Merc Service");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-a2");
+  assert.equal(WEB_VERSION, "v1.8.0 RC1");
+  assert.equal(WEB_RELEASE, "v1.8.0 RC1 — Merc Service");
+  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-rc1");
 });
 
 test("Alpha 2 exposes exact availability reasons", () => {

@@ -1,5 +1,5 @@
-# Crystal Guild v1.8.0 Alpha 2 — Merc Service Balance & UX
-# Runtime: 1.8.0-merc-a2
+# Crystal Guild v1.8.0 RC1 — Merc Service
+# Runtime: 1.8.0-merc-rc1
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -24,6 +24,8 @@ MERC_SERVICE_BATCH5_VALIDATION.md
 MERC_SERVICE_CURRENCY_HOTFIX.md
 MERC_SERVICE_HOTFIX2.md
 MERC_SERVICE_HOTFIX3.md
+MERC_SERVICE_RC1_RELEASE_NOTES.md
+MERC_SERVICE_RC1_VALIDATION.md
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -1117,6 +1119,7 @@ frontend/tests/mercServiceBatch4.test.mjs
 frontend/tests/mercServiceBatch5.test.mjs
 frontend/tests/mercServiceHotfix2.test.mjs
 frontend/tests/mercServiceHotfix3.test.mjs
+frontend/tests/mercServiceRC1.test.mjs
 frontend/tests/mobileContextHelpDisclosureAlignment.test.mjs
 frontend/tests/mobileHeaderViewportHotfix.test.mjs
 frontend/tests/mobileProfileNameNoWrap.test.mjs
@@ -1203,3 +1206,4 @@ tests/test_portal_actions.py
 tests/test_resynthesis_alpha1.py
 tests/test_retainer_alpha1.py
 tests/test_retainer_alpha2.py
+PACKAGE_MANIFEST.txt

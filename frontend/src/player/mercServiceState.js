@@ -26,7 +26,7 @@ export function mercMissionAvailability(hero, selectedMission = "") {
 
 export function mercHeroUiState(hero, source, selectedMission = "") {
   const contracted = mercContractForHero(source, hero?.id);
-  if (contracted) return "contracted";
+  if (contracted) return contracted?.deployed || String(contracted?.state || "").toLowerCase() === "deployed" ? "deployed" : "contracted";
   if (!hero?.available) return "locked";
   const mission = String(selectedMission || "").toLowerCase();
   if (!mission) {
@@ -52,6 +52,7 @@ export function mercHeroStatusLabel(hero, source, selectedMission = "") {
   const mission = String(selectedMission || "").toLowerCase();
   const uiState = mercHeroUiState(hero, source, mission);
   const contracted = mercContractForHero(source, hero?.id);
+  if (uiState === "deployed") return contracted?.mission_type ? `${String(contracted.mission_type).toUpperCase()} DEPLOYED` : "DEPLOYED";
   if (uiState === "contracted") return contracted?.mission_type ? `ON ${String(contracted.mission_type).toUpperCase()}` : "CONTRACTED";
   if (uiState === "available") return "AVAILABLE";
   if (uiState === "locked") return "LOCKED";
@@ -64,7 +65,10 @@ export function mercHeroStatusLabel(hero, source, selectedMission = "") {
 export function mercHeroAvailabilityReason(hero, source, selectedMission = "") {
   const mission = String(selectedMission || "").toLowerCase();
   const contracted = mercContractForHero(source, hero?.id);
-  if (contracted) return `On contract — ${String(contracted.mission_type || "assignment").replace(/^./, (c) => c.toUpperCase())}`;
+  if (contracted) {
+    const label = String(contracted.mission_type || "assignment").replace(/^./, (c) => c.toUpperCase());
+    return contracted?.deployed || String(contracted?.state || "").toLowerCase() === "deployed" ? `Deployed — ${label} in progress` : `On contract — ${label}`;
+  }
   const backend = mercMissionAvailability(hero, mission);
   if (backend?.reason) return String(backend.reason);
   if (!hero?.available) return hero?.locked_reason || `Requires Lv. ${Number(hero?.min_level || 1)} and ${Number(hero?.required_hunt_clears || 0)} Hunt clears`;

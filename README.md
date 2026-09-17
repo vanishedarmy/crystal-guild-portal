@@ -1,12 +1,11 @@
-# Crystal Guild v1.8.0 Alpha 2 — Merc Service Balance & UX
+# Crystal Guild v1.8.0 RC1 — Merc Service
 
-Alpha 2 is the Merc Service stabilization and readability pass.
+RC1 hardens the Alpha 2 Merc Service without adding new feature scope.
 
-- Visual Hunt / Venture / Raid deployment board with open and assigned slot states.
-- Exact per-Hero availability reasons for the currently selected job type.
-- Filled job tabs remain inspectable instead of automatically jumping to another open slot.
-- Hunt Seal fees are rebalanced to 5 / 6 / 5 / 7 / 9 / 12 for Aerith / Tifa / Zidane / Yuna / Balthier / Cloud.
-- All approved Merc artwork remains integrated, including available/unavailable card states.
-- Existing three-slot rules, signature effects, Hunt Seal wallet, schema, sync, and Portal protocol remain intact.
+- Deployed Heroes and their Hunt / Venture / Raid slots remain unavailable until the active assignment resolves.
+- Deployed contracts cannot be cancelled or rehired mid-mission.
+- Timed Hunt deployment state survives runtime checkpoint recovery.
+- A Solo Venture that fails during pre-start setup restores the already-paid Merc reservation.
+- Alpha 2 Hunt Seal pricing, Hero signature effects, three independent slots, artwork, and availability rules remain unchanged.
 
-Release contract: runtime `1.8.0-merc-a2`, local schema **17**, hosted sync **1**, Portal Action protocol **34**, no player reset.
+Release contract: runtime `1.8.0-merc-rc1`, local schema **17**, hosted sync **1**, Portal Action protocol **34**, no player reset.

@@ -43,6 +43,6 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
   assert.match(guide, /Priority material/);
-  assert.equal(guideData.meta.version, "v1.8.0 Alpha 2 — Merc Service");
-  assert.equal(guideData.meta.release, "1.8.0-merc-a2");
+  assert.equal(guideData.meta.version, "v1.8.0 RC1 — Merc Service");
+  assert.equal(guideData.meta.release, "1.8.0-merc-rc1");
 });

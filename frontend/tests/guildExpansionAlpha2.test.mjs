@@ -27,7 +27,7 @@ test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   assert.match(version, /WEB_BUILD = "Merc Service"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a1"/);
-  assert.equal(guideData.meta.version, "v1.8.0 Alpha 1 — Merc Service");
-  assert.equal(guideData.meta.release, "1.8.0-merc-a1");
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a2"/);
+  assert.equal(guideData.meta.version, "v1.8.0 Alpha 2 — Merc Service");
+  assert.equal(guideData.meta.release, "1.8.0-merc-a2");
 });

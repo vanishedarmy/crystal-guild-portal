@@ -12,14 +12,14 @@ const contracts=[{hero_id:"tifa",mission_type:"hunt"}];
 test("Hotfix 3 keeps contracted heroes unavailable across every job type",()=>{
   const hero={id:"tifa",available:true,mission_types:["hunt","raid"]};
   assert.equal(mercHeroUiState(hero,contracts,"raid"),"contracted");
-  assert.equal(mercHeroStatusLabel(hero,contracts,"raid"),"CONTRACTED");
+  assert.equal(mercHeroStatusLabel(hero,contracts,"raid"),"ON HUNT");
   assert.equal(mercHeroCardArt(hero,contracts,"raid"),"/merc-service/a1/cards/tifa-unavailable.webp");
 });
 
 test("Hotfix 3 makes every other hero unavailable when the selected job slot is occupied",()=>{
   const hero={id:"aerith",available:true,mission_types:["hunt","venture","raid"]};
   assert.equal(mercHeroUiState(hero,contracts,"hunt"),"unavailable");
-  assert.equal(mercHeroStatusLabel(hero,contracts,"hunt"),"UNAVAILABLE");
+  assert.equal(mercHeroStatusLabel(hero,contracts,"hunt"),"HUNT FULL");
   assert.equal(mercHeroCardArt(hero,contracts,"hunt"),"/merc-service/a1/cards/aerith-unavailable.webp");
 });
 

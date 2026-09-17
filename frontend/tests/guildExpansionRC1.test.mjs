@@ -18,9 +18,9 @@ function fellowshipSection(html) {
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
   assert.match(version, /WEB_BUILD = "Merc Service"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a1"/);
-  assert.equal(guideData.meta.version, "v1.8.0 Alpha 1 — Merc Service");
-  assert.equal(guideData.meta.release, "1.8.0-merc-a1");
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a2"/);
+  assert.equal(guideData.meta.version, "v1.8.0 Alpha 2 — Merc Service");
+  assert.equal(guideData.meta.release, "1.8.0-merc-a2");
   assert.equal(manifest.release, "v1.5.1 — Relic Arsenal Complete");
   assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });

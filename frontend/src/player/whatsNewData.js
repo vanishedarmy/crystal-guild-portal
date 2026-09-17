@@ -1,10 +1,13 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.8.0 Alpha 1",
-    name: "Merc Service",
-    title: "Hire legendary help for the next assignment",
-    summary: "Merc Service uses the existing Hunt Seal economy with independent Hunt, Venture, and Raid contract slots, a six-Hero roster, character-specific assists, and personalized mission results.",
+    version: "v1.8.0 Alpha 2",
+    name: "Merc Service Balance & UX",
+    title: "Merc contracts get clearer, cleaner, and better balanced",
+    summary: "Alpha 2 keeps the three-slot Merc system intact while adding a visual deployment board, exact availability reasons, and Hunt Seal pricing tuned to the established Hunt economy.",
     highlights: [
+      { title: "Deployment board", description: "Hunt, Venture, and Raid now read as a proper deployment board with open/assigned visuals, Hero art, quick roster navigation, and per-slot cancellation." },
+      { title: "Exact availability reasons", description: "Every Hero card explains why it is Available, Locked, unsupported for the selected job, blocked by an occupied slot, or already On Contract." },
+      { title: "Hunt Seal price tuning", description: "Merc fees are now Aerith 5, Tifa 6, Zidane 5, Yuna 7, Balthier 9, and Cloud 12 Hunt Seals—still accessible against normal Hunt payouts while giving premium utility more weight." },
       { title: "Merc contracts use Hunt Seals", description: "Merc contracts spend the same Hunt Seals already earned from Hunts and used across the Guild; no separate Merc currency is required." },
       { title: "Six Hero contracts", description: "Aerith, Tifa, Zidane, Yuna, Balthier, and Cloud unlock through Character Level plus lifetime Hunt clears, each with their own fee and supported assignments." },
       { title: "Real mission participation", description: "Mercs use signature assists in Hunts, Ventures, and Raids: burst damage, healing, protection, extra finds, or rare-spoil support depending on the Hero." },

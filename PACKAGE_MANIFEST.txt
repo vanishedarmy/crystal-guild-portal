@@ -1,5 +1,5 @@
-# Crystal Guild v1.8 Merc Service Alpha 1 — Hotfix 2
-# Runtime: 1.8.0-merc-a1
+# Crystal Guild v1.8.0 Alpha 2 — Merc Service Balance & UX
+# Runtime: 1.8.0-merc-a2
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -13,6 +13,8 @@ GOLD_SAUCER_MGP_REBALANCE_AUDIT.md
 HOSTING_GUIDE.md
 ITEM_WEAPON_REFRESH_MANIFEST.json
 MATERIAL_ARTWORK_MANIFEST.json
+MERC_SERVICE_ALPHA2_BALANCE_AUDIT.md
+MERC_SERVICE_ALPHA2_RELEASE_NOTES.md
 MERC_SERVICE_BATCH3_RELEASE_NOTES.md
 MERC_SERVICE_BATCH3_VALIDATION.md
 MERC_SERVICE_BATCH4_RELEASE_NOTES.md
@@ -21,6 +23,7 @@ MERC_SERVICE_BATCH5_RELEASE_NOTES.md
 MERC_SERVICE_BATCH5_VALIDATION.md
 MERC_SERVICE_CURRENCY_HOTFIX.md
 MERC_SERVICE_HOTFIX2.md
+MERC_SERVICE_HOTFIX3.md
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -1108,10 +1111,12 @@ frontend/tests/itemUsageCopyHotfix2.test.mjs
 frontend/tests/jobsAbilityReference.test.mjs
 frontend/tests/livePolicy.test.mjs
 frontend/tests/materialArtworkRetroPhaseIII.test.mjs
+frontend/tests/mercServiceAlpha2.test.mjs
 frontend/tests/mercServiceBatch3.test.mjs
 frontend/tests/mercServiceBatch4.test.mjs
 frontend/tests/mercServiceBatch5.test.mjs
 frontend/tests/mercServiceHotfix2.test.mjs
+frontend/tests/mercServiceHotfix3.test.mjs
 frontend/tests/mobileContextHelpDisclosureAlignment.test.mjs
 frontend/tests/mobileHeaderViewportHotfix.test.mjs
 frontend/tests/mobileProfileNameNoWrap.test.mjs

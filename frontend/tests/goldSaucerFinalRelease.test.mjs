@@ -9,8 +9,8 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
 
 test("v1.6.0 production identity is final", () => {
   const version = read("src/version.js");
-  assert.match(version, /WEB_VERSION = "v1\.8\.0 Alpha 1"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a1"/);
+  assert.match(version, /WEB_VERSION = "v1\.8\.0 Alpha 2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a2"/);
 });
 
 test("Gold Saucer mobile disclosure pointer stays in the right-side grid column", () => {

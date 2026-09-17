@@ -3,7 +3,7 @@ import { submitMercCancel, submitMercHire, submitMercState, waitForPortalAction 
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import ContextHelp from "../components/ContextHelp.jsx";
 import { number } from "../utils/formatters.js";
-import { MERC_ART_ROOT, mercContractForHero, mercContractForMission, mercContractsList, mercHeroCardArt, mercHeroStatusLabel, mercHeroUiState } from "./mercServiceState.js";
+import { MERC_ART_ROOT, mercContractForHero, mercContractForMission, mercContractsList, mercHeroAvailabilityReason, mercHeroCardArt, mercHeroStatusLabel, mercHeroUiState } from "./mercServiceState.js";
 
 function actionKey(kind, target = "merc") {
   const suffix = globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
@@ -54,14 +54,6 @@ export default function MercService({ data, overview, onRefresh }) {
   useEffect(() => { if (actionsAvailable && !state) void loadState({ quiet: true }); }, [actionsAvailable, state, loadState]);
 
   const contracts = mercContractsList(state);
-  const openMissions = MISSION_ORDER.filter((mission) => !mercContractForMission(contracts, mission));
-
-  useEffect(() => {
-    if (!state) return;
-    if (!mercContractForMission(contracts, selectedMission)) return;
-    if (openMissions.length) setSelectedMission(openMissions[0]);
-  }, [state, contracts, openMissions, selectedMission]);
-
   const hire = async (hero) => {
     const mission = String(selectedMission || "");
     if (!actionsAvailable || busy || !hero?.available || !mission) return;
@@ -73,6 +65,11 @@ export default function MercService({ data, overview, onRefresh }) {
       if (next && onRefresh) onRefresh();
     } catch (error) { setMessage(String(error?.message || error)); }
     finally { setBusy(""); }
+  };
+
+  const browseMission = (mission) => {
+    setSelectedMission(mission);
+    globalThis.document?.getElementById?.("merc-roster")?.scrollIntoView?.({ behavior: "smooth", block: "start" });
   };
 
   const cancel = async (mission) => {
@@ -120,12 +117,20 @@ export default function MercService({ data, overview, onRefresh }) {
 
     <section className="panel span-12 merc-current-panel" id="merc-current">
       <div className="panel-title-row"><div><p className="eyebrow">Current Contracts</p><h3>{contracts.length ? `${contracts.length} of 3 slots reserved` : "No Heroes hired"}</h3></div><span className={`small-badge ${allSlotsOccupied ? "active" : "ready"}`}>{allSlotsOccupied ? "FULL" : `${3 - contracts.length} OPEN`}</span></div>
-      <div className="merc-contract-slots">
+      <div className="merc-contract-slots merc-deployment-board">
         {MISSION_ORDER.map((mission) => {
           const contract = mercContractForMission(contracts, mission);
-          return <article className={`merc-contract-slot ${contract ? "occupied" : "open"}`} key={mission}>
-            <div><span className="small-badge">{MISSION_LABELS[mission]}</span><strong>{contract ? contract.hero_name : "Open Slot"}</strong>{contract ? <><span>{contract.signature} · {contract.role}</span><small>{number(contract.fee_seals)} Hunt Seals · reserved for your next {MISSION_LABELS[mission]}.</small></> : <small>Hire one eligible Hero for your next {MISSION_LABELS[mission]}.</small>}</div>
-            {contract ? <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => cancel(mission)}>{busy === `cancel:${mission}` ? "Cancelling…" : "Cancel Contract"}</button> : null}
+          const image = contract ? `${MERC_ART_ROOT}/cards/${contract.hero_id}-unavailable.webp` : `${MERC_ART_ROOT}/scenes/${mission}.webp`;
+          return <article className={`merc-contract-slot ${contract ? "occupied" : "open"} ${selectedMission === mission ? "selected" : ""}`} key={mission}>
+            <button type="button" className="merc-slot-visual" onClick={() => browseMission(mission)} aria-label={`View ${MISSION_LABELS[mission]} Merc roster`}>
+              <img src={image} alt={contract ? `${contract.hero_name} contracted for ${MISSION_LABELS[mission]}` : `${MISSION_LABELS[mission]} contract slot open`} loading="lazy" />
+              <span className={`merc-slot-state ${contract ? "occupied" : "open"}`}>{contract ? "ASSIGNED" : "OPEN"}</span>
+            </button>
+            <div className="merc-slot-copy"><span className="small-badge">{MISSION_LABELS[mission]}</span><strong>{contract ? contract.hero_name : "Open Slot"}</strong>{contract ? <><span>{contract.signature} · {contract.role}</span><small>{number(contract.fee_seals)} Hunt Seals · reserved for your next {MISSION_LABELS[mission]}.</small></> : <small>Hire one eligible Hero for your next {MISSION_LABELS[mission]}.</small>}</div>
+            <div className="merc-slot-actions">
+              <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => browseMission(mission)}>{contract ? `View ${MISSION_LABELS[mission]} Roster` : `Choose ${MISSION_LABELS[mission]} Hero`}</button>
+              {contract ? <button type="button" className="equipment-action-button secondary danger" disabled={Boolean(busy)} onClick={() => cancel(mission)}>{busy === `cancel:${mission}` ? "Cancelling…" : "Cancel Contract"}</button> : null}
+            </div>
           </article>;
         })}
       </div>
@@ -154,23 +159,17 @@ export default function MercService({ data, overview, onRefresh }) {
           const heroContract = mercContractForHero(contracts, hero.id);
           const uiState = mercHeroUiState(hero, contracts, selectedMission);
           const isContracted = uiState === "contracted";
-          const selectedSlotOccupied = Boolean(mercContractForMission(contracts, selectedMission));
           const canHire = uiState === "available" && affordable && !busy;
           const statusLabel = mercHeroStatusLabel(hero, contracts, selectedMission);
           const statusClass = isContracted ? "active" : uiState === "available" ? "ready" : "locked";
           const artAltState = uiState === "available" ? "available" : isContracted ? "contracted" : "unavailable";
-          const supportsSelected = Array.isArray(hero.mission_types) && hero.mission_types.includes(selectedMission);
-          let unavailableReason = hero.locked_reason || "";
-          if (hero.available && !isContracted) {
-            if (allSlotsOccupied) unavailableReason = "All Hunt, Venture, and Raid contract slots are currently reserved.";
-            else if (selectedSlotOccupied) unavailableReason = `Your ${MISSION_LABELS[selectedMission]} contract slot is already reserved.`;
-            else if (!supportsSelected) unavailableReason = `${hero.name} does not accept ${MISSION_LABELS[selectedMission]} contracts.`;
-          }
+          const availabilityReason = mercHeroAvailabilityReason(hero, contracts, selectedMission);
           return <article className={`merc-card ${uiState === "available" ? "available" : "locked"} ${uiState}`} key={hero.id}>
             <div className="merc-card-art-frame"><img src={mercHeroCardArt(hero, contracts, selectedMission)} alt={`${hero.name} Merc contract card — ${artAltState}`} loading="lazy" /></div>
             <div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${statusClass}`}>{statusLabel}</span></div>
             <p className="merc-card-effect">{hero.effect_summary}</p>
-            {isContracted ? <div className="merc-contract-reason"><strong>Currently Hired</strong><span>Reserved for your next {MISSION_LABELS[heroContract?.mission_type] || heroContract?.mission_type || "assignment"}. This Hero cannot take another job until that contract resolves.</span></div> : uiState === "available" ? <button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : affordable ? `Hire for ${MISSION_LABELS[selectedMission]} · ${number(hero.fee_seals)} Hunt Seals` : `Need ${number(hero.fee_seals)} Hunt Seals`}</button> : <div className="merc-lock-reason"><strong>{hero.available ? "Unavailable" : "Locked"}</strong><span>{unavailableReason || `Requires Lv. ${number(hero.min_level)} and ${number(hero.required_hunt_clears)} Hunt clears.`}</span></div>}
+            <div className={`merc-availability-line ${uiState}`}><strong>{isContracted ? "On Contract" : uiState === "available" ? "Available" : hero.available ? "Unavailable" : "Locked"}</strong><span>{availabilityReason}</span></div>
+            {isContracted ? <div className="merc-contract-reason"><strong>Currently Hired</strong><span>Reserved for your next {MISSION_LABELS[heroContract?.mission_type] || heroContract?.mission_type || "assignment"}. This Hero cannot take another job until that contract resolves.</span></div> : uiState === "available" ? <button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : affordable ? `Hire for ${MISSION_LABELS[selectedMission]} · ${number(hero.fee_seals)} Hunt Seals` : `Need ${number(hero.fee_seals)} Hunt Seals`}</button> : null}
           </article>;
         })}
       </div>

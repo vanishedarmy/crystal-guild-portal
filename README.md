@@ -1,13 +1,12 @@
-# Crystal Guild v1.8.0 Alpha 1 — Merc Service — Batch 4
+# Crystal Guild v1.8.0 Alpha 2 — Merc Service Balance & UX
 
-Code-only Merc Service player-facing completion pass.
+Alpha 2 is the Merc Service stabilization and readability pass.
 
-- Dedicated Hero Merc Service Portal page and authenticated actions.
-- Hunt Seals wallet and six-Hero roster with unlock/fee/mission requirements.
-- Player Guide section with exact Hero contract rules and Hunt Seal rewards.
-- Contextual Quick Help directly on the Merc Service page.
-- Visible Web/Guide identity advanced to v1.8.0 Alpha 1 — Merc Service.
-- Mobile Merc navigation, single-column roster, touch-safe controls, and overflow protection.
-- Artwork remains intentionally absent until Batch 5.
+- Visual Hunt / Venture / Raid deployment board with open and assigned slot states.
+- Exact per-Hero availability reasons for the currently selected job type.
+- Filled job tabs remain inspectable instead of automatically jumping to another open slot.
+- Hunt Seal fees are rebalanced to 5 / 6 / 5 / 7 / 9 / 12 for Aerith / Tifa / Zidane / Yuna / Balthier / Cloud.
+- All approved Merc artwork remains integrated, including available/unavailable card states.
+- Existing three-slot rules, signature effects, Hunt Seal wallet, schema, sync, and Portal protocol remain intact.
 
-Release contract: runtime `1.8.0-merc-a1`, local schema **17**, hosted sync **1**, Portal Action protocol **34**, no player reset.
+Release contract: runtime `1.8.0-merc-a2`, local schema **17**, hosted sync **1**, Portal Action protocol **34**, no player reset.

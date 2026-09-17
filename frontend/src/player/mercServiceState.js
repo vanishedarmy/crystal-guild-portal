@@ -18,6 +18,12 @@ export function mercContractForHero(source, heroId) {
   return mercContractsList(source).find((contract) => String(contract?.hero_id || "").toLowerCase() === id) || null;
 }
 
+export function mercMissionAvailability(hero, selectedMission = "") {
+  const mission = String(selectedMission || "").toLowerCase();
+  const record = hero?.mission_availability?.[mission];
+  return record && typeof record === "object" ? record : null;
+}
+
 export function mercHeroUiState(hero, source, selectedMission = "") {
   const contracted = mercContractForHero(source, hero?.id);
   if (contracted) return "contracted";
@@ -27,6 +33,8 @@ export function mercHeroUiState(hero, source, selectedMission = "") {
     const hireable = Array.isArray(hero?.hireable_mission_types) ? hero.hireable_mission_types : hero?.mission_types;
     return Array.isArray(hireable) && hireable.length ? "available" : "unavailable";
   }
+  const backend = mercMissionAvailability(hero, mission);
+  if (backend?.status) return String(backend.status).toLowerCase();
   if (mercContractForMission(source, mission)) return "unavailable";
   const missions = Array.isArray(hero?.mission_types) ? hero.mission_types.map((value) => String(value).toLowerCase()) : [];
   return missions.includes(mission) ? "available" : "unavailable";
@@ -41,9 +49,28 @@ export function mercHeroCardArt(hero, source, selectedMission = "") {
 }
 
 export function mercHeroStatusLabel(hero, source, selectedMission = "") {
-  const uiState = mercHeroUiState(hero, source, selectedMission);
-  if (uiState === "contracted") return "CONTRACTED";
+  const mission = String(selectedMission || "").toLowerCase();
+  const uiState = mercHeroUiState(hero, source, mission);
+  const contracted = mercContractForHero(source, hero?.id);
+  if (uiState === "contracted") return contracted?.mission_type ? `ON ${String(contracted.mission_type).toUpperCase()}` : "CONTRACTED";
   if (uiState === "available") return "AVAILABLE";
   if (uiState === "locked") return "LOCKED";
+  if (mercContractForMission(source, mission)) return `${mission.toUpperCase()} FULL`;
+  const supported = Array.isArray(hero?.mission_types) ? hero.mission_types.map((value) => String(value).toLowerCase()) : [];
+  if (mission && !supported.includes(mission)) return `NO ${mission.toUpperCase()}`;
   return "UNAVAILABLE";
+}
+
+export function mercHeroAvailabilityReason(hero, source, selectedMission = "") {
+  const mission = String(selectedMission || "").toLowerCase();
+  const contracted = mercContractForHero(source, hero?.id);
+  if (contracted) return `On contract — ${String(contracted.mission_type || "assignment").replace(/^./, (c) => c.toUpperCase())}`;
+  const backend = mercMissionAvailability(hero, mission);
+  if (backend?.reason) return String(backend.reason);
+  if (!hero?.available) return hero?.locked_reason || `Requires Lv. ${Number(hero?.min_level || 1)} and ${Number(hero?.required_hunt_clears || 0)} Hunt clears`;
+  const occupied = mercContractForMission(source, mission);
+  if (occupied) return `${mission.replace(/^./, (c) => c.toUpperCase())} slot occupied by ${occupied.hero_name || "another Hero"}`;
+  const supported = Array.isArray(hero?.mission_types) ? hero.mission_types.map((value) => String(value).toLowerCase()) : [];
+  if (mission && !supported.includes(mission)) return `Does not accept ${mission.replace(/^./, (c) => c.toUpperCase())} contracts`;
+  return mission ? `Available for ${mission.replace(/^./, (c) => c.toUpperCase())} · ${Number(hero?.fee_seals || 0)} Hunt Seals` : "Available";
 }

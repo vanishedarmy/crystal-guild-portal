@@ -20,5 +20,5 @@ test("Gold Saucer hero stacks cleanly at the established mobile breakpoint", () 
 });
 
 test("Hotfix 3 is a Web-only asset revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.0-merc-a2"/);
 });

@@ -1,8 +1,8 @@
-Crystal Guild v1.8.0 Alpha 1 — Merc Service — Batch 4
-Runtime/frontend: 1.8.0-merc-a1
-Local DB schema: 17
-Hosted sync schema: 1
+Crystal Guild v1.8.0 Alpha 2 — Merc Service Balance & UX
+Runtime/frontend: 1.8.0-merc-a2
+Local schema: 17
+Hosted sync: 1
 Portal Action protocol: 34
-Command prefix: !
+Player reset: no
 
-Batch 4 completes the code-only player-facing Merc Service rollout: Player Guide coverage, contextual Quick Help, visible v1.8 identity, What's New entry, and responsive/mobile polish. Merc artwork is intentionally deferred to Batch 5.
+See README.md, RELEASE_NOTES.md, and MERC_SERVICE_ALPHA2_BALANCE_AUDIT.md.

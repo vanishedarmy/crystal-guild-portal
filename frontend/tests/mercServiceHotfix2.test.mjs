@@ -12,7 +12,7 @@ test("Hotfix 2 gives the hired Hero a distinct contracted state",()=>{
   const hero={id:"tifa",available:true};
   const contract={hero_id:"tifa",mission_type:"hunt"};
   assert.equal(mercHeroUiState(hero,contract),"contracted");
-  assert.equal(mercHeroStatusLabel(hero,contract),"CONTRACTED");
+  assert.equal(mercHeroStatusLabel(hero,contract),"ON HUNT");
   assert.equal(mercHeroCardArt(hero,contract),"/merc-service/a1/cards/tifa-unavailable.webp");
 });
 

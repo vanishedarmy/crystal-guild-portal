@@ -18,14 +18,14 @@ test("Batch 4 publishes the v1.8 Merc Service identity",()=>{
   assert.equal(data.meta.release,"1.8.0-merc-a1");
 });
 
-test("Player Guide documents Hunt Marks and all six Hero contracts",()=>{
+test("Player Guide documents Hunt Seals and all six Hero contracts",()=>{
   const guide=read("public/guide-body.html");
   assert.match(guide,/id="merc-service"/);
-  assert.match(guide,/Hunt Marks are new and separate from Hunt Seals/);
-  assert.match(guide,/C 1 · B 2 · A 3 · S 5/);
+  assert.match(guide,/Merc Service uses the same Hunt Seals already earned from Hunts/);
+  assert.match(guide,/Hunts already award <b>Hunt Seals<\/b>/);
   for (const hero of ["Aerith","Tifa","Zidane","Yuna","Balthier","Cloud"]) assert.match(guide,new RegExp(`>${hero}<`));
   assert.match(guide,/Lv\. 30 · 15 Hunt clears/);
-  assert.match(guide,/10 Marks/);
+  assert.match(guide,/10 Hunt Seals/);
 });
 
 test("Merc page has contextual help, on-page briefing, and mobile navigation",()=>{
@@ -36,7 +36,7 @@ test("Merc page has contextual help, on-page briefing, and mobile navigation",()
   assert.match(page,/How Merc Contracts Work/);
   assert.match(page,/aria-label="Merc Service page sections"/);
   assert.match(help,/merc_service:\s*\{/);
-  assert.match(help,/Hunt Marks are earned from successful Hunts/);
+  assert.match(help,/Hunt Seals are earned from Hunts/);
   assert.match(css,/\.merc-mobile-nav\{display:none\}/);
   assert.match(css,/@media\(max-width:700px\)[\s\S]*\.merc-mobile-nav\{display:grid/);
   assert.match(css,/\.merc-info-grid\{display:grid/);

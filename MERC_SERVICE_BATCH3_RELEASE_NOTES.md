@@ -4,7 +4,7 @@ Code-only Web Portal/API implementation. No new Merc artwork is included in this
 
 ## Portal
 - Adds **Hero Merc Service** under Guild Services.
-- Displays live Hunt Marks, level, Hunt clears, current contract, and the full Merc roster.
+- Displays live Hunt Seals, level, Hunt clears, current contract, and the full Merc roster.
 - Shows Hero unlock/lock state, role, specialty, weapon, signature effect summary, fee, and eligible mission types.
 - Supports selecting Hunt, Venture, or Raid where the Hero permits it.
 - Supports authenticated hire and non-refundable cancel actions.

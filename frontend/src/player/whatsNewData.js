@@ -5,11 +5,11 @@ export const MAJOR_UPDATES = [
     title: "Hire legendary help for the next assignment",
     summary: "Merc Service introduces a dedicated Hunt Mark economy and a six-Hero contract roster for Hunts, Ventures, and Raids, with character-specific assists and personalized mission results.",
     highlights: [
-      { title: "New Hunt Marks currency", description: "Successful C/B/A/S Hunts award 1/2/3/5 Hunt Marks. Marks are used only for Merc contracts; Hunt Seals keep their existing Quartermaster role." },
+      { title: "Merc contracts use Hunt Seals", description: "Successful C/B/A/S Hunts award 1/2/3/5 Hunt Seals. Marks are used only for Merc contracts; Hunt Seals keep their existing Quartermaster role." },
       { title: "Six Hero contracts", description: "Aerith, Tifa, Zidane, Yuna, Balthier, and Cloud unlock through Character Level plus lifetime Hunt clears, each with their own fee and supported assignments." },
       { title: "Real mission participation", description: "Mercs use signature assists in Hunts, Ventures, and Raids: burst damage, healing, protection, extra finds, or rare-spoil support depending on the Hero." },
       { title: "Contracts wait for the right mission", description: "Choose a mission type when hiring. The contract is consumed only when that matching Hunt, Venture, or Raid actually begins." },
-      { title: "Portal-first service", description: "The Hero Merc Service page shows Hunt Marks, unlock requirements, fees, specialties, current contract state, and hire/cancel controls in one place." },
+      { title: "Portal-first service", description: "The Hero Merc Service page shows your Hunt Seal balance, unlock requirements, fees, specialties, current contract state, and hire/cancel controls in one place." },
       { title: "Full Merc artwork pass", description: "Available and unavailable Hero contract cards now change with progression, backed by SNES-style service, role, contract, Hunt, Venture, and Raid artwork throughout the Portal." },
       { title: "Compatibility", description: "Local schema is 17, hosted sync remains 1, Portal Action protocol is 34, and no player reset is required." },
     ],

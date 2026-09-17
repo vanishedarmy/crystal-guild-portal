@@ -91,9 +91,9 @@ export default function MercService({ data, overview, onRefresh }) {
     <section className="panel span-12 merc-hero-panel">
       <div className="merc-hero-copy">
         <div className="panel-title-row merc-title-row"><div><p className="eyebrow">Crystal Guild · Hero Contracts</p><h2>{state.service || "Hero Merc Service"}</h2></div><ContextHelp topic="merc_service" /></div>
-        <p className="merc-lead">Hire one Hero with Hunt Marks for your next eligible Hunt, Venture, or Raid. The contract is consumed only when that matching assignment begins.</p>
+        <p className="merc-lead">Hire one Hero with Hunt Seals for your next eligible Hunt, Venture, or Raid. The contract is consumed only when that matching assignment begins.</p>
       </div>
-      <div className="merc-wallet"><span>Hunt Marks</span><strong>{number(state.hunt_marks)}</strong><small>Lv. {number(state.player_level)} · {number(state.hunt_clears)} Hunt clears</small></div>
+      <div className="merc-wallet"><span>Hunt Seals</span><strong>{number(state.hunt_seals)}</strong><small>Lv. {number(state.player_level)} · {number(state.hunt_clears)} Hunt clears</small></div>
       {message ? <div className="state-message compact-state merc-message">{message}</div> : null}
       <figure className="merc-service-hero-art"><img src={`${MERC_ART_ROOT}/scenes/service-hall.webp`} alt="Cloud operating the Crystal Guild Hero Merc Service contract desk" fetchPriority="high" /><figcaption>Cloud manages the contract desk while available Heroes take assignments across the Guild.</figcaption></figure>
     </section>
@@ -101,14 +101,14 @@ export default function MercService({ data, overview, onRefresh }) {
     <nav className="merc-mobile-nav" aria-label="Merc Service page sections"><a href="#merc-current">Current</a><a href="#merc-roster">Roster</a><a href="#merc-info">How It Works</a></nav>
 
     <section className="panel span-12 merc-info-panel" id="merc-info">
-      <div className="panel-title-row"><div><p className="eyebrow">Contract Briefing</p><h3>How Merc Contracts Work</h3></div><span className="small-badge">Hunt Marks Only</span></div>
+      <div className="panel-title-row"><div><p className="eyebrow">Contract Briefing</p><h3>How Merc Contracts Work</h3></div><span className="small-badge">Hunt Seals</span></div>
       <div className="merc-info-layout">
-        <figure className="merc-contract-art"><img src={`${MERC_ART_ROOT}/scenes/contract.webp`} alt="Crystal Guild Hero Merc contract parchment paid with Hunt Marks" loading="lazy" /></figure>
+        <figure className="merc-contract-art"><img src={`${MERC_ART_ROOT}/scenes/contract.webp`} alt="Crystal Guild Hero Merc contract parchment paid with Hunt Seals" loading="lazy" /></figure>
         <div className="merc-info-grid">
-          <div><strong>1. Earn Marks</strong><span>Successful Hunts award Hunt Marks by rank: C 1 · B 2 · A 3 · S 5. Hunt Seals remain a separate Quartermaster currency.</span></div>
+          <div><strong>1. Earn Seals</strong><span>Complete Hunts to earn Hunt Seals. The same Hunt Seals can also be used at the Quartermaster and for other Guild costs.</span></div>
           <div><strong>2. Pick a Hero</strong><span>Hero access is based on your Character Level and lifetime Hunt clears. Each Hero supports only the mission types shown on their card.</span></div>
           <div><strong>3. Reserve a Mission</strong><span>Choose Hunt, Venture, or Raid when hiring. Only one Merc contract may be active, and it waits until that matching assignment actually begins.</span></div>
-          <div><strong>4. Hero Intervenes</strong><span>The Hero uses their signature assist during the mission. Cancelling frees the contract slot, but spent Hunt Marks are not refunded.</span></div>
+          <div><strong>4. Hero Intervenes</strong><span>The Hero uses their signature assist during the mission. Cancelling frees the contract slot, but spent Hunt Seals are not refunded.</span></div>
         </div>
         <figure className="merc-role-art"><img src={`${MERC_ART_ROOT}/scenes/roles.webp`} alt="Merc Service role emblems for Striker, Support, Scavenger, and Specialist" loading="lazy" /></figure>
       </div>
@@ -116,13 +116,13 @@ export default function MercService({ data, overview, onRefresh }) {
 
     <section className="panel span-12 merc-current-panel" id="merc-current">
       <div className="panel-title-row"><div><p className="eyebrow">Current Contract</p><h3>{contract ? contract.hero_name : "No Hero hired"}</h3></div><span className={`small-badge ${contract ? "active" : "ready"}`}>{contract ? (MISSION_LABELS[contract.mission_type] || contract.mission_type) : "READY"}</span></div>
-      {contract ? <div className="merc-current-contract"><div><strong>{contract.signature}</strong><span>{contract.role} · {number(contract.fee_marks)} Hunt Marks</span><small>Reserved for your next {MISSION_LABELS[contract.mission_type] || contract.mission_type}.</small></div><button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={cancel}>{busy === "cancel" ? "Cancelling…" : "Cancel Contract"}</button></div> : <p className="merc-empty">Choose an available Hero below. Hunt Marks are charged when the contract is accepted and are non-refundable if you cancel.</p>}
+      {contract ? <div className="merc-current-contract"><div><strong>{contract.signature}</strong><span>{contract.role} · {number(contract.fee_seals)} Hunt Seals</span><small>Reserved for your next {MISSION_LABELS[contract.mission_type] || contract.mission_type}.</small></div><button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={cancel}>{busy === "cancel" ? "Cancelling…" : "Cancel Contract"}</button></div> : <p className="merc-empty">Choose an available Hero below. Hunt Seals are charged when the contract is accepted and are non-refundable if you cancel.</p>}
     </section>
 
     <section className="panel span-12 merc-action-panel" aria-labelledby="merc-action-title">
       <div className="panel-title-row"><div><p className="eyebrow">Mercs in Action</p><h3 id="merc-action-title">One Contract. One Assignment.</h3></div><span className="small-badge">Hunt · Venture · Raid</span></div>
       <div className="merc-action-grid">
-        <figure><img src={`${MERC_ART_ROOT}/scenes/hunt.webp`} alt="Hero Mercs assisting the Crystal Guild on a Hunt" loading="lazy" /><figcaption><strong>Hunts</strong><span>Earn Hunt Marks and deploy a contracted Hero against marked targets.</span></figcaption></figure>
+        <figure><img src={`${MERC_ART_ROOT}/scenes/hunt.webp`} alt="Hero Mercs assisting the Crystal Guild on a Hunt" loading="lazy" /><figcaption><strong>Hunts</strong><span>Earn Hunt Seals and deploy a contracted Hero against marked targets.</span></figcaption></figure>
         <figure><img src={`${MERC_ART_ROOT}/scenes/venture.webp`} alt="Hero Mercs exploring crystalline ruins during a Venture" loading="lazy" /><figcaption><strong>Ventures</strong><span>Bring specialized support into Solo or Rally Venture combat.</span></figcaption></figure>
         <figure><img src={`${MERC_ART_ROOT}/scenes/raid.webp`} alt="Hero Mercs joining a Crystal Guild Raid battle" loading="lazy" /><figcaption><strong>Raids</strong><span>Call in a Hero's signature intervention during high-stakes encounters.</span></figcaption></figure>
       </div>
@@ -134,13 +134,13 @@ export default function MercService({ data, overview, onRefresh }) {
         {heroes.map((hero) => {
           const missions = Array.isArray(hero.mission_types) ? hero.mission_types : [];
           const selected = String(missionByHero[hero.id] || missions[0] || "");
-          const affordable = Number(state.hunt_marks || 0) >= Number(hero.fee_marks || 0);
+          const affordable = Number(state.hunt_seals || 0) >= Number(hero.fee_seals || 0);
           const canHire = hero.available && affordable && !contract && !busy;
           return <article className={`merc-card ${hero.available ? "available" : "locked"}`} key={hero.id}>
             <div className="merc-card-art-frame"><img src={heroCardArt(hero)} alt={`${hero.name} Merc contract card — ${hero.available ? "available" : "unavailable"}`} loading="lazy" /></div>
             <div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${hero.available ? "ready" : "locked"}`}>{hero.available ? "AVAILABLE" : "LOCKED"}</span></div>
             <p className="merc-card-effect">{hero.effect_summary}</p>
-            {hero.available ? <><label className="merc-mission-field"><span>Contract for</span><select disabled={Boolean(busy) || Boolean(contract)} value={selected} onChange={(event) => setMissionByHero((current) => ({ ...current, [hero.id]: event.target.value }))}>{missions.map((mission) => <option value={mission} key={mission}>{MISSION_LABELS[mission] || mission}</option>)}</select></label><button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : affordable ? `Hire · ${number(hero.fee_marks)} Hunt Marks` : `Need ${number(hero.fee_marks)} Hunt Marks`}</button></> : <div className="merc-lock-reason"><strong>Unavailable</strong><span>{hero.locked_reason || `Requires Lv. ${number(hero.min_level)} and ${number(hero.required_hunt_clears)} Hunt clears.`}</span></div>}
+            {hero.available ? <><label className="merc-mission-field"><span>Contract for</span><select disabled={Boolean(busy) || Boolean(contract)} value={selected} onChange={(event) => setMissionByHero((current) => ({ ...current, [hero.id]: event.target.value }))}>{missions.map((mission) => <option value={mission} key={mission}>{MISSION_LABELS[mission] || mission}</option>)}</select></label><button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : affordable ? `Hire · ${number(hero.fee_seals)} Hunt Seals` : `Need ${number(hero.fee_seals)} Hunt Seals`}</button></> : <div className="merc-lock-reason"><strong>Unavailable</strong><span>{hero.locked_reason || `Requires Lv. ${number(hero.min_level)} and ${number(hero.required_hunt_clears)} Hunt clears.`}</span></div>}
           </article>;
         })}
       </div>

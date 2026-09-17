@@ -3,6 +3,7 @@ import { submitMercCancel, submitMercHire, submitMercState, waitForPortalAction 
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import ContextHelp from "../components/ContextHelp.jsx";
 import { number } from "../utils/formatters.js";
+import { MERC_ART_ROOT, mercHeroCardArt, mercHeroStatusLabel, mercHeroUiState } from "./mercServiceState.js";
 
 function actionKey(kind, target = "merc") {
   const suffix = globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
@@ -17,13 +18,6 @@ async function finishedAction(response) {
 }
 
 const MISSION_LABELS = { hunt: "Hunt", venture: "Venture", raid: "Raid" };
-const MERC_ART_ROOT = "/merc-service/a1";
-
-function heroCardArt(hero) {
-  const heroId = String(hero?.id || "").toLowerCase();
-  if (!heroId) return "";
-  return `${MERC_ART_ROOT}/cards/${heroId}-${hero?.available ? "available" : "unavailable"}.webp`;
-}
 
 export default function MercService({ data, overview, onRefresh }) {
   const { auth } = usePortalAuth();
@@ -135,12 +129,17 @@ export default function MercService({ data, overview, onRefresh }) {
           const missions = Array.isArray(hero.mission_types) ? hero.mission_types : [];
           const selected = String(missionByHero[hero.id] || missions[0] || "");
           const affordable = Number(state.hunt_seals || 0) >= Number(hero.fee_seals || 0);
-          const canHire = hero.available && affordable && !contract && !busy;
-          return <article className={`merc-card ${hero.available ? "available" : "locked"}`} key={hero.id}>
-            <div className="merc-card-art-frame"><img src={heroCardArt(hero)} alt={`${hero.name} Merc contract card — ${hero.available ? "available" : "unavailable"}`} loading="lazy" /></div>
-            <div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${hero.available ? "ready" : "locked"}`}>{hero.available ? "AVAILABLE" : "LOCKED"}</span></div>
+          const uiState = mercHeroUiState(hero, contract);
+          const isContracted = uiState === "contracted";
+          const canHire = uiState === "available" && affordable && !contract && !busy;
+          const statusLabel = mercHeroStatusLabel(hero, contract);
+          const statusClass = isContracted ? "active" : uiState === "available" ? "ready" : "locked";
+          const artAltState = uiState === "available" ? "available" : isContracted ? "contracted" : "unavailable";
+          return <article className={`merc-card ${uiState === "available" ? "available" : "locked"} ${uiState}`} key={hero.id}>
+            <div className="merc-card-art-frame"><img src={mercHeroCardArt(hero, contract)} alt={`${hero.name} Merc contract card — ${artAltState}`} loading="lazy" /></div>
+            <div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${statusClass}`}>{statusLabel}</span></div>
             <p className="merc-card-effect">{hero.effect_summary}</p>
-            {hero.available ? <><label className="merc-mission-field"><span>Contract for</span><select disabled={Boolean(busy) || Boolean(contract)} value={selected} onChange={(event) => setMissionByHero((current) => ({ ...current, [hero.id]: event.target.value }))}>{missions.map((mission) => <option value={mission} key={mission}>{MISSION_LABELS[mission] || mission}</option>)}</select></label><button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : affordable ? `Hire · ${number(hero.fee_seals)} Hunt Seals` : `Need ${number(hero.fee_seals)} Hunt Seals`}</button></> : <div className="merc-lock-reason"><strong>Unavailable</strong><span>{hero.locked_reason || `Requires Lv. ${number(hero.min_level)} and ${number(hero.required_hunt_clears)} Hunt clears.`}</span></div>}
+            {isContracted ? <div className="merc-contract-reason"><strong>Currently Hired</strong><span>Reserved for your next {MISSION_LABELS[contract?.mission_type] || contract?.mission_type || "assignment"}. Cancel the active contract to make this Hero available again.</span></div> : hero.available ? <><label className="merc-mission-field"><span>Contract for</span><select disabled={Boolean(busy) || Boolean(contract)} value={selected} onChange={(event) => setMissionByHero((current) => ({ ...current, [hero.id]: event.target.value }))}>{missions.map((mission) => <option value={mission} key={mission}>{MISSION_LABELS[mission] || mission}</option>)}</select></label><button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : contract ? "Contract Slot Occupied" : affordable ? `Hire · ${number(hero.fee_seals)} Hunt Seals` : `Need ${number(hero.fee_seals)} Hunt Seals`}</button></> : <div className="merc-lock-reason"><strong>Unavailable</strong><span>{hero.locked_reason || `Requires Lv. ${number(hero.min_level)} and ${number(hero.required_hunt_clears)} Hunt clears.`}</span></div>}
           </article>;
         })}
       </div>

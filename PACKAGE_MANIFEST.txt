@@ -1,3 +1,5 @@
+# Crystal Guild v1.8 Merc Service Alpha 1 — Hotfix 2
+# Runtime: 1.8.0-merc-a1
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -15,6 +17,10 @@ MERC_SERVICE_BATCH3_RELEASE_NOTES.md
 MERC_SERVICE_BATCH3_VALIDATION.md
 MERC_SERVICE_BATCH4_RELEASE_NOTES.md
 MERC_SERVICE_BATCH4_VALIDATION.md
+MERC_SERVICE_BATCH5_RELEASE_NOTES.md
+MERC_SERVICE_BATCH5_VALIDATION.md
+MERC_SERVICE_CURRENCY_HOTFIX.md
+MERC_SERVICE_HOTFIX2.md
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -194,6 +200,25 @@ frontend/public/gold-saucer/rc2h1/triple-triad/cards/tonberry.webp
 frontend/public/guide-body.html
 frontend/public/guide-data.json
 frontend/public/guide.css
+frontend/public/merc-service/a1/cards/aerith-available.webp
+frontend/public/merc-service/a1/cards/aerith-unavailable.webp
+frontend/public/merc-service/a1/cards/balthier-available.webp
+frontend/public/merc-service/a1/cards/balthier-unavailable.webp
+frontend/public/merc-service/a1/cards/cloud-available.webp
+frontend/public/merc-service/a1/cards/cloud-unavailable.webp
+frontend/public/merc-service/a1/cards/tifa-available.webp
+frontend/public/merc-service/a1/cards/tifa-unavailable.webp
+frontend/public/merc-service/a1/cards/yuna-available.webp
+frontend/public/merc-service/a1/cards/yuna-unavailable.webp
+frontend/public/merc-service/a1/cards/zidane-available.webp
+frontend/public/merc-service/a1/cards/zidane-unavailable.webp
+frontend/public/merc-service/a1/scenes/coming-soon.webp
+frontend/public/merc-service/a1/scenes/contract.webp
+frontend/public/merc-service/a1/scenes/hunt.webp
+frontend/public/merc-service/a1/scenes/raid.webp
+frontend/public/merc-service/a1/scenes/roles.webp
+frontend/public/merc-service/a1/scenes/service-hall.webp
+frontend/public/merc-service/a1/scenes/venture.webp
 frontend/public/raid-overlay.html
 frontend/public/raid-overlay.js
 frontend/public/retainer/a2h1/assignments/field-gathering.webp
@@ -938,6 +963,7 @@ frontend/src/player/RetainerService.jsx
 frontend/src/player/TrophyHall.jsx
 frontend/src/player/WhatsNew.jsx
 frontend/src/player/bestiarySort.js
+frontend/src/player/mercServiceState.js
 frontend/src/player/whatsNewData.js
 frontend/src/styles/button-fit.css
 frontend/src/styles/character-identity.css
@@ -1084,6 +1110,8 @@ frontend/tests/livePolicy.test.mjs
 frontend/tests/materialArtworkRetroPhaseIII.test.mjs
 frontend/tests/mercServiceBatch3.test.mjs
 frontend/tests/mercServiceBatch4.test.mjs
+frontend/tests/mercServiceBatch5.test.mjs
+frontend/tests/mercServiceHotfix2.test.mjs
 frontend/tests/mobileContextHelpDisclosureAlignment.test.mjs
 frontend/tests/mobileHeaderViewportHotfix.test.mjs
 frontend/tests/mobileProfileNameNoWrap.test.mjs

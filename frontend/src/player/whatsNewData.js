@@ -3,9 +3,9 @@ export const MAJOR_UPDATES = [
     version: "v1.8.0 Alpha 1",
     name: "Merc Service",
     title: "Hire legendary help for the next assignment",
-    summary: "Merc Service introduces a dedicated Hunt Mark economy and a six-Hero contract roster for Hunts, Ventures, and Raids, with character-specific assists and personalized mission results.",
+    summary: "Merc Service uses the existing Hunt Seal economy with a six-Hero contract roster for Hunts, Ventures, and Raids, plus character-specific assists and personalized mission results.",
     highlights: [
-      { title: "Merc contracts use Hunt Seals", description: "Successful C/B/A/S Hunts award 1/2/3/5 Hunt Seals. Marks are used only for Merc contracts; Hunt Seals keep their existing Quartermaster role." },
+      { title: "Merc contracts use Hunt Seals", description: "Merc contracts spend the same Hunt Seals already earned from Hunts and used across the Guild; no separate Merc currency is required." },
       { title: "Six Hero contracts", description: "Aerith, Tifa, Zidane, Yuna, Balthier, and Cloud unlock through Character Level plus lifetime Hunt clears, each with their own fee and supported assignments." },
       { title: "Real mission participation", description: "Mercs use signature assists in Hunts, Ventures, and Raids: burst damage, healing, protection, extra finds, or rare-spoil support depending on the Hero." },
       { title: "Contracts wait for the right mission", description: "Choose a mission type when hiring. The contract is consumed only when that matching Hunt, Venture, or Raid actually begins." },

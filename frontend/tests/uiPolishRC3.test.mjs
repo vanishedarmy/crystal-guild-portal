@@ -19,13 +19,13 @@ const sectionSources = await Promise.all([
 ].map((name) => readFile(new URL(`player/${name}`, SRC), "utf8")));
 
 test("RC3 advances the visible UI polish identity", () => {
-  assert.equal(WEB_VERSION, "v1.8.0 RC3");
-  assert.equal(WEB_RELEASE, "v1.8.0 RC3 — Merc Service");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-rc3");
+  assert.equal(WEB_VERSION, "v1.8.0 Final");
+  assert.equal(WEB_RELEASE, "v1.8.0 Final — Merc Service");
+  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-final");
 });
 
 test("profile navigation prioritizes readable one-line labels at every desktop tier", () => {
-  assert.match(css, /v1\.8\.0 RC3 — navigation fit \+ one-page refresh/);
+  assert.match(css, /navigation fit \+ one-page refresh/);
   assert.match(css, /\.profile-tabs\s*\{[\s\S]*grid-template-columns:\s*repeat\(6,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(css, /@media \(min-width: 1600px\)[\s\S]*repeat\(8,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1279px\)[\s\S]*repeat\(4,\s*minmax\(0,\s*1fr\)\)/);

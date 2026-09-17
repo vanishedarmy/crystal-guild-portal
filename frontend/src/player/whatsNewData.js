@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.8.0 Final",
+    name: "Merc Service",
+    title: "Hero Merc Service is ready for full release",
+    summary: "v1.8.0 Final promotes the fully hardened Merc Service and Portal experience from RC3 with no gameplay rebalance or player-data migration required.",
+    highlights: [
+      { title: "Three Merc assignments", description: "Reserve one eligible Hero for Hunt, one for Venture, and one for Raid at the same time, with deployed Heroes remaining unavailable until their assignment resolves." },
+      { title: "Hunt Seals economy", description: "Hero contracts use the existing Hunt Seals earned through Hunts, alongside the established Hunt economy rather than a separate Merc currency." },
+      { title: "Six distinct Heroes", description: "Aerith, Tifa, Zidane, Yuna, Balthier, and Cloud provide healing, protection, burst damage, extra finds, or rare-spoil support according to their role." },
+      { title: "Complete Portal presentation", description: "Available and unavailable Hero artwork, deployment states, exact availability reasons, responsive navigation, and desktop/mobile layout hardening are all included." },
+      { title: "Simplified refresh", description: "Automatic synchronization remains active while manual refresh is consolidated into one Refresh button at the bottom of live Portal pages." },
+      { title: "Release compatibility", description: "Schema 17, hosted sync 1, and Portal Action protocol 34 are unchanged from RC3; no player reset or new migration is required." },
+    ],
+    action: { tab: "mercs", label: "Open Hero Merc Service" },
+  },
+  {
     version: "v1.8.0 RC3",
     name: "Portal UI Polish",
     title: "Cleaner navigation and one simple refresh control",

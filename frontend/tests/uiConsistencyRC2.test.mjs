@@ -7,9 +7,9 @@ const css = await readFile(new URL("../src/styles/portal.css", import.meta.url),
 const profile = await readFile(new URL("../src/pages/PlayerProfile.jsx", import.meta.url), "utf8");
 
 test("current release identity remains in the Merc build family", () => {
-  assert.equal(WEB_VERSION, "v1.8.0 RC3");
-  assert.equal(WEB_RELEASE, "v1.8.0 RC3 — Merc Service");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-rc3");
+  assert.equal(WEB_VERSION, "v1.8.0 Final");
+  assert.equal(WEB_RELEASE, "v1.8.0 Final — Merc Service");
+  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-final");
 });
 
 test("phones use the polished section selector instead of the full tab grid", () => {

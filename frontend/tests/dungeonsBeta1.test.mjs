@@ -22,7 +22,7 @@ test("Dungeons Beta 1 exposes ongoing round telemetry and current release identi
   assert.match(board, /Round \{number\(combat\.round\)\}/);
   assert.doesNotMatch(board, /combat\.max_rounds/);
   assert.match(board, /Dungeons & Delves · v1.4.0/);
-  assert.match(version, /1\.8\.0-merc-rc3/);
+  assert.match(version, /1\.8\.0-merc-final/);
   assert.match(whatsNew, /Dungeons & Delves/);
   assert.match(whatsNew, /Safe across tabs and retries/);
 });

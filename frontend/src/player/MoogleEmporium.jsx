@@ -269,14 +269,6 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           <span><strong>{shop?.job_name || overview?.job?.name || "Adventurer"}</strong> stock</span>
           <span>Rotation refresh: <strong>{expiresText}</strong></span>
         </div>
-        <button
-          type="button"
-          className="equipment-action-button secondary"
-          disabled={!shopActionsAvailable || Boolean(busyKey)}
-          onClick={() => loadShop()}
-        >
-          {busyKey === "shop-state" ? "Refreshing…" : "Refresh stock"}
-        </button>
       </div>
 
       {shop ? (

@@ -243,7 +243,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
       </section>
 
       <section className="panel span-12 retainer-assignments-panel" id="retainer-assignments">
-        <div className="panel-title-row"><div><p className="eyebrow">Procurement Board</p><h3>Assignments</h3></div><button type="button" className="equipment-action-button secondary compact" disabled={Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Refreshing…" : "Refresh"}</button></div>
+        <div className="panel-title-row"><div><p className="eyebrow">Procurement Board</p><h3>Assignments</h3></div></div>
         <div className="retainer-assignment-grid">
           {(Array.isArray(state.assignments) ? state.assignments : []).map((option) => {
             const dispatching = busy === `dispatch:${option.id}`;

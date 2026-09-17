@@ -646,9 +646,6 @@ export default function Hunts({ data, overview, onRefresh }) {
           </div>
           <div className="context-help-actions">
             <ContextHelp topic="adventure_board" />
-            <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>
-              {busy === "state" ? "Refreshing…" : "Refresh Board"}
-            </button>
           </div>
         </div>
         <div className={`equipment-action-status compact-status ${actionsAvailable ? "ready" : "offline"}`} role="status">

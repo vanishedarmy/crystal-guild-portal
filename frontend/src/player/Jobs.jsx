@@ -239,9 +239,6 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
           <div><span>Current Job</span><strong>{liveState?.current_job_name || currentJob?.name || overview?.job?.name || "Adventurer"}</strong></div>
           <div><span>Stance</span><strong>{humanizeLabel(currentStance)}</strong></div>
           <div><span>Masteries</span><strong>{(liveState?.mastery_slots || data.mastery_slots || []).filter((slot) => slot.job_id).length} / 2</strong></div>
-          <button type="button" className="equipment-action-button secondary" disabled={!managementAvailable || Boolean(busyKey)} onClick={() => loadState()}>
-            {busyKey === "state" ? "Refreshing…" : "Refresh"}
-          </button>
         </div>
       ) : null}
 

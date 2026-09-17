@@ -414,7 +414,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
         <strong>{actionsAvailable ? "Gold Saucer connection ready" : "Gold Saucer controls unavailable"}</strong>
         <span>{actionsAvailable ? "All draws, payouts, cooldowns, and records are resolved by the authoritative Guild Bot." : "Gold Saucer play returns when Crystal Guild reconnects."}</span>
         {message ? <small aria-live="polite">{message}</small> : null}
-        <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Checking…" : "Refresh Floor"}</button>
       </div>
 
       {!state ? <div className="state-message">{actionsAvailable ? "Opening the Gold Saucer floor…" : "Crystal Guild must be online to enter."}</div> : (

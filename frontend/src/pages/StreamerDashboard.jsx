@@ -14,6 +14,7 @@ import { number, pct, timeAgo } from "../utils/formatters.js";
 import { loadGuideData } from "../utils/itemCatalog.js";
 import { WEB_BUILD, WEB_RELEASE } from "../version.js";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
+import PageRefreshButton from "../components/PageRefreshButton.jsx";
 
 const STREAM_COMMAND_GROUPS = [
   {
@@ -522,7 +523,7 @@ export default function StreamerDashboard() {
             <section className="streamer-panel streamer-roster-panel" id="roster">
               <div className="streamer-panel-heading">
                 <div><span>Roster Watch</span><h2>Adventurers</h2></div>
-                <div className="streamer-heading-tools"><small>{number(shownPlayers.length)} of {number(players.length)} shown</small><button className="ghost-button" type="button" onClick={refresh}>Refresh</button></div>
+                <div className="streamer-heading-tools"><small>{number(shownPlayers.length)} of {number(players.length)} shown</small></div>
               </div>
               <div className="streamer-toolbar">
                 <input aria-label="Search streamer roster" onChange={(event) => setSearch(event.target.value)} placeholder="Search hero, Job, title, region..." type="search" value={search} />
@@ -571,6 +572,7 @@ export default function StreamerDashboard() {
         ) : null}
 
         <HostedOverlayCard />
+        <PageRefreshButton onRefresh={refresh} disabled={loading} />
       </main>
       <footer className="site-footer streamer-footer"><span>Crystal Guild Streamer Dashboard · {WEB_RELEASE}</span><span><Link to="/privacy">Privacy Policy</Link> · Streamer Controls execute verified backend actions; Chat Reference only copies commands</span></footer>
     </>

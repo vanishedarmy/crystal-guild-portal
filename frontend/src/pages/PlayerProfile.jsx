@@ -4,6 +4,7 @@ import { fetchPlayer } from "../api/players.js";
 import JobPortrait from "../components/JobPortrait.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PortalLinkPanel from "../components/PortalLinkPanel.jsx";
+import PageRefreshButton from "../components/PageRefreshButton.jsx";
 import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
@@ -73,10 +74,15 @@ export default function PlayerProfile() {
   const [tabLoading, setTabLoading] = useState(false);
   const [updated, setUpdated] = useState("");
   const [refreshToken, setRefreshToken] = useState(0);
+  const [manualRefreshToken, setManualRefreshToken] = useState(0);
   const [campDeadline, setCampDeadline] = useState(0);
   const [clockNow, setClockNow] = useState(() => Date.now());
 
   const refresh = useCallback(() => setRefreshToken((value) => value + 1), []);
+  const manualRefresh = useCallback(() => {
+    setManualRefreshToken((value) => value + 1);
+    setRefreshToken((value) => value + 1);
+  }, []);
   const liveStatus = useLiveUpdates(refresh);
 
   useEffect(() => {
@@ -263,11 +269,13 @@ export default function PlayerProfile() {
               <Suspense fallback={<div className="state-message">Opening {activeTab}...</div>}>
                 {!moduleData || !ActiveModule
                   ? <div className="state-message">Loading {activeTab}...</div>
-                  : <ActiveModule data={moduleData} overview={overview} onDetail={setDetail} onRefresh={refresh} onNavigate={setActiveTab} />}
+                  : <ActiveModule key={`${activeTab}:${manualRefreshToken}`} data={moduleData} overview={overview} onDetail={setDetail} onRefresh={refresh} onNavigate={setActiveTab} />}
               </Suspense>
               {moduleData && tabLoading ? <div className="background-refresh" role="status" aria-live="polite">Refreshing…</div> : null}
             </SectionErrorBoundary>
           </div>
+
+          <PageRefreshButton onRefresh={manualRefresh} disabled={overviewLoading || tabLoading} />
         </section>
       </main>
       {detail ? (

@@ -4,6 +4,7 @@ import { fetchPlayers } from "../api/players.js";
 import SiteHeader from "../components/SiteHeader.jsx";
 import RecruitPanel from "../components/RecruitPanel.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
+import PageRefreshButton from "../components/PageRefreshButton.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
@@ -105,7 +106,6 @@ export default function GuildDirectory() {
                 onChange={(event) => setSearch(event.target.value)}
               />
             </label>
-            <button className="ghost-button" type="button" onClick={refresh}>Refresh</button>
           </div>
 
           {loading && !players.length ? <div className="state-message">Loading heroes...</div> : null}
@@ -138,6 +138,8 @@ export default function GuildDirectory() {
               </Link>
             ))}
           </div>
+
+          <PageRefreshButton onRefresh={refresh} disabled={loading} />
         </section>
       </main>
       <footer className="site-footer">

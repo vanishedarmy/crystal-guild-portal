@@ -7,7 +7,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
 const webRoot = path.resolve(root, "..");
 
-test("Portal actions use single-action long polling with history fallback", () => {
+test("Portal action API keeps single-action long polling while the passive connection strip does not poll", () => {
   const auth = read("src/api/auth.js");
   const panel = read("src/components/PortalLinkPanel.jsx");
   assert.match(auth, /fetchPortalAction/);
@@ -15,7 +15,7 @@ test("Portal actions use single-action long polling with history fallback", () =
   assert.match(auth, /waitForPortalAction/);
   assert.match(auth, /singleActionSupported/);
   assert.match(auth, /fetchPortalActions/);
-  assert.match(panel, /waitForPortalAction\(pending\.id/);
+  assert.doesNotMatch(panel, /waitForPortalAction|fetchPortalActions|submitPortalPing/);
   assert.doesNotMatch(panel, /setInterval\(pollPending, 1500\)/);
 });
 

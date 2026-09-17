@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.8.0 RC3",
+    name: "Portal UI Polish",
+    title: "Cleaner navigation and one simple refresh control",
+    summary: "RC3 refines the Portal navigation after RC2 visual testing and consolidates manual refresh into one page-level control while keeping automatic live updates intact.",
+    highlights: [
+      { title: "Readable desktop navigation", description: "Normal desktops use a roomier six-column profile grid, very wide screens can use eight columns, and compact widths step down to four and two before the mobile selector takes over." },
+      { title: "No broken tab labels", description: "Navigation labels stay on one line inside their buttons, with button overflow contained and breakpoints chosen to give long section names enough room." },
+      { title: "One Refresh button", description: "Section-specific Refresh buttons are removed across the Portal. A single Refresh control now sits at the bottom of live pages, while automatic updates and post-action synchronization continue in the background." },
+      { title: "Simpler connection strip", description: "The signed-in profile connection indicator is status-only instead of presenting another manual refresh action." },
+      { title: "Gameplay unchanged", description: "Merc Service balance, Hunt Seal pricing, Hero effects, schema 17, hosted sync 1, and Portal Action protocol 34 are unchanged." },
+    ],
+    action: { tab: "overview", label: "Review the Portal" },
+  },
+  {
     version: "v1.8.0 RC2",
     name: "UI Consistency",
     title: "A cleaner Crystal Guild Portal on desktop and mobile",

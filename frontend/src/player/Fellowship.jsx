@@ -232,14 +232,6 @@ export default function Fellowship({ data, onRefresh }) {
             </div>
             <div className="context-help-actions">
               <ContextHelp topic="fellowship" />
-              <button
-                type="button"
-                className="equipment-action-button secondary"
-                disabled={!contributionAvailable || Boolean(busyKey)}
-                onClick={() => loadState()}
-              >
-                {busyKey === "state" ? "Refreshing…" : "Refresh"}
-              </button>
             </div>
           </div>
 

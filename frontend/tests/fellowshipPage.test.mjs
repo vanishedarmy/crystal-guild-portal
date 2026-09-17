@@ -30,5 +30,5 @@ test("Fellowship responsive layout collapses cleanly without fixed-width rails",
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
   assert.match(css, /\.fellowship-summary-grid[\s\S]*minmax\(0, 1fr\)/);
   assert.match(css, /@media \(max-width: 520px\)[\s\S]*\.fellowship-summary-grid[\s\S]*grid-template-columns: 1fr/);
-  assert.doesNotMatch(css.slice(css.indexOf("v1.1 Fellowship page")), /min-width:\s*[6-9]\d\dpx/);
+  assert.doesNotMatch(css, /\.fellowship-[^{]+\{[^}]*min-width:\s*[6-9]\d\dpx/);
 });

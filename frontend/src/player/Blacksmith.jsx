@@ -351,9 +351,6 @@ export default function Blacksmith({ data, overview, onRefresh }) {
           <button type="button" role="tab" id="blacksmith-tab-resynthesis" data-tab-value="resynthesis" tabIndex={view === "resynthesis" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "resynthesis"} className={view === "resynthesis" ? "active" : ""} onClick={() => setView("resynthesis")}><span>Resynthesize Gear</span><small>Recover materials</small></button>
         </div>
         <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : view === "resynthesis" ? "Gear or recovered material…" : "Equipment…"} /></label>
-        <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busyKey)} onClick={() => loadState()}>
-          {busyKey === "state" ? "Refreshing…" : "Refresh"}
-        </button>
       </div>
 
       {!state && actionsAvailable ? <div className="state-message compact-state">Opening your Blacksmith ledger…</div> : null}

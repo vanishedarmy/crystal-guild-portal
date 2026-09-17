@@ -219,14 +219,6 @@ export default function DailyReward({ username, onRefresh }) {
           >
             {busy === "claim" ? "Claiming…" : daily?.blocked_reason ? "Solo Venture in Progress" : available ? "Claim Daily Reward" : "Already Claimed"}
           </button>
-          <button
-            type="button"
-            className="equipment-action-button secondary"
-            disabled={!actionsAvailable || Boolean(busy)}
-            onClick={() => loadDaily()}
-          >
-            {busy === "state" ? "Checking…" : "Refresh"}
-          </button>
           {!actionsAvailable ? <span className="muted">Available when Crystal Guild is online.</span> : null}
         </div>
       </div>

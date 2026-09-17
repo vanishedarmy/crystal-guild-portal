@@ -147,7 +147,7 @@ export default function MercService({ data, overview, onRefresh }) {
     </section>
 
     <section className="panel span-12 merc-roster-panel" id="merc-roster">
-      <div className="panel-title-row"><div><p className="eyebrow">Merc Roster</p><h3>Hire for {MISSION_LABELS[selectedMission]}</h3></div><button type="button" className="equipment-action-button secondary compact" disabled={Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Refreshing…" : "Refresh"}</button></div>
+      <div className="panel-title-row"><div><p className="eyebrow">Merc Roster</p><h3>Hire for {MISSION_LABELS[selectedMission]}</h3></div></div>
       <div className="merc-job-picker" role="group" aria-label="Merc assignment type">
         {MISSION_ORDER.map((mission) => {
           const occupied = Boolean(mercContractForMission(contracts, mission));

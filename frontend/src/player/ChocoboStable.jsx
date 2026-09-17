@@ -413,7 +413,6 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
       </section>
 
       <div className="chocobo-footer-actions">
-        <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy)} onClick={() => loadState()}>{busy === "state" ? "Refreshing…" : "Refresh Stable"}</button>
         <span className="muted">Registered Chocobos gain Bond XP from Ventures, treasure, Hunts, and Expeditions. Alpha 5 turns each persistent trait into a scaling Expedition specialty and records your adventures together.</span>
       </div>
     </section>

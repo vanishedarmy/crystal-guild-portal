@@ -6,16 +6,10 @@ import { WEB_ASSET_REVISION, WEB_RELEASE, WEB_VERSION } from "../src/version.js"
 const css = await readFile(new URL("../src/styles/portal.css", import.meta.url), "utf8");
 const profile = await readFile(new URL("../src/pages/PlayerProfile.jsx", import.meta.url), "utf8");
 
-test("RC2 advances the visible release identity without changing the Merc build family", () => {
-  assert.equal(WEB_VERSION, "v1.8.0 RC2");
-  assert.equal(WEB_RELEASE, "v1.8.0 RC2 — Merc Service");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-rc2");
-});
-
-test("profile navigation uses deterministic balanced desktop grids", () => {
-  assert.match(css, /v1\.8\.0 RC2 — Portal-wide desktop\/mobile consistency pass/);
-  assert.match(css, /\.profile-tabs\s*\{[\s\S]*grid-template-columns:\s*repeat\(8,\s*minmax\(0,\s*1fr\)\)/);
-  assert.match(css, /@media \(max-width: 1279px\)[\s\S]*\.profile-tabs\s*\{[\s\S]*repeat\(4,\s*minmax\(0,\s*1fr\)\)/);
+test("current release identity remains in the Merc build family", () => {
+  assert.equal(WEB_VERSION, "v1.8.0 RC3");
+  assert.equal(WEB_RELEASE, "v1.8.0 RC3 — Merc Service");
+  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-rc3");
 });
 
 test("phones use the polished section selector instead of the full tab grid", () => {

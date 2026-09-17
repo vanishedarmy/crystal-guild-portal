@@ -410,7 +410,6 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
         <section className="recovery-dashboard" aria-label="Recovery">
           <div className="recovery-heading">
             <div><p className="eyebrow">Recovery</p><h3>{stateLabel}</h3></div>
-            <button type="button" className="equipment-action-button secondary" disabled={!recoveryActionsAvailable || Boolean(busyKey)} onClick={() => loadRecovery()}>{busyKey === "recovery-state" ? "Checking…" : "Refresh Recovery"}</button>
           </div>
           <div className="recovery-resource-grid">
             <div className="recovery-resource"><span><b>HP</b><em>{number(recoveryState?.hp?.current ?? overview?.hp?.current)} / {number(recoveryState?.hp?.max ?? overview?.hp?.max)}</em></span><ProgressBar value={pct(recoveryState?.hp?.current ?? overview?.hp?.current, recoveryState?.hp?.max ?? overview?.hp?.max)} className="hp" /></div>

@@ -27,22 +27,10 @@ test("Portal auth status refreshes in the background and when the tab returns", 
   assert.match(hook, /const subscribers = new Set\(\)/);
 });
 
-test("completed Portal action result overrides the temporary queued message", async () => {
+test("connection status strip is passive and has no action-history polling", async () => {
   const panel = await readFile(new URL("components/PortalLinkPanel.jsx", SRC), "utf8");
-  assert.match(panel, /latestFinished/);
-  assert.match(panel, /latestFinished && latestText \? latestText : \(message \|\| latestText\)/);
-  assert.match(panel, /aria-live="polite">\{displayedMessage\}/);
-  assert.match(panel, /window\.addEventListener\("focus", refreshActions\)/);
-  assert.match(panel, /window\.addEventListener\("pageshow", refreshActions\)/);
-});
-
-
-test("Portal action history stays idle unless an action is pending", async () => {
-  const panel = await readFile(new URL("components/PortalLinkPanel.jsx", SRC), "utf8");
-  assert.match(panel, /const hasPending = useMemo/);
-  assert.match(panel, /if \(!isOwnProfile \|\| !hasPending\) return undefined/);
-  assert.match(panel, /waitForPortalAction\(pending\.id/);
-  assert.match(panel, /actionRefreshInFlight\.current/);
-  assert.match(panel, /\}, \[isOwnProfile, refreshActions\]\);/);
-  assert.doesNotMatch(panel, /\}, \[isOwnProfile, refreshActions, actions\]\);/);
+  assert.match(panel, /Crystal Guild Connection/);
+  assert.match(panel, /ONLINE/);
+  assert.match(panel, /OFFLINE/);
+  assert.doesNotMatch(panel, /submitPortalPing|fetchPortalActions|waitForPortalAction|Refresh connection/);
 });

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchFellowship } from "../api/fellowship.js";
 import ProgressBar from "../components/ProgressBar.jsx";
+import PageRefreshButton from "../components/PageRefreshButton.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
@@ -401,6 +402,7 @@ export default function FellowshipPage() {
                 ))}
               </div>
             </details>
+            <PageRefreshButton onRefresh={refresh} />
           </section>
         ) : null}
       </main>

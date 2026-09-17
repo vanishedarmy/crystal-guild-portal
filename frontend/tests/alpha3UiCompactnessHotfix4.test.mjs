@@ -37,9 +37,10 @@ test("Fellowship level card is bounded on mobile", () => {
   assert.match(css, /\.fellowship-level-progress \.progress-track \{[\s\S]*?max-width: 100%;/);
 });
 
-test("connection strip is status plus refresh control", () => {
+test("connection strip is passive status only", () => {
   assert.match(connection, /Crystal Guild Connection/);
-  assert.match(connection, /Refresh connection/);
+  assert.match(connection, /ONLINE/);
+  assert.match(connection, /OFFLINE/);
+  assert.doesNotMatch(connection, /Refresh connection/);
   assert.doesNotMatch(connection, /Your Twitch account is linked to this adventurer/);
-  assert.match(css, /\.portal-link-panel \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) auto;/);
 });

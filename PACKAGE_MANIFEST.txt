@@ -1,5 +1,5 @@
-# Crystal Guild v1.8.0 RC1 — Merc Service
-# Runtime: 1.8.0-merc-rc1
+# Crystal Guild v1.8.0 RC2 — Merc Service
+# Runtime: 1.8.0-merc-rc2
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -26,6 +26,7 @@ MERC_SERVICE_HOTFIX2.md
 MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
+PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -33,6 +34,8 @@ RELEASE_NOTES.md
 RELIC_ARTWORK_MANIFEST.json
 SCENE_BACKGROUND_MANIFEST.json
 STREAMER_DASHBOARD.md
+UI_CONSISTENCY_RC2_RELEASE_NOTES.md
+UI_CONSISTENCY_RC2_VALIDATION.md
 UI_SHARED_ASSET_MANIFEST.json
 UPGRADE_GUIDE.md
 VALIDATION_REPORT.md
@@ -1186,6 +1189,7 @@ frontend/tests/trailsRaidsBeta3.test.mjs
 frontend/tests/trailsRaidsRC1.test.mjs
 frontend/tests/trailsRaidsReleaseVisuals.test.mjs
 frontend/tests/trailsRaidsScenicLayersHotfix4.test.mjs
+frontend/tests/uiConsistencyRC2.test.mjs
 frontend/tests/uiSharedAssets131.test.mjs
 frontend/tests/version.test.mjs
 frontend/tests/whatsNew.test.mjs
@@ -1206,4 +1210,3 @@ tests/test_portal_actions.py
 tests/test_resynthesis_alpha1.py
 tests/test_retainer_alpha1.py
 tests/test_retainer_alpha2.py
-PACKAGE_MANIFEST.txt

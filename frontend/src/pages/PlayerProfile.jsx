@@ -229,7 +229,7 @@ export default function PlayerProfile() {
 
           <div className="profile-navigation">
             <label className="profile-tab-select">
-              <span>Profile section</span>
+              <span>Crystal Guild section</span>
               <select value={activeTab} onChange={(event) => setActiveTab(event.target.value)} aria-label="Choose adventurer profile section">
                 {TAB_GROUPS.map(([group, ids]) => (
                   <optgroup label={group} key={group}>

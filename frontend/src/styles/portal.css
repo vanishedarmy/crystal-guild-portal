@@ -11743,3 +11743,235 @@ textarea {
 .merc-card.deployed .merc-card-art-frame{filter:saturate(.72) brightness(.82)}
 .merc-card.deployed .merc-availability-line{border-color:rgba(113,203,255,.32);background:rgba(35,91,128,.16)}
 @media(max-width:520px){.merc-contract-slot.deployed .merc-slot-copy small{line-height:1.35}}
+
+/* v1.8.0 RC2 — Portal-wide desktop/mobile consistency pass
+   Final cascade layer: predictable navigation rows, resilient content wrapping,
+   and media containment without changing feature-specific visual identities. */
+:root {
+  --portal-ui-gap: clamp(.45rem, .7vw, .7rem);
+  --portal-ui-control-height: 44px;
+}
+
+/* Universal shrink/containment guardrails for player-facing layout regions. */
+:where(
+  .site-header,
+  .site-header-actions,
+  .shell,
+  .profile-header,
+  .profile-identity,
+  .profile-vitals,
+  .profile-navigation,
+  .profile-content,
+  .panel,
+  .panel-title-row,
+  .dashboard-grid,
+  .content-grid,
+  .equipment-grid,
+  .inventory-grid,
+  .job-grid,
+  .relic-grid,
+  .achievement-grid,
+  .title-grid,
+  .boss-grid,
+  .fellowship-view,
+  .merc-service-grid
+) {
+  min-width: 0;
+}
+
+/* Art may crop inside an authored frame, but it may never force the page wider. */
+:where(.profile-content, .profile-header, .panel, .player-card, .site-header) img,
+:where(.profile-content, .panel, .player-card) svg,
+.profile-content video,
+.profile-content canvas {
+  max-width: 100%;
+}
+
+.profile-content figure,
+.profile-content picture {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Narrative copy can wrap naturally; compact controls stay intact. */
+:where(
+  .profile-content p,
+  .profile-content li,
+  .profile-content dd,
+  .profile-content blockquote,
+  .profile-content figcaption,
+  .panel-title-row h2,
+  .panel-title-row h3,
+  .card-title,
+  .display-name,
+  .profile-title,
+  .small-badge
+) {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+:where(button, select, input, textarea) {
+  max-width: 100%;
+}
+
+/* Screenshot-targeted profile navigation: a deliberate grid rather than a
+   free-form flex wrap. 16 destinations become two balanced rows on wide
+   desktop and predictable grids before the mobile selector takes over. */
+.profile-navigation {
+  width: 100%;
+}
+
+.profile-tabs {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  align-items: stretch;
+  gap: .45rem;
+  width: 100%;
+  max-width: 100%;
+  padding: .55rem;
+  overflow: visible;
+}
+
+.profile-tabs button {
+  display: grid;
+  grid-template-columns: 1.05rem minmax(0, 1fr);
+  align-items: center;
+  justify-items: start;
+  gap: .42rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: .5rem .62rem;
+  line-height: 1.15;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.profile-tabs button > span:last-child {
+  min-width: 0;
+  max-width: 100%;
+  font-size: clamp(.61rem, .66vw, .7rem);
+  letter-spacing: .035em;
+  white-space: nowrap;
+}
+
+.profile-tabs .tab-glyph {
+  display: inline-grid;
+  width: 1.05rem;
+  place-items: center;
+  margin: 0;
+  font-size: .78rem;
+}
+
+/* Active/focus treatment is consistent without changing dimensions. */
+.profile-tabs button:hover,
+.profile-tabs button:focus-visible,
+.profile-tabs button[aria-selected="true"] {
+  transform: none;
+}
+
+.profile-tabs button:focus-visible {
+  outline: 2px solid rgba(143, 219, 255, .72);
+  outline-offset: 1px;
+}
+
+/* Keep common title/action rows aligned until space genuinely becomes tight. */
+.panel-title-row {
+  min-width: 0;
+}
+
+.panel-title-row > :first-child {
+  min-width: 0;
+}
+
+.panel-title-row :where(h2, h3) {
+  margin-right: 0;
+  max-width: 100%;
+}
+
+/* Shared media frames should never leak or distort page geometry. */
+:where(
+  .merc-card-art-frame,
+  .merc-service-hero-art,
+  .merc-contract-art,
+  .merc-role-art,
+  .merc-action-grid figure,
+  .merc-future-art,
+  .equipment-art-frame,
+  .item-art-frame,
+  .monster-art-frame,
+  .region-art-frame
+) {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Tablet / compact desktop: clean 4-up rows instead of uneven wrapping. */
+@media (max-width: 1279px) {
+  .profile-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .profile-tabs button > span:last-child {
+    font-size: .69rem;
+    letter-spacing: .045em;
+  }
+}
+
+/* Mobile: one polished selector replaces the large desktop navigation block. */
+@media (max-width: 720px) {
+  .profile-navigation {
+    margin-bottom: 1rem;
+  }
+  .profile-tabs {
+    display: none;
+  }
+  .profile-tab-select {
+    display: grid;
+    gap: .38rem;
+    padding: .7rem .75rem;
+    border: 1px solid rgba(143, 219, 255, .22);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(8, 24, 39, .96), rgba(4, 13, 23, .96));
+    box-shadow: inset 0 1px rgba(255, 255, 255, .025), 0 8px 22px rgba(0, 0, 0, .16);
+  }
+  .profile-tab-select > span {
+    font-size: .66rem;
+    letter-spacing: .1em;
+  }
+  .profile-tab-select select {
+    min-height: 46px;
+    padding: .6rem 2.25rem .6rem .72rem;
+    font-size: .88rem;
+    line-height: 1.2;
+  }
+
+  .panel-title-row {
+    gap: .55rem;
+  }
+
+  /* Mobile media defaults: preserve authored aspect ratio and contain width. */
+  :where(.profile-content figure, .profile-content picture) {
+    width: 100%;
+  }
+  :where(.profile-content figure img, .profile-content picture img) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .panel,
+  .profile-header {
+    padding-inline: .85rem;
+  }
+  .profile-tab-select {
+    padding: .62rem;
+  }
+  .profile-tab-select select {
+    min-height: 44px;
+    font-size: .84rem;
+  }
+}

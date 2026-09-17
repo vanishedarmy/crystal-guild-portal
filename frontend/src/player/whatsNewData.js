@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.8.0 RC2",
+    name: "UI Consistency",
+    title: "A cleaner Crystal Guild Portal on desktop and mobile",
+    summary: "RC2 is a visual consistency and responsive hardening pass. It keeps Merc Service gameplay unchanged while making navigation, panels, controls, text, and artwork behave predictably across screen sizes.",
+    highlights: [
+      { title: "Balanced profile navigation", description: "The sixteen adventurer sections now form two deliberate rows on wide desktop, step down cleanly at tablet widths, and use the compact section selector on phones." },
+      { title: "No accidental overflow", description: "Shared layout guardrails let grids, panels, titles, controls, and user-facing copy shrink or wrap safely instead of forcing horizontal page overflow." },
+      { title: "Artwork containment", description: "Portal images, figures, and authored media frames are constrained to their parent layout so artwork cannot stretch a card or escape the viewport." },
+      { title: "Consistent touch targets", description: "Desktop and mobile navigation keep practical control heights, stable focus treatment, and predictable spacing without changing feature-specific interactions." },
+      { title: "Gameplay unchanged", description: "Merc pricing, three assignment slots, Hunt Seal economy, Hero effects, local schema 17, hosted sync 1, and Portal Action protocol 34 are unchanged." },
+    ],
+    action: { tab: "overview", label: "Review the Portal" },
+  },
+  {
     version: "v1.8.0 RC1",
     name: "Merc Service Hardening",
     title: "Merc deployments now stay locked through mission resolution",

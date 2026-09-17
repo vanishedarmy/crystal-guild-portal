@@ -20,6 +20,7 @@ const MODULES = {
   chocobo: lazy(() => import("../player/ChocoboStable.jsx")),
   gold_saucer: lazy(() => import("../player/GoldSaucer.jsx")),
   retainer: lazy(() => import("../player/RetainerService.jsx")),
+  mercs: lazy(() => import("../player/MercService.jsx")),
   jobs: lazy(() => import("../player/Jobs.jsx")),
   inventory: lazy(() => import("../player/Inventory.jsx")),
   shop: lazy(() => import("../player/MoogleEmporium.jsx")),
@@ -41,6 +42,7 @@ const TABS = [
   ["blacksmith", "Blacksmith", "⚒"],
   ["chocobo", "Chocobo Stable", "♞"],
   ["retainer", "Retainer Service", "◇"],
+  ["mercs", "Hero Merc Service", "⚔"],
   ["gold_saucer", "Gold Saucer", "✺"],
   ["fellowship", "Fellowship", "✥"],
   ["bestiary", "Bestiary", "◈"],
@@ -52,7 +54,7 @@ const TABS = [
 
 const TAB_GROUPS = [
   ["Core", ["overview", "hunts", "jobs", "inventory"]],
-  ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer"]],
+  ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
   ["Attractions", ["gold_saucer"]],
   ["Guild", ["fellowship"]],
   ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies"]],
@@ -105,7 +107,7 @@ export default function PlayerProfile() {
   }, [username, refreshToken]);
 
   useEffect(() => {
-    if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || moduleVersions.current[activeTab] === refreshToken) return undefined;
+    if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || moduleVersions.current[activeTab] === refreshToken) return undefined;
     const controller = new AbortController();
     if (!moduleCache[activeTab]) setTabLoading(true);
     const requestedModule = activeTab === "shop" || activeTab === "blacksmith" ? "inventory" : activeTab;
@@ -151,7 +153,7 @@ export default function PlayerProfile() {
     };
   }, [overview?.status?.state, overview?.status?.until, overview?.status?.remaining_seconds]);
 
-  const moduleData = activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" ? overview : moduleCache[activeTab] || null;
+  const moduleData = activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" ? overview : moduleCache[activeTab] || null;
   const ActiveModule = MODULES[activeTab];
   const campRemaining = campRemainingSeconds(campDeadline, clockNow);
   const displayedStatusState = overview?.status?.state === "resting" && campDeadline && campRemaining <= 0

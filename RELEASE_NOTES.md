@@ -1,21 +1,36 @@
-# Crystal Guild v1.7.1 — Resynthesis Alpha 2 Hotfix 5
+# Crystal Guild v1.8.0 Alpha 1 — Merc Service — Batch 4
 
-## Mobile Help & Disclosure Alignment
+## Player Guide, Quick Help & responsive polish
 
-This Web-only correction fixes inconsistent placement of the contextual **?** control and collapsible-section pointer on mobile.
+Batch 4 completes the code-only player-facing Merc Service layer before artwork integration.
 
-### Mobile utility controls
+### Web / Portal
+- Visible Web identity is now **v1.8.0 Alpha 1 — Merc Service** (`1.8.0-merc-a1`).
+- Player Guide adds a dedicated **Hero Merc Service** chapter and navigation entry.
+- Guide documents the separate Hunt Marks economy: **C 1 / B 2 / A 3 / S 5** per successful Hunt.
+- Guide documents all six Heroes, real unlock requirements, Hunt Mark fees, eligible mission types, and signature assists.
+- Merc Service page now includes contextual `?` Quick Help and an inline **How Merc Contracts Work** briefing.
+- Mobile adds an in-page Current / Roster / How It Works navigator, one-column roster behavior, touch-safe controls, and overflow protection.
+- What’s New now leads with the v1.8 Merc Service Alpha 1 summary.
+- Raid overlay asset cache-bust follows the v1.8 asset revision.
+- Merc artwork remains intentionally absent until Batch 5.
 
-- Contextual **?** and the collapse pointer now form one compact utility pair whenever they share a collapsible section header.
-- The **?** sits immediately to the left of the pointer instead of drifting to a different row/edge.
-- Both controls use a matching **34px** mobile visual size with a tighter shared gap.
-- Section badges, readiness state, current-region labels, Hunt Seal wallet, and similar status content remain left while the help/pointer pair stays right.
-- Dungeon Board receives an explicit right-column utility cluster so its previous grid rule cannot separate the two controls.
-- Trial & Raid Board receives the same explicit paired alignment.
-- Travel Regions, Hunts, Expeditions, and other shared collapsible-board headers use the same rule automatically.
+### Bot help
+- `!guild mercs`, `!guild merc`, and `!guild huntmarks` explain the Portal-first Merc Service, Hunt Marks, contract consumption, and cancellation rules.
+- No new Twitch gameplay command is introduced; hiring remains authoritative through the Adventurer Portal.
 
-### Compatibility
+### Release contract
+- Runtime/frontend: `1.8.0-merc-a1`
+- Local DB schema: **17**
+- Hosted sync schema: **1**
+- Portal Action protocol: **34**
+- Player reset: **none**
+- New migration in Batch 4: **none**
 
-Desktop placement remains unchanged. Personalized Twitch settlement messages, Raid XP +50%, Contextual Quick Help behavior, HTTP Response Efficiency, item sorting/control-fit changes, Full Rest & Combat Continuity, and authoritative Gear Favorites remain intact.
+## v1.8.0 Alpha 1 — Merc Service — Batch 5 Artwork Integration
 
-Runtime/frontend remains `1.7.1-resynthesis-a2h5`; schema **16**; hosted sync **1**; Portal protocol **33**. No migration or player reset.
+- Integrated all approved Merc Service artwork into the Portal.
+- Hero cards now switch between available and unavailable artwork from live unlock state.
+- Added service hall, contract, role, Hunt, Venture, Raid, and future-roster presentation art.
+- Added responsive artwork layouts and reduced-motion handling.
+- No gameplay, schema, sync, or Portal Action protocol changes from Batch 4.

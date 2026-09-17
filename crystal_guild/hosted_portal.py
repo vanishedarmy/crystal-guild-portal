@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.7.1-resynthesis-a2h5"
-FRONTEND_ASSET_REVISION = "1.7.1-resynthesis-a2h5"
+HOSTED_PORTAL_VERSION = "1.8.0-merc-a1"
+FRONTEND_ASSET_REVISION = "1.8.0-merc-a1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 33
+ACTION_PROTOCOL_VERSION = 34
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -39,6 +39,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
     "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
     "RETAINER_STATE", "RETAINER_DISPATCH", "RETAINER_COLLECT",
+    "MERC_STATE", "MERC_HIRE", "MERC_CANCEL",
     "STREAMER_COMMAND",
 }
 
@@ -82,7 +83,7 @@ MAX_ACTION_HISTORY = 20
 # Read/state requests are safe to collapse because only the newest response matters.
 READ_ONLY_STATE_ACTIONS = {
     "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
-    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE",
+    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE", "MERC_STATE",
     # Preference writes are deliberately queue-budget neutral: they never affect
     # combat, Long Rest, or gameplay progression and are last-write-wins.
     "SET_GEAR_FAVORITES",
@@ -98,7 +99,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
-    "RETAINER_DISPATCH", "RETAINER_COLLECT",
+    "RETAINER_DISPATCH", "RETAINER_COLLECT", "MERC_HIRE", "MERC_CANCEL",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -936,6 +937,19 @@ class HostedPortalStore:
             if not prize_id or len(prize_id) > 64 or not re.fullmatch(r"[a-z0-9_]+", prize_id):
                 raise ValueError("Invalid Gold Saucer prize ID.")
             payload = {"prize_id": prize_id}
+        elif kind in {"MERC_STATE", "MERC_CANCEL"}:
+            if payload:
+                raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "MERC_HIRE":
+            if set(payload) != {"hero_id", "mission_type"}:
+                raise ValueError("MERC_HIRE requires hero_id and mission_type only.")
+            hero_id = str(payload.get("hero_id") or "").strip().lower()
+            mission_type = str(payload.get("mission_type") or "").strip().lower()
+            if not hero_id or len(hero_id) > 40 or not re.fullmatch(r"[a-z0-9_]+", hero_id):
+                raise ValueError("Invalid Merc hero ID.")
+            if mission_type not in {"hunt", "venture", "raid"}:
+                raise ValueError("Invalid Merc mission type.")
+            payload = {"hero_id": hero_id, "mission_type": mission_type}
         elif kind in {"RETAINER_STATE", "RETAINER_COLLECT"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")

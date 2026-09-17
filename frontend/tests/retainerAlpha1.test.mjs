@@ -9,7 +9,7 @@ test("v1.7.0 Alpha 2 mounts Retainer Service as a personal Guild Service", async
   const profile = await read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /RetainerService/);
   assert.match(profile, /\["retainer", "Retainer Service", "◇"\]/);
-  assert.match(profile, /\["Guild Services", \["shop", "blacksmith", "chocobo", "retainer"\]\]/);
+  assert.match(profile, /\["Guild Services", \["shop", "blacksmith", "chocobo", "retainer", "mercs"\]\]/);
   assert.match(profile, /activeTab === "retainer"/);
 });
 
@@ -43,6 +43,6 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
   assert.match(guide, /Priority material/);
-  assert.equal(guideData.meta.version, "v1.7.1 Alpha 2 — Resynthesis H5");
-  assert.equal(guideData.meta.release, "1.7.1-resynthesis-a2h5");
+  assert.equal(guideData.meta.version, "v1.8.0 Alpha 1 — Merc Service");
+  assert.equal(guideData.meta.release, "1.8.0-merc-a1");
 });

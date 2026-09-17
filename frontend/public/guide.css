@@ -2932,3 +2932,7 @@ button, input, select, textarea { font: inherit; }
     flex-basis: 100%;
   }
 }
+
+/* v1.8 Merc Service Alpha 1 — Batch 4 Guide additions */
+#merc-service{scroll-margin-top:18px}.merc-guide-table-wrap{margin-top:14px}.merc-guide-table td,.merc-guide-table th{vertical-align:top}.merc-guide-table td:last-child{min-width:220px}.merc-guide-table td:nth-child(3),.merc-guide-table td:nth-child(5){white-space:normal}
+@media(max-width:720px){#merc-service .grid.two{grid-template-columns:1fr}.merc-guide-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain}.merc-guide-table{min-width:760px}.merc-guide-table th,.merc-guide-table td{padding:.65rem .7rem;font-size:.78rem}.merc-guide-table-wrap::after{content:"Swipe table for all Hero details →";display:block;padding:.45rem .15rem 0;color:var(--muted);font-size:.7rem}}

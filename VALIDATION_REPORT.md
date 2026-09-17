@@ -1,29 +1,14 @@
-# Validation Report — Mobile Help & Disclosure Alignment
+# Validation Report — Merc Service Alpha 1 Batch 4
 
 **PASS**
 
-## Regression
-
-- Frontend: **624 / 624 PASS**
-- Hosted Web/API: **76 / 76 PASS**
-- Paired Bot: **709 / 709 PASS** — Bot source unchanged
-- Focused mobile help/disclosure alignment checks: **4 / 4 PASS** (included in frontend total)
-
-## Focused checks
-
-- Mobile contextual help control resolves to 34px visual size.
-- Mobile collapse controls resolve to matching 34px visual size.
-- Help is ordered immediately before the collapse pointer with a compact shared gap.
-- Status/badge content remains left while the help/pointer pair stays right.
-- Dungeon Board explicitly treats Context Help + collapse pointer as one right-column cluster.
-- Trial & Raid Board explicitly keeps the pair together at the right edge.
-
-## Contract
-
-- Runtime/frontend: `1.7.1-resynthesis-a2h5`
-- Local DB schema: **16**
-- Hosted sync schema: **1**
-- Portal Action protocol: **33**
-- Bot/gameplay/backend changes: **none**
-- Database migration: **none**
-- Player reset: **none**
+- Frontend unit/regression: **631 / 631 PASS**
+- Hosted Web/API: **78 / 78 PASS**
+- Bot regression: **726 / 726 PASS** plus **30 / 30 subtests**
+- Focused Merc frontend (Batch 3 + Batch 4): **7 / 7 PASS**
+- Focused Merc/Portal hosted actions: **17 / 17 PASS**
+- Focused Merc/help Bot checks: **34 / 34 PASS**
+- Merc Service remains artwork-free in Batch 4 by focused regression guard.
+- Hunt Marks remain distinct from Hunt Seals in player-facing Guide/help copy.
+- Current release identity is `v1.8.0 Alpha 1 — Merc Service` / `1.8.0-merc-a1`.
+- Release contract remains schema **17**, hosted sync **1**, Portal protocol **34**.

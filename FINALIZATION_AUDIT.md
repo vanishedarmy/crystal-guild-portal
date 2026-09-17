@@ -1,9 +1,7 @@
-# Finalization Audit — Mobile Help & Disclosure Alignment
+# Finalization Audit — Merc Service Alpha 1 Batch 4
 
-**Decision: PASS — focused mobile UI correction ready to deploy.**
+**Decision: PASS — code-only player-facing Merc Service layer is ready for artwork integration.**
 
-The correction resolves the inconsistent mobile placement shown after Contextual Quick Help was introduced. Collapsible board headers now keep the contextual **?** directly beside the existing collapse pointer as one compact right-edge utility pair. Section state remains readable on the left, and Dungeon/Raid special layouts are explicitly protected.
+Batch 4 adds no gameplay rebalance and no new persistent migration. The Batch 2 Merc mechanics and Batch 3 Portal actions remain authoritative. This pass adds Player Guide coverage, Quick Help, visible v1.8 identity, Twitch help routing, and responsive/mobile presentation.
 
-No desktop redesign or backend/gameplay changes are included. Runtime/frontend remains `1.7.1-resynthesis-a2h5`, schema **16**, hosted sync **1**, Portal protocol **33**.
-
-Source regression: **624/624 frontend**, **76/76 hosted Web/API**, **709/709 paired Bot**.
+Full regressions pass at **631/631 frontend**, **78/78 hosted Web/API**, and **726/726 Bot tests + 30 subtests**. Merc artwork is deliberately deferred to Batch 5.

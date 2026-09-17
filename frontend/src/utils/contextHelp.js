@@ -165,6 +165,18 @@ export const CONTEXT_HELP = {
     tip: "Choose assignments based on materials you actually need for crafting or projects rather than sending the Retainer blindly.",
     guide: "retainer-service",
   },
+  merc_service: {
+    title: "Hero Merc Service",
+    summary: "Hire one unlocked Final Fantasy Hero with Hunt Marks to assist your next matching Hunt, Venture, or Raid.",
+    bullets: [
+      "Hunt Marks are earned from successful Hunts: C 1, B 2, A 3, and S 5. They are separate from Hunt Seals.",
+      "A contract is reserved for one mission type and is consumed only when that matching assignment actually begins.",
+      "Heroes unlock through Character Level plus lifetime Hunt clears; each Hero has a different fee, mission list, and signature assist.",
+      "Cancelling a contract frees the slot but does not refund the Hunt Marks already paid.",
+    ],
+    tip: "Choose the Hero for the mission you are about to run—not simply the most expensive one. Their specialties are intentionally different.",
+    guide: "merc-service",
+  },
   gold_saucer: {
     title: "Gold Saucer",
     summary: "Low-stakes side activities that use MGP, keep their own records, and award cosmetic or collection-focused prizes.",

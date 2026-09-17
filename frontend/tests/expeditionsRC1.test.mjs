@@ -8,8 +8,8 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("v1.2 publishes the final Expeditions identity", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(version, /WEB_BUILD = "Resynthesis H5"/);
-  assert.match(version, /1\.7\.1-resynthesis-a2/);
+  assert.match(version, /WEB_BUILD = "Merc Service"/);
+  assert.match(version, /1\.8\.0-merc-a1/);
   assert.match(news, /Expeditions has arrived/);
 });
 

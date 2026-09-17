@@ -7,7 +7,7 @@ const SRC = new URL("../src/", import.meta.url);
 
 test("v1.2.0 Player Guide command catalog uses exclamation commands exclusively", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.7.1 Alpha 2 — Resynthesis H5");
+  assert.equal(data.meta.version, "v1.8.0 Alpha 1 — Merc Service");
   assert.ok(data.commands.length > 30);
   assert.ok(data.commands.every((entry) => String(entry.command || "").startsWith("!")));
   assert.ok(data.commands.every((entry) => !String(entry.command || "").startsWith("&")));

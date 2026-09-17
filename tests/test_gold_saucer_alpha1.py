@@ -40,9 +40,9 @@ class GoldSaucerHostedAlpha1Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_contract_and_capability_allowlist(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.7.1-resynthesis-a2h5")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.7.1-resynthesis-a2h5")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 33)
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.8.0-merc-a1")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.8.0-merc-a1")
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 34)
         for action in {"GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "SAUCER_BUY"}:
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)
         self.assertEqual(STREAMER_COMMAND_SPECS["saucergrant"], "text")

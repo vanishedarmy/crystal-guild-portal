@@ -242,6 +242,18 @@ export function submitSaucerBuy(prizeId, csrfToken, idempotencyKey) {
   return submitPortalAction("SAUCER_BUY", { prize_id: String(prizeId || "") }, csrfToken, idempotencyKey);
 }
 
+export function submitMercState(csrfToken, idempotencyKey) {
+  return submitPortalAction("MERC_STATE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitMercHire(heroId, missionType, csrfToken, idempotencyKey) {
+  return submitPortalAction("MERC_HIRE", { hero_id: String(heroId || ""), mission_type: String(missionType || "") }, csrfToken, idempotencyKey);
+}
+
+export function submitMercCancel(csrfToken, idempotencyKey) {
+  return submitPortalAction("MERC_CANCEL", {}, csrfToken, idempotencyKey);
+}
+
 export function submitRetainerState(csrfToken, idempotencyKey) {
   return submitPortalAction("RETAINER_STATE", {}, csrfToken, idempotencyKey);
 }

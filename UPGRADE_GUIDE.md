@@ -1,17 +1,11 @@
-# Upgrade Guide — Mobile Help & Disclosure Alignment
+# Upgrade Guide — Merc Service Alpha 1 Batch 4
 
-This is a **Web-only** correction on top of **Personalized Chat Results + Raid XP Boost**.
+Batch 4 should be applied on top of **Merc Service Alpha 1 Batch 3 Web** and **Batch 2 Bot**.
 
-If that build is already installed, deploy the incremental Web patch only. The Bot does not need to change.
-
-The update changes only mobile control-fit CSS, focused frontend regression coverage, and release metadata. It does not modify gameplay, Raid XP, Twitch settlement behavior, authoritative player state, database schema, hosted sync, or Portal actions.
-
-Release contract:
-- runtime/frontend `1.7.1-resynthesis-a2h5`
-- local DB schema **16**
-- hosted sync schema **1**
-- Portal Action protocol **33**
-- database migration: **none**
-- player reset: **none**
-
-For a clean replacement, use the Full Web package or Complete package while preserving live databases, secrets, tokens, and persistent runtime state as usual.
+- Web: update to the Batch 4 Web package or apply the incremental Web patch.
+- Bot: update to the Batch 4 Bot package or apply the small incremental Bot patch for Merc help.
+- Preserve live databases, hosted secrets/tokens, and persistent runtime state.
+- No player reset is required.
+- No new DB migration is introduced beyond schema **17** already established in Batch 1.
+- Portal Action protocol remains **34**.
+- Merc artwork is not included; integrate the approved art set in Batch 5.

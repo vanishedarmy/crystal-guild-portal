@@ -937,9 +937,16 @@ class HostedPortalStore:
             if not prize_id or len(prize_id) > 64 or not re.fullmatch(r"[a-z0-9_]+", prize_id):
                 raise ValueError("Invalid Gold Saucer prize ID.")
             payload = {"prize_id": prize_id}
-        elif kind in {"MERC_STATE", "MERC_CANCEL"}:
+        elif kind == "MERC_STATE":
             if payload:
-                raise ValueError(f"{kind} does not accept parameters.")
+                raise ValueError("MERC_STATE does not accept parameters.")
+        elif kind == "MERC_CANCEL":
+            if not set(payload).issubset({"mission_type"}):
+                raise ValueError("MERC_CANCEL accepts only optional mission_type.")
+            mission_type = str(payload.get("mission_type") or "").strip().lower()
+            if mission_type and mission_type not in {"hunt", "venture", "raid"}:
+                raise ValueError("Invalid Merc mission type.")
+            payload = {"mission_type": mission_type} if mission_type else {}
         elif kind == "MERC_HIRE":
             if set(payload) != {"hero_id", "mission_type"}:
                 raise ValueError("MERC_HIRE requires hero_id and mission_type only.")

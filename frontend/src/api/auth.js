@@ -250,8 +250,9 @@ export function submitMercHire(heroId, missionType, csrfToken, idempotencyKey) {
   return submitPortalAction("MERC_HIRE", { hero_id: String(heroId || ""), mission_type: String(missionType || "") }, csrfToken, idempotencyKey);
 }
 
-export function submitMercCancel(csrfToken, idempotencyKey) {
-  return submitPortalAction("MERC_CANCEL", {}, csrfToken, idempotencyKey);
+export function submitMercCancel(missionType, csrfToken, idempotencyKey) {
+  const mission = String(missionType || "").trim().toLowerCase();
+  return submitPortalAction("MERC_CANCEL", mission ? { mission_type: mission } : {}, csrfToken, idempotencyKey);
 }
 
 export function submitRetainerState(csrfToken, idempotencyKey) {

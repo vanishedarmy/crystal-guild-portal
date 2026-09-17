@@ -13,8 +13,9 @@ class MercBatch3HostedTests(unittest.TestCase):
     def test_merc_payloads_are_strict(self):
         state=self.store.create_action('100','MERC_STATE',{},'merc-state-1234'); self.assertEqual(state['type'],'MERC_STATE')
         hire=self.store.create_action('100','MERC_HIRE',{'hero_id':'aerith','mission_type':'hunt'},'merc-hire-1234'); self.assertEqual(hire['type'],'MERC_HIRE')
-        cancel=self.store.create_action('100','MERC_CANCEL',{},'merc-cancel-1234'); self.assertEqual(cancel['type'],'MERC_CANCEL')
+        cancel=self.store.create_action('100','MERC_CANCEL',{'mission_type':'hunt'},'merc-cancel-1234'); self.assertEqual(cancel['type'],'MERC_CANCEL')
         with self.assertRaises(ValueError): self.store.create_action('100','MERC_HIRE',{'hero_id':'../../bad','mission_type':'hunt'},'merc-hire-bad1')
         with self.assertRaises(ValueError): self.store.create_action('100','MERC_HIRE',{'hero_id':'aerith','mission_type':'dungeon'},'merc-hire-bad2')
         with self.assertRaises(ValueError): self.store.create_action('100','MERC_CANCEL',{'force':True},'merc-cancel-bad')
+        with self.assertRaises(ValueError): self.store.create_action('100','MERC_CANCEL',{'mission_type':'dungeon'},'merc-cancel-bad2')
 if __name__=='__main__': unittest.main()

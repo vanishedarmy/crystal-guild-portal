@@ -12,7 +12,7 @@ const HEROES=["aerith","tifa","zidane","yuna","balthier","cloud"];
 test("Batch 5 dynamically routes available and unavailable Merc card artwork",()=>{
   const page=read("src/player/MercService.jsx");
   const stateHelper=read("src/player/mercServiceState.js");
-  assert.match(page,/mercHeroCardArt\(hero, contract\)/);
+  assert.match(page,/mercHeroCardArt\(hero, contracts, selectedMission\)/);
   assert.match(stateHelper,/uiState === "available" \? "available" : "unavailable"/);
   assert.match(page,/merc-card-art-frame/);
   for(const hero of HEROES){

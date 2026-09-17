@@ -167,12 +167,12 @@ export const CONTEXT_HELP = {
   },
   merc_service: {
     title: "Hero Merc Service",
-    summary: "Hire one unlocked Final Fantasy Hero with Hunt Seals to assist your next matching Hunt, Venture, or Raid.",
+    summary: "Hire up to three unlocked Final Fantasy Heroes with Hunt Seals—one each for Hunt, Venture, and Raid assignments.",
     bullets: [
       "Hunt Seals are earned from Hunts and are the same established currency used by the Quartermaster and other Guild systems.",
-      "A contract is reserved for one mission type and is consumed only when that matching assignment actually begins.",
-      "Heroes unlock through Character Level plus lifetime Hunt clears; each Hero has a different fee, mission list, and signature assist.",
-      "Cancelling a contract frees the slot but does not refund the Hunt Seals already paid.",
+      "Hunt, Venture, and Raid each have an independent contract slot; each slot is consumed only when its matching assignment actually begins.",
+      "A Hero already on contract cannot take another job, and Heroes that do not support the selected assignment type display unavailable.",
+      "If all three job slots are reserved, the entire roster displays unavailable until a contract is completed or cancelled. Cancelling does not refund Hunt Seals.",
     ],
     tip: "Choose the Hero for the mission you are about to run—not simply the most expensive one. Their specialties are intentionally different.",
     guide: "merc-service",

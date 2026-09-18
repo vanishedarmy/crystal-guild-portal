@@ -743,3 +743,96 @@
     width: auto;
   }
 }
+
+/* v1.8.1 Hotfix 2 — mobile quick-help corner anchoring.
+   Keep the contextual ? in the upper-right utility corner instead of letting
+   it wrap into content rows. Collapsible headers keep ? immediately beside
+   their disclosure control; status/wallet content is allowed to wrap below. */
+@media (max-width: 760px) {
+  /* Standard panel headers: reserve one compact utility slot. */
+  .panel-title-row:has(> .context-help-actions > .context-help):not(:has(> .context-help-actions > .section-collapse-button)),
+  .panel-title-row:has(> .context-help),
+  .chocobo-title-row:has(> .chocobo-stable-status > .context-help) {
+    position: relative;
+    padding-right: 2.75rem;
+  }
+
+  /* The help control itself is independent of badges, wallets, and other
+     metadata, so those elements can wrap naturally without dragging ? down. */
+  .panel-title-row > .context-help-actions:not(:has(> .section-collapse-button)) > .context-help,
+  .panel-title-row > .context-help,
+  .chocobo-title-row > .chocobo-stable-status > .context-help {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 26;
+    margin: 0;
+  }
+
+  /* Metadata that used to share the help row gets its own safe line. */
+  .panel-title-row > .context-help-actions:not(:has(> .section-collapse-button)) {
+    flex: 1 0 100%;
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+    gap: .45rem;
+  }
+
+  .panel-title-row > .context-help-actions:has(> .context-help:only-child) {
+    flex: 0 0 0;
+    width: 0;
+    height: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chocobo-title-row > .chocobo-stable-status {
+    width: 100%;
+    justify-content: flex-start;
+    padding-right: 0;
+  }
+
+  /* Collapsible boards reserve a two-control utility corner. The status or
+     wallet stays in normal flow while ? and the pointer remain paired. */
+  .section-collapsible-title-row:has(> .section-collapse-actions > .section-collapse-button),
+  .dungeon-board-title-row:has(> .context-help-actions > .dungeon-board-collapse-toggle),
+  .raid-board-title-row:has(> .raid-board-title-actions > .raid-board-collapse-toggle) {
+    position: relative;
+    padding-right: 4.85rem;
+  }
+
+  .section-collapsible-title-row > .section-collapse-actions,
+  .raid-board-title-row > .raid-board-title-actions {
+    flex: 1 0 100%;
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+
+  .section-collapsible-title-row > .section-collapse-actions > .context-help,
+  .dungeon-board-title-row > .context-help-actions > .context-help,
+  .raid-board-title-row > .raid-board-title-actions > .context-help {
+    position: absolute;
+    top: 0;
+    right: 2.45rem;
+    z-index: 26;
+    margin: 0;
+  }
+
+  .section-collapsible-title-row > .section-collapse-actions > .section-collapse-button,
+  .dungeon-board-title-row > .context-help-actions > .dungeon-board-collapse-toggle,
+  .raid-board-title-row > .raid-board-title-actions > .raid-board-collapse-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 26;
+    margin: 0;
+  }
+
+  /* Dungeon has no separate status in its title utility group. Removing that
+     empty wrapper from layout prevents a phantom wrapped row under the title. */
+  .dungeon-board-title-row > .context-help-actions:has(> .dungeon-board-collapse-toggle) {
+    display: contents;
+  }
+}

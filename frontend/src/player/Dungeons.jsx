@@ -167,7 +167,7 @@ export default function Dungeons({
                 <div className="solo-combat-panel dungeon-combat-panel">
                   <div className="solo-combatant enemy">
                     <div className="solo-enemy-layout">
-                      <MonsterPortrait monsterName={combat.enemy?.name} className="solo-enemy-portrait" />
+                      <MonsterPortrait monster={combat.enemy} name={combat.enemy?.name} className="solo-enemy-portrait" eager />
                       <div className="solo-enemy-copy">
                         <div className="solo-combat-head"><div><span>Dungeon Foe</span><h3>{combat.enemy?.name} · Lv. {number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)}</span></div>
                         <div className="vital-label"><span>HP</span><span>{number(combat.enemy?.hp)} / {number(combat.enemy?.max_hp)}</span></div>

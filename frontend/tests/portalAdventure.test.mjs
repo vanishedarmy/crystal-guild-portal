@@ -4,20 +4,21 @@ import test from "node:test";
 
 const SRC = new URL("../src/", import.meta.url);
 
-test("Stream Venture remains Twitch-commanded and is presented in Stream Activities", async () => {
+test("Stream Venture keeps Twitch start commands and adds authenticated Portal live controls", async () => {
   const api = await readFile(new URL("api/auth.js", SRC), "utf8");
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   const stream = await readFile(new URL("player/StreamActivities.jsx", SRC), "utf8");
   for (const token of [
-    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
-    "submitAdventureState", "submitTravelRegion", "submitSoloVenture", "submitSoloExpeditionAction", "submitSoloExpeditionContinue", "submitSoloExpeditionReturn", "submitSoloExpeditionRetreat", "submitChallengeHunt",
+    "ADVENTURE_STATE", "LIVE_EVENT_JOIN", "LIVE_EVENT_ACTION", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
+    "submitAdventureState", "submitLiveEventJoin", "submitLiveEventAction", "submitTravelRegion", "submitSoloVenture", "submitSoloExpeditionAction", "submitSoloExpeditionContinue", "submitSoloExpeditionReturn", "submitSoloExpeditionRetreat", "submitChallengeHunt",
   ]) assert.match(api, new RegExp(token));
   assert.doesNotMatch(api, /submitVenture|submitJoinEncounter|"VENTURE"|"JOIN_ENCOUNTER"/);
   assert.doesNotMatch(board, /submitVenture|submitJoinEncounter|Join Encounter/);
   assert.doesNotMatch(board, /Stream Venture · Twitch Chat Only|Rally Venture · Twitch Chat Only|<Raids/);
-  assert.match(stream, /Stream Venture · Twitch Chat Only/);
+  assert.match(stream, /Stream Venture · Live Stream/);
   assert.match(stream, /!venture/);
-  assert.match(stream, /!join/);
+  assert.match(stream, /Join Stream Venture/);
+  assert.match(stream, /runLiveAction/);
 });
 
 test("Solo Venture stays on Adventure Board while Stream Venture is separated", async () => {
@@ -27,7 +28,7 @@ test("Solo Venture stays on Adventure Board while Stream Venture is separated", 
   const region = board.indexOf('<h2>Travel Regions</h2>');
   assert.ok(solo > 0 && region > solo, { solo, region });
   assert.doesNotMatch(board, /Rally Venture · Twitch Chat Only|Stream Venture · Twitch Chat Only/);
-  assert.match(stream, /Stream Venture · Twitch Chat Only/);
+  assert.match(stream, /Stream Venture · Live Stream/);
   assert.match(board, /encounter_chance_percent \?\? 80/);
   assert.match(board, /treasure_chance_percent \?\? 20/);
   assert.match(board, /Encounter \/ Treasure/);

@@ -34,13 +34,13 @@ export const CONTEXT_HELP = {
   },
   rally_venture: {
     title: "Rally Venture",
-    summary: "A live Twitch-chat venture where the Guild rallies around one encounter for higher-risk, higher-reward combat.",
+    summary: "A live Stream Venture where Twitch chat can start the encounter and the Portal can become a visual join/action controller for the signed-in adventurer.",
     bullets: [
-      "Rally Venture is available only while the stream is live.",
+      "Rally Venture is available only while the stream is live; Twitch chat and authenticated Portal controls share the same authoritative battle.",
       "It is battle-only: 100% encounter chance and no Rally treasure chest outcome.",
       "Enemy level can scale above the initiating hero, increasing both danger and reward.",
     ],
-    tip: "Use !venture to open the rally and !join to participate while the join window is active.",
+    tip: "Use !venture to open the rally. Once it appears here, you can Join and queue Attack, Abilities, Defend, or owned battle items from the Portal; chat commands remain fully supported.",
     guide: "combat",
   },
   travel_regions: {
@@ -91,12 +91,12 @@ export const CONTEXT_HELP = {
     title: "Trials & Raids",
     summary: "Live-stream group boss encounters built around round coordination, mechanics, contribution, and repeat-clear mastery.",
     bullets: [
-      "Trials/Raids are live-only and use a rally/join phase before round actions begin.",
+      "Trials/Raids are live-only and use a rally/join phase before round actions begin; signed-in raiders can join and queue their round from the Portal or Twitch chat.",
       "Boss mechanics can ask the group for damage, mitigation, healing, positioning-style responses, or special checks.",
       "Raid victory XP has been increased by 50%; the final personal payout still blends participation with contribution.",
       "Personal records track clears, wipes, score, fastest clears, and repeat mastery milestones.",
     ],
-    tip: "The mechanic callout is the most important thing to read each round; contribution score is secondary to surviving the mechanic.",
+    tip: "Read the mechanic callout first, then use the Portal action panel or Twitch chat to queue your response before the round closes.",
     guide: "raids",
   },
   jobs: {

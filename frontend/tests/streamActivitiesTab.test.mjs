@@ -24,9 +24,12 @@ test("Adventure Board contains only Portal and off-stream adventure surfaces", a
 
 test("Stream Activities owns Stream Venture and Raid presentation", async () => {
   const stream = await readFile(new URL("player/StreamActivities.jsx", SRC), "utf8");
-  assert.match(stream, /Stream Venture · Twitch Chat Only/);
-  assert.match(stream, /<Raids username=/);
+  assert.match(stream, /Stream Venture · Live Stream/);
+  assert.match(stream, /<Raids username=.*liveRaid=/s);
   assert.match(stream, /submitAdventureState/);
+  assert.match(stream, /submitLiveEventJoin/);
+  assert.match(stream, /submitLiveEventAction/);
+  assert.match(stream, /LiveStreamCombatControls/);
   assert.match(stream, /crystal-guild-live-revision/);
   assert.match(stream, /100% Encounter \/ 0% Treasure Chest/);
 });

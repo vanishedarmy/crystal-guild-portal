@@ -283,6 +283,17 @@ export function submitAdventureState(csrfToken, idempotencyKey) {
   return submitPortalAction("ADVENTURE_STATE", {}, csrfToken, idempotencyKey);
 }
 
+export function submitLiveEventJoin(event, eventId, csrfToken, idempotencyKey) {
+  return submitPortalAction("LIVE_EVENT_JOIN", { event, event_id: eventId }, csrfToken, idempotencyKey);
+}
+
+export function submitLiveEventAction(event, eventId, round, kind, choice, targetUsername, csrfToken, idempotencyKey) {
+  const payload = { event, event_id: eventId, round: Number(round), kind };
+  if (choice) payload.choice = choice;
+  if (targetUsername) payload.target_username = targetUsername;
+  return submitPortalAction("LIVE_EVENT_ACTION", payload, csrfToken, idempotencyKey);
+}
+
 export function submitTravelRegion(regionId, csrfToken, idempotencyKey) {
   return submitPortalAction("TRAVEL_REGION", { region_id: regionId }, csrfToken, idempotencyKey);
 }

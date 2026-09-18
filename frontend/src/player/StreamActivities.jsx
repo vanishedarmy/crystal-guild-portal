@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { submitAdventureState, waitForPortalAction } from "../api/auth.js";
+import { submitAdventureState, submitLiveEventAction, submitLiveEventJoin, waitForPortalAction } from "../api/auth.js";
 import ContextHelp from "../components/ContextHelp.jsx";
+import LiveStreamCombatControls from "../components/LiveStreamCombatControls.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
@@ -57,7 +58,7 @@ function remainingUntil(timestamp, nowMs) {
   return Math.max(0, seconds);
 }
 
-function StreamVentureEncounter({ encounter, nowMs }) {
+function StreamVentureEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
   if (!encounter || encounter.kind !== "venture") return null;
   const rallyRemaining = remainingUntil(encounter.rally_closes_at, nowMs);
   const roundRemaining = remainingUntil(encounter.next_round_at, nowMs);
@@ -91,16 +92,18 @@ function StreamVentureEncounter({ encounter, nowMs }) {
       </div>
 
       {encounter.state === "rally" ? (
-        <div className="adventure-combat-note rally-venture-chat-note">
-          <strong>Rally entry is in Twitch chat.</strong>
-          <span>{encounter.you_joined ? "You are already in this rally. Watch chat for the battle start." : "Type !join in Twitch chat before the rally closes to take part."}</span>
+        <div className="adventure-combat-note rally-venture-chat-note live-stream-rally-control">
+          <strong>{encounter.you_joined ? "You are in the rally." : "Rally open."}</strong>
+          <span>{encounter.you_joined ? "The Portal will switch to battle controls when combat begins." : encounter.join_reason || "Join from the Portal or Twitch chat before the rally closes."}</span>
+          {!encounter.you_joined && encounter.can_join ? <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => onJoin?.("venture", String(encounter.id))}>{busy === "venture:join" ? "Joining…" : "Join Stream Venture"}</button> : null}
         </div>
       ) : null}
 
       {encounter.state === "combat" ? (
+        encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} busy={busy?.startsWith?.("venture:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("venture", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
         <div className="adventure-combat-note">
-          <strong>Battle is underway in Twitch chat.</strong>
-          <span>Choose !attack, !ability, !defend, or !use before the round timer closes; otherwise your hero uses the default action.</span>
+          <strong>{encounter.you_joined ? "Portal battle controls are synchronizing." : "Battle is underway."}</strong>
+          <span>{encounter.you_joined ? "Twitch chat commands remain available while the controls refresh." : "This rally is already in combat; watch the live battle and join the next rally."}</span>
         </div>
       ) : null}
     </div>
@@ -111,6 +114,7 @@ export default function StreamActivities({ data: overview }) {
   const { auth } = usePortalAuth();
   const [state, setState] = useState(null);
   const [message, setMessage] = useState("");
+  const [liveBusy, setLiveBusy] = useState("");
   const [clock, setClock] = useState(() => Date.now());
   const [serverOffsetMs, setServerOffsetMs] = useState(0);
   const stateInflight = useRef(false);
@@ -164,13 +168,51 @@ export default function StreamActivities({ data: overview }) {
     }
   }, [csrfToken, stateAvailable, username]);
 
+  const runLiveJoin = useCallback(async (event, eventId) => {
+    if (!stateAvailable || liveBusy) return;
+    const target = `${event}:${eventId}:join`;
+    const idem = actionKey("live-join", target, username);
+    setLiveBusy(`${event}:join`);
+    try {
+      const response = await submitLiveEventJoin(event, eventId, csrfToken, idem);
+      const finished = await finishedAction(response);
+      clearActionKey("live-join", target, username, idem);
+      const next = finished?.result?.data?.adventure_state || null;
+      if (next) setState(next);
+      setMessage(finished?.result?.message || (finished?.status === "completed" ? "Joined live event." : "Live event join failed."));
+    } catch (error) {
+      setMessage(String(error?.message || error));
+    } finally {
+      setLiveBusy("");
+    }
+  }, [csrfToken, liveBusy, stateAvailable, username]);
+
+  const runLiveAction = useCallback(async (event, eventId, round, kind, choice = "", targetUsername = "") => {
+    if (!stateAvailable || liveBusy) return;
+    const target = `${event}:${eventId}:r${round}:${kind}:${choice || "core"}:${targetUsername || "none"}`;
+    const idem = actionKey("live-action", target, username);
+    setLiveBusy(`${event}:${kind}`);
+    try {
+      const response = await submitLiveEventAction(event, eventId, round, kind, choice, targetUsername, csrfToken, idem);
+      const finished = await finishedAction(response);
+      clearActionKey("live-action", target, username, idem);
+      const next = finished?.result?.data?.adventure_state || null;
+      if (next) setState(next);
+      setMessage(finished?.result?.message || (finished?.status === "completed" ? "Live action queued." : "Live action failed."));
+    } catch (error) {
+      setMessage(String(error?.message || error));
+    } finally {
+      setLiveBusy("");
+    }
+  }, [csrfToken, liveBusy, stateAvailable, username]);
+
   useEffect(() => {
     if (!stateAvailable) return undefined;
     void loadState();
     const refreshVisible = () => {
       if (document.visibilityState === "visible") void loadState();
     };
-    const poll = window.setInterval(refreshVisible, state?.encounter?.kind === "venture" ? 30000 : 60000);
+    const poll = window.setInterval(refreshVisible, state?.stream_live ? 5000 : 60000);
     window.addEventListener("crystal-guild-live-revision", refreshVisible);
     window.addEventListener("focus", refreshVisible);
     window.addEventListener("pageshow", refreshVisible);
@@ -182,7 +224,7 @@ export default function StreamActivities({ data: overview }) {
       window.removeEventListener("pageshow", refreshVisible);
       document.removeEventListener("visibilitychange", refreshVisible);
     };
-  }, [stateAvailable, state?.encounter?.kind, loadState]);
+  }, [stateAvailable, state?.stream_live, loadState]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClock(Date.now()), 1000);
@@ -209,8 +251,8 @@ export default function StreamActivities({ data: overview }) {
           <span className="small-badge">Twitch Live</span>
         </div>
         <div className="stream-activity-summary" aria-label="Stream activity summary">
-          <div><span>Stream Venture</span><strong>{ventureStatus}</strong><small>Start with !venture · join with !join</small></div>
-          <div><span>Raids &amp; Trials</span><strong>Live Board</strong><small>Join active encounters with !raid</small></div>
+          <div><span>Stream Venture</span><strong>{ventureStatus}</strong><small>Start in chat · join/action in Portal or chat</small></div>
+          <div><span>Raids &amp; Trials</span><strong>Live Board</strong><small>Join/action in Portal or chat</small></div>
         </div>
         {!isOwnProfile ? <p className="stream-activity-note">Stream Venture status is private to the signed-in adventurer. Raid and Trial information remains viewable below.</p> : null}
         {isOwnProfile && !stateAvailable ? <p className="stream-activity-note">Live Stream status will appear when Crystal Guild reconnects.</p> : null}
@@ -220,10 +262,10 @@ export default function StreamActivities({ data: overview }) {
       <section className="panel rally-venture-notice stream-venture-panel" data-active={encounter ? "true" : "false"}>
         <img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp" alt="" aria-hidden="true" loading="eager" decoding="async" />
         <div className="panel-title-row">
-          <div><p className="eyebrow">Stream Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
+          <div><p className="eyebrow">Stream Venture · Live Stream</p><h2>Higher risk. Better rewards.</h2></div>
           <div className="context-help-actions"><ContextHelp topic="rally_venture" /><span className="small-badge">Live Stream</span></div>
         </div>
-        <p className="muted">Use <code>!venture</code>; join an open rally with <code>!join</code>.</p>
+        <p className="muted">A Venture can still begin in Twitch chat with <code>!venture</code>. Once the rally appears here, join and queue battle actions directly from the Portal or continue using chat commands.</p>
         <div className="solo-venture-rules rally-venture-rules" aria-label="Stream Venture rules">
           <span><strong>100% Encounter / 0% Treasure Chest</strong>Battle-only Stream Venture</span>
           <span><strong>+10</strong>Enemy level cap</span>
@@ -234,7 +276,7 @@ export default function StreamActivities({ data: overview }) {
           <strong>{ventureStatus}</strong>
           <span>Live-stream activity</span>
         </div>
-        {encounter ? <StreamVentureEncounter encounter={encounter} nowMs={authoritativeClock} /> : null}
+        {encounter ? <StreamVentureEncounter encounter={encounter} nowMs={authoritativeClock} busy={liveBusy} onJoin={runLiveJoin} onAction={runLiveAction} /> : null}
         {recentVenture ? (
           <div className={`stream-venture-result ${recentVenture.won ? "won" : "lost"}`} aria-live="polite">
             <div><span>Recent Stream Venture</span><strong>{recentVenture.won ? "Victory" : "Ended"}</strong></div>
@@ -244,7 +286,7 @@ export default function StreamActivities({ data: overview }) {
         ) : null}
       </section>
 
-      <Raids username={overview?.identity?.username || ""} />
+      <Raids username={overview?.identity?.username || ""} liveRaid={state?.raid || null} liveBusy={liveBusy} onLiveJoin={runLiveJoin} onLiveAction={runLiveAction} />
     </section>
   );
 }

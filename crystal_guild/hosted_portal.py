@@ -33,7 +33,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "WORKSHOP_EXCHANGE",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "RESYNTHESIZE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
-    "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
+    "ADVENTURE_STATE", "LIVE_EVENT_JOIN", "LIVE_EVENT_ACTION", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE", "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
@@ -92,7 +92,7 @@ READ_ONLY_STATE_ACTIONS = {
 # still pending/processing. This prevents a browser retry from applying a Solo
 # Venture round twice after the first request completed slowly.
 COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
-    "CLAIM_DAILY", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
+    "CLAIM_DAILY", "LIVE_EVENT_JOIN", "LIVE_EVENT_ACTION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
     "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN",
     "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
@@ -1031,6 +1031,52 @@ class HostedPortalStore:
         elif kind in {"ADVENTURE_STATE", "SOLO_VENTURE", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")
+        elif kind == "LIVE_EVENT_JOIN":
+            if set(payload) != {"event", "event_id"}:
+                raise ValueError("LIVE_EVENT_JOIN requires event and event_id.")
+            event = str(payload.get("event") or "").strip().lower()
+            event_id = str(payload.get("event_id") or "").strip()
+            if event not in {"venture", "raid"}:
+                raise ValueError("Live event must be venture or raid.")
+            if not event_id or len(event_id) > 120 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", event_id):
+                raise ValueError("Invalid live event ID.")
+            payload = {"event": event, "event_id": event_id}
+        elif kind == "LIVE_EVENT_ACTION":
+            allowed = {"event", "event_id", "round", "kind", "choice", "target_username"}
+            if set(payload) - allowed or not {"event", "event_id", "round", "kind"}.issubset(payload):
+                raise ValueError("LIVE_EVENT_ACTION requires event, event_id, round, and kind; choice/target_username are optional.")
+            event = str(payload.get("event") or "").strip().lower()
+            event_id = str(payload.get("event_id") or "").strip()
+            action_kind = str(payload.get("kind") or "").strip().lower()
+            if event not in {"venture", "raid"}:
+                raise ValueError("Live event must be venture or raid.")
+            if not event_id or len(event_id) > 120 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", event_id):
+                raise ValueError("Invalid live event ID.")
+            if isinstance(payload.get("round"), bool):
+                raise ValueError("Live event round must be a positive whole number.")
+            try:
+                round_no = int(payload.get("round"))
+            except (TypeError, ValueError):
+                raise ValueError("Live event round must be a positive whole number.") from None
+            if round_no < 1 or round_no > 9999:
+                raise ValueError("Live event round must be a positive whole number.")
+            if action_kind not in {"attack", "defend", "ability", "item"}:
+                raise ValueError("Unknown live battle command.")
+            choice = " ".join(str(payload.get("choice") or "").strip().split())
+            target_username = str(payload.get("target_username") or "").strip().lower()
+            if action_kind in {"attack", "defend"}:
+                if choice or target_username:
+                    raise ValueError(f"{action_kind.title()} does not accept choice or target_username.")
+            else:
+                if not choice or len(choice) > 100 or not re.fullmatch(r"[A-Za-z0-9 .'_:-]+", choice):
+                    raise ValueError("Choose a valid live ability or item.")
+                if target_username and not USERNAME_RE.fullmatch(target_username):
+                    raise ValueError("Invalid live ally target.")
+            payload = {"event": event, "event_id": event_id, "round": round_no, "kind": action_kind}
+            if choice:
+                payload["choice"] = choice
+            if target_username:
+                payload["target_username"] = target_username
         elif kind == "STREAMER_COMMAND":
             if set(payload) - {"command", "argument"} or "command" not in payload:
                 raise ValueError("STREAMER_COMMAND requires command and, when needed, argument.")

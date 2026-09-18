@@ -5,6 +5,7 @@ import CollapsePointer from "../components/CollapsePointer.jsx";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import { duration, number, pct } from "../utils/formatters.js";
 import ContextHelp from "../components/ContextHelp.jsx";
+import LiveStreamCombatControls from "../components/LiveStreamCombatControls.jsx";
 
 const FEATURED_TRIALS = [
   { id: "ifrit", name: "Ifrit", encounter: "Inferno Crucible", level: 25, hp: 18000, art: "/retro-phase-ii/boss-art-v1/ifrit.webp", summary: <>Read Incinerate and Radiant Plume, then break <strong>Infernal Nails</strong> before <strong>Hellfire</strong>.</> },
@@ -47,7 +48,7 @@ function repeatMastery(record) {
   return { label: "Uncleared", next: 1 };
 }
 
-export default function Raids({ username = "" }) {
+export default function Raids({ username = "", liveRaid = null, liveBusy = "", onLiveJoin, onLiveAction }) {
   const [state, setState] = useState(null);
   const [recordData, setRecordData] = useState(null);
   const [now, setNow] = useState(Date.now());
@@ -105,6 +106,12 @@ export default function Raids({ username = "" }) {
     <img loading="lazy" className={`panel-scenic-art raid-board-scenic-art ${boardOpen ? "open" : "collapsed"}`} src={boardOpen ? "/trails-raids/h4/trial-board-open.webp" : "/trails-raids/h4/trial-board-collapsed.webp"} alt="" aria-hidden="true" decoding="async" />
     <div className="panel-title-row raid-board-title-row"><div><p className="eyebrow">Trails &amp; Raids</p><h2 id="raid-board-title">Trial &amp; Raid Board</h2><p className="muted">Coordinate each round, review personal Trial progress, and keep the seven flagship encounters readable from pull to settlement.</p></div><div className="raid-board-title-actions"><ContextHelp topic="raids" /><span className={`small-badge ${active || finalStatus === "VICTORY" ? "success" : finalStatus === "WIPE" ? "danger" : ""}`}>{statusLabel}</span><button type="button" className="section-collapse-button raid-board-collapse-toggle" aria-expanded={boardOpen} aria-label={boardOpen ? "Collapse Trial & Raid Board" : "Expand Trial & Raid Board"} title={boardOpen ? "Collapse Trial & Raid Board" : "Expand Trial & Raid Board"} onClick={toggleBoard}><CollapsePointer open={boardOpen} /></button></div></div>
     {boardOpen ? (active ? <div className="raid-board-live" aria-live="polite">
+      {liveRaid?.state === "rally" ? <div className="adventure-combat-note live-stream-rally-control raid-portal-rally">
+        <strong>{liveRaid.you_joined ? "You are in the raid rally." : "Raid rally open."}</strong>
+        <span>{liveRaid.you_joined ? "Portal battle controls will appear when the pull begins." : liveRaid.join_reason || "Join from the Portal or Twitch chat before the rally closes."}</span>
+        {!liveRaid.you_joined && liveRaid.can_join ? <button type="button" className="equipment-action-button" disabled={Boolean(liveBusy)} onClick={() => onLiveJoin?.("raid", String(liveRaid.event_id || ""))}>{liveBusy === "raid:join" ? "Joining…" : "Join Raid"}</button> : null}
+      </div> : null}
+      {liveRaid?.state === "combat" ? (liveRaid.you_joined && liveRaid.controls ? <LiveStreamCombatControls controls={liveRaid.controls} busy={liveBusy?.startsWith?.("raid:") ? liveBusy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onLiveAction?.("raid", String(liveRaid.event_id || ""), liveRaid.controls?.round || liveRaid.action_round, kind, choice, target)} /> : <div className="adventure-combat-note"><strong>{liveRaid.you_joined ? "Portal battle controls are synchronizing." : "Raid combat is underway."}</strong><span>{liveRaid.you_joined ? "Twitch chat commands remain available while the controls refresh." : "The rally is closed; watch this pull and join the next one."}</span></div>) : null}
       <div className="raid-board-boss-row"><div><span>{state?.encounter_type || state?.tier || "Raid"}</span><strong>{state?.boss || "Raid Boss"}</strong><small>{state?.encounter_name && state.encounter_name !== state.boss ? state.encounter_name : state?.phase || "Battle"}</small></div><div className="raid-board-round"><span>Round {number(state?.round || 0)}</span><strong>{nextRound > 0 ? duration(nextRound) : "Resolving"}</strong><small>{state?.phase || "Battle"}</small></div></div>
       <div className="raid-board-vitals"><div className="raid-board-vital-copy"><span>Boss HP</span><strong>{number(state?.hp || 0)} / {number(state?.max_hp || 0)}</strong></div><ProgressBar value={pct(state?.hp, state?.max_hp)} className="hp" /><div className="raid-board-vital-meta"><span>{number(state?.alive || 0)} / {number(state?.raiders || 0)} raiders standing</span><span>Actions {number(state?.ready_actions || 0)} / {number(state?.actionable_raiders || 0)} queued</span><span>Summon {number(state?.summon_gauge || 0)}%</span></div></div>
       <div className="raid-readiness-strip" aria-label="Raid round readiness"><div><span>Round Readiness</span><strong>{number(state?.ready_actions || 0)} / {number(state?.actionable_raiders || 0)} queued</strong><small>{Math.max(0, Number(state?.actionable_raiders || 0) - Number(state?.ready_actions || 0)) ? `${number(Math.max(0, Number(state?.actionable_raiders || 0) - Number(state?.ready_actions || 0)))} waiting` : "All actionable raiders ready"}</small></div><ProgressBar value={pct(state?.ready_actions, state?.actionable_raiders)} /></div>

@@ -716,6 +716,10 @@ class PortalActionServerCase(unittest.TestCase):
     def test_wayfarer_accepts_only_typed_portal_side_adventure_actions(self):
         for action_type, payload, key in (
             ("ADVENTURE_STATE", {}, "adventure-state"),
+            ("LIVE_EVENT_JOIN", {"event": "venture", "event_id": "123"}, "live-venture-join"),
+            ("LIVE_EVENT_JOIN", {"event": "raid", "event_id": "raidabc123"}, "live-raid-join"),
+            ("LIVE_EVENT_ACTION", {"event": "venture", "event_id": "123", "round": 1, "kind": "attack"}, "live-venture-attack"),
+            ("LIVE_EVENT_ACTION", {"event": "raid", "event_id": "raidabc123", "round": 2, "kind": "ability", "choice": "cure", "target_username": "van"}, "live-raid-cure"),
             ("TRAVEL_REGION", {"region_id": "sable_coast"}, "travel-sable"),
             ("SOLO_VENTURE", {}, "solo-venture-now"),
             ("SOLO_EXPEDITION_ACTION", {"action": "attack"}, "solo-action-attack"),
@@ -754,6 +758,14 @@ class PortalActionServerCase(unittest.TestCase):
 
         invalid = (
             ("ADVENTURE_STATE", {"unexpected": True}),
+            ("LIVE_EVENT_JOIN", {}),
+            ("LIVE_EVENT_JOIN", {"event": "hunt", "event_id": "1"}),
+            ("LIVE_EVENT_JOIN", {"event": "venture", "event_id": "bad id"}),
+            ("LIVE_EVENT_ACTION", {"event": "venture", "event_id": "1", "round": 0, "kind": "attack"}),
+            ("LIVE_EVENT_ACTION", {"event": "venture", "event_id": "1", "round": 1, "kind": "attack", "choice": "power break"}),
+            ("LIVE_EVENT_ACTION", {"event": "raid", "event_id": "abc", "round": 1, "kind": "ability"}),
+            ("LIVE_EVENT_ACTION", {"event": "raid", "event_id": "abc", "round": 1, "kind": "dance"}),
+            ("LIVE_EVENT_ACTION", {"event": "raid", "event_id": "abc", "round": 1, "kind": "item", "choice": "potion", "target_username": "bad user!"}),
             ("TRAVEL_REGION", {}),
             ("TRAVEL_REGION", {"region_id": "Sable Coast"}),
             ("TRAVEL_REGION", {"region_id": "sable_coast", "command": "!travel"}),

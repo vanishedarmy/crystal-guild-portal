@@ -15,7 +15,7 @@ const refreshButton = await readFile(new URL("components/PageRefreshButton.jsx",
 const sectionSources = await Promise.all([
   "Blacksmith.jsx", "ChocoboStable.jsx", "DailyReward.jsx", "Fellowship.jsx",
   "GoldSaucer.jsx", "Hunts.jsx", "Inventory.jsx", "Jobs.jsx", "MercService.jsx",
-  "MoogleEmporium.jsx", "RetainerService.jsx",
+  "MoogleEmporium.jsx", "RetainerService.jsx", "StreamActivities.jsx",
 ].map((name) => readFile(new URL(`player/${name}`, SRC), "utf8")));
 
 test("RC3 advances the visible UI polish identity", () => {
@@ -27,7 +27,6 @@ test("RC3 advances the visible UI polish identity", () => {
 test("profile navigation prioritizes readable one-line labels at every desktop tier", () => {
   assert.match(css, /navigation fit \+ one-page refresh/);
   assert.match(css, /\.profile-tabs\s*\{[\s\S]*grid-template-columns:\s*repeat\(6,\s*minmax\(0,\s*1fr\)\)/);
-  assert.match(css, /@media \(min-width: 1600px\)[\s\S]*repeat\(8,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1279px\)[\s\S]*repeat\(4,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(css, /@media \(min-width: 721px\) and \(max-width: 900px\)[\s\S]*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(css, /\.profile-tabs button\s*\{[\s\S]*overflow:\s*hidden/);
@@ -36,7 +35,7 @@ test("profile navigation prioritizes readable one-line labels at every desktop t
 });
 
 test("normal desktop final row is centered instead of orphaned", () => {
-  assert.match(css, /@media \(min-width: 1280px\) and \(max-width: 1599px\)[\s\S]*\.profile-tabs button:nth-child\(13\)\s*\{\s*grid-column:\s*2;/);
+  assert.match(css, /@media \(min-width: 1280px\)[\s\S]*\.profile-tabs button:nth-child\(13\)\s*\{\s*grid-column:\s*2;/);
 });
 
 test("manual refresh is one shared control at the page bottom", () => {

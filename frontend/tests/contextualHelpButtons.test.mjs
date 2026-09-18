@@ -36,11 +36,12 @@ test("quick-help button is accessible, dismissible, and rendered outside clipped
   assert.match(source, /Open full Player Guide/);
 });
 
-test("Adventure Board help is placed on the major systems players need explained", () => {
+test("Adventure and Stream boards place help on the major systems players need explained", () => {
   const source = read("src/player/Hunts.jsx");
-  for (const topic of ["adventure_board", "camp_recovery", "solo_venture", "rally_venture", "travel_regions", "hunts"]) {
+  for (const topic of ["adventure_board", "camp_recovery", "solo_venture", "travel_regions", "hunts"]) {
     assert.match(source, new RegExp(`ContextHelp topic=\\"${topic}\\"`));
   }
+  assert.match(read("src/player/StreamActivities.jsx"), /ContextHelp topic="rally_venture"/);
   assert.match(read("src/player/Dungeons.jsx"), /ContextHelp topic="dungeons"/);
   assert.match(read("src/player/Expeditions.jsx"), /ContextHelp topic="expeditions"/);
   assert.match(read("src/player/Raids.jsx"), /ContextHelp topic="raids"/);

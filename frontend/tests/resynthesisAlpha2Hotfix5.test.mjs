@@ -8,6 +8,7 @@ const shop = fs.readFileSync(new URL("../src/player/MoogleEmporium.jsx", import.
 const detail = fs.readFileSync(new URL("../src/components/DetailDialog.jsx", import.meta.url), "utf8");
 const streamer = fs.readFileSync(new URL("../src/pages/StreamerDashboard.jsx", import.meta.url), "utf8");
 const hunts = fs.readFileSync(new URL("../src/player/Hunts.jsx", import.meta.url), "utf8");
+const stream = fs.readFileSync(new URL("../src/player/StreamActivities.jsx", import.meta.url), "utf8");
 const formatters = fs.readFileSync(new URL("../src/utils/formatters.js", import.meta.url), "utf8");
 const portalCss = fs.readFileSync(new URL("../src/styles/portal.css", import.meta.url), "utf8");
 const streamerCss = fs.readFileSync(new URL("../src/styles/streamer.css", import.meta.url), "utf8");
@@ -66,7 +67,7 @@ test("Hotfix 5 final UI corrections keep gear cards compact, stars icon-only, an
   assert.match(portalCss, /gear-favorite-button \{ width:38px/);
   assert.match(inventory, /\{isFavorite \? "★" : "☆"\}/);
   assert.doesNotMatch(inventory, /★ Favorited|☆ Favorite/);
-  assert.match(hunts, /100% Encounter \/ 0% Treasure Chest/);
-  assert.doesNotMatch(hunts, /70 \/ 30/);
+  assert.match(stream, /100% Encounter \/ 0% Treasure Chest/);
+  assert.doesNotMatch(stream, /70 \/ 30/);
   assert.match(hunts, /\{soloEncounterChance\} \/ \{soloTreasureChance\}/);
 });

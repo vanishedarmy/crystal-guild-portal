@@ -17,7 +17,8 @@ test("Fellowship page presents the active Expedition Board gate", async () => {
 test("Chocobo Stable presents live Expedition readiness and active trait effects", async () => {
   const stable = await readFile(new URL("player/ChocoboStable.jsx", SRC), "utf8");
   const guide = await readFile(new URL("../public/guide-body.html", import.meta.url), "utf8");
-  assert.match(stable, /v1\.2 · Active/);
+  assert.match(stable, /panel-kicker">Active/);
+  assert.doesNotMatch(stable, /v1\.2 · Active/);
   assert.match(stable, /EXPEDITIONS OPEN/);
   assert.match(stable, /Adventure Board/);
   assert.match(stable, /persistent trait now modifies travel|persistent trait becomes a Guardian/);

@@ -27,6 +27,7 @@ const MODULES = {
   shop: lazy(() => import("../player/MoogleEmporium.jsx")),
   blacksmith: lazy(() => import("../player/Blacksmith.jsx")),
   hunts: lazy(() => import("../player/Hunts.jsx")),
+  stream: lazy(() => import("../player/StreamActivities.jsx")),
   bestiary: lazy(() => import("../player/Bestiary.jsx")),
   relics: lazy(() => import("../player/Relics.jsx")),
   achievements: lazy(() => import("../player/Achievements.jsx")),
@@ -37,6 +38,7 @@ const MODULES = {
 const TABS = [
   ["overview", "Overview", "◇"],
   ["hunts", "Adventure Board", "⌖"],
+  ["stream", "Stream Activities", "◉"],
   ["jobs", "Jobs", "✦"],
   ["inventory", "Equipment & Inventory", "◆"],
   ["shop", "Moogle Emporium", "¤"],
@@ -54,7 +56,7 @@ const TABS = [
 ];
 
 const TAB_GROUPS = [
-  ["Core", ["overview", "hunts", "jobs", "inventory"]],
+  ["Core", ["overview", "hunts", "stream", "jobs", "inventory"]],
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
   ["Attractions", ["gold_saucer"]],
   ["Guild", ["fellowship"]],
@@ -113,7 +115,7 @@ export default function PlayerProfile() {
   }, [username, refreshToken]);
 
   useEffect(() => {
-    if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || moduleVersions.current[activeTab] === refreshToken) return undefined;
+    if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" || moduleVersions.current[activeTab] === refreshToken) return undefined;
     const controller = new AbortController();
     if (!moduleCache[activeTab]) setTabLoading(true);
     const requestedModule = activeTab === "shop" || activeTab === "blacksmith" ? "inventory" : activeTab;
@@ -159,7 +161,7 @@ export default function PlayerProfile() {
     };
   }, [overview?.status?.state, overview?.status?.until, overview?.status?.remaining_seconds]);
 
-  const moduleData = activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" ? overview : moduleCache[activeTab] || null;
+  const moduleData = activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" ? overview : moduleCache[activeTab] || null;
   const ActiveModule = MODULES[activeTab];
   const campRemaining = campRemainingSeconds(campDeadline, clockNow);
   const displayedStatusState = overview?.status?.state === "resting" && campDeadline && campRemaining <= 0

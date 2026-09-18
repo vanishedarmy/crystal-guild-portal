@@ -37,11 +37,11 @@ test("native details use actual right/down pointer image elements", () => {
   }
 });
 
-test("Rally Venture uses a real DOM image layer rather than a CSS background URL", () => {
+test("Stream Venture uses a real DOM image layer rather than a CSS background URL", () => {
   const rel = "public/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp";
   assert.ok(fs.existsSync(path.join(root, rel)));
-  const hunts = read("src/player/Hunts.jsx");
-  assert.ok(hunts.includes('<img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp"'));
+  const stream = read("src/player/StreamActivities.jsx");
+  assert.ok(stream.includes('<img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp"'));
   const portal = read("src/styles/portal.css");
   assert.match(portal, /\.rally-venture-background-art \{[\s\S]*position: absolute;[\s\S]*object-fit: cover;/);
   assert.doesNotMatch(read("src/styles/environment-pass.css"), /rally_venture\.webp/);

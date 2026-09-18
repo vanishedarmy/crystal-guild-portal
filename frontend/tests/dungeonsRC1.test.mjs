@@ -12,7 +12,7 @@ test("RC1 identity and Dungeon catalog remain feature frozen", () => {
   assert.equal(WEB_BUILD, "Merc Service");
   assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-final");
   const board=read("src/player/Dungeons.jsx");
-  assert.match(board,/Dungeons & Delves · v1.4.0/);
+  assert.match(board,/Dungeons &amp; Delves/);
 });
 
 test("RC1 keeps the mobile Dungeon disclosure pinned right with stateful pointers", () => {

@@ -21,7 +21,7 @@ test("Dungeons Beta 1 binds Portal mutations to the exact persisted revision", (
 test("Dungeons Beta 1 exposes ongoing round telemetry and current release identity", () => {
   assert.match(board, /Round \{number\(combat\.round\)\}/);
   assert.doesNotMatch(board, /combat\.max_rounds/);
-  assert.match(board, /Dungeons & Delves · v1.4.0/);
+  assert.match(board, /Dungeons &amp; Delves/);
   assert.match(version, /1\.8\.0-merc-final/);
   assert.match(whatsNew, /Dungeons & Delves/);
   assert.match(whatsNew, /Safe across tabs and retries/);

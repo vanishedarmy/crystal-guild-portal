@@ -31,7 +31,8 @@ export default function Overview({ data, onDetail, onRefresh, onNavigate }) {
     ["jobs", "Character Setup", "Change Job, stance, and cross-Job Masteries."],
     ["shop", "Moogle Emporium", "Buy supplies and sell eligible inventory."],
     ["blacksmith", "Guild Blacksmith", "Craft, forge, and resynthesize equipment."],
-    ["hunts", "Adventure Board", "Interactive Solo Venture, travel, and challenge Hunts. Rally Ventures use Twitch chat."],
+    ["hunts", "Adventure Board", "Interactive Solo Venture, Expeditions, Dungeons, travel, recovery, and challenge Hunts."],
+    ["stream", "Stream Activities", "Live Stream Ventures, Trials, and Raids in one Twitch-focused area."],
     ["fellowship", "Fellowship", "Review Guild Rank, projects, and contributions."],
     ["chocobo", "Chocobo Stable", "Register and train your companion for Expeditions."],
   ];

@@ -227,7 +227,7 @@ export default function Expeditions({
       <section className={`panel expedition-board-panel collapsible-board-section ${boardOpen ? "open" : "collapsed"} ${active ? "active" : ""}`} data-region={active?.region?.id || ""}>
         <div className="panel-title-row section-collapsible-title-row">
           <div>
-            <p className="eyebrow">v1.2 · Chocobo Expeditions</p>
+            <p className="eyebrow">Chocobo Expeditions</p>
             <h2>{active ? `${active.region?.name} · Stage ${number(active.stage)} / ${number(active.max_stages)}` : "Distant Expedition Board"}</h2>
             {boardOpen ? <p className="muted">{active ? "Your progress is saved. Follow the current stage, then choose how to continue." : "Choose a region and route, then bring your Expedition Cache home safely."}</p> : null}
           </div>

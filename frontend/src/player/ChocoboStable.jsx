@@ -214,7 +214,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
     <section className="panel chocobo-stable-panel">
       <div className="panel-title-row chocobo-title-row">
         <div>
-          <p className="eyebrow">v1.1.10 · Chocobo Companions</p>
+          <p className="eyebrow">Chocobo Companions</p>
           <h2>Chocobo Stable</h2>
           <p className="muted">A registered Chocobo is required to launch Expeditions from the Adventure Board.</p>
         </div>
@@ -401,7 +401,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
 
       <section className="chocobo-expedition-preview" aria-label="Expedition readiness">
         <div className="panel-title-row">
-          <div><span className="panel-kicker">v1.2 · Active</span><h3>Expeditions</h3></div>
+          <div><span className="panel-kicker">Active</span><h3>Expeditions</h3></div>
           <span className="small-badge success">EXPEDITIONS OPEN</span>
         </div>
         <p className="muted">The Stable is your first step toward Expeditions. Once your Chocobo is registered and the Fellowship Expedition Board is complete, launch distant contracts from the Adventure Board.</p>

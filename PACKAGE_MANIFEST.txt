@@ -9,6 +9,9 @@ CHOCOBO_PORTRAIT_MANIFEST.json
 Dockerfile
 EQUIPMENT_ARTWORK_ROUTING_MANIFEST.json
 EXPEDITION_ARTWORK_MANIFEST.json
+EXPEDITION_UI_POLISH_MANIFEST.json
+EXPEDITION_UI_POLISH_RELEASE_NOTES.md
+EXPEDITION_UI_POLISH_VALIDATION.md
 FINALIZATION_AUDIT.md
 GEAR_ARTWORK_MANIFEST.json
 GOLD_SAUCER_MGP_REBALANCE_AUDIT.md
@@ -35,6 +38,9 @@ RELEASE_NOTES.md
 RELIC_ARTWORK_MANIFEST.json
 SCENE_BACKGROUND_MANIFEST.json
 STREAMER_DASHBOARD.md
+STREAM_ACTIVITIES_UI_MANIFEST.json
+STREAM_ACTIVITIES_UI_RELEASE_NOTES.md
+STREAM_ACTIVITIES_UI_VALIDATION.md
 UI_CONSISTENCY_RC2_RELEASE_NOTES.md
 UI_CONSISTENCY_RC2_VALIDATION.md
 UI_POLISH_RC3_RELEASE_NOTES.md
@@ -974,6 +980,7 @@ frontend/src/player/Raids.jsx
 frontend/src/player/Records.jsx
 frontend/src/player/Relics.jsx
 frontend/src/player/RetainerService.jsx
+frontend/src/player/StreamActivities.jsx
 frontend/src/player/TrophyHall.jsx
 frontend/src/player/WhatsNew.jsx
 frontend/src/player/bestiarySort.js
@@ -1046,6 +1053,7 @@ frontend/tests/emporiumItemInfoHotfix4.test.mjs
 frontend/tests/environmentPass.test.mjs
 frontend/tests/equipmentArtworkRoutingIii6.test.mjs
 frontend/tests/expeditionComingSoon.test.mjs
+frontend/tests/expeditionUiPolish.test.mjs
 frontend/tests/expeditionsAlpha1.test.mjs
 frontend/tests/expeditionsAlpha1Hotfix2Presentation.test.mjs
 frontend/tests/expeditionsAlpha1Hotfix3BoardBackdrop.test.mjs
@@ -1178,6 +1186,7 @@ frontend/tests/retroPhase1.test.mjs
 frontend/tests/retroPhaseII.test.mjs
 frontend/tests/retroPhaseIIImageFitHotfix.test.mjs
 frontend/tests/scene-backgrounds.test.mjs
+frontend/tests/streamActivitiesTab.test.mjs
 frontend/tests/streamerDashboard.test.mjs
 frontend/tests/timerFormat.test.mjs
 frontend/tests/titlePortalAction.test.mjs

@@ -6,7 +6,7 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("Alpha 4 Dungeon UI exposes event count and encounter rules", () => {
   const board = read("../src/player/Dungeons.jsx");
-  assert.match(board, /Dungeons & Delves · v1.4.0/);
+  assert.match(board, /Dungeons &amp; Delves/);
   assert.match(board, /Events/);
   assert.match(board, /Encounter Rules/);
   assert.match(board, /opening_effects/);

@@ -4,26 +4,30 @@ import test from "node:test";
 
 const SRC = new URL("../src/", import.meta.url);
 
-test("v1.1.15 Wayfarer keeps Rally Venture start/join out of the Portal", async () => {
+test("Stream Venture remains Twitch-commanded and is presented in Stream Activities", async () => {
   const api = await readFile(new URL("api/auth.js", SRC), "utf8");
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
+  const stream = await readFile(new URL("player/StreamActivities.jsx", SRC), "utf8");
   for (const token of [
     "ADVENTURE_STATE", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT",
     "submitAdventureState", "submitTravelRegion", "submitSoloVenture", "submitSoloExpeditionAction", "submitSoloExpeditionContinue", "submitSoloExpeditionReturn", "submitSoloExpeditionRetreat", "submitChallengeHunt",
   ]) assert.match(api, new RegExp(token));
   assert.doesNotMatch(api, /submitVenture|submitJoinEncounter|"VENTURE"|"JOIN_ENCOUNTER"/);
   assert.doesNotMatch(board, /submitVenture|submitJoinEncounter|Join Encounter/);
-  assert.match(board, /Rally Venture · Twitch Chat Only/);
-  assert.match(board, /!venture/);
-  assert.match(board, /!join/);
+  assert.doesNotMatch(board, /Stream Venture · Twitch Chat Only|Rally Venture · Twitch Chat Only|<Raids/);
+  assert.match(stream, /Stream Venture · Twitch Chat Only/);
+  assert.match(stream, /!venture/);
+  assert.match(stream, /!join/);
 });
 
-test("Solo Venture is the first actionable section before Rally notice and regions", async () => {
+test("Solo Venture stays on Adventure Board while Stream Venture is separated", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
+  const stream = await readFile(new URL("player/StreamActivities.jsx", SRC), "utf8");
   const solo = board.indexOf('Solo Venture · Portal Only');
-  const rally = board.indexOf('Rally Venture · Twitch Chat Only');
   const region = board.indexOf('<h2>Travel Regions</h2>');
-  assert.ok(solo > 0 && rally > solo && region > rally, { solo, rally, region });
+  assert.ok(solo > 0 && region > solo, { solo, region });
+  assert.doesNotMatch(board, /Rally Venture · Twitch Chat Only|Stream Venture · Twitch Chat Only/);
+  assert.match(stream, /Stream Venture · Twitch Chat Only/);
   assert.match(board, /encounter_chance_percent \?\? 80/);
   assert.match(board, /treasure_chance_percent \?\? 20/);
   assert.match(board, /Encounter \/ Treasure/);
@@ -37,7 +41,7 @@ test("Adventure Board uses clearer player-facing wording", async () => {
   assert.match(board, /Adventure Board/);
   assert.match(board, /Choose Your Next Adventure/);
   assert.doesNotMatch(board, /Phase 9 Adventure Board|authoritative rules|Portal action|mutation|protocol/i);
-  assert.match(board, /Rally battles use Twitch chat for combat/);
+  assert.doesNotMatch(board, /Rally battles use Twitch chat for combat|Stream Venture|<Raids/);
   assert.match(board, /Up to three private stages/);
 });
 
@@ -51,9 +55,11 @@ test("Adventure Board uses Bot-synchronized local timers and uses live revisions
   assert.match(board, /window\.setTimeout\(\(\) => void loadState\(\{ quiet: true \}\), waitMs\)/);
   assert.match(board, /const authoritativeClock = clock \+ serverOffsetMs/);
   assert.match(board, /setServerOffsetMs\(Number\(next\.server_now \|\| 0\) > 0/);
-  assert.match(board, /const ventureRemaining = remainingUntil\(state\?\.venture\?\.available_at, authoritativeClock\)/);
   assert.match(board, /Number\(state\.active_hunt\?\.resolves_at \|\| 0\)/);
-  assert.match(board, /Ready in \$\{duration\(ventureRemaining\)\}/);
+  const stream = await readFile(new URL("player/StreamActivities.jsx", SRC), "utf8");
+  assert.match(stream, /const ventureRemaining = remainingUntil\(state\?\.venture\?\.available_at, authoritativeClock\)/);
+  assert.match(stream, /crystal-guild-live-revision/);
+  assert.match(stream, /`Ready in \$\{duration\(ventureRemaining\)\}`/);
 });
 
 test("Adventure Board styles Solo and Rally cards responsively", async () => {
@@ -87,8 +93,8 @@ test("Wayfarer Solo Venture is player-paced and keeps combat inside the Solo Ven
   assert.match(board, /SoloVentureResult/);
   assert.doesNotMatch(board, /Encounter fights resolve immediately/);
   const soloCard = board.indexOf('className={`panel venture-panel solo-venture-panel');
-  const rallyCard = board.indexOf('Rally Venture · Twitch Chat Only');
-  assert.ok(soloCard > 0 && rallyCard > soloCard, { soloCard, rallyCard });
+  assert.ok(soloCard > 0, { soloCard });
+  assert.doesNotMatch(board, /Stream Venture · Twitch Chat Only|Rally Venture · Twitch Chat Only/);
   assert.match(css, /v1\.1\.15 — Wayfarer interactive Solo Expedition/);
   assert.match(css, /\.solo-expedition-shell/);
   assert.match(css, /\.solo-command-bar/);
@@ -100,6 +106,7 @@ test("Wayfarer orders the Adventurer Portal around the most-used character actio
   const ordered = [
     '["overview", "Overview"',
     '["hunts", "Adventure Board"',
+    '["stream", "Stream Activities"',
     '["jobs", "Jobs"',
     '["inventory", "Equipment & Inventory"',
     '["shop", "Moogle Emporium"',

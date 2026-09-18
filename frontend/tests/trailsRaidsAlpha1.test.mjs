@@ -26,15 +26,17 @@ test("Ifrit guide data declares Inferno Crucible and the four Alpha 1 mechanics"
   assert.deepEqual(ifrit.mechanics.map((m) => m.name), ["Incinerate", "Radiant Plume", "Infernal Nails", "Hellfire"]);
 });
 
-test("Adventure Board Raid panel is read-only live mechanic and contribution UI", () => {
+test("Stream Activities Raid panel is read-only live mechanic and contribution UI", () => {
   const raids = read("src/player/Raids.jsx");
   const hunts = read("src/player/Hunts.jsx");
+  const stream = read("src/player/StreamActivities.jsx");
   assert.match(raids, /\/api\/overlay\/state/);
   assert.match(raids, /mechanic/);
   assert.match(raids, /contribution/i);
   assert.match(raids, /Inferno Crucible/);
   assert.doesNotMatch(raids, /portal\/action|fetch\([^)]*method:\s*["']POST/i);
-  assert.match(hunts, /<Raids[^>]*username=/);
+  assert.doesNotMatch(hunts, /<Raids[^>]*username=/);
+  assert.match(stream, /<Raids[^>]*username=/);
 });
 
 test("hosted raid overlay renders telegraphs and weighted contribution without private ids", () => {

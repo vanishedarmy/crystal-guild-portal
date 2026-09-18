@@ -15,11 +15,13 @@ test("player-facing countdowns use the shared canonical duration formatter", () 
   const inventory = read("player/Inventory.jsx");
   const daily = read("player/DailyReward.jsx");
   const adventure = read("player/Hunts.jsx");
+  const stream = read("player/StreamActivities.jsx");
   const chocobo = read("player/ChocoboStable.jsx");
   const moogle = read("player/MoogleEmporium.jsx");
   assert.match(inventory, /Camp recovery in \{duration\(campRemaining\)\}/);
   assert.match(daily, /duration\(remaining\)/);
-  assert.match(adventure, /duration\(ventureRemaining\)/);
+  assert.match(adventure, /duration\(soloRemaining\)/);
+  assert.match(stream, /duration\(ventureRemaining\)/);
   assert.match(chocobo, /duration\(writRemaining\)/);
   assert.match(moogle, /duration\(shopRemaining\)/);
   assert.doesNotMatch(inventory, /padStart\(2/);

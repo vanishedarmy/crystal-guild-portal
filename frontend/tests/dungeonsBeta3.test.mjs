@@ -23,7 +23,7 @@ test("Beta 3 Dungeon disclosure still switches right closed to down open", () =>
 test("Beta 3 identity is exposed by the Dungeon Board and frontend revision", () => {
   const board = read("src/player/Dungeons.jsx");
   const version = read("src/version.js");
-  assert.match(board, /Dungeons & Delves · v1.4.0/);
+  assert.match(board, /Dungeons &amp; Delves/);
   assert.match(version, /1\.8\.0-merc-final/);
 });
 

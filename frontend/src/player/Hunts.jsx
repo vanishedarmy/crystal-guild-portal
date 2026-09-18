@@ -18,7 +18,6 @@ import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
 import Expeditions from "./Expeditions.jsx";
 import Dungeons from "./Dungeons.jsx";
-import Raids from "./Raids.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
@@ -543,7 +542,6 @@ export default function Hunts({ data, overview, onRefresh }) {
 
   const boardStateReady = Boolean(state);
   const authoritativeClock = clock + serverOffsetMs;
-  const ventureRemaining = remainingUntil(state?.venture?.available_at, authoritativeClock);
   const soloRemaining = remainingUntil(state?.solo_venture?.available_at, authoritativeClock);
   const soloReason = !boardStateReady
     ? "Checking Crystal Guild for your current Solo Venture…"
@@ -553,7 +551,6 @@ export default function Hunts({ data, overview, onRefresh }) {
   const encounter = state?.encounter || null;
   const activeHunt = state?.active_hunt || null;
   const activeHuntRemaining = remainingUntil(activeHunt?.resolves_at, authoritativeClock);
-  const rallyRemaining = remainingUntil(encounter?.rally_closes_at, authoritativeClock);
   const roundRemaining = remainingUntil(encounter?.next_round_at, authoritativeClock);
   const currentRegion = state?.current_region || { name: overview?.region?.name || "Unknown Region" };
   const regions = [...(state?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
@@ -580,8 +577,8 @@ export default function Hunts({ data, overview, onRefresh }) {
       ? `Solo Venture · Stage ${number(expedition.stage)}`
       : activeHunt
         ? `Hunt · ${activeHunt.name}`
-        : encounter
-          ? `${encounter.kind === "venture" ? "Rally Venture" : "Adventure"} · ${encounter.monster?.name || "In progress"}`
+        : encounter && encounter.kind !== "venture"
+          ? `Adventure · ${encounter.monster?.name || "In progress"}`
           : state?.camp?.resting
             ? "Camp · Resting"
             : "No active adventure";
@@ -598,11 +595,11 @@ export default function Hunts({ data, overview, onRefresh }) {
       <Tag className={`${embedded ? "active-adventure-embedded " : "panel "}active-adventure-panel ${encounter.kind}`}>
         <div className="panel-title-row">
           <div>
-            <p className="eyebrow">{encounter.kind === "hunt" ? `${encounter.hunt?.rank || ""}-Rank Active Hunt` : encounter.kind === "solo_venture" ? "Solo Venture Encounter" : "Active Rally Venture"}</p>
+            <p className="eyebrow">{encounter.kind === "hunt" ? `${encounter.hunt?.rank || ""}-Rank Active Hunt` : "Solo Venture Encounter"}</p>
             <h2>{encounter.hunt?.name || encounter.monster?.name}</h2>
             <p className="muted">{encounter.monster?.name} · Lv. {number(encounter.monster?.level)} · {encounter.region?.name}</p>
           </div>
-          <span className="small-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
+          <span className="small-badge">Round {number(encounter.round || 1)}</span>
         </div>
         {encounter.state === "combat" && Number(encounter.enemy_max_hp || 0) > 0 ? (
           <div className="adventure-enemy-vitals">
@@ -619,16 +616,10 @@ export default function Hunts({ data, overview, onRefresh }) {
             </div>
           ))}
         </div>
-        {encounter.state === "rally" && encounter.kind === "venture" ? (
-          <div className="adventure-combat-note rally-venture-chat-note">
-            <strong>Rally entry is in Twitch chat.</strong>
-            <span>{encounter.you_joined ? "You are already in this rally. Watch chat for the battle start." : "Type !join in Twitch chat before the rally closes to take part."}</span>
-          </div>
-        ) : null}
         {encounter.state === "combat" ? (
           <div className="adventure-combat-note">
             <strong>Battle is underway.</strong>
-            <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : encounter.kind === "venture" ? "Rally battles use Twitch chat for combat. Choose !attack, !ability, !defend, or !use before the round timer closes; otherwise your hero uses the default action." : "This Hunt began before the timed-Hunt hotfix and is finishing under the legacy battle state. New Hunts resolve automatically at their rank timer without chat combat."}</span>
+            <span>{encounter.kind === "solo_venture" ? "This Solo Venture began before the instant-resolution update and will finish automatically here." : "This Hunt began before the timed-Hunt hotfix and is finishing under the legacy battle state. New Hunts resolve automatically at their rank timer without chat combat."}</span>
           </div>
         ) : null}
       </Tag>
@@ -681,8 +672,6 @@ export default function Hunts({ data, overview, onRefresh }) {
           {state?.camp?.reason ? <span className="adventure-disabled-reason">{state.camp.reason}</span> : null}
         </div>
       </section>
-
-      <Raids username={overview?.identity?.username || state?.player?.username || ""} />
 
       <Dungeons
         data={state?.dungeons}
@@ -868,26 +857,6 @@ export default function Hunts({ data, overview, onRefresh }) {
         ) : null}
       </section>
 
-      <section className="panel rally-venture-notice" data-active={encounter?.kind === "venture" ? "true" : "false"}>
-        <img className="rally-venture-background-art" src="/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp" alt="" aria-hidden="true" loading="eager" decoding="async" />
-        <div className="panel-title-row">
-          <div><p className="eyebrow">Rally Venture · Twitch Chat Only</p><h2>Higher risk. Better rewards.</h2></div>
-          <div className="context-help-actions"><ContextHelp topic="rally_venture" /><span className="small-badge">Live Stream</span></div>
-        </div>
-        <p className="muted">Use <code>!venture</code>; join an open rally with <code>!join</code>.</p>
-        <div className="solo-venture-rules rally-venture-rules" aria-label="Rally Venture rules">
-          <span><strong>100% Encounter / 0% Treasure Chest</strong>Battle-only Rally Venture</span>
-          <span><strong>+10</strong>Enemy level cap</span>
-          <span><strong>+5% / level</strong>XP / JP / Gil reward bonus</span>
-          <span><strong>+50%</strong>Maximum reward bonus</span>
-        </div>
-        <div className="adventure-combat-note rally-venture-chat-note compact-adventure-note">
-          <strong>{ventureRemaining > 0 ? `Ready in ${duration(ventureRemaining)}` : "Ready in Twitch chat"}</strong>
-          <span>Live-stream activity</span>
-        </div>
-        {encounter?.kind === "venture" ? renderActiveEncounter(true) : null}
-      </section>
-
       <section className={`panel adventure-region-panel collapsible-board-section ${regionsOpen ? "open" : "collapsed"}`}>
         <div className="panel-title-row section-collapsible-title-row">
           <div><p className="eyebrow">World Map</p><h2>Travel Regions</h2></div>
@@ -942,7 +911,7 @@ export default function Hunts({ data, overview, onRefresh }) {
           ))}
         </div>
       ) : null}
-      {state?.recent_result && !["solo_venture", "hunt", "expedition"].includes(state.recent_result.kind) ? (
+      {state?.recent_result && !["solo_venture", "hunt", "expedition", "venture"].includes(state.recent_result.kind) ? (
         <section className={`panel adventure-result-panel compact-result ${state.recent_result.won ? "won" : "lost"}`} aria-live="polite">
           <div className="panel-title-row"><div><p className="eyebrow">Recent Adventure</p><h2>{state.recent_result.won ? "Complete" : "Ended"}</h2></div><span className={`small-badge ${state.recent_result.won ? "success" : ""}`}>{state.recent_result.won ? "Victory" : "Defeat"}</span></div>
           <strong>{state.recent_result.monster_name}</strong>

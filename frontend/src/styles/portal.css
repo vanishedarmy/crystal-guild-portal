@@ -11816,8 +11816,8 @@ textarea {
 }
 
 /* Screenshot-targeted profile navigation: a deliberate grid rather than a
-   free-form flex wrap. 16 destinations become two balanced rows on wide
-   desktop and predictable grids before the mobile selector takes over. */
+   free-form flex wrap. Destinations stay readable and predictable before the
+   mobile selector takes over. */
 .profile-navigation {
   width: 100%;
 }
@@ -12031,21 +12031,11 @@ textarea {
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.13), 0 0 0 1px rgba(57,140,255,.2), 0 4px 16px rgba(10,62,140,.18);
 }
 
-/* With sixteen destinations, center the four-button final row at the common
-   desktop width rather than leaving it visually pinned to the left. */
-@media (min-width: 1280px) and (max-width: 1599px) {
+/* With seventeen destinations, the six-column layout produces a five-button
+   final row. Start it in column two so the row remains visually centered. */
+@media (min-width: 1280px) {
   .profile-tabs button:nth-child(13) {
     grid-column: 2;
-  }
-}
-
-/* Only very wide desktops use the dense two-row eight-column layout. */
-@media (min-width: 1600px) {
-  .profile-tabs {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-  .profile-tabs button:nth-child(13) {
-    grid-column: auto;
   }
 }
 
@@ -12476,3 +12466,108 @@ textarea {
   box-shadow: inset 0 0 0 1px rgba(143,219,255,.08), 0 6px 16px rgba(0,0,0,.17);
 }
 .expedition-launch-button { width: 100%; }
+
+/* ============================================================
+   Stream Activities separation — live-only ventures and raids
+   ============================================================ */
+.stream-activities-stack {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.stream-activities-hero {
+  border-color: rgba(116, 187, 244, .34);
+  background:
+    radial-gradient(circle at 86% 18%, rgba(79, 153, 222, .13), transparent 34%),
+    linear-gradient(145deg, rgba(8, 25, 43, .94), rgba(4, 14, 26, .96));
+}
+
+.stream-activity-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: .95rem;
+}
+
+.stream-activity-summary > div {
+  display: grid;
+  gap: .2rem;
+  min-width: 0;
+  padding: .85rem .95rem;
+  border: 1px solid rgba(136, 191, 238, .22);
+  border-radius: 10px;
+  background: rgba(5, 17, 31, .72);
+}
+
+.stream-activity-summary span,
+.stream-activity-summary small,
+.stream-activity-note {
+  color: var(--muted);
+}
+
+.stream-activity-summary span {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.stream-activity-summary strong {
+  color: var(--crystal-soft);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: .025em;
+}
+
+.stream-activity-summary small {
+  line-height: 1.4;
+}
+
+.stream-activity-note {
+  margin: .8rem 0 0;
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.stream-venture-panel {
+  overflow: hidden;
+}
+
+.stream-venture-result {
+  display: grid;
+  gap: .28rem;
+  margin-top: .85rem;
+  padding: .8rem .9rem;
+  border: 1px solid rgba(137, 194, 236, .22);
+  border-radius: 10px;
+  background: rgba(3, 14, 25, .72);
+}
+
+.stream-venture-result > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.stream-venture-result span,
+.stream-venture-result small {
+  color: var(--muted);
+}
+
+.stream-venture-result.won strong {
+  color: var(--success);
+}
+
+@media (max-width: 720px) {
+  .stream-activity-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .stream-venture-result > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .18rem;
+  }
+}

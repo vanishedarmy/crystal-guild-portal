@@ -6,15 +6,16 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const hunts = fs.readFileSync(path.join(root, "src/player/Hunts.jsx"), "utf8");
+const stream = fs.readFileSync(path.join(root, "src/player/StreamActivities.jsx"), "utf8");
 const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
 const inventory = fs.readFileSync(path.join(root, "src/player/Inventory.jsx"), "utf8");
 const jobs = fs.readFileSync(path.join(root, "src/player/Jobs.jsx"), "utf8");
 
-test("active live Rally Venture status is embedded in the Rally Venture panel", () => {
-  const rallyStart = hunts.indexOf('className="panel rally-venture-notice"');
-  const regionStart = hunts.indexOf('adventure-region-panel collapsible-board-section');
-  const embedded = hunts.indexOf('encounter?.kind === "venture" ? renderActiveEncounter(true)');
-  assert.ok(rallyStart >= 0 && embedded > rallyStart && embedded < regionStart);
+test("active live Stream Venture status is embedded in the Stream Activities panel", () => {
+  const rallyStart = stream.indexOf('className="panel rally-venture-notice stream-venture-panel"');
+  const embedded = stream.indexOf('encounter ? <StreamVentureEncounter');
+  assert.ok(rallyStart >= 0 && embedded > rallyStart);
+  assert.doesNotMatch(hunts, /rally-venture-notice|<Raids/);
   assert.match(hunts, /encounter && encounter\.kind !== "venture" \? renderActiveEncounter\(false\)/);
   assert.match(css, /\.active-adventure-embedded\s*\{/);
 });

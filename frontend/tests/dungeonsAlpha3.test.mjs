@@ -6,7 +6,7 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("Alpha 3 Dungeon UI exposes route consequences and first-clear identity", () => {
   const board = read("../src/player/Dungeons.jsx");
-  assert.match(board, /Dungeons & Delves · v1.4.0/);
+  assert.match(board, /Dungeons &amp; Delves/);
   assert.match(board, /Route effects ahead/);
   assert.match(board, /First Clear/);
   assert.match(board, /choice\.effects/);

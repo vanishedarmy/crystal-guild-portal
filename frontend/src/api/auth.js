@@ -246,6 +246,10 @@ export function submitMercState(csrfToken, idempotencyKey) {
   return submitPortalAction("MERC_STATE", {}, csrfToken, idempotencyKey);
 }
 
+export function submitMercRecruit(heroId, csrfToken, idempotencyKey) {
+  return submitPortalAction("MERC_RECRUIT", { hero_id: String(heroId || "") }, csrfToken, idempotencyKey);
+}
+
 export function submitMercHire(heroId, missionType, csrfToken, idempotencyKey) {
   return submitPortalAction("MERC_HIRE", { hero_id: String(heroId || ""), mission_type: String(missionType || "") }, csrfToken, idempotencyKey);
 }

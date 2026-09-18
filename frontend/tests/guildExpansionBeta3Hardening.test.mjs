@@ -18,8 +18,8 @@ test("Beta 3 binds Fellowship contributions to the rendered project", () => {
 });
 
 test("Final player-facing release copy keeps the hardening summary without backend jargon", () => {
-  assert.match(version, /WEB_BUILD = "Merc Service"/);
-  assert.match(version, /1\.8\.0-merc-final/);
+  assert.match(version, /WEB_BUILD = "Merc Recruitment"/);
+  assert.match(version, /1\.8\.1-merc-recruitment/);
   assert.match(news, /Guild Expansion has arrived/);
   assert.match(news, /Shared progress stays reliable/);
     assert.doesNotMatch(news.split('name: "Guild Expansion"')[1].split('\n  },')[0], /SQLite|transaction|mutex|schema|protocol|replay receipt/i);

@@ -12571,3 +12571,56 @@ textarea {
     gap: .18rem;
   }
 }
+
+/* v1.8.1 Merc Recruitment — permanent unlocks and registry */
+.merc-section-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  padding:8px;
+  border:1px solid rgba(103,190,255,.16);
+  border-radius:12px;
+  background:rgba(5,11,22,.82);
+}
+.merc-section-tabs button{
+  display:grid;
+  place-items:center;
+  gap:2px;
+  min-height:56px;
+  padding:8px 12px;
+  border:1px solid rgba(103,190,255,.14);
+  border-radius:9px;
+  background:rgba(103,190,255,.045);
+  color:#dcecff;
+  font:inherit;
+  cursor:pointer;
+}
+.merc-section-tabs button span{font-family:var(--display);font-size:.82rem}
+.merc-section-tabs button small{color:var(--muted);font-size:.66rem}
+.merc-section-tabs button.active{border-color:rgba(240,201,92,.42);background:rgba(240,201,92,.1);box-shadow:inset 0 0 0 1px rgba(240,201,92,.08)}
+.merc-recruitment-grid,.merc-registry-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.merc-recruit-card,.merc-registry-card{display:grid;align-content:start;gap:10px;min-width:0;padding:10px;border:1px solid rgba(204,220,255,.14);border-radius:12px;background:linear-gradient(180deg,rgba(9,16,29,.94),rgba(5,10,19,.95))}
+.merc-recruit-card.locked,.merc-registry-card.locked{border-color:rgba(204,220,255,.1);background:linear-gradient(180deg,rgba(10,13,22,.95),rgba(5,8,14,.97))}
+.merc-recruit-card.ready{border-color:rgba(240,201,92,.38);box-shadow:inset 0 0 0 1px rgba(240,201,92,.06)}
+.merc-recruit-card.recruited,.merc-registry-card.recruited{border-color:rgba(94,223,163,.28);box-shadow:inset 0 0 0 1px rgba(94,223,163,.05)}
+.merc-recruit-copy{display:grid;gap:4px}
+.merc-recruit-copy h4,.merc-registry-card h4{margin:0;color:#ffe7a1;font-family:var(--display);font-size:1rem}
+.merc-recruit-copy strong{color:#dcecff;font-size:.82rem}
+.merc-recruit-copy p,.merc-registry-card p,.merc-registry-card small{margin:0;color:var(--muted);font-size:.78rem;line-height:1.45;overflow-wrap:anywhere}
+.merc-objectives{display:grid;gap:5px}
+.merc-objectives>div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 8px;border:1px solid rgba(204,220,255,.1);border-radius:7px;background:rgba(204,220,255,.03);font-size:.73rem}
+.merc-objectives>div span{color:var(--muted)}
+.merc-objectives>div strong{white-space:nowrap;color:#dcecff}
+.merc-objectives>div.met{border-color:rgba(94,223,163,.2);background:rgba(94,223,163,.045)}
+.merc-objectives>div.met strong{color:#adf7d3}
+.merc-objectives>div.missing{border-color:rgba(255,118,118,.15);background:rgba(120,24,24,.05)}
+.merc-objectives>div.missing strong{color:#ffb0b0}
+.merc-recruit-card .equipment-action-button,.merc-registry-card .equipment-action-button{width:100%;align-self:end}
+.merc-registry-progress{height:10px;margin-top:10px;overflow:hidden;border:1px solid rgba(103,190,255,.16);border-radius:999px;background:rgba(3,8,16,.75)}
+.merc-registry-progress>span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,rgba(66,151,240,.9),rgba(108,224,255,.92));transition:width .2s ease}
+.merc-registry-card{grid-template-rows:auto auto auto auto 1fr auto}
+.merc-registry-card.locked .merc-card-art-frame{border-color:rgba(204,220,255,.1)}
+.merc-registry-card.locked .merc-card-art-frame img{filter:saturate(.7) brightness(.8)}
+@media(max-width:980px){.merc-recruitment-grid,.merc-registry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.merc-section-tabs{gap:4px;padding:5px}.merc-section-tabs button{min-height:48px;padding:6px 5px}.merc-section-tabs button span{font-size:.72rem}.merc-recruitment-grid,.merc-registry-grid{grid-template-columns:1fr}.merc-recruit-card,.merc-registry-card{padding:8px}}
+@media(prefers-reduced-motion:reduce){.merc-registry-progress>span{transition:none}}

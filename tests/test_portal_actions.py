@@ -513,6 +513,7 @@ class PortalActionServerCase(unittest.TestCase):
             self.assertEqual(response["action"]["type"], action_type)
             claimed = self.store.claim_actions("bot:test", limit=1)
             self.assertEqual(len(claimed), 1)
+            self.assertEqual(claimed[0]["payload"], payload)
             self.assertTrue(self.store.complete_action(claimed[0]["id"], claimed[0]["lease_token"], True, "ok"))
 
         invalid = [
@@ -733,9 +734,11 @@ class PortalActionServerCase(unittest.TestCase):
             ("EXPEDITION_RETURN", {}, "expedition-return"),
             ("EXPEDITION_RETREAT", {}, "expedition-retreat"),
             ("DUNGEON_START", {"dungeon_id": "forgotten_ossuary"}, "dungeon-start"),
-            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "bone_gallery", "action": "attack"}, "dungeon-attack"),
-            ("DUNGEON_CONTINUE", {"run_id": "run-123", "room_id": "ossuary_gate"}, "dungeon-continue"),
-            ("DUNGEON_RETREAT", {"run_id": "run-123", "room_id": "bone_gallery"}, "dungeon-retreat"),
+            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "bone_gallery", "revision": 3, "action": "attack"}, "dungeon-attack"),
+            ("DUNGEON_CHOICE", {"run_id": "run-123", "room_id": "bone_gallery", "revision": 3, "choice_id": "left_path"}, "dungeon-choice"),
+            ("DUNGEON_CONTINUE", {"run_id": "run-123", "room_id": "ossuary_gate", "revision": 3}, "dungeon-continue"),
+            ("DUNGEON_RETREAT", {"run_id": "run-123", "room_id": "bone_gallery", "revision": 3}, "dungeon-retreat"),
+            ("MERC_RECRUIT", {"hero_id": "auron"}, "merc-recruit-auron"),
         ):
             status, response, _ = self.request(
                 "/api/actions",
@@ -785,11 +788,13 @@ class PortalActionServerCase(unittest.TestCase):
             ("DUNGEON_START", {}),
             ("DUNGEON_START", {"dungeon_id": "Forgotten Ossuary"}),
             ("DUNGEON_ACTION", {"action": "attack"}),
-            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "bone_gallery", "action": "!attack"}),
-            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "Bone Gallery", "action": "attack"}),
+            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "bone_gallery", "action": "attack"}),
+            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "bone_gallery", "revision": 3, "action": "!attack"}),
+            ("DUNGEON_ACTION", {"run_id": "run-123", "room_id": "Bone Gallery", "revision": 3, "action": "attack"}),
+            ("DUNGEON_CHOICE", {"run_id": "run-123", "room_id": "bone_gallery", "choice_id": "left_path"}),
             ("DUNGEON_CONTINUE", {}),
-            ("DUNGEON_CONTINUE", {"run_id": "run-123", "room_id": "ossuary_gate", "force": True}),
-            ("DUNGEON_RETREAT", {"run_id": "run-123"}),
+            ("DUNGEON_CONTINUE", {"run_id": "run-123", "room_id": "ossuary_gate", "revision": 3, "force": True}),
+            ("DUNGEON_RETREAT", {"run_id": "run-123", "revision": 3}),
             ("ATTACK", {}),
             ("ABILITY", {"name": "Provoke"}),
             ("RAID", {}),

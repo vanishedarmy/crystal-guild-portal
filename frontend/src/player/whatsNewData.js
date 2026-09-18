@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.8.1",
+    name: "Merc Recruitment",
+    title: "Build a permanent Hero Merc roster",
+    summary: "Merc Service expands with six recruitable Heroes, permanent recruitment quests and contracts, a Merc Registry, and a Dungeon Portal repair for room actions.",
+    highlights: [
+      { title: "Six new Heroes", description: "Auron, Vivi, Cecil, Terra, Tidus, and Ramza join the Merc expansion with distinct combat and support specialties." },
+      { title: "Recruit before hiring", description: "Expansion Heroes begin locked and must be permanently recruited through a quest or one-time Gil contract before Hunt Seal deployments become available." },
+      { title: "Merc Registry", description: "Track all twelve Heroes in one collection view. Locked expansion Heroes use silhouette cards until recruited, then switch to their full-color roster artwork." },
+      { title: "Three clear card states", description: "Expansion Heroes now have dedicated Locked, Available, and Unavailable card artwork so recruitment and deployment state is readable at a glance." },
+      { title: "Dungeon actions repaired", description: "Continue, Retreat, route choices, and combat actions now preserve the current Dungeon room revision through the hosted Portal action path." },
+      { title: "Safe upgrade", description: "Schema 18 adds permanent Merc recruitment records with an automatic verified pre-migration backup. Existing players and founding Merc access are preserved." },
+    ],
+    action: { tab: "mercs", label: "Open Hero Merc Service" },
+  },
+  {
     version: "v1.8.0 Final",
     name: "Merc Service",
     title: "Hero Merc Service is ready for full release",

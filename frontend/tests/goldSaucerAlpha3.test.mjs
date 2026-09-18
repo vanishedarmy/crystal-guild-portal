@@ -6,8 +6,8 @@ import { WEB_ASSET_REVISION, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Production Web publishes the canonical MGP identity", () => {
-  assert.equal(WEB_VERSION, "v1.8.0 Final");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-final");
+  assert.equal(WEB_VERSION, "v1.8.1");
+  assert.equal(WEB_ASSET_REVISION, "1.8.1-merc-recruitment");
 });
 
 test("Gold Saucer prefers canonical MGP fields and keeps compatibility fallbacks", () => {

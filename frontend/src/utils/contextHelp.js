@@ -167,15 +167,16 @@ export const CONTEXT_HELP = {
   },
   merc_service: {
     title: "Hero Merc Service",
-    summary: "Hire up to three unlocked Final Fantasy Heroes with Hunt Seals—one each for Hunt, Venture, and Raid assignments.",
+    summary: "Recruit expansion Heroes permanently, then hire recruited Heroes with Hunt Seals for Hunt, Venture, and Raid assignments.",
     bullets: [
-      "Hunt Seals are earned from Hunts and are the same established currency used by the Quartermaster and other Guild systems.",
-      "Hunt, Venture, and Raid each have an independent contract slot. A hired Hero stays reserved, then remains Deployed and unavailable from assignment start until that job actually resolves.",
-      "A Hero already on contract cannot take another job, and Heroes that do not support the selected assignment type display unavailable.",
-      "If all three job slots are reserved, the entire roster displays unavailable until a contract is completed or cancelled. Each unavailable card now states whether the cause is progression, mission eligibility, an occupied slot, or an active contract.",
-      "Alpha 2 fees are 5 / 6 / 5 / 7 / 9 / 12 Hunt Seals for Aerith / Tifa / Zidane / Yuna / Balthier / Cloud. Cancelling does not refund Hunt Seals.",
+      "Hunt Seals are earned from Hunts and remain the per-assignment Merc deployment currency.",
+      "Aerith, Tifa, Zidane, Yuna, Balthier, and Cloud remain the founding roster and keep their original progression unlocks.",
+      "Auron, Vivi, Cecil, and Ramza join through recruitment quests tied to Character Level, Hunt clears, and selected Dungeon clears.",
+      "Terra and Tidus use one-time Gil contracts after their required Character Level is reached. Permanent recruitment fees are separate from deployment fees.",
+      "Hunt, Venture, and Raid each have an independent contract slot. A Hero that is Deployed remains Deployed and unavailable until that assignment resolves.",
+      "The Merc Registry shows the full collection; unrecruited expansion Heroes use locked silhouette artwork until permanently recruited.",
     ],
-    tip: "Choose the Hero for the mission you are about to run—not simply the most expensive one. Their specialties are intentionally different.",
+    tip: "Recruitment is permanent. Hunt Seals are only spent when you actually reserve a recruited Hero for an assignment.",
     guide: "merc-service",
   },
   gold_saucer: {

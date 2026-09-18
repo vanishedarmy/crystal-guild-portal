@@ -19,9 +19,9 @@ const sectionSources = await Promise.all([
 ].map((name) => readFile(new URL(`player/${name}`, SRC), "utf8")));
 
 test("RC3 advances the visible UI polish identity", () => {
-  assert.equal(WEB_VERSION, "v1.8.0 Final");
-  assert.equal(WEB_RELEASE, "v1.8.0 Final — Merc Service");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-final");
+  assert.equal(WEB_VERSION, "v1.8.1");
+  assert.equal(WEB_RELEASE, "v1.8.1 — Merc Recruitment");
+  assert.equal(WEB_ASSET_REVISION, "1.8.1-merc-recruitment");
 });
 
 test("profile navigation prioritizes readable one-line labels at every desktop tier", () => {

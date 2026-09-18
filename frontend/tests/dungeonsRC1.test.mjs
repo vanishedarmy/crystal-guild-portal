@@ -9,8 +9,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("RC1 identity and Dungeon catalog remain feature frozen", () => {
-  assert.equal(WEB_BUILD, "Merc Service");
-  assert.equal(WEB_ASSET_REVISION, "1.8.0-merc-final");
+  assert.equal(WEB_BUILD, "Merc Recruitment");
+  assert.equal(WEB_ASSET_REVISION, "1.8.1-merc-recruitment");
   const board=read("src/player/Dungeons.jsx");
   assert.match(board,/Dungeons &amp; Delves/);
 });

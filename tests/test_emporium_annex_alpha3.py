@@ -7,9 +7,9 @@ from crystal_guild.hosted_portal import ACTION_PROTOCOL_VERSION, FRONTEND_ASSET_
 
 class EmporiumAnnexHostedAlpha3Tests(unittest.TestCase):
     def test_alpha3_keeps_portal_protocol_stable(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.8.0-merc-final")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.8.0-merc-final")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 34)
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.8.1-merc-recruitment")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.8.1-merc-recruitment")
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 35)
 
 
 if __name__ == "__main__":

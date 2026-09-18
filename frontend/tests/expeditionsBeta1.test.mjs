@@ -11,8 +11,8 @@ test("Expeditions Beta 1 route balance remains active under the final v1.3 relea
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
 
-  assert.match(version, /WEB_BUILD = "Merc Service"/);
-  assert.match(version, /1\.8\.0-merc-final/);
+  assert.match(version, /WEB_BUILD = "Merc Recruitment"/);
+  assert.match(version, /1\.8\.1-merc-recruitment/);
   assert.match(board, /Lower combat damage and softer hazards/);
   assert.match(board, /Harder combat and hazards for stronger rewards/);
   assert.match(board, /Harder enemy pressure/);

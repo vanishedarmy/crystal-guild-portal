@@ -1,6 +1,6 @@
-# Crystal Guild v1.8.0 Final — Merc Service
-# Runtime: 1.8.0-merc-final
-# Schema: 17 · Hosted sync: 1 · Portal Action protocol: 34
+# Crystal Guild v1.8.1 — Merc Recruitment (Hero Merc Service)
+# Runtime: 1.8.1-merc-recruitment
+# Schema: 18 · Hosted sync: 1 · Portal Action protocol: 35
 # Files
 .dockerignore
 .gitignore
@@ -31,6 +31,7 @@ MERC_SERVICE_HOTFIX2.md
 MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
+PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -47,6 +48,8 @@ UI_POLISH_RC3_RELEASE_NOTES.md
 UI_POLISH_RC3_VALIDATION.md
 UI_SHARED_ASSET_MANIFEST.json
 UPGRADE_GUIDE.md
+V1_8_1_RELEASE_NOTES.md
+V1_8_1_VALIDATION.md
 V1_8_FINAL_RELEASE_NOTES.md
 V1_8_FINAL_VALIDATION.md
 VALIDATION_REPORT.md
@@ -238,6 +241,24 @@ frontend/public/merc-service/a1/scenes/raid.webp
 frontend/public/merc-service/a1/scenes/roles.webp
 frontend/public/merc-service/a1/scenes/service-hall.webp
 frontend/public/merc-service/a1/scenes/venture.webp
+frontend/public/merc-service/a2/cards/auron-available.webp
+frontend/public/merc-service/a2/cards/auron-locked.webp
+frontend/public/merc-service/a2/cards/auron-unavailable.webp
+frontend/public/merc-service/a2/cards/cecil-available.webp
+frontend/public/merc-service/a2/cards/cecil-locked.webp
+frontend/public/merc-service/a2/cards/cecil-unavailable.webp
+frontend/public/merc-service/a2/cards/ramza-available.webp
+frontend/public/merc-service/a2/cards/ramza-locked.webp
+frontend/public/merc-service/a2/cards/ramza-unavailable.webp
+frontend/public/merc-service/a2/cards/terra-available.webp
+frontend/public/merc-service/a2/cards/terra-locked.webp
+frontend/public/merc-service/a2/cards/terra-unavailable.webp
+frontend/public/merc-service/a2/cards/tidus-available.webp
+frontend/public/merc-service/a2/cards/tidus-locked.webp
+frontend/public/merc-service/a2/cards/tidus-unavailable.webp
+frontend/public/merc-service/a2/cards/vivi-available.webp
+frontend/public/merc-service/a2/cards/vivi-locked.webp
+frontend/public/merc-service/a2/cards/vivi-unavailable.webp
 frontend/public/raid-overlay.html
 frontend/public/raid-overlay.js
 frontend/public/retainer/a2h1/assignments/field-gathering.webp
@@ -1130,6 +1151,7 @@ frontend/tests/itemUsageCopyHotfix2.test.mjs
 frontend/tests/jobsAbilityReference.test.mjs
 frontend/tests/livePolicy.test.mjs
 frontend/tests/materialArtworkRetroPhaseIII.test.mjs
+frontend/tests/mercRecruitment181.test.mjs
 frontend/tests/mercServiceAlpha2.test.mjs
 frontend/tests/mercServiceBatch3.test.mjs
 frontend/tests/mercServiceBatch4.test.mjs

@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.8.0-merc-final"
-FRONTEND_ASSET_REVISION = "1.8.0-merc-final"
+HOSTED_PORTAL_VERSION = "1.8.1-merc-recruitment"
+FRONTEND_ASSET_REVISION = "1.8.1-merc-recruitment"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 34
+ACTION_PROTOCOL_VERSION = 35
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
@@ -39,7 +39,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "CHOCOBO_STATE", "COMPLETE_CHOCOBO_QUEST", "PURCHASE_CHOCOBO_WRIT", "REGISTER_CHOCOBO", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT",
     "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
     "RETAINER_STATE", "RETAINER_DISPATCH", "RETAINER_COLLECT",
-    "MERC_STATE", "MERC_HIRE", "MERC_CANCEL",
+    "MERC_STATE", "MERC_RECRUIT", "MERC_HIRE", "MERC_CANCEL",
     "STREAMER_COMMAND",
 }
 
@@ -99,7 +99,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
-    "RETAINER_DISPATCH", "RETAINER_COLLECT", "MERC_HIRE", "MERC_CANCEL",
+    "RETAINER_DISPATCH", "RETAINER_COLLECT", "MERC_RECRUIT", "MERC_HIRE", "MERC_CANCEL",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -940,6 +940,13 @@ class HostedPortalStore:
         elif kind == "MERC_STATE":
             if payload:
                 raise ValueError("MERC_STATE does not accept parameters.")
+        elif kind == "MERC_RECRUIT":
+            if set(payload) != {"hero_id"}:
+                raise ValueError("MERC_RECRUIT requires hero_id only.")
+            hero_id = str(payload.get("hero_id") or "").strip().lower()
+            if not hero_id or len(hero_id) > 40 or not re.fullmatch(r"[a-z0-9_]+", hero_id):
+                raise ValueError("Invalid Merc hero ID.")
+            payload = {"hero_id": hero_id}
         elif kind == "MERC_CANCEL":
             if not set(payload).issubset({"mission_type"}):
                 raise ValueError("MERC_CANCEL accepts only optional mission_type.")
@@ -1107,41 +1114,59 @@ class HostedPortalStore:
                 raise ValueError("Invalid Dungeon ID.")
             payload = {"dungeon_id": dungeon_id}
         elif kind == "DUNGEON_ACTION":
-            if set(payload) != {"run_id", "room_id", "action"}:
-                raise ValueError("DUNGEON_ACTION requires run_id, room_id, and action.")
+            if set(payload) != {"run_id", "room_id", "revision", "action"}:
+                raise ValueError("DUNGEON_ACTION requires run_id, room_id, revision, and action.")
             run_id = str(payload.get("run_id") or "").strip().lower()
             room_id = str(payload.get("room_id") or "").strip().lower()
             action = str(payload.get("action") or "").strip().lower()
+            try:
+                revision = int(payload.get("revision") or 0)
+            except (TypeError, ValueError):
+                revision = 0
             if not run_id or len(run_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", run_id):
                 raise ValueError("Invalid Dungeon run ID.")
             if not room_id or len(room_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", room_id):
                 raise ValueError("Invalid Dungeon room ID.")
+            if revision <= 0:
+                raise ValueError("Invalid Dungeon revision.")
             if not re.fullmatch(r"(?:attack|defend|ability:[a-z0-9_.-]+|item:[a-z0-9_.-]+)", action):
                 raise ValueError("Invalid Dungeon battle action.")
-            payload = {"run_id": run_id, "room_id": room_id, "action": action}
+            payload = {"run_id": run_id, "room_id": room_id, "revision": revision, "action": action}
         elif kind == "DUNGEON_CHOICE":
-            if set(payload) != {"run_id", "room_id", "choice_id"}:
-                raise ValueError("DUNGEON_CHOICE requires run_id, room_id, and choice_id.")
+            if set(payload) != {"run_id", "room_id", "revision", "choice_id"}:
+                raise ValueError("DUNGEON_CHOICE requires run_id, room_id, revision, and choice_id.")
             run_id = str(payload.get("run_id") or "").strip().lower()
             room_id = str(payload.get("room_id") or "").strip().lower()
             choice_id = str(payload.get("choice_id") or "").strip().lower()
+            try:
+                revision = int(payload.get("revision") or 0)
+            except (TypeError, ValueError):
+                revision = 0
             if not run_id or len(run_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", run_id):
                 raise ValueError("Invalid Dungeon run ID.")
             if not room_id or len(room_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", room_id):
                 raise ValueError("Invalid Dungeon room ID.")
+            if revision <= 0:
+                raise ValueError("Invalid Dungeon revision.")
             if not choice_id or len(choice_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", choice_id):
                 raise ValueError("Invalid Dungeon choice ID.")
-            payload = {"run_id": run_id, "room_id": room_id, "choice_id": choice_id}
+            payload = {"run_id": run_id, "room_id": room_id, "revision": revision, "choice_id": choice_id}
         elif kind in {"DUNGEON_CONTINUE", "DUNGEON_RETREAT"}:
-            if set(payload) != {"run_id", "room_id"}:
-                raise ValueError(f"{kind} requires run_id and room_id.")
+            if set(payload) != {"run_id", "room_id", "revision"}:
+                raise ValueError(f"{kind} requires run_id, room_id, and revision.")
             run_id = str(payload.get("run_id") or "").strip().lower()
             room_id = str(payload.get("room_id") or "").strip().lower()
+            try:
+                revision = int(payload.get("revision") or 0)
+            except (TypeError, ValueError):
+                revision = 0
             if not run_id or len(run_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", run_id):
                 raise ValueError("Invalid Dungeon run ID.")
             if not room_id or len(room_id) > 100 or not re.fullmatch(r"[a-z0-9_.:-]+", room_id):
                 raise ValueError("Invalid Dungeon room ID.")
-            payload = {"run_id": run_id, "room_id": room_id}
+            if revision <= 0:
+                raise ValueError("Invalid Dungeon revision.")
+            payload = {"run_id": run_id, "room_id": room_id, "revision": revision}
         elif kind == "TRAVEL_REGION":
             if set(payload) != {"region_id"}:
                 raise ValueError("TRAVEL_REGION requires only region_id.")

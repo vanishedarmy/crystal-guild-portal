@@ -35,6 +35,6 @@ test("RC1 Portal distinguishes reserved and deployed contracts", () => {
   assert.match(css, /Merc Service RC1 — deployed-state and lifecycle hardening/);
   assert.match(css, /\.merc-contract-slot\.deployed/);
   assert.match(help, /remains Deployed and unavailable/);
-  assert.match(guide, /RC1 deployment lifecycle/);
+  assert.match(guide, /Deployment lifecycle/);
   assert.match(guide, /Deployed contracts cannot be cancelled|cannot be cancelled/);
 });

@@ -11,11 +11,11 @@ const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 const HEROES = ["auron", "vivi", "cecil", "terra", "tidus", "ramza"];
 
 test("v1.8.1 Merc Recruitment release identity is current", () => {
-  assert.equal(WEB_VERSION, "v1.8.1");
-  assert.equal(WEB_BUILD, "Merc Recruitment");
-  assert.equal(WEB_ASSET_REVISION, "1.8.1-merc-recruitment");
+  assert.equal(WEB_VERSION, "v1.8.2");
+  assert.equal(WEB_BUILD, "Elite Mercs");
+  assert.equal(WEB_ASSET_REVISION, "1.8.2-elite-mercs");
   const guide = JSON.parse(read("public/guide-data.json"));
-  assert.equal(guide.meta.release, "1.8.1-merc-recruitment");
+  assert.equal(guide.meta.release, "1.8.2-elite-mercs");
 });
 
 test("six expansion Heroes ship all three optimized card states", () => {
@@ -45,7 +45,7 @@ test("Merc Portal exposes recruitment and permanent registry views", () => {
   assert.match(page, /Recruitment/);
   assert.match(page, /Merc Registry/);
   assert.match(page, /submitMercRecruit/);
-  assert.match(page, /Permanent Unlocks/);
+  assert.match(page, /Elite Contracts/);
   assert.match(api, /"MERC_RECRUIT"/);
 });
 

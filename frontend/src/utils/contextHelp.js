@@ -173,6 +173,8 @@ export const CONTEXT_HELP = {
       "Aerith, Tifa, Zidane, Yuna, Balthier, and Cloud remain the founding roster and keep their original progression unlocks.",
       "Auron, Vivi, Cecil, and Ramza join through recruitment quests tied to Character Level, Hunt clears, and selected Dungeon clears.",
       "Terra and Tidus use one-time Gil contracts after their required Character Level is reached. Permanent recruitment fees are separate from deployment fees.",
+      "Lightning, Sephiroth, Rikku, Y’shtola, Noctis, and Cid form the Elite Merc tier. Their permanent contracts and Hunt Seal deployment fees are much higher, but their assists are intentionally stronger.",
+      "Elite specialties include extreme burst damage, full-service recovery, premium spoil gathering, and Venture support.",
       "Hunt, Venture, and Raid each have an independent contract slot. A Hero that is Deployed remains Deployed and unavailable until that assignment resolves.",
       "The Merc Registry shows the full collection; unrecruited expansion Heroes use locked silhouette artwork until permanently recruited.",
     ],

@@ -1,5 +1,6 @@
 export const MERC_ART_ROOT = "/merc-service/a1";
 export const MERC_EXPANSION_ART_ROOT = "/merc-service/a2";
+export const MERC_ELITE_ART_ROOT = "/merc-service/a3";
 
 export function mercContractsList(source) {
   if (Array.isArray(source)) return source.filter(Boolean);
@@ -43,14 +44,17 @@ export function mercHeroUiState(hero, source, selectedMission = "") {
 }
 
 export function mercHeroArtRoot(hero) {
-  return String(hero?.art_set || "a1").toLowerCase() === "a2" ? MERC_EXPANSION_ART_ROOT : MERC_ART_ROOT;
+  const artSet = String(hero?.art_set || "a1").toLowerCase();
+  if (artSet === "a3") return MERC_ELITE_ART_ROOT;
+  if (artSet === "a2") return MERC_EXPANSION_ART_ROOT;
+  return MERC_ART_ROOT;
 }
 
 export function mercHeroCardArt(hero, source, selectedMission = "") {
   const heroId = String(hero?.id || "").toLowerCase();
   if (!heroId) return "";
   const root = mercHeroArtRoot(hero);
-  if (hero?.recruitment?.required && !hero?.recruitment?.recruited && root === MERC_EXPANSION_ART_ROOT) {
+  if (hero?.recruitment?.required && !hero?.recruitment?.recruited && root !== MERC_ART_ROOT) {
     return `${root}/cards/${heroId}-locked.webp`;
   }
   const uiState = mercHeroUiState(hero, source, selectedMission);
@@ -62,7 +66,7 @@ export function mercRegistryCardArt(hero) {
   const heroId = String(hero?.id || "").toLowerCase();
   if (!heroId) return "";
   const root = mercHeroArtRoot(hero);
-  if (hero?.recruitment?.required && !hero?.recruitment?.recruited && root === MERC_EXPANSION_ART_ROOT) {
+  if (hero?.recruitment?.required && !hero?.recruitment?.recruited && root !== MERC_ART_ROOT) {
     return `${root}/cards/${heroId}-locked.webp`;
   }
   return `${root}/cards/${heroId}-available.webp`;

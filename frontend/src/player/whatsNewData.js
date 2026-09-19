@@ -1,5 +1,21 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.8.2",
+    name: "Elite Mercs",
+    title: "Legendary contracts join the Hero Merc Service",
+    summary: "Six premium Hero contracts join the Merc Registry with high recruitment requirements, expensive deployment fees, and the strongest specialized assists in the service.",
+    highlights: [
+      { title: "Six Elite Mercs", description: "Lightning, Sephiroth, Rikku, Y’shtola, Noctis, and Cid expand the permanent roster from twelve Heroes to eighteen." },
+      { title: "Premium recruitment", description: "Every Elite Merc requires a high-level permanent Gil contract backed by Hunt and Dungeon progression before the Hero can be hired." },
+      { title: "Elite combat power", description: "Lightning and Sephiroth deliver top-end opening damage, while Noctis combines strong damage with Haste, Power Up, and protection." },
+      { title: "Elite recovery", description: "Y’shtola provides the strongest Merc recovery package: major healing, harmful-status cleansing, Regen, and protection." },
+      { title: "Elite gathering", description: "Rikku guarantees an enhanced bonus-spoil pull, while Cid specializes in Venture support and enlarged material recovery." },
+      { title: "Three-state card set", description: "All six Elite Heroes include Locked silhouette, Available, and Unavailable contract artwork matching the established Merc Service card system." },
+      { title: "Safe upgrade", description: "The existing schema 18 recruitment registry is reused, so v1.8.2 requires no player reset and no database migration." },
+    ],
+    action: { tab: "mercs", label: "Open Hero Merc Service" },
+  },
+  {
     version: "v1.8.1",
     name: "Merc Recruitment",
     title: "Build a permanent Hero Merc roster",

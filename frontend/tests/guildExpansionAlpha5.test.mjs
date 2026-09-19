@@ -46,6 +46,6 @@ test("Alpha 5 What's New and public version identity are current", async () => {
   const whatsNew = await text(whatsNewPath);
   const version = await text(versionPath);
   assert.match(whatsNew, /name: "Guild Expansion"/);
-  assert.match(version, /WEB_BUILD = "Merc Recruitment"/);
-  assert.match(version, /1\.8\.1-merc-recruitment/);
+  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
+  assert.match(version, /1\.8\.2-elite-mercs/);
 });

@@ -29,8 +29,8 @@ test("secondary Fellowship detail is persistent and mobile friendly", () => {
 });
 
 test("Fellowship UX remains present in the final release", () => {
-  assert.match(version, /WEB_BUILD = "Merc Recruitment"/);
-  assert.match(version, /1\.8\.1-merc-recruitment/);
+  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
+  assert.match(version, /1\.8\.2-elite-mercs/);
   assert.match(news, /Guild Expansion has arrived/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);

@@ -50,7 +50,7 @@ test("Triple Triad remains readable and responsive", () => {
 });
 
 test("Alpha 5 player copy, Guide, and compatibility contract are current", () => {
-  assert.match(version, /1\.8\.1-merc-recruitment/);
+  assert.match(version, /1\.8\.2-elite-mercs/);
   assert.match(whatsNew, /v1\.6\.0/);
   assert.match(whatsNew, /Triple Triad opens the card hall/);
   assert.match(whatsNew, /schema advances to 13/);

@@ -115,6 +115,7 @@ export default function MercService({ data, overview, onRefresh }) {
   const heroes = Array.isArray(state.heroes) ? state.heroes : [];
   const hiredRoster = heroes.filter((hero) => !hero?.recruitment?.required || hero?.recruitment?.recruited);
   const expansionRoster = heroes.filter((hero) => hero?.recruitment?.required);
+  const eliteRoster = heroes.filter((hero) => String(hero?.tier || "").toLowerCase() === "elite");
   const allSlotsOccupied = contracts.length >= 3;
   const registry = state.registry || { recruited: hiredRoster.length, total: heroes.length };
 
@@ -122,7 +123,7 @@ export default function MercService({ data, overview, onRefresh }) {
     <section className="panel span-12 merc-hero-panel">
       <div className="merc-hero-copy">
         <div className="panel-title-row merc-title-row"><div><p className="eyebrow">Crystal Guild · Hero Contracts</p><h2>{state.service || "Hero Merc Service"}</h2></div><ContextHelp topic="merc_service" /></div>
-        <p className="merc-lead">Recruit new Heroes permanently, then hire up to three Heroes at once—one Hunt, one Venture, and one Raid contract.</p>
+        <p className="merc-lead">Recruit new Heroes permanently, then hire up to three Heroes at once—one Hunt, one Venture, and one Raid contract. Elite Mercs demand premium contracts, but bring the strongest damage, recovery, and gathering support in the roster.</p>
       </div>
       <div className="merc-wallet"><span>Hunt Seals</span><strong>{number(state.hunt_seals)}</strong><small>{number(state.gil)} Gil · Lv. {number(state.player_level)} · {number(state.hunt_clears)} Hunt clears · {number(state.dungeon_clears)} Dungeon clears</small></div>
       {message ? <div className="state-message compact-state merc-message">{message}</div> : null}
@@ -142,7 +143,7 @@ export default function MercService({ data, overview, onRefresh }) {
           <div className="merc-info-grid">
             <div><strong>1. Recruit</strong><span>Founding Heroes keep their original progression unlocks. Expansion Heroes must first be recruited through a character quest or one-time permanent Gil contract.</span></div>
             <div><strong>2. Pick a Job Type</strong><span>Choose Hunt, Venture, or Raid. A filled slot remains unavailable until that assignment begins or its reservation is cancelled.</span></div>
-            <div><strong>3. Spend Hunt Seals</strong><span>Recruitment is permanent, but each deployment still uses Hunt Seals. Only Heroes who accept the selected assignment can be hired.</span></div>
+            <div><strong>3. Spend Hunt Seals</strong><span>Recruitment is permanent, but each deployment still uses Hunt Seals. Elite contracts cost substantially more and are intended for high-value assignments.</span></div>
             <div><strong>4. Up to Three Active</strong><span>You may keep one contract of each assignment type active at once. Deployed Heroes remain unavailable until their mission resolves.</span></div>
           </div>
           <figure className="merc-role-art"><img src={`${MERC_ART_ROOT}/scenes/roles.webp`} alt="Merc Service role emblems for Striker, Support, Scavenger, and Specialist" loading="lazy" /></figure>
@@ -188,9 +189,10 @@ export default function MercService({ data, overview, onRefresh }) {
             const statusLabel = mercHeroStatusLabel(hero, contracts, selectedMission);
             const statusClass = isContracted ? "active" : uiState === "available" ? "ready" : "locked";
             const availabilityReason = mercHeroAvailabilityReason(hero, contracts, selectedMission);
-            return <article className={`merc-card ${uiState === "available" ? "available" : "locked"} ${uiState}`} key={hero.id}>
+            const elite = String(hero?.tier || "").toLowerCase() === "elite";
+            return <article className={`merc-card ${uiState === "available" ? "available" : "locked"} ${uiState} ${elite ? "elite" : ""}`} key={hero.id}>
               <div className="merc-card-art-frame"><img src={mercHeroCardArt(hero, contracts, selectedMission)} alt={`${hero.name} Merc contract card — ${uiState}`} loading="lazy" /></div>
-              <div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${statusClass}`}>{statusLabel}</span></div>
+              <div className="merc-card-meta"><span>{hero.origin}{elite ? " · Elite Contract" : ""}</span><span className={`small-badge ${statusClass}`}>{statusLabel}</span></div>
               <p className="merc-card-effect">{hero.effect_summary}</p>
               <div className={`merc-availability-line ${uiState}`}><strong>{isDeployed ? "Deployed" : isContracted ? "On Contract" : uiState === "available" ? "Available" : hero.available ? "Unavailable" : "Locked"}</strong><span>{availabilityReason}</span></div>
               {isContracted ? <div className="merc-contract-reason"><strong>{isDeployed ? "Assignment In Progress" : "Currently Hired"}</strong><span>{isDeployed ? `${MISSION_LABELS[heroContract?.mission_type] || heroContract?.mission_type || "Assignment"} is underway. This Hero and slot remain unavailable until it resolves.` : `Reserved for your next ${MISSION_LABELS[heroContract?.mission_type] || heroContract?.mission_type || "assignment"}. This Hero cannot take another job until that contract resolves.`}</span></div> : uiState === "available" ? <button type="button" className="equipment-action-button" disabled={!canHire} onClick={() => hire(hero)}>{busy === `hire:${hero.id}` ? "Hiring…" : affordable ? `Hire for ${MISSION_LABELS[selectedMission]} · ${number(hero.fee_seals)} Hunt Seals` : `Need ${number(hero.fee_seals)} Hunt Seals`}</button> : null}
@@ -202,8 +204,8 @@ export default function MercService({ data, overview, onRefresh }) {
     </> : null}
 
     {view === "recruitment" ? <section className="panel span-12 merc-recruitment-panel" id="merc-recruitment">
-      <div className="panel-title-row"><div><p className="eyebrow">Expansion Recruitment</p><h3>Earn Their Contract</h3></div><span className="small-badge">Permanent Unlocks</span></div>
-      <p className="merc-lead">Expansion Heroes do not simply appear for hire. Complete their recruitment quest or fund a one-time permanent contract. Once recruited, they remain in your Merc Registry permanently and individual assignments continue to cost Hunt Seals.</p>
+      <div className="panel-title-row"><div><p className="eyebrow">Expansion Recruitment</p><h3>Earn Their Contract</h3></div><span className="small-badge">{eliteRoster.length} Elite Contracts</span></div>
+      <p className="merc-lead">Expansion Heroes do not simply appear for hire. Complete their recruitment objectives or fund a one-time permanent contract. Elite Mercs sit at the top of the roster: their permanent contracts and Hunt Seal deployment fees are deliberately expensive, but their assists are substantially stronger.</p>
       <div className="merc-recruitment-grid">
         {expansionRoster.map((hero) => {
           const recruitment = hero.recruitment || {};
@@ -211,9 +213,10 @@ export default function MercService({ data, overview, onRefresh }) {
           const ready = Boolean(recruitment.ready) && !recruited;
           const status = mercRecruitmentStatusLabel(hero);
           const buttonLabel = recruited ? "Recruited" : recruitment.kind === "contract" ? (recruitment.affordable ? `Sign Contract · ${number(recruitment.gil_cost)} Gil` : `Need ${number(recruitment.gil_cost)} Gil`) : ready ? `Complete ${recruitment.name}` : "Requirements Not Met";
-          return <article className={`merc-recruit-card ${recruited ? "recruited" : ready ? "ready" : "locked"}`} key={hero.id}>
-            <div className="merc-card-art-frame"><img src={mercHeroCardArt(hero, contracts, selectedMission)} alt={`${hero.name} ${recruited ? "recruited" : "locked"} recruitment card`} loading="lazy" /></div>
-            <div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${recruited ? "ready" : ready ? "active" : "locked"}`}>{status}</span></div>
+          const elite = String(hero?.tier || "").toLowerCase() === "elite";
+          return <article className={`merc-recruit-card ${recruited ? "recruited" : ready ? "ready" : "locked"} ${elite ? "elite" : ""}`} key={hero.id}>
+            <div className="merc-card-art-frame"><img src={recruited ? mercRegistryCardArt(hero) : mercHeroCardArt(hero, contracts, selectedMission)} alt={`${hero.name} ${recruited ? "recruited" : "locked"} recruitment card`} loading="lazy" /></div>
+            <div className="merc-card-meta"><span>{hero.origin}{elite ? " · Elite Contract" : ""}</span><span className={`small-badge ${recruited ? "ready" : ready ? "active" : "locked"}`}>{status}</span></div>
             <div className="merc-recruit-copy"><h4>{hero.name}</h4><strong>{recruitment.name}</strong><p>{recruitment.hint}</p></div>
             <div className="merc-objectives">{(recruitment.objectives || []).map((objective) => <div className={objective.met ? "met" : "missing"} key={objective.id}><span>{objective.label}</span><strong>{number(objective.current)} / {number(objective.required)}</strong></div>)}{Number(recruitment.gil_cost || 0) > 0 ? <div className={recruitment.affordable ? "met" : "missing"}><span>Permanent Contract</span><strong>{number(recruitment.gil_cost)} Gil</strong></div> : null}</div>
             <p className="merc-card-effect">{hero.effect_summary}</p>
@@ -226,7 +229,7 @@ export default function MercService({ data, overview, onRefresh }) {
     {view === "registry" ? <section className="panel span-12 merc-registry-panel" id="merc-registry">
       <div className="panel-title-row"><div><p className="eyebrow">Merc Registry</p><h3>{number(registry.recruited)} of {number(registry.total)} Heroes Recruited</h3></div><span className="small-badge ready">Permanent Roster</span></div>
       <div className="merc-registry-progress" aria-label={`${number(registry.recruited)} of ${number(registry.total)} Merc Heroes recruited`}><span style={{ width: `${Math.max(0, Math.min(100, Number(registry.total || 0) ? Number(registry.recruited || 0) / Number(registry.total) * 100 : 0))}%` }} /></div>
-      <div className="merc-registry-grid">{heroes.map((hero) => { const recruitment = hero.recruitment || {}; const recruited = Boolean(recruitment.recruited); return <article className={`merc-registry-card ${recruited ? "recruited" : "locked"}`} key={hero.id}><div className="merc-card-art-frame"><img src={mercRegistryCardArt(hero)} alt={`${hero.name} Merc Registry card — ${recruited ? "recruited" : "not recruited"}`} loading="lazy" /></div><div className="merc-card-meta"><span>{hero.origin}</span><span className={`small-badge ${recruited ? "ready" : "locked"}`}>{recruited ? "RECRUITED" : "LOCKED"}</span></div><h4>{hero.name}</h4><p><strong>{hero.role}</strong> · {hero.specialty}</p><small>{recruited ? hero.effect_summary : recruitment.hint || hero.locked_reason}</small>{!recruited ? <button type="button" className="equipment-action-button secondary" onClick={() => setView("recruitment")}>View Recruitment</button> : null}</article>; })}</div>
+      <div className="merc-registry-grid">{heroes.map((hero) => { const recruitment = hero.recruitment || {}; const recruited = Boolean(recruitment.recruited); const elite = String(hero?.tier || "").toLowerCase() === "elite"; return <article className={`merc-registry-card ${recruited ? "recruited" : "locked"} ${elite ? "elite" : ""}`} key={hero.id}><div className="merc-card-art-frame"><img src={mercRegistryCardArt(hero)} alt={`${hero.name} Merc Registry card — ${recruited ? "recruited" : "not recruited"}`} loading="lazy" /></div><div className="merc-card-meta"><span>{hero.origin}{elite ? " · Elite Contract" : ""}</span><span className={`small-badge ${recruited ? "ready" : "locked"}`}>{recruited ? "RECRUITED" : "LOCKED"}</span></div><h4>{hero.name}</h4><p><strong>{hero.role}</strong> · {hero.specialty}</p><small>{recruited ? hero.effect_summary : recruitment.hint || hero.locked_reason}</small>{!recruited ? <button type="button" className="equipment-action-button secondary" onClick={() => setView("recruitment")}>View Recruitment</button> : null}</article>; })}</div>
     </section> : null}
   </div>;
 }

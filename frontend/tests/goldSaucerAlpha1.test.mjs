@@ -6,9 +6,9 @@ import { WEB_ASSET_REVISION, WEB_BUILD, WEB_VERSION } from "../src/version.js";
 const read = (relative) => fs.readFileSync(new URL(`../${relative}`, import.meta.url), "utf8");
 
 test("Gold Saucer Alpha 1 public identity and tab are wired", () => {
-  assert.equal(WEB_VERSION, "v1.8.1");
-  assert.equal(WEB_BUILD, "Merc Recruitment");
-  assert.equal(WEB_ASSET_REVISION, "1.8.1-merc-recruitment");
+  assert.equal(WEB_VERSION, "v1.8.2");
+  assert.equal(WEB_BUILD, "Elite Mercs");
+  assert.equal(WEB_ASSET_REVISION, "1.8.2-elite-mercs");
   const profile = read("src/pages/PlayerProfile.jsx");
   assert.match(profile, /gold_saucer.*Gold Saucer/s);
   assert.match(profile, /\.\.\/player\/GoldSaucer\.jsx/);

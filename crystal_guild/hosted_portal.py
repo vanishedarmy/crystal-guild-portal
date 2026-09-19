@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.8.1-merc-recruitment"
-FRONTEND_ASSET_REVISION = "1.8.1-merc-recruitment"
+HOSTED_PORTAL_VERSION = "1.8.2-elite-mercs"
+FRONTEND_ASSET_REVISION = "1.8.2-elite-mercs"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 35
 ALLOWED_PORTAL_ACTIONS = {

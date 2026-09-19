@@ -4,11 +4,11 @@ import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
 test("v1.7.1 Resynthesis Alpha 2 web identity is centralized", () => {
-  assert.equal(WEB_VERSION, "v1.8.1");
-  assert.equal(WEB_BUILD, "Merc Recruitment");
-  assert.equal(WEB_RELEASE, "v1.8.1 — Merc Recruitment");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.8.1 — Merc Recruitment");
-  assert.equal(WEB_ASSET_REVISION, "1.8.1-merc-recruitment");
+  assert.equal(WEB_VERSION, "v1.8.2");
+  assert.equal(WEB_BUILD, "Elite Mercs");
+  assert.equal(WEB_RELEASE, "v1.8.2 — Elite Mercs");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.8.2 — Elite Mercs");
+  assert.equal(WEB_ASSET_REVISION, "1.8.2-elite-mercs");
 });
 
 

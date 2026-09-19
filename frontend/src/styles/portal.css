@@ -12813,3 +12813,7 @@ textarea {
     line-height: 1.25;
   }
 }
+
+/* v1.8.2 — Elite Merc contracts */
+.merc-card.elite,.merc-recruit-card.elite,.merc-registry-card.elite{border-color:rgba(240,201,92,.34);box-shadow:inset 0 0 0 1px rgba(240,201,92,.06),0 10px 24px rgba(0,0,0,.16)}
+.merc-card.elite .merc-card-meta>span:first-child,.merc-recruit-card.elite .merc-card-meta>span:first-child,.merc-registry-card.elite .merc-card-meta>span:first-child{color:#ffe7a1}

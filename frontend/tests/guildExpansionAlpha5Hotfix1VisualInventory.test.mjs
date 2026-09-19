@@ -31,6 +31,6 @@ test("Equipment inventory groups are independently collapsible and remembered", 
 });
 
 test("Alpha 5 Hotfix 1 uses a cache-busted frontend revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.1-merc-recruitment"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
   assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });

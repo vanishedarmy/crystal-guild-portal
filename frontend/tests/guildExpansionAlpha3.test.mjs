@@ -26,10 +26,10 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Merc Recruitment"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.1-merc-recruitment"/);
-  assert.equal(guideData.meta.version, "v1.8.1 — Merc Recruitment");
-  assert.equal(guideData.meta.release, "1.8.1-merc-recruitment");
+  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
+  assert.equal(guideData.meta.version, "v1.8.2 — Elite Mercs");
+  assert.equal(guideData.meta.release, "1.8.2-elite-mercs");
   assert.match(hosted, /ACTION_PROTOCOL_VERSION = 35/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

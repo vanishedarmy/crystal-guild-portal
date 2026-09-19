@@ -26,8 +26,8 @@ test("Guild Expansion exposes Supply Drives, Guild Objectives, and Order rewards
 test("Alpha 2 public identity is current", () => {
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
-  assert.match(version, /WEB_BUILD = "Merc Recruitment"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.1-merc-recruitment"/);
-  assert.equal(guideData.meta.version, "v1.8.1 — Merc Recruitment");
-  assert.equal(guideData.meta.release, "1.8.1-merc-recruitment");
+  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
+  assert.equal(guideData.meta.version, "v1.8.2 — Elite Mercs");
+  assert.equal(guideData.meta.release, "1.8.2-elite-mercs");
 });

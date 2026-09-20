@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 1",
+    name: "Moogle Trading Post",
+    title: "Player-to-player commerce arrives at the Moogle Emporium",
+    summary: "Fellowships can build a Level 1 Moogle Trading Post that opens fixed-price player listings for eligible gear, materials, and supplies.",
+    highlights: [
+      { title: "Fellowship construction", description: "Build the Trading Post with 25,000 Gil, 3 Mythril Ore, 15 completed Expeditions, and Fellowship LVL 1." },
+      { title: "Fixed-price listings", description: "List eligible inventory for 48 hours, browse other adventurers’ offers, buy immediately with Gil, or cancel your own active listing." },
+      { title: "Economy safeguards", description: "A 2% listing fee and 5% completed-sale tax remove Gil from circulation while equipped last copies, key items, quest items, relics, and artifacts stay protected." },
+      { title: "Atomic transactions", description: "Purchases, payouts, item transfers, cancellations, and expired-item returns are handled by the authoritative Bot ledger with Portal replay protection." },
+      { title: "Full Trading Post artwork", description: "Locked, construction, marketplace, empty-state, transaction, category, status, and Moogle clerk artwork support the complete new service." },
+      { title: "Safe migration", description: "Schema 19 adds the Trading Post listing ledger with an automatic verified pre-migration backup; existing player progress is preserved." },
+    ],
+    action: { tab: "emporium", label: "Open Moogle Emporium" },
+  },
+  {
     version: "v1.8.2",
     name: "Elite Mercs",
     title: "Legendary contracts join the Hero Merc Service",

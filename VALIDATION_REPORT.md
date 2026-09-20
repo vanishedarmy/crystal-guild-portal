@@ -1,41 +1,21 @@
-# Crystal Guild v1.8.2 — Elite Mercs Validation
+# Crystal Guild v1.9.0 Alpha 1 — Moogle Trading Post Validation
 
-## Result
+Validation target: runtime `1.9.0-trading-post-alpha1`, local schema **19**, hosted sync schema **1**, and Portal Action protocol **36**.
 
-**PASS** — the v1.8.2 Elite Mercs release remains compatible after the comprehensive Web UI/UX polish pass.
+## Automated results
 
-## Automated validation
+- Bot regression suite: **757 / 757 passed**.
+- Web/hosted Python suite: **80 / 80 passed**.
+- Dedicated Trading Post coverage includes construction gating, locked/open state, listing fees, fixed-price purchase settlement, seller tax/payout, replay safety, self-purchase rejection, cancellation returns, expiry returns, protected relics, equipped-last-copy protection, and hosted payload validation.
+- Python package compile checks passed for Bot and Web.
+- JavaScript syntax checks passed for `api/auth.js`, `version.js`, and `whatsNewData.js`.
+- JSX parser checks passed for the modified `MoogleEmporium.jsx` and `FellowshipPage.jsx`.
+- Project JSON parse validation passed.
 
-| Check | Result |
-| --- | --- |
-| Bot unit/regression baseline | 748 / 748 passed (Bot unchanged) |
-| Hosted Web/API tests | 78 / 78 passed |
-| Frontend unit/regression tests | 696 / 696 passed |
-| Public image decode audit | 898 / 898 valid |
-| Elite Merc artwork set | 18 / 18 present |
-| Elite artwork dimensions | 660 × 880 for all 18 cards |
-| UI/UX polish regression suite | Passed |
+## Frontend build-environment note
 
-## UI/UX polish coverage
+The source archive does not contain `node_modules` or a package lock, and dependency installation was not available to completion in this isolated build environment, so a Vite production bundle could not be executed here. This is an environment/dependency-availability limitation rather than a detected source parse error. The modified JavaScript/JSX passed the syntax/parser checks above. Normal deployment should install the dependencies declared in `frontend/package.json` before running the Vite build.
 
-- Cross-panel width containment and natural text wrapping.
-- Mobile form legibility and no-zoom sizing.
-- Consistent keyboard focus visibility.
-- Reduced-motion, higher-contrast, and forced-colors fallbacks.
-- Compact status strips and action grouping.
-- Responsive Stream battle, Expedition, Dungeon/Solo, recovery-item, and Merc controls.
-- Full-frame 3:4 Merc card containment to protect generated borders from cropping.
-- Matching Player Guide accessibility/containment refinements.
+## Migration and safety
 
-## Release-contract validation
-
-- Runtime/frontend identity: `1.8.2-elite-mercs`
-- Visible release: `v1.8.2 — Elite Mercs`
-- Local database schema: 18
-- Hosted sync schema: 1
-- Portal Action protocol: 35
-- No migration or player reset is required.
-
-## Packaging/build note
-
-The Web package is distributed as source, consistent with previous releases. The environment did not have the pinned npm/Vite dependencies available offline, so a local Vite production bundle was not generated. Source-level frontend tests and hosted API tests passed.
+Schema 18 → 19 is additive and uses the existing verified pre-migration backup path (`pre_schema_19_*.db`). No player reset is required. Trading Post mutations remain Bot-authoritative and use the existing replay-safe Portal action pipeline.

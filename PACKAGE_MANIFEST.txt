@@ -1,8 +1,8 @@
-# Crystal Guild v1.8.2 — Elite Mercs
-# Runtime: 1.8.2-elite-mercs
-# Schema: 18 · Hosted sync: 1 · Portal Action protocol: 35
-# Comprehensive UI/UX polish + Fellowship project selection hotfix included; visible title unchanged.
-# Packaged source files: 1296
+# Crystal Guild v1.9.0 Alpha 1 — Moogle Trading Post
+# Runtime: 1.9.0-trading-post-alpha1
+# Schema: 19 · Hosted sync: 1 · Portal Action protocol: 36
+# Moogle Trading Post player-market expansion.
+# Packaged source files: 1300
 # Files
 .dockerignore
 .gitignore
@@ -49,6 +49,7 @@ STREAMER_DASHBOARD.md
 STREAM_ACTIVITIES_UI_MANIFEST.json
 STREAM_ACTIVITIES_UI_RELEASE_NOTES.md
 STREAM_ACTIVITIES_UI_VALIDATION.md
+TRADING_POST_ARTWORK_MANIFEST.json
 UIUX_POLISH_182.md
 UIUX_POLISH_182_VALIDATION.md
 UI_CONSISTENCY_RC2_RELEASE_NOTES.md
@@ -66,10 +67,6 @@ V1_8_FINAL_VALIDATION.md
 VALIDATION_REPORT.md
 VERSION.txt
 crystal_guild/__init__.py
-crystal_guild/__pycache__/__init__.cpython-313.pyc
-crystal_guild/__pycache__/hosted_portal.cpython-313.pyc
-crystal_guild/__pycache__/portal_auth.cpython-313.pyc
-crystal_guild/__pycache__/trophy_hall.cpython-313.pyc
 crystal_guild/config.py
 crystal_guild/hosted_portal.py
 crystal_guild/portal_auth.py
@@ -972,6 +969,23 @@ frontend/public/retro-phase-iii/weapon-icons-v2/wyvern_claws.webp
 frontend/public/retro-phase-iii/weapon-icons-v2/yew_wand.webp
 frontend/public/retro-phase-iii/weapon-icons-v2/yoichi_bow.webp
 frontend/public/retro-phase-iii/weapon-icons-v2/zweihander.webp
+frontend/public/trading-post/a1/category-icons.png
+frontend/public/trading-post/a1/clerk-excited.png
+frontend/public/trading-post/a1/clerk-happy.png
+frontend/public/trading-post/a1/clerk-neutral.png
+frontend/public/trading-post/a1/clerk-thinking.png
+frontend/public/trading-post/a1/clerk-worried.png
+frontend/public/trading-post/a1/construction.png
+frontend/public/trading-post/a1/emblem.png
+frontend/public/trading-post/a1/expired.png
+frontend/public/trading-post/a1/listing-board.png
+frontend/public/trading-post/a1/listing-complete.png
+frontend/public/trading-post/a1/locked.png
+frontend/public/trading-post/a1/marketplace.png
+frontend/public/trading-post/a1/no-results.png
+frontend/public/trading-post/a1/purchase-complete.png
+frontend/public/trading-post/a1/sale-complete.png
+frontend/public/trading-post/a1/status-icons.png
 frontend/public/trails-raids/h4/hunt-active.webp
 frontend/public/trails-raids/h4/trial-board-collapsed.webp
 frontend/public/trails-raids/h4/trial-board-open.webp
@@ -1278,17 +1292,6 @@ hosted.env.example
 render.yaml
 requirements.txt
 run_hosted_portal.py
-tests/__pycache__/test_emporium_annex_alpha3.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_gold_saucer_alpha1.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_gold_saucer_alpha2.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_gold_saucer_alpha4.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_gold_saucer_alpha5.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_hosted_portal.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_merc_service_batch3.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_portal_actions.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_resynthesis_alpha1.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_retainer_alpha1.cpython-313-pytest-9.0.2.pyc
-tests/__pycache__/test_retainer_alpha2.cpython-313-pytest-9.0.2.pyc
 tests/test_emporium_annex_alpha3.py
 tests/test_gold_saucer_alpha1.py
 tests/test_gold_saucer_alpha2.py
@@ -1300,3 +1303,4 @@ tests/test_portal_actions.py
 tests/test_resynthesis_alpha1.py
 tests/test_retainer_alpha1.py
 tests/test_retainer_alpha2.py
+tests/test_trading_post_alpha1.py

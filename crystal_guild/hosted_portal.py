@@ -23,12 +23,13 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.8.2-elite-mercs"
-FRONTEND_ASSET_REVISION = "1.8.2-elite-mercs"
+HOSTED_PORTAL_VERSION = "1.9.0-trading-post-alpha1"
+FRONTEND_ASSET_REVISION = "1.9.0-trading-post-alpha1"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 35
+ACTION_PROTOCOL_VERSION = 36
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
+    "TRADING_POST_STATE", "TRADING_POST_LIST", "TRADING_POST_BUY", "TRADING_POST_CANCEL",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "WORKSHOP_EXCHANGE",
@@ -82,7 +83,7 @@ MAX_ACTION_HISTORY = 20
 # cannot flood the bounded Portal relay queue.
 # Read/state requests are safe to collapse because only the newest response matters.
 READ_ONLY_STATE_ACTIONS = {
-    "CHARACTER_STATE", "SHOP_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
+    "CHARACTER_STATE", "SHOP_STATE", "TRADING_POST_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
     "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE", "MERC_STATE",
     # Preference writes are deliberately queue-budget neutral: they never affect
     # combat, Long Rest, or gameplay progression and are last-write-wins.
@@ -779,6 +780,39 @@ class HostedPortalStore:
             if quantity < 1 or quantity > 99:
                 raise ValueError("Shop quantity must be between 1 and 99.")
             payload = {"item_id": item_id, "quantity": quantity}
+        elif kind == "TRADING_POST_STATE":
+            if payload:
+                raise ValueError("TRADING_POST_STATE does not accept parameters.")
+        elif kind == "TRADING_POST_LIST":
+            if set(payload) != {"item_id", "quantity", "unit_price"}:
+                raise ValueError("TRADING_POST_LIST requires item_id, quantity, and unit_price.")
+            item_id = str(payload.get("item_id") or "").strip()
+            if not item_id or len(item_id) > 100 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", item_id):
+                raise ValueError("Invalid Trading Post item ID.")
+            if isinstance(payload.get("quantity"), bool) or isinstance(payload.get("unit_price"), bool):
+                raise ValueError("Invalid Trading Post quantity or price.")
+            try:
+                quantity = int(payload.get("quantity"))
+                unit_price = int(payload.get("unit_price"))
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Trading Post quantity or price.") from None
+            if quantity < 1 or quantity > 99:
+                raise ValueError("Trading Post quantity must be between 1 and 99.")
+            if unit_price < 1 or unit_price > 1_000_000:
+                raise ValueError("Trading Post unit price must be between 1 and 1,000,000 Gil.")
+            payload = {"item_id": item_id, "quantity": quantity, "unit_price": unit_price}
+        elif kind in {"TRADING_POST_BUY", "TRADING_POST_CANCEL"}:
+            if set(payload) != {"listing_id"}:
+                raise ValueError(f"{kind} requires only listing_id.")
+            if isinstance(payload.get("listing_id"), bool):
+                raise ValueError("Invalid Trading Post listing ID.")
+            try:
+                listing_id = int(payload.get("listing_id"))
+            except (TypeError, ValueError):
+                raise ValueError("Invalid Trading Post listing ID.") from None
+            if listing_id < 1 or listing_id > 2_147_483_647:
+                raise ValueError("Invalid Trading Post listing ID.")
+            payload = {"listing_id": listing_id}
         elif kind == "RECOVERY_STATE":
             if payload:
                 raise ValueError("RECOVERY_STATE does not accept parameters.")

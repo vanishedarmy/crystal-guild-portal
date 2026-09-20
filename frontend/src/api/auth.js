@@ -117,6 +117,22 @@ export function submitSellItem(itemId, quantity, csrfToken, idempotencyKey) {
   return submitPortalAction("SELL_ITEM", { item_id: itemId, quantity }, csrfToken, idempotencyKey);
 }
 
+export function submitTradingPostState(csrfToken, idempotencyKey) {
+  return submitPortalAction("TRADING_POST_STATE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitTradingPostList(itemId, quantity, unitPrice, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRADING_POST_LIST", { item_id: itemId, quantity, unit_price: unitPrice }, csrfToken, idempotencyKey);
+}
+
+export function submitTradingPostBuy(listingId, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRADING_POST_BUY", { listing_id: listingId }, csrfToken, idempotencyKey);
+}
+
+export function submitTradingPostCancel(listingId, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRADING_POST_CANCEL", { listing_id: listingId }, csrfToken, idempotencyKey);
+}
+
 export async function waitForPortalAction(actionId, { attempts = 24, delayMs = 750, signal } = {}) {
   const budgetMs = Math.max(1000, (Number(attempts) || 24) * Math.max(100, Number(delayMs) || 750));
   const deadline = Date.now() + budgetMs;

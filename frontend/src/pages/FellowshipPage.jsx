@@ -171,7 +171,7 @@ export default function FellowshipPage() {
             <ProjectCard project={data.active_project} />
 
             <details className="panel fellowship-section fellowship-guild-board fellowship-dashboard-disclosure" open={disclosures.facilities} onToggle={(event) => setDisclosure("facilities", event.currentTarget.open)}>
-              <summary><span><span className="panel-kicker">Guild Hall Foundation</span><strong>Guild Facilities</strong><small>Construction progress and current facility benefits</small></span><span className="small-badge">{number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 6)} Built</span><DetailsPointer /></summary>
+              <summary><span><span className="panel-kicker">Guild Hall Foundation</span><strong>Guild Facilities</strong><small>Construction progress and current facility benefits</small></span><span className="small-badge">{number(data.guild_board?.built_count)} / {number(data.guild_board?.facility_count || 7)} Built</span><DetailsPointer /></summary>
               <div className="fellowship-disclosure-body">
                 <p className="muted fellowship-board-copy">Guild facilities grow through shared construction projects. Gil and requested materials can be donated voluntarily; gameplay milestones advance automatically.</p>
                 <div className="fellowship-facility-grid">
@@ -181,12 +181,13 @@ export default function FellowshipPage() {
             </details>
 
             <details className="panel fellowship-section fellowship-services fellowship-dashboard-disclosure" open={disclosures.services} onToggle={(event) => setDisclosure("services", event.currentTarget.open)}>
-              <summary><span><span className="panel-kicker">Guild Services &amp; Workshop</span><strong>Facility Services</strong><small>Workshop, Emporium, Stable, and Archive benefits</small></span><span className="small-badge">Guild Services</span><DetailsPointer /></summary>
+              <summary><span><span className="panel-kicker">Guild Services &amp; Workshop</span><strong>Facility Services</strong><small>Workshop, Emporium, Trading Post, Stable, and Archive benefits</small></span><span className="small-badge">Guild Services</span><DetailsPointer /></summary>
               <div className="fellowship-disclosure-body">
                 <p className="muted">Facility levels provide practical Guild services without replacing normal character progression.</p>
                 <div className="fellowship-service-grid">
                   <article><span>Workshop</span><strong>{number(data.services?.workshop?.forge_discount * 100)}% lower forge fees</strong><small>{number(data.services?.workshop?.level) >= 2 ? "Material refining available from the signed-in Fellowship tab." : "Material refining unlocks at Workshop Lv. 2."}</small></article>
                   <article><span>Moogle Emporium Annex</span><strong>{number(data.services?.emporium_annex?.stock_slots || 9)} stock slots</strong><small>{data.services?.emporium_annex?.unlocked ? "Annex open — every adventurer receives three additional shop choices per rotation." : "Construct the Annex to expand personal Emporium rotations from 9 to 12 items."}</small></article>
+                  <article><span>Moogle Trading Post</span><strong>{data.services?.trading_post?.unlocked ? "Player market open" : "Not built"}</strong><small>{data.services?.trading_post?.unlocked ? `Fixed-price listings stay open for ${number(data.services?.trading_post?.listing_hours || 48)} hours with a ${number((data.services?.trading_post?.sale_tax_rate || 0.05) * 100)}% completed-sale tax.` : "Construct the Level 1 Trading Post to unlock player-to-player listings inside the Moogle Emporium."}</small></article>
                   <article><span>Chocobo Stables</span><strong>+{number(data.services?.chocobo_stable?.xp_bonus * 100)}% Bond XP</strong><small>Applies automatically whenever your registered Chocobo earns XP.</small></article>
                   <article><span>Guild Archive</span><strong>+{Number((data.services?.archive?.rare_event_bonus || 0) * 100).toFixed(1)}% rare events</strong><small>Archive research modestly improves rare Expedition event chances.</small></article>
                 </div>

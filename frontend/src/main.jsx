@@ -9,6 +9,7 @@ import "./styles/character-identity.css";
 import "./styles/monster-identity.css";
 import "./styles/environment-pass.css";
 import "./styles/button-fit.css";
+import "./styles/uiux-polish.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

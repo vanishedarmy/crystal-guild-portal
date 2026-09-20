@@ -1,11 +1,14 @@
-# Crystal Guild v1.8.1 — Merc Recruitment (Hero Merc Service)
-# Runtime: 1.8.1-merc-recruitment
+# Crystal Guild v1.8.2 — Elite Mercs
+# Runtime: 1.8.2-elite-mercs
 # Schema: 18 · Hosted sync: 1 · Portal Action protocol: 35
+# Comprehensive UI/UX polish refresh included; visible title unchanged.
+# Packaged source files: 1279
 # Files
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
 CHOCOBO_PORTRAIT_MANIFEST.json
+DUNGEON_PORTRAIT_HOTFIX1.md
 Dockerfile
 EQUIPMENT_ARTWORK_ROUTING_MANIFEST.json
 EXPEDITION_ARTWORK_MANIFEST.json
@@ -17,6 +20,7 @@ GEAR_ARTWORK_MANIFEST.json
 GOLD_SAUCER_MGP_REBALANCE_AUDIT.md
 HOSTING_GUIDE.md
 ITEM_WEAPON_REFRESH_MANIFEST.json
+LIVE_STREAM_CONTROLS_HOTFIX3.md
 MATERIAL_ARTWORK_MANIFEST.json
 MERC_SERVICE_ALPHA2_BALANCE_AUDIT.md
 MERC_SERVICE_ALPHA2_RELEASE_NOTES.md
@@ -31,6 +35,7 @@ MERC_SERVICE_HOTFIX2.md
 MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
+MOBILE_CONTEXT_HELP_HOTFIX2.md
 PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
@@ -42,6 +47,8 @@ STREAMER_DASHBOARD.md
 STREAM_ACTIVITIES_UI_MANIFEST.json
 STREAM_ACTIVITIES_UI_RELEASE_NOTES.md
 STREAM_ACTIVITIES_UI_VALIDATION.md
+UIUX_POLISH_182.md
+UIUX_POLISH_182_VALIDATION.md
 UI_CONSISTENCY_RC2_RELEASE_NOTES.md
 UI_CONSISTENCY_RC2_VALIDATION.md
 UI_POLISH_RC3_RELEASE_NOTES.md
@@ -50,6 +57,8 @@ UI_SHARED_ASSET_MANIFEST.json
 UPGRADE_GUIDE.md
 V1_8_1_RELEASE_NOTES.md
 V1_8_1_VALIDATION.md
+V1_8_2_RELEASE_NOTES.md
+V1_8_2_VALIDATION.md
 V1_8_FINAL_RELEASE_NOTES.md
 V1_8_FINAL_VALIDATION.md
 VALIDATION_REPORT.md
@@ -259,6 +268,24 @@ frontend/public/merc-service/a2/cards/tidus-unavailable.webp
 frontend/public/merc-service/a2/cards/vivi-available.webp
 frontend/public/merc-service/a2/cards/vivi-locked.webp
 frontend/public/merc-service/a2/cards/vivi-unavailable.webp
+frontend/public/merc-service/a3/cards/cid-available.webp
+frontend/public/merc-service/a3/cards/cid-locked.webp
+frontend/public/merc-service/a3/cards/cid-unavailable.webp
+frontend/public/merc-service/a3/cards/lightning-available.webp
+frontend/public/merc-service/a3/cards/lightning-locked.webp
+frontend/public/merc-service/a3/cards/lightning-unavailable.webp
+frontend/public/merc-service/a3/cards/noctis-available.webp
+frontend/public/merc-service/a3/cards/noctis-locked.webp
+frontend/public/merc-service/a3/cards/noctis-unavailable.webp
+frontend/public/merc-service/a3/cards/rikku-available.webp
+frontend/public/merc-service/a3/cards/rikku-locked.webp
+frontend/public/merc-service/a3/cards/rikku-unavailable.webp
+frontend/public/merc-service/a3/cards/sephiroth-available.webp
+frontend/public/merc-service/a3/cards/sephiroth-locked.webp
+frontend/public/merc-service/a3/cards/sephiroth-unavailable.webp
+frontend/public/merc-service/a3/cards/yshtola-available.webp
+frontend/public/merc-service/a3/cards/yshtola-locked.webp
+frontend/public/merc-service/a3/cards/yshtola-unavailable.webp
 frontend/public/raid-overlay.html
 frontend/public/raid-overlay.js
 frontend/public/retainer/a2h1/assignments/field-gathering.webp
@@ -961,6 +988,7 @@ frontend/src/components/DetailDialog.jsx
 frontend/src/components/ItemArtwork.jsx
 frontend/src/components/JobPortrait.jsx
 frontend/src/components/LiveStatus.jsx
+frontend/src/components/LiveStreamCombatControls.jsx
 frontend/src/components/MonsterPortrait.jsx
 frontend/src/components/PageRefreshButton.jsx
 frontend/src/components/PortalLinkPanel.jsx
@@ -1015,6 +1043,7 @@ frontend/src/styles/portal.css
 frontend/src/styles/retro-phase-ii.css
 frontend/src/styles/retro.css
 frontend/src/styles/streamer.css
+frontend/src/styles/uiux-polish.css
 frontend/src/utils/achievementUtils.js
 frontend/src/utils/bossArtwork.js
 frontend/src/utils/campCountdown.js
@@ -1058,6 +1087,7 @@ frontend/tests/continuityAccessibility.test.mjs
 frontend/tests/dailySubscriberPerks.test.mjs
 frontend/tests/desktopRecoveryBattleItemFit.test.mjs
 frontend/tests/displayLabels.test.mjs
+frontend/tests/dungeonMonsterPortraitHotfix.test.mjs
 frontend/tests/dungeonsAlpha1.test.mjs
 frontend/tests/dungeonsAlpha2.test.mjs
 frontend/tests/dungeonsAlpha2Hotfix1.test.mjs
@@ -1069,6 +1099,7 @@ frontend/tests/dungeonsBeta3.test.mjs
 frontend/tests/dungeonsRC1.test.mjs
 frontend/tests/dungeonsRelease.test.mjs
 frontend/tests/dynamicCamp.test.mjs
+frontend/tests/eliteMercs182.test.mjs
 frontend/tests/emporiumAnnexAlpha3.test.mjs
 frontend/tests/emporiumItemInfoHotfix4.test.mjs
 frontend/tests/environmentPass.test.mjs
@@ -1150,6 +1181,7 @@ frontend/tests/itemCatalog.test.mjs
 frontend/tests/itemUsageCopyHotfix2.test.mjs
 frontend/tests/jobsAbilityReference.test.mjs
 frontend/tests/livePolicy.test.mjs
+frontend/tests/liveStreamPortalControls181.test.mjs
 frontend/tests/materialArtworkRetroPhaseIII.test.mjs
 frontend/tests/mercRecruitment181.test.mjs
 frontend/tests/mercServiceAlpha2.test.mjs
@@ -1159,10 +1191,12 @@ frontend/tests/mercServiceBatch5.test.mjs
 frontend/tests/mercServiceHotfix2.test.mjs
 frontend/tests/mercServiceHotfix3.test.mjs
 frontend/tests/mercServiceRC1.test.mjs
+frontend/tests/mobileContextHelpCornerAnchor181.test.mjs
 frontend/tests/mobileContextHelpDisclosureAlignment.test.mjs
 frontend/tests/mobileHeaderViewportHotfix.test.mjs
 frontend/tests/mobileProfileNameNoWrap.test.mjs
 frontend/tests/mobileReadabilityHotfix.test.mjs
+frontend/tests/mobileRecoveryTwoColumn181.test.mjs
 frontend/tests/mobileRetainerGuideUx.test.mjs
 frontend/tests/mobileScreenshotFit.test.mjs
 frontend/tests/mobileSiteHeader.test.mjs
@@ -1229,6 +1263,7 @@ frontend/tests/trailsRaidsScenicLayersHotfix4.test.mjs
 frontend/tests/uiConsistencyRC2.test.mjs
 frontend/tests/uiPolishRC3.test.mjs
 frontend/tests/uiSharedAssets131.test.mjs
+frontend/tests/uiUxPolish182.test.mjs
 frontend/tests/version.test.mjs
 frontend/tests/whatsNew.test.mjs
 frontend/tests/worldRaidBossArtwork.test.mjs

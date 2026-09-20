@@ -2936,3 +2936,67 @@ button, input, select, textarea { font: inherit; }
 /* v1.8 Merc Service Alpha 1 — Batch 4 Guide additions */
 #merc-service{scroll-margin-top:18px}.merc-guide-table-wrap{margin-top:14px}.merc-guide-table td,.merc-guide-table th{vertical-align:top}.merc-guide-table td:last-child{min-width:220px}.merc-guide-table td:nth-child(3),.merc-guide-table td:nth-child(5){white-space:normal}
 @media(max-width:720px){#merc-service .grid.two{grid-template-columns:1fr}.merc-guide-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain}.merc-guide-table{min-width:760px}.merc-guide-table th,.merc-guide-table td{padding:.65rem .7rem;font-size:.78rem}.merc-guide-table-wrap::after{content:"Swipe table for all Hero details →";display:block;padding:.45rem .15rem 0;color:var(--muted);font-size:.7rem}}
+
+/* v1.8.2 — comprehensive Guide UI/UX polish.
+   Mirrors the Portal's final containment, focus, wrapping, and mobile form pass. */
+:where(.guide-react-host, .guide-shell, .main, .content, .section),
+:where(.guide-react-host, .guide-shell, .main, .content, .section) > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+:where(.guide-react-host, .guide-shell) :where(h1, h2, h3, h4) {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+:where(.guide-react-host, .guide-shell) :where(p, li, td, th, small) {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+:where(.guide-react-host, .guide-shell) :where(button, a, input, select, textarea, summary):focus-visible {
+  outline: 3px solid rgba(125, 228, 255, .68);
+  outline-offset: 2px;
+}
+
+:where(.guide-react-host, .guide-shell) :where(button, a, input, select, textarea) {
+  min-width: 0;
+  max-width: 100%;
+  touch-action: manipulation;
+}
+
+:where(.guide-react-host, .guide-shell) table {
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  :where(.guide-react-host, .guide-shell) :where(input, select, textarea) {
+    font-size: 16px;
+  }
+  :where(.guide-react-host, .guide-shell) :where(button, .guide-index-nav-button, .info-action) {
+    min-height: 44px;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-react-host *, .guide-react-host *::before, .guide-react-host *::after,
+  .guide-shell *, .guide-shell *::before, .guide-shell *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root { --muted: #d1daea; }
+  :where(.guide-react-host, .guide-shell) :where(.section, .card, button, input, select) {
+    border-color: rgba(220, 237, 248, .46);
+  }
+}

@@ -25,3 +25,17 @@
 - Portal Action protocol: **35** (unchanged)
 - No player reset.
 - Existing v1.8.1 Merc recruitment records and active contracts remain compatible.
+
+
+## Comprehensive UI/UX polish refresh
+
+- Adds final responsive containment and natural wrapping safeguards across Portal panels, cards, badges, buttons, and forms.
+- Tightens panel/status/action density while preserving practical touch targets and established Crystal Guild visual styling.
+- Improves primary/secondary/danger action hierarchy and narrow-screen combat/ability/item layouts.
+- Preserves the requested two-column mobile recovery inventory with an extra-narrow fallback.
+- Protects Merc card borders with a fixed 3:4 contained artwork viewport.
+- Adds stronger keyboard focus visibility, reduced-motion support, high-contrast/forced-colors fallbacks, and 16px mobile form controls.
+- Extends the same wrapping, focus, containment, and mobile form safeguards to the Player Guide.
+- No gameplay, schema, sync, protocol, or release-title changes.
+
+- Mobile anti-truncation refinement: long player names, status badges, Merc requirements, and action labels now wrap safely instead of disappearing behind ellipsis/nowrap rules.

@@ -1,6 +1,7 @@
 import { useCallback, useDeferredValue, useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchStreamerDashboard } from "../api/streamer.js";
+import { fetchFellowship } from "../api/fellowship.js";
 import {
   loginUrl,
   submitStreamerCommand,
@@ -66,7 +67,7 @@ const OWNER_COMMAND_GROUPS = [
     title: "Fellowship Control",
     description: "Choose which unlocked community project the Guild is currently building.",
     commands: [
-      { id: "fellowshipproject", command: "!fellowshipproject <project>", label: "Set Fellowship Project", description: "Set the active unlocked Fellowship project", risk: "caution", argument: { type: "text", placeholder: "Project name", label: "Project" } },
+      { id: "fellowshipproject", command: "!fellowshipproject <project>", label: "Set Fellowship Project", description: "Set the active unlocked Fellowship project", risk: "caution", argument: { type: "project", label: "Project" } },
       { id: "airshipmission", command: "!airshipmission <mission>", label: "Launch Airship Mission", description: "Dispatch the completed Guild Airship on an unlocked mission", risk: "caution", argument: { type: "text", placeholder: "Mission name", label: "Airship mission" } },
     ],
   },
@@ -222,7 +223,7 @@ function actionKey(command) {
   return `streamer-${command}-${entropy}`;
 }
 
-function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players = [] }) {
+function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players = [], fellowshipProjects = [] }) {
   const initialInputs = useMemo(() => {
     const values = {};
     OWNER_COMMAND_GROUPS.forEach((group) => group.commands.forEach((item) => {
@@ -251,6 +252,14 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
       .catch(() => { if (active) setCatalogItems([]); });
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    setInputs((current) => {
+      const selected = String(current.fellowshipproject || "");
+      if (!selected || fellowshipProjects.some((project) => String(project.id) === selected)) return current;
+      return { ...current, fellowshipproject: "" };
+    });
+  }, [fellowshipProjects]);
 
   const execute = async (item) => {
     if (running) return;
@@ -305,7 +314,7 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
     <section className="streamer-panel streamer-control-panel" id="controls">
       <div className="streamer-panel-heading streamer-owner-heading">
         <div><span>Authenticated Backend</span><h2>Streamer Control Center</h2></div>
-        <small>15 verified owner actions</small>
+        <small>{OWNER_COMMAND_GROUPS.reduce((total, group) => total + group.commands.length, 0)} verified owner actions</small>
       </div>
 
       {accessState !== "ready" ? (
@@ -358,7 +367,21 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
                         </div>
                         <strong>{item.label}</strong>
                         <p>{item.description}</p>
-                        {item.argument?.type === "inventory" ? (
+                        {item.argument?.type === "project" ? (
+                          <label>
+                            <span>{item.argument.label}</span>
+                            <select
+                              value={argumentValue}
+                              disabled={!fellowshipProjects.length}
+                              onChange={(event) => setInputs((current) => ({ ...current, [item.id]: event.target.value }))}
+                            >
+                              <option value="">{fellowshipProjects.length ? "Choose unlocked project…" : "No unlocked projects"}</option>
+                              {fellowshipProjects.map((project) => (
+                                <option key={`fellowship-project-${project.id}`} value={project.id}>{project.name}</option>
+                              ))}
+                            </select>
+                          </label>
+                        ) : item.argument?.type === "inventory" ? (
                           <div className="streamer-inventory-admin-fields">
                             <label>
                               <span>Adventurer</span>
@@ -454,6 +477,7 @@ function RosterHeader() {
 
 export default function StreamerDashboard() {
   const [dashboard, setDashboard] = useState(null);
+  const [fellowship, setFellowship] = useState(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [error, setError] = useState("");
@@ -473,6 +497,14 @@ export default function StreamerDashboard() {
       .then((payload) => { setDashboard(payload); setError(""); })
       .catch((reason) => { if (reason.name !== "AbortError") setError(reason.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
+  }, [refreshToken]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchFellowship(controller.signal)
+      .then((payload) => setFellowship(payload))
+      .catch((reason) => { if (reason.name !== "AbortError") setFellowship(null); });
     return () => controller.abort();
   }, [refreshToken]);
 
@@ -518,7 +550,7 @@ export default function StreamerDashboard() {
 
         {dashboard ? (
           <div className="streamer-flow-layout">
-            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} players={players} />
+            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} players={players} fellowshipProjects={fellowship?.available_projects || []} />
 
             <section className="streamer-panel streamer-roster-panel" id="roster">
               <div className="streamer-panel-heading">

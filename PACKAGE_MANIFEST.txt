@@ -1,8 +1,8 @@
 # Crystal Guild v1.8.2 — Elite Mercs
 # Runtime: 1.8.2-elite-mercs
 # Schema: 18 · Hosted sync: 1 · Portal Action protocol: 35
-# Comprehensive UI/UX polish refresh included; visible title unchanged.
-# Packaged source files: 1279
+# Comprehensive UI/UX polish + Fellowship project selection hotfix included; visible title unchanged.
+# Packaged source files: 1296
 # Files
 .dockerignore
 .gitignore
@@ -15,6 +15,8 @@ EXPEDITION_ARTWORK_MANIFEST.json
 EXPEDITION_UI_POLISH_MANIFEST.json
 EXPEDITION_UI_POLISH_RELEASE_NOTES.md
 EXPEDITION_UI_POLISH_VALIDATION.md
+FELLOWSHIP_PROJECT_SELECTION_HOTFIX.md
+FELLOWSHIP_PROJECT_SELECTION_HOTFIX_VALIDATION.md
 FINALIZATION_AUDIT.md
 GEAR_ARTWORK_MANIFEST.json
 GOLD_SAUCER_MGP_REBALANCE_AUDIT.md
@@ -64,6 +66,10 @@ V1_8_FINAL_VALIDATION.md
 VALIDATION_REPORT.md
 VERSION.txt
 crystal_guild/__init__.py
+crystal_guild/__pycache__/__init__.cpython-313.pyc
+crystal_guild/__pycache__/hosted_portal.cpython-313.pyc
+crystal_guild/__pycache__/portal_auth.cpython-313.pyc
+crystal_guild/__pycache__/trophy_hall.cpython-313.pyc
 crystal_guild/config.py
 crystal_guild/hosted_portal.py
 crystal_guild/portal_auth.py
@@ -1272,6 +1278,17 @@ hosted.env.example
 render.yaml
 requirements.txt
 run_hosted_portal.py
+tests/__pycache__/test_emporium_annex_alpha3.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_gold_saucer_alpha1.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_gold_saucer_alpha2.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_gold_saucer_alpha4.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_gold_saucer_alpha5.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_hosted_portal.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_merc_service_batch3.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_portal_actions.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_resynthesis_alpha1.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_retainer_alpha1.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_retainer_alpha2.cpython-313-pytest-9.0.2.pyc
 tests/test_emporium_annex_alpha3.py
 tests/test_gold_saucer_alpha1.py
 tests/test_gold_saucer_alpha2.py

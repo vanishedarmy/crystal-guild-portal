@@ -22,12 +22,16 @@ test("Streamer dashboard uses the aggregate endpoint plus authenticated Portal c
   assert.match(page, /Streamer Control Center/);
   assert.match(page, /streamer_authorized/);
   assert.match(page, /submitStreamerCommand/);
+  assert.match(page, /fetchFellowship/);
+  assert.match(page, /fellowshipProjects=\{fellowship\?\.available_projects \|\| \[\]\}/);
+  assert.match(page, /Choose unlocked project…/);
+  assert.match(page, /value=\{project\.id\}/);
   assert.match(main, /styles\/streamer\.css/);
   assert.match(css, /Broadcaster-only presentation layer/);
   assert.doesNotMatch(css, /translateY\(|scale\(/);
 });
 
-test("Streamer dashboard exposes all fifteen allow-listed owner operations", async () => {
+test("Streamer dashboard exposes the allow-listed owner operations", async () => {
   const page = await readFile(new URL("pages/StreamerDashboard.jsx", SRC), "utf8");
   const commands = [
     "!health",
@@ -47,7 +51,7 @@ test("Streamer dashboard exposes all fifteen allow-listed owner operations", asy
     "!removeitem <player> | <item> | [qty]",
   ];
   for (const command of commands) assert.equal(page.includes(command), true, `missing ${command}`);
-  assert.match(page, /15 verified owner actions/);
+  assert.match(page, /OWNER_COMMAND_GROUPS\.reduce/);
   assert.doesNotMatch(page, /TWITCH_OWNER_ID/);
   assert.match(page, /Arbitrary chat commands cannot be relayed/);
   assert.match(page, /streamer-inventory-admin-fields/);

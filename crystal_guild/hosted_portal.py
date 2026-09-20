@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.0-trading-post-alpha1"
-FRONTEND_ASSET_REVISION = "1.9.0-trading-post-alpha1"
+HOSTED_PORTAL_VERSION = "1.9.0-economy-balance-alpha2"
+FRONTEND_ASSET_REVISION = "1.9.0-economy-balance-alpha2"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 36
 ALLOWED_PORTAL_ACTIONS = {

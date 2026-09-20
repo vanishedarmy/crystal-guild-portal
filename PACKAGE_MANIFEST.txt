@@ -1,8 +1,8 @@
-# Crystal Guild v1.9.0 Alpha 1 — Moogle Trading Post
-# Runtime: 1.9.0-trading-post-alpha1
+# Crystal Guild v1.9.0 Alpha 2 — Economy Balance
+# Runtime: 1.9.0-economy-balance-alpha2
 # Schema: 19 · Hosted sync: 1 · Portal Action protocol: 36
-# Moogle Trading Post player-market expansion.
-# Packaged source files: 1300
+# Preserves the Moogle Trading Post while applying targeted economy corrections.
+# Packaged source files: 1302
 # Files
 .dockerignore
 .gitignore
@@ -10,6 +10,7 @@ ARTWORK_ROUTING_AUDIT.json
 CHOCOBO_PORTRAIT_MANIFEST.json
 DUNGEON_PORTRAIT_HOTFIX1.md
 Dockerfile
+ECONOMY_BALANCE_AUDIT.md
 EQUIPMENT_ARTWORK_ROUTING_MANIFEST.json
 EXPEDITION_ARTWORK_MANIFEST.json
 EXPEDITION_UI_POLISH_MANIFEST.json
@@ -38,7 +39,6 @@ MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
 MOBILE_CONTEXT_HELP_HOTFIX2.md
-PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -1119,6 +1119,7 @@ frontend/tests/dungeonsBeta3.test.mjs
 frontend/tests/dungeonsRC1.test.mjs
 frontend/tests/dungeonsRelease.test.mjs
 frontend/tests/dynamicCamp.test.mjs
+frontend/tests/economyBalanceAlpha2.test.mjs
 frontend/tests/eliteMercs182.test.mjs
 frontend/tests/emporiumAnnexAlpha3.test.mjs
 frontend/tests/emporiumItemInfoHotfix4.test.mjs

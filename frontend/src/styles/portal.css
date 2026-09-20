@@ -12818,7 +12818,7 @@ textarea {
 .merc-card.elite,.merc-recruit-card.elite,.merc-registry-card.elite{border-color:rgba(240,201,92,.34);box-shadow:inset 0 0 0 1px rgba(240,201,92,.06),0 10px 24px rgba(0,0,0,.16)}
 .merc-card.elite .merc-card-meta>span:first-child,.merc-recruit-card.elite .merc-card-meta>span:first-child,.merc-registry-card.elite .merc-card-meta>span:first-child{color:#ffe7a1}
 
-/* v1.9.0 Alpha 1 — Moogle Trading Post */
+/* v1.9.0 Alpha 2 — Economy Balance */
 .moogle-commerce-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .trading-post-panel { display: grid; gap: 1rem; min-width: 0; }
 .trading-post-locked,

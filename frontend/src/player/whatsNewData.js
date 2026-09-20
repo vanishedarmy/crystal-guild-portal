@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 2",
+    name: "Economy Balance",
+    title: "A fairer economy without turning progression into a grind",
+    summary: "Core Gil progression stays intact while isolated resale loops are closed, Monster Toss becomes more rewarding, and the Level 1 Trading Post unlock is made genuinely early-game accessible.",
+    highlights: [
+      { title: "Core rewards preserved", description: "Normal Hunt, Raid, daily, shop, Chocobo Racing, Mini Cactpot, Triple Triad, and Trading Post fee curves remain intact after the economy audit." },
+      { title: "Monster Toss buff", description: "Monster Toss now pays 10 / 15 / 30 / 50 / 80 / 120 MGP across its scoring tiers so beginner choices are less punishing and strong play remains worthwhile." },
+      { title: "No passive Retainer flip", description: "Mineral Survey and Specialist Acquisition fees now sit just above their expected NPC liquidation value while preserving their material-procurement purpose." },
+      { title: "Workshop loop closed", description: "Press Adamantite now costs 1,600 Gil, preventing a guaranteed Mythril-to-Adamantite NPC resale loop without reducing Adamantite's value to gatherers or traders." },
+      { title: "Trading Post truly unlocks at Level 1", description: "Its activity gate is now 15 completed Ventures instead of Expeditions, which are not available until much later Fellowship progression." },
+      { title: "No migration required", description: "Schema 19, hosted sync 1, and Portal Action protocol 36 are unchanged." },
+    ],
+    action: { tab: "saucer", label: "Open Gold Saucer" },
+  },
+  {
     version: "v1.9.0 Alpha 1",
     name: "Moogle Trading Post",
     title: "Player-to-player commerce arrives at the Moogle Emporium",

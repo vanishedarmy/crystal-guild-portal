@@ -499,7 +499,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                           </div>
                         ))}
                       </div>
-                    ) : <small>Construction requirements: Fellowship LVL 1 · 25,000 Gil · 3 Mythril Ore · 15 Expeditions.</small>}
+                    ) : <small>Construction requirements: Fellowship LVL 1 · 25,000 Gil · 3 Mythril Ore · 15 Ventures.</small>}
                   </div>
                 </div>
               ) : (

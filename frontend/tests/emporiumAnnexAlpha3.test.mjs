@@ -10,7 +10,7 @@ test("Alpha 3 surfaces the Moogle Emporium Annex in shop and Fellowship UI", asy
   assert.match(shop, /Moogle Emporium Annex/);
   assert.match(shop, /annexUnlocked/);
   assert.match(shop, /stockSlots/);
-  assert.match(shop, /expand personal rotations from 9 to 15 items/);
+  assert.match(shop, /\+2 Weapons, \+4 Armor & Accessories, and \+6 Items/);
   assert.match(fellowship, /Moogle Emporium Annex/);
   assert.match(fellowship, /emporium_annex/);
   assert.match(fellowship, /facility_count \|\| 6/);

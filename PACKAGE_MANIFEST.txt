@@ -1,8 +1,3 @@
-# Crystal Guild v1.9.0 Alpha 6 — World Events
-# Runtime: 1.9.0-world-events-alpha6
-# Carried forward systems include Title Status Hardening, Navigation Accessibility, Title Expansion, Moogle Trading Post, Economy Balance, Merc Service, Fellowship, and Gold Saucer.
-# Files: 1323
-
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -38,7 +33,8 @@ MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
 MOBILE_CONTEXT_HELP_HOTFIX2.md
-PACKAGE_MANIFEST.txt
+MOOGLE_ANNEX_CATEGORY_STOCK_HOTFIX4.md
+MOOGLE_ANNEX_STOCK_HOTFIX3.md
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -51,6 +47,7 @@ STREAM_ACTIVITIES_UI_RELEASE_NOTES.md
 STREAM_ACTIVITIES_UI_VALIDATION.md
 TITLE_EXPANSION.md
 TRADING_POST_ARTWORK_MANIFEST.json
+TRADING_POST_UIUX_HOTFIX2.md
 UIUX_POLISH_182.md
 UIUX_POLISH_182_VALIDATION.md
 UI_CONSISTENCY_RC2_RELEASE_NOTES.md
@@ -69,6 +66,7 @@ VALIDATION_REPORT.md
 VERSION.txt
 WORLD_EVENTS.md
 WORLD_EVENTS_ARTWORK_MANIFEST.json
+WORLD_EVENTS_UIUX_HOTFIX1.md
 crystal_guild/__init__.py
 crystal_guild/config.py
 crystal_guild/hosted_portal.py
@@ -1008,8 +1006,11 @@ frontend/public/world-events/a1/savage_coeurl.webp
 frontend/public/world-events/a1/tainted_malboro.webp
 frontend/public/world-events/a1/twisted_ahriman.webp
 frontend/public/world-events/a1/world_event_active.webp
+frontend/public/world-events/a1/world_event_active_h1.webp
 frontend/public/world-events/a1/world_event_defeated.webp
+frontend/public/world-events/a1/world_event_defeated_h1.webp
 frontend/public/world-events/a1/world_event_idle.webp
+frontend/public/world-events/a1/world_event_idle_h1.webp
 frontend/public/world-events/a1/world_events_header.webp
 frontend/src/App.jsx
 frontend/src/api/auth.js
@@ -1096,6 +1097,7 @@ frontend/src/utils/playerDirectorySort.js
 frontend/src/utils/quantityInput.js
 frontend/src/utils/relicArtwork.js
 frontend/src/utils/tabKeyboard.js
+frontend/src/utils/tradingPostSort.js
 frontend/src/utils/viewportAnchor.js
 frontend/src/version.js
 frontend/tests/achievements.test.mjs
@@ -1249,6 +1251,8 @@ frontend/tests/monsterIdentityWave6.test.mjs
 frontend/tests/monsterIdentityWave7.test.mjs
 frontend/tests/monsterIdentityWave8.test.mjs
 frontend/tests/monsterIdentityWave9.test.mjs
+frontend/tests/moogleAnnexCategoryStockHotfix4.test.mjs
+frontend/tests/moogleAnnexStockHotfix3.test.mjs
 frontend/tests/moogleRetainerRecipeCompactnessHotfix3.test.mjs
 frontend/tests/navigationAccessibilityAlpha4.test.mjs
 frontend/tests/passiveRecoveryGuide.test.mjs
@@ -1287,6 +1291,7 @@ frontend/tests/timerFormat.test.mjs
 frontend/tests/titleExpansionAlpha3.test.mjs
 frontend/tests/titlePortalAction.test.mjs
 frontend/tests/titleStatusHardeningAlpha5.test.mjs
+frontend/tests/tradingPostUiUxHotfix2.test.mjs
 frontend/tests/trailsRaidsAlpha1.test.mjs
 frontend/tests/trailsRaidsAlpha1Hotfix2.test.mjs
 frontend/tests/trailsRaidsAlpha2.test.mjs
@@ -1308,6 +1313,7 @@ frontend/tests/uiUxPolish182.test.mjs
 frontend/tests/version.test.mjs
 frontend/tests/whatsNew.test.mjs
 frontend/tests/worldEventsAlpha6.test.mjs
+frontend/tests/worldEventsUiUxHotfix1.test.mjs
 frontend/tests/worldRaidBossArtwork.test.mjs
 frontend/vite.config.js
 hosted.env.example

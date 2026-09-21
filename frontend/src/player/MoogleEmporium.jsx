@@ -136,7 +136,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     .slice().sort(compareTradingPostItems), [market?.my_listings]);
 
   const annexUnlocked = Boolean(shop?.annex_unlocked);
-  const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 15 : 9));
+  const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 21 : 9));
 
   const shopActionsAvailable = Boolean(
     isOwnProfile
@@ -386,8 +386,8 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           <div><span className="panel-kicker">Guild Expansion</span><strong>Moogle Emporium Annex</strong></div>
           <div><strong>{annexUnlocked ? "OPEN" : "NOT BUILT"}</strong><span>{number(stockSlots)} stock slots</span></div>
           <small>{annexUnlocked
-            ? "The completed Annex adds six extra choices to every personal Emporium rotation."
-            : "The Fellowship can construct the Annex to expand personal rotations from 9 to 15 items."}</small>
+            ? "Fixed Annex stock bonus: +2 Weapons · +4 Armor & Accessories · +6 Items."
+            : "Construct the Annex to add +2 Weapons, +4 Armor & Accessories, and +6 Items to each rotation."}</small>
         </div>
       ) : null}
 

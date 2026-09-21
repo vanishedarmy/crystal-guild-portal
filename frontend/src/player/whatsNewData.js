@@ -2,8 +2,8 @@ export const MAJOR_UPDATES = [
   {
     version: "v1.9.0 Alpha 6 Hotfix 3",
     name: "Moogle Annex Stock",
-    title: "The Moogle Emporium Annex now carries six extra choices",
-    summary: "The completed Fellowship Annex now expands every personal Moogle Emporium rotation from 9 to 15 stock slots instead of 12.",
+    title: "Moogle Emporium Annex stock is now category-fixed",
+    summary: "The completed Annex now adds +2 Weapons, +4 Armor & Accessories, and +6 Items to every personal Emporium rotation.",
     highlights: [
       { title: "Six bonus slots", description: "The Annex benefit increases from +3 to +6 current shop choices, bringing completed rotations to 15 slots." },
       { title: "Immediate cache upgrade", description: "Existing 12-item Annex rotations are invalidated by the authoritative stock-size check and reroll at the new capacity on the next shop request." },

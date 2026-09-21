@@ -4,11 +4,10 @@ import fs from "node:fs";
 
 const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("Title Expansion Alpha 3 publishes the current web identity", () => {
-  const version = read("../src/version.js");
-  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 3"/);
-  assert.match(version, /WEB_BUILD = "Title Expansion"/);
-  assert.match(version, /1\.9\.0-title-expansion-alpha3/);
+test("Title Expansion Alpha 3 remains documented in release history", () => {
+  const whatsNew = read("../src/player/whatsNewData.js");
+  assert.match(whatsNew, /version: "v1\.9\.0 Alpha 3"/);
+  assert.match(whatsNew, /name: "Title Expansion"/);
 });
 
 test("Gold Saucer separates earned Challenge Titles from MGP purchases", () => {

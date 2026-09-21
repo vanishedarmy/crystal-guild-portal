@@ -13041,3 +13041,153 @@ textarea {
 .saucer-prize-subhead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 0 10px}.saucer-prize-subhead h4{margin:.15rem 0 0;font-family:var(--display);color:var(--gold)}
 .saucer-challenge-title-grid{margin-bottom:18px}.saucer-challenge-title{gap:12px}.saucer-title-progress{height:7px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid rgba(255,214,98,.12)}.saucer-title-progress>span{display:block;height:100%;background:linear-gradient(90deg,#947236,#e1bd63);box-shadow:0 0 8px rgba(225,189,99,.28)}
 @media(max-width:560px){.saucer-prize-subhead{align-items:flex-start;flex-direction:column;gap:6px}}
+
+/* ============================================================
+   v1.9.0 Alpha 4 — Navigation Accessibility
+   Color is a secondary recognition cue only: every destination retains its
+   icon + text label, selected state, and high-contrast keyboard focus ring.
+   ============================================================ */
+.profile-tabs button[data-tab-tone] {
+  --tab-rgb: 96, 196, 235;
+  --tab-accent: rgb(var(--tab-rgb));
+  border-color: rgba(var(--tab-rgb), .28);
+  background:
+    linear-gradient(180deg, rgba(var(--tab-rgb), .115), rgba(var(--tab-rgb), .025) 72%),
+    rgba(5, 14, 34, .92);
+  color: #c9d5e2;
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease, color 140ms ease;
+}
+.profile-tabs button[data-tab-tone="aqua"]    { --tab-rgb: 71, 205, 235; }
+.profile-tabs button[data-tab-tone="gold"]    { --tab-rgb: 235, 191, 73; }
+.profile-tabs button[data-tab-tone="cyan"]    { --tab-rgb: 68, 190, 224; }
+.profile-tabs button[data-tab-tone="violet"]  { --tab-rgb: 153, 112, 244; }
+.profile-tabs button[data-tab-tone="emerald"] { --tab-rgb: 79, 198, 132; }
+.profile-tabs button[data-tab-tone="rose"]    { --tab-rgb: 224, 101, 175; }
+.profile-tabs button[data-tab-tone="ember"]   { --tab-rgb: 229, 103, 92; }
+.profile-tabs button[data-tab-tone="amber"]   { --tab-rgb: 224, 163, 67; }
+.profile-tabs button[data-tab-tone="teal"]    { --tab-rgb: 57, 186, 187; }
+.profile-tabs button[data-tab-tone="blue"]    { --tab-rgb: 63, 151, 236; }
+.profile-tabs button[data-tab-tone="green"]   { --tab-rgb: 78, 190, 105; }
+.profile-tabs button[data-tab-tone="azure"]   { --tab-rgb: 66, 159, 245; }
+.profile-tabs button[data-tab-tone="magenta"] { --tab-rgb: 229, 87, 166; }
+
+.profile-tabs button[data-tab-tone] .tab-glyph {
+  color: var(--tab-accent);
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(var(--tab-rgb), .28);
+}
+.profile-tabs button[data-tab-tone]::after {
+  background: var(--tab-accent);
+}
+.profile-tabs button[data-tab-tone]:hover {
+  border-color: rgba(var(--tab-rgb), .58);
+  background:
+    linear-gradient(180deg, rgba(var(--tab-rgb), .18), rgba(var(--tab-rgb), .055) 72%),
+    rgba(6, 17, 38, .95);
+  color: #f4f8fc;
+  box-shadow: inset 0 1px rgba(255,255,255,.045), 0 4px 14px rgba(var(--tab-rgb), .075);
+}
+.profile-tabs button[data-tab-tone]:focus-visible {
+  outline: 3px solid #f2d77b;
+  outline-offset: 2px;
+  border-color: rgba(var(--tab-rgb), .72);
+  color: #ffffff;
+}
+.profile-tabs button[data-tab-tone][aria-selected="true"] {
+  border-color: rgba(var(--tab-rgb), .94);
+  background:
+    linear-gradient(180deg, rgba(var(--tab-rgb), .34), rgba(var(--tab-rgb), .13) 76%),
+    rgba(8, 22, 46, .98);
+  color: #fff9e8;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.11),
+    inset 0 1px rgba(255,255,255,.09),
+    0 0 0 1px rgba(var(--tab-rgb), .15),
+    0 5px 18px rgba(var(--tab-rgb), .14);
+}
+.profile-tabs button[data-tab-tone][aria-selected="true"] .tab-glyph {
+  color: #fff0ad;
+  text-shadow: 0 0 12px rgba(var(--tab-rgb), .5);
+}
+
+/* Responsive navigation rhythm: 6-up desktop, 4-up compact desktop,
+   3-up tablet, and a finger-friendly 2-up mobile grid. */
+@media (min-width: 1280px) {
+  .profile-tabs { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .profile-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .profile-tabs button:nth-child(13) { grid-column: auto; }
+}
+@media (min-width: 721px) and (max-width: 1023px) {
+  .profile-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .profile-tabs button:nth-child(13) { grid-column: auto; }
+  .profile-tabs button > span:last-child {
+    font-size: .7rem;
+    white-space: normal;
+    line-height: 1.14;
+  }
+}
+@media (max-width: 720px) {
+  .profile-navigation { margin-bottom: .85rem; }
+  .profile-tab-select { display: none; }
+  .profile-tabs {
+    display: grid;
+    position: relative;
+    top: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .38rem;
+    margin: 0 0 .85rem;
+    padding: .46rem;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(7, 18, 43, .96), rgba(4, 13, 31, .98));
+  }
+  .profile-tabs button,
+  .profile-tabs button[data-tab-tone] {
+    grid-template-columns: 1.12rem minmax(0, 1fr);
+    min-height: 46px;
+    padding: .5rem .58rem;
+    gap: .4rem;
+    border-radius: 9px;
+    touch-action: manipulation;
+  }
+  .profile-tabs button > span:last-child {
+    font-size: .67rem;
+    letter-spacing: .025em;
+    white-space: normal;
+    line-height: 1.14;
+    overflow: visible;
+  }
+  .profile-tabs .tab-glyph {
+    width: 1.12rem;
+    font-size: .88rem;
+  }
+  .profile-tabs button:nth-child(13) { grid-column: auto; }
+  .profile-tabs button:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 420px) {
+  .profile-tabs { gap: .3rem; padding: .38rem; }
+  .profile-tabs button,
+  .profile-tabs button[data-tab-tone] {
+    min-height: 44px;
+    padding: .44rem .48rem;
+    gap: .34rem;
+  }
+  .profile-tabs button > span:last-child { font-size: .62rem; }
+  .profile-tabs .tab-glyph { font-size: .82rem; }
+}
+
+@media (prefers-contrast: more) {
+  .profile-tabs button[data-tab-tone] {
+    border-width: 2px;
+    color: #edf4fa;
+    background: rgba(4, 13, 31, .98);
+  }
+  .profile-tabs button[data-tab-tone][aria-selected="true"] {
+    color: #ffffff;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.2);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-tabs button[data-tab-tone] { transition: none; }
+}

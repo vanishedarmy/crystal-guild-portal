@@ -55,6 +55,26 @@ const TABS = [
   ["trophies", "Trophy Hall", "♛"],
 ];
 
+const TAB_TONES = {
+  overview: "aqua",
+  hunts: "gold",
+  stream: "cyan",
+  jobs: "violet",
+  inventory: "emerald",
+  shop: "rose",
+  blacksmith: "ember",
+  chocobo: "amber",
+  retainer: "teal",
+  mercs: "blue",
+  gold_saucer: "gold",
+  fellowship: "green",
+  bestiary: "violet",
+  relics: "azure",
+  achievements: "magenta",
+  records: "cyan",
+  trophies: "violet",
+};
+
 const TAB_GROUPS = [
   ["Core", ["overview", "hunts", "stream", "jobs", "inventory"]],
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
@@ -256,6 +276,7 @@ export default function PlayerProfile() {
                   aria-controls="profile-active-panel"
                   id={`profile-tab-${id}`}
                   data-tab-value={id}
+                  data-tab-tone={TAB_TONES[id]}
                   tabIndex={activeTab === id ? 0 : -1}
                   className={activeTab === id ? "active" : ""}
                   onClick={() => setActiveTab(id)}

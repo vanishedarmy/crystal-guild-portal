@@ -1,5 +1,21 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 4",
+    name: "Navigation Accessibility",
+    title: "Faster section recognition with clearer responsive navigation",
+    summary: "The adventurer profile navigation now uses restrained section color families, stronger selected/focus states, and a responsive button grid that stays readable from desktop through mobile.",
+    highlights: [
+      { title: "Color-assisted scanning", description: "Each destination receives a subtle visual identity while retaining its icon and text label, so color is never the only way to identify a section." },
+      { title: "Stronger active state", description: "The current section now has a clearer border, brighter label, accent glow, and persistent selected state without changing the button footprint." },
+      { title: "Keyboard visibility", description: "Focused navigation buttons use a high-contrast gold outline that remains distinct from the section accent color." },
+      { title: "Responsive button grid", description: "Navigation scales from six columns on wide screens to four on compact desktop, three on tablet, and two finger-friendly columns on mobile." },
+      { title: "Mobile labels stay readable", description: "Long destinations may wrap naturally on narrow screens instead of clipping or being replaced by a generic dropdown." },
+      { title: "Accessibility preferences respected", description: "Higher-contrast and reduced-motion system preferences receive dedicated navigation treatments." },
+      { title: "No gameplay migration", description: "Schema 19, hosted sync 1, Portal Action protocol 36, economy values, titles, and player progression are unchanged." },
+    ],
+    action: { tab: "overview", label: "Open Profile" },
+  },
+  {
     version: "v1.9.0 Alpha 3",
     name: "Title Expansion",
     title: "More titles to buy, earn, discover, and accidentally deserve",

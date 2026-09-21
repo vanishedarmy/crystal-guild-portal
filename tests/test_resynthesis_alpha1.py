@@ -38,8 +38,8 @@ class ResynthesisHostedAlpha1Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_resynthesis_release_contract(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-title-expansion-alpha3")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-title-expansion-alpha3")
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-navigation-accessibility-alpha4")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-navigation-accessibility-alpha4")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 36)
         self.assertIn("RESYNTHESIZE_ITEM", ALLOWED_PORTAL_ACTIONS)
 

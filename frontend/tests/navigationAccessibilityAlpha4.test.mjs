@@ -4,11 +4,13 @@ import fs from "node:fs";
 
 const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("Alpha 4 publishes Navigation Accessibility as the current web identity", () => {
+test("Alpha 4 Navigation Accessibility remains carried forward in the current web build", () => {
   const version = read("../src/version.js");
-  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 4"/);
-  assert.match(version, /WEB_BUILD = "Navigation Accessibility"/);
-  assert.match(version, /1\.9\.0-navigation-accessibility-alpha4/);
+  const whatsNew = read("../src/player/whatsNewData.js");
+  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 5"/);
+  assert.match(version, /WEB_BUILD = "Title Status Hardening"/);
+  assert.match(whatsNew, /version: "v1\.9\.0 Alpha 4"/);
+  assert.match(whatsNew, /name: "Navigation Accessibility"/);
 });
 
 test("profile destinations carry persistent non-color identity plus tone metadata", () => {

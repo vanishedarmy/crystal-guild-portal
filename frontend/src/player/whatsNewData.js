@@ -1,5 +1,21 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 5",
+    name: "Title Status Hardening",
+    title: "Achievement and Title unlocks reconcile immediately and display consistently",
+    summary: "Existing heroes are proactively checked for newly-added achievement rewards, missing reward-title rows self-repair, chained achievements resolve without data-order delays, and permanent unlocks always display as complete.",
+    highlights: [
+      { title: "Retroactive startup reconciliation", description: "When the Bot starts after an update, every existing hero is checked against the current achievement catalog so already-met requirements unlock without repeating gameplay." },
+      { title: "Portal reconciliation before sync", description: "In-process hosted Portal sync reconciles a hero before publishing that profile snapshot, removing the brief mismatch where progress could be met before the Title appeared." },
+      { title: "Reward-title repair", description: "If an older achievement row exists but its reward Title is missing, the Title is restored automatically and idempotently." },
+      { title: "Order-independent mastery", description: "Achievement dependencies now evaluate to a fixed point, so mastery rewards such as Golden Saucer can unlock in the same cycle regardless of catalog ordering." },
+      { title: "Permanent means complete", description: "Once an achievement is earned, reversible requirements such as held Gil or inventory no longer make its Portal progress bar fall below 100%." },
+      { title: "Progress parity", description: "Portal progress calculation now mirrors the Bot for Expedition region progress and the full supported requirement set, preventing incorrect zero-progress displays." },
+      { title: "No migration required", description: "Schema 19, hosted sync 1, Portal Action protocol 36, economy values, and all Title requirements remain unchanged." },
+    ],
+    action: { tab: "achievements", label: "Open Achievements & Titles" },
+  },
+  {
     version: "v1.9.0 Alpha 4",
     name: "Navigation Accessibility",
     title: "Faster section recognition with clearer responsive navigation",

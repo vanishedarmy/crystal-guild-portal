@@ -1,5 +1,5 @@
 {
-  "build": "1.9.0-navigation-accessibility-alpha4",
+  "build": "1.9.0-title-status-hardening-alpha5",
   "base_path": "/trading-post/a1/",
   "assets": {
     "locked": "locked.png",

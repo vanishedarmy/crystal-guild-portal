@@ -4,11 +4,11 @@ import fs from "node:fs";
 
 const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("Economy Balance Alpha 2 publishes the current web identity", () => {
-  const version = read("../src/version.js");
-  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 2"/);
-  assert.match(version, /WEB_BUILD = "Economy Balance"/);
-  assert.match(version, /1\.9\.0-economy-balance-alpha2/);
+test("Economy Balance Alpha 2 remains in the release history", () => {
+  const whatsNew = read("../src/player/whatsNewData.js");
+  assert.match(whatsNew, /version: "v1\.9\.0 Alpha 2"/);
+  assert.match(whatsNew, /name: "Economy Balance"/);
+  assert.match(whatsNew, /A fairer economy without turning progression into a grind/);
 });
 
 test("Trading Post Level 1 copy uses Ventures rather than late-game Expeditions", () => {

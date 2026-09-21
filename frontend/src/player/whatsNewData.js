@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 3",
+    name: "Title Expansion",
+    title: "More titles to buy, earn, discover, and accidentally deserve",
+    summary: "Gold Saucer titles now split into affordable Prize Counter vanity rewards and achievement-driven Challenge Titles, while the wider Guild gains new Final Fantasy-flavored, progression, and sarcastic unlocks.",
+    highlights: [
+      { title: "Gold Saucer Challenge Titles", description: "Earn titles through memorable Saucer milestones such as jackpots, racing wins, Monster Toss scores, Triple Triad streaks, lifetime MGP activity, and broad attraction mastery." },
+      { title: "Affordable vanity picks", description: "One More Spin, Probably Rigged, Bird Is the Word, and Card Shark join the Prize Counter at 750–1,500 MGP so fun titles stay accessible instead of becoming prestige grinds." },
+      { title: "Final Fantasy-flavored milestones", description: "New progression titles include Warrior of Light, Treasure Hunter, Limit Breaker, and Chocobo Knight, tied to natural play rather than extreme repetition." },
+      { title: "Sarcastic rewards", description: "Professional Hoarder and Worth It. reward some of the Guild's less dignified accomplishments, with additional secret titles hidden until their conditions are met." },
+      { title: "Secret achievements stay secret", description: "Hidden title challenges do not reveal their title, condition, or progress before completion. Discovery is part of the reward." },
+      { title: "No migration required", description: "Schema 19, hosted sync 1, and Portal Action protocol 36 are unchanged." },
+    ],
+    action: { tab: "saucer", label: "Open Gold Saucer" },
+  },
+  {
     version: "v1.9.0 Alpha 2",
     name: "Economy Balance",
     title: "A fairer economy without turning progression into a grind",

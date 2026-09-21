@@ -334,6 +334,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const dailyAllowanceMgp = Number(saucerState.daily_allowance_mgp ?? saucerState.daily_allowance_points ?? 125);
   const dailyRewardMgp = Number(saucerState.daily_reward_mgp ?? saucerState.daily_reward_points ?? 50);
   const prizes = asObjectArray(saucerState.prizes);
+  const challengeTitles = asObjectArray(saucerState.challenge_titles);
   const history = asObjectArray(saucerState.history);
   const records = asRecord(saucerState.records);
   const netMgp = Number(records.net_mgp ?? records.net_points ?? 0);
@@ -744,12 +745,34 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
           <details className="panel saucer-prize-panel saucer-scenic-panel saucer-section-disclosure">
             <summary className="saucer-section-summary">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
-              <span className="small-badge">Titles Only · Alpha 5</span>
+              <span className="small-badge">Purchased + Earned</span>
               <DetailsPointer className="saucer-details-pointer" />
             </summary>
             <img loading="lazy" decoding="async" className="saucer-scenic-art saucer-prize-art" src={`${SAUCER_ART_ROOT}/prize-counter.webp`} alt="" aria-hidden="true" />
             <div className="saucer-section-body">
-            <p className="muted">Spend MGP on collectible titles. Gold Saucer prizes are cosmetic only and never grant combat stats, Gil, items, or progression advantages.</p>
+            <p className="muted">Some titles are bought with MGP; others must be earned on the floor. Every Gold Saucer title is cosmetic only and never grants combat stats, Gil, items, or progression advantages.</p>
+            {challengeTitles.length ? (
+              <>
+                <div className="saucer-prize-subhead"><div><span className="eyebrow">Challenge Titles</span><h4>Earned, Not Purchased</h4></div><span className="small-badge">{number(challengeTitles.filter((row) => row.unlocked).length)} / {number(challengeTitles.length)}</span></div>
+                <div className="saucer-prize-grid saucer-challenge-title-grid">
+                  {challengeTitles.map((challenge) => {
+                    const progress = asRecord(challenge.progress);
+                    const percent = Math.max(0, Math.min(100, Number(progress.percent || 0)));
+                    return (
+                      <article className={`saucer-prize-card saucer-challenge-title ${challenge.unlocked ? "owned" : ""}`} key={challenge.id}>
+                        <div>
+                          <span className={`small-badge ${challenge.unlocked ? "ready" : ""}`}>{challenge.unlocked ? "EARNED" : challenge.secret && progress.hidden ? "SECRET" : `${number(progress.value)} / ${number(progress.target)}`}</span>
+                          <h4>{displayText(challenge.title_name || challenge.name, challenge.secret ? "Secret Title" : "Gold Saucer Title")}</h4>
+                          <p className="muted">{displayText(challenge.description, "Complete the Gold Saucer challenge to unlock this title.")}</p>
+                        </div>
+                        {!challenge.unlocked && !progress.hidden ? <div className="saucer-title-progress" aria-label={`${number(percent)} percent complete`}><span style={{ width: `${percent}%` }} /></div> : null}
+                      </article>
+                    );
+                  })}
+                </div>
+              </>
+            ) : null}
+            <div className="saucer-prize-subhead"><div><span className="eyebrow">Prize Counter Titles</span><h4>Spend MGP</h4></div><span className="small-badge">Cosmetic</span></div>
             <div className="saucer-prize-grid">
               {prizes.map((prize) => (
                 <article className={`saucer-prize-card ${prize.owned ? "owned" : ""}`} key={prize.id}>

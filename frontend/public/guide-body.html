@@ -566,7 +566,7 @@
      </section>
      <section class="section searchable" id="gold-saucer">
       <h2>Gold Saucer</h2>
-      <div class="kicker">Gold Saucer — v1.9.0 Alpha 2 economy balance</div>
+      <div class="kicker">Gold Saucer — v1.9.0 Alpha 3 title expansion</div>
       <p class="lead">A Portal-first side hall for low-stakes daily luck, quick attractions, cosmetic prizes, and personal records. Mini Cactpot, Crystal Slots, Monster Toss, Chocobo Racing, and Triple Triad are currently playable.</p>
       <div class="callout"><b>Manderville Gold Saucer Points (MGP):</b> your first visit grants <b>500 MGP</b>. After the welcome day, your first Saucer visit each UTC day grants a <b>125 MGP floor allowance</b>, and every UTC day includes a separate <b>50 MGP daily reward</b>. MGP is separate from Gil, cannot be purchased with Gil or real money, and does not replace normal Crystal Guild progression.</div>
       <div class="grid two">
@@ -575,12 +575,13 @@
        <div class="card"><h3>Monster Toss</h3><p>Spend <b>20 MGP</b> for a five-throw game. Pick a target and Safe, Normal, or Power throw style. Payout tiers are <b>10 / 15 / 30 / 50 / 80 / 120 MGP</b> at 75 / 100 / 250 / 400 / 600 / 900 points, so safer beginner play can earn something while high-risk accuracy pays more. Three games are available per UTC day, and active games persist safely through refreshes or reconnects.</p></div>
        <div class="card"><h3>Chocobo Racing</h3><p>Race your <b>existing registered Chocobo</b> up to <b>three races per UTC day</b>. Manderville Sprint opens at Bond Lv. 1 for 25 MGP, Crystal Circuit at Lv. 5 for 35 MGP, and Golden Gauntlet at Lv. 10 for 50 MGP. Choose Steady, Balanced, or Final Sprint pace; Bond level and favored traits provide modest performance help, while the authoritative six-racer result is still uncertain.</p></div>
        <div class="card"><h3>Triple Triad</h3><p>Build a <b>five-card deck</b> and play on a 3×3 board using the <b>Open</b> ruleset: a higher touching side captures the lower adjacent card. The values printed on each illustrated card face are the authoritative Top/Right/Bottom/Left values. You begin with Chocobo, Moogle, Cactuar, Bomb, and Flan, can play up to <b>five matches per UTC day</b>, and unlock stronger opponents at 3 and 8 career wins. Winning can add a new card to the persistent 15-card collection.</p></div>
-       <div class="card"><h3>Prize Counter</h3><p>Spend MGP on cosmetic-only Gold Saucer titles, now including Triad Tactician and Card Hall Master alongside the racing and carnival titles. These rewards never add combat stats, Gil, items, or progression power.</p></div>
+       <div class="card"><h3>Prize Counter &amp; Challenge Titles</h3><p>Gold Saucer titles now come from two paths. <b>Prize Counter titles</b> are affordable MGP vanity purchases, while <b>Challenge Titles</b> are earned automatically from Saucer milestones such as jackpots, race wins, high scores, card streaks, and broad attraction play. Titles never add combat stats, Gil, items, or progression power.</p></div>
        <div class="card"><h3>Your Saucer Ledger</h3><p>The Portal tracks MGP earned/spent, net MGP, total games, Mini Cactpot net wins/draws/losses and high rolls, Slot win rate, triple matches, Monster Toss records, Chocobo race records, Triple Triad matches/wins/cards/streak, best payouts, collected prizes, and recent Saucer activity.</p></div>
        <div class="card"><h3>Collapsible floor</h3><p>To keep the Gold Saucer readable, Monster Toss, Chocobo Racing, Triple Triad, Prize Counter, Saucer Ledger, and Recent Activity can be collapsed using the shared finger-pointer controls. <b>Mini Cactpot and Crystal Slots remain permanently open.</b></p></div>
       </div>
       <div class="callout"><b>v1.6.0 production release:</b> all five planned attractions remain open. v1.7.1 Alpha 2 keeps all attraction entry fees unchanged while raising the MGP earning curve: Mini Cactpot now tops out at <b>1,250 MGP</b>, Slots target about <b>97.1% RTP</b>, Monster Toss and Chocobo Racing pay stronger performance rewards, Triple Triad win purses are larger, and Prize Counter prestige costs rise with the richer economy. Local schema is now <b>16</b>, hosted sync remains <b>1</b>, and Portal Action protocol is <b>33</b> after the cross-device Gear Favorites authority repair.</div>
       <div class="callout"><b>v1.9.0 Alpha 2 economy audit:</b> normal daily MGP, Mini Cactpot, Crystal Slots, Chocobo Racing, Triple Triad, and Prize Counter costs remain unchanged. Monster Toss alone receives a payout-floor and performance buff because the previous table made several reasonable play styles disproportionately punishing.</div>
+      <div class="callout"><b>v1.9.0 Alpha 3 title expansion:</b> the Prize Counter gains <b>One More Spin (750 MGP)</b>, <b>Probably Rigged (1,000)</b>, <b>Bird Is the Word (1,250)</b>, and <b>Card Shark (1,500)</b>. A separate <b>Challenge Titles</b> panel tracks earned Saucer titles. Secret challenges hide their title, condition, and progress until completed.</div>
       <div class="callout"><b>How to play:</b> sign into the Adventurer Portal, open your own character, and choose <b>Gold Saucer</b>. Draws, costs, payouts, cooldowns, daily limits, and replay protection are resolved by the authoritative Bot.</div>
       <p><b>Streamer testing:</b> owner controls can use <code>!saucergrant &lt;player&gt; | &lt;amount&gt;</code> to grant test/event MGP and <code>!saucerreset &lt;player&gt;</code> to clear that player's active ticket, Monster Toss game, Triple Triad match, and Saucer cooldowns without erasing their MGP balance, card collection/deck, or records.</p>
      </section>
@@ -1294,13 +1295,14 @@
       <div class="callout">
        <b>Trophy Hall:</b> Adventurer profiles showcase boss victories, completed Relics, mastered Jobs, rare achievements, equipped titles and major milestones.
       </div>
+      <div class="callout"><b>Title paths:</b> some cosmetic titles are purchased from shops such as the Gold Saucer Prize Counter, others are awarded automatically by achievements, and <b>secret titles remain hidden until earned</b>. Achievement requirements are tuned around normal progression and memorable milestones rather than extreme repetition.</div>
       <div class="completion-catalog-stack">
        <details class="catalog-disclosure completion-catalog" data-completion-catalog="achievements" id="achievements">
         <summary class="catalog-launch">
          <span aria-hidden="true" class="catalog-launch-glyph">★</span>
          <span class="catalog-launch-kicker">Milestones</span>
          <span class="catalog-launch-title">Achievements</span>
-         <span class="catalog-launch-meta">66 milestones</span>
+         <span class="catalog-launch-meta">89 milestones</span>
          <span class="catalog-launch-action">Open Catalog</span>
         </summary>
         <div class="catalog-panel" id="achievementCatalog">
@@ -1318,7 +1320,7 @@
          <span aria-hidden="true" class="catalog-launch-glyph">✦</span>
          <span class="catalog-launch-kicker">Cosmetic Titles</span>
          <span class="catalog-launch-title">Titles</span>
-         <span class="catalog-launch-meta">81 titles</span>
+         <span class="catalog-launch-meta">121 titles</span>
          <span class="catalog-launch-action">Open Catalog</span>
         </summary>
         <div class="catalog-panel" id="titleCatalog">

@@ -1,8 +1,8 @@
-# Crystal Guild v1.9.0 Alpha 2 — Economy Balance
-# Runtime: 1.9.0-economy-balance-alpha2
+# Crystal Guild v1.9.0 Alpha 3 — Title Expansion
+# Runtime: 1.9.0-title-expansion-alpha3
 # Schema: 19 · Hosted sync: 1 · Portal Action protocol: 36
-# Preserves the Moogle Trading Post while applying targeted economy corrections.
-# Packaged source files: 1302
+# Preserves the Moogle Trading Post and Alpha 2 economy balance while expanding purchased, earned, and secret titles.
+# Packaged source files: 1303
 # Files
 .dockerignore
 .gitignore
@@ -49,6 +49,7 @@ STREAMER_DASHBOARD.md
 STREAM_ACTIVITIES_UI_MANIFEST.json
 STREAM_ACTIVITIES_UI_RELEASE_NOTES.md
 STREAM_ACTIVITIES_UI_VALIDATION.md
+TITLE_EXPANSION.md
 TRADING_POST_ARTWORK_MANIFEST.json
 UIUX_POLISH_182.md
 UIUX_POLISH_182_VALIDATION.md
@@ -1266,6 +1267,7 @@ frontend/tests/scene-backgrounds.test.mjs
 frontend/tests/streamActivitiesTab.test.mjs
 frontend/tests/streamerDashboard.test.mjs
 frontend/tests/timerFormat.test.mjs
+frontend/tests/titleExpansionAlpha3.test.mjs
 frontend/tests/titlePortalAction.test.mjs
 frontend/tests/trailsRaidsAlpha1.test.mjs
 frontend/tests/trailsRaidsAlpha1Hotfix2.test.mjs

@@ -13036,3 +13036,8 @@ textarea {
   .trading-post-view-tabs,
   .trading-post-filters { grid-template-columns: 1fr; }
 }
+
+/* v1.9.0 Alpha 3 — earned Gold Saucer title challenges */
+.saucer-prize-subhead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 0 10px}.saucer-prize-subhead h4{margin:.15rem 0 0;font-family:var(--display);color:var(--gold)}
+.saucer-challenge-title-grid{margin-bottom:18px}.saucer-challenge-title{gap:12px}.saucer-title-progress{height:7px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid rgba(255,214,98,.12)}.saucer-title-progress>span{display:block;height:100%;background:linear-gradient(90deg,#947236,#e1bd63);box-shadow:0 0 8px rgba(225,189,99,.28)}
+@media(max-width:560px){.saucer-prize-subhead{align-items:flex-start;flex-direction:column;gap:6px}}

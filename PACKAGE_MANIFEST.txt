@@ -1,3 +1,4 @@
+Crystal Guild Web v1.9.0 Alpha 6 — World Events — Progress Accounting Hardening Hotfix 5
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -35,6 +36,7 @@ MERC_SERVICE_RC1_VALIDATION.md
 MOBILE_CONTEXT_HELP_HOTFIX2.md
 MOOGLE_ANNEX_CATEGORY_STOCK_HOTFIX4.md
 MOOGLE_ANNEX_STOCK_HOTFIX3.md
+PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -45,6 +47,7 @@ STREAMER_DASHBOARD.md
 STREAM_ACTIVITIES_UI_MANIFEST.json
 STREAM_ACTIVITIES_UI_RELEASE_NOTES.md
 STREAM_ACTIVITIES_UI_VALIDATION.md
+TASK_COMPLETION_HARDENING_HOTFIX5.md
 TITLE_EXPANSION.md
 TRADING_POST_ARTWORK_MANIFEST.json
 TRADING_POST_UIUX_HOTFIX2.md
@@ -1287,6 +1290,7 @@ frontend/tests/retroPhaseIIImageFitHotfix.test.mjs
 frontend/tests/scene-backgrounds.test.mjs
 frontend/tests/streamActivitiesTab.test.mjs
 frontend/tests/streamerDashboard.test.mjs
+frontend/tests/taskCompletionHardeningHotfix5.test.mjs
 frontend/tests/timerFormat.test.mjs
 frontend/tests/titleExpansionAlpha3.test.mjs
 frontend/tests/titlePortalAction.test.mjs

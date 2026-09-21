@@ -1,12 +1,26 @@
 export const MAJOR_UPDATES = [
   {
-    version: "v1.9.0 Alpha 6 Hotfix 3",
-    name: "Moogle Annex Stock",
+    version: "v1.9.0 Alpha 6 Hotfix 5",
+    name: "Progress Accounting Hardening",
+    title: "Broad task requirements now count every valid completion source",
+    summary: "Fellowship construction and shared objectives now interpret broad requirements consistently across Hunts, Ventures, Expeditions, Dungeons, World Events, ordinary encounters, and Raids.",
+    highlights: [
+      { title: "All monster defeats count", description: "Bestiary monster kills from normal encounters, Hunts, Ventures, Solo Ventures, Expeditions, Dungeons, and World Events now satisfy Monsters Defeated requirements." },
+      { title: "Combat victories are truly broad", description: "Combat Victory requirements count monster victories from every supported combat source and also count Raid victories." },
+      { title: "Specific goals stay specific", description: "Hunts won, Raid clears, Ventures completed, Expeditions completed, crafting, forging, and other named requirements still advance only from their matching activity." },
+      { title: "One victory, one receipt", description: "Progress receipts remain replay-safe and Airship mission alias matching uses the strongest applicable weight so one combat result cannot double-count." },
+      { title: "No migration required", description: "Schema 19, hosted sync 1, Portal Action protocol 36, balance values, and player inventories are unchanged." },
+    ],
+    action: { tab: "fellowship", label: "Open Fellowship" },
+  },
+  {
+    version: "v1.9.0 Alpha 6 Hotfix 4",
+    name: "Moogle Annex Category Stock",
     title: "Moogle Emporium Annex stock is now category-fixed",
     summary: "The completed Annex now adds +2 Weapons, +4 Armor & Accessories, and +6 Items to every personal Emporium rotation.",
     highlights: [
-      { title: "Six bonus slots", description: "The Annex benefit increases from +3 to +6 current shop choices, bringing completed rotations to 15 slots." },
-      { title: "Immediate cache upgrade", description: "Existing 12-item Annex rotations are invalidated by the authoritative stock-size check and reroll at the new capacity on the next shop request." },
+      { title: "Twelve fixed bonus slots", description: "The Annex now adds +2 Weapons, +4 Armor & Accessories, and +6 Items, bringing a fully stocked rotation from 9 to 21 choices." },
+      { title: "Immediate cache upgrade", description: "Older Annex rotations are invalidated by the authoritative stock-composition check and reroll under the fixed category budget on the next shop request." },
       { title: "No economy rebalance", description: "Item prices, rarity weighting, refresh timing, and purchase rules are unchanged." },
       { title: "No migration required", description: "Schema 19, hosted sync 1, and Portal Action protocol 36 remain unchanged." },
     ],

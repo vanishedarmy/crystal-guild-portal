@@ -26,32 +26,8 @@ export default function Overview({ data, onDetail, onRefresh, onNavigate }) {
   const statNames = {
     str: "STR", vit: "VIT", mag: "MAG", spr: "SPR", dex: "DEX", lck: "LCK", attack: "ATK", magic_power: "M.PWR",
   };
-  const shortcuts = [
-    ["inventory", "Recover & Equip", "Use items, review gear, and manage your inventory."],
-    ["jobs", "Character Setup", "Change Job, stance, and cross-Job Masteries."],
-    ["shop", "Moogle Emporium", "Buy supplies and sell eligible inventory."],
-    ["blacksmith", "Guild Blacksmith", "Craft, forge, and resynthesize equipment."],
-    ["hunts", "Adventure Board", "Interactive Solo Venture, Expeditions, Dungeons, travel, recovery, and challenge Hunts."],
-    ["stream", "Stream Activities", "Live Stream Ventures, World Events, Trials, and Raids in one Twitch-focused area."],
-    ["fellowship", "Fellowship", "Review Guild Rank, projects, and contributions."],
-    ["chocobo", "Chocobo Stable", "Register and train your companion for Expeditions."],
-  ];
   return (
     <div className="dashboard-grid overview-dashboard">
-      <section className="panel span-12 overview-welcome">
-        <div>
-          <p className="eyebrow">Adventurer Home</p>
-          <h2>Ready at a glance</h2>
-          <p className="muted">Your essentials and most-used actions are collected here. Detailed records stay in their dedicated sections.</p>
-        </div>
-        <div className="overview-quick-actions" aria-label="Quick actions">
-          {shortcuts.map(([id, label, description]) => (
-            <button key={id} type="button" className="overview-quick-action" onClick={() => onNavigate?.(id)} title={description}>
-              <strong>{label}</strong><span>{description}</span>
-            </button>
-          ))}
-        </div>
-      </section>
       <DailyReward username={data.identity?.username} onRefresh={onRefresh} />
       <WhatsNew onNavigate={onNavigate} />
       <section className="panel span-7">

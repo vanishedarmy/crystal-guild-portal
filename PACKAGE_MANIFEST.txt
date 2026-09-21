@@ -1,4 +1,5 @@
-Crystal Guild Web v1.9.0 Alpha 6 — World Events — Progress Accounting Hardening Hotfix 5
+Crystal Guild Web v1.9.0 Alpha 6 — World Events — Overview Cleanup Hotfix 6
+OVERVIEW_CLEANUP_HOTFIX6.md
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json

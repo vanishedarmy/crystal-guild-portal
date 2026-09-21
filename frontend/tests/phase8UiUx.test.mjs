@@ -23,13 +23,14 @@ test("adventurer profile provides desktop tabs and a compact mobile section sele
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*?\.profile-tabs \{ display: none; \}[\s\S]*?\.profile-tab-select/);
 });
 
-test("Overview acts as an adventurer home with direct quick actions", async () => {
+test("Overview keeps the useful dashboard content without the redundant quick-action home panel", async () => {
   const overview = await readFile(new URL("player/Overview.jsx", SRC), "utf8");
-  assert.match(overview, /Adventurer Home/);
-  assert.match(overview, /overview-quick-actions/);
-  assert.match(overview, /Recover & Equip/);
-  assert.match(overview, /Guild Blacksmith/);
-  assert.match(overview, /onNavigate\?\.\(id\)/);
+  assert.doesNotMatch(overview, /Ready at a glance/);
+  assert.doesNotMatch(overview, /overview-quick-actions/);
+  assert.doesNotMatch(overview, /Adventurer Home/);
+  assert.match(overview, /DailyReward/);
+  assert.match(overview, /WhatsNew/);
+  assert.match(overview, /Battle Profile/);
 });
 
 test("Phase 8 adds touch, focus, reduced-motion, Guide, and Streamer polish", async () => {

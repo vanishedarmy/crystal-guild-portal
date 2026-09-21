@@ -1,5 +1,17 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 6 Hotfix 6",
+    name: "Overview Cleanup",
+    title: "The redundant Ready at a glance panel has been removed",
+    summary: "The Overview now opens directly into useful player information instead of repeating navigation destinations already available in the main Portal tabs.",
+    highlights: [
+      { title: "Less duplicate navigation", description: "The Adventurer Home / Ready at a glance shortcut panel has been removed entirely." },
+      { title: "Useful content first", description: "Daily Reward, What's New, Battle Profile, Progress, Equipment, Masteries, and Recent Activity move up naturally with no replacement spacer." },
+      { title: "No gameplay change", description: "This is a frontend-only UI cleanup. Player data, balance, progression, schema 19, hosted sync 1, and Portal Action protocol 36 are unchanged." },
+    ],
+    action: { tab: "overview", label: "Open Overview" },
+  },
+  {
     version: "v1.9.0 Alpha 6 Hotfix 5",
     name: "Progress Accounting Hardening",
     title: "Broad task requirements now count every valid completion source",

@@ -5,13 +5,13 @@ import { readFile } from "node:fs/promises";
 const SRC = new URL("../src/", import.meta.url);
 const PUBLIC = new URL("../public/", import.meta.url);
 
-test("Stream Activities is a dedicated profile tab beside Adventure Board", async () => {
+test("Stream Activities remains a dedicated profile tab beside Adventure Board after Overview shortcut cleanup", async () => {
   const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
   const overview = await readFile(new URL("player/Overview.jsx", SRC), "utf8");
   assert.match(profile, /stream: lazy\(\(\) => import\("\.\.\/player\/StreamActivities\.jsx"\)\)/);
   assert.match(profile, /\["stream", "Stream Activities", "◉"\]/);
   assert.match(profile, /\["Core", \["overview", "hunts", "stream", "jobs", "inventory"\]\]/);
-  assert.match(overview, /\["stream", "Stream Activities"/);
+  assert.doesNotMatch(overview, /\["stream", "Stream Activities"/);
 });
 
 test("Adventure Board contains only Portal and off-stream adventure surfaces", async () => {

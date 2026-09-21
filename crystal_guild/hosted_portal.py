@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.0-title-status-hardening-alpha5"
-FRONTEND_ASSET_REVISION = "1.9.0-title-status-hardening-alpha5"
+HOSTED_PORTAL_VERSION = "1.9.0-world-events-alpha6"
+FRONTEND_ASSET_REVISION = "1.9.0-world-events-alpha6"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 36
 ALLOWED_PORTAL_ACTIONS = {
@@ -1070,8 +1070,8 @@ class HostedPortalStore:
                 raise ValueError("LIVE_EVENT_JOIN requires event and event_id.")
             event = str(payload.get("event") or "").strip().lower()
             event_id = str(payload.get("event_id") or "").strip()
-            if event not in {"venture", "raid"}:
-                raise ValueError("Live event must be venture or raid.")
+            if event not in {"venture", "world_event", "raid"}:
+                raise ValueError("Live event must be venture, world_event, or raid.")
             if not event_id or len(event_id) > 120 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", event_id):
                 raise ValueError("Invalid live event ID.")
             payload = {"event": event, "event_id": event_id}
@@ -1082,8 +1082,8 @@ class HostedPortalStore:
             event = str(payload.get("event") or "").strip().lower()
             event_id = str(payload.get("event_id") or "").strip()
             action_kind = str(payload.get("kind") or "").strip().lower()
-            if event not in {"venture", "raid"}:
-                raise ValueError("Live event must be venture or raid.")
+            if event not in {"venture", "world_event", "raid"}:
+                raise ValueError("Live event must be venture, world_event, or raid.")
             if not event_id or len(event_id) > 120 or not re.fullmatch(r"[A-Za-z0-9_.:-]+", event_id):
                 raise ValueError("Invalid live event ID.")
             if isinstance(payload.get("round"), bool):

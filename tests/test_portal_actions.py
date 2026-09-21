@@ -717,8 +717,10 @@ class PortalActionServerCase(unittest.TestCase):
         for action_type, payload, key in (
             ("ADVENTURE_STATE", {}, "adventure-state"),
             ("LIVE_EVENT_JOIN", {"event": "venture", "event_id": "123"}, "live-venture-join"),
+            ("LIVE_EVENT_JOIN", {"event": "world_event", "event_id": "456"}, "live-world-event-join"),
             ("LIVE_EVENT_JOIN", {"event": "raid", "event_id": "raidabc123"}, "live-raid-join"),
             ("LIVE_EVENT_ACTION", {"event": "venture", "event_id": "123", "round": 1, "kind": "attack"}, "live-venture-attack"),
+            ("LIVE_EVENT_ACTION", {"event": "world_event", "event_id": "456", "round": 1, "kind": "defend"}, "live-world-event-defend"),
             ("LIVE_EVENT_ACTION", {"event": "raid", "event_id": "raidabc123", "round": 2, "kind": "ability", "choice": "cure", "target_username": "van"}, "live-raid-cure"),
             ("TRAVEL_REGION", {"region_id": "sable_coast"}, "travel-sable"),
             ("SOLO_VENTURE", {}, "solo-venture-now"),

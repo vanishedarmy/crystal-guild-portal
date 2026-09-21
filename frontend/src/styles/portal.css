@@ -13191,3 +13191,178 @@ textarea {
 @media (prefers-reduced-motion: reduce) {
   .profile-tabs button[data-tab-tone] { transition: none; }
 }
+
+/* ============================================================
+   v1.9.0 Alpha 6 — World Events
+   Stream-only Notorious Monster roster and active battle state.
+   ============================================================ */
+.world-events-panel {
+  overflow: hidden;
+  border-color: rgba(224, 154, 73, .2);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(154, 66, 69, .12), transparent 24rem),
+    linear-gradient(145deg, rgba(8, 20, 39, .97), rgba(5, 14, 29, .98));
+}
+.world-events-panel[data-active="true"] {
+  border-color: rgba(234, 108, 92, .46);
+  box-shadow: inset 0 0 0 1px rgba(255, 188, 107, .05), 0 0 24px rgba(169, 44, 50, .08);
+}
+.world-events-hero-art {
+  overflow: hidden;
+  margin: -.9rem -.9rem 1rem;
+  border-bottom: 1px solid rgba(222, 182, 91, .2);
+  background: #061326;
+  aspect-ratio: 8 / 3;
+}
+.world-events-hero-art img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.world-event-state-banner {
+  overflow: hidden;
+  margin: 0 0 .85rem;
+  border: 1px solid rgba(222, 182, 91, .16);
+  border-radius: 11px;
+  background: #061326;
+  aspect-ratio: 3.2 / 1;
+}
+.world-event-state-banner img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.world-events-heading { align-items: flex-start; }
+.world-event-danger-badge {
+  color: #ffe2b4;
+  border-color: rgba(244, 112, 91, .5);
+  background: linear-gradient(180deg, rgba(151, 43, 48, .7), rgba(83, 24, 31, .72));
+}
+.world-event-rules {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .55rem;
+  margin: .85rem 0 1rem;
+}
+.world-event-rules > span {
+  display: grid;
+  gap: .18rem;
+  min-width: 0;
+  padding: .62rem .7rem;
+  border: 1px solid rgba(230, 190, 105, .16);
+  border-radius: 10px;
+  background: rgba(8, 18, 33, .66);
+  color: var(--muted);
+  font-size: .76rem;
+}
+.world-event-rules strong { color: #f1cf78; font-size: .9rem; }
+.world-event-idle-state {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  align-items: center;
+  padding: .72rem .8rem;
+  margin-bottom: 1rem;
+  border: 1px dashed rgba(123, 181, 228, .2);
+  border-radius: 11px;
+  background: rgba(6, 18, 34, .5);
+}
+.world-event-idle-state strong { color: #d8e9f8; }
+.world-event-idle-state span { color: var(--muted); text-align: right; }
+.world-event-active-card {
+  display: grid;
+  grid-template-columns: minmax(210px, 340px) minmax(0, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: .75rem;
+  border: 1px solid rgba(240, 111, 87, .38);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(70, 20, 30, .56), rgba(6, 17, 32, .82) 52%);
+}
+.world-event-active-art {
+  overflow: hidden;
+  border: 1px solid rgba(238, 186, 92, .22);
+  border-radius: 11px;
+  background: #071224;
+  aspect-ratio: 4 / 5;
+}
+.world-event-active-art img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.world-event-active-copy { min-width: 0; display: grid; align-content: start; gap: .7rem; }
+.world-event-active-copy h3 { color: #f0cb75; }
+.world-event-rally-note { border-color: rgba(239, 128, 87, .28); }
+.world-event-rally-note .equipment-action-button { margin-top: .5rem; }
+.world-event-roster-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 1rem 0 .65rem;
+}
+.world-event-roster-head h3 { margin: .1rem 0 0; color: var(--gold); }
+.world-event-roster-head small { color: var(--muted); }
+.world-event-roster {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .65rem;
+}
+.world-event-boss-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(219, 177, 90, .19);
+  border-radius: 11px;
+  background: linear-gradient(180deg, rgba(15, 29, 50, .94), rgba(7, 17, 32, .98));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+.world-event-boss-card[data-threat="extreme"] { border-color: rgba(225, 98, 87, .34); }
+.world-event-boss-card[data-threat="severe"] { border-color: rgba(221, 160, 75, .3); }
+.world-event-boss-card[data-threat="dangerous"] { border-color: rgba(113, 181, 224, .28); }
+.world-event-boss-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  border-bottom: 1px solid rgba(219, 177, 90, .16);
+}
+.world-event-boss-card > div { display: grid; gap: .28rem; padding: .62rem; }
+.world-event-boss-card h4 { margin: 0; color: #f0d58c; font-size: .88rem; line-height: 1.16; }
+.world-event-boss-card p { margin: 0; color: var(--muted); font-size: .72rem; line-height: 1.35; }
+.world-event-threat {
+  width: fit-content;
+  padding: .12rem .34rem;
+  border: 1px solid rgba(225, 189, 105, .18);
+  border-radius: 999px;
+  color: #d9c68f;
+  font-size: .61rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.stream-activity-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 1100px) {
+  .world-event-roster { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .world-event-rules { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .world-events-hero-art { margin-left: -.7rem; margin-right: -.7rem; aspect-ratio: 16 / 7; }
+  .world-event-state-banner { aspect-ratio: 2.65 / 1; }
+  .world-event-active-card { grid-template-columns: 1fr; }
+  .world-event-active-art { max-height: 360px; aspect-ratio: 16 / 10; }
+  .world-event-active-art img { object-position: center 26%; }
+  .world-event-roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stream-activity-summary { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .world-events-hero-art { aspect-ratio: 16 / 8; }
+  .world-event-state-banner { aspect-ratio: 2.2 / 1; }
+  .world-event-rules { grid-template-columns: 1fr 1fr; }
+  .world-event-roster { grid-template-columns: 1fr; }
+  .world-event-boss-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
+  .world-event-boss-card img { height: 100%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid rgba(219, 177, 90, .16); }
+  .world-event-idle-state,
+  .world-event-roster-head { align-items: flex-start; flex-direction: column; }
+  .world-event-idle-state span { text-align: left; }
+}
+@media (max-width: 380px) {
+  .world-event-rules { grid-template-columns: 1fr; }
+  .world-event-boss-card { grid-template-columns: 96px minmax(0, 1fr); }
+  .world-event-boss-card p { font-size: .68rem; }
+}
+@media (prefers-contrast: more) {
+  .world-event-boss-card,
+  .world-event-active-card,
+  .world-event-rules > span { border-width: 2px; }
+}

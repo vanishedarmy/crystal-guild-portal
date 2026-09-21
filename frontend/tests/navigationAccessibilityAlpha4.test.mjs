@@ -7,8 +7,8 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 test("Alpha 4 Navigation Accessibility remains carried forward in the current web build", () => {
   const version = read("../src/version.js");
   const whatsNew = read("../src/player/whatsNewData.js");
-  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 5"/);
-  assert.match(version, /WEB_BUILD = "Title Status Hardening"/);
+  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 6"/);
+  assert.match(version, /WEB_BUILD = "World Events"/);
   assert.match(whatsNew, /version: "v1\.9\.0 Alpha 4"/);
   assert.match(whatsNew, /name: "Navigation Accessibility"/);
 });

@@ -1,5 +1,21 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 6",
+    name: "World Events",
+    title: "Notorious Monsters can now interrupt live streams",
+    summary: "World Events add spontaneous stream-only Notorious Monster encounters: enhanced variants of familiar enemies, scaled against the Guild's strongest current character, with no Raid creation and a dedicated Stream Activities roster.",
+    highlights: [
+      { title: "Random live appearances", description: "While the Twitch stream is live and no Guild-wide battle is active, the combat director periodically rolls for a World Event after an opening grace period." },
+      { title: "Highest hero +10 ceiling", description: "Each Notorious Monster scales from the current highest character level and can never exceed that level by more than ten." },
+      { title: "Not a Raid", description: "World Events use the existing Active Battle rally, round actions, Portal controls, and Twitch commands without creating or consuming a Raid encounter." },
+      { title: "Ten opening threats", description: "Notorious Behemoth, Tainted Malboro, Dark Iron Giant, Elder Adamantoise, Cursed Tonberry King, Savage Coeurl, Dread Bomb King, Twisted Ahriman, Ravenous Dragon, and Bloodied Deathclaw form the first roster." },
+      { title: "Enhanced rewards", description: "World Event variants carry stronger stat and reward profiles than their familiar counterparts while staying below Raid-scale reward pools." },
+      { title: "Dedicated Portal presentation", description: "Stream Activities now shows the full ten-monster World Event roster, active threat art, live HP/party state, rally join button, and normal authenticated battle controls." },
+      { title: "No migration required", description: "World Event scheduling uses existing runtime-state storage. Schema 19, hosted sync 1, and Portal Action protocol 36 remain unchanged." },
+    ],
+    action: { tab: "stream", label: "Open Stream Activities" },
+  },
+  {
     version: "v1.9.0 Alpha 5",
     name: "Title Status Hardening",
     title: "Achievement and Title unlocks reconcile immediately and display consistently",

@@ -8,6 +8,19 @@ import { duration, number, pct } from "../utils/formatters.js";
 import Raids from "./Raids.jsx";
 
 const volatileAdventureActionKeys = new Map();
+const WORLD_EVENT_CATALOG = [
+  ["notorious_behemoth", "Notorious Behemoth", "Extreme", "A brutal apex monster known for overwhelming force.", "/world-events/a1/notorious_behemoth.webp"],
+  ["tainted_malboro", "Tainted Malboro", "Severe", "A corrupted horror that inflicts crippling afflictions.", "/world-events/a1/tainted_malboro.webp"],
+  ["dark_iron_giant", "Dark Iron Giant", "Extreme", "An immense armored executioner wreathed in menace.", "/world-events/a1/dark_iron_giant.webp"],
+  ["elder_adamantoise", "Elder Adamantoise", "Severe", "An ancient titan whose shell turns aside all but the strongest blows.", "/world-events/a1/elder_adamantoise.webp"],
+  ["cursed_tonberry_king", "Cursed Tonberry King", "Extreme", "A slow, silent menace whose patience is deadlier than rage.", "/world-events/a1/cursed_tonberry_king.webp"],
+  ["savage_coeurl", "Savage Coeurl", "Dangerous", "A lightning-fast predator that strikes before most can react.", "/world-events/a1/savage_coeurl.webp"],
+  ["dread_bomb_king", "Dread Bomb King", "Severe", "A volatile terror that threatens devastation if left unchecked.", "/world-events/a1/dread_bomb_king.webp"],
+  ["twisted_ahriman", "Twisted Ahriman", "Severe", "A warped watcher that assails foes with sinister magic.", "/world-events/a1/twisted_ahriman.webp"],
+  ["ravenous_dragon", "Ravenous Dragon", "Extreme", "A relentless drake driven by hunger and fury.", "/world-events/a1/ravenous_dragon.webp"],
+  ["bloodied_deathclaw", "Bloodied Deathclaw", "Severe", "A frenzied beast that tears through the unwary with savage force.", "/world-events/a1/bloodied_deathclaw.webp"],
+].map(([id, name, threat, description, art]) => ({ id, name, threat, description, art }));
+
 
 function actionStorageKey(kind, target, username) {
   return `crystal-guild:adventure:${String(username || "").toLowerCase()}:${kind}:${target || "adventure"}`;
@@ -106,6 +119,57 @@ function StreamVentureEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
           <span>{encounter.you_joined ? "Twitch chat commands remain available while the controls refresh." : "This rally is already in combat; watch the live battle and join the next rally."}</span>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function WorldEventEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
+  if (!encounter || encounter.kind !== "world_event") return null;
+  const rallyRemaining = remainingUntil(encounter.rally_closes_at, nowMs);
+  const roundRemaining = remainingUntil(encounter.next_round_at, nowMs);
+  const event = encounter.world_event || {};
+  return (
+    <div className="world-event-active-card" aria-live="polite">
+      <div className="world-event-active-art">
+        {event.art ? <img src={event.art} alt={`${event.name || encounter.monster?.name || "World Event"} artwork`} loading="eager" decoding="async" /> : null}
+      </div>
+      <div className="world-event-active-copy">
+        <div className="panel-title-row">
+          <div>
+            <p className="eyebrow">World Event Active</p>
+            <h3>{event.name || encounter.monster?.name || "Notorious Monster"}</h3>
+            <p className="muted">Lv. {number(encounter.monster?.level)} · {event.threat || "Notorious"} Threat · No Raid</p>
+          </div>
+          <span className="small-badge world-event-danger-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
+        </div>
+        {event.description ? <p>{event.description}</p> : null}
+        {encounter.state === "combat" && Number(encounter.enemy_max_hp || 0) > 0 ? (
+          <div className="adventure-enemy-vitals">
+            <div><span>Notorious HP</span><strong>{number(encounter.enemy_hp)} / {number(encounter.enemy_max_hp)}</strong></div>
+            <ProgressBar value={pct(encounter.enemy_hp, encounter.enemy_max_hp)} className="hp" />
+            <small>{roundRemaining > 0 ? `Next round in ${duration(roundRemaining)}` : "Round resolving…"}</small>
+          </div>
+        ) : null}
+        <div className="adventure-party-grid">
+          {(encounter.party || []).map((member) => (
+            <div className="adventure-party-member" key={`${member.username}:${member.display_name}`}>
+              <strong>{member.display_name}</strong><span>{member.job_name}</span>
+              {encounter.state === "combat" && Number(member.max_hp || 0) > 0 ? <small>HP {number(member.hp)} / {number(member.max_hp)}</small> : null}
+            </div>
+          ))}
+        </div>
+        {encounter.state === "rally" ? (
+          <div className="adventure-combat-note world-event-rally-note">
+            <strong>{encounter.you_joined ? "You answered the call." : "Notorious rally open."}</strong>
+            <span>{encounter.you_joined ? "Battle controls will appear here when combat begins." : encounter.join_reason || "Join from the Portal or Twitch chat before the rally closes."}</span>
+            {!encounter.you_joined && encounter.can_join ? <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => onJoin?.("world_event", String(encounter.id))}>{busy === "world_event:join" ? "Joining…" : "Join World Event"}</button> : null}
+          </div>
+        ) : null}
+        {encounter.state === "combat" ? (
+          encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} busy={busy?.startsWith?.("world_event:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("world_event", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
+          <div className="adventure-combat-note"><strong>{encounter.you_joined ? "Battle controls are synchronizing." : "The World Event is underway."}</strong><span>{encounter.you_joined ? "Twitch chat commands remain available while the controls refresh." : "This rally is already in combat; watch the battle unfold."}</span></div>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -234,7 +298,10 @@ export default function StreamActivities({ data: overview }) {
   const authoritativeClock = clock + serverOffsetMs;
   const ventureRemaining = remainingUntil(state?.venture?.available_at, authoritativeClock);
   const encounter = state?.encounter?.kind === "venture" ? state.encounter : null;
+  const worldEventEncounter = state?.encounter?.kind === "world_event" ? state.encounter : null;
+  const worldEventCatalog = state?.world_events?.catalog?.length ? state.world_events.catalog : WORLD_EVENT_CATALOG;
   const recentVenture = state?.recent_result?.kind === "venture" ? state.recent_result : null;
+  const recentWorldEvent = state?.recent_result?.kind === "world_event" ? state.recent_result : null;
   const ventureStatus = encounter
     ? encounter.state === "rally" ? "Rally Open" : "In Battle"
     : ventureRemaining > 0 ? `Ready in ${duration(ventureRemaining)}` : stateAvailable ? "Ready in Twitch Chat" : "Twitch Chat";
@@ -252,6 +319,7 @@ export default function StreamActivities({ data: overview }) {
         </div>
         <div className="stream-activity-summary" aria-label="Stream activity summary">
           <div><span>Stream Venture</span><strong>{ventureStatus}</strong><small>Start in chat · join/action in Portal or chat</small></div>
+          <div><span>World Events</span><strong>{worldEventEncounter ? "Notorious Monster Active" : state?.stream_live ? "Watching the Realm" : "Stream Only"}</strong><small>Random encounter · up to highest hero +10</small></div>
           <div><span>Raids &amp; Trials</span><strong>Live Board</strong><small>Join/action in Portal or chat</small></div>
         </div>
         {!isOwnProfile ? <p className="stream-activity-note">Stream Venture status is private to the signed-in adventurer. Raid and Trial information remains viewable below.</p> : null}
@@ -284,6 +352,47 @@ export default function StreamActivities({ data: overview }) {
             {(recentVenture.messages || []).slice(-2).map((line, index) => <small key={`${index}:${line}`}>{line}</small>)}
           </div>
         ) : null}
+      </section>
+
+      <section className="panel world-events-panel" data-active={worldEventEncounter ? "true" : "false"}>
+        <div className="world-events-hero-art" aria-hidden="true">
+          <img src="/world-events/a1/world_events_header.webp" alt="" loading="lazy" decoding="async" />
+        </div>
+        <div className="panel-title-row world-events-heading">
+          <div>
+            <p className="eyebrow">World Events · Stream Only</p>
+            <h2>Notorious Monsters</h2>
+            <p className="muted">Enhanced versions of familiar monsters can appear without warning while the stream is live. These encounters use normal Active Battle rules and never start a Raid.</p>
+          </div>
+          <div className="context-help-actions"><ContextHelp topic="world_events" /><span className={`small-badge ${worldEventEncounter ? "world-event-danger-badge" : ""}`}>{worldEventEncounter ? "EVENT ACTIVE" : "Realm Calm"}</span></div>
+        </div>
+        <div className="world-event-rules" aria-label="World Event rules">
+          <span><strong>Random</strong>Stream-only appearance</span>
+          <span><strong>+10 Max</strong>Above the highest character level</span>
+          <span><strong>No Raid</strong>Standard Active Battle rally</span>
+          <span><strong>Greater Spoils</strong>Enhanced progression rewards</span>
+        </div>
+        <div className="world-event-state-banner" aria-hidden="true">
+          <img
+            src={worldEventEncounter ? "/world-events/a1/world_event_active.webp" : recentWorldEvent?.won ? "/world-events/a1/world_event_defeated.webp" : "/world-events/a1/world_event_idle.webp"}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        {worldEventEncounter ? <WorldEventEncounter encounter={worldEventEncounter} nowMs={authoritativeClock} busy={liveBusy} onJoin={runLiveJoin} onAction={runLiveAction} /> : (
+          <div className="world-event-idle-state"><strong>No Active World Event</strong><span>{state?.stream_live ? "The realm is calm… for now." : "World Events are watched for while the Twitch stream is live."}</span></div>
+        )}
+        {recentWorldEvent ? <div className={`stream-venture-result ${recentWorldEvent.won ? "won" : "lost"}`}><div><span>Recent World Event</span><strong>{recentWorldEvent.won ? "Defeated" : "Escaped"}</strong></div><p>{recentWorldEvent.monster_name || "Notorious Monster"}</p></div> : null}
+        <div className="world-event-roster-head"><div><p className="eyebrow">Known Threats</p><h3>World Event Bosses</h3></div><small>Initial roster · 10 notorious variants</small></div>
+        <div className="world-event-roster">
+          {worldEventCatalog.map((event) => (
+            <article className="world-event-boss-card" key={event.id} data-threat={String(event.threat || "notorious").toLowerCase()}>
+              <img src={event.art} alt={`${event.name} World Event artwork`} loading="lazy" decoding="async" />
+              <div><span className="world-event-threat">{event.threat || "Notorious"}</span><h4>{event.name}</h4><p>{event.description}</p></div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <Raids username={overview?.identity?.username || ""} liveRaid={state?.raid || null} liveBusy={liveBusy} onLiveJoin={runLiveJoin} onLiveAction={runLiveAction} />

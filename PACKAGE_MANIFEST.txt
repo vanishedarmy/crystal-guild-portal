@@ -1,7 +1,7 @@
-# Crystal Guild v1.9.0 Alpha 5 — Title Status Hardening
-# Runtime: 1.9.0-title-status-hardening-alpha5
-# Carried forward systems include Navigation Accessibility, Title Expansion, Moogle Trading Post, Economy Balance, Merc Service, Fellowship, and Gold Saucer.
-# Files: 1306
+# Crystal Guild v1.9.0 Alpha 6 — World Events
+# Runtime: 1.9.0-world-events-alpha6
+# Carried forward systems include Title Status Hardening, Navigation Accessibility, Title Expansion, Moogle Trading Post, Economy Balance, Merc Service, Fellowship, and Gold Saucer.
+# Files: 1323
 
 .dockerignore
 .gitignore
@@ -67,6 +67,8 @@ V1_8_FINAL_RELEASE_NOTES.md
 V1_8_FINAL_VALIDATION.md
 VALIDATION_REPORT.md
 VERSION.txt
+WORLD_EVENTS.md
+WORLD_EVENTS_ARTWORK_MANIFEST.json
 crystal_guild/__init__.py
 crystal_guild/config.py
 crystal_guild/hosted_portal.py
@@ -995,6 +997,20 @@ frontend/public/trails-raids/trial-board-collapsed.webp
 frontend/public/trails-raids/trial-board-open.webp
 frontend/public/ui/collapse-pointer-down-a2.webp
 frontend/public/ui/collapse-pointer-right-a2.webp
+frontend/public/world-events/a1/bloodied_deathclaw.webp
+frontend/public/world-events/a1/cursed_tonberry_king.webp
+frontend/public/world-events/a1/dark_iron_giant.webp
+frontend/public/world-events/a1/dread_bomb_king.webp
+frontend/public/world-events/a1/elder_adamantoise.webp
+frontend/public/world-events/a1/notorious_behemoth.webp
+frontend/public/world-events/a1/ravenous_dragon.webp
+frontend/public/world-events/a1/savage_coeurl.webp
+frontend/public/world-events/a1/tainted_malboro.webp
+frontend/public/world-events/a1/twisted_ahriman.webp
+frontend/public/world-events/a1/world_event_active.webp
+frontend/public/world-events/a1/world_event_defeated.webp
+frontend/public/world-events/a1/world_event_idle.webp
+frontend/public/world-events/a1/world_events_header.webp
 frontend/src/App.jsx
 frontend/src/api/auth.js
 frontend/src/api/client.js
@@ -1291,6 +1307,7 @@ frontend/tests/uiSharedAssets131.test.mjs
 frontend/tests/uiUxPolish182.test.mjs
 frontend/tests/version.test.mjs
 frontend/tests/whatsNew.test.mjs
+frontend/tests/worldEventsAlpha6.test.mjs
 frontend/tests/worldRaidBossArtwork.test.mjs
 frontend/vite.config.js
 hosted.env.example

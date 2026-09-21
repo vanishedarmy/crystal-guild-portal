@@ -4,7 +4,7 @@ export const CONTEXT_HELP = {
     summary: "Your hub for personal adventures, recovery, travel, Hunts, Dungeons, Expeditions, and live-group challenges.",
     bullets: [
       "Finish or confirm any active result before starting a conflicting adventure.",
-      "Solo Venture is Portal-only; Rally Venture and Trials/Raids are live-stream activities.",
+      "Solo Venture is Portal-only; Rally Venture, World Events, and Trials/Raids are live-stream activities.",
       "Travel changes the region used by region-aware adventures and encounter pools.",
     ],
     tip: "Use the Current strip at the top first—it tells you what the Guild considers active right now.",
@@ -41,6 +41,17 @@ export const CONTEXT_HELP = {
       "Enemy level can scale above the initiating hero, increasing both danger and reward.",
     ],
     tip: "Use !venture to open the rally. Once it appears here, you can Join and queue Attack, Abilities, Defend, or owned battle items from the Portal; chat commands remain fully supported.",
+    guide: "combat",
+  },
+  world_events: {
+    title: "World Events",
+    summary: "Random stream-only Notorious Monster encounters that interrupt the realm without creating a Raid.",
+    bullets: [
+      "A World Event can appear only while the Twitch stream is live and only when no other Guild-wide battle is active.",
+      "World Event level scales from the current highest character and never exceeds that level by more than +10.",
+      "These enemies use normal Active Battle rally/actions, but their enhanced stats and rewards make them more dangerous than ordinary encounters.",
+    ],
+    tip: "World Events ignore your normal Venture cooldown—if a Notorious Monster appears and your hero is otherwise free to fight, you can answer the rally immediately.",
     guide: "combat",
   },
   travel_regions: {

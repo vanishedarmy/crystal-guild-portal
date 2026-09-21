@@ -11,7 +11,7 @@ import {
 import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
-import { battleItemPurpose, duration, number, pct, sortBattleItems } from "../utils/formatters.js";
+import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
@@ -43,25 +43,16 @@ const MASTERY_COPY = {
 };
 
 const ABILITY_GROUPS = [
-  { id: "offense", label: "Offense", hint: "Damage and enemy pressure" },
-  { id: "restoration", label: "Restoration", hint: "Healing and recovery" },
-  { id: "support", label: "Support", hint: "Protection, buffs, and utility" },
+  { id: "offense", label: "Offense", hint: "Damage & debuffs" },
+  { id: "restoration", label: "Restoration", hint: "Healing & recovery" },
+  { id: "support", label: "Support", hint: "Buffs & protection" },
 ];
 
 const CONSUMABLE_GROUPS = [
-  { id: "healing", label: "Healing", hint: "HP, MP, AP, revival, and cleanses" },
-  { id: "support", label: "Support", hint: "Buffs and utility items" },
-  { id: "damage", label: "Damage", hint: "Offensive consumables" },
+  { id: "healing", label: "Healing", hint: "Recovery & cures" },
+  { id: "support", label: "Support", hint: "Buffs & utility" },
+  { id: "damage", label: "Damage", hint: "Direct damage" },
 ];
-
-function expeditionAbilityPurpose(ability = {}) {
-  const target = String(ability?.target || "").toLowerCase();
-  const traits = Array.isArray(ability?.traits) ? ability.traits.join(" ") : "";
-  const text = `${ability?.name || ""} ${ability?.description || ""} ${traits}`.toLowerCase();
-  if (target === "enemy" || /\b(damage|attack|strike|blast|shot|pierc|vulnerable|poison|stun|slow|weaken|blind)\b/.test(text)) return "offense";
-  if (/\b(heal|healing|restore|recovery|recover|revive|regen|cleanse|cure)\b/.test(text)) return "restoration";
-  return "support";
-}
 
 function expeditionConsumablePurpose(item = {}) {
   const purpose = battleItemPurpose(item);
@@ -198,7 +189,7 @@ export default function Expeditions({
   const selectedRouteDef = routes.find((route) => route.id === selectedRoute) || null;
   const abilityGroups = useMemo(() => {
     const grouped = { offense: [], restoration: [], support: [] };
-    for (const ability of active?.combat?.abilities || []) grouped[expeditionAbilityPurpose(ability)].push(ability);
+    for (const ability of active?.combat?.abilities || []) grouped[battleAbilityPurpose(ability)].push(ability);
     return grouped;
   }, [active?.combat?.abilities]);
   const consumableGroups = useMemo(() => {
@@ -402,20 +393,18 @@ export default function Expeditions({
                 {active.last_round?.events?.length ? <div className="adventure-combat-note expedition-round-log"><strong>Round {number(active.last_round.round)}</strong>{active.last_round.events.slice(-4).map((line, index) => <span key={`${index}:${line}`}>{line}</span>)}</div> : null}
                 <div className="expedition-action-section expedition-core-actions">
                   <div className="expedition-action-section-header">
-                    <div><span className="slot-label">Core Actions</span><h3>Choose your move</h3></div>
-                    <small>Always available when your hero can act.</small>
+                    <h3>Actions</h3>
                   </div>
                   <div className="expedition-action-grid">
-                    <button type="button" className="equipment-action-button expedition-primary-action" disabled={Boolean(busy)} onClick={() => doRequest("expedition:attack", "expedition-action", `attack:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("attack", csrfToken, idem), "Attack resolved.")}>Attack</button>
-                    <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => doRequest("expedition:defend", "expedition-action", `defend:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("defend", csrfToken, idem), "Defend resolved.")}>Defend</button>
+                    <button type="button" className="equipment-action-button expedition-primary-action combat-tone-offense" disabled={Boolean(busy)} onClick={() => doRequest("expedition:attack", "expedition-action", `attack:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("attack", csrfToken, idem), "Attack complete.")}>Attack</button>
+                    <button type="button" className="equipment-action-button secondary combat-tone-defense" disabled={Boolean(busy)} onClick={() => doRequest("expedition:defend", "expedition-action", `defend:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("defend", csrfToken, idem), "Defend complete.")}>Defend</button>
                   </div>
                 </div>
 
                 {(active.combat.abilities || []).length ? (
                   <div className="expedition-action-section expedition-abilities-section">
                     <div className="expedition-action-section-header">
-                      <div><span className="slot-label">Abilities</span><h3>{active.combat.player?.job_name || "Job"} abilities</h3></div>
-                      <small>Organized by combat purpose.</small>
+                      <h3>{active.combat.player?.job_name || "Job"} Abilities</h3>
                     </div>
                     <div className="expedition-ability-groups">
                       {ABILITY_GROUPS.map((group) => abilityGroups[group.id].length ? (
@@ -423,10 +412,10 @@ export default function Expeditions({
                           <div className="expedition-category-heading"><div><strong>{group.label}</strong><small>{group.hint}</small></div><span>{number(abilityGroups[group.id].length)}</span></div>
                           <div className="expedition-option-grid">
                             {abilityGroups[group.id].map((ability) => (
-                              <button type="button" key={ability.id} className={`expedition-combat-option ability ${group.id}`} disabled={Boolean(busy) || !ability.usable} title={ability.reason || ability.description} onClick={() => doRequest(`expedition:ability:${ability.id}`, "expedition-action", `ability:${ability.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}>
+                              <button type="button" key={ability.id} className={`expedition-combat-option ability combat-purpose-${group.id}`} disabled={Boolean(busy) || !ability.usable} title={ability.reason || battleAbilitySummary(ability) || ability.description} onClick={() => doRequest(`expedition:ability:${ability.id}`, "expedition-action", `ability:${ability.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} complete.`)}>
                                 <strong>{ability.name}</strong>
                                 <small>{abilityCostLabel(ability)}</small>
-                                <span>{ability.usable ? (ability.description || "Use ability") : ability.reason}</span>
+                                <span>{ability.usable ? (battleAbilitySummary(ability) || "Ready") : ability.reason}</span>
                               </button>
                             ))}
                           </div>
@@ -439,12 +428,11 @@ export default function Expeditions({
                 {(active.combat.items || []).length ? (
                   <div className="expedition-action-section expedition-consumables-section">
                     <div className="expedition-action-section-header">
-                      <div><span className="slot-label">Consumables</span><h3>Battle items</h3></div>
-                      <small>Show only the item type you need.</small>
+                      <h3>Items</h3>
                     </div>
                     <div className="expedition-consumable-tabs" aria-label="Consumable categories">
                       {CONSUMABLE_GROUPS.map((group) => (
-                        <button type="button" key={group.id} className={activeConsumableCategory === group.id ? "active" : ""} aria-pressed={activeConsumableCategory === group.id} disabled={!consumableGroups[group.id].length} onClick={() => setConsumableCategory(group.id)}>
+                        <button type="button" key={group.id} className={`combat-purpose-${group.id} ${activeConsumableCategory === group.id ? "active" : ""}`} aria-pressed={activeConsumableCategory === group.id} disabled={!consumableGroups[group.id].length} onClick={() => setConsumableCategory(group.id)}>
                           <strong>{group.label}</strong><span>{number(consumableGroups[group.id].length)}</span><small>{group.hint}</small>
                         </button>
                       ))}
@@ -452,10 +440,10 @@ export default function Expeditions({
                     <div className="expedition-consumable-panel" aria-live="polite">
                       <div className="expedition-option-grid">
                         {consumableGroups[activeConsumableCategory].map((item) => (
-                          <button type="button" key={item.id} className={`expedition-combat-option item ${activeConsumableCategory}`} disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => doRequest(`expedition:item:${item.id}`, "expedition-action", `item:${item.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}>
+                          <button type="button" key={item.id} className={`expedition-combat-option item combat-purpose-${activeConsumableCategory}`} disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => doRequest(`expedition:item:${item.id}`, "expedition-action", `item:${item.id}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}>
                             <strong>{item.name}</strong>
                             <small>Qty {number(item.quantity)}</small>
-                            <span>{item.usable ? (item.description || "Ready to use") : item.reason}</span>
+                            <span>{item.usable ? (item.description || "Ready") : item.reason}</span>
                           </button>
                         ))}
                       </div>

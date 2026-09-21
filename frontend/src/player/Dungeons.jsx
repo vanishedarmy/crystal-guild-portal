@@ -9,7 +9,7 @@ import {
 import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
-import { number, pct, sortBattleItems } from "../utils/formatters.js";
+import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, number, pct, sortBattleItems } from "../utils/formatters.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import ContextHelp from "../components/ContextHelp.jsx";
@@ -98,7 +98,7 @@ function DungeonResult({ result, onConfirm, confirming }) {
       {summary?.first_clear ? <p className="dungeon-first-clear-line"><strong>First Clear Bonus:</strong> {(summary?.first_clear_bonus || []).join(" · ") || "Claimed"}</p> : null}
       {(summary?.discoveries || []).length ? <p className="expedition-loot-line"><strong>Discovered:</strong> {summary.discoveries.join(" · ")}</p> : null}
       <div className="adventure-result-confirmation">
-        <div><strong>Saved until you confirm</strong><span>This Dungeon report remains on your Adventure Board across refreshes.</span></div>
+        <div><strong>Result saved</strong><span>It stays here until you confirm it.</span></div>
         <button type="button" className="equipment-action-button secondary" disabled={Boolean(confirming)} onClick={() => onConfirm?.(result?.result_id)}>{confirming ? "Confirming…" : "Confirm Result"}</button>
       </div>
     </section>
@@ -155,7 +155,7 @@ export default function Dungeons({
               <div className="dungeon-run-status-grid" aria-label="Current dungeon run status">
                 <div><span>Progress</span><strong>Room {number(active.room_number)} / {number(active.room_count)}</strong></div>
                 <div><span>Delve Style</span><strong>{active.identity || "Dungeon"}</strong></div>
-                <div><span>Current State</span><strong>{runStatusLabel(active.status)}</strong></div>
+                <div><span>Status</span><strong>{runStatusLabel(active.status)}</strong></div>
                 <div><span>Retreat Value</span><strong>50% Cache</strong></div>
               </div>
               <ProgressBar value={pct(active.room_number, active.room_count)} />
@@ -172,11 +172,11 @@ export default function Dungeons({
                         <div className="solo-combat-head"><div><span>Dungeon Foe</span><h3>{combat.enemy?.name} · Lv. {number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)}</span></div>
                         <div className="vital-label"><span>HP</span><span>{number(combat.enemy?.hp)} / {number(combat.enemy?.max_hp)}</span></div>
                         <ProgressBar value={pct(combat.enemy?.hp, combat.enemy?.max_hp)} className="hp" />
-                        <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{combat.enemy?.intent || "Preparing an action"}</strong></div>
+                        <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{combat.enemy?.intent || "Preparing"}</strong></div>
                         {combat.enemy?.statuses && combat.enemy.statuses !== "—" ? <small>Status: {combat.enemy.statuses}</small> : null}
-                        {combat.route_effects?.length ? <small className="dungeon-combat-route-effects">Route consequence: {combat.route_effects.join(" · ")}</small> : null}
-                        {combat.opening_effects?.length ? <small className="dungeon-combat-opening-effects">Opening pressure: {combat.opening_effects.join(" · ")}</small> : null}
-                        {combat.mechanics?.length ? <div className="dungeon-mechanic-list"><span>Encounter Rules</span>{combat.mechanics.map((rule) => <strong key={rule}>{rule}</strong>)}</div> : null}
+                        {combat.route_effects?.length ? <small className="dungeon-combat-route-effects">Route effect: {combat.route_effects.join(" · ")}</small> : null}
+                        {combat.opening_effects?.length ? <small className="dungeon-combat-opening-effects">Opening effect: {combat.opening_effects.join(" · ")}</small> : null}
+                        {combat.mechanics?.length ? <div className="dungeon-mechanic-list"><span>Battle Effects</span>{combat.mechanics.map((rule) => <strong key={rule}>{rule}</strong>)}</div> : null}
                       </div>
                     </div>
                   </div>
@@ -193,13 +193,13 @@ export default function Dungeons({
                   </div>
                   {active.last_round?.events?.length ? <div className="solo-round-log" aria-live="polite"><strong>Round {number(active.last_round.round)}</strong>{active.last_round.events.map((line, index) => <span key={`${index}:${line}`}>{line}</span>)}</div> : null}
                   <div className="solo-command-bar" aria-label="Dungeon battle actions">
-                    <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("dungeon:attack", "dungeon-action", "attack", (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, "attack", csrfToken, idem), "Dungeon round resolved.")}>{busy === "dungeon:attack" ? "Attacking…" : "Attack"}</button>
-                    <button type="button" className={`equipment-action-button secondary ${picker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} onClick={() => setPicker(picker === "ability" ? "" : "ability")}>Ability</button>
-                    <button type="button" className={`equipment-action-button secondary ${picker === "item" ? "active" : ""}`} disabled={Boolean(busy)} onClick={() => setPicker(picker === "item" ? "" : "item")}>Use Item</button>
-                    <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("dungeon:defend", "dungeon-action", "defend", (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, "defend", csrfToken, idem), "Dungeon round resolved.")}>{busy === "dungeon:defend" ? "Defending…" : "Defend"}</button>
+                    <button type="button" className="equipment-action-button combat-tone-offense" disabled={Boolean(busy)} onClick={() => runRequest("dungeon:attack", "dungeon-action", "attack", (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, "attack", csrfToken, idem), "Attack complete.")}>{busy === "dungeon:attack" ? "Attacking…" : "Attack"}</button>
+                    <button type="button" className={`equipment-action-button secondary combat-tone-ability ${picker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} onClick={() => setPicker(picker === "ability" ? "" : "ability")}>Ability</button>
+                    <button type="button" className={`equipment-action-button secondary combat-tone-item ${picker === "item" ? "active" : ""}`} disabled={Boolean(busy)} onClick={() => setPicker(picker === "item" ? "" : "item")}>Use Item</button>
+                    <button type="button" className="equipment-action-button secondary combat-tone-defense" disabled={Boolean(busy)} onClick={() => runRequest("dungeon:defend", "dungeon-action", "defend", (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, "defend", csrfToken, idem), "Defend complete.")}>{busy === "dungeon:defend" ? "Defending…" : "Defend"}</button>
                   </div>
-                  {picker === "ability" ? <div className="solo-action-picker"><div className="panel-title-row"><div><p className="eyebrow">Battle Abilities</p><h3>Choose an ability</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setPicker("")}>Close</button></div><div className="solo-action-grid solo-ability-grid">{abilities.length ? abilities.map((ability) => <button key={ability.id} type="button" className="solo-action-option solo-ability-option" disabled={Boolean(busy)} onClick={() => runRequest(`dungeon:ability:${ability.id}`, "dungeon-ability", ability.id, (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, `ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}><strong>{ability.name}</strong><span>{number(ability.cost)} {String(ability.resource || "MP").toUpperCase()}</span></button>) : <p className="muted">No abilities are currently available.</p>}</div></div> : null}
-                  {picker === "item" ? <div className="solo-action-picker"><div className="panel-title-row"><div><p className="eyebrow">Battle Inventory</p><h3>Choose an item</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setPicker("")}>Close</button></div><div className="solo-action-grid">{items.length ? items.map((item) => <button key={item.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`dungeon:item:${item.id}`, "dungeon-item", item.id, (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, `item:${item.id}`, csrfToken, idem), `${item.name} used.`)}><span><strong>{item.name}</strong><small>Qty {number(item.quantity)} · {item.target}</small></span><span>{item.usable ? "Use" : item.reason}</span><small>{item.description}</small></button>) : <p className="muted">No usable battle items are in your inventory.</p>}</div></div> : null}
+                  {picker === "ability" ? <div className="solo-action-picker"><div className="panel-title-row compact-combat-picker"><h3>Abilities</h3><button type="button" className="equipment-action-button secondary" onClick={() => setPicker("")}>Close</button></div><div className="solo-action-grid solo-ability-grid">{abilities.length ? abilities.map((ability) => <button key={ability.id} type="button" className={`solo-action-option solo-ability-option combat-purpose-${battleAbilityPurpose(ability)}`} disabled={Boolean(busy)} title={battleAbilitySummary(ability) || ability.description || ability.name} onClick={() => runRequest(`dungeon:ability:${ability.id}`, "dungeon-ability", ability.id, (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, `ability:${ability.id}`, csrfToken, idem), `${ability.name} complete.`)}><strong>{ability.name}</strong><span>{number(ability.cost)} {String(ability.resource || "MP").toUpperCase()}</span>{battleAbilitySummary(ability) ? <small>{battleAbilitySummary(ability)}</small> : null}</button>) : <p className="muted">No abilities available.</p>}</div></div> : null}
+                  {picker === "item" ? <div className="solo-action-picker"><div className="panel-title-row compact-combat-picker"><h3>Items</h3><button type="button" className="equipment-action-button secondary" onClick={() => setPicker("")}>Close</button></div><div className="solo-action-grid">{items.length ? items.map((item) => <button key={item.id} type="button" className={`solo-action-option combat-purpose-${battleItemPurpose(item)}`} disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`dungeon:item:${item.id}`, "dungeon-item", item.id, (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, `item:${item.id}`, csrfToken, idem), `${item.name} used.`)}><span><strong>{item.name}</strong><small>Qty {number(item.quantity)}</small></span><small>{item.usable ? item.description : item.reason}</small></button>) : <p className="muted">No battle items available.</p>}</div></div> : null}
                 </div>
               ) : null}
 

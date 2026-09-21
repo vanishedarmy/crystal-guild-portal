@@ -19,7 +19,7 @@ import StatCard from "../components/StatCard.jsx";
 import Expeditions from "./Expeditions.jsx";
 import Dungeons from "./Dungeons.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
-import { duration, number, pct, sortBattleItems } from "../utils/formatters.js";
+import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
@@ -743,7 +743,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                       <div className="solo-combat-head"><div><span>Enemy</span><h3>{expedition.combat.enemy?.name} · Lv. {number(expedition.combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(expedition.combat.round)}</span></div>
                       <div className="vital-label"><span>HP</span><span>{number(expedition.combat.enemy?.hp)} / {number(expedition.combat.enemy?.max_hp)}</span></div>
                       <ProgressBar value={pct(expedition.combat.enemy?.hp, expedition.combat.enemy?.max_hp)} className="hp" />
-                      <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing an action"}</strong></div>
+                      <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{expedition.combat.enemy?.intent || "Preparing"}</strong></div>
                       {expedition.combat.enemy?.statuses && expedition.combat.enemy.statuses !== "—" ? <small>Status: {expedition.combat.enemy.statuses}</small> : null}
                     </div>
                   </div>
@@ -771,49 +771,49 @@ export default function Hunts({ data, overview, onRefresh }) {
                 ) : null}
 
                 <div className="solo-command-bar" aria-label="Solo Venture battle actions">
-                  <button type="button" className="equipment-action-button" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Round resolved.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
-                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={(event) => {
+                  <button type="button" className="equipment-action-button combat-tone-offense" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Attack complete.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
+                  <button type="button" className={`equipment-action-button secondary combat-tone-ability ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={(event) => {
                     const next = soloPicker === "ability" ? "" : "ability";
                     const anchor = event.currentTarget;
                     const y = window.scrollY;
                     setSoloPicker(next);
                     window.requestAnimationFrame(() => window.requestAnimationFrame(() => { anchor?.focus?.({ preventScroll: true }); window.scrollTo({ top: y, left: window.scrollX, behavior: "auto" }); }));
                   }}>Ability</button>
-                  <button type="button" className={`equipment-action-button secondary ${soloPicker === "item" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "item"} onClick={(event) => {
+                  <button type="button" className={`equipment-action-button secondary combat-tone-item ${soloPicker === "item" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "item"} onClick={(event) => {
                     const next = soloPicker === "item" ? "" : "item";
                     const anchor = event.currentTarget;
                     const y = window.scrollY;
                     setSoloPicker(next);
                     window.requestAnimationFrame(() => window.requestAnimationFrame(() => { anchor?.focus?.({ preventScroll: true }); window.scrollTo({ top: y, left: window.scrollX, behavior: "auto" }); }));
                   }}>Use Item</button>
-                  <button type="button" className="equipment-action-button secondary" disabled={Boolean(busy)} onClick={() => runRequest("solo:defend", "solo-action", "defend", (idem) => submitSoloExpeditionAction("defend", csrfToken, idem), "Round resolved.")}>{busy === "solo:defend" ? "Defending…" : "Defend"}</button>
+                  <button type="button" className="equipment-action-button secondary combat-tone-defense" disabled={Boolean(busy)} onClick={() => runRequest("solo:defend", "solo-action", "defend", (idem) => submitSoloExpeditionAction("defend", csrfToken, idem), "Defend complete.")}>{busy === "solo:defend" ? "Defending…" : "Defend"}</button>
                 </div>
 
                 {soloPicker === "ability" ? (
                   <div className="solo-action-picker">
-                    <div className="panel-title-row"><div><p className="eyebrow">Battle Abilities</p><h3>Choose an ability</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
+                    <div className="panel-title-row compact-combat-picker"><h3>Abilities</h3><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid solo-ability-grid">
                       {availableSoloAbilities.length ? availableSoloAbilities.map((ability) => (
-                        <button key={ability.id} type="button" className="solo-action-option solo-ability-option" disabled={Boolean(busy)} onClick={() => runRequest(`solo:ability:${ability.id}`, "solo-ability", ability.id, (idem) => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} resolved.`)}>
+                        <button key={ability.id} type="button" className={`solo-action-option solo-ability-option combat-purpose-${battleAbilityPurpose(ability)}`} disabled={Boolean(busy)} title={battleAbilitySummary(ability) || ability.description || ability.name} onClick={() => runRequest(`solo:ability:${ability.id}`, "solo-ability", ability.id, (idem) => submitSoloExpeditionAction(`ability:${ability.id}`, csrfToken, idem), `${ability.name} complete.`)}>
                           <strong>{ability.name}</strong>
                           <span>{number(ability.cost)} {String(ability.resource || "MP").toUpperCase()}</span>
+                          {battleAbilitySummary(ability) ? <small>{battleAbilitySummary(ability)}</small> : null}
                         </button>
-                      )) : <p className="muted">No abilities are currently available.</p>}
+                      )) : <p className="muted">No abilities available.</p>}
                     </div>
                   </div>
                 ) : null}
 
                 {soloPicker === "item" ? (
                   <div className="solo-action-picker">
-                    <div className="panel-title-row"><div><p className="eyebrow">Battle Inventory</p><h3>Choose an item</h3></div><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
+                    <div className="panel-title-row compact-combat-picker"><h3>Items</h3><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid">
                       {(expedition.combat.items || []).length ? sortBattleItems(expedition.combat.items || []).map((item) => (
-                        <button key={item.id} type="button" className="solo-action-option" disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`solo:item:${item.id}`, "solo-item", item.id, (idem) => submitSoloExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}>
-                          <span><strong>{item.name}</strong><small>Qty {number(item.quantity)} · {item.target}</small></span>
-                          <span>{item.usable ? "Use" : item.reason}</span>
-                          <small>{item.description}</small>
+                        <button key={item.id} type="button" className={`solo-action-option combat-purpose-${battleItemPurpose(item)}`} disabled={Boolean(busy) || !item.usable} title={item.reason || item.description} onClick={() => runRequest(`solo:item:${item.id}`, "solo-item", item.id, (idem) => submitSoloExpeditionAction(`item:${item.id}`, csrfToken, idem), `${item.name} used.`)}>
+                          <span><strong>{item.name}</strong><small>Qty {number(item.quantity)}</small></span>
+                          <small>{item.usable ? item.description : item.reason}</small>
                         </button>
-                      )) : <p className="muted">No usable battle items are in your inventory.</p>}
+                      )) : <p className="muted">No battle items available.</p>}
                     </div>
                   </div>
                 ) : null}

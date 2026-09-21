@@ -1,9 +1,8 @@
-Crystal Guild Web v1.9.0 Alpha 6 — World Events — Overview Cleanup Hotfix 6
-OVERVIEW_CLEANUP_HOTFIX6.md
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
 CHOCOBO_PORTRAIT_MANIFEST.json
+COMBAT_ACCESSIBILITY_GUIDE_HOTFIX7.md
 DUNGEON_PORTRAIT_HOTFIX1.md
 Dockerfile
 ECONOMY_BALANCE_AUDIT.md
@@ -37,6 +36,7 @@ MERC_SERVICE_RC1_VALIDATION.md
 MOBILE_CONTEXT_HELP_HOTFIX2.md
 MOOGLE_ANNEX_CATEGORY_STOCK_HOTFIX4.md
 MOOGLE_ANNEX_STOCK_HOTFIX3.md
+OVERVIEW_CLEANUP_HOTFIX6.md
 PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
@@ -1121,6 +1121,7 @@ frontend/tests/buttonFitRevert.test.mjs
 frontend/tests/campCountdown.test.mjs
 frontend/tests/characterIdentity.test.mjs
 frontend/tests/cinzelTypography.test.mjs
+frontend/tests/combatAccessibilityHotfix7.test.mjs
 frontend/tests/combatGuide.test.mjs
 frontend/tests/combatResources.test.mjs
 frontend/tests/commandPrefixV115.test.mjs
@@ -1259,6 +1260,7 @@ frontend/tests/moogleAnnexCategoryStockHotfix4.test.mjs
 frontend/tests/moogleAnnexStockHotfix3.test.mjs
 frontend/tests/moogleRetainerRecipeCompactnessHotfix3.test.mjs
 frontend/tests/navigationAccessibilityAlpha4.test.mjs
+frontend/tests/overviewCleanupHotfix6.test.mjs
 frontend/tests/passiveRecoveryGuide.test.mjs
 frontend/tests/phase8UiUx.test.mjs
 frontend/tests/playerClarity.test.mjs

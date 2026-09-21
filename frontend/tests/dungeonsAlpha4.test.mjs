@@ -4,11 +4,11 @@ import fs from "node:fs";
 
 const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("Alpha 4 Dungeon UI exposes event count and encounter rules", () => {
+test("Alpha 4 Dungeon UI exposes event count and battle effects", () => {
   const board = read("../src/player/Dungeons.jsx");
   assert.match(board, /Dungeons &amp; Delves/);
   assert.match(board, /Events/);
-  assert.match(board, /Encounter Rules/);
+  assert.match(board, /Battle Effects/);
   assert.match(board, /opening_effects/);
   assert.match(board, /combat\.mechanics/);
 });

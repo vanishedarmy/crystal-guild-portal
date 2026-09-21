@@ -13,7 +13,7 @@ test("Beta 2 Trial Board keeps a visible last-result recap",()=>{
 
 test("Beta 2 shows live raid action readiness",()=>{
   const jsx=read("src/player/Raids.jsx");
-  for(const term of ["ready_actions","actionable_raiders","Actions .* queued"]) assert.match(jsx,new RegExp(term));
+  for(const term of ["ready_actions","actionable_raiders","Party Ready","Ready .* / .*" ]) assert.match(jsx,new RegExp(term));
 });
 
 test("Beta 2 adds repeat-clear mastery to Board and Records",()=>{

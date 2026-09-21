@@ -25,6 +25,6 @@ test("RC1 keeps the roomy collapsible Trial Board presentation",()=>{
   const jsx=read("src/player/Raids.jsx"), css=read("src/styles/portal.css");
   assert.match(jsx,/Trails &amp; Raids/);
   assert.match(jsx,/raid-board-collapse-toggle/);
-  assert.match(jsx,/Round Readiness/);
+  assert.match(jsx,/Party Ready/);
   assert.match(css,/raid-featured-trials/);
 });

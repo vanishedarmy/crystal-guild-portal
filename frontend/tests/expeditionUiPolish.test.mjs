@@ -6,7 +6,7 @@ const SRC = new URL("../src/", import.meta.url);
 
 test("Expedition combat separates core actions, abilities, and consumables", async () => {
   const component = await readFile(new URL("player/Expeditions.jsx", SRC), "utf8");
-  assert.match(component, /Core Actions/);
+  assert.match(component, /<h3>Actions<\/h3>/);
   assert.match(component, /className="expedition-action-section expedition-abilities-section"/);
   assert.match(component, /className="expedition-action-section expedition-consumables-section"/);
   assert.match(component, /ABILITY_GROUPS/);

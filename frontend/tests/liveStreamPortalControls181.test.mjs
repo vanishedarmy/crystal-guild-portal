@@ -17,9 +17,12 @@ test("authenticated Stream Activities can submit live rally joins and round acti
 
 test("live battle controller exposes core actions, abilities, ally targeting, and categorized items", async () => {
   const controls = await readFile(new URL("components/LiveStreamCombatControls.jsx", SRC), "utf8");
-  for (const text of ["Attack", "Defend", "Abilities", "Support target", "Healing", "Support", "Damage", "Owned"]) {
+  for (const text of ["Attack", "Defend", "Abilities", "Support target", "Healing", "Support", "Damage", "Items"]) {
     assert.match(controls, new RegExp(text));
   }
+  assert.match(controls, /combat-tone-offense/);
+  assert.match(controls, /combat-tone-defense/);
+  assert.match(controls, /combat-purpose-\$\{group\}/);
   assert.match(controls, /ItemArtwork/);
   assert.match(controls, /onAction\?\.\("ability"/);
   assert.match(controls, /onAction\?\.\("item"/);

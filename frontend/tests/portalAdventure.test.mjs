@@ -128,16 +128,16 @@ test("Wayfarer orders the Adventurer Portal around the most-used character actio
   }
 });
 
-test("Retro Phase 1 Hotfix 1 condenses Solo Venture abilities to usable name-and-cost rows", async () => {
+test("Solo Venture abilities stay compact while showing concise effect summaries", async () => {
   const board = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   const retro = await readFile(new URL("styles/retro.css", SRC), "utf8");
   assert.match(board, /const availableSoloAbilities = \(expedition\?\.combat\?\.abilities \|\| \[\]\)\.filter\(\(ability\) => ability\.usable\)/);
-  assert.match(board, /className="solo-action-option solo-ability-option"/);
+  assert.match(board, /solo-action-option solo-ability-option combat-purpose-\$\{battleAbilityPurpose\(ability\)\}/);
   assert.match(board, /<strong>\{ability\.name\}<\/strong>/);
   assert.match(board, /\{number\(ability\.cost\)\} \{String\(ability\.resource \|\| "MP"\)\.toUpperCase\(\)\}/);
-  assert.match(board, /No abilities are currently available\./);
-  const abilityBlock = board.slice(board.indexOf('soloPicker === "ability"'), board.indexOf('soloPicker === "item"'));
-  assert.doesNotMatch(abilityBlock, /ability\.description|ability\.traits|ability\.target|ability\.reason/);
+  assert.match(board, /No abilities available\./);
+  assert.match(board, /battleAbilitySummary\(ability\)/);
+  assert.doesNotMatch(board, /ability\.traits/);
   assert.match(retro, /Retro Phase 1 Hotfix 1 — compact Solo Venture abilities/);
   assert.match(retro, /\.solo-action-option\.solo-ability-option[\s\S]*min-height: 42px/);
 });

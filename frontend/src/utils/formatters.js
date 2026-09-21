@@ -153,6 +153,106 @@ export function battleItemPurpose(item = {}) {
   return "support";
 }
 
+export function battleAbilityPurpose(ability = {}) {
+  const effects = Array.isArray(ability?.effects) ? ability.effects : [];
+  const effectTypes = new Set(effects.map((effect) => String(effect?.type || "").toLowerCase()).filter(Boolean));
+  const target = String(ability?.target || "").toLowerCase();
+  const text = `${ability?.name || ""} ${ability?.description || ""}`.toLowerCase();
+
+  if (
+    effectTypes.has("heal")
+    || effectTypes.has("heal_hp")
+    || effectTypes.has("restore_mp")
+    || effectTypes.has("restore_ap")
+    || effectTypes.has("revive")
+    || effectTypes.has("cleanse")
+    || /\b(heal|restore|revive|regen|cleanse|cure|recovery)\b/.test(text)
+  ) return "restoration";
+
+  if (
+    effectTypes.has("damage")
+    || target === "enemy"
+    || /\b(damage|attack|strike|blast|shot|pierc|poison|stun|slow|weaken|vulnerable|blind)\b/.test(text)
+  ) return "offense";
+
+  return "support";
+}
+
+function combatStatusLabel(status) {
+  const labels = {
+    blind: "Blind",
+    evade: "Evasion",
+    focus: "Focus",
+    haste: "Haste",
+    poison: "Poison",
+    power_up: "Power Up",
+    protect: "Protect",
+    regen: "Regen",
+    slow: "Slow",
+    stun: "Stun",
+    taunt: "Taunt",
+    vulnerable: "Vulnerable",
+    weaken: "Weaken",
+  };
+  return labels[String(status || "").toLowerCase()] || humanizeLabel(status, "Status");
+}
+
+export function battleAbilitySummary(ability = {}) {
+  const effects = Array.isArray(ability?.effects) ? ability.effects : [];
+  if (!effects.length) return String(ability?.description || "").trim();
+
+  const parts = [];
+  for (const effect of effects) {
+    const type = String(effect?.type || "").toLowerCase();
+    if (type === "damage") {
+      const element = String(ability?.element || "").trim();
+      const scaling = String(effect?.scaling || "").toLowerCase();
+      const label = element ? `${element} damage` : scaling === "physical" ? "Physical damage" : scaling === "magic" ? "Magic damage" : "Damage";
+      if (!parts.includes(label)) parts.push(label);
+      if (Number(effect?.pierce || 0) > 0) parts.push("Pierces defense");
+      if (Number(effect?.crit_bonus || 0) > 0) parts.push("Higher critical chance");
+      continue;
+    }
+    if (type === "heal") {
+      parts.push("Restore HP");
+      continue;
+    }
+    if (type === "restore_mp") {
+      parts.push("Restore MP");
+      continue;
+    }
+    if (type === "restore_ap") {
+      parts.push("Restore AP");
+      continue;
+    }
+    if (type === "revive") {
+      const fraction = Number(effect?.fraction || 0);
+      parts.push(fraction > 0 ? `Revive at ${Math.round(fraction * 100)}% HP` : "Revive");
+      continue;
+    }
+    if (type === "cleanse") {
+      const count = Number(effect?.count || 0);
+      parts.push(count > 1 ? `Cleanse ${count} statuses` : "Cleanse status");
+      continue;
+    }
+    if (type === "drain") {
+      const fraction = Number(effect?.fraction || 0);
+      parts.push(fraction > 0 ? `Recover ${Math.round(fraction * 100)}% of damage as HP` : "Drain HP");
+      continue;
+    }
+    if (type === "status") {
+      const status = combatStatusLabel(effect?.status);
+      const chance = Number(effect?.chance);
+      const turns = Number(effect?.turns || 0);
+      const prefix = Number.isFinite(chance) && chance > 0 && chance < .995 ? `${Math.round(chance * 100)}% ` : "";
+      const suffix = turns > 1 ? ` · ${turns} rounds` : "";
+      parts.push(`${prefix}${status}${suffix}`);
+    }
+  }
+
+  return [...new Set(parts)].slice(0, 4).join(" · ") || String(ability?.description || "").trim();
+}
+
 const BATTLE_ITEM_PURPOSE_ORDER = Object.freeze({ restorative: 0, cure: 1, support: 2, damage: 3 });
 
 export function compareBattleItems(a = {}, b = {}) {

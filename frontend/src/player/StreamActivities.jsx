@@ -128,8 +128,8 @@ function StreamVentureEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
       {encounter.state === "combat" ? (
         encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} busy={busy?.startsWith?.("venture:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("venture", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
         <div className="adventure-combat-note">
-          <strong>{encounter.you_joined ? "Portal battle controls are synchronizing." : "Battle is underway."}</strong>
-          <span>{encounter.you_joined ? "Twitch chat commands remain available while the controls refresh." : "This rally is already in combat; watch the live battle and join the next rally."}</span>
+          <strong>{encounter.you_joined ? "Battle controls are loading." : "Battle is underway."}</strong>
+          <span>{encounter.you_joined ? "You can still use Twitch chat while they load." : "This rally is already in combat; watch the live battle and join the next rally."}</span>
         </div>
       ) : null}
     </div>
@@ -180,7 +180,7 @@ function WorldEventEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
         ) : null}
         {encounter.state === "combat" ? (
           encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} busy={busy?.startsWith?.("world_event:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("world_event", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
-          <div className="adventure-combat-note"><strong>{encounter.you_joined ? "Battle controls are synchronizing." : "The World Event is underway."}</strong><span>{encounter.you_joined ? "Twitch chat commands remain available while the controls refresh." : "This rally is already in combat; watch the battle unfold."}</span></div>
+          <div className="adventure-combat-note"><strong>{encounter.you_joined ? "Battle controls are loading." : "The World Event is underway."}</strong><span>{encounter.you_joined ? "You can still use Twitch chat while they load." : "This rally is already in combat; watch the battle unfold."}</span></div>
         ) : null}
       </div>
     </div>
@@ -219,7 +219,7 @@ export default function StreamActivities({ data: overview }) {
       const response = await submitAdventureState(csrfToken, idem);
       const finished = await finishedAction(response);
       if (!finished) {
-        setMessage("Crystal Guild is still synchronizing live Stream activity.");
+        setMessage("Stream activity is still loading.");
         return null;
       }
       clearActionKey("adventure-state", "board", username, idem);

@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 6 Hotfix 7",
+    name: "Combat Accessibility & Guide",
+    title: "Battle actions are easier to scan and the Player Guide covers the newest systems",
+    summary: "Combat controls now use consistent purpose colors, denser action cards, and shorter player-facing language across Solo Ventures, Dungeons, Expeditions, live Ventures, Raids, and World Events.",
+    highlights: [
+      { title: "Purpose colors", description: "Offense uses red/orange, healing and recovery use green, support uses purple, and defense uses blue. Labels remain visible so color is never the only cue." },
+      { title: "Less scrolling", description: "Action decks and ability/item cards are denser, with two-column mobile command layouts where space allows and shorter effect summaries built from the ability data." },
+      { title: "Cleaner combat language", description: "Redundant helper text and implementation-sounding copy have been removed or shortened across the combat views." },
+      { title: "FAQ refresh", description: "The Player Guide now answers common questions about World Events, combat colors, Trading Post rules, Moogle Annex stock, retroactive Titles, and broad monster-defeat requirements." },
+      { title: "No gameplay change", description: "Damage, costs, cooldowns, rewards, encounter rules, schema 19, hosted sync 1, and Portal Action protocol 36 are unchanged." },
+    ],
+    action: { tab: "adventure", label: "Open Adventure Board" },
+  },
+  {
     version: "v1.9.0 Alpha 6 Hotfix 6",
     name: "Overview Cleanup",
     title: "The redundant Ready at a glance panel has been removed",

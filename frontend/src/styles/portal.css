@@ -13375,3 +13375,158 @@ textarea {
   .world-event-active-card,
   .world-event-rules > span { border-width: 2px; }
 }
+
+/* ============================================================
+   v1.9.0 Alpha 6 — Trading Post UI/UX Hotfix 2
+   Denser marketplace cards and deterministic type-first ordering.
+   ============================================================ */
+.trading-post-sell-section,
+.trading-post-own-section {
+  gap: .55rem;
+  padding: .7rem;
+}
+
+.trading-post-listing-grid,
+.trading-post-sell-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .55rem;
+  align-items: start;
+}
+
+.trading-post-listing,
+.trading-post-sell-card {
+  gap: .42rem;
+  padding: .62rem;
+  border-radius: 12px;
+  align-content: start;
+}
+
+.trading-post-listing-head {
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: .5rem;
+  min-height: 48px;
+}
+.trading-post-listing-head .moogle-item-artwork {
+  width: 48px;
+  height: 48px;
+}
+.trading-post-listing-head > div { gap: .08rem; }
+.trading-post-listing-head .slot-label {
+  font-size: .66rem;
+  line-height: 1.05;
+}
+.trading-post-listing-head .item-name {
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.trading-post-listing-head small {
+  font-size: .73rem;
+  line-height: 1.2;
+}
+
+.trading-post-market-metrics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .25rem .6rem;
+  align-items: end;
+  padding-top: .38rem;
+  border-top: 1px solid rgba(143, 219, 255, .1);
+}
+.trading-post-market-metrics > span {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: .28rem;
+}
+.trading-post-market-metrics > span:nth-child(2) {
+  justify-content: flex-end;
+  text-align: right;
+}
+.trading-post-market-metrics strong {
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.trading-post-market-metrics small { color: var(--muted); }
+.trading-post-expiry {
+  grid-column: 1 / -1;
+  font-size: .7rem;
+  line-height: 1.15;
+}
+.trading-post-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: .75rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.trading-post-list-form {
+  grid-template-columns: minmax(72px, .48fr) minmax(120px, 1.52fr);
+  gap: .4rem;
+}
+.trading-post-list-form label {
+  gap: .12rem;
+  font-size: .7rem;
+}
+.trading-post-list-form input {
+  min-height: 36px;
+  padding: .34rem .48rem;
+  border-radius: 8px;
+}
+.trading-post-fee-summary {
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.trading-post-listing > .equipment-action-button,
+.trading-post-sell-card > .equipment-action-button {
+  min-height: 38px;
+  padding: .42rem .55rem;
+}
+
+.trading-post-own-list { gap: .4rem; }
+.trading-post-own-row {
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: .5rem;
+  padding: .5rem .58rem;
+}
+.trading-post-own-row .moogle-sell-item-artwork {
+  width: 44px;
+  height: 44px;
+}
+.trading-post-own-row > div { gap: .05rem; }
+.trading-post-own-row span,
+.trading-post-own-row small { line-height: 1.2; }
+
+@media (max-width: 1180px) {
+  .trading-post-listing-grid,
+  .trading-post-sell-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .trading-post-listing-grid,
+  .trading-post-sell-grid { grid-template-columns: 1fr; }
+  .trading-post-listing,
+  .trading-post-sell-card { padding: .58rem; }
+  .trading-post-list-form { grid-template-columns: 80px minmax(0, 1fr); }
+  .trading-post-list-form input { min-height: 42px; }
+  .trading-post-listing > .equipment-action-button,
+  .trading-post-sell-card > .equipment-action-button { min-height: 44px; }
+}
+
+@media (max-width: 390px) {
+  .trading-post-listing-head {
+    grid-template-columns: 42px minmax(0, 1fr);
+    min-height: 42px;
+  }
+  .trading-post-listing-head .moogle-item-artwork {
+    width: 42px;
+    height: 42px;
+  }
+  .trading-post-list-form { grid-template-columns: 74px minmax(0, 1fr); }
+}

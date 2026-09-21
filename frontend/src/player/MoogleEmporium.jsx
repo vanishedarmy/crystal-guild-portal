@@ -15,6 +15,7 @@ import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
+import { compareTradingPostItems } from "../utils/tradingPostSort.js";
 import ContextHelp from "../components/ContextHelp.jsx";
 
 
@@ -127,10 +128,12 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const filteredStock = useMemo(() => displayedStock.filter((item) => shopCategory(item) === category), [displayedStock, category]);
   const filteredSellableItems = useMemo(() => sellableItems.filter((item) => shopCategory(item) === category), [sellableItems, category]);
   const marketListings = useMemo(() => (Array.isArray(market?.listings) ? market.listings : [])
-    .filter((listing) => marketCategory === "all" || shopCategory(listing?.item) === marketCategory), [market?.listings, marketCategory]);
+    .filter((listing) => marketCategory === "all" || shopCategory(listing?.item) === marketCategory)
+    .slice().sort(compareTradingPostItems), [market?.listings, marketCategory]);
   const marketEligibleItems = useMemo(() => (Array.isArray(market?.eligible_items) ? market.eligible_items : [])
-    .slice().sort(compareShopItems), [market?.eligible_items]);
-  const ownMarketListings = useMemo(() => (Array.isArray(market?.my_listings) ? market.my_listings : []), [market?.my_listings]);
+    .slice().sort(compareTradingPostItems), [market?.eligible_items]);
+  const ownMarketListings = useMemo(() => (Array.isArray(market?.my_listings) ? market.my_listings : [])
+    .slice().sort(compareTradingPostItems), [market?.my_listings]);
 
   const annexUnlocked = Boolean(shop?.annex_unlocked);
   const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 12 : 9));
@@ -545,10 +548,12 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                                   <ItemArtwork item={listing.item} className="moogle-item-artwork" />
                                   <div><span className="slot-label">{typeLabel(listing.item?.type)}</span><strong className={`item-name rarity-${listing.item?.rarity || "common"}`}>{listing.item?.name || "Unknown Item"}</strong><small>{listing.mine ? "Your listing" : `Seller: ${listing.seller_name || listing.seller_username || "Adventurer"}`}</small></div>
                                 </div>
-                                <div className="trading-post-price-line"><strong>{number(listing.unit_price)}g</strong><span>each · Qty {number(listing.quantity)}</span></div>
-                                <div className="trading-post-total"><span>Total</span><strong>{number(listing.total_price)} Gil</strong></div>
-                                <small>Expires in {remaining > 0 ? duration(remaining) : "moments"}</small>
-                                {listing.item?.description ? <p>{listing.item.description}</p> : null}
+                                <div className="trading-post-market-metrics">
+                                  <span><strong>{number(listing.unit_price)}g</strong><small>each · Qty {number(listing.quantity)}</small></span>
+                                  <span><small>Total</small><strong>{number(listing.total_price)}g</strong></span>
+                                  <small className="trading-post-expiry">Expires in {remaining > 0 ? duration(remaining) : "moments"}</small>
+                                </div>
+                                {listing.item?.description ? <p className="trading-post-description">{listing.item.description}</p> : null}
                                 {Object.keys(itemBonuses(listing.item)).length ? <small>{formatBonuses(itemBonuses(listing.item))}</small> : null}
                                 <button type="button" className="equipment-action-button" disabled={listing.mine || market.combat_locked || !affordable || Boolean(busyKey)} onClick={() => buyMarketListing(listing)}>{busy ? "Buying…" : listing.mine ? "Your Listing" : affordable ? `Buy · ${number(listing.total_price)}g` : `Need ${number(listing.total_price)}g`}</button>
                               </article>
@@ -578,7 +583,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                                   <label><span>Qty</span><input type="number" inputMode="numeric" min="1" max={max} value={marketQty[item.id] ?? 1} onChange={(event) => setMarketQty((current) => ({ ...current, [item.id]: Math.max(1, Math.min(max, Number(event.target.value) || 1)) }))} /></label>
                                   <label><span>Gil each</span><input type="number" inputMode="numeric" min="1" max="1000000" value={marketPrice[item.id] ?? item.reference_price ?? 1} onChange={(event) => setMarketPrice((current) => ({ ...current, [item.id]: Math.max(1, Math.min(1000000, Number(event.target.value) || 1)) }))} /></label>
                                 </div>
-                                <small>Total value {number(total)}g · Listing fee {number(fee)}g</small>
+                                <small className="trading-post-fee-summary">Total {number(total)}g · Fee {number(fee)}g</small>
                                 <button type="button" className="equipment-action-button secondary" disabled={market.combat_locked || Number(market.gil || 0) < fee || Number(market.active_count || 0) >= Number(market.active_limit || 24) || Boolean(busyKey)} onClick={() => listOnMarket(item)}>{busy ? "Posting…" : `Post Listing · ${number(fee)}g fee`}</button>
                               </article>
                             );

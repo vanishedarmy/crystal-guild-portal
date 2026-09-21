@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { submitAdventureState, submitLiveEventAction, submitLiveEventJoin, waitForPortalAction } from "../api/auth.js";
 import ContextHelp from "../components/ContextHelp.jsx";
+import CollapsePointer from "../components/CollapsePointer.jsx";
 import LiveStreamCombatControls from "../components/LiveStreamCombatControls.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, number, pct } from "../utils/formatters.js";
+import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import Raids from "./Raids.jsx";
 
 const volatileAdventureActionKeys = new Map();
@@ -21,6 +23,17 @@ const WORLD_EVENT_CATALOG = [
   ["bloodied_deathclaw", "Bloodied Deathclaw", "Severe", "A frenzied beast that tears through the unwary with savage force.", "/world-events/a1/bloodied_deathclaw.webp"],
 ].map(([id, name, threat, description, art]) => ({ id, name, threat, description, art }));
 
+
+function defaultWorldEventsOpen() {
+  try {
+    const stored = window.localStorage?.getItem("crystal-guild:stream:world-events");
+    if (stored === "open") return true;
+    if (stored === "closed") return false;
+    return !window.matchMedia?.("(max-width: 520px)")?.matches;
+  } catch {
+    return true;
+  }
+}
 
 function actionStorageKey(kind, target, username) {
   return `crystal-guild:adventure:${String(username || "").toLowerCase()}:${kind}:${target || "adventure"}`;
@@ -181,7 +194,9 @@ export default function StreamActivities({ data: overview }) {
   const [liveBusy, setLiveBusy] = useState("");
   const [clock, setClock] = useState(() => Date.now());
   const [serverOffsetMs, setServerOffsetMs] = useState(0);
+  const [worldEventsOpen, setWorldEventsOpen] = useState(defaultWorldEventsOpen);
   const stateInflight = useRef(false);
+  const worldEventActiveRef = useRef(false);
 
   const username = String(overview?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -271,6 +286,14 @@ export default function StreamActivities({ data: overview }) {
   }, [csrfToken, liveBusy, stateAvailable, username]);
 
   useEffect(() => {
+    try {
+      window.localStorage?.setItem("crystal-guild:stream:world-events", worldEventsOpen ? "open" : "closed");
+    } catch {
+      // Storage may be unavailable in strict privacy modes.
+    }
+  }, [worldEventsOpen]);
+
+  useEffect(() => {
     if (!stateAvailable) return undefined;
     void loadState();
     const refreshVisible = () => {
@@ -302,6 +325,13 @@ export default function StreamActivities({ data: overview }) {
   const worldEventCatalog = state?.world_events?.catalog?.length ? state.world_events.catalog : WORLD_EVENT_CATALOG;
   const recentVenture = state?.recent_result?.kind === "venture" ? state.recent_result : null;
   const recentWorldEvent = state?.recent_result?.kind === "world_event" ? state.recent_result : null;
+
+  useEffect(() => {
+    const active = Boolean(worldEventEncounter);
+    if (active && !worldEventActiveRef.current) setWorldEventsOpen(true);
+    worldEventActiveRef.current = active;
+  }, [worldEventEncounter]);
+
   const ventureStatus = encounter
     ? encounter.state === "rally" ? "Rally Open" : "In Battle"
     : ventureRemaining > 0 ? `Ready in ${duration(ventureRemaining)}` : stateAvailable ? "Ready in Twitch Chat" : "Twitch Chat";
@@ -354,45 +384,64 @@ export default function StreamActivities({ data: overview }) {
         ) : null}
       </section>
 
-      <section className="panel world-events-panel" data-active={worldEventEncounter ? "true" : "false"}>
-        <div className="world-events-hero-art" aria-hidden="true">
-          <img src="/world-events/a1/world_events_header.webp" alt="" loading="lazy" decoding="async" />
-        </div>
-        <div className="panel-title-row world-events-heading">
+      <section className={`panel world-events-panel collapsible-board-section ${worldEventsOpen ? "open" : "collapsed"}`} data-active={worldEventEncounter ? "true" : "false"} aria-labelledby="world-events-title">
+        <div className="panel-title-row world-events-heading section-collapsible-title-row">
           <div>
             <p className="eyebrow">World Events · Stream Only</p>
-            <h2>Notorious Monsters</h2>
-            <p className="muted">Enhanced versions of familiar monsters can appear without warning while the stream is live. These encounters use normal Active Battle rules and never start a Raid.</p>
+            <h2 id="world-events-title">Notorious Monsters</h2>
+            <p className="muted world-events-heading-copy">
+              {worldEventsOpen
+                ? "Enhanced versions of familiar monsters can appear without warning while the stream is live. They use normal Active Battle rules and never start a Raid."
+                : worldEventEncounter
+                  ? `${worldEventEncounter.world_event?.name || worldEventEncounter.monster?.name || "Notorious Monster"} is active now.`
+                  : "Random stream encounters · up to highest hero +10."}
+            </p>
           </div>
-          <div className="context-help-actions"><ContextHelp topic="world_events" /><span className={`small-badge ${worldEventEncounter ? "world-event-danger-badge" : ""}`}>{worldEventEncounter ? "EVENT ACTIVE" : "Realm Calm"}</span></div>
+          <div className="section-collapse-actions world-events-heading-actions">
+            <ContextHelp topic="world_events" />
+            <span className={`small-badge ${worldEventEncounter ? "world-event-danger-badge" : ""}`}>{worldEventEncounter ? "EVENT ACTIVE" : state?.stream_live ? "Realm Calm" : "Stream Only"}</span>
+            <button
+              type="button"
+              className="section-collapse-button"
+              aria-expanded={worldEventsOpen}
+              aria-label={worldEventsOpen ? "Collapse World Events" : "Expand World Events"}
+              title={worldEventsOpen ? "Collapse World Events" : "Expand World Events"}
+              onClick={(event) => toggleWithViewportAnchor(event, setWorldEventsOpen)}
+            >
+              <CollapsePointer open={worldEventsOpen} />
+            </button>
+          </div>
         </div>
-        <div className="world-event-rules" aria-label="World Event rules">
-          <span><strong>Random</strong>Stream-only appearance</span>
-          <span><strong>+10 Max</strong>Above the highest character level</span>
-          <span><strong>No Raid</strong>Standard Active Battle rally</span>
-          <span><strong>Greater Spoils</strong>Enhanced progression rewards</span>
-        </div>
-        <div className="world-event-state-banner" aria-hidden="true">
-          <img
-            src={worldEventEncounter ? "/world-events/a1/world_event_active.webp" : recentWorldEvent?.won ? "/world-events/a1/world_event_defeated.webp" : "/world-events/a1/world_event_idle.webp"}
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-        {worldEventEncounter ? <WorldEventEncounter encounter={worldEventEncounter} nowMs={authoritativeClock} busy={liveBusy} onJoin={runLiveJoin} onAction={runLiveAction} /> : (
-          <div className="world-event-idle-state"><strong>No Active World Event</strong><span>{state?.stream_live ? "The realm is calm… for now." : "World Events are watched for while the Twitch stream is live."}</span></div>
-        )}
-        {recentWorldEvent ? <div className={`stream-venture-result ${recentWorldEvent.won ? "won" : "lost"}`}><div><span>Recent World Event</span><strong>{recentWorldEvent.won ? "Defeated" : "Escaped"}</strong></div><p>{recentWorldEvent.monster_name || "Notorious Monster"}</p></div> : null}
-        <div className="world-event-roster-head"><div><p className="eyebrow">Known Threats</p><h3>World Event Bosses</h3></div><small>Initial roster · 10 notorious variants</small></div>
-        <div className="world-event-roster">
-          {worldEventCatalog.map((event) => (
-            <article className="world-event-boss-card" key={event.id} data-threat={String(event.threat || "notorious").toLowerCase()}>
-              <img src={event.art} alt={`${event.name} World Event artwork`} loading="lazy" decoding="async" />
-              <div><span className="world-event-threat">{event.threat || "Notorious"}</span><h4>{event.name}</h4><p>{event.description}</p></div>
-            </article>
-          ))}
-        </div>
+
+        {worldEventsOpen ? (
+          <div className="world-events-body">
+            <div className="world-event-rules" aria-label="World Event rules">
+              <span><strong>Random</strong>Stream-only appearance</span>
+              <span><strong>+10 Max</strong>Above the highest character level</span>
+              <span><strong>No Raid</strong>Standard Active Battle rally</span>
+              <span><strong>Greater Spoils</strong>Enhanced progression rewards</span>
+            </div>
+            <div className="world-event-state-banner" aria-hidden="true">
+              <img
+                src={worldEventEncounter ? "/world-events/a1/world_event_active_h1.webp" : recentWorldEvent?.won ? "/world-events/a1/world_event_defeated_h1.webp" : "/world-events/a1/world_event_idle_h1.webp"}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {worldEventEncounter ? <WorldEventEncounter encounter={worldEventEncounter} nowMs={authoritativeClock} busy={liveBusy} onJoin={runLiveJoin} onAction={runLiveAction} /> : null}
+            {recentWorldEvent ? <div className={`stream-venture-result world-event-recent-result ${recentWorldEvent.won ? "won" : "lost"}`}><div><span>Recent World Event</span><strong>{recentWorldEvent.won ? "Defeated" : "Escaped"}</strong></div><p>{recentWorldEvent.monster_name || "Notorious Monster"}</p></div> : null}
+            <div className="world-event-roster-head"><div><p className="eyebrow">Known Threats</p><h3>World Event Bosses</h3></div><small>Initial roster · 10 notorious variants</small></div>
+            <div className="world-event-roster">
+              {worldEventCatalog.map((event) => (
+                <article className="world-event-boss-card" key={event.id} data-threat={String(event.threat || "notorious").toLowerCase()}>
+                  <img src={event.art} alt={`${event.name} World Event artwork`} loading="lazy" decoding="async" />
+                  <div><span className="world-event-threat">{event.threat || "Notorious"}</span><h4>{event.name}</h4><p>{event.description}</p></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </section>
 
       <Raids username={overview?.identity?.username || ""} liveRaid={state?.raid || null} liveBusy={liveBusy} onLiveJoin={runLiveJoin} onLiveAction={runLiveAction} />

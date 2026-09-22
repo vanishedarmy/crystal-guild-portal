@@ -14015,11 +14015,15 @@ textarea {
     position: fixed !important;
     z-index: 90;
     inset-inline: 8px;
-    top: calc(max(0px, env(safe-area-inset-top)) + 104px);
+    top: auto;
     bottom: max(8px, env(safe-area-inset-bottom));
-    max-height: none;
+    /* Keep enough of the battle page exposed to avoid a nested-scroll trap. */
+    max-height: min(58vh, 520px);
+    max-height: min(58dvh, 520px);
     overflow-y: auto;
-    overscroll-behavior: contain;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     margin: 0 !important;
     padding: .68rem !important;
     border: 1px solid rgba(121, 173, 224, .55) !important;
@@ -14046,7 +14050,7 @@ textarea {
   .mobile-combat-drawer .expedition-action-section-header,
   .mobile-combat-drawer .live-stream-action-heading {
     position: sticky;
-    top: -.68rem;
+    top: 0;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -14097,7 +14101,8 @@ textarea {
     font-size: .7rem;
   }
   .mobile-combat-drawer {
-    top: calc(max(0px, env(safe-area-inset-top)) + 132px);
+    max-height: min(54vh, 440px);
+    max-height: min(54dvh, 440px);
   }
   .mobile-combat-drawer .solo-action-grid,
   .mobile-combat-drawer .expedition-option-grid,
@@ -14112,5 +14117,16 @@ textarea {
   .mobile-combat-hud-vital,
   .mobile-combat-hud-resource {
     border-width: 2px !important;
+  }
+}
+
+
+/* ============================================================
+   v1.9.0 Alpha 6 Hotfix 10 — mobile combat drawer scroll hardening
+   Bound nested pickers so the surrounding battle page always remains reachable.
+   ============================================================ */
+@media (max-width: 760px) {
+  .mobile-combat-drawer {
+    scrollbar-gutter: stable;
   }
 }

@@ -34,6 +34,7 @@ MERC_SERVICE_HOTFIX2.md
 MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
+MOBILE_COMBAT_DRAWER_SCROLL_HOTFIX10.md
 MOBILE_CONTEXT_HELP_HOTFIX2.md
 MOBILE_QUICK_COMBAT_HUD_HOTFIX9.md
 MOOGLE_ANNEX_CATEGORY_STOCK_HOTFIX4.md
@@ -1240,6 +1241,7 @@ frontend/tests/mercServiceBatch5.test.mjs
 frontend/tests/mercServiceHotfix2.test.mjs
 frontend/tests/mercServiceHotfix3.test.mjs
 frontend/tests/mercServiceRC1.test.mjs
+frontend/tests/mobileCombatDrawerScrollHotfix10.test.mjs
 frontend/tests/mobileContextHelpCornerAnchor181.test.mjs
 frontend/tests/mobileContextHelpDisclosureAlignment.test.mjs
 frontend/tests/mobileHeaderViewportHotfix.test.mjs

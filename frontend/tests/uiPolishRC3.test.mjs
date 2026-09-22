@@ -34,8 +34,10 @@ test("profile navigation prioritizes readable one-line labels at every desktop t
   assert.doesNotMatch(css, /text-overflow:\s*ellipsis/);
 });
 
-test("normal desktop final row is centered instead of orphaned", () => {
-  assert.match(css, /@media \(min-width: 1280px\)[\s\S]*\.profile-tabs button:nth-child\(13\)\s*\{\s*grid-column:\s*2;/);
+test("eighteen destinations occupy three full desktop rows without an orphan", () => {
+  assert.match(profile, /\["seasonal", "Seasonal Event", "☾"\]/);
+  assert.match(css, /@media \(min-width: 1280px\)[\s\S]*\.profile-tabs\s*\{\s*grid-template-columns:\s*repeat\(6, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(css, /\.profile-tabs button:nth-child\(13\)/);
 });
 
 test("manual refresh is one shared control at the page bottom", () => {

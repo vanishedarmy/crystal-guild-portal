@@ -95,6 +95,7 @@ export default function PlayerProfile() {
   const [activeTab, setActiveTab] = useState("overview");
   const [detail, setDetail] = useState(null);
   const [error, setError] = useState("");
+  const [tabError, setTabError] = useState(null);
   const [overviewLoading, setOverviewLoading] = useState(true);
   const [tabLoading, setTabLoading] = useState(false);
   const [updated, setUpdated] = useState("");
@@ -114,6 +115,7 @@ export default function PlayerProfile() {
     setOverview(null);
     setModuleCache({});
     moduleVersions.current = {};
+    setTabError(null);
     setActiveTab("overview");
   }, [username]);
 
@@ -141,15 +143,16 @@ export default function PlayerProfile() {
     if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" || moduleVersions.current[activeTab] === refreshToken) return undefined;
     const controller = new AbortController();
     if (!moduleCache[activeTab]) setTabLoading(true);
+    setTabError(null);
     const requestedModule = activeTab === "shop" || activeTab === "blacksmith" ? "inventory" : activeTab;
     fetchPlayer(username, requestedModule, controller.signal)
       .then((payload) => {
         moduleVersions.current[activeTab] = refreshToken;
         setModuleCache((current) => ({ ...current, [activeTab]: payload }));
-        setError("");
+        setTabError(null);
       })
       .catch((reason) => {
-        if (reason.name !== "AbortError") setError(reason.message);
+        if (reason.name !== "AbortError") setTabError({ tab: activeTab, message: reason.message });
       })
       .finally(() => {
         if (!controller.signal.aborted) setTabLoading(false);
@@ -294,7 +297,12 @@ export default function PlayerProfile() {
             <SectionErrorBoundary resetKey={`${username}:${activeTab}:${refreshToken}`}>
               <Suspense fallback={<div className="state-message">Opening {activeTab}...</div>}>
                 {!moduleData || !ActiveModule
-                  ? <div className="state-message">Loading {activeTab}...</div>
+                  ? tabError?.tab === activeTab
+                    ? <div className="state-message section-load-error" role="alert">
+                        <span>Could not load this section: {tabError.message}</span>
+                        <button type="button" className="equipment-action-button secondary" onClick={refresh}>Retry Section</button>
+                      </div>
+                    : <div className="state-message">Loading {activeTab}...</div>
                   : <ActiveModule key={`${activeTab}:${manualRefreshToken}`} data={moduleData} overview={overview} onDetail={setDetail} onRefresh={refresh} onNavigate={setActiveTab} />}
               </Suspense>
               {moduleData && tabLoading ? <div className="background-refresh" role="status" aria-live="polite">Refreshing…</div> : null}

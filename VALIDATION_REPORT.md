@@ -45,3 +45,10 @@ The source package does not include installed `node_modules`, so a production Vi
 - Frontend Node suite: **702/757 passed**; the same 55 inherited Alpha 8 historical assertions fail, with **zero new failure names**.
 - Schema **21**, hosted sync **1**, Portal Action protocol **37** unchanged; no migration or player reset for already-deployed Alpha 8.
 - The source package excludes installed frontend `node_modules`; the production Vite bundle must be built on deployment after installing pinned dependencies.
+
+## Navigation & Seasonal Event Hotfix 2
+- Reproduced the prior `/api/player/<username>/seasonal` 404 and verified the route now returns the synced event payload.
+- Confirmed old snapshots without an event module return an explicit sync-pending state, both in memory and after cache eviction.
+- Hosted Portal focused HTTP tests: **29/29 passed**.
+- Full frontend Node source/history suite: **704/759 passed**, with the exact same **55 inherited historical assertions** as Package Cleanup Hotfix 1 (**702/757**); the two new regression tests pass and there are **zero new frontend failure names**.
+- Bot package, gameplay, schema **21**, hosted sync **1**, and Portal Action protocol **37** remain unchanged. Frontend production Vite bundling still occurs on deployment using the pinned dependencies.

@@ -1,5 +1,12 @@
 # Crystal Guild v1.9.0 Alpha 8 — Seasonal Event Framework
 
+## Navigation & Seasonal Event Hotfix 2
+- All 18 Adventurer Profile destinations now form three even six-column desktop rows; removed the old 17-tab offset and full-width mobile final-button rule. Compact-desktop navigation centers its final pair.
+- The hosted player API now serves the seasonal profile module; previously the route returned an "Unknown player module" 404, leaving the Seasonal Event page loading indefinitely.
+- Historical player snapshots without a seasonal module display a clear "Waiting for event data" state until the updated Bot syncs, instead of a blank screen.
+- Failed profile section requests show an error and a working Retry Section control.
+- Web-only fix: the Bot is unchanged. Schema 21, hosted sync 1, Portal Action protocol 37, game balance, and seasonal activation defaults are unchanged.
+
 Alpha 8 builds one reusable seasonal/event rotation system and ships **Night of the Hollow Crystal** as the first event edition. Seasonal content is a layer over existing Ventures, Hunts, World Events, rewards, profiles, and the Hall rather than a second combat system.
 
 ## Reusable seasonal framework

@@ -25,6 +25,18 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   const own = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
   const canBuy = Boolean(own && auth.actions_enabled && capabilities.has("SEASONAL_BUY") && event.redemption);
 
+  // A profile synced before the Alpha 8 Bot upgrade will not contain this
+  // optional module yet. Show a useful state instead of a misleading blank
+  // seasonal page (or an endless loading indicator).
+  if (event.sync_pending || event.state === "unavailable") {
+    return <section className="panel seasonal-sync-pending" role="status">
+      <p className="eyebrow">Seasonal Event</p>
+      <h2>Waiting for event data</h2>
+      <p>The seasonal event has not synced from the Bot yet. Confirm the Bot and Portal are both running Alpha 8, then refresh this page.</p>
+      <button type="button" className="equipment-action-button secondary" onClick={() => onRefresh?.()}>Refresh</button>
+    </section>;
+  }
+
   const buy = async (reward) => {
     if (!canBuy || busy || reward.owned) return;
     setBusy(reward.id);

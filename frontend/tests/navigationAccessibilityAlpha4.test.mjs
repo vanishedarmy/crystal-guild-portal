@@ -33,7 +33,8 @@ test("profile navigation adapts from desktop through a two-column mobile grid", 
   assert.match(css, /@media \(min-width: 1024px\) and \(max-width: 1279px\)[\s\S]*repeat\(4, minmax\(0, 1fr\)\)/);
   assert.match(css, /@media \(min-width: 721px\) and \(max-width: 1023px\)[\s\S]*repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.profile-tab-select \{ display: none; \}[\s\S]*repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.profile-tabs button:last-child \{ grid-column: 1 \/ -1; \}/);
+  assert.doesNotMatch(css, /\.profile-tabs button:last-child \{ grid-column: 1 \/ -1; \}/);
+  assert.match(css, /\.profile-tabs button:nth-last-child\(2\) \{ grid-column: 2; \}/);
 });
 
 test("navigation accessibility does not rely on color alone", () => {

@@ -1983,6 +1983,13 @@ class HostedPortalStore:
                 self._snapshot_cache.move_to_end(username)
                 if module == "trophies":
                     return build_trophy_hall(snapshot)
+                if module == "seasonal":
+                    # Older Bot snapshots can predate Alpha 8. Do not leave the
+                    # profile on a permanent loading screen while they resync.
+                    return snapshot.get("seasonal") or {
+                        "seasonal": {"state": "unavailable", "active": False,
+                                     "redemption": False, "sync_pending": True}
+                    }
                 value = snapshot.get(module)
                 if module == "inventory" and isinstance(value, dict):
                     value = dict(value)
@@ -2007,6 +2014,11 @@ class HostedPortalStore:
             self._cache_snapshot(username, snapshot)
         if module == "trophies":
             return build_trophy_hall(snapshot)
+        if module == "seasonal":
+            return snapshot.get("seasonal") or {
+                "seasonal": {"state": "unavailable", "active": False,
+                             "redemption": False, "sync_pending": True}
+            }
         value = snapshot.get(module)
         if module == "inventory" and isinstance(value, dict):
             value = dict(value)
@@ -2715,6 +2727,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             "achievements",
             "records",
             "trophies",
+            "seasonal",
         }
         module = aliases.get(module, module)
         if module not in valid:

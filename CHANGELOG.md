@@ -1,5 +1,8 @@
 # Crystal Guild — Release History (Condensed)
 
+## Alpha 8 — Navigation & Seasonal Event Hotfix 2
+Corrected the 18-tab profile navigation layout and enabled the missing hosted Seasonal Event API route. Missing legacy seasonal snapshots now show a sync-pending state, and profile request errors offer Retry instead of loading forever. Web-only; no schema, gameplay, or Bot changes.
+
 Only major release milestones appear here. Historical hotfix reports and obsolete per-version audits are omitted from deployable source packages; original released archives remain available separately.
 
 ## v1.9.0 Alpha 8 — Seasonal Event Framework

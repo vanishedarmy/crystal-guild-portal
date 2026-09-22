@@ -120,6 +120,35 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(caught.exception.headers.get("Content-Length"), "0")
         self.assertEqual(caught.exception.read(), b"")
 
+    def test_seasonal_profile_route_returns_synced_data_and_pending_state(self):
+        payload = snapshot_payload("van")
+        payload["snapshot"]["seasonal"] = {
+            "player": {"username": "van"},
+            "seasonal": {"name": "Night of the Hollow Crystal", "state": "disabled",
+                         "active": False, "redemption": False},
+        }
+        self.assertEqual(self.post("/api/sync/player", payload)[0], 200)
+        status, raw, _ = self.get("/api/player/van/seasonal")
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(raw)["seasonal"]["name"], "Night of the Hollow Crystal")
+
+        # Historical Alpha 7 snapshots may still be present when the Web
+        # service is upgraded first. Do not turn that case into an HTTP 404.
+        payload["snapshot"].pop("seasonal")
+        self.assertEqual(self.post("/api/sync/player", payload)[0], 200)
+        status, raw, _ = self.get("/api/player/van/seasonal")
+        self.assertEqual(status, 200)
+        pending = json.loads(raw)["seasonal"]
+        self.assertEqual(pending["state"], "unavailable")
+        self.assertTrue(pending["sync_pending"])
+
+        # The same fallback must work after a process restart/cache eviction.
+        with self.store._lock:
+            self.store._snapshot_cache.clear()
+        status, raw, _ = self.get("/api/player/van/seasonal")
+        self.assertEqual(status, 200)
+        self.assertTrue(json.loads(raw)["seasonal"]["sync_pending"])
+
     def test_manifest_reports_only_missing_shared_snapshots_for_recovery(self):
         manifest = {"schema_version": 1, "sync_version": "http-efficiency-test", "usernames": []}
         status, result = self.post("/api/sync/manifest", manifest)

@@ -12031,13 +12031,8 @@ textarea {
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.13), 0 0 0 1px rgba(57,140,255,.2), 0 4px 16px rgba(10,62,140,.18);
 }
 
-/* With seventeen destinations, the six-column layout produces a five-button
-   final row. Start it in column two so the row remains visually centered. */
-@media (min-width: 1280px) {
-  .profile-tabs button:nth-child(13) {
-    grid-column: 2;
-  }
-}
+/* Alpha 8 has eighteen destinations: at six columns the desktop navigation
+   fills three complete rows without the old 17-tab centering offset. */
 
 /* Compact desktop/tablet: keep labels comfortably inside their controls. */
 @media (min-width: 901px) and (max-width: 1279px) {
@@ -13117,11 +13112,11 @@ textarea {
 }
 @media (min-width: 1024px) and (max-width: 1279px) {
   .profile-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .profile-tabs button:nth-child(13) { grid-column: auto; }
+  /* 18 items produce two final-row controls here; center them together. */
+  .profile-tabs button:nth-last-child(2) { grid-column: 2; }
 }
 @media (min-width: 721px) and (max-width: 1023px) {
   .profile-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .profile-tabs button:nth-child(13) { grid-column: auto; }
   .profile-tabs button > span:last-child {
     font-size: .7rem;
     white-space: normal;
@@ -13162,8 +13157,7 @@ textarea {
     width: 1.12rem;
     font-size: .88rem;
   }
-  .profile-tabs button:nth-child(13) { grid-column: auto; }
-  .profile-tabs button:last-child { grid-column: 1 / -1; }
+  /* All eighteen destinations form nine complete two-column rows. */
 }
 @media (max-width: 420px) {
   .profile-tabs { gap: .3rem; padding: .38rem; }

@@ -13801,3 +13801,88 @@ textarea {
     border-width: 2px;
   }
 }
+
+
+/* v1.9.0 Alpha 6 — Combat Card Hierarchy Hotfix 8
+   Keep the action name as the visual anchor; secondary information always follows below. */
+:is(.solo-action-option,.expedition-combat-option,.live-stream-option:not(.live-stream-item-option)) {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+:is(.solo-action-option,.expedition-combat-option,.live-stream-option) > strong,
+.live-stream-item-copy > strong,
+.solo-action-option > span:first-child > strong {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  color: var(--combat-text, var(--crystal-soft, #e7f2ff));
+  font-size: .9rem;
+  line-height: 1.22;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+/* Solo/Dungeon item buttons used to keep name + quantity on one horizontal row.
+   Stack them so the item name always owns the first line. */
+.solo-action-option > span:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: .08rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.solo-action-option > span:first-child > small,
+:is(.solo-ability-option,.expedition-combat-option,.live-stream-option:not(.live-stream-item-option)) > small,
+.live-stream-item-copy > small {
+  display: block;
+  width: 100%;
+  margin: .08rem 0 0;
+  color: var(--gold-bright, #f1d47c);
+  font-size: .72rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.solo-ability-option > span,
+.expedition-combat-option > span,
+.live-stream-option:not(.live-stream-item-option) > span,
+.live-stream-item-copy > span {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin-top: .22rem;
+}
+
+/* Preserve compact cards without allowing metadata to create narrow title columns. */
+.solo-action-option,
+.expedition-combat-option,
+.live-stream-option {
+  min-width: 0;
+  align-content: start;
+}
+
+.live-stream-item-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+@media (max-width: 560px) {
+  :is(.solo-action-option,.expedition-combat-option,.live-stream-option) > strong,
+  .live-stream-item-copy > strong,
+  .solo-action-option > span:first-child > strong {
+    font-size: .86rem;
+  }
+}

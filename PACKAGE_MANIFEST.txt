@@ -3,6 +3,7 @@
 ARTWORK_ROUTING_AUDIT.json
 CHOCOBO_PORTRAIT_MANIFEST.json
 COMBAT_ACCESSIBILITY_GUIDE_HOTFIX7.md
+COMBAT_CARD_HIERARCHY_HOTFIX8.md
 DUNGEON_PORTRAIT_HOTFIX1.md
 Dockerfile
 ECONOMY_BALANCE_AUDIT.md
@@ -1122,6 +1123,7 @@ frontend/tests/campCountdown.test.mjs
 frontend/tests/characterIdentity.test.mjs
 frontend/tests/cinzelTypography.test.mjs
 frontend/tests/combatAccessibilityHotfix7.test.mjs
+frontend/tests/combatCardHierarchyHotfix8.test.mjs
 frontend/tests/combatGuide.test.mjs
 frontend/tests/combatResources.test.mjs
 frontend/tests/commandPrefixV115.test.mjs

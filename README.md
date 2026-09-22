@@ -1,7 +1,11 @@
-# Crystal Guild v1.8.2 — Elite Mercs
+# Crystal Guild — Web / Portal (v1.9.0 Alpha 8)
 
-Crystal Guild is the Twitch/Portal RPG runtime. v1.8.1 adds permanent Hero Merc recruitment, six expansion Heroes, the Merc Registry, and the Dungeon Portal revision repair.
+Player Portal, Streamer Control Center, and public artwork. Deploy with the matching Alpha 8 Bot.
 
-Release contract: runtime `1.8.2-elite-mercs`, local schema **18**, hosted sync **1**, Portal Action protocol **35**, no player reset.
+**Runtime:** `1.9.0-seasonal-events-alpha8` · **Bot database schema:** 21 · **Hosted sync:** 1 · **Portal Action protocol:** 37.
 
-See `V1_8_1_RELEASE_NOTES.md`, `V1_8_1_VALIDATION.md`, and `UPGRADE_GUIDE.md` for upgrade and validation details.
+This cleanup hotfix removes retired documentation and unreferenced older art revisions. It does not modify gameplay, event scheduling, saved progress or live component routes. See `UPGRADE_GUIDE.md` to remove old files when applying the maintenance patch to an existing installation.
+
+**Documentation:** `HOSTING_GUIDE.md`, `PORTAL_ACTIONS_SETUP.md`, `STREAMER_DASHBOARD.md`, `RELEASE_NOTES.md` and condensed `CHANGELOG.md`. Asset manifests are retained for audit/validation.
+
+**Frontend:** from `frontend/`, install the pinned dependencies and run the normal Vite production build. Halloween assets are under `frontend/public/seasonal/halloween-2026/`; the event remains disabled until enabled by the owner.

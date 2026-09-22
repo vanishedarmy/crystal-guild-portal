@@ -1,5 +1,7 @@
-# Portal Actions — Hotfix 5 Gear Favorites Authority Fix
+# Portal Actions — Alpha 8
 
-Portal Action protocol is **33**. Authenticated Favorite changes queue `SET_GEAR_FAVORITES` with the complete Favorite set, while the hosted Portal keeps only a temporary pending/migration mirror until a matching authoritative Bot snapshot arrives.
+Portal Action protocol **37**. Deploy the paired `1.9.0-seasonal-events-alpha8` Bot/Web packages; preserve current OAuth/session keys and private sync configuration.
 
-Deploy this Web with the matching protocol-33 Bot. Existing OAuth/session/sync-key configuration is unchanged.
+Authenticated Portal mutations are queued and verified by the authoritative Bot (including gear favorites, Trading Post operations and seasonal event shop/state actions). Repeated requests use the existing idempotency receipts. Do not expose private Bot tokens, database files or secrets to the public frontend.
+
+The cleanup hotfix makes **no protocol or gameplay change**.

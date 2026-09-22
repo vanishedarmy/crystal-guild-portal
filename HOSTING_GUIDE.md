@@ -1,7 +1,9 @@
-# Hosting Guide — Hotfix 5 Gear Favorites Authority Fix
+# Crystal Guild Portal — Hosting Guide (Alpha 8)
 
-This is **not Web-only**. Deploy this Web package together with the matching schema-16 / Portal-protocol-33 Bot. Runtime/frontend remains `1.7.1-resynthesis-a2h5`; hosted sync schema remains **1**.
+Deploy this Web package alongside the matching Alpha 8 Bot: runtime/frontend `1.9.0-seasonal-events-alpha8`, Bot database schema **21**, hosted sync **1**, Portal Action protocol **37**. The hosted Web has no separate database schema migration for this cleanup.
 
-Preserve hosted secrets, persistent state, OAuth/session configuration, and the live player database. The local schema **15 → 16** migration is performed by the Bot after creating a verified pre-migration backup. The hosted Portal itself needs no new environment variables.
+Preserve OAuth/session configuration, private `PORTAL_SYNC_KEY`, public URL and persistent player data. Do not publish `.env`, database files, Twitch tokens or live player state in `frontend/public`. From `frontend/`, install the pinned package dependencies and run the normal Vite build.
 
-The authenticated Favorites endpoint queues `SET_GEAR_FAVORITES`; the normal Bot snapshot is authoritative after that action is persisted.
+On an existing Alpha 8 deployment, the cleanup patch needs no restart-time migration, but **you must delete the retired files listed in its deletion manifest** if overlaying in place. A fresh Complete/Web extraction already excludes them.
+
+The Halloween edition is installed disabled by default.

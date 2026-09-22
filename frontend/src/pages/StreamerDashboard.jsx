@@ -80,6 +80,13 @@ const OWNER_COMMAND_GROUPS = [
     ],
   },
   {
+    title: "Seasonal Event Control",
+    description: "Activate, pause, schedule, or archive the installed seasonal event without changing its content pack.",
+    commands: [
+      { id: "seasonalevent", command: "!seasonalevent <mode>", label: "Seasonal Event", description: "Modes: on, off, pause, resume, manual, scheduled, status", risk: "caution", argument: { type: "text", placeholder: "status", label: "Mode" } },
+    ],
+  },
+  {
     title: "Gold Saucer Control",
     description: "Testing and event controls for the Gold Saucer MGP economy. These never spend or convert player Gil.",
     commands: [

@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 8",
+    name: "Seasonal Event Framework",
+    title: "Night of the Hollow Crystal opens the Guild's reusable seasonal-event system",
+    summary: "Seasonal events can now rotate in without rewriting core systems. The first Halloween edition layers FF-styled monsters, the Hollow Warden, Moonlit Tokens, objectives, a temporary reward counter, and permanent event trophies onto existing gameplay.",
+    highlights: [
+      { title: "Reusable event editions", description: "Manual, scheduled, paused, redemption, and archived event states are persisted so future winter, anniversary, or other limited events can reuse the same architecture." },
+      { title: "Halloween bestiary", description: "Jack-o’-Bomb, Graveyard Coeurl, Lantern Tonberry, and Wraith Ahriman can supplement eligible encounters while the event is active." },
+      { title: "The Hollow Warden", description: "The seasonal Iron Giant joins the existing World Event director without increasing the normal World Event spawn rate or creating a second combat system." },
+      { title: "Moonlit progression", description: "Daily rotating objectives and controlled seasonal victories award Moonlit Tokens for the Moonlit Emporium, with replay-safe claims and a daily ordinary-kill cap." },
+      { title: "Permanent keepsakes", description: "Nightwatcher, the Haunted Candle, Hollow Crystal Display, and four seasonal trophies remain part of the player's history after the event ends." },
+      { title: "Safe activation", description: "The Halloween edition installs disabled by default. Schema advances from 20 to 21 with a verified backup; hosted sync remains 1 and Portal Action protocol advances to 37." },
+    ],
+    action: { tab: "seasonal", label: "Open Seasonal Event" },
+  },
+  {
     version: "v1.9.0 Alpha 7",
     name: "Hall of Trophies",
     title: "Your greatest victories now have a permanent place in the Guild",

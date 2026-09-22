@@ -419,3 +419,11 @@ export function submitStreamerCommand(command, argument, csrfToken, idempotencyK
   if (argument !== undefined && argument !== null && String(argument).trim() !== "") payload.argument = argument;
   return submitPortalAction("STREAMER_COMMAND", payload, csrfToken, idempotencyKey);
 }
+
+export function submitSeasonalState(csrfToken, idempotencyKey) {
+  return submitPortalAction("SEASONAL_STATE", {}, csrfToken, idempotencyKey);
+}
+
+export function submitSeasonalBuy(rewardId, csrfToken, idempotencyKey) {
+  return submitPortalAction("SEASONAL_BUY", { reward_id: String(rewardId || "") }, csrfToken, idempotencyKey);
+}

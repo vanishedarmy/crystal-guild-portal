@@ -1,5 +1,5 @@
 {
-  "release": "v1.5.1 — Relic Arsenal Complete",
+  "release": "v1.5.1 \u2014 Relic Arsenal Complete",
   "frontend_asset_revision": "1.5.1-relic-arsenal-complete",
   "scene_backgrounds": [
     {
@@ -9,8 +9,8 @@
       "height": 810,
       "bytes": 659480,
       "usage": [
-        "Adventure Board — Camp & Recovery",
-        "Inventory — Recovery"
+        "Adventure Board \u2014 Camp & Recovery",
+        "Inventory \u2014 Recovery"
       ]
     },
     {
@@ -53,7 +53,7 @@
       "height": 1672,
       "bytes": 2251825,
       "usage": [
-        "Adventure Board — Solo Venture"
+        "Adventure Board \u2014 Solo Venture"
       ],
       "format": "portrait"
     },
@@ -75,7 +75,7 @@
       "height": 1672,
       "bytes": 2386182,
       "usage": [
-        "Fellowship — Guild Legacy — Founding Hall"
+        "Fellowship \u2014 Guild Legacy \u2014 Founding Hall"
       ],
       "format": "portrait"
     },
@@ -86,7 +86,7 @@
       "height": 724,
       "bytes": 147704,
       "usage": [
-        "Adventure Board — Rally Venture"
+        "Adventure Board \u2014 Rally Venture"
       ],
       "format": "wide"
     },
@@ -97,40 +97,40 @@
       "height": 724,
       "bytes": 183336,
       "usage": [
-        "Adventure Board — Dungeon Board"
+        "Adventure Board \u2014 Dungeon Board"
       ],
       "format": "wide"
     },
     {
       "file": "hunt-active.webp",
-      "path": "/trails-raids/hunt-active.webp",
+      "path": "/trails-raids/h4/hunt-active.webp",
       "width": 2172,
       "height": 724,
       "bytes": 125784,
       "usage": [
-        "Adventure Board — Active Hunt"
+        "Adventure Board \u2014 Active Hunt"
       ],
       "format": "wide"
     },
     {
       "file": "trial-board-collapsed.webp",
-      "path": "/trails-raids/trial-board-collapsed.webp",
+      "path": "/trails-raids/h4/trial-board-collapsed.webp",
       "width": 2172,
       "height": 724,
       "bytes": 178110,
       "usage": [
-        "Adventure Board — Trial & Raid Board — Collapsed"
+        "Adventure Board \u2014 Trial & Raid Board \u2014 Collapsed"
       ],
       "format": "wide"
     },
     {
       "file": "trial-board-open.webp",
-      "path": "/trails-raids/trial-board-open.webp",
+      "path": "/trails-raids/h4/trial-board-open.webp",
       "width": 1086,
       "height": 1448,
       "bytes": 207510,
       "usage": [
-        "Adventure Board — Trial & Raid Board — Open"
+        "Adventure Board \u2014 Trial & Raid Board \u2014 Open"
       ],
       "format": "portrait"
     }

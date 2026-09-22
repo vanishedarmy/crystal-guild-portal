@@ -23,10 +23,10 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.0-hall-of-trophies-alpha7"
-FRONTEND_ASSET_REVISION = "1.9.0-hall-of-trophies-alpha7"
+HOSTED_PORTAL_VERSION = "1.9.0-seasonal-events-alpha8"
+FRONTEND_ASSET_REVISION = "1.9.0-seasonal-events-alpha8"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 36
+ACTION_PROTOCOL_VERSION = 37
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "TRADING_POST_STATE", "TRADING_POST_LIST", "TRADING_POST_BUY", "TRADING_POST_CANCEL",
@@ -41,6 +41,7 @@ ALLOWED_PORTAL_ACTIONS = {
     "GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
     "RETAINER_STATE", "RETAINER_DISPATCH", "RETAINER_COLLECT",
     "MERC_STATE", "MERC_RECRUIT", "MERC_HIRE", "MERC_CANCEL",
+    "SEASONAL_STATE", "SEASONAL_BUY",
     "STREAMER_COMMAND",
 }
 
@@ -63,6 +64,7 @@ STREAMER_COMMAND_SPECS = {
     "removeitem": "inventory",
     "saucergrant": "text",
     "saucerreset": "text",
+    "seasonalevent": "text",
 }
 
 CHOCOBO_PORTRAIT_IDS = {
@@ -84,7 +86,7 @@ MAX_ACTION_HISTORY = 20
 # Read/state requests are safe to collapse because only the newest response matters.
 READ_ONLY_STATE_ACTIONS = {
     "CHARACTER_STATE", "SHOP_STATE", "TRADING_POST_STATE", "RECOVERY_STATE", "FELLOWSHIP_STATE",
-    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE", "MERC_STATE",
+    "CRAFTING_STATE", "DAILY_STATE", "CHOCOBO_STATE", "ADVENTURE_STATE", "GOLD_SAUCER_STATE", "RETAINER_STATE", "MERC_STATE", "SEASONAL_STATE",
     # Preference writes are deliberately queue-budget neutral: they never affect
     # combat, Long Rest, or gameplay progression and are last-write-wins.
     "SET_GEAR_FAVORITES",
@@ -100,7 +102,7 @@ COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
     "EXPEDITION_CAMP", "EXPEDITION_RETURN", "EXPEDITION_RETREAT",
     "DUNGEON_START", "DUNGEON_ACTION", "DUNGEON_CONTINUE", "DUNGEON_CHOICE", "DUNGEON_RETREAT",
     "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY",
-    "RETAINER_DISPATCH", "RETAINER_COLLECT", "MERC_RECRUIT", "MERC_HIRE", "MERC_CANCEL",
+    "RETAINER_DISPATCH", "RETAINER_COLLECT", "MERC_RECRUIT", "MERC_HIRE", "MERC_CANCEL", "SEASONAL_BUY",
 }
 MAX_SYNC_BYTES = 8 * 1024 * 1024
 MAX_MANIFEST_PLAYERS = 10000
@@ -971,6 +973,16 @@ class HostedPortalStore:
             if not prize_id or len(prize_id) > 64 or not re.fullmatch(r"[a-z0-9_]+", prize_id):
                 raise ValueError("Invalid Gold Saucer prize ID.")
             payload = {"prize_id": prize_id}
+        elif kind == "SEASONAL_STATE":
+            if payload:
+                raise ValueError("SEASONAL_STATE does not accept parameters.")
+        elif kind == "SEASONAL_BUY":
+            if set(payload) != {"reward_id"}:
+                raise ValueError("SEASONAL_BUY requires only reward_id.")
+            reward_id = str(payload.get("reward_id") or "").strip().lower()
+            if not reward_id or len(reward_id) > 64 or not re.fullmatch(r"[a-z0-9_]+", reward_id):
+                raise ValueError("Invalid seasonal reward ID.")
+            payload = {"reward_id": reward_id}
         elif kind == "MERC_STATE":
             if payload:
                 raise ValueError("MERC_STATE does not accept parameters.")

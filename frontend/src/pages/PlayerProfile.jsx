@@ -32,6 +32,7 @@ const MODULES = {
   relics: lazy(() => import("../player/Relics.jsx")),
   achievements: lazy(() => import("../player/Achievements.jsx")),
   trophies: lazy(() => import("../player/TrophyHall.jsx")),
+  seasonal: lazy(() => import("../player/SeasonalEvent.jsx")),
   records: lazy(() => import("../player/Records.jsx")),
 };
 
@@ -53,6 +54,7 @@ const TABS = [
   ["achievements", "Achievements & Titles", "★"],
   ["records", "Records", "▤"],
   ["trophies", "Hall of Trophies", "♛"],
+  ["seasonal", "Seasonal Event", "☾"],
 ];
 
 const TAB_TONES = {
@@ -73,6 +75,7 @@ const TAB_TONES = {
   achievements: "magenta",
   records: "cyan",
   trophies: "violet",
+  seasonal: "magenta",
 };
 
 const TAB_GROUPS = [
@@ -80,7 +83,7 @@ const TAB_GROUPS = [
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
   ["Attractions", ["gold_saucer"]],
   ["Guild", ["fellowship"]],
-  ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies"]],
+  ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies", "seasonal"]],
 ];
 
 export default function PlayerProfile() {

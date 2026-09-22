@@ -7,14 +7,14 @@ const root = path.resolve(import.meta.dirname, "..");
 const component = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
 const pointer = fs.readFileSync(path.join(root, "src/components/CollapsePointer.jsx"), "utf8");
-const artRoot = path.join(root, "public/gold-saucer/a5h4/triple-triad");
+const artRoot = path.join(root, "public/gold-saucer/a5h5/triple-triad");
 
 const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","ahriman","malboro","ifrit","shiva","ramuh","leviathan","bahamut","odin"];
 const opponents = ["saucer_attendant","card_shark","crystal_master"];
 const ui = ["hero","board","deck-builder","collection","collection-complete","how-to-play","match-start","new-card","deck-saved","crystal-master-locked","opponents"];
 
-test("Hotfix 4 cache-busts and packages the complete Triple Triad art family", () => {
-  assert.ok(fs.existsSync(artRoot), "H4 historical art family remains packaged");
+test("Current build packages the complete Triple Triad art family once", () => {
+  assert.ok(fs.existsSync(artRoot), "current a5h5 art family remains packaged");
   for (const id of cards) assert.ok(fs.existsSync(path.join(artRoot, `cards/${id}.webp`)), `${id} card art missing`);
   assert.ok(fs.existsSync(path.join(artRoot, "cards/card-back.webp")));
   for (const id of opponents) assert.ok(fs.existsSync(path.join(artRoot, `opponents/${id}.webp`)), `${id} opponent art missing`);

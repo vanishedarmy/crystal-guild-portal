@@ -7,7 +7,7 @@ const css=fs.readFileSync(path.join(root,"src/styles/portal.css"),"utf8");
 const raids=fs.readFileSync(path.join(root,"src/player/Raids.jsx"),"utf8");
 const version=fs.readFileSync(path.join(root,"src/version.js"),"utf8");
 for(const asset of ["hunt-active.webp","trial-board-collapsed.webp","trial-board-open.webp"]){
-  test(`production scene asset ${asset} ships`,()=>assert.ok(fs.existsSync(path.join(root,"public/trails-raids",asset))));
+  test(`production scene asset ${asset} ships`,()=>assert.ok(fs.existsSync(path.join(root,"public/trails-raids/h4",asset))));
 }
 test("Trial Board binds scenic image layer to disclosure state",()=>{
   assert.match(raids,/boardOpen \? "open" : "collapsed"/);

@@ -18,10 +18,9 @@ test("all canonical world and raid bosses have packaged artwork", () => {
   }
 });
 
-test("boss artwork is wired into guide, portal records, trophy hall, detail dialog, and OBS overlay", () => {
+test("boss artwork is wired into guide, portal records, detail dialog, and OBS overlay", () => {
   assert.match(read("src/guide/guideRuntime.js"), /bossArtworkPath/);
   assert.match(read("src/player/Records.jsx"), /BossArtwork boss=\{boss\}/);
-  assert.match(read("src/player/TrophyHall.jsx"), /BossArtwork boss=\{boss\}/);
   assert.match(read("src/components/DetailDialog.jsx"), /detail-boss-artwork/);
   assert.match(read("public/raid-overlay.js"), /bossArtPath/);
   assert.match(read("public/raid-overlay.html"), /--boss-art/);

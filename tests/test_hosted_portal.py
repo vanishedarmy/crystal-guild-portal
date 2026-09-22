@@ -259,8 +259,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.9.0-world-events-alpha6", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.9.0-world-events-alpha6")
+        self.assertIn("1.9.0-hall-of-trophies-alpha7", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.9.0-hall-of-trophies-alpha7")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)
@@ -354,54 +354,24 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(json.loads(body)["identity"]["level"], 12)
 
 
-    def test_trophy_hall_is_derived_from_existing_snapshot_modules(self):
+    def test_trophy_hall_uses_authoritative_trophy_snapshot(self):
         payload = snapshot_payload("van")
         payload["snapshot"]["overview"]["identity"]["level"] = 55
         payload["snapshot"]["overview"]["identity"]["title"] = "Crystal Vanguard"
-        payload["snapshot"]["jobs"] = {
-            "jobs": [{
-                "id": "dragoon", "name": "Dragoon", "tier": "advanced", "level": 50,
-                "mastered": True, "current": True, "mastery": {"name": "Sky Sovereign"},
-            }]
-        }
-        payload["snapshot"]["relics"] = {
-            "relics": [{
-                "id": "gae_bolg", "name": "Gae Bolg", "job": "Dragoon", "stage": 5,
-                "total_stages": 5, "completed": True, "completed_at": "2026-08-15 00:00:00",
-                "stages": ["I", "II", "III", "IV", "Zenith"],
-            }]
-        }
-        payload["snapshot"]["achievements"] = {
-            "summary": {"unlocked": 1, "total": 1, "points": 500},
-            "achievements": [{
-                "id": "crystal_test", "name": "Crystal Test", "description": "Did the thing.",
-                "unlocked": True, "tier": "crystal", "points": 100, "category": "Trials",
-            }],
-            "titles": [{
-                "id": "crystal_vanguard", "name": "Crystal Vanguard", "description": "A rare distinction.",
-                "rarity": "legendary", "category": "Trials", "equipped": True, "unlocked": True,
-            }],
-        }
-        payload["snapshot"]["records"] = {
-            "career": {"boss_clears": 12, "relics_completed": 1},
-            "progression": {"jobs_mastered": 1},
-            "bosses": [{
-                "id": "omega", "name": "Omega", "tier": "superboss", "clears": 2,
-                "best_damage": 12345, "last_cleared_at": "2026-08-15 00:00:00",
-            }],
+        payload["snapshot"]["trophies"] = {
+            "player": {"username": "van", "display_name": "Van"},
+            "unlocked": [
+                {"id": "raid_ifrit", "unlock_source": "reconciliation", "unlocked_at": "2026-09-22 01:00:00", "seen_at": None},
+                {"id": "tt_first_win", "unlock_source": "triple_triad:win", "unlocked_at": "2026-09-22 01:05:00", "seen_at": None},
+            ],
         }
         self.post("/api/sync/player", payload)
         status, body, _ = self.get("/api/player/van/trophies")
         hall = json.loads(body)
         self.assertEqual(status, 200)
-        self.assertEqual(hall["summary"]["superbosses_defeated"], 1)
-        self.assertEqual(hall["summary"]["superboss_clears"], 2)
-        self.assertEqual(hall["summary"]["relics_completed"], 1)
-        self.assertEqual(hall["summary"]["jobs_mastered"], 1)
-        self.assertEqual(hall["equipped_title"]["name"], "Crystal Vanguard")
-        self.assertEqual(hall["bosses"][0]["name"], "Omega")
-        self.assertTrue(any(item["type"] == "relic" for item in hall["featured"]))
-        self.assertTrue(any(item["id"] == "level" and item["completed"] for item in hall["milestones"]))
+        self.assertEqual(hall["player"]["title"], "Crystal Vanguard")
+        self.assertEqual(hall["summary"], {"unlocked": 2, "total": 30})
+        self.assertEqual([item["id"] for item in hall["unlocked"]], ["raid_ifrit", "tt_first_win"])
 
     def test_private_fields_rejected(self):
         payload = snapshot_payload()

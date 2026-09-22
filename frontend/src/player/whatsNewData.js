@@ -1,5 +1,20 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 7",
+    name: "Hall of Trophies",
+    title: "Your greatest victories now have a permanent place in the Guild",
+    summary: "The rebuilt Hall of Trophies adds 30 illustrated trophies across World Events, Raids, Hunts, Triple Triad, and Fellowship construction, with safe retroactive reconciliation wherever the Guild can prove the accomplishment.",
+    highlights: [
+      { title: "Thirty illustrated trophies", description: "World Events, Raids, Hunts, Triple Triad, and Fellowship projects each have a dedicated collection with full trophy artwork and category completion tracking." },
+      { title: "Permanent ownership", description: "Trophies are recorded by stable IDs in schema 20 and remain earned even if later balance or presentation changes." },
+      { title: "Safe retroactive credit", description: "Existing Raid, Hunt, Triple Triad, and contributor records are reconciled automatically. Older World Events are credited only when exact variant participation can be proven." },
+      { title: "Participant-only group credit", description: "Raid and World Event trophies require victorious participation, while Fellowship construction trophies require an actual contribution to the completed project." },
+      { title: "Responsive collection room", description: "The Hall includes category filters, Hall Order and Recently Earned sorting, NEW markers, full detail views, keyboard support, and a mobile-safe gallery." },
+      { title: "Safe migration", description: "Local schema advances from 19 to 20 with an automatic verified backup. Hosted sync remains 1, Portal Action protocol remains 36, and no player reset is required." },
+    ],
+    action: { tab: "trophies", label: "Open Hall of Trophies" },
+  },
+  {
     version: "v1.9.0 Alpha 6 Hotfix 7",
     name: "Combat Accessibility & Guide",
     title: "Battle actions are easier to scan and the Player Guide covers the newest systems",

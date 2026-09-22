@@ -118,7 +118,7 @@ test("Wayfarer orders the Adventurer Portal around the most-used character actio
     '["relics", "Relics"',
     '["achievements", "Achievements & Titles"',
     '["records", "Records"',
-    '["trophies", "Trophy Hall"',
+    '["trophies", "Hall of Trophies"',
   ];
   let previous = -1;
   for (const marker of ordered) {

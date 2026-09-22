@@ -52,7 +52,7 @@ const TABS = [
   ["relics", "Relics", "✧"],
   ["achievements", "Achievements & Titles", "★"],
   ["records", "Records", "▤"],
-  ["trophies", "Trophy Hall", "♛"],
+  ["trophies", "Hall of Trophies", "♛"],
 ];
 
 const TAB_TONES = {

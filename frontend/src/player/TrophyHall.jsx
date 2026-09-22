@@ -1,166 +1,220 @@
-import BossArtwork from "../components/BossArtwork.jsx";
-import RelicArtwork from "../components/RelicArtwork.jsx";
-import { humanizeLabel } from "../utils/displayLabels.js";
-import ClickableCard from "../components/ClickableCard.jsx";
-import ProgressBar from "../components/ProgressBar.jsx";
-import StatCard from "../components/StatCard.jsx";
-import { number, pct } from "../utils/formatters.js";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { TROPHY_CATALOG, TROPHY_CATEGORIES } from "./trophyCatalog.js";
 
-const GLYPHS = {
-  boss: "♛",
-  relic: "✧",
-  achievement: "★",
-  job: "✦",
-  title: "◇",
-  milestone: "◆",
-};
+const CATEGORY_LABELS = Object.fromEntries(TROPHY_CATEGORIES.map((item) => [item.id, item.label]));
 
-function detailFor(trophy) {
-  if (trophy.type === "boss" && trophy.boss) return { type: "boss", boss: trophy.boss };
-  if (trophy.type === "relic" && trophy.relic) return { type: "relic", relic: trophy.relic };
-  if (trophy.type === "job" && trophy.job) return { type: "job", job: trophy.job };
-  return null;
+function formatDate(value) {
+  if (!value) return "Earned previously";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Earned previously";
+  return new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short", day: "numeric" }).format(date);
 }
 
-function FeaturedTrophy({ trophy, onDetail }) {
-  const content = (
-    <>
-      {trophy.type === "relic" && trophy.relic ? <RelicArtwork relic={trophy.relic} stage={3} className="featured-relic-artwork" /> : null}
-      <div className="trophy-glyph" aria-hidden="true">{GLYPHS[trophy.type] || "◇"}</div>
-      <div className="slot-label">{trophy.eyebrow}</div>
-      <strong>{trophy.name}</strong>
-      <span>{trophy.meta}</span>
-    </>
+function seenKey(player) {
+  return `crystal-guild:trophy-seen:${player?.username || player?.display_name || "adventurer"}`;
+}
+
+function readSeen(player) {
+  try {
+    const raw = window.localStorage.getItem(seenKey(player));
+    const parsed = raw ? JSON.parse(raw) : [];
+    return new Set(Array.isArray(parsed) ? parsed.map(String) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+export default function TrophyHall({ data = {} }) {
+  const [category, setCategory] = useState("all");
+  const [sort, setSort] = useState("hall");
+  const [selected, setSelected] = useState(null);
+  const [seen, setSeen] = useState(() => readSeen(data.player));
+  const selectedTrigger = useRef(null);
+
+  useEffect(() => setSeen(readSeen(data.player)), [data.player?.username, data.player?.display_name]);
+
+  const unlockedById = useMemo(
+    () => new Map((data.unlocked || []).map((item) => [String(item.id), item])),
+    [data.unlocked],
   );
-  const detail = detailFor(trophy);
-  return detail ? (
-    <ClickableCard className={`featured-trophy rank-${trophy.rank || "common"}`} detail={detail} onOpen={onDetail}>
-      {content}
-    </ClickableCard>
-  ) : <article className={`featured-trophy rank-${trophy.rank || "common"}`}>{content}</article>;
-}
+  const unlockedCount = TROPHY_CATALOG.filter((trophy) => unlockedById.has(trophy.id)).length;
+  const percent = Math.round((unlockedCount / TROPHY_CATALOG.length) * 100);
+  const complete = unlockedCount === TROPHY_CATALOG.length;
 
-function CollectionPanel({ badge, children, title }) {
+  const categoryCounts = useMemo(() => {
+    const result = {};
+    for (const item of TROPHY_CATEGORIES) {
+      const rows = item.id === "all" ? TROPHY_CATALOG : TROPHY_CATALOG.filter((trophy) => trophy.category === item.id);
+      result[item.id] = {
+        total: rows.length,
+        unlocked: rows.filter((trophy) => unlockedById.has(trophy.id)).length,
+      };
+    }
+    return result;
+  }, [unlockedById]);
+
+  const visible = useMemo(() => {
+    const rows = category === "all" ? [...TROPHY_CATALOG] : TROPHY_CATALOG.filter((trophy) => trophy.category === category);
+    if (sort === "recent") {
+      rows.sort((a, b) => {
+        const aTime = Date.parse(unlockedById.get(a.id)?.unlocked_at || "") || 0;
+        const bTime = Date.parse(unlockedById.get(b.id)?.unlocked_at || "") || 0;
+        if (aTime !== bTime) return bTime - aTime;
+        if (unlockedById.has(a.id) !== unlockedById.has(b.id)) return unlockedById.has(b.id) ? 1 : -1;
+        return a.order - b.order;
+      });
+    }
+    return rows;
+  }, [category, sort, unlockedById]);
+
+  function markSeen(id) {
+    if (seen.has(id)) return;
+    const next = new Set(seen);
+    next.add(id);
+    setSeen(next);
+    try { window.localStorage.setItem(seenKey(data.player), JSON.stringify([...next])); } catch { /* presentation-only */ }
+  }
+
+  function openTrophy(trophy, trigger) {
+    selectedTrigger.current = trigger;
+    setSelected(trophy);
+    if (unlockedById.has(trophy.id)) markSeen(trophy.id);
+  }
+
+  function closeTrophy() {
+    setSelected(null);
+    window.setTimeout(() => selectedTrigger.current?.focus?.(), 0);
+  }
+
+  useEffect(() => {
+    if (!selected) return undefined;
+    const onKeyDown = (event) => { if (event.key === "Escape") closeTrophy(); };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selected]);
+
+  const selectedState = selected ? unlockedById.get(selected.id) : null;
+  const selectedUnlocked = Boolean(selectedState);
+  const categoryProgress = categoryCounts[category] || categoryCounts.all;
+
   return (
-    <section className="panel span-12 trophy-collection">
-      <div className="panel-title-row"><h2>{title}</h2><span className="small-badge">{badge}</span></div>
-      {children}
-    </section>
-  );
-}
-
-export default function TrophyHall({ data, onDetail }) {
-  const summary = data.summary || {};
-  const featured = data.featured || [];
-  const bosses = data.bosses || [];
-  const relics = data.relics || [];
-  const jobs = data.mastered_jobs || [];
-  const achievements = data.achievements || [];
-  const milestones = data.milestones || [];
-  const title = data.equipped_title;
-
-  return (
-    <div className="dashboard-grid trophy-hall">
-      <section className="panel span-12 trophy-banner">
-        <div>
-          <p className="eyebrow">Crystal Guild Hall of Renown</p>
-          <h2>{data.player?.display_name || "Adventurer"}'s Trophy Hall</h2>
-          <p className="muted">A living display of completed Relics, mastered Jobs, rare achievements, and victories worth bragging about.</p>
-        </div>
-        <div className="trophy-title-inscription">
-          <span>Equipped Title</span>
-          <strong>“{title?.name || data.player?.title || "Fresh Recruit"}”</strong>
-          {title?.rarity ? <small>{humanizeLabel(title.rarity)} distinction</small> : null}
-        </div>
-      </section>
-
-      <section className="panel span-12">
-        <div className="panel-title-row"><h2>Hall Summary</h2><span className="small-badge">Lifetime</span></div>
-        <div className="stat-grid trophy-summary-grid">
-          <StatCard current={summary.boss_clears} label="Boss Clears" />
-          <StatCard current={summary.superboss_clears} label="Superboss Clears" />
-          <StatCard current={summary.relics_completed} label="Relics Complete" />
-          <StatCard current={summary.jobs_mastered} label="Jobs Mastered" />
-          <StatCard current={summary.rare_achievements} label="Rare Achievements" />
-          <StatCard current={summary.achievement_points} label="Achievement Points" />
-        </div>
-      </section>
-
-      <section className="panel span-12 featured-display">
-        <div className="panel-title-row"><h2>Featured Trophies</h2><span className="small-badge">Curated Automatically</span></div>
-        {featured.length ? (
-          <div className="featured-trophy-grid">
-            {featured.map((trophy, index) => <FeaturedTrophy key={`${trophy.type}-${trophy.name}-${index}`} trophy={trophy} onDetail={onDetail} />)}
+    <div className="dashboard-grid trophy-hall-v2">
+      <section className={`panel span-12 trophy-hall-hero ${complete ? "is-complete" : ""}`}>
+        <img
+          className="trophy-hall-hero-art"
+          src={complete ? "/trophies/a1/hall-complete.webp" : "/trophies/a1/hall-header.webp"}
+          alt="Ornate Crystal Guild Hall of Trophies"
+        />
+        <div className="trophy-hall-hero-copy">
+          <p className="eyebrow">Crystal Guild</p>
+          <h2>Hall of Trophies</h2>
+          <p className="muted">Relics, honors, and memories earned throughout your adventures.</p>
+          <div className="trophy-hall-progress-copy">
+            <strong>{unlockedCount} / {TROPHY_CATALOG.length}</strong>
+            <span>{complete ? "Hall Complete" : `${percent}% discovered`}</span>
           </div>
-        ) : <div className="trophy-empty">The cases are polished and ready. Go make something regrettably heroic happen.</div>}
+          <div className="trophy-hall-progress" role="progressbar" aria-label="Hall of Trophies completion" aria-valuemin="0" aria-valuemax={TROPHY_CATALOG.length} aria-valuenow={unlockedCount}>
+            <span style={{ width: `${percent}%` }} />
+          </div>
+        </div>
       </section>
 
-      <CollectionPanel badge={`${bosses.length} defeated`} title="Boss & Superboss Victories">
-        <div className="trophy-card-grid">
-          {bosses.length ? bosses.map((boss) => (
-            <ClickableCard className="trophy-record-card" detail={{ type: "boss", boss }} key={boss.id || boss.name} onOpen={onDetail}>
-              <BossArtwork boss={boss} className="boss-card-artwork" />
-              <div className="slot-label">{humanizeLabel(boss.tier || "boss")}</div>
-              <strong>{boss.name}</strong>
-              <span>{number(boss.clears)} clears · Best {number(boss.best_damage)} damage</span>
-            </ClickableCard>
-          )) : <div className="muted">No boss victories recorded yet.</div>}
+      <section className="panel span-12 trophy-hall-controls" aria-label="Trophy filters">
+        <div className="trophy-category-tabs" role="tablist" aria-label="Trophy categories">
+          {TROPHY_CATEGORIES.map((item) => {
+            const counts = categoryCounts[item.id];
+            return (
+              <button
+                type="button"
+                role="tab"
+                aria-selected={category === item.id}
+                className={category === item.id ? "active" : ""}
+                key={item.id}
+                onClick={() => setCategory(item.id)}
+              >
+                <span>{item.label}</span><small>{counts.unlocked} / {counts.total}</small>
+              </button>
+            );
+          })}
         </div>
-      </CollectionPanel>
+        <label className="trophy-category-select">
+          <span>Category</span>
+          <select value={category} onChange={(event) => setCategory(event.target.value)}>
+            {TROPHY_CATEGORIES.map((item) => {
+              const counts = categoryCounts[item.id];
+              return <option key={item.id} value={item.id}>{item.label} — {counts.unlocked}/{counts.total}</option>;
+            })}
+          </select>
+        </label>
+        <label className="trophy-sort-control">
+          <span>Sort</span>
+          <select value={sort} onChange={(event) => setSort(event.target.value)}>
+            <option value="hall">Hall Order</option>
+            <option value="recent">Recently Earned</option>
+          </select>
+        </label>
+        <div className="trophy-category-progress">
+          <strong>{CATEGORY_LABELS[category]}</strong>
+          <span>{categoryProgress.unlocked} / {categoryProgress.total}{category !== "all" && categoryProgress.unlocked === categoryProgress.total ? " — Complete" : ""}</span>
+        </div>
+      </section>
 
-      <CollectionPanel badge={`${relics.length} complete`} title="Completed Relic Weapons">
-        <div className="trophy-card-grid">
-          {relics.length ? relics.map((relic) => (
-            <ClickableCard className="trophy-record-card trophy-relic-card" detail={{ type: "relic", relic }} key={relic.id || relic.name} onOpen={onDetail}>
-              <RelicArtwork relic={relic} stage={3} className="trophy-relic-artwork" />
-              <div className="slot-label">{relic.job} Relic</div>
-              <strong>{relic.name}</strong>
-              <span>Zenith Complete{relic.completed_at ? ` · ${relic.completed_at}` : ""}</span>
-            </ClickableCard>
-          )) : <div className="muted">No completed Relic weapons yet.</div>}
+      <section className="panel span-12 trophy-gallery-section">
+        {unlockedCount === 0 && category === "all" ? (
+          <div className="trophy-welcome">
+            <strong>Your Hall awaits.</strong>
+            <span>Great victories, discoveries, and Fellowship accomplishments will leave their mark here.</span>
+          </div>
+        ) : null}
+        <div className="trophy-gallery-grid">
+          {visible.map((trophy) => {
+            const ownership = unlockedById.get(trophy.id);
+            const unlocked = Boolean(ownership);
+            const isNew = unlocked && !seen.has(trophy.id) && !ownership?.seen_at;
+            const image = trophy.secret && !unlocked ? "/trophies/a1/secret.webp" : unlocked ? trophy.art : "/trophies/a1/locked.webp";
+            return (
+              <button
+                type="button"
+                className={`trophy-gallery-card ${unlocked ? "unlocked" : "locked"}`}
+                key={trophy.id}
+                onClick={(event) => openTrophy(trophy, event.currentTarget)}
+                aria-label={`${unlocked ? "Unlocked" : trophy.secret ? "Undiscovered secret" : "Locked"} trophy: ${trophy.secret && !unlocked ? "Secret Trophy" : trophy.name}`}
+              >
+                <div className="trophy-card-art-wrap">
+                  <img src={image} alt={unlocked ? `Trophy: ${trophy.name}` : trophy.secret ? "Undiscovered secret trophy" : `Locked trophy: ${trophy.name}`} />
+                  {isNew ? <span className="trophy-new-badge">NEW</span> : null}
+                </div>
+                <div className="trophy-card-copy">
+                  <span className="slot-label">{CATEGORY_LABELS[trophy.category]}</span>
+                  <strong>{trophy.secret && !unlocked ? "???" : trophy.name}</strong>
+                  <span>{unlocked ? trophy.description : trophy.secret ? "Its story has yet to be written." : trophy.requirement}</span>
+                  <small>{unlocked ? formatDate(ownership.unlocked_at) : "Locked"}</small>
+                </div>
+              </button>
+            );
+          })}
         </div>
-      </CollectionPanel>
+      </section>
 
-      <CollectionPanel badge={`${jobs.length} mastered`} title="Mastered Jobs">
-        <div className="trophy-card-grid">
-          {jobs.length ? jobs.map((job) => (
-            <ClickableCard className="trophy-record-card" detail={{ type: "job", job }} key={job.id || job.name} onOpen={onDetail}>
-              <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
-              <strong>{job.name}</strong>
-              <span>{job.mastery?.name || "JLv. 50 Mastery"}</span>
-            </ClickableCard>
-          )) : <div className="muted">No Jobs mastered yet.</div>}
+      {selected ? (
+        <div className="trophy-detail-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeTrophy(); }}>
+          <section className="trophy-detail-panel" role="dialog" aria-modal="true" aria-labelledby="trophy-detail-title">
+            <button type="button" className="trophy-detail-close" onClick={closeTrophy} aria-label="Close trophy details">×</button>
+            <img
+              className="trophy-detail-art"
+              src={selected.secret && !selectedUnlocked ? "/trophies/a1/secret.webp" : selectedUnlocked ? selected.art : "/trophies/a1/locked.webp"}
+              alt={selectedUnlocked ? `Trophy: ${selected.name}` : selected.secret ? "Undiscovered secret trophy" : `Locked trophy: ${selected.name}`}
+            />
+            <div className="trophy-detail-copy">
+              <span className="slot-label">{CATEGORY_LABELS[selected.category]}</span>
+              <h2 id="trophy-detail-title">{selected.secret && !selectedUnlocked ? "???" : selected.name}</h2>
+              <p>{selectedUnlocked ? selected.description : selected.secret ? "Its story has yet to be written." : selected.description}</p>
+              {!selected.secret || selectedUnlocked ? <div><strong>Requirement</strong><span>{selected.requirement}</span></div> : null}
+              <div><strong>Status</strong><span>{selectedUnlocked ? `Unlocked ${formatDate(selectedState?.unlocked_at)}` : "Locked"}</span></div>
+            </div>
+          </section>
         </div>
-      </CollectionPanel>
-
-      <CollectionPanel badge={`${achievements.length} earned`} title="Rare Achievements">
-        <div className="trophy-card-grid">
-          {achievements.length ? achievements.map((achievement) => (
-            <article className={`trophy-record-card achievement-trophy tier-${achievement.tier || "silver"}`} key={achievement.id || achievement.name}>
-              <div className="slot-label">{humanizeLabel(achievement.tier)} · {humanizeLabel(achievement.category)}</div>
-              <strong>{achievement.name}</strong>
-              <span>{achievement.description}</span>
-              <small>{number(achievement.points)} points{achievement.reward_title ? ` · Title: ${achievement.reward_title}` : ""}</small>
-            </article>
-          )) : <div className="muted">No silver-or-higher achievements unlocked yet.</div>}
-        </div>
-      </CollectionPanel>
-
-      <CollectionPanel badge="Career marks" title="Major Milestones">
-        <div className="milestone-grid">
-          {milestones.map((milestone) => (
-            <article className={`milestone-card ${milestone.completed ? "complete" : ""}`} key={milestone.id}>
-              <div className="milestone-head">
-                <span className="slot-label">{milestone.completed ? "Completed" : "In Progress"}</span>
-                <strong>{milestone.name}</strong>
-              </div>
-              <p>{milestone.description}</p>
-              <ProgressBar value={pct(milestone.current, milestone.target)} />
-              <small>{number(Math.min(milestone.current, milestone.target))} / {number(milestone.target)}</small>
-            </article>
-          ))}
-        </div>
-      </CollectionPanel>
+      ) : null}
     </div>
   );
 }

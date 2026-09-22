@@ -1,24 +1,11 @@
-# Crystal Guild v1.9.0 Alpha 6 — World Events Upgrade Guide
+# Crystal Guild v1.9.0 Alpha 7 — Hall of Trophies Upgrade Guide
 
-Upgrade from **v1.9.0 Alpha 5 — Title Status Hardening** by deploying the matching Alpha 6 Bot and Web packages together, then restarting both services.
+Deploy the matching Alpha 7 Web and Bot packages together over the latest Alpha 6 Hotfix 10 baseline. Preserve hosted secrets and persistent Bot data.
 
-## Compatibility
-- Runtime/frontend: `1.9.0-world-events-alpha6`
-- Local database schema: **19**
-- Hosted sync schema: **1**
+- Runtime/frontend: `1.9.0-hall-of-trophies-alpha7`
+- Local Bot schema: **20** (automatic 19 → 20 migration)
+- Hosted sync: **1**
 - Portal Action protocol: **36**
-- Database migration required: **No**
-- Player reset required: **No**
+- Player reset: **No**
 
-World Event timing state uses the existing runtime-state table, so no schema migration is needed. Existing player progress, Titles, achievements, inventory, Fellowship state, Gold Saucer data, Mercs, Retainers, and Trading Post state remain intact.
-
-## Deployment
-1. Stop the current Alpha 5 Bot and Web services.
-2. Replace them with the matching Alpha 6 packages (or apply the Alpha 5 → Alpha 6 overlay patch).
-3. Preserve the existing database and environment configuration.
-4. Start the Web service, then the Bot worker.
-5. Confirm `!cgversion` reports `1.9.0-world-events-alpha6`.
-6. Confirm schema **19**, hosted sync **1**, and Portal Action protocol **36**.
-7. Open **Stream Activities → World Events** and verify the ten-monster roster/artwork loads.
-
-No manual World Event seed data is required. The live scheduler begins automatically while the configured Twitch stream is live.
+After deployment, open **Adventurer Profile → Hall of Trophies** and verify all 30 trophy cards and artwork load.

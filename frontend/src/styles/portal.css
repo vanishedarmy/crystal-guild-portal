@@ -14130,3 +14130,38 @@ textarea {
     scrollbar-gutter: stable;
   }
 }
+
+/* v1.9.0 Alpha 7 — Hall of Trophies */
+.trophy-hall-v2{min-width:0}
+.trophy-hall-hero{position:relative;overflow:hidden;min-height:260px;padding:0;background:#090d17}
+.trophy-hall-hero-art{display:block;width:100%;height:clamp(240px,34vw,410px);object-fit:cover;opacity:.58}
+.trophy-hall-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,9,17,.96) 0%,rgba(6,9,17,.76) 43%,rgba(6,9,17,.18) 78%,rgba(6,9,17,.28) 100%);pointer-events:none}
+.trophy-hall-hero-copy{position:absolute;z-index:1;left:clamp(18px,4vw,52px);bottom:clamp(18px,4vw,44px);width:min(580px,calc(100% - 36px));text-shadow:0 2px 10px #000}
+.trophy-hall-hero-copy h2{margin:.15rem 0 .35rem;font-size:clamp(1.8rem,4vw,3.25rem)}
+.trophy-hall-hero.is-complete{box-shadow:inset 0 0 0 1px rgba(236,200,104,.55),0 0 28px rgba(236,200,104,.12)}
+.trophy-hall-progress-copy{display:flex;align-items:baseline;gap:.8rem;margin-top:1rem}
+.trophy-hall-progress-copy strong{font-size:1.15rem}
+.trophy-hall-progress-copy span{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em}
+.trophy-hall-progress{height:8px;max-width:480px;margin-top:.45rem;border:1px solid rgba(197,220,255,.24);background:rgba(0,0,0,.58);overflow:hidden}
+.trophy-hall-progress>span{display:block;height:100%;background:linear-gradient(90deg,#4e91cb,#87d1ee,#d7bc69);transition:width .25s ease}
+.trophy-hall-controls{display:flex;align-items:end;gap:14px;flex-wrap:wrap;min-width:0}
+.trophy-category-tabs{display:flex;gap:8px;flex:1 1 100%;min-width:0;flex-wrap:wrap;padding-bottom:3px}
+.trophy-category-tabs button{display:grid;gap:2px;min-width:max-content;padding:9px 12px;border:1px solid rgba(153,190,232,.2);background:rgba(9,15,26,.66);color:inherit;text-align:left;border-radius:8px;cursor:pointer}
+.trophy-category-tabs button small{opacity:.7;font-size:.7rem}.trophy-category-tabs button.active{border-color:rgba(215,188,105,.75);background:rgba(72,57,25,.44)}
+.trophy-category-select{display:none}.trophy-sort-control{display:grid;gap:5px}.trophy-sort-control span,.trophy-category-select span{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;opacity:.72}
+.trophy-sort-control select,.trophy-category-select select{min-height:38px;max-width:100%;border:1px solid rgba(153,190,232,.25);background:#0a1020;color:inherit;border-radius:7px;padding:7px 30px 7px 9px}
+.trophy-category-progress{margin-left:auto;display:flex;gap:12px;align-items:baseline}.trophy-category-progress span{opacity:.75;font-size:.85rem}
+.trophy-welcome{display:grid;gap:3px;margin-bottom:14px;padding:12px 14px;border-left:3px solid rgba(116,187,225,.65);background:rgba(16,29,48,.5)}.trophy-welcome span{opacity:.75}
+.trophy-gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;min-width:0}
+.trophy-gallery-card{display:grid;grid-template-rows:auto 1fr;min-width:0;padding:0;overflow:hidden;border:1px solid rgba(153,190,232,.18);background:linear-gradient(180deg,rgba(15,23,38,.95),rgba(8,12,22,.98));color:inherit;text-align:left;border-radius:10px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.trophy-gallery-card:hover{border-color:rgba(215,188,105,.55);transform:translateY(-1px)}.trophy-gallery-card:focus-visible,.trophy-detail-close:focus-visible,.trophy-category-tabs button:focus-visible{outline:2px solid #9fdbff;outline-offset:2px}
+.trophy-card-art-wrap{position:relative;aspect-ratio:1/1;min-width:0;background:#050912;overflow:hidden}.trophy-card-art-wrap img{display:block;width:100%;height:100%;object-fit:contain}.trophy-gallery-card.locked .trophy-card-art-wrap img{opacity:.78}
+.trophy-new-badge{position:absolute;top:9px;right:9px;padding:4px 7px;border:1px solid rgba(255,224,122,.7);border-radius:999px;background:#271d08;color:#ffe18a;font-size:.68rem;font-weight:800;letter-spacing:.08em;box-shadow:0 2px 8px #000}
+.trophy-card-copy{display:grid;align-content:start;gap:5px;padding:12px 13px 14px;min-width:0}.trophy-card-copy strong{font-size:1.02rem;overflow-wrap:anywhere}.trophy-card-copy>span:not(.slot-label){font-size:.82rem;line-height:1.45;opacity:.78}.trophy-card-copy small{margin-top:4px;opacity:.58}.trophy-gallery-card.locked .trophy-card-copy{opacity:.76}
+.trophy-detail-backdrop{position:fixed;z-index:1000;inset:0;display:grid;place-items:center;padding:18px;background:rgba(2,5,10,.8);backdrop-filter:blur(5px)}
+.trophy-detail-panel{position:relative;display:grid;grid-template-columns:minmax(250px,44%) 1fr;width:min(900px,100%);max-height:90dvh;overflow:auto;border:1px solid rgba(215,188,105,.55);border-radius:12px;background:#080e19;box-shadow:0 24px 80px rgba(0,0,0,.65)}
+.trophy-detail-art{width:100%;height:100%;min-height:360px;object-fit:contain;background:#040811}.trophy-detail-copy{display:grid;align-content:center;gap:12px;padding:clamp(24px,4vw,42px)}.trophy-detail-copy h2{margin:0}.trophy-detail-copy p{margin:0;line-height:1.6;opacity:.82}.trophy-detail-copy>div{display:grid;gap:3px;padding-top:10px;border-top:1px solid rgba(153,190,232,.14)}.trophy-detail-copy>div span{opacity:.75}
+.trophy-detail-close{position:absolute;z-index:2;top:10px;right:10px;width:38px;height:38px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer}
+@media (max-width:900px){.trophy-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.trophy-category-tabs{display:none}.trophy-category-select{display:grid;gap:5px;flex:1 1 230px}.trophy-category-progress{margin-left:0;flex:1 1 100%}.trophy-detail-panel{grid-template-columns:1fr;max-width:620px}.trophy-detail-art{min-height:0;max-height:46dvh;aspect-ratio:1/1}}
+@media (max-width:560px){.trophy-hall-hero-art{height:300px}.trophy-hall-hero::after{background:linear-gradient(0deg,rgba(6,9,17,.98) 0%,rgba(6,9,17,.72) 62%,rgba(6,9,17,.2) 100%)}.trophy-gallery-grid{grid-template-columns:1fr}.trophy-hall-controls{align-items:stretch}.trophy-sort-control{flex:1 1 100%}.trophy-sort-control select,.trophy-category-select select{width:100%}.trophy-detail-backdrop{padding:8px}.trophy-detail-panel{max-height:96dvh}.trophy-detail-copy{padding:22px 16px}.trophy-detail-art{max-height:40dvh}}
+@media (prefers-reduced-motion:reduce){.trophy-hall-progress>span,.trophy-gallery-card{transition:none}.trophy-gallery-card:hover{transform:none}}

@@ -1,3 +1,4 @@
+Crystal Guild v1.9.0 Alpha 7 — Hall of Trophies — Web package manifest
 .dockerignore
 .gitignore
 ARTWORK_ROUTING_AUDIT.json
@@ -40,7 +41,6 @@ MOBILE_QUICK_COMBAT_HUD_HOTFIX9.md
 MOOGLE_ANNEX_CATEGORY_STOCK_HOTFIX4.md
 MOOGLE_ANNEX_STOCK_HOTFIX3.md
 OVERVIEW_CLEANUP_HOTFIX6.md
-PACKAGE_MANIFEST.txt
 PORTAL_ACTIONS_SETUP.md
 README.md
 README_FIRST.txt
@@ -55,6 +55,7 @@ TASK_COMPLETION_HARDENING_HOTFIX5.md
 TITLE_EXPANSION.md
 TRADING_POST_ARTWORK_MANIFEST.json
 TRADING_POST_UIUX_HOTFIX2.md
+TROPHY_HALL_ARTWORK_MANIFEST.json
 UIUX_POLISH_182.md
 UIUX_POLISH_182_VALIDATION.md
 UI_CONSISTENCY_RC2_RELEASE_NOTES.md
@@ -1000,6 +1001,40 @@ frontend/public/trails-raids/h4/trial-board-open.webp
 frontend/public/trails-raids/hunt-active.webp
 frontend/public/trails-raids/trial-board-collapsed.webp
 frontend/public/trails-raids/trial-board-open.webp
+frontend/public/trophies/a1/fellowship/crystal-foundation.webp
+frontend/public/trophies/a1/fellowship/kupo-expansion-permit.webp
+frontend/public/trophies/a1/fellowship/living-archive.webp
+frontend/public/trophies/a1/fellowship/masterwork-anvil.webp
+frontend/public/trophies/a1/fellowship/merchants-bell.webp
+frontend/public/trophies/a1/fellowship/skybound-berth.webp
+frontend/public/trophies/a1/hall-complete.webp
+frontend/public/trophies/a1/hall-header.webp
+frontend/public/trophies/a1/hunts/s-rank-bounty-board.webp
+frontend/public/trophies/a1/hunts/the-mountains-plate.webp
+frontend/public/trophies/a1/hunts/tyrants-crown.webp
+frontend/public/trophies/a1/hunts/veilscale.webp
+frontend/public/trophies/a1/locked.webp
+frontend/public/trophies/a1/raids/diamond-of-shiva.webp
+frontend/public/trophies/a1/raids/ember-of-ifrit.webp
+frontend/public/trophies/a1/raids/heart-of-the-crag.webp
+frontend/public/trophies/a1/raids/primal-conqueror.webp
+frontend/public/trophies/a1/raids/shard-of-the-final-coil.webp
+frontend/public/trophies/a1/secret.webp
+frontend/public/trophies/a1/triple-triad/collectors-folio.webp
+frontend/public/trophies/a1/triple-triad/hot-streak.webp
+frontend/public/trophies/a1/triple-triad/master-deck.webp
+frontend/public/trophies/a1/triple-triad/opening-hand.webp
+frontend/public/trophies/a1/world-events/black-iron-crest.webp
+frontend/public/trophies/a1/world-events/bloodied-talon.webp
+frontend/public/trophies/a1/world-events/breath-of-blight.webp
+frontend/public/trophies/a1/world-events/crown-of-cinders.webp
+frontend/public/trophies/a1/world-events/elders-carapace.webp
+frontend/public/trophies/a1/world-events/eye-of-the-twisted.webp
+frontend/public/trophies/a1/world-events/horn-of-the-notorious.webp
+frontend/public/trophies/a1/world-events/notorious-menagerie.webp
+frontend/public/trophies/a1/world-events/ravenous-fang.webp
+frontend/public/trophies/a1/world-events/stormwhisker.webp
+frontend/public/trophies/a1/world-events/the-kings-lantern.webp
 frontend/public/ui/collapse-pointer-down-a2.webp
 frontend/public/ui/collapse-pointer-right-a2.webp
 frontend/public/world-events/a1/bloodied_deathclaw.webp
@@ -1080,6 +1115,7 @@ frontend/src/player/TrophyHall.jsx
 frontend/src/player/WhatsNew.jsx
 frontend/src/player/bestiarySort.js
 frontend/src/player/mercServiceState.js
+frontend/src/player/trophyCatalog.js
 frontend/src/player/whatsNewData.js
 frontend/src/styles/button-fit.css
 frontend/src/styles/character-identity.css
@@ -1218,6 +1254,7 @@ frontend/tests/guildExpansionBeta1.test.mjs
 frontend/tests/guildExpansionBeta2Ux.test.mjs
 frontend/tests/guildExpansionBeta3Hardening.test.mjs
 frontend/tests/guildExpansionRC1.test.mjs
+frontend/tests/hallOfTrophiesAlpha7.test.mjs
 frontend/tests/headerBrand.test.mjs
 frontend/tests/hotfix3Bugfixes.test.mjs
 frontend/tests/hotfix3cEquipmentEconomyMobile.test.mjs

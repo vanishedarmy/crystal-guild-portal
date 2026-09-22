@@ -33,17 +33,15 @@ test("Relic stage reward items route to dedicated Relic artwork", () => {
   }
 });
 
-test("Relic visuals are surfaced in Portal cards, trophy displays, details, and the Player Guide", () => {
+test("Relic visuals are surfaced in Portal cards, details, and the Player Guide", () => {
   const files = {
     relics: fs.readFileSync(path.join(frontend, "src/player/Relics.jsx"), "utf8"),
-    trophy: fs.readFileSync(path.join(frontend, "src/player/TrophyHall.jsx"), "utf8"),
     detail: fs.readFileSync(path.join(frontend, "src/components/DetailDialog.jsx"), "utf8"),
     guide: fs.readFileSync(path.join(frontend, "src/guide/guideRuntime.js"), "utf8"),
     portalCss: fs.readFileSync(path.join(frontend, "src/styles/portal.css"), "utf8"),
     guideCss: fs.readFileSync(path.join(frontend, "public/guide.css"), "utf8"),
   };
   assert.match(files.relics, /RelicArtwork/);
-  assert.match(files.trophy, /trophy-relic-artwork/);
   assert.match(files.detail, /detail-relic-artwork/);
   assert.match(files.guide, /relic-art-frame/);
   assert.match(files.guide, /info-stage-art/);

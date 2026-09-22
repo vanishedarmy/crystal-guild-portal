@@ -31,7 +31,7 @@ test("lazy guide markup documents Active Battle and keeps the organized guide sh
   const markup = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
   const page = await readFile(new URL("../src/guide/GuidePage.jsx", import.meta.url), "utf8");
   assert.match(markup, /id="completion"/);
-  assert.match(markup, /Trophy Hall/);
+  assert.match(markup, /Hall of Trophies/);
   assert.doesNotMatch(markup, /class="guide-site-header"/);
   assert.match(page, /<SiteHeader liveStatus=\{liveStatus\}/);
   assert.doesNotMatch(markup, /development build|production baseline/i);

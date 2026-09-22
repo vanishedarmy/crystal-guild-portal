@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ItemArtwork from "./ItemArtwork.jsx";
 import ProgressBar from "./ProgressBar.jsx";
+import MobileCombatHud from "./MobileCombatHud.jsx";
 import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, number, pct } from "../utils/formatters.js";
 
 const ITEM_GROUPS = [
@@ -13,7 +14,7 @@ function targetFor(option, selectedTarget) {
   return String(option?.target || "enemy").toLowerCase() === "ally" ? selectedTarget : "";
 }
 
-export default function LiveStreamCombatControls({ controls, busy = false, onAction }) {
+export default function LiveStreamCombatControls({ controls, enemy = null, busy = false, onAction }) {
   const targets = Array.isArray(controls?.targets) ? controls.targets : [];
   const abilities = Array.isArray(controls?.abilities) ? controls.abilities : [];
   const items = Array.isArray(controls?.items) ? controls.items : [];
@@ -21,6 +22,7 @@ export default function LiveStreamCombatControls({ controls, busy = false, onAct
   const selfTarget = targets.find((row) => row.self)?.username || targets.find((row) => !row.ko)?.username || "";
   const [selectedTarget, setSelectedTarget] = useState(selfTarget);
   const [itemGroup, setItemGroup] = useState("healing");
+  const [mobilePicker, setMobilePicker] = useState("");
 
   useEffect(() => {
     if (!selectedTarget || !targets.some((row) => row.username === selectedTarget)) setSelectedTarget(selfTarget);
@@ -63,13 +65,26 @@ export default function LiveStreamCombatControls({ controls, busy = false, onAct
 
       {!controls.can_act && controls.reason ? <p className="live-stream-command-reason">{controls.reason}</p> : null}
 
+      <MobileCombatHud
+        enemy={enemy || controls?.enemy}
+        player={actor}
+        disabled={disabled}
+        picker={mobilePicker}
+        hasAbilities={abilities.length > 0}
+        hasItems={items.length > 0}
+        onAttack={() => onAction?.("attack", "", "")}
+        onToggleAbility={() => setMobilePicker(mobilePicker === "ability" ? "" : "ability")}
+        onToggleItem={() => setMobilePicker(mobilePicker === "item" ? "" : "item")}
+        onDefend={() => onAction?.("defend", "", "")}
+      />
+
       <div className="live-stream-core-actions">
         <button type="button" className="equipment-action-button combat-tone-offense" disabled={disabled} onClick={() => onAction?.("attack", "", "")}>{busy === "attack" ? "Attack…" : "Attack"}</button>
         <button type="button" className="equipment-action-button secondary combat-tone-defense" disabled={disabled} onClick={() => onAction?.("defend", "", "")}>{busy === "defend" ? "Defend…" : "Defend"}</button>
       </div>
 
       {targets.length > 1 ? (
-        <label className="live-stream-target-control">
+        <label className="live-stream-target-control desktop-combat-target">
           <span>Support target</span>
           <select value={selectedTarget} onChange={(event) => setSelectedTarget(event.target.value)}>
             {targets.map((target) => <option value={target.username} key={target.username}>{target.display_name}{target.self ? " (You)" : ""}{target.ko ? " · KO" : ` · ${number(target.hp)}/${number(target.max_hp)} HP`}</option>)}
@@ -79,8 +94,16 @@ export default function LiveStreamCombatControls({ controls, busy = false, onAct
       ) : null}
 
       {abilities.length ? (
-        <div className="live-stream-action-block">
-          <div className="live-stream-action-heading"><strong>Abilities</strong></div>
+        <div className={`live-stream-action-block mobile-combat-drawer ${mobilePicker === "ability" ? "mobile-picker-open" : ""}`}>
+          <div className="live-stream-action-heading"><strong>Abilities</strong><button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobilePicker("")}>Close</button></div>
+          {targets.length > 1 ? (
+            <label className="live-stream-target-control mobile-combat-target">
+              <span>Support target</span>
+              <select value={selectedTarget} onChange={(event) => setSelectedTarget(event.target.value)}>
+                {targets.map((target) => <option value={target.username} key={`mobile-ability:${target.username}`}>{target.display_name}{target.self ? " (You)" : ""}{target.ko ? " · KO" : ` · ${number(target.hp)}/${number(target.max_hp)} HP`}</option>)}
+              </select>
+            </label>
+          ) : null}
           {[
             ["offense", "Offense"], ["restoration", "Restoration"], ["support", "Support"],
           ].map(([group, label]) => abilityGroups[group].length ? (
@@ -102,8 +125,16 @@ export default function LiveStreamCombatControls({ controls, busy = false, onAct
       ) : null}
 
       {items.length ? (
-        <div className="live-stream-action-block live-stream-items">
-          <div className="live-stream-action-heading"><strong>Items</strong></div>
+        <div className={`live-stream-action-block live-stream-items mobile-combat-drawer ${mobilePicker === "item" ? "mobile-picker-open" : ""}`}>
+          <div className="live-stream-action-heading"><strong>Items</strong><button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobilePicker("")}>Close</button></div>
+          {targets.length > 1 ? (
+            <label className="live-stream-target-control mobile-combat-target">
+              <span>Item target</span>
+              <select value={selectedTarget} onChange={(event) => setSelectedTarget(event.target.value)}>
+                {targets.map((target) => <option value={target.username} key={`mobile-item:${target.username}`}>{target.display_name}{target.self ? " (You)" : ""}{target.ko ? " · KO" : ` · ${number(target.hp)}/${number(target.max_hp)} HP`}</option>)}
+              </select>
+            </label>
+          ) : null}
           <div className="live-stream-item-tabs" aria-label="Live battle item categories">
             {ITEM_GROUPS.map((group) => <button type="button" key={group.id} className={`combat-purpose-${group.id} ${itemGroup === group.id ? "active" : ""}`} aria-pressed={itemGroup === group.id} disabled={!(itemGroups[group.id] || []).length} onClick={() => setItemGroup(group.id)}>{group.label}<span>{number((itemGroups[group.id] || []).length)}</span></button>)}
           </div>

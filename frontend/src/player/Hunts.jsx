@@ -23,6 +23,7 @@ import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
+import MobileCombatHud from "../components/MobileCombatHud.jsx";
 
 const volatileAdventureActionKeys = new Map();
 
@@ -770,6 +771,19 @@ export default function Hunts({ data, overview, onRefresh }) {
                   </div>
                 ) : null}
 
+                <MobileCombatHud
+                  enemy={expedition.combat.enemy}
+                  player={expedition.combat.player}
+                  disabled={Boolean(busy)}
+                  picker={soloPicker}
+                  hasAbilities={availableSoloAbilities.length > 0}
+                  hasItems={(expedition.combat.items || []).length > 0}
+                  onAttack={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Attack complete.")}
+                  onToggleAbility={() => setSoloPicker(soloPicker === "ability" ? "" : "ability")}
+                  onToggleItem={() => setSoloPicker(soloPicker === "item" ? "" : "item")}
+                  onDefend={() => runRequest("solo:defend", "solo-action", "defend", (idem) => submitSoloExpeditionAction("defend", csrfToken, idem), "Defend complete.")}
+                />
+
                 <div className="solo-command-bar" aria-label="Solo Venture battle actions">
                   <button type="button" className="equipment-action-button combat-tone-offense" disabled={Boolean(busy)} onClick={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Attack complete.")}>{busy === "solo:attack" ? "Attacking…" : "Attack"}</button>
                   <button type="button" className={`equipment-action-button secondary combat-tone-ability ${soloPicker === "ability" ? "active" : ""}`} disabled={Boolean(busy)} aria-expanded={soloPicker === "ability"} onClick={(event) => {
@@ -790,7 +804,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 </div>
 
                 {soloPicker === "ability" ? (
-                  <div className="solo-action-picker">
+                  <div className="solo-action-picker mobile-combat-drawer">
                     <div className="panel-title-row compact-combat-picker"><h3>Abilities</h3><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid solo-ability-grid">
                       {availableSoloAbilities.length ? availableSoloAbilities.map((ability) => (
@@ -805,7 +819,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 ) : null}
 
                 {soloPicker === "item" ? (
-                  <div className="solo-action-picker">
+                  <div className="solo-action-picker mobile-combat-drawer">
                     <div className="panel-title-row compact-combat-picker"><h3>Items</h3><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid">
                       {(expedition.combat.items || []).length ? sortBattleItems(expedition.combat.items || []).map((item) => (

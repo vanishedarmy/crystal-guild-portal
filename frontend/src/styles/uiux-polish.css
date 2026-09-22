@@ -628,3 +628,36 @@
     white-space: normal;
   }
 }
+
+/* Hotfix 9 — final mobile quick-combat overrides.
+   This file loads after portal.css, so keep drawer density authoritative here. */
+.mobile-combat-target { display: none; }
+
+@media (max-width: 760px) {
+  .desktop-combat-target { display: none !important; }
+  .mobile-combat-target {
+    display: grid;
+    gap: .28rem;
+    margin: 0 0 .55rem;
+    padding: .45rem;
+    border: 1px solid rgba(111, 159, 204, .32);
+    border-radius: 8px;
+    background: rgba(5, 13, 27, .76);
+  }
+  .mobile-combat-target > span {
+    font-size: .72rem;
+    color: #c9d8e9;
+  }
+  .mobile-combat-target select {
+    min-height: 42px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 391px) and (max-width: 520px) {
+  .mobile-combat-drawer .solo-action-grid,
+  .mobile-combat-drawer .expedition-option-grid,
+  .mobile-combat-drawer .live-stream-option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

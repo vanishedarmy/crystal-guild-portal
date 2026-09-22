@@ -13886,3 +13886,231 @@ textarea {
     font-size: .86rem;
   }
 }
+
+/* ============================================================
+   v1.9.0 Alpha 6 Hotfix 9 — mobile quick combat HUD
+   Keeps vitals and core actions available while long combat panels scroll.
+   ============================================================ */
+.mobile-combat-hud,
+.mobile-combat-drawer-close {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .mobile-combat-hud {
+    display: block;
+    position: sticky;
+    top: max(0px, env(safe-area-inset-top));
+    z-index: 70;
+    margin: .5rem 0 .58rem;
+    padding: .48rem;
+    border: 1px solid rgba(117, 177, 235, .5);
+    border-radius: 12px;
+    background:
+      linear-gradient(180deg, rgba(18, 37, 70, .98), rgba(6, 14, 29, .985)),
+      rgba(6, 14, 29, .98);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .35), inset 0 1px rgba(255,255,255,.04);
+    backdrop-filter: blur(9px);
+  }
+
+  .mobile-combat-hud-vitals {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: .38rem;
+    align-items: stretch;
+    margin-bottom: .42rem;
+  }
+
+  .mobile-combat-hud-vital,
+  .mobile-combat-hud-resource {
+    min-width: 0;
+    padding: .34rem .4rem;
+    border: 1px solid rgba(105, 152, 198, .34);
+    border-radius: 8px;
+    background: rgba(3, 10, 22, .72);
+  }
+
+  .mobile-combat-hud-vital > div,
+  .mobile-combat-hud-resource {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .32rem;
+  }
+
+  .mobile-combat-hud-vital span,
+  .mobile-combat-hud-resource span {
+    color: #aebdd1;
+    font-size: .63rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .mobile-combat-hud-vital strong,
+  .mobile-combat-hud-resource strong {
+    color: #f4f8ff;
+    font-size: .69rem;
+    line-height: 1.1;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mobile-combat-hud-meter {
+    display: block;
+    width: 100%;
+    height: 5px;
+    margin-top: .28rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(11, 19, 36, .98);
+    box-shadow: inset 0 0 0 1px rgba(116, 150, 190, .28);
+  }
+
+  .mobile-combat-hud-meter > i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #44a876, #a8f3cd);
+  }
+
+  .mobile-combat-hud-vital.enemy .mobile-combat-hud-meter > i {
+    background: linear-gradient(90deg, #c55445, #f19762);
+  }
+
+  .mobile-combat-hud-resource {
+    flex-direction: column;
+    justify-content: center;
+    min-width: 64px;
+  }
+  .mobile-combat-hud-resource.mp { border-color: rgba(116, 133, 235, .46); }
+  .mobile-combat-hud-resource.ap { border-color: rgba(228, 169, 74, .46); }
+
+  .mobile-combat-hud-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .34rem;
+  }
+
+  .mobile-combat-hud-actions .equipment-action-button {
+    min-width: 0;
+    min-height: 42px;
+    padding: .42rem .25rem;
+    font-size: .75rem;
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+
+  /* The sticky HUD replaces the repeated in-flow core buttons on phones. */
+  .solo-combat-board > .solo-command-bar,
+  .dungeon-combat-panel > .solo-command-bar,
+  .expedition-core-actions,
+  .live-stream-core-actions {
+    display: none !important;
+  }
+
+  /* Ability and item choices become compact drawers rather than forcing a
+     round-trip through a long combat page. */
+  .mobile-combat-drawer {
+    position: fixed !important;
+    z-index: 90;
+    inset-inline: 8px;
+    top: calc(max(0px, env(safe-area-inset-top)) + 104px);
+    bottom: max(8px, env(safe-area-inset-bottom));
+    max-height: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: 0 !important;
+    padding: .68rem !important;
+    border: 1px solid rgba(121, 173, 224, .55) !important;
+    border-radius: 13px !important;
+    background:
+      linear-gradient(180deg, rgba(12, 26, 50, .995), rgba(5, 12, 25, .995)),
+      #07101f !important;
+    box-shadow: 0 18px 46px rgba(0,0,0,.62), inset 0 1px rgba(255,255,255,.04);
+  }
+
+  .expedition-action-section.mobile-combat-drawer:not(.mobile-picker-open),
+  .live-stream-action-block.mobile-combat-drawer:not(.mobile-picker-open) {
+    display: none !important;
+  }
+
+  .mobile-combat-drawer-close {
+    display: inline-flex;
+    width: auto;
+    min-height: 36px;
+    padding: .32rem .66rem;
+  }
+
+  .mobile-combat-drawer .panel-title-row,
+  .mobile-combat-drawer .expedition-action-section-header,
+  .mobile-combat-drawer .live-stream-action-heading {
+    position: sticky;
+    top: -.68rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin: -.1rem -.1rem .55rem;
+    padding: .48rem .1rem .45rem;
+    background: rgba(8, 18, 35, .97);
+    border-bottom: 1px solid rgba(108, 145, 184, .28);
+  }
+
+  .mobile-combat-drawer .solo-action-grid,
+  .mobile-combat-drawer .expedition-option-grid,
+  .mobile-combat-drawer .live-stream-option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .42rem;
+  }
+
+  .mobile-combat-drawer .solo-action-option,
+  .mobile-combat-drawer .expedition-combat-option,
+  .mobile-combat-drawer .live-stream-option {
+    min-height: 68px;
+  }
+
+  .mobile-combat-drawer .expedition-ability-group,
+  .mobile-combat-drawer .live-stream-ability-group {
+    margin-top: .45rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobile-combat-hud {
+    padding: .42rem;
+  }
+  .mobile-combat-hud-vitals {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .mobile-combat-hud-resource {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    min-height: 27px;
+  }
+  .mobile-combat-hud-actions {
+    gap: .28rem;
+  }
+  .mobile-combat-hud-actions .equipment-action-button {
+    min-height: 40px;
+    font-size: .7rem;
+  }
+  .mobile-combat-drawer {
+    top: calc(max(0px, env(safe-area-inset-top)) + 132px);
+  }
+  .mobile-combat-drawer .solo-action-grid,
+  .mobile-combat-drawer .expedition-option-grid,
+  .mobile-combat-drawer .live-stream-option-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-contrast: more) and (max-width: 760px) {
+  .mobile-combat-hud,
+  .mobile-combat-drawer,
+  .mobile-combat-hud-vital,
+  .mobile-combat-hud-resource {
+    border-width: 2px !important;
+  }
+}

@@ -35,6 +35,7 @@ MERC_SERVICE_HOTFIX3.md
 MERC_SERVICE_RC1_RELEASE_NOTES.md
 MERC_SERVICE_RC1_VALIDATION.md
 MOBILE_CONTEXT_HELP_HOTFIX2.md
+MOBILE_QUICK_COMBAT_HUD_HOTFIX9.md
 MOOGLE_ANNEX_CATEGORY_STOCK_HOTFIX4.md
 MOOGLE_ANNEX_STOCK_HOTFIX3.md
 OVERVIEW_CLEANUP_HOTFIX6.md
@@ -1032,6 +1033,7 @@ frontend/src/components/ItemArtwork.jsx
 frontend/src/components/JobPortrait.jsx
 frontend/src/components/LiveStatus.jsx
 frontend/src/components/LiveStreamCombatControls.jsx
+frontend/src/components/MobileCombatHud.jsx
 frontend/src/components/MonsterPortrait.jsx
 frontend/src/components/PageRefreshButton.jsx
 frontend/src/components/PortalLinkPanel.jsx
@@ -1242,6 +1244,7 @@ frontend/tests/mobileContextHelpCornerAnchor181.test.mjs
 frontend/tests/mobileContextHelpDisclosureAlignment.test.mjs
 frontend/tests/mobileHeaderViewportHotfix.test.mjs
 frontend/tests/mobileProfileNameNoWrap.test.mjs
+frontend/tests/mobileQuickCombatHudHotfix9.test.mjs
 frontend/tests/mobileReadabilityHotfix.test.mjs
 frontend/tests/mobileRecoveryTwoColumn181.test.mjs
 frontend/tests/mobileRetainerGuideUx.test.mjs

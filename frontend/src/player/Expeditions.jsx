@@ -15,6 +15,7 @@ import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
+import MobileCombatHud from "../components/MobileCombatHud.jsx";
 
 const DEPTH_COPY = {
   scout: "3 stages · short survey",
@@ -177,6 +178,7 @@ export default function Expeditions({
   const [selectedDepth, setSelectedDepth] = useState("scout");
   const [selectedRoute, setSelectedRoute] = useState("");
   const [consumableCategory, setConsumableCategory] = useState("healing");
+  const [mobileCombatPicker, setMobileCombatPicker] = useState("");
   const [boardOpen, setBoardOpen] = useState(() => data?.active ? true : defaultBoardOpen());
   const [atlasOpen, setAtlasOpen] = useState(defaultAtlasOpen);
   const active = data?.active || null;
@@ -209,6 +211,7 @@ export default function Expeditions({
   }, [atlasOpen]);
   useEffect(() => {
     setSelectedRoute("");
+    setMobileCombatPicker("");
   }, [active?.stage, active?.status]);
 
   const doRequest = (key, kind, target, submit, fallback) => runRequest?.(key, kind, target, submit, fallback);
@@ -391,6 +394,19 @@ export default function Expeditions({
                   </article>
                 </div>
                 {active.last_round?.events?.length ? <div className="adventure-combat-note expedition-round-log"><strong>Round {number(active.last_round.round)}</strong>{active.last_round.events.slice(-4).map((line, index) => <span key={`${index}:${line}`}>{line}</span>)}</div> : null}
+                <MobileCombatHud
+                  enemy={active.combat.enemy}
+                  player={active.combat.player}
+                  disabled={Boolean(busy)}
+                  picker={mobileCombatPicker}
+                  hasAbilities={(active.combat.abilities || []).length > 0}
+                  hasItems={(active.combat.items || []).length > 0}
+                  onAttack={() => doRequest("expedition:attack", "expedition-action", `attack:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("attack", csrfToken, idem), "Attack complete.")}
+                  onToggleAbility={() => setMobileCombatPicker(mobileCombatPicker === "ability" ? "" : "ability")}
+                  onToggleItem={() => setMobileCombatPicker(mobileCombatPicker === "item" ? "" : "item")}
+                  onDefend={() => doRequest("expedition:defend", "expedition-action", `defend:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("defend", csrfToken, idem), "Defend complete.")}
+                />
+
                 <div className="expedition-action-section expedition-core-actions">
                   <div className="expedition-action-section-header">
                     <h3>Actions</h3>
@@ -402,9 +418,10 @@ export default function Expeditions({
                 </div>
 
                 {(active.combat.abilities || []).length ? (
-                  <div className="expedition-action-section expedition-abilities-section">
+                  <div className={`expedition-action-section expedition-abilities-section mobile-combat-drawer ${mobileCombatPicker === "ability" ? "mobile-picker-open" : ""}`}>
                     <div className="expedition-action-section-header">
                       <h3>{active.combat.player?.job_name || "Job"} Abilities</h3>
+                      <button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobileCombatPicker("")}>Close</button>
                     </div>
                     <div className="expedition-ability-groups">
                       {ABILITY_GROUPS.map((group) => abilityGroups[group.id].length ? (
@@ -426,9 +443,10 @@ export default function Expeditions({
                 ) : null}
 
                 {(active.combat.items || []).length ? (
-                  <div className="expedition-action-section expedition-consumables-section">
+                  <div className={`expedition-action-section expedition-consumables-section mobile-combat-drawer ${mobileCombatPicker === "item" ? "mobile-picker-open" : ""}`}>
                     <div className="expedition-action-section-header">
                       <h3>Items</h3>
+                      <button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobileCombatPicker("")}>Close</button>
                     </div>
                     <div className="expedition-consumable-tabs" aria-label="Consumable categories">
                       {CONSUMABLE_GROUPS.map((group) => (

@@ -126,7 +126,7 @@ function StreamVentureEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
       ) : null}
 
       {encounter.state === "combat" ? (
-        encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} busy={busy?.startsWith?.("venture:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("venture", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
+        encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} enemy={{ name: encounter.monster?.name, hp: encounter.enemy_hp, max_hp: encounter.enemy_max_hp }} busy={busy?.startsWith?.("venture:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("venture", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
         <div className="adventure-combat-note">
           <strong>{encounter.you_joined ? "Battle controls are loading." : "Battle is underway."}</strong>
           <span>{encounter.you_joined ? "You can still use Twitch chat while they load." : "This rally is already in combat; watch the live battle and join the next rally."}</span>
@@ -179,7 +179,7 @@ function WorldEventEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
           </div>
         ) : null}
         {encounter.state === "combat" ? (
-          encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} busy={busy?.startsWith?.("world_event:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("world_event", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
+          encounter.you_joined && encounter.controls ? <LiveStreamCombatControls controls={encounter.controls} enemy={{ name: event.name || encounter.monster?.name, hp: encounter.enemy_hp, max_hp: encounter.enemy_max_hp }} busy={busy?.startsWith?.("world_event:") ? busy.split(":").slice(-1)[0] : false} onAction={(kind, choice, target) => onAction?.("world_event", String(encounter.id), encounter.controls?.round || encounter.round, kind, choice, target)} /> :
           <div className="adventure-combat-note"><strong>{encounter.you_joined ? "Battle controls are loading." : "The World Event is underway."}</strong><span>{encounter.you_joined ? "You can still use Twitch chat while they load." : "This rally is already in combat; watch the battle unfold."}</span></div>
         ) : null}
       </div>

@@ -1,5 +1,11 @@
 # Crystal Guild v1.9.0 Alpha 8 — Seasonal Event Framework
 
+## Halloween Individual Artwork Hotfix 3
+- Replaced the original composite-derived Halloween imagery with 31 individually packaged WebP assets from the eight approved art batches: 10 monster/Warden states, 5 currency/shop icons, 8 permanent/locked trophies, 4 banners and 4 backgrounds.
+- The Bestiary and trophy cards now display uncropped art (`object-fit: contain`); the seasonal wallet, shop and optional scenery gallery use the proper independent images. The Warden displays its locked image until earned.
+- Added a revision query to seasonal art URLs so browsers refresh retired images after deployment. Fixed the purchase button guard for the intentionally repeatable Spooky Supply Cache.
+- Web-only: Bot, schema 21, hosted sync 1, Portal Action protocol 37, event activation defaults, seasonal rewards and combat odds are unchanged.
+
 ## Navigation & Seasonal Event Hotfix 2
 - All 18 Adventurer Profile destinations now form three even six-column desktop rows; removed the old 17-tab offset and full-width mobile final-button rule. Compact-desktop navigation centers its final pair.
 - The hosted player API now serves the seasonal profile module; previously the route returned an "Unknown player module" 404, leaving the Seasonal Event page loading indefinitely.

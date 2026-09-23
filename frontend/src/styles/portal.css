@@ -14162,3 +14162,33 @@ textarea {
 
 /* Alpha 8 — reusable seasonal event presentation */
 .seasonal-event-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:1rem}.seasonal-event-hero>img{width:100%;height:100%;min-height:260px;object-fit:cover;border-radius:12px}.seasonal-event-hero-copy{align-self:center}.seasonal-monster-grid,.seasonal-trophy-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.85rem}.seasonal-monster-card,.seasonal-trophy-card,.seasonal-shop-card,.seasonal-objective{border:1px solid var(--line,rgba(255,255,255,.14));border-radius:12px;background:rgba(4,8,18,.6);padding:.8rem}.seasonal-monster-card img,.seasonal-trophy-card img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:9px}.seasonal-boss-card{grid-column:span 1}.seasonal-objective-list,.seasonal-shop-grid{display:grid;gap:.7rem}.seasonal-objective,.seasonal-shop-card{display:flex;align-items:center;justify-content:space-between;gap:.8rem}.seasonal-objective.is-complete{box-shadow:inset 0 0 0 1px rgba(226,194,91,.35)}.seasonal-shop-card img{width:58px;height:58px;object-fit:cover;border-radius:8px}.seasonal-trophy-card.is-locked{opacity:.72}@media(max-width:900px){.seasonal-event-hero{grid-template-columns:1fr}.seasonal-monster-grid,.seasonal-trophy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.seasonal-monster-grid,.seasonal-trophy-grid{grid-template-columns:1fr}.seasonal-objective,.seasonal-shop-card{align-items:flex-start;flex-direction:column}.seasonal-event-hero>img{min-height:180px}}
+
+/* Alpha 8 Seasonal Artwork Hotfix 3 — genuine single-file assets, no sheet crops. */
+.seasonal-art-hotfix3 .seasonal-event-hero{align-items:center}
+.seasonal-art-hotfix3 .seasonal-event-banner{display:block;width:100%;height:auto;min-height:0;aspect-ratio:3 / 1;object-fit:contain;object-position:center;background:#090d1d}
+.seasonal-art-hotfix3 .seasonal-section-art{display:block;width:100%;height:clamp(110px,16vw,170px);object-fit:cover;object-position:center 56%;border-radius:9px;margin-bottom:12px;background:#0b1125}
+.seasonal-art-hotfix3 .seasonal-monster-card,.seasonal-art-hotfix3 .seasonal-trophy-card{min-width:0;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.seasonal-art-hotfix3 .seasonal-monster-card img,.seasonal-art-hotfix3 .seasonal-trophy-card img{display:block;width:100%;height:auto;aspect-ratio:1 / 1;object-fit:contain;object-position:center;padding:5px;box-sizing:border-box;background:#0b1227;border:1px solid rgba(126,102,177,.25);border-radius:9px}
+.seasonal-art-hotfix3 .seasonal-monster-card h4,.seasonal-art-hotfix3 .seasonal-trophy-card strong{margin-top:5px;overflow-wrap:anywhere}
+.seasonal-art-hotfix3 .seasonal-boss-card{background:linear-gradient(180deg,rgba(43,25,71,.58),rgba(4,8,18,.65));border-color:rgba(173,113,236,.5)}
+.seasonal-art-hotfix3 .seasonal-boss-card img{background:#121026}
+.seasonal-art-hotfix3 .seasonal-trophy-card.is-locked{opacity:1}
+.seasonal-art-hotfix3 .seasonal-trophy-card.is-locked img{background:#14142c}
+.seasonal-art-hotfix3 .seasonal-shop-card{min-width:0;justify-content:initial}
+.seasonal-art-hotfix3 .seasonal-shop-card img{display:block;flex:0 0 72px;width:72px;height:72px;object-fit:contain;background:#0d1224;padding:3px;box-sizing:border-box;border:1px solid rgba(153,190,232,.17)}
+.seasonal-art-hotfix3 .seasonal-shop-card>div{flex:1;min-width:0}
+.seasonal-art-hotfix3 .seasonal-shop-card button{flex-shrink:0}
+.seasonal-art-hotfix3 .seasonal-wallet{display:flex;flex-direction:row;align-items:center;gap:8px}
+.seasonal-art-hotfix3 .seasonal-wallet img{width:38px;height:38px;object-fit:contain;flex-shrink:0}
+.seasonal-art-hotfix3 .seasonal-wallet>div{display:flex;flex-direction:column}
+.seasonal-art-hotfix3 .seasonal-scenery-details summary{cursor:pointer;padding:8px 2px;font-weight:700;color:inherit}
+.seasonal-art-hotfix3 .seasonal-scenery-details summary:focus-visible{outline:2px solid #b2a1ff;outline-offset:3px}
+.seasonal-art-hotfix3 .seasonal-scenery-header{display:block;max-width:100%;width:100%;height:auto;max-height:220px;object-fit:contain;margin:10px auto 16px}
+.seasonal-art-hotfix3 .seasonal-scenery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.seasonal-art-hotfix3 .seasonal-scenery-grid figure{margin:0;min-width:0;overflow:hidden;border-radius:9px;border:1px solid rgba(153,190,232,.18);background:#0b1227}
+.seasonal-art-hotfix3 .seasonal-scenery-grid img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.seasonal-art-hotfix3 .seasonal-scenery-grid figcaption{text-align:center;padding:8px;font-size:.85rem}
+@media(max-width:1000px){.seasonal-art-hotfix3 .seasonal-scenery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.seasonal-art-hotfix3 .seasonal-section-art{height:110px}.seasonal-art-hotfix3 .seasonal-shop-card{flex-direction:row;align-items:center;flex-wrap:wrap}.seasonal-art-hotfix3 .seasonal-shop-card button{margin-left:auto}.seasonal-art-hotfix3 .seasonal-scenery-grid{grid-template-columns:1fr}.seasonal-art-hotfix3 .seasonal-monster-card img{max-height:280px}.seasonal-art-hotfix3 .seasonal-event-banner{min-height:0}}
+/* The locked Warden silhouette is intentionally near-black: give it a visible halo. */
+.seasonal-art-hotfix3 .seasonal-boss-card img{background:radial-gradient(ellipse at 50% 42%,#615184 0%,#302344 55%,#121026 100%)}

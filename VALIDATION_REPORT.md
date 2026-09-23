@@ -2,6 +2,14 @@
 
 Validation target: runtime/frontend `1.9.0-seasonal-events-alpha8`, local schema **21**, hosted sync schema **1**, Portal Action protocol **37**.
 
+## Halloween Individual Artwork Hotfix 3 (Web-only)
+- All 31 replacements decode individually as WebP; 10 encounter/boss states, 5 currency/shop items, 8 trophy states, 4 headers and 4 separate environments. No source sprite sheet is bundled as a gameplay asset.
+- New focused artwork/portal contract tests: **3/3 passing**; combined artwork and prior navigation tests: **5/5 passing**.
+- Full frontend source/history suite: **707/762 passing**; exactly the same 55 inherited historical failures as Navigation Hotfix 2 (**704/759**), **zero new failure names**.
+- Full hosted Web Python suite: **81/81 passing**. Bot code and DB schema are byte-identical to Hotfix 2.
+- Final archive integrity, asset source references and package parity are verified before distribution.
+- The production Vite bundle still requires installation of pinned dependencies on deployment.
+
 ## Automated results
 - Bot full regression suite: **796 / 796 passed**.
 - Focused Seasonal Event Framework suite: **4 / 4 passed**.

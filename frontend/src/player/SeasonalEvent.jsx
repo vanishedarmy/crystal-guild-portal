@@ -3,11 +3,29 @@ import { submitSeasonalBuy, waitForPortalAction } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
 
+const HALLOWEEN_ART = "/seasonal/halloween-2026/";
+const ART_REVISION = "halloween-art-hotfix3";
+const SCENES = [
+  { name: "Haunted Ruins", file: "haunted-ruins.webp" },
+  { name: "Graveyard", file: "graveyard.webp" },
+  { name: "Eerie Forest", file: "eerie-forest.webp" },
+  { name: "Hollow Crystal Spire", file: "hollow-crystal-spire.webp" },
+];
+
+// Changing the artwork must not require a Bot/protocol migration; image URLs
+// receive their own cache revision so browsers discard the retired sheet crops.
+function artURL(url) {
+  if (!url) return "";
+  return String(url).startsWith(HALLOWEEN_ART)
+    ? `${url}${String(url).includes("?") ? "&" : "?"}v=${ART_REVISION}`
+    : url;
+}
+function localArt(name) { return artURL(`${HALLOWEEN_ART}${name}`); }
+
 function actionKey(kind, target = "seasonal") {
   const suffix = globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}:${Math.random().toString(36).slice(2)}`;
   return `${kind}:${target}:${suffix}`;
 }
-
 async function finishedAction(response) {
   const action = response?.action;
   if (!action?.id) throw new Error("Crystal Guild did not return an event request ID.");
@@ -24,10 +42,9 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   const capabilities = useMemo(() => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []), [auth.action_capabilities]);
   const own = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
   const canBuy = Boolean(own && auth.actions_enabled && capabilities.has("SEASONAL_BUY") && event.redemption);
+  const wardenDiscovered = Boolean((event.trophies || []).some((entry) => entry.id === "season_halloween_warden" && entry.unlocked_at));
 
-  // A profile synced before the Alpha 8 Bot upgrade will not contain this
-  // optional module yet. Show a useful state instead of a misleading blank
-  // seasonal page (or an endless loading indicator).
+  // Old sync snapshots have no seasonal module; show a recoverable state.
   if (event.sync_pending || event.state === "unavailable") {
     return <section className="panel seasonal-sync-pending" role="status">
       <p className="eyebrow">Seasonal Event</p>
@@ -38,7 +55,7 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   }
 
   const buy = async (reward) => {
-    if (!canBuy || busy || reward.owned) return;
+    if (!canBuy || busy || (reward.owned && !reward.repeatable)) return;
     setBusy(reward.id);
     setMessage(`Requesting ${reward.name} from the Moonlit Emporium…`);
     try {
@@ -54,28 +71,35 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   };
 
   return (
-    <div className="dashboard-grid seasonal-event-page">
+    <div className="dashboard-grid seasonal-event-page seasonal-art-hotfix3">
       <section className="panel span-12 seasonal-event-hero">
-        <img src={event.art?.banner || "/seasonal/halloween-2026/event-banner.webp"} alt="Night of the Hollow Crystal seasonal event" />
+        <img className="seasonal-event-banner" src={artURL(event.art?.banner || `${HALLOWEEN_ART}event-banner.webp`)} alt="Night of the Hollow Crystal — moonlit castle and the Hollow Warden" />
         <div className="seasonal-event-hero-copy">
           <p className="eyebrow">Seasonal Event · {event.state || "disabled"}</p>
           <h2>{event.name || "Night of the Hollow Crystal"}</h2>
           <p className="muted">The Hollow Crystal burns violet beneath the autumn moon. Seasonal monsters, rotating objectives, and the Hollow Warden appear only while this event edition is active.</p>
-          <div className="currency-row"><div className="currency-box"><strong>{number(event.tokens || 0)}</strong><span>{event.token_name || "Moonlit Tokens"}</span></div><div className="currency-box"><strong>{number(event.guild_seasonal_kills || 0)}</strong><span>Guild seasonal defeats</span></div></div>
+          <div className="currency-row">
+            <div className="currency-box seasonal-wallet"><img src={localArt("moonlit-token.webp")} alt="" /><div><strong>{number(event.tokens || 0)}</strong><span>{event.token_name || "Moonlit Tokens"}</span></div></div>
+            <div className="currency-box"><strong>{number(event.guild_seasonal_kills || 0)}</strong><span>Guild seasonal defeats</span></div>
+          </div>
         </div>
       </section>
 
-      <section className="panel span-12">
+      <section className="panel span-12 seasonal-bestiary-panel">
+        <img className="seasonal-section-art" src={localArt("bestiary-header.webp")} alt="Event Bestiary" loading="lazy" />
         <div className="panel-heading"><div><p className="eyebrow">Event Bestiary</p><h3>Things stirring in the dark</h3></div></div>
         <div className="seasonal-monster-grid">
           {(event.variants || []).map((monster) => {
             const discovered = Number(monster.clears || 0) > 0;
             return <article className="seasonal-monster-card" key={monster.id}>
-              <img src={discovered ? monster.art : monster.locked_art} alt={discovered ? monster.name : "Undiscovered seasonal monster"} />
+              <img src={artURL(discovered ? monster.art : monster.locked_art)} alt={discovered ? monster.name : "Undiscovered seasonal monster"} loading="lazy" decoding="async" />
               <h4>{discovered ? monster.name : "???"}</h4><p>{monster.element}</p><span>{discovered ? `${monster.clears} defeated` : "Not yet encountered"}</span>
             </article>;
           })}
-          {event.world_event ? <article className="seasonal-monster-card seasonal-boss-card"><img src={event.world_event.art} alt={event.world_event.name} /><h4>{event.world_event.name}</h4><p>Seasonal World Event</p><span>{event.world_event.description}</span></article> : null}
+          {event.world_event ? <article className="seasonal-monster-card seasonal-boss-card">
+            <img src={artURL(wardenDiscovered ? event.world_event.art : (event.world_event.locked_art || event.world_event.art))} alt={wardenDiscovered ? event.world_event.name : "Undiscovered Hollow Warden"} loading="lazy" decoding="async" />
+            <h4>{event.world_event.name}</h4><p>Seasonal World Event</p><span>{event.world_event.description}</span>
+          </article> : null}
         </div>
       </section>
 
@@ -84,15 +108,34 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
         <div className="seasonal-objective-list">{(event.objectives || []).map((objective) => <div className={`seasonal-objective ${objective.complete ? "is-complete" : ""}`} key={objective.id}><div><strong>{objective.name}</strong><p>{objective.description}</p></div><span>{number(objective.progress)} / {number(objective.target)} · {objective.reward} Tokens</span></div>)}</div>
       </section>
 
-      <section className="panel span-6">
+      <section className="panel span-6 seasonal-shop-panel">
+        <img className="seasonal-section-art" src={localArt("emporium-header.webp")} alt="Moonlit Emporium" loading="lazy" />
         <div className="panel-heading"><div><p className="eyebrow">Temporary Counter</p><h3>Moonlit Emporium</h3></div></div>
-        <div className="seasonal-shop-grid">{(event.shop || []).map((reward) => <article className="seasonal-shop-card" key={reward.id}><img src={reward.art} alt="" /><div><strong>{reward.name}</strong><p>{reward.cost} {event.token_name || "Moonlit Tokens"}</p></div><button type="button" className="equipment-action-button" disabled={!canBuy || Boolean(busy) || (reward.owned && !reward.repeatable) || Number(event.tokens || 0) < Number(reward.cost || 0)} onClick={() => buy(reward)}>{reward.owned && !reward.repeatable ? "Owned" : busy === reward.id ? "Claiming…" : "Acquire"}</button></article>)}</div>
+        <div className="seasonal-shop-grid">{(event.shop || []).map((reward) => <article className="seasonal-shop-card" key={reward.id}>
+          <img src={artURL(reward.art)} alt="" loading="lazy" decoding="async" />
+          <div><strong>{reward.name}</strong><p>{reward.cost} {event.token_name || "Moonlit Tokens"}</p></div>
+          <button type="button" className="equipment-action-button" disabled={!canBuy || Boolean(busy) || (reward.owned && !reward.repeatable) || Number(event.tokens || 0) < Number(reward.cost || 0)} onClick={() => buy(reward)}>{reward.owned && !reward.repeatable ? "Owned" : busy === reward.id ? "Claiming…" : "Acquire"}</button>
+        </article>)}</div>
         {message ? <div className="state-message compact-state" role="status">{message}</div> : null}
       </section>
 
       <section className="panel span-12">
         <div className="panel-heading"><div><p className="eyebrow">Permanent Collection</p><h3>Night of the Hollow Crystal Trophies</h3></div></div>
-        <div className="seasonal-trophy-grid">{(event.trophies || []).map((trophy) => <article className={`seasonal-trophy-card ${trophy.unlocked_at ? "is-unlocked" : "is-locked"}`} key={trophy.id}><img src={trophy.unlocked_at ? trophy.art : trophy.locked_art} alt={trophy.unlocked_at ? trophy.name : "Locked seasonal trophy"} /><strong>{trophy.unlocked_at ? trophy.name : "???"}</strong><p>{trophy.unlocked_at ? trophy.description : "Its story has yet to be written."}</p></article>)}</div>
+        <div className="seasonal-trophy-grid">{(event.trophies || []).map((trophy) => <article className={`seasonal-trophy-card ${trophy.unlocked_at ? "is-unlocked" : "is-locked"}`} key={trophy.id}>
+          <img src={artURL(trophy.unlocked_at ? trophy.art : trophy.locked_art)} alt={trophy.unlocked_at ? trophy.name : "Locked seasonal trophy"} loading="lazy" decoding="async" />
+          <strong>{trophy.unlocked_at ? trophy.name : "???"}</strong><p>{trophy.unlocked_at ? trophy.description : "Its story has yet to be written."}</p>
+        </article>)}</div>
+      </section>
+
+      <section className="panel span-12 seasonal-scenery-panel">
+        <details className="seasonal-scenery-details">
+          <summary>Explore the Halloween event locations</summary>
+          <img className="seasonal-scenery-header" src={localArt("seasonal-header.webp")} alt="Seasonal Event — Night of the Hollow Crystal" loading="lazy" />
+          <div className="seasonal-scenery-grid">{SCENES.map((scene) => <figure key={scene.file}>
+            <img src={localArt(scene.file)} alt={scene.name} loading="lazy" decoding="async" />
+            <figcaption>{scene.name}</figcaption>
+          </figure>)}</div>
+        </details>
       </section>
     </div>
   );

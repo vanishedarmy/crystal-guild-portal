@@ -1,4 +1,4 @@
-Crystal Guild v1.9.0 Alpha 8 — Seasonal Event Framework — Navigation & Seasonal Event Hotfix 2
+Crystal Guild v1.9.0 Alpha 8 — Seasonal Event Framework — Halloween Artwork Hotfix 3
 Runtime/frontend: 1.9.0-seasonal-events-alpha8 | schema 21 | hosted sync 1 | Portal Action protocol 37
 Carried forward: Moogle Trading Post, Hall of Trophies, World Events, Seasonal Event Framework.
 This is a compact top-level inventory, not a recursively expanded asset manifest.

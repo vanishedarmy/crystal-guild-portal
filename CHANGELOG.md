@@ -1,5 +1,8 @@
 # Crystal Guild — Release History (Condensed)
 
+## Alpha 8 — Halloween Individual Artwork Hotfix 3
+Replaced the old sheet-derived seasonal art with 31 individually processed assets from all eight Halloween batches. Updated Bestiary, World Event, Moonlit Emporium, token and trophy card presentation, added independent event headers and an optional environment gallery; no combat, reward, schema, or Bot changes.
+
 ## Alpha 8 — Navigation & Seasonal Event Hotfix 2
 Corrected the 18-tab profile navigation layout and enabled the missing hosted Seasonal Event API route. Missing legacy seasonal snapshots now show a sync-pending state, and profile request errors offer Retry instead of loading forever. Web-only; no schema, gameplay, or Bot changes.
 

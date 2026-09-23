@@ -106,6 +106,11 @@ const MONSTER_PORTRAITS = {
   land_worm: "/retro-phase-ii/monster-portraits-v10/land_worm.webp",
   void_tonberry: "/retro-phase-ii/monster-portraits-v10/void_tonberry.webp",
   mimic_king: "/retro-phase-ii/monster-portraits-v10/mimic_king.webp",
+  elder_ochu: "/retro-phase-ii/monster-portraits-v10/elder_ochu.webp",
+  inferno_drake: "/retro-phase-ii/monster-portraits-v10/inferno_drake.webp",
+  malboro_sovereign: "/retro-phase-ii/monster-portraits-v10/malboro_sovereign.webp",
+  frost_behemoth: "/retro-phase-ii/monster-portraits-v10/frost_behemoth.webp",
+  rift_wyrm: "/retro-phase-ii/monster-portraits-v10/rift_wyrm.webp",
 };
 
 export function normalizeMonsterId(monster) {
@@ -114,6 +119,8 @@ export function normalizeMonsterId(monster) {
 }
 
 export function monsterPortraitPath(monster) {
+  const direct = typeof monster === "object" ? String(monster?.art || "").trim() : "";
+  if (direct) return direct;
   return MONSTER_PORTRAITS[normalizeMonsterId(monster)] || "";
 }
 

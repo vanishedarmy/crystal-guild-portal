@@ -49,7 +49,7 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
     return <section className="panel seasonal-sync-pending" role="status">
       <p className="eyebrow">Seasonal Event</p>
       <h2>Waiting for event data</h2>
-      <p>The seasonal event has not synced from the Bot yet. Confirm the Bot and Portal are both running Alpha 8, then refresh this page.</p>
+      <p>The seasonal event has not synced from the Bot yet. Confirm the Bot and Portal are both running the matching Crystal Guild build, then refresh this page.</p>
       <button type="button" className="equipment-action-button secondary" onClick={() => onRefresh?.()}>Refresh</button>
     </section>;
   }

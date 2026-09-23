@@ -14192,3 +14192,114 @@ textarea {
 @media(max-width:560px){.seasonal-art-hotfix3 .seasonal-section-art{height:110px}.seasonal-art-hotfix3 .seasonal-shop-card{flex-direction:row;align-items:center;flex-wrap:wrap}.seasonal-art-hotfix3 .seasonal-shop-card button{margin-left:auto}.seasonal-art-hotfix3 .seasonal-scenery-grid{grid-template-columns:1fr}.seasonal-art-hotfix3 .seasonal-monster-card img{max-height:280px}.seasonal-art-hotfix3 .seasonal-event-banner{min-height:0}}
 /* The locked Warden silhouette is intentionally near-black: give it a visible halo. */
 .seasonal-art-hotfix3 .seasonal-boss-card img{background:radial-gradient(ellipse at 50% 42%,#615184 0%,#302344 55%,#121026 100%)}
+
+/* v1.9.0 Bestiary Overhaul — Step 4 research cards */
+.bestiary-research-panel { overflow: visible; }
+.bestiary-title-row { align-items: flex-start; gap: 1rem; }
+.bestiary-title-row > div { min-width: 0; }
+.bestiary-intro { margin: .3rem 0 0; color: var(--muted); max-width: 760px; line-height: 1.5; }
+.bestiary-summary-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; margin: 1rem 0; }
+.bestiary-summary-card { min-width: 0; padding: .8rem .9rem; border: 1px solid rgba(143,219,255,.16); border-radius: 10px; background: linear-gradient(145deg, rgba(10,31,53,.78), rgba(3,14,29,.92)); box-shadow: inset 0 1px rgba(255,255,255,.025); }
+.bestiary-summary-card span { display: block; color: var(--muted); font-size: .69rem; letter-spacing: .06em; text-transform: uppercase; }
+.bestiary-summary-card strong { display: block; margin-top: .2rem; color: var(--gold); font-family: var(--font-retro); font-size: 1.15rem; }
+.bestiary-filter-panel { display: grid; grid-template-columns: minmax(260px, 1.8fr) repeat(3, minmax(145px, 1fr)) auto; gap: .65rem; align-items: end; padding: .8rem; border: 1px solid rgba(143,219,255,.13); border-radius: 10px; background: rgba(2,12,25,.52); }
+.bestiary-filter-panel label { display: grid; gap: .3rem; min-width: 0; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .04em; }
+.bestiary-filter-panel select { width: 100%; min-height: 40px; }
+.bestiary-search-box { min-width: 0; }
+.bestiary-search-box input { width: 100%; }
+.bestiary-clear-filters { min-height: 40px; white-space: nowrap; }
+.bestiary-results-row { display: flex; justify-content: space-between; gap: .8rem; flex-wrap: wrap; margin: .75rem 0; color: var(--muted); font-size: .78rem; }
+.bestiary-results-row strong { color: var(--text); }
+.bestiary-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.bestiary-card { min-width: 0; overflow: hidden; border: 1px solid rgba(143,219,255,.16); border-radius: 12px; background: linear-gradient(145deg, rgba(8,27,47,.88), rgba(3,13,27,.96)); box-shadow: inset 0 1px rgba(255,255,255,.025), 0 8px 22px rgba(0,0,0,.12); }
+.bestiary-card.mastered { border-color: rgba(225,188,91,.44); box-shadow: inset 0 1px rgba(255,255,255,.035), 0 0 0 1px rgba(225,188,91,.07), 0 8px 24px rgba(0,0,0,.16); }
+.bestiary-card-main { display: grid; grid-template-columns: 96px minmax(0,1fr) 28px; align-items: stretch; gap: .8rem; width: 100%; padding: .8rem; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.bestiary-card-main:hover { background: rgba(143,219,255,.035); }
+.bestiary-card-main:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.bestiary-card-portrait { width: 96px; align-self: center; border-radius: 7px; }
+.bestiary-card-copy { display: grid; align-content: center; gap: .48rem; min-width: 0; }
+.bestiary-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; min-width: 0; }
+.bestiary-card-heading > div { min-width: 0; }
+.bestiary-card-heading strong { display: block; font-family: var(--font-retro); font-size: 1rem; line-height: 1.2; overflow-wrap: anywhere; }
+.bestiary-card-heading small { display: block; margin-top: .15rem; color: var(--muted); }
+.bestiary-seal { flex: 0 0 auto; color: var(--gold); font-size: 1rem; filter: drop-shadow(0 0 6px rgba(225,188,91,.35)); }
+.bestiary-card-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
+.bestiary-card-tags span { max-width: 100%; padding: .16rem .42rem; border: 1px solid rgba(143,219,255,.16); border-radius: 999px; color: var(--muted); background: rgba(3,14,29,.45); font-size: .62rem; line-height: 1.2; overflow-wrap: anywhere; }
+.bestiary-card.mastered .bestiary-card-tags span:first-child { border-color: rgba(225,188,91,.28); color: #e8d39a; }
+.bestiary-research-track { display: grid; gap: .28rem; }
+.bestiary-progress-copy { display: flex; justify-content: space-between; gap: .6rem; align-items: baseline; font-size: .68rem; }
+.bestiary-progress-copy strong { color: var(--gold); font-size: .7rem; }
+.bestiary-progress-copy span { color: var(--muted); text-align: right; }
+.bestiary-progress-bar { height: 7px; overflow: hidden; border: 1px solid rgba(143,219,255,.13); border-radius: 999px; background: rgba(0,0,0,.32); }
+.bestiary-progress-bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, rgba(95,183,224,.72), rgba(225,188,91,.92)); }
+.bestiary-research-track > small { color: var(--muted); font-size: .62rem; }
+.bestiary-expand-marker { align-self: center; justify-self: center; display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid rgba(143,219,255,.18); border-radius: 50%; color: var(--gold); font-size: 1.05rem; }
+.bestiary-card.locked .bestiary-card-main { opacity: .78; }
+.bestiary-dossier { padding: .85rem; border-top: 1px solid rgba(143,219,255,.12); background: rgba(1,9,20,.45); }
+.bestiary-dossier-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .65rem; }
+.bestiary-dossier-grid > div, .bestiary-dossier-section { min-width: 0; padding: .65rem; border: 1px solid rgba(143,219,255,.1); border-radius: 8px; background: rgba(8,27,47,.42); }
+.bestiary-dossier-grid strong { display: block; margin-top: .2rem; overflow-wrap: anywhere; }
+.bestiary-dossier-grid small { display: block; margin-top: .18rem; color: var(--muted); }
+.bestiary-dossier-label { display: block; color: var(--gold); font-family: var(--font-retro); font-size: .62rem; letter-spacing: .075em; text-transform: uppercase; }
+.bestiary-dossier-section { margin-top: .65rem; }
+.bestiary-dossier-section p { margin: .4rem 0 0; line-height: 1.55; }
+.bestiary-drop-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .35rem .6rem; margin: .45rem 0 0; padding-left: 1rem; }
+.bestiary-drop-list li { min-width: 0; color: var(--text); font-size: .78rem; overflow-wrap: anywhere; }
+.bestiary-mastery-reward { display: flex; align-items: center; gap: .65rem; margin-top: .7rem; padding: .65rem .75rem; border: 1px solid rgba(225,188,91,.3); border-radius: 8px; background: linear-gradient(135deg, rgba(225,188,91,.08), rgba(8,27,47,.5)); }
+.bestiary-mastery-reward > span { color: var(--gold); font-size: 1.2rem; }
+.bestiary-mastery-reward strong, .bestiary-mastery-reward small { display: block; }
+.bestiary-mastery-reward small { margin-top: .15rem; color: var(--muted); }
+.bestiary-dossier-locked { color: var(--muted); text-align: center; }
+.bestiary-dossier-locked p { margin: .2rem 0; }
+.bestiary-empty-state { display: grid; justify-items: center; gap: .65rem; padding: 2rem 1rem; text-align: center; }
+
+@media (max-width: 1080px) {
+  .bestiary-summary-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .bestiary-filter-panel { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .bestiary-search-box { grid-column: 1 / -1; }
+  .bestiary-clear-filters { justify-self: start; }
+}
+
+@media (max-width: 820px) {
+  .bestiary-card-grid { grid-template-columns: 1fr; }
+  .bestiary-card-main { grid-template-columns: 82px minmax(0,1fr) 26px; }
+  .bestiary-card-portrait { width: 82px; }
+}
+
+@media (max-width: 620px) {
+  .bestiary-title-row { display: grid; }
+  .bestiary-summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .bestiary-filter-panel { grid-template-columns: 1fr; }
+  .bestiary-search-box { grid-column: auto; }
+  .bestiary-card-main { grid-template-columns: 72px minmax(0,1fr) 24px; gap: .65rem; padding: .7rem; }
+  .bestiary-card-portrait { width: 72px; }
+  .bestiary-progress-copy { display: grid; gap: .12rem; }
+  .bestiary-progress-copy span { text-align: left; }
+  .bestiary-dossier-grid, .bestiary-drop-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 390px) {
+  .bestiary-summary-grid { grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .bestiary-summary-card { padding: .62rem .68rem; }
+  .bestiary-card-main { grid-template-columns: 62px minmax(0,1fr); }
+  .bestiary-card-portrait { width: 62px; }
+  .bestiary-expand-marker { display: none; }
+}
+
+/* v1.9.0 Bestiary Overhaul — Step 5 cross-system records */
+.bestiary-filter-panel { grid-template-columns: minmax(240px, 1.7fr) repeat(4, minmax(135px, 1fr)) auto; }
+.bestiary-card.external-record { border-color: rgba(135,188,255,.3); }
+.bestiary-card.external-record.mastered { border-color: rgba(120,210,188,.38); box-shadow: inset 0 1px rgba(255,255,255,.035), 0 0 0 1px rgba(120,210,188,.06), 0 8px 24px rgba(0,0,0,.16); }
+.bestiary-seal.external { color: #8ed9c9; filter: drop-shadow(0 0 6px rgba(120,210,188,.32)); }
+.bestiary-mastery-reward.external-record { border-color: rgba(120,210,188,.28); background: linear-gradient(135deg, rgba(120,210,188,.07), rgba(8,27,47,.5)); }
+.bestiary-mastery-reward.external-record > span { color: #8ed9c9; }
+@media (max-width: 1220px) {
+  .bestiary-filter-panel { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .bestiary-search-box { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .bestiary-filter-panel { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 620px) {
+  .bestiary-filter-panel { grid-template-columns: 1fr; }
+}

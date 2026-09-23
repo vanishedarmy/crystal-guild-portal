@@ -19,3 +19,19 @@
 .solo-enemy-copy h3,.solo-enemy-copy small{max-width:100%;overflow-wrap:anywhere}
 @media(max-width:480px){.solo-enemy-layout{grid-template-columns:88px minmax(0,1fr)}}
 @media(max-width:360px){.solo-enemy-layout{grid-template-columns:1fr}.solo-enemy-portrait{width:min(100%,150px);justify-self:center}}
+
+/* Bestiary Research Step 2: each unseen monster keeps its own recognisable
+ * portrait shape in the locked visual state. Actual combat/lore gating is
+ * implemented in Step 3; existing purpose-built seasonal art is unchanged. */
+.monster-portrait.undiscovered.has-art { isolation:isolate; }
+.monster-portrait.undiscovered.has-art img {
+  filter:grayscale(1) brightness(.24) contrast(1.48);
+  opacity:.93;
+}
+.monster-portrait.undiscovered.has-art::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 52% 43%,transparent 15%,rgba(2,7,20,.63) 100%),linear-gradient(180deg,rgba(5,10,28,.08),rgba(5,10,28,.30));
+}

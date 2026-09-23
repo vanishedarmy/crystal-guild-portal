@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 9",
+    name: "Bestiary Discovery",
+    title: "Discover every monster, complete your field guide, earn permanent mastery",
+    summary: "Your Bestiary is now a unified 164-entry collection. Older monster defeats count automatically toward research and one-time Mastery Seals, while Raid, World Event and seasonal records keep their existing rewards.",
+    highlights: [
+      { title: "Research with every battle", description: "Core monsters progressively reveal habitats, families, combat information, drops, lore and a permanent mastery entry." },
+      { title: "Existing progress counts", description: "Your historical monster defeat records are preserved and eligible Mastery Seals and Research Points are granted once." },
+      { title: "Special encounters included", description: "Thirty-seven Raid/boss records, ten World Event variants and five Halloween records join the Bestiary, while retaining their independent rewards." },
+      { title: "Complete Expedition artwork", description: "Elder Ochu, Inferno Drake, Malboro Sovereign, Frost Behemoth and Rift Wyrm each have standalone portraits." },
+      { title: "Safe upgrade", description: "The Bot migrates existing databases to schema 22 with a verified backup; hosted sync schema 1 and Portal Action protocol 37 remain unchanged." },
+    ],
+    action: { tab: "bestiary", label: "Open Bestiary" },
+  },
+  {
     version: "v1.9.0 Alpha 8",
     name: "Seasonal Event Framework",
     title: "Night of the Hollow Crystal opens the Guild's reusable seasonal-event system",

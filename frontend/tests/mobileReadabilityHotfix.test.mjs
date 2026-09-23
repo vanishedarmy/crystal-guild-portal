@@ -15,13 +15,13 @@ test("hero directory keeps long names on one line and status out of the name are
   assert.match(css, /\.player-card-topline \.status-badge[\s\S]*position: static/);
 });
 
-test("Bestiary becomes a labeled portrait-led card layout on mobile", () => {
+test("Bestiary becomes a portrait-led research card layout on mobile", () => {
   const page = read("src/player/Bestiary.jsx");
   const css = read("src/styles/portal.css");
-  assert.match(page, /bestiary-table-wrap/);
-  assert.match(page, /data-label="Weakness"/);
-  assert.match(page, /data-label="Combat Style"/);
-  assert.match(page, /data-label="Active Skill"/);
-  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.bestiary-table tr[\s\S]*display: grid/);
-  assert.match(css, /\.bestiary-table thead[\s\S]*display: none/);
+  assert.match(page, /bestiary-card-grid/);
+  assert.match(page, /bestiary-card-portrait/);
+  assert.match(page, /Combat Profile \/ Active Skill/);
+  assert.match(page, /Known Drops/);
+  assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.bestiary-card-grid/);
+  assert.match(css, /\.bestiary-dossier-grid, \.bestiary-drop-list \{ grid-template-columns: 1fr; \}/);
 });

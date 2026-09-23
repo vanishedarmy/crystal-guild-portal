@@ -12,8 +12,8 @@ test("Monster Identity Wave 11 completes every existing Bestiary portrait", () =
   const data = JSON.parse(read("public/guide-data.json"));
   const monsterIds = new Set(data.monsters.map((entry) => entry.id));
   const mapped = [...src.matchAll(/^\s*([a-z0-9_]+):\s*"\/retro-phase-ii\/monster-portraits-v10\//gm)].map((m) => m[1]);
-  assert.equal(data.monsters.length, 107);
-  assert.equal(mapped.length, 107);
+  assert.equal(data.monsters.length, 112);
+  assert.equal(mapped.length, 112); // all historical entries and five newly illustrated Expedition bosses
   for (const id of finalWave) {
     assert.ok(monsterIds.has(id), `existing Bestiary monster missing: ${id}`);
     assert.ok(mapped.includes(id), `portrait mapping missing: ${id}`);

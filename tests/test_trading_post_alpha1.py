@@ -42,8 +42,8 @@ class TradingPostHostedAlpha1Tests(unittest.TestCase):
         self.tmp.cleanup()
 
     def test_release_contract_and_actions(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-seasonal-events-alpha8")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-seasonal-events-alpha8")
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-bestiary-alpha9")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-bestiary-alpha9")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 37)
         for kind in {"TRADING_POST_STATE", "TRADING_POST_LIST", "TRADING_POST_BUY", "TRADING_POST_CANCEL"}:
             self.assertIn(kind, ALLOWED_PORTAL_ACTIONS)

@@ -1,3 +1,21 @@
+# Crystal Guild v1.9.0 Alpha 10 — Records & Moments
+
+The Adventurer's Ledger expands the existing Records page with 15 personal records across combat, Gil, World Events, Ventures, Raids and the Gold Saucer. A new 12-Moment collection rewards unlikely feats, narrow escapes and spectacular misjudgments with illustrated badges and cosmetic Titles. Seven Moment identities stay hidden until earned; two also receive independent Hall of Trophies rewards.
+
+- Six collapsible Personal Records chapters, server-authored bests and dates where saved evidence exists.
+- Own-once Moments with exactly-once reward receipts and per-player repair on restart.
+- Spoiler-safe server projections: no secret names, unlock rules, Titles or badge URLs before ownership.
+- Fresh-discovery notices on the Records page; older verified achievements are not mislabeled as newly earned.
+- Player Guide chapter, What's New and narrow-screen Records card improvements.
+- 12 standalone badge WebPs and four standalone earned/locked trophy WebPs. All 16 images remain independent; the separate artwork pack has a matching PNG of each.
+- Historical backfill only from verified paid Mini Cactpot streaks and qualifying Gil purchases. No guessed old battle or Raid achievements, no player reset and no stat/economy balance changes.
+
+**Compatibility:** local SQLite schema 23 (migration from 22 creates verified backup), hosted sync schema 1, Portal Action protocol 37. Deploy matching Web and Bot together from the Language Hotfix 1 baseline; source-only Web requires a Vite production build in a dependency-installed environment. Preserve database, secrets, token storage and persistent volumes. Validate browser and deployed runtime on staging first.
+
+---
+
+## Previous release
+
 # Crystal Guild v1.9.0 Alpha 9 — Bestiary Discovery
 
 - Reworked the Portal Bestiary with responsive research cards, searchable and filterable dossiers, progress bars, habitats, lore and discovery-stage visibility.
@@ -10,19 +28,6 @@
 
 ## Earlier release: v1.9.0 Alpha 8 — Seasonal Event Framework
 
-
-## Halloween Individual Artwork Hotfix 3
-- Replaced the original composite-derived Halloween imagery with 31 individually packaged WebP assets from the eight approved art batches: 10 monster/Warden states, 5 currency/shop icons, 8 permanent/locked trophies, 4 banners and 4 backgrounds.
-- The Bestiary and trophy cards now display uncropped art (`object-fit: contain`); the seasonal wallet, shop and optional scenery gallery use the proper independent images. The Warden displays its locked image until earned.
-- Added a revision query to seasonal art URLs so browsers refresh retired images after deployment. Fixed the purchase button guard for the intentionally repeatable Spooky Supply Cache.
-- Web-only: Bot, schema 21, hosted sync 1, Portal Action protocol 37, event activation defaults, seasonal rewards and combat odds are unchanged.
-
-## Navigation & Seasonal Event Hotfix 2
-- All 18 Adventurer Profile destinations now form three even six-column desktop rows; removed the old 17-tab offset and full-width mobile final-button rule. Compact-desktop navigation centers its final pair.
-- The hosted player API now serves the seasonal profile module; previously the route returned an "Unknown player module" 404, leaving the Seasonal Event page loading indefinitely.
-- Historical player snapshots without a seasonal module display a clear "Waiting for event data" state until the updated Bot syncs, instead of a blank screen.
-- Failed profile section requests show an error and a working Retry Section control.
-- Web-only fix: the Bot is unchanged. Schema 21, hosted sync 1, Portal Action protocol 37, game balance, and seasonal activation defaults are unchanged.
 
 Alpha 8 builds one reusable seasonal/event rotation system and ships **Night of the Hollow Crystal** as the first event edition. Seasonal content is a layer over existing Ventures, Hunts, World Events, rewards, profiles, and the Hall rather than a second combat system.
 

@@ -1,14 +1,16 @@
 {
   "name": "crystal-guild-fellowship",
   "private": true,
-  "version": "1.9.0-alpha.9",
+  "version": "1.9.0-alpha.10",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "check": "vite build",
-    "test:unit": "node --test tests/*.test.mjs"
+    "test:unit": "node --test tests/*.test.mjs",
+    "doctor": "node scripts/diagnose-build.mjs",
+    "build:setup": "node scripts/install-and-build.mjs"
   },
   "dependencies": {
     "react": "19.2.8",

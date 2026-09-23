@@ -5,6 +5,7 @@ export const TROPHY_CATEGORIES = [
   { id: "hunts", label: "Hunts" },
   { id: "triple_triad", label: "Triple Triad" },
   { id: "fellowship", label: "Fellowship" },
+  { id: "mystery", label: "Mysteries" },
 ];
 
 export const TROPHY_CATALOG = [

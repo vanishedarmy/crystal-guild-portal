@@ -1,11 +1,19 @@
-# Crystal Guild — Web / Portal (v1.9.0 Alpha 8)
+# Crystal Guild — Web / Portal (v1.9.0 Alpha 10 — Records & Moments)
 
-Player Portal, Streamer Control Center, and public artwork. Deploy with the matching Alpha 8 Bot.
+Player Portal, Streamer Control Center, and public artwork. Deploy alongside the matching **Alpha 10 Bot**. This is source-only Web: install the pinned frontend dependencies and build with Vite in a deployment environment.
 
-**Runtime:** `1.9.0-seasonal-events-alpha8` · **Bot database schema:** 21 · **Hosted sync:** 1 · **Portal Action protocol:** 37.
+**Runtime:** `1.9.0-records-moments-alpha10` · **Local Bot database schema:** 23 · **Hosted sync:** 1 · **Portal Action protocol:** 37.
 
-This cleanup hotfix removes retired documentation and unreferenced older art revisions. It does not modify gameplay, event scheduling, saved progress or live component routes. See `UPGRADE_GUIDE.md` to remove old files when applying the maintenance patch to an existing installation.
+## Records & Moments
 
-**Documentation:** `HOSTING_GUIDE.md`, `PORTAL_ACTIONS_SETUP.md`, `STREAMER_DASHBOARD.md`, `RELEASE_NOTES.md` and condensed `CHANGELOG.md`. Asset manifests are retained for audit/validation.
+Records now tracks additional personal bests. The Moments collection awards 12 unusual achievements and cosmetic Titles; seven secret identities remain hidden until earned. The artwork contains 12 individually named badge WebPs and 4 separate earned/locked Hall of Trophies WebPs. See `RELEASE_NOTES.md` for player-facing changes.
 
-**Frontend:** from `frontend/`, install the pinned dependencies and run the normal Vite production build. Halloween assets are under `frontend/public/seasonal/halloween-2026/`; the event remains disabled until enabled by the owner.
+## Deployment
+
+Begin with `UPGRADE_GUIDE.md` and `HOSTING_GUIDE.md`. Do not overwrite the Bot's real database, persistent runtime state or your private `.env` and authentication files. The exact supported incremental baseline is **v1.9.0 Alpha 9 Player Language Hotfix 1**. If uncertain, deploy matching Alpha 10 Complete or Web/Bot source packages, not an incremental patch.
+
+**Validation status:** source-level backend and targeted frontend checks passed; inherited frontend failures, dependency-installed Vite production bundling and a deployed-browser visual walkthrough are outstanding. Check on staging before production.
+
+## Historical notes
+
+`CHANGELOG.md`, `HOSTING_GUIDE.md`, `PORTAL_ACTIONS_SETUP.md` and `RELEASE_VALIDATION.md` include historical feature and deployment guidance; some sections originally described the Alpha 8/9 baselines and should not be used as current upgrade instructions. The current upgrade source of truth is `UPGRADE_GUIDE.md`.

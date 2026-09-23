@@ -23,7 +23,7 @@ test("drawer headers remain pinned while long ability and item lists scroll", ()
 });
 
 test("Hotfix 10 cache-busts the Portal and documents bounded mobile drawers", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-bestiary-alpha9-language-hotfix1"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-records-moments-alpha10"/);
   assert.match(guide, /bounded drawer with their own scroll area/);
   assert.match(guide, /battle page remains visible and scrollable outside it/);
 });

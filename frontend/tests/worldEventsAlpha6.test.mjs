@@ -7,9 +7,9 @@ const exists = (path) => fs.existsSync(new URL(path, import.meta.url));
 
 test("Alpha 6 publishes World Events as the current web identity", () => {
   const version = read("../src/version.js");
-  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 9"/);
-  assert.match(version, /WEB_BUILD = "Bestiary Discovery"/);
-  assert.match(version, /1\.9\.0-bestiary-alpha9/);
+  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 10"/);
+  assert.match(version, /WEB_BUILD = "Records & Moments"/);
+  assert.match(version, /1\.9\.0-records-moments-alpha10/);
 });
 
 test("Stream Activities exposes World Events separately from Raids", () => {

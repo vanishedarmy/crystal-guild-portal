@@ -1,40 +1,7 @@
-Crystal Guild v1.9.0 Alpha 9 — Bestiary Discovery
-Runtime/frontend: 1.9.0-bestiary-alpha9 | local schema 22 | hosted sync 1 | Portal Action protocol 37
-Carried forward: Seasonal Events, Hall of Trophies, Moogle Trading Post, World Events.
-164 unified monster-domain records; 169 verified Bestiary image states.
-Compact package inventory (full integrity list included in release MANIFEST.json).
-
-.dockerignore
-.gitignore
-ARTWORK_ROUTING_AUDIT.json
-CHANGELOG.md
-CHOCOBO_PORTRAIT_MANIFEST.json
-Dockerfile
-EQUIPMENT_ARTWORK_ROUTING_MANIFEST.json
-EXPEDITION_ARTWORK_MANIFEST.json
-EXPEDITION_UI_POLISH_MANIFEST.json
-GEAR_ARTWORK_MANIFEST.json
-HOSTING_GUIDE.md
-ITEM_WEAPON_REFRESH_MANIFEST.json
-MATERIAL_ARTWORK_MANIFEST.json
-PORTAL_ACTIONS_SETUP.md
-README.md
-README_FIRST.txt
-RELEASE_NOTES.md
-RELIC_ARTWORK_MANIFEST.json
-SCENE_BACKGROUND_MANIFEST.json
-STREAMER_DASHBOARD.md
-STREAM_ACTIVITIES_UI_MANIFEST.json
-TITLE_EXPANSION.md
-TRADING_POST_ARTWORK_MANIFEST.json
-TROPHY_HALL_ARTWORK_MANIFEST.json
-UI_SHARED_ASSET_MANIFEST.json
-UPGRADE_GUIDE.md
-VALIDATION_REPORT.md
-VERSION.txt
-WORLD_EVENTS.md
-WORLD_EVENTS_ARTWORK_MANIFEST.json
-hosted.env.example
-render.yaml
-requirements.txt
-run_hosted_portal.py
+Crystal Guild Alpha 10 Web source package
+Release: 1.9.0-records-moments-alpha10
+Packaged Web source files (excludes caches and generated assets): 1342
+Independent Moments badges: 12 WebP
+Independent earned/locked Moment trophy art: 4 WebP
+Local DB schema: 23 | Hosted sync: 1 | Portal Action: 37
+For authoritative per-file SHA-256, see the top-level release MANIFEST.json and SHA256SUMS.txt.

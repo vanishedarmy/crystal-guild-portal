@@ -1,3 +1,12 @@
+# Crystal Guild Web/Portal — Release history
+
+## v1.9.0 Alpha 10 — Records & Moments
+- Six collapsible personal-record chapters and 12 one-time Moments, including seven secret identities and cosmetic Titles.
+- Individual 16-bit-style badges and Hall of Trophies rewards remain separate files; new personal unlock notices and responsive Records layout.
+- Server-owned read-only player-specific projection and local schema 23 (hosted sync 1; Portal Action protocol 37).
+- Source release; staging production bundling and deployed-browser walkthrough remain outstanding.
+
+## Earlier releases
 # Crystal Guild — Release History (Condensed)
 
 ## Alpha 8 — Halloween Individual Artwork Hotfix 3

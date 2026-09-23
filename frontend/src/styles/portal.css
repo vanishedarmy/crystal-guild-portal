@@ -14303,3 +14303,101 @@ textarea {
 @media (max-width: 620px) {
   .bestiary-filter-panel { grid-template-columns: 1fr; }
 }
+
+/* Records & Moments — Step 4: readable, collapsible personal history. */
+.records-dashboard { align-items: start; }
+.records-dashboard > .panel { min-width: 0; }
+.records-dashboard .record-section { display: block; }
+.record-section > summary, .record-category > summary { list-style: none; cursor: pointer; }
+.record-section > summary::-webkit-details-marker, .record-category > summary::-webkit-details-marker { display: none; }
+.record-section-summary { margin: 0; display: flex; justify-content: space-between; align-items: center; gap: .85rem; }
+.record-section-summary::after, .record-category-summary::after { display: none !important; content: none !important; }
+.record-section-tools, .record-category-meta { display: inline-flex; align-items: center; flex-shrink: 0; gap: .35rem; }
+.record-section:not([open]) > summary { margin-bottom: 0; }
+.record-section-body { margin-top: 1rem; }
+.record-new-collection .panel-title-row { flex-wrap: wrap; gap: .75rem; }
+.record-intro-copy { margin: .2rem 0 1.05rem; color: var(--muted); line-height: 1.6; }
+.record-highlights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; margin-bottom: 1.1rem; }
+.record-highlights > div { min-width: 0; padding: .85rem 1rem; background: linear-gradient(140deg,rgba(20,48,69,.8),rgba(7,24,36,.66)); border: 1px solid rgba(230,203,136,.18); border-radius: 12px; }
+.record-highlights span { display: block; font-size: .73rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.record-highlights strong { display: block; margin-top: .35rem; font-family: var(--font-display); font-size: 1.28rem; color: var(--crystal-soft); overflow-wrap: anywhere; }
+.record-category-list { display: grid; gap: .65rem; }
+.record-category { min-width: 0; background: linear-gradient(135deg,rgba(8,25,41,.68),rgba(6,15,28,.72)); border: 1px solid rgba(138,173,199,.23); border-radius: 12px; }
+.record-category-summary { display: flex; justify-content: space-between; align-items: center; gap: .7rem; padding: .9rem 1rem; min-width: 0; }
+.record-category-heading { display: grid; gap: .24rem; min-width: 0; }
+.record-category-heading > strong { font-size: 1rem; color: var(--text); }
+.record-category-heading > small { color: var(--muted); font-size: .77rem; line-height: 1.45; }
+.personal-best-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,215px),1fr)); gap: .7rem; padding: 0 .8rem .85rem; }
+.personal-best-card { display: flex; flex-direction: column; gap: .25rem; min-width: 0; min-height: 144px; padding: 1rem; border: 1px solid rgba(169,200,217,.25); background: rgba(5,17,31,.7); border-radius: 10px; }
+.personal-best-card.is-unset { border-style: dashed; opacity: .8; }
+.personal-best-card strong { display: block; overflow-wrap: anywhere; font-family: var(--font-display); font-size: clamp(1.12rem,2vw,1.38rem); color: var(--crystal-soft); }
+.personal-best-description { color: var(--muted); font-size: .82rem; line-height: 1.5; overflow-wrap: anywhere; }
+.personal-best-card small { color: var(--muted); font-size: .7rem; margin-top: auto; }
+.record-history-note { margin: 1rem 0 0; font-size: .78rem; line-height: 1.6; }
+.record-moment-filters { display: grid; gap: .55rem; margin-bottom: 1rem; }
+.record-moment-filters .filter-row { display: flex; flex-wrap: wrap; gap: .45rem; min-width: 0; }
+.record-moment-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); gap: .85rem; }
+.record-moment-card { position: relative; display: flex; flex-direction: column; min-width: 0; gap: .5rem; padding: 1rem; border: 1px solid rgba(155,229,255,.33); border-radius: 13px; background: linear-gradient(150deg,rgba(23,44,66,.75),rgba(7,20,35,.88)); }
+.record-moment-card.is-locked { border-color: rgba(163,174,193,.22); background: linear-gradient(150deg,rgba(16,28,43,.78),rgba(7,16,30,.85)); }
+.record-moment-card.is-secret { border-style: dashed; }
+.record-moment-top { display: flex; align-items: center; gap: .5rem; min-height: 2rem; }
+.record-moment-seal { display: inline-grid; flex: 0 0 2rem; width: 2rem; height: 2rem; place-items: center; border: 1px solid rgba(160,184,209,.5); border-radius: 50%; color: var(--muted); background: rgba(0,0,0,.22); font-family: var(--font-display); font-size: 1.1rem; }
+.record-moment-seal.earned { color: var(--gold); border-color: rgba(230,203,136,.6); box-shadow: inset 0 0 14px rgba(230,203,136,.13); }
+.record-moment-status { margin-right: auto; font-size: .72rem; color: var(--muted); line-height: 1.3; }
+.record-moment-card h3 { margin: .1rem 0 0; color: var(--crystal-soft); font: 600 1.15rem var(--font-display); line-height: 1.32; }
+.record-moment-card p { margin: 0; color: var(--text); font-size: .86rem; line-height: 1.6; }
+.record-moment-card .record-moment-hint { font-style: italic; color: var(--muted); }
+.record-moment-reward { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem; padding-top: .65rem; margin-top: auto; border-top: 1px solid rgba(169,200,217,.18); }
+.record-moment-reward span { color: var(--gold); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+.record-moment-reward strong { color: var(--crystal-soft); font-size: .92rem; overflow-wrap: anywhere; }
+.record-moment-card > small { font-size: .73rem; color: var(--muted); }
+.record-no-moments { margin: 1rem 0; }
+.record-section > summary:focus-visible, .record-category > summary:focus-visible,
+.record-moment-filters button:focus-visible { outline: 2px solid var(--crystal-soft); outline-offset: 3px; }
+@media (max-width: 780px) {
+  .record-highlights { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 560px) {
+  .record-highlights { grid-template-columns: 1fr; }
+  .record-category-summary, .record-section-summary { align-items: center; }
+  .record-category-summary { padding: .8rem; }
+  .record-category-meta .small-badge { white-space: nowrap; }
+  .personal-best-grid, .record-moment-grid { grid-template-columns: minmax(0,1fr); }
+  .record-moment-top { flex-wrap: wrap; }
+}
+
+/* Records & Moments Step 5 — complete standalone badges, no public secret leak. */
+.record-moment-seal:has(img) { width: 5.25rem; height: 5.25rem; flex-basis: 5.25rem; border: none; border-radius: 0; background: transparent; overflow: visible; }
+.record-moment-seal img { display:block; width:100%; height:100%; object-fit:contain; image-rendering:auto; }
+.record-moment-card.is-locked .record-moment-seal img { filter:grayscale(.84) brightness(.6); opacity:.76; }
+@media(max-width:560px) { .record-moment-seal:has(img) { width:4.25rem; height:4.25rem; flex-basis:4.25rem; } }
+
+.record-moment-trophy { display:flex; align-items:baseline; flex-wrap:wrap; gap:.5rem; color:var(--gold); font-size:.83rem; }
+.record-moment-trophy strong { color:var(--crystal-soft); overflow-wrap:anywhere; }
+
+
+/* Records & Moments Alpha 10 — narrow screens, fresh discoveries and focus. */
+.record-new-collection { min-width: 0; overflow-wrap: anywhere; }
+.record-category-heading, .record-moment-card, .record-moment-top, .record-moment-reward { min-width: 0; }
+.record-moment-card > p, .record-moment-card > h3 { overflow-wrap: anywhere; }
+.moment-discovery-notice { margin: 0 0 1.1rem; border: 1px solid rgba(242,208,123,.65); background: linear-gradient(140deg,rgba(66,47,15,.8),rgba(18,40,57,.9)); border-radius: 13px; padding: .85rem 1rem; }
+.moment-discovery-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; margin-bottom: .7rem; }
+.moment-discovery-heading strong { color: var(--gold); font-family: var(--font-display); font-size: 1.05rem; }
+.moment-discovery-heading button { color: var(--text); background: rgba(4,18,30,.74); border: 1px solid rgba(194,211,225,.45); border-radius: 8px; cursor: pointer; padding: .4rem .7rem; }
+.moment-discovery-heading button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.moment-discovery-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: .7rem; }
+.moment-discovery-item { min-width: 0; display: flex; gap: .65rem; align-items: center; padding: .6rem; border: 1px solid rgba(226,203,151,.22); border-radius: 9px; background: rgba(7,18,29,.55); }
+.moment-discovery-item img { width: 4.25rem; height: 4.25rem; flex: 0 0 4.25rem; object-fit: contain; }
+.moment-discovery-item div { min-width: 0; display: grid; gap: .12rem; overflow-wrap: anywhere; }
+.moment-discovery-item strong { color: var(--crystal-soft); font-size: .97rem; }
+.moment-discovery-item span { color: var(--gold); font-size: .83rem; }
+.moment-discovery-item small { color: var(--muted); font-size: .72rem; line-height: 1.45; }
+@media (max-width: 560px) {
+ .moment-discovery-notice { padding: .75rem; }
+ .record-category-summary { flex-wrap: wrap; }
+ .record-category-meta { margin-left: auto; }
+ .record-moment-filters .filter-row { overflow: auto hidden; flex-wrap: nowrap; padding-block: .25rem; }
+ .record-moment-filters .filter-chip { flex: 0 0 auto; white-space: nowrap; }
+ .moment-discovery-item img { width: 3.75rem; height: 3.75rem; flex-basis: 3.75rem; }
+}
+@media (prefers-reduced-motion: reduce) { .moment-discovery-notice { animation: none; } }

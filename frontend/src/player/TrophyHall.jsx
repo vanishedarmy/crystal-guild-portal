@@ -37,24 +37,28 @@ export default function TrophyHall({ data = {} }) {
     () => new Map((data.unlocked || []).map((item) => [String(item.id), item])),
     [data.unlocked],
   );
-  const unlockedCount = TROPHY_CATALOG.filter((trophy) => unlockedById.has(trophy.id)).length;
-  const percent = Math.round((unlockedCount / TROPHY_CATALOG.length) * 100);
-  const complete = unlockedCount === TROPHY_CATALOG.length;
+  const trophyCatalog = useMemo(() => [
+    ...TROPHY_CATALOG,
+    ...(data.moment_slots || []).map((slot, offset) => ({ ...slot, order: TROPHY_CATALOG.length + offset })),
+  ], [data.moment_slots]);
+  const unlockedCount = trophyCatalog.filter((trophy) => unlockedById.has(trophy.id)).length;
+  const percent = Math.round((unlockedCount / trophyCatalog.length) * 100);
+  const complete = unlockedCount === trophyCatalog.length;
 
   const categoryCounts = useMemo(() => {
     const result = {};
     for (const item of TROPHY_CATEGORIES) {
-      const rows = item.id === "all" ? TROPHY_CATALOG : TROPHY_CATALOG.filter((trophy) => trophy.category === item.id);
+      const rows = item.id === "all" ? trophyCatalog : trophyCatalog.filter((trophy) => trophy.category === item.id);
       result[item.id] = {
         total: rows.length,
         unlocked: rows.filter((trophy) => unlockedById.has(trophy.id)).length,
       };
     }
     return result;
-  }, [unlockedById]);
+  }, [unlockedById, trophyCatalog]);
 
   const visible = useMemo(() => {
-    const rows = category === "all" ? [...TROPHY_CATALOG] : TROPHY_CATALOG.filter((trophy) => trophy.category === category);
+    const rows = category === "all" ? [...trophyCatalog] : trophyCatalog.filter((trophy) => trophy.category === category);
     if (sort === "recent") {
       rows.sort((a, b) => {
         const aTime = Date.parse(unlockedById.get(a.id)?.unlocked_at || "") || 0;
@@ -65,7 +69,7 @@ export default function TrophyHall({ data = {} }) {
       });
     }
     return rows;
-  }, [category, sort, unlockedById]);
+  }, [category, sort, unlockedById, trophyCatalog]);
 
   function markSeen(id) {
     if (seen.has(id)) return;
@@ -110,10 +114,10 @@ export default function TrophyHall({ data = {} }) {
           <h2>Hall of Trophies</h2>
           <p className="muted">Relics, honors, and memories earned throughout your adventures.</p>
           <div className="trophy-hall-progress-copy">
-            <strong>{unlockedCount} / {TROPHY_CATALOG.length}</strong>
+            <strong>{unlockedCount} / {trophyCatalog.length}</strong>
             <span>{complete ? "Hall Complete" : `${percent}% discovered`}</span>
           </div>
-          <div className="trophy-hall-progress" role="progressbar" aria-label="Hall of Trophies completion" aria-valuemin="0" aria-valuemax={TROPHY_CATALOG.length} aria-valuenow={unlockedCount}>
+          <div className="trophy-hall-progress" role="progressbar" aria-label="Hall of Trophies completion" aria-valuemin="0" aria-valuemax={trophyCatalog.length} aria-valuenow={unlockedCount}>
             <span style={{ width: `${percent}%` }} />
           </div>
         </div>
@@ -171,7 +175,7 @@ export default function TrophyHall({ data = {} }) {
             const ownership = unlockedById.get(trophy.id);
             const unlocked = Boolean(ownership);
             const isNew = unlocked && !seen.has(trophy.id) && !ownership?.seen_at;
-            const image = trophy.secret && !unlocked ? "/trophies/a1/secret.webp" : unlocked ? trophy.art : "/trophies/a1/locked.webp";
+            const image = trophy.secret && !unlocked ? "/trophies/a1/secret.webp" : unlocked ? trophy.art : (trophy.locked_art || "/trophies/a1/locked.webp");
             return (
               <button
                 type="button"
@@ -202,7 +206,7 @@ export default function TrophyHall({ data = {} }) {
             <button type="button" className="trophy-detail-close" onClick={closeTrophy} aria-label="Close trophy details">×</button>
             <img
               className="trophy-detail-art"
-              src={selected.secret && !selectedUnlocked ? "/trophies/a1/secret.webp" : selectedUnlocked ? selected.art : "/trophies/a1/locked.webp"}
+              src={selected.secret && !selectedUnlocked ? "/trophies/a1/secret.webp" : selectedUnlocked ? selected.art : (selected.locked_art || "/trophies/a1/locked.webp")}
               alt={selectedUnlocked ? `Trophy: ${selected.name}` : selected.secret ? "Undiscovered secret trophy" : `Locked trophy: ${selected.name}`}
             />
             <div className="trophy-detail-copy">

@@ -17,10 +17,10 @@ function fellowshipSection(html) {
 }
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
-  assert.match(version, /WEB_BUILD = "Bestiary Discovery"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-bestiary-alpha9-language-hotfix1"/);
-  assert.equal(guideData.meta.version, "v1.9.0 Alpha 9 — Bestiary Discovery");
-  assert.equal(guideData.meta.release, "1.9.0-bestiary-alpha9");
+  assert.match(version, /WEB_BUILD = "Records & Moments"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-records-moments-alpha10"/);
+  assert.equal(guideData.meta.version, "v1.9.0 Alpha 10 — Records & Moments");
+  assert.equal(guideData.meta.release, "1.9.0-records-moments-alpha10");
   assert.equal(manifest.release, "v1.5.1 — Relic Arsenal Complete");
   assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });

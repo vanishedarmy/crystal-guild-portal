@@ -43,6 +43,6 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
   assert.match(guide, /Priority material/);
-  assert.equal(guideData.meta.version, "v1.9.0 Alpha 9 — Bestiary Discovery");
-  assert.equal(guideData.meta.release, "1.9.0-bestiary-alpha9");
+  assert.equal(guideData.meta.version, "v1.9.0 Alpha 10 — Records & Moments");
+  assert.equal(guideData.meta.release, "1.9.0-records-moments-alpha10");
 });

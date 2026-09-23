@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 10",
+    name: "Records & Moments",
+    title: "Your victories have witnesses. So do your spectacular mistakes.",
+    summary: "Personal Records remembers your greatest hits, narrow escapes and very questionable purchases. Twelve new Moments commemorate the unlikely stories behind them—some of the best are secrets until you stumble into them.",
+    highlights: [
+      { title: "Six chapters of personal bests", description: "Browse your combat, economy, World Event, Venture, Raid and Gold Saucer records without losing any of your older Guild history." },
+      { title: "Twelve strange new Moments", description: "Earn illustrated badges and cosmetic Titles for unlikely triumphs and memorable disasters. Seven of the Moments keep their identities hidden until discovered." },
+      { title: "Two new Hall trophies", description: "Especially close World Event and Raid victories have their own illustrated keepsakes, with separate locked and unlocked art." },
+      { title: "Your previous adventures are safe", description: "Older records are preserved. Only verifiable past purchases and consecutive paid Mini Cactpot losses can earn historical Moments; unrecorded old combat details aren't guessed." },
+    ],
+    action: { tab: "records", label: "Open Records & Moments" },
+  },
+  {
     version: "v1.9.0 Alpha 9",
     name: "Bestiary Discovery",
     title: "Your field guide has grown — every battle brings a new discovery",

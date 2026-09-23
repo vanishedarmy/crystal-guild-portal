@@ -29,6 +29,30 @@ def build_trophy_hall(snapshot: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
+    # The Bot already seals unearned secrets, but do not let a stale/partial
+    # hosted snapshot accidentally forward names, artwork or private event
+    # evidence to a different player's Hall. Ownership must agree with the
+    # independent durable receipt list before revealing a Moment trophy.
+    moment_slots: list[dict[str, Any]] = []
+    for position, raw in enumerate(trophies.get("moment_slots") or [], start=1):
+        slot = raw if isinstance(raw, dict) else {}
+        trophy_id = str(slot.get("id") or "")
+        if slot.get("earned") is True and trophy_id.startswith("moment_trophy_") and trophy_id in seen:
+            moment_slots.append({
+                "id": trophy_id,
+                "name": slot.get("name"), "description": slot.get("description"),
+                "category": slot.get("category"), "requirement": slot.get("requirement"),
+                "art": slot.get("art"), "locked_art": slot.get("locked_art"),
+                "secret": True, "earned": True,
+            })
+        else:
+            moment_slots.append({
+                "id": f"sealed_trophy_slot_{position:02d}",
+                "name": "Undiscovered Trophy", "description": "Its story has yet to be written.",
+                "category": "mystery", "requirement": None, "art": None, "locked_art": None,
+                "secret": True, "earned": False,
+            })
+
     return {
         "player": {
             "username": identity.get("username"),
@@ -37,5 +61,6 @@ def build_trophy_hall(snapshot: dict[str, Any]) -> dict[str, Any]:
             "title": identity.get("title"),
         },
         "unlocked": unlocked,
-        "summary": {"unlocked": len(unlocked), "total": 30},
+        "moment_slots": moment_slots,
+        "summary": {"unlocked": len(unlocked), "total": 30 + len(moment_slots)},
     }

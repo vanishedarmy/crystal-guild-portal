@@ -1,7 +1,5 @@
-# Portal Actions — Alpha 8
+# Portal Actions — v1.9.0 Alpha 10
 
-Portal Action protocol **37**. Deploy the paired `1.9.0-seasonal-events-alpha8` Bot/Web packages; preserve current OAuth/session keys and private sync configuration.
+Portal Action protocol **37**, hosted sync **1**. Deploy matching `1.9.0-records-moments-alpha10` Web and Bot source packages; preserve existing OAuth/session keys, secrets and private sync configuration. Records & Moments uses read-only Records/Moments projections; it does not introduce new Portal action mutations or a new hosted sync schema.
 
-Authenticated Portal mutations are queued and verified by the authoritative Bot (including gear favorites, Trading Post operations and seasonal event shop/state actions). Repeated requests use the existing idempotency receipts. Do not expose private Bot tokens, database files or secrets to the public frontend.
-
-The cleanup hotfix makes **no protocol or gameplay change**.
+For the current deployment baseline and local schema upgrade, see `UPGRADE_GUIDE.md`.

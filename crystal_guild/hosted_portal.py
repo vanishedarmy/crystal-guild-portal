@@ -23,8 +23,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.0-bestiary-alpha9"
-FRONTEND_ASSET_REVISION = "1.9.0-bestiary-alpha9"
+HOSTED_PORTAL_VERSION = "1.9.0-records-moments-alpha10"
+FRONTEND_ASSET_REVISION = "1.9.0-records-moments-alpha10"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 37
 ALLOWED_PORTAL_ACTIONS = {

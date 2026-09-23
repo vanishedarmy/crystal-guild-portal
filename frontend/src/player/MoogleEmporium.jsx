@@ -367,10 +367,10 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       </div>
 
       <div className={`equipment-action-status ${shopActionsAvailable ? "ready" : "offline"}`}>
-        <strong>{shopActionsAvailable ? "Emporium connection ready" : "Emporium controls unavailable"}</strong>
+        <strong>{shopActionsAvailable ? "The counter is open" : "The counter is closed for now"}</strong>
         <span>{shopActionsAvailable
-          ? "Buy or sell through the Emporium, or enter the Fellowship Trading Post for player-to-player listings. Prices and availability are checked again before every transaction."
-          : "The shop is temporarily unavailable while Crystal Guild is offline."}</span>
+          ? "Looking for supplies? Browse the Emporium, sell a few spare items, or see what other adventurers have posted at the Trading Post. We’ll confirm the price before you buy."
+          : "The moogles are taking a short break while the Guild reconnects. Your Gil and items are safe."}</span>
         {message ? <small aria-live="polite">{message}</small> : null}
       </div>
 
@@ -588,7 +588,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                               </article>
                             );
                           })}
-                        </div> : <div className="state-message compact-state">No eligible inventory is available to list. Key items, quest items, relics, artifacts, and equipped last copies cannot be traded.</div>}
+                        </div> : <div className="state-message compact-state">Nothing in your bag can go up for sale right now. Key items, quest items, relics, artifacts, and equipped last copies cannot be traded.</div>}
                       </section>
 
                       <section className="trading-post-own-section">

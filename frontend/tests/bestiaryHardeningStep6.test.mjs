@@ -12,7 +12,7 @@ test('Step 6 synchronizes release identity and keeps protocol/schema contract', 
   assert.match(version, /v1\.9\.0 Alpha 9/);
   assert.match(version, /1\.9\.0-bestiary-alpha9/);
   assert.match(news, /name: "Bestiary Discovery"/);
-  assert.match(news, /schema 22/);
+  assert.doesNotMatch(news.slice(0, news.indexOf("version: \"v1.9.0 Alpha 8\"")), /schema 22|Portal Action protocol/);
 });
 
 test('Step 6 Guide now covers all 112 base monsters and its current metadata', () => {

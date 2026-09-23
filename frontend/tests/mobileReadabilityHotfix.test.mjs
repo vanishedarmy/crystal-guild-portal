@@ -20,8 +20,8 @@ test("Bestiary becomes a portrait-led research card layout on mobile", () => {
   const css = read("src/styles/portal.css");
   assert.match(page, /bestiary-card-grid/);
   assert.match(page, /bestiary-card-portrait/);
-  assert.match(page, /Combat Profile \/ Active Skill/);
-  assert.match(page, /Known Drops/);
+  assert.match(page, /How it fights/);
+  assert.match(page, /What it drops/);
   assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.bestiary-card-grid/);
   assert.match(css, /\.bestiary-dossier-grid, \.bestiary-drop-list \{ grid-template-columns: 1fr; \}/);
 });

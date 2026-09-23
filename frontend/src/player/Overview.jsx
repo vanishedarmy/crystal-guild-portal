@@ -1,5 +1,5 @@
 import DailyReward from "./DailyReward.jsx";
-import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
+import { activitySourceLabel, humanizeLabel, locationLabel } from "../utils/displayLabels.js";
 import ClickableCard from "../components/ClickableCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
@@ -78,7 +78,7 @@ export default function Overview({ data, onDetail, onRefresh, onNavigate }) {
             return (
               <div className="activity-row" key={`${item.created_at}-${item.asset}-${index}`}>
                 <span className="activity-icon">{item.kind === "item" ? "◇" : "G"}</span>
-                <span><strong>{item.kind === "item" ? item.asset : humanizeLabel(item.asset)}</strong><br /><span className="muted">{activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</span></span>
+                <span><strong>{item.kind === "item" ? (item.asset_name || humanizeLabel(item.asset)) : humanizeLabel(item.asset)}</strong><br /><span className="muted">{activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</span></span>
                 <span className={`activity-amount ${positive ? "positive" : "negative"}`}>{positive ? "+" : ""}{number(item.amount)}</span>
               </div>
             );

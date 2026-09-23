@@ -1,3 +1,4 @@
+import { humanizeLabel } from "../utils/displayLabels.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   submitCactpotLine,
@@ -470,7 +471,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div className={`saucer-reels ${slotAnimating ? "is-spinning" : ""}`} aria-label={slotAnimating ? "Crystal Slots reels spinning" : "Last Crystal Slots result"}>
                 {[0, 1, 2].map((index) => <Reel key={index} id={shownReels[index]} label={shownLabels[index]} />)}
               </div>
-              {slots.last_spin && !slotAnimating ? <div className={`saucer-result slot-result ${String(slots.last_spin.details?.result_tier || slots.last_spin.outcome || "spin")}`}><strong>{slots.last_spin.payout > 0 ? `+${number(slots.last_spin.payout)} MGP` : "No payout"}</strong><span>{String(slots.last_spin.outcome || "spin").replaceAll("_", " ")}</span></div> : slotAnimating ? <p className="saucer-instruction spin-callout">Reels are stopping…</p> : <p className="saucer-instruction">No spins recorded yet.</p>}
+              {slots.last_spin && !slotAnimating ? <div className={`saucer-result slot-result ${String(slots.last_spin.details?.result_tier || slots.last_spin.outcome || "spin")}`}><strong>{slots.last_spin.payout > 0 ? `+${number(slots.last_spin.payout)} MGP` : "No payout"}</strong><span>{humanizeLabel(slots.last_spin.outcome || "spin")}</span></div> : slotAnimating ? <p className="saucer-instruction spin-callout">Reels are stopping…</p> : <p className="saucer-instruction">No spins recorded yet.</p>}
               <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !canSpin} onClick={() => void spinSlots()}>{busy === "slots" ? "Spinning…" : slotsRemaining > 0 ? `Ready in ${duration(slotsRemaining)}` : mgp < Number(slots.cost || 15) ? "Not Enough MGP" : `Spin · ${number(slots.cost || 15)} MGP`}</button>
             </section>
           </div>
@@ -542,7 +543,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                   {lastTossHistory ? (
                     <div className={`monster-toss-final-result tier-${lastTossTier}`}>
                       <img loading="lazy" decoding="async" src={lastTossResultArt} alt="" aria-hidden="true" />
-                      <div><span>Last Game</span><strong>{number(lastTossDetails.score || 0)} pts · {number(lastTossHistory.payout || 0)} MGP</strong><small>{String(lastTossTier).replaceAll("_", " ")}</small></div>
+                      <div><span>Last Game</span><strong>{number(lastTossDetails.score || 0)} pts · {number(lastTossHistory.payout || 0)} MGP</strong><small>{humanizeLabel(lastTossTier)}</small></div>
                     </div>
                   ) : null}
                   <div className="saucer-result monster-toss-entry-card"><strong>{number(toss.cost || 20)} MGP entry</strong><span>{number(toss.throws_per_game || 5)} throws · {number(toss.daily_games || 3)} games/day</span></div>
@@ -575,7 +576,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 <div className="saucer-race-companion">
                   <img loading="lazy" decoding="async" src={`${CHOCOBO_PORTRAIT_ROOT}/${raceCompanion?.portrait_id || "classic_gold"}.webp`} alt={`${displayText(raceCompanion?.name, "Registered Chocobo")} portrait`} />
                   <div><span>Your Racer</span><strong>{displayText(raceCompanion?.name, "Chocobo")}</strong><small>Bond Lv. {number(raceCompanion?.level || 1)}</small></div>
-                  <div className="saucer-race-traits">{asArray(raceCompanion?.traits).map((trait) => <span className="small-badge" key={typeof trait === "string" ? trait : trait.id}>{String(typeof trait === "string" ? trait : trait.name || trait.id).replaceAll("_", " ")}</span>)}</div>
+                  <div className="saucer-race-traits">{asArray(raceCompanion?.traits).map((trait) => <span className="small-badge" key={typeof trait === "string" ? trait : trait.id}>{humanizeLabel(typeof trait === "string" ? trait : trait.name || trait.id)}</span>)}</div>
                 </div>
 
                 {lastRace ? (
@@ -840,11 +841,11 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             {history.length ? (
               <div className="saucer-history-list">
                 {history.map((entry, index) => {
-                  const game = String(entry.game || "activity").replaceAll("_", " ");
+                  const game = humanizeLabel(entry.game || "activity");
                   const details = asRecord(entry.details);
                   const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "daily_reward" ? "Daily MGP reward" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
-                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${String(entry.outcome || "").replaceAll("_", " ")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : entry.game === "triple_triad" ? `${number(details.player_score)}–${number(details.npc_score)}${details.card_reward_name ? ` · won ${details.card_reward_name}` : ""}` : String(entry.outcome || "").replaceAll("_", " ")}</small></span>
+                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${humanizeLabel(entry.outcome || "")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : entry.game === "triple_triad" ? `${number(details.player_score)}–${number(details.npc_score)}${details.card_reward_name ? ` · won ${details.card_reward_name}` : ""}` : humanizeLabel(entry.outcome || "")}</small></span>
                     <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} MGP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} MGP` : "—"}</b>
                   </div>;
                 })}

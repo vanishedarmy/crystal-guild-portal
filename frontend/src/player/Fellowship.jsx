@@ -237,13 +237,13 @@ export default function Fellowship({ data, onRefresh }) {
 
           <div className={`equipment-action-status ${contributionAvailable ? "ready" : "offline"}`}>
             <strong>{contributionAvailable
-              ? (liveState ? (projectType === "guild_objective" ? "Guild Objective active" : hasContributableRequirements ? "Contribution controls ready" : "Guild project active") : "Loading Fellowship project…")
-              : "Contribution controls unavailable"}</strong>
+              ? (liveState ? (projectType === "guild_objective" ? "Guild Objective active" : hasContributableRequirements ? "Ready for your contribution" : "Guild project active") : "Loading Fellowship project…")
+              : "Contributions are on hold"}</strong>
             <span>{contributionAvailable
               ? (projectType === "guild_objective"
-                ? "This objective advances automatically from normal Guild activity; there is nothing to donate."
-                : "Support the active Guild project with requested Gil or materials. Gameplay requirements still advance through normal play.")
-              : "Your Fellowship record remains available to view. Contributions return when Crystal Guild reconnects."}</span>
+                ? "Just keep adventuring. This Guild goal grows as members play, so you don’t need to donate anything."
+                : "Help build the next Guild project with Gil or materials. You can make progress on its adventure goals while you play, too.")
+              : "You can still see your Fellowship progress. Donations will return when the Guild reconnects."}</span>
             {message ? <small aria-live="polite">{message}</small> : null}
           </div>
 
@@ -340,7 +340,7 @@ export default function Fellowship({ data, onRefresh }) {
           </div>
           <p className="muted">Recycle surplus materials into harder-to-find crafting stock. Refining is intentionally lossy and charges a small Guild service fee.</p>
           {!workshopAvailable ? (
-            <div className="state-message compact-state">Workshop Portal services are unavailable while Crystal Guild is disconnected.</div>
+            <div className="state-message compact-state">The workshop is taking a break until the Guild reconnects.</div>
           ) : workshop && Number(workshop.level || 0) < 2 ? (
             <div className="state-message compact-state">Material refining unlocks when the Fellowship completes Workshop Lv. 2.</div>
           ) : (

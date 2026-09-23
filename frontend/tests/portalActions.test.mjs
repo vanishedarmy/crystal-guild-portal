@@ -71,7 +71,7 @@ test("Arsenal II gives the Moogle Emporium dedicated Buy/Sell and category tabs"
   assert.match(shop, /role="tabpanel"/);
   assert.doesNotMatch(shop, /moogle-sell-disclosure/);
   assert.match(shop, /current stock/);
-  assert.match(shop, /Prices and availability are checked again before every transaction/);
+  assert.match(shop, /confirm the price before you buy/);
   assert.match(shop, /Stat boosts/);
   assert.match(shop, /formatBonuses\(itemBonuses\(item\)\)/);
   assert.match(shop, /equipmentDelta\(item, current\)/);

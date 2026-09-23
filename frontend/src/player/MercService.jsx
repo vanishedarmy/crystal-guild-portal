@@ -47,7 +47,7 @@ export default function MercService({ data, overview, onRefresh }) {
   const csrfToken = auth.csrf_token || "";
 
   const applyFinished = useCallback((finished, fallback) => {
-    if (!finished) { setMessage("The Merc request is still processing. Refresh before trying again."); return null; }
+    if (!finished) { setMessage("Cloud is still checking that contract. Refresh to see whether it went through before trying again."); return null; }
     setMessage(finished.result?.message || fallback);
     const next = finished.result?.data?.merc_state || null;
     if (next) setState(next);
@@ -127,7 +127,7 @@ export default function MercService({ data, overview, onRefresh }) {
       </div>
       <div className="merc-wallet"><span>Hunt Seals</span><strong>{number(state.hunt_seals)}</strong><small>{number(state.gil)} Gil · Lv. {number(state.player_level)} · {number(state.hunt_clears)} Hunt clears · {number(state.dungeon_clears)} Dungeon clears</small></div>
       {message ? <div className="state-message compact-state merc-message">{message}</div> : null}
-      <figure className="merc-service-hero-art"><img src={`${MERC_ART_ROOT}/scenes/service-hall.webp`} alt="Cloud operating the Crystal Guild Hero Merc Service contract desk" fetchPriority="high" /><figcaption>Cloud manages recruitment plus three independent deployment slots: Hunt, Venture, and Raid.</figcaption></figure>
+      <figure className="merc-service-hero-art"><img src={`${MERC_ART_ROOT}/scenes/service-hall.webp`} alt="Cloud operating the Crystal Guild Hero Merc Service contract desk" fetchPriority="high" /><figcaption>Looking for an extra blade? Cloud keeps the contracts. Hire a hero for a Hunt, Venture, or Raid.</figcaption></figure>
     </section>
 
     <nav className="merc-section-tabs span-12" aria-label="Merc Service sections">
@@ -141,10 +141,10 @@ export default function MercService({ data, overview, onRefresh }) {
         <div className="merc-info-layout">
           <figure className="merc-contract-art"><img src={`${MERC_ART_ROOT}/scenes/contract.webp`} alt="Crystal Guild Hero Merc contract parchment paid with Hunt Seals" loading="lazy" /></figure>
           <div className="merc-info-grid">
-            <div><strong>1. Recruit</strong><span>Founding Heroes keep their original progression unlocks. Expansion Heroes must first be recruited through a character quest or one-time permanent Gil contract.</span></div>
-            <div><strong>2. Pick a Job Type</strong><span>Choose Hunt, Venture, or Raid. A filled slot remains unavailable until that assignment begins or its reservation is cancelled.</span></div>
-            <div><strong>3. Spend Hunt Seals</strong><span>Recruitment is permanent, but each deployment still uses Hunt Seals. Elite contracts cost substantially more and are intended for high-value assignments.</span></div>
-            <div><strong>4. Up to Three Active</strong><span>You may keep one contract of each assignment type active at once. Deployed Heroes remain unavailable until their mission resolves.</span></div>
+            <div><strong>1. Recruit</strong><span>Your original heroes unlock as before. New faces join the roster after you finish their quest or pay their one-time recruitment fee.</span></div>
+            <div><strong>2. Pick a Job Type</strong><span>Choose a Hunt, Venture, or Raid. Each has its own slot, and you can change your mind before the mission begins.</span></div>
+            <div><strong>3. Spend Hunt Seals</strong><span>Once recruited, a hero stays in your roster. Hiring them for a mission costs Hunt Seals, with elite heroes charging a higher fee.</span></div>
+            <div><strong>4. Up to Three Active</strong><span>Keep up to three contracts ready—one for each mission type. A hero on assignment can’t be hired again until they return.</span></div>
           </div>
           <figure className="merc-role-art"><img src={`${MERC_ART_ROOT}/scenes/roles.webp`} alt="Merc Service role emblems for Striker, Support, Scavenger, and Specialist" loading="lazy" /></figure>
         </div>

@@ -17,8 +17,8 @@ test('Step 5 adds source-aware unified Bestiary filtering', () => {
 
 test('Step 5 distinguishes external encounter records from mastery rewards', () => {
   assert.match(bestiary, /mastery_reward\?\.external/);
-  assert.match(bestiary, /no duplicate Bestiary reward is granted/);
-  assert.match(bestiary, /Mastered \/ Recorded/);
+  assert.match(bestiary, /This victory is saved alongside your other adventures/);
+  assert.match(bestiary, /Completed entries/);
   assert.match(bestiary, /external-record/);
 });
 

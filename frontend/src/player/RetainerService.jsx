@@ -73,7 +73,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
 
   const applyFinished = useCallback((finished, fallback) => {
     if (!finished) {
-      setMessage("The Retainer request is still being processed. Refresh before trying again.");
+      setMessage("Your Retainer is still sorting out that request. Refresh to check before sending another.");
       return null;
     }
     setMessage(finished.result?.message || fallback);
@@ -157,7 +157,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
     return <section className="panel span-12"><div className="state-message">Retainer Service is available only from your own Adventurer Portal.</div></section>;
   }
   if (!actionsAvailable) {
-    return <section className="panel span-12"><div className="state-message">Retainer Service is unavailable while the local Crystal Guild Bot is disconnected or running an older Portal protocol.</div></section>;
+    return <section className="panel span-12"><div className="state-message">The Retainer office is closed while the Guild reconnects. If it stays closed, the streamer may need to update the Bot.</div></section>;
   }
   if (!state) {
     return <section className="panel span-12"><div className="state-message">{message || "Opening the Retainer Service…"}</div></section>;

@@ -113,7 +113,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       const response = await submit();
       const finished = await finishedAction(response);
       if (!finished) {
-        setMessage("Your Blacksmith request is still being processed. Please wait a moment before trying again.");
+        setMessage("The forge is still working on your request. Check again shortly before trying another time.");
         return;
       }
       setMessage(finished.result?.message || fallback);
@@ -337,7 +337,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       </div>
 
       <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>
-        <strong>{actionsAvailable ? "Blacksmith connection ready" : "Blacksmith controls unavailable"}</strong>
+        <strong>{actionsAvailable ? "The forge is open" : "The forge is closed for now"}</strong>
         <span>{actionsAvailable
           ? "Recipe costs, forge levels, and resynthesis eligibility are checked again before every action."
           : "Crafting, forging, and resynthesis return when Crystal Guild reconnects."}</span>

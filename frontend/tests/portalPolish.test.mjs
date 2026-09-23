@@ -19,5 +19,5 @@ test("registry and Bestiary polish remains present", async () => {
   const bestiary = await readFile(new URL("player/Bestiary.jsx", SRC), "utf8");
   assert.match(css, /registry-state-grid/);
   assert.match(directory, /registry-summary/);
-  assert.match(bestiary, /Temperament|Active Skill/);
+  assert.match(bestiary, /How it fights/);
 });

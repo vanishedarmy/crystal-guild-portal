@@ -88,7 +88,7 @@ export default function DailyReward({ username, onRefresh }) {
       const response = await submitDailyState(csrfToken, key);
       const finished = await finishedAction(response);
       if (!finished) {
-        setMessage("Crystal Guild is still processing this Daily request. This card will keep checking the same request instead of adding another one.");
+        setMessage("Your daily claim is still going through. We’ll keep checking without claiming twice.");
         window.clearTimeout(stateRetryTimer.current);
         stateRetryTimer.current = window.setTimeout(() => {
           if (document.visibilityState === "visible") void loadDaily({ quiet: true });
@@ -105,12 +105,12 @@ export default function DailyReward({ username, onRefresh }) {
         setDaily(next);
         setClock(Date.now());
       }
-      if (!quiet) setMessage("Daily provisions checked.");
+      if (!quiet) setMessage("Your daily supplies are up to date.");
       return next;
     } catch (error) {
       const text = String(error?.message || error);
       setMessage(text.includes("Too many Portal actions")
-        ? "Crystal Guild is catching up on your existing Portal requests. Wait a moment, then Refresh; this page will not add duplicate Daily requests."
+        ? "Your earlier claim is still going through. Refresh shortly to check on it—we won’t claim your reward twice."
         : text);
       return null;
     } finally {
@@ -162,7 +162,7 @@ export default function DailyReward({ username, onRefresh }) {
       const response = await submitClaimDaily(csrfToken, key);
       const finished = await finishedAction(response);
       if (!finished) {
-        setMessage("Your claim is still waiting for Crystal Guild. Trying again will resume this same claim rather than queueing another one.");
+        setMessage("Your reward is still on its way. Try again to check the same claim; you won’t be charged or claim twice.");
         return;
       }
       clearActionKey("claim-daily", username, key);
@@ -181,7 +181,7 @@ export default function DailyReward({ username, onRefresh }) {
     } catch (error) {
       const text = String(error?.message || error);
       setMessage(text.includes("Too many Portal actions")
-        ? "Crystal Guild is catching up on your existing Portal requests. Wait a moment, then try the same claim again."
+        ? "Your previous claim is still being handled. Try the same claim again shortly to see whether it’s ready."
         : text);
     } finally {
       claimInflight.current = false;
@@ -198,7 +198,7 @@ export default function DailyReward({ username, onRefresh }) {
           <p className="muted">
             {daily
               ? `Reward: ${number(daily.gil_min)}–${number(daily.gil_max)} Gil + ${daily.provision_summary || "a random level-appropriate provision bundle"}.`
-              : "Claim the same randomized 24-hour Daily Guild Provisions available through !daily."}
+              : "Your daily supplies are waiting! Claim them here or with !daily in chat."}
           </p>
           {daily?.subscriber_tier > 0 ? (
             <p className="daily-subscriber-perk">

@@ -67,6 +67,37 @@ export function humanizeLabel(value, fallback = "—") {
     .join(" ");
 }
 
+// Display names belong at the presentation boundary. IDs such as sable_coast
+// remain untouched in API requests, persistence, filters and reward receipts.
+// Keep this map in sync with the canonical Bot location registries.
+export const LOCATION_NAMES = Object.freeze({
+  "greenwind_plains": "Greenwind Plains",
+  "whispering_caverns": "Whispering Caverns",
+  "sable_coast": "Sable Coast",
+  "magitek_wastes": "Magitek Wastes",
+  "crystal_expanse": "Crystal Expanse",
+  "riftlands": "Riftlands",
+  "interdimensional_rift": "Interdimensional Rift",
+  "omega_ruins": "Omega Ruins",
+  "emerald_wilds": "Emerald Wilds",
+  "ashen_highlands": "Ashen Highlands",
+  "mistfen_marshes": "Mistfen Marshes",
+  "frostveil_reach": "Frostveil Reach",
+  "astral_scar": "The Astral Scar"
+});
+
+export function locationLabel(value, fallback = "Unknown location") {
+  if (value === null || value === undefined || value === "") return fallback;
+  const raw = typeof value === "object" ? value.name || value.id : value;
+  if (raw === null || raw === undefined || !String(raw).trim()) return fallback;
+  const name = String(raw).trim();
+  return LOCATION_NAMES[name.toLowerCase()] || humanizeLabel(name, fallback);
+}
+
+export function locationList(values) {
+  return Array.isArray(values) ? values.map((value) => locationLabel(value)).join(" · ") : "";
+}
+
 export function metricLabel(value) {
   return humanizeLabel(value, "Progress");
 }

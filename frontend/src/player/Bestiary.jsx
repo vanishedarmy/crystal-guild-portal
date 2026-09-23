@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { formatMonsterSpecial, number } from "../utils/formatters.js";
+import { humanizeLabel, locationLabel } from "../utils/displayLabels.js";
 import { sortBestiaryByLevel } from "./bestiarySort.js";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 
@@ -41,17 +42,17 @@ function monsterName(monster) {
 }
 
 function categoryLabel(value) {
-  return CATEGORY_LABELS[value] || (value ? String(value).replaceAll("_", " ") : "Unknown");
+  return CATEGORY_LABELS[value] || humanizeLabel(value, "Unknown");
 }
 
 function scopeLabel(value) {
-  return SCOPE_LABELS[value] || (value ? String(value).replaceAll("_", " ") : "Unknown source");
+  return SCOPE_LABELS[value] || humanizeLabel(value, "Unknown source");
 }
 
 function stageLabel(value, completed, external) {
   if (completed) return external ? "Record Complete" : "Mastered";
   const raw = String(value || "undiscovered");
-  return STAGE_LABELS[raw] || raw.replaceAll("_", " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  return STAGE_LABELS[raw] || humanizeLabel(raw, "Not yet discovered");
 }
 
 function countValue(monster) {
@@ -71,18 +72,42 @@ function progressPercent(monster) {
   return Math.max(0, Math.min(100, Math.round((count / threshold) * 100)));
 }
 
+// Names sent by newer Bots are authoritative; older snapshots still render
+// cleanly. Neither representation changes stable location IDs used in progress.
+function habitatList(monster) {
+  const rows = monster?.habitat_names?.length ? monster.habitat_names : monster?.habitats;
+  return Array.isArray(rows) ? rows.map((value) => locationLabel(value)).join(" · ") : "";
+}
+
+const NEXT_DISCOVERY = {
+  encountered: "meet this creature",
+  observed: "find its haunts and family",
+  studied: "uncover its weaknesses",
+  researched: "identify its drops",
+  documented: "hear its story",
+  mastered: "master this creature",
+  recorded: "add this victory to your book",
+};
+
+function nextDiscovery(monster, milestone) {
+  const remaining = Number(milestone?.remaining || 0);
+  const unit = unitLabel(monster, remaining);
+  const goal = NEXT_DISCOVERY[milestone?.key] || "uncover more";
+  return `${number(remaining)} more ${unit} to ${goal}`;
+}
+
 function dropText(drop) {
   const chance = Math.max(0, Number(drop?.chance || 0));
   const min = Math.max(1, Number(drop?.min || 1));
   const max = Math.max(min, Number(drop?.max || min));
   const quantity = min === max ? `×${number(min)}` : `×${number(min)}–${number(max)}`;
-  return `${drop?.name || drop?.item_id || "Unknown item"} ${quantity} · ${Math.round(chance * 100)}%`;
+  return `${drop?.name || humanizeLabel(drop?.item_id, "Unknown item")} ${quantity} · ${Math.round(chance * 100)}% chance`;
 }
 
 function ResearchSummary({ summary }) {
   const items = [
     ["Discovered", `${number(summary.discovered)} / ${number(summary.total)}`],
-    ["Mastered / Recorded", `${number(summary.completed ?? summary.mastered)} / ${number(summary.total)}`],
+    ["Completed entries", `${number(summary.completed ?? summary.mastered)} / ${number(summary.total)}`],
     ["Research Points", number(summary.research_points)],
     ["Mastery Seals", number(summary.mastery_seals)],
     ["Core Defeats", number(summary.defeats)],
@@ -111,9 +136,9 @@ function ResearchTrack({ monster }) {
         <strong>{stageLabel(research.stage, research.mastered, external)}</strong>
         <span>
           {research.mastered
-            ? `${number(count)} ${unitLabel(monster, count)} · ${external ? "record complete" : "mastery complete"}`
+            ? `${number(count)} ${unitLabel(monster, count)} · ${external ? "victory recorded" : "mastery earned"}`
             : next
-              ? `${number(count)} ${unitLabel(monster, count)} · ${number(next.remaining)} to next discovery`
+              ? `${number(count)} ${unitLabel(monster, count)} · ${nextDiscovery(monster, next)}`
               : `${number(count)} ${unitLabel(monster, count)}`}
         </span>
       </div>
@@ -132,7 +157,7 @@ function Dossier({ monster }) {
   if (!discovered) {
     return (
       <div className="bestiary-dossier bestiary-dossier-locked">
-        <p>{monster?.scope === "world_event" ? "Win this World Event to add its record to the Guild archive." : monster?.scope === "seasonal" ? "Defeat this seasonal creature to preserve its edition-scoped record." : monster?.scope === "boss" ? "Clear this encounter to add its record to the Guild archive." : "Defeat this monster once to begin its Guild research record."}</p>
+        <p>{monster?.scope === "world_event" ? "Help bring down this World Event foe to earn its place in your Bestiary." : monster?.scope === "seasonal" ? "Defeat this seasonal creature while the event is live to keep its entry, even after the event ends." : monster?.scope === "boss" ? "Win this battle to add the boss to your Bestiary." : "Defeat this creature once to start filling in its field notes."}</p>
       </div>
     );
   }
@@ -142,36 +167,37 @@ function Dossier({ monster }) {
       <div className="bestiary-dossier-grid">
         <div>
           <span className="bestiary-dossier-label">Classification</span>
-          <strong>{monster?.family || categoryLabel(monster?.category)}</strong>
+          <strong>{monster?.family ? humanizeLabel(monster.family) : categoryLabel(monster?.category)}</strong>
           <small>{categoryLabel(monster?.category)} · {scopeLabel(monster?.scope)}</small>
+          {monster?.family_description ? <p className="muted">{monster.family_description}</p> : null}
         </div>
         <div>
-          <span className="bestiary-dossier-label">Habitat / Encounter</span>
-          <strong>{monster?.habitats?.length ? monster.habitats.join(" · ") : "Not specified"}</strong>
+          <span className="bestiary-dossier-label">Where to find it</span>
+          <strong>{habitatList(monster) || "The Guild hasn't pinned down a location yet"}</strong>
         </div>
         <div>
           <span className="bestiary-dossier-label">Weakness</span>
-          <strong>{monster?.weakness || (external ? "Not listed for this encounter" : "Research incomplete")}</strong>
+          <strong>{monster?.weakness ? humanizeLabel(monster.weakness) : external ? "No weakness recorded" : "Still a mystery"}</strong>
         </div>
         <div>
-          <span className="bestiary-dossier-label">Combat Profile / Active Skill / Signature</span>
-          <strong>{monster?.combat_profile || (external ? "Encounter record" : "Research incomplete")}</strong>
-          {monster?.active_skill ? <small title={formatMonsterSpecial(monster?.special)}>{monster.active_skill}</small> : null}
+          <span className="bestiary-dossier-label">How it fights</span>
+          <strong>{monster?.combat_profile ? humanizeLabel(monster.combat_profile) : external ? "No battle notes yet" : "Still a mystery"}</strong>
+          {monster?.active_skill ? <small title={formatMonsterSpecial(monster?.special)}>{humanizeLabel(monster.active_skill)}</small> : null}
         </div>
       </div>
 
       <div className="bestiary-dossier-section">
-        <span className="bestiary-dossier-label">Known Drops</span>
+        <span className="bestiary-dossier-label">What it drops</span>
         {monster?.drops?.length ? (
           <ul className="bestiary-drop-list">
             {monster.drops.map((drop, index) => <li key={`${drop.item_id || drop.name}-${index}`}>{dropText(drop)}</li>)}
           </ul>
-        ) : <p className="muted">{external ? "No drop catalogue is published for this record." : "Further research required."}</p>}
+        ) : <p className="muted">{external ? "No drops are listed for this encounter." : "Keep fighting this creature to discover what it leaves behind."}</p>}
       </div>
 
       <div className="bestiary-dossier-section">
-        <span className="bestiary-dossier-label">Guild Field Notes</span>
-        <p>{monster?.lore || "Further research is required before the Guild can publish this entry."}</p>
+        <span className="bestiary-dossier-label">Notes from the Guild</span>
+        <p>{monster?.lore || "There's more to this creature's story. Keep exploring to uncover it."}</p>
       </div>
 
       {completed ? (
@@ -181,8 +207,8 @@ function Dossier({ monster }) {
             <strong>{external ? (monster?.mastery_reward?.label || "Record Complete") : "Mastery Complete"}</strong>
             <small>
               {external
-                ? `${monster?.mastery_reward?.source || "Existing encounter progression"} remains the source of truth; no duplicate Bestiary reward is granted.`
-                : `Mastery Seal earned · +${number(monster?.mastery_reward?.research_points || 1)} Research Point`}
+                ? "This victory is saved alongside your other adventures. Any rewards you've earned for it are still yours."
+                : `You've earned a Mastery Seal and ${number(monster?.mastery_reward?.research_points || 1)} Research Point${Number(monster?.mastery_reward?.research_points || 1) === 1 ? "" : "s"}.`}
             </small>
           </div>
         </div>
@@ -208,14 +234,14 @@ function MonsterCard({ monster, expanded, onToggle }) {
           <div className="bestiary-card-heading">
             <div>
               <strong>{monsterName(monster)}</strong>
-              <small>{discovered && monster?.level ? `Lv. ${number(monster.level)}` : discovered ? scopeLabel(monster?.scope) : "Identity unknown"}</small>
+              <small>{discovered && monster?.level ? `Lv. ${number(monster.level)}` : discovered ? scopeLabel(monster?.scope) : "Not yet identified"}</small>
             </div>
             {completed ? <span className={`bestiary-seal${external ? " external" : ""}`} title={external ? "Encounter record complete" : "Mastery Seal earned"}>{external ? "✓" : "◆"}</span> : null}
           </div>
           <div className="bestiary-card-tags">
             <span>{scopeLabel(monster?.scope)}</span>
             {monster?.category ? <span>{categoryLabel(monster.category)}</span> : <span>Undiscovered</span>}
-            {monster?.family ? <span>{monster.family}</span> : null}
+            {monster?.family ? <span>{humanizeLabel(monster.family)}</span> : null}
           </div>
           <ResearchTrack monster={monster} />
         </div>
@@ -258,7 +284,10 @@ export default function Bestiary({ data }) {
         scopeLabel(monster?.scope),
         categoryLabel(monster?.category),
         monster?.family,
+        monster?.family_description,
         ...(monster?.habitats || []),
+        ...(monster?.habitat_names || []),
+        ...(monster?.habitats || []).map((value) => locationLabel(value)),
         monster?.weakness,
         monster?.combat_profile,
         monster?.active_skill,
@@ -280,7 +309,7 @@ export default function Bestiary({ data }) {
       <div className="panel-title-row bestiary-title-row">
         <div>
           <h2>Bestiary</h2>
-          <p className="bestiary-intro">Encounter, study, document, and preserve every creature record gathered by the Crystal Guild.</p>
+          <p className="bestiary-intro">Every battle has a story. Discover new creatures, learn their secrets, and earn your place among the Guild's master hunters.</p>
         </div>
         <span className="small-badge">{number(summary.discovered)} / {number(summary.total)} discovered</span>
       </div>
@@ -292,7 +321,7 @@ export default function Bestiary({ data }) {
           <span>Search Bestiary</span>
           <input
             type="search"
-            placeholder="Monster, family, encounter, weakness, or lore"
+            placeholder="Search monsters, places, weaknesses, and stories"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />
@@ -323,7 +352,7 @@ export default function Bestiary({ data }) {
           <select value={status} onChange={(event) => setStatus(event.target.value)}>
             <option value="all">All entries</option>
             <option value="locked">Undiscovered</option>
-            <option value="discovered">In research</option>
+            <option value="discovered">Still learning</option>
             <option value="mastered">Mastered core entries</option>
             <option value="recorded">Completed special records</option>
           </select>
@@ -332,8 +361,8 @@ export default function Bestiary({ data }) {
       </div>
 
       <div className="bestiary-results-row">
-        <span>{number(filtered.length)} entries shown</span>
-        {summary?.most_defeated?.discovered ? <span>Most encountered core monster: <strong>{monsterName(summary.most_defeated)}</strong> ({number(summary.most_defeated.defeats)})</span> : null}
+        <span>{number(filtered.length)} {filtered.length === 1 ? "entry" : "entries"} shown</span>
+        {summary?.most_defeated?.discovered ? <span>Your most familiar foe: <strong>{monsterName(summary.most_defeated)}</strong> ({number(summary.most_defeated.defeats)} defeats)</span> : null}
       </div>
 
       {filtered.length ? (
@@ -352,7 +381,7 @@ export default function Bestiary({ data }) {
         </div>
       ) : (
         <div className="empty-state bestiary-empty-state">
-          <strong>No Bestiary entries match these filters.</strong>
+          <strong>Nothing in your field guide matches that search yet.</strong>
           <button type="button" className="secondary-button" onClick={clearFilters}>Reset filters</button>
         </div>
       )}

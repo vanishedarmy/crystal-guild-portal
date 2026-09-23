@@ -21,7 +21,7 @@ test("signed-in owners get a live Fellowship contribution workspace", async () =
   assert.match(tab, /submitFellowshipState/);
   assert.match(tab, /submitFellowshipGil/);
   assert.match(tab, /submitFellowshipItem/);
-  assert.match(tab, /Gameplay requirements still advance through normal play/);
+  assert.match(tab, /make progress on its adventure goals while you play/);
   assert.match(tab, /You have \{number\(req\.owned\)\}/);
   assert.doesNotMatch(tab, /!fellowshipproject|COMMAND|READYALL|VENTURE|Web combat/);
 });

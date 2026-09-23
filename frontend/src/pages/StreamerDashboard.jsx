@@ -10,7 +10,7 @@ import {
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
-import { activitySourceLabel, humanizeLabel } from "../utils/displayLabels.js";
+import { activitySourceLabel, humanizeLabel, locationLabel } from "../utils/displayLabels.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
 import { loadGuideData } from "../utils/itemCatalog.js";
 import { WEB_BUILD, WEB_RELEASE } from "../version.js";
@@ -576,7 +576,7 @@ export default function StreamerDashboard() {
                     <Link className="streamer-player-row" key={player.username} to={`/player/${encodeURIComponent(player.username)}`}>
                       <span className={`streamer-status-dot ${player.status}`} aria-label={player.status_label} />
                       <span className="streamer-player-identity"><strong>{player.display_name}</strong><small>@{player.username} · {player.title}</small></span>
-                      <span className="streamer-player-job"><strong>{player.job_name}</strong><small>Lv. {number(player.level)} · JLv. {number(player.job_level)} · {player.region}</small></span>
+                      <span className="streamer-player-job"><strong>{player.job_name}</strong><small>Lv. {number(player.level)} · JLv. {number(player.job_level)} · {locationLabel(player.region)}</small></span>
                       <span className={`streamer-hp ${hpTone(player)}`}><span className="streamer-hp-line"><strong>{number(player.hp_current)} / {number(player.hp_max)}</strong><small>{hpPercent}%</small></span><span className="streamer-hp-track"><span style={{ width: `${hpPercent}%` }} /></span></span>
                       <span className="streamer-player-record"><strong>{number(player.boss_clears)}</strong><small>Clears</small></span>
                     </Link>
@@ -596,7 +596,7 @@ export default function StreamerDashboard() {
                 <summary className="streamer-panel-heading"><div><span>Live Ledger</span><h2>Recent Activity</h2></div><span className="streamer-heading-tools"><small>Recent gil and item changes</small><DetailsPointer /></span></summary>
                 <div className="streamer-activity-list">
                   {(dashboard.activity || []).slice(0, 8).map((item, index) => (
-                    <div className="streamer-activity" key={`${item.username}-${item.created_at}-${index}`}><span className="streamer-activity-glyph">{item.kind === "item" ? "◇" : "G"}</span><span><strong>{item.display_name}</strong><small>{item.kind === "item" ? item.asset : humanizeLabel(item.asset)} · {activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</small></span><b className={item.amount >= 0 ? "good-text" : "danger-text"}>{item.amount >= 0 ? "+" : ""}{number(item.amount)}</b></div>
+                    <div className="streamer-activity" key={`${item.username}-${item.created_at}-${index}`}><span className="streamer-activity-glyph">{item.kind === "item" ? "◇" : "G"}</span><span><strong>{item.display_name}</strong><small>{item.kind === "item" ? (item.asset_name || humanizeLabel(item.asset)) : humanizeLabel(item.asset)} · {activitySourceLabel(item.source)} · {timeAgo(item.created_at)}</small></span><b className={item.amount >= 0 ? "good-text" : "danger-text"}>{item.amount >= 0 ? "+" : ""}{number(item.amount)}</b></div>
                   ))}
                   {!dashboard.activity?.length ? <div className="streamer-empty">No recent Guild activity.</div> : null}
                 </div>

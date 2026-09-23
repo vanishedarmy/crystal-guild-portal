@@ -21,7 +21,7 @@ function RivalryCard({ eyebrow, record, empty, value }) {
     <div className="record-feature-card">
       <div className="slot-label">{eyebrow}</div>
       <strong>{record?.name || empty}</strong>
-      <span>{record ? value(record) : "No record established yet."}</span>
+      <span>{record ? value(record) : "The next chapter is still yours to write."}</span>
     </div>
   );
 }
@@ -118,7 +118,7 @@ export default function Records({ data, onDetail }) {
             </div>
           ))}
         </div>
-        <p className="muted trial-record-note">Existing clears from earlier Alphas are preserved. Wipe, fastest-round, and contribution-best tracking begins with Beta 1 because those values were not persisted previously.</p>
+        <p className="muted trial-record-note">Your earlier Trial wins are safe. Detailed round times, wipes, and contribution records start with Beta 1 because we didn’t track those details before then.</p>
       </RecordPanel>
 
       <RecordPanel badge="Personal History" className="span-12" title="Rivalries & Identity">
@@ -160,7 +160,7 @@ export default function Records({ data, onDetail }) {
                 {number(boss.clears)} clears · Best {number(boss.best_damage)} damage
               </div>
             </ClickableCard>
-          )) : <div className="muted">No boss clears recorded yet.</div>}
+          )) : <div className="muted">Your first boss victory will appear here.</div>}
         </div>
       </RecordPanel>
     </div>

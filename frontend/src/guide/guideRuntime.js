@@ -3,7 +3,7 @@ import {
   filterGuideAchievements,
   filterGuideTitles,
 } from "./guideCompletionUtils.js";
-import { humanizeLabel, metricLabel } from "../utils/displayLabels.js";
+import { humanizeLabel, metricLabel, locationLabel } from "../utils/displayLabels.js";
 import { jobPortraitPath } from "../utils/jobPortraits.js";
 import { monsterPortraitPath } from "../utils/monsterPortraits.js";
 import { bossArtworkPath } from "../utils/bossArtwork.js";
@@ -15,7 +15,7 @@ export function initGuide(GAME_DATA, releaseLabel = GAME_DATA?.meta?.version || 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const byId=(arr,id)=>arr.find(x=>x.id===id);
-const fallbackName=id=>humanizeLabel(id,'Unknown');
+const fallbackName=id=>locationLabel(id, 'Unknown');
 const itemName=id=>byId(D.items,id)?.name||fallbackName(id);
 const monsterName=id=>byId(D.monsters,id)?.name||fallbackName(id);
 const bossName=id=>byId(D.bosses,id)?.name||fallbackName(id);

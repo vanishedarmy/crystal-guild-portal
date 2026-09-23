@@ -24,6 +24,6 @@ test("seasonal errors are recoverable, not a permanent loading state", () => {
   assert.match(hosted, /"seasonal",\n\s*\}/);
   assert.match(profile, /Could not load this section:/);
   assert.match(profile, /Retry Section/);
-  assert.match(seasonal, /Waiting for event data/);
+  assert.match(seasonal, /The event board is still loading/);
   assert.match(seasonal, /sync_pending/);
 });

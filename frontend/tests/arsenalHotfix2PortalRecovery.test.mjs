@@ -8,7 +8,7 @@ test("Arsenal Hotfix 3 resumes Daily requests instead of flooding the Portal que
   const daily = await readFile(new URL("player/DailyReward.jsx", SRC), "utf8");
   assert.match(daily, /sessionStorage/);
   assert.match(daily, /stateInflight/);
-  assert.match(daily, /same request instead of adding another one/);
+  assert.match(daily, /We’ll keep checking without claiming twice/);
   assert.match(daily, /stateRetryTimer/);
   assert.match(daily, /loadDaily\(\{ quiet: true \}\)/);
 });

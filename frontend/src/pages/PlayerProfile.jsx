@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { lazy, memo, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPlayer } from "../api/players.js";
 import JobPortrait from "../components/JobPortrait.jsx";
@@ -85,6 +85,12 @@ const TAB_GROUPS = [
   ["Guild", ["fellowship"]],
   ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies", "seasonal"]],
 ];
+
+// Camp has a live second-based countdown. Memoizing the active module prevents
+// that parent timer from rerendering hundreds of shop, market and inventory cards.
+const StableProfileModule = memo(function StableProfileModule({ Module, data, overview, onDetail, onRefresh, onNavigate }) {
+  return <Module data={data} overview={overview} onDetail={onDetail} onRefresh={onRefresh} onNavigate={onNavigate} />;
+});
 
 export default function PlayerProfile() {
   const { username: routeUsername } = useParams();
@@ -303,7 +309,7 @@ export default function PlayerProfile() {
                         <button type="button" className="equipment-action-button secondary" onClick={refresh}>Retry Section</button>
                       </div>
                     : <div className="state-message">Loading {activeTab}...</div>
-                  : <ActiveModule key={`${activeTab}:${manualRefreshToken}`} data={moduleData} overview={overview} onDetail={setDetail} onRefresh={refresh} onNavigate={setActiveTab} />}
+                  : <StableProfileModule key={`${activeTab}:${manualRefreshToken}`} Module={ActiveModule} data={moduleData} overview={overview} onDetail={setDetail} onRefresh={refresh} onNavigate={setActiveTab} />}
               </Suspense>
               {moduleData && tabLoading ? <div className="background-refresh" role="status" aria-live="polite">Refreshing…</div> : null}
             </SectionErrorBoundary>

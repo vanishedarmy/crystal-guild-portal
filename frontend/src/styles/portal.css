@@ -8168,7 +8168,7 @@ main h1,
 .moogle-panel::after {
   background-image:
     linear-gradient(180deg, rgba(7, 10, 18, .10) 0%, rgba(9, 16, 27, .40) 48%, rgba(8, 18, 29, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v3/emporium.webp');
+    url('/retro-phase-iii/scene-backgrounds-v3/emporium.webp?v=1.9.1');
   background-position: center top;
 }
 
@@ -14494,4 +14494,44 @@ textarea {
 
 @media (prefers-reduced-motion: reduce) {
   .mobile-combat-drawer { animation: none !important; }
+}
+
+/* v1.9.1 stability: compact retry message and less mobile paint work. */
+.moogle-load-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .65rem;
+  margin-top: .6rem;
+  padding: .7rem;
+  border: 1px solid rgba(255, 198, 116, .5);
+  border-radius: .55rem;
+  background: rgba(22, 15, 10, .88);
+  overflow-wrap: anywhere;
+}
+.moogle-load-error > span { flex: 1 1 15rem; }
+.moogle-load-error > button { flex: 0 1 auto; min-height: 44px; }
+@media (max-width: 720px) {
+  /* Translucent shop cards over the large Emporium art caused expensive
+     repeated full-card backdrop blur while scrolling on mobile GPUs. */
+  .moogle-panel .moogle-item-card,
+  .moogle-panel .moogle-sell-panel,
+  .moogle-panel .moogle-toolbar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(4, 15, 25, .94);
+  }
+  .moogle-stock-grid .moogle-item-card,
+  .trading-post-listing-grid .trading-post-listing,
+  .trading-post-sell-grid .trading-post-sell-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 360px;
+  }
+  .moogle-load-error > button { width: 100%; }
+}
+
+@media (max-width: 720px) {
+  /* Only the above-the-fold shop needs the illustrated background; avoid
+     painting a full multi-screen pseudo-element under long market lists. */
+  .moogle-panel::after { height: min(780px, 100%); }
 }

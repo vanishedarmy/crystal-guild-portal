@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   submitBuyItem,
   submitSellItem,
@@ -105,6 +105,12 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const [history, setHistory] = useState(null);
   const [historyItem, setHistoryItem] = useState("");
   const [relistTarget, setRelistTarget] = useState("");
+  const [shopLoadError, setShopLoadError] = useState("");
+  const [marketLoadError, setMarketLoadError] = useState("");
+  // React Strict Mode and quick tab switching can otherwise queue duplicate
+  // authoritative SHOP_STATE requests before the first response arrives.
+  const shopRequest = useRef(null);
+  const marketRequest = useRef(null);
 
   const playerUsername = String(data?.player?.username || overview?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -165,12 +171,13 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const annexUnlocked = Boolean(shop?.annex_unlocked);
   const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 21 : 9));
 
+  // Browsing must not disappear just because an older Bot has not advertised
+  // a buy/sell permission. Keep read and mutation permissions independent.
+  const shopStateAvailable = Boolean(
+    isOwnProfile && auth.actions_enabled && capabilities.has("SHOP_STATE")
+  );
   const shopActionsAvailable = Boolean(
-    isOwnProfile
-    && auth.actions_enabled
-    && capabilities.has("SHOP_STATE")
-    && capabilities.has("BUY_ITEM")
-    && capabilities.has("SELL_ITEM")
+    shopStateAvailable && capabilities.has("BUY_ITEM") && capabilities.has("SELL_ITEM")
   );
   const tradingPostActionsAvailable = Boolean(
     isOwnProfile
@@ -192,76 +199,94 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     return () => { cancelled = true; };
   }, []);
 
-  const loadShop = useCallback(async ({ quiet = false } = {}) => {
-    if (!shopActionsAvailable) return null;
-    if (!quiet) {
-      setBusyKey("shop-state");
-      setMessage("Asking the Moogle for your current stock…");
-    }
-    try {
-      const response = await submitShopState(csrfToken, actionKey("shop-state"));
-      const finished = await finishedAction(response);
-      if (!finished) {
-        setMessage("The shop is still updating. Try again in a moment.");
-        return null;
+  const loadShop = useCallback(({ quiet = false } = {}) => {
+    if (!shopStateAvailable) return Promise.resolve(null);
+    if (shopRequest.current) return shopRequest.current;
+    const task = (async () => {
+      if (!quiet) {
+        setBusyKey("shop-state");
+        setMessage("Asking the Moogle for your current stock…");
       }
-      if (finished.status !== "completed" || finished.result?.ok === false) {
-        setMessage(finished.result?.message || "The Moogle Emporium could not be loaded.");
+      setShopLoadError("");
+      try {
+        const response = await submitShopState(csrfToken, actionKey("shop-state"));
+        const finished = await finishedAction(response);
+        if (!finished) {
+          setShopLoadError("The Guild did not respond in time. Check the Bot connection and retry.");
+          return null;
+        }
+        if (finished.status !== "completed" || finished.result?.ok === false) {
+          setShopLoadError(finished.result?.message || "The Moogle could not fetch stock. Retry when the Bot is connected.");
+          return null;
+        }
+        const next = finished.result?.data || null;
+        if (!next || !Array.isArray(next.stock)) {
+          setShopLoadError("The Bot returned an incomplete shop response. Retry after the Bot reconnects.");
+          return null;
+        }
+        setShop(next);
+        // Fresh recruits and low-level characters can have no weapon stock.
+        // Open the first populated category instead of showing an empty page.
+        setCategory((previous) => next.stock.some((item) => shopCategory(item) === previous)
+          ? previous : (["items", "armor", "weapons"].find((kind) => next.stock.some((item) => shopCategory(item) === kind)) || previous));
+        if (!quiet) setMessage("Moogle Emporium updated.");
+        return next;
+      } catch (error) {
+        setShopLoadError(error?.message || "The Emporium could not be reached.");
         return null;
+      } finally {
+        if (!quiet) setBusyKey("");
       }
-      const next = finished.result?.data || null;
-      if (!next || !Array.isArray(next.stock)) {
-        setMessage("The shop could not be loaded completely. Try refreshing the Emporium.");
-        return null;
-      }
-      setShop(next);
-      if (!quiet) setMessage("Moogle Emporium updated.");
-      return next;
-    } catch (error) {
-      setMessage(error.message);
-      return null;
-    } finally {
-      if (!quiet) setBusyKey("");
-    }
-  }, [shopActionsAvailable, csrfToken]);
+    })();
+    const pending = task.finally(() => { if (shopRequest.current === pending) shopRequest.current = null; });
+    shopRequest.current = pending;
+    return pending;
+  }, [shopStateAvailable, csrfToken]);
 
-  const loadMarket = useCallback(async ({ quiet = false } = {}) => {
-    if (!tradingPostActionsAvailable) return null;
-    if (!quiet) {
-      setBusyKey("market-state");
-      setMessage("Checking the Trading Post ledger…");
-    }
-    try {
-      const response = await submitTradingPostState(csrfToken, actionKey("market-state", "trading-post"));
-      const finished = await finishedAction(response);
-      if (!finished) {
-        setMessage("The Trading Post is still updating. Try again in a moment.");
-        return null;
+  const loadMarket = useCallback(({ quiet = false } = {}) => {
+    if (!tradingPostActionsAvailable) return Promise.resolve(null);
+    if (marketRequest.current) return marketRequest.current;
+    const task = (async () => {
+      if (!quiet) {
+        setBusyKey("market-state");
+        setMessage("Checking the Trading Post ledger…");
       }
-      if (finished.status !== "completed" || finished.result?.ok === false) {
-        setMessage(finished.result?.message || "The Moogle Trading Post could not be loaded.");
+      setMarketLoadError("");
+      try {
+        const response = await submitTradingPostState(csrfToken, actionKey("market-state", "trading-post"));
+        const finished = await finishedAction(response);
+        if (!finished) {
+          setMarketLoadError("The Trading Post did not respond in time. Check the Bot connection and retry.");
+          return null;
+        }
+        if (finished.status !== "completed" || finished.result?.ok === false) {
+          setMarketLoadError(finished.result?.message || "The Trading Post could not be loaded.");
+          return null;
+        }
+        const next = finished.result?.data || null;
+        if (!next || !Array.isArray(next.listings) || !Array.isArray(next.my_listings)) {
+          setMarketLoadError("The Trading Post returned an incomplete response. Please retry.");
+          return null;
+        }
+        setMarket(next);
+        if (!quiet) setMessage(next.unlocked ? "Moogle Trading Post updated." : "The Fellowship has not built the Trading Post yet.");
+        return next;
+      } catch (error) {
+        setMarketLoadError(error?.message || "The Trading Post could not be reached.");
         return null;
+      } finally {
+        if (!quiet) setBusyKey("");
       }
-      const next = finished.result?.data || null;
-      if (!next || !Array.isArray(next.listings) || !Array.isArray(next.my_listings)) {
-        setMessage("The Trading Post ledger could not be loaded completely.");
-        return null;
-      }
-      setMarket(next);
-      if (!quiet) setMessage(next.unlocked ? "Moogle Trading Post updated." : "The Fellowship has not built the Trading Post yet.");
-      return next;
-    } catch (error) {
-      setMessage(error.message);
-      return null;
-    } finally {
-      if (!quiet) setBusyKey("");
-    }
+    })();
+    const pending = task.finally(() => { if (marketRequest.current === pending) marketRequest.current = null; });
+    marketRequest.current = pending;
+    return pending;
   }, [tradingPostActionsAvailable, csrfToken]);
 
   useEffect(() => {
-    if (!shopActionsAvailable) return;
+    if (!shopStateAvailable) return;
     loadShop();
-  }, [shopActionsAvailable, loadShop]);
+  }, [shopStateAvailable, loadShop]);
 
   useEffect(() => {
     if (mode !== "market" || !tradingPostActionsAvailable) return;
@@ -273,7 +298,11 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     if (!deadline) return undefined;
     setClock(Date.now());
     if (deadline <= Date.now()) return undefined;
-    const timer = window.setInterval(() => setClock(Date.now()), 1000);
+    // A seconds-accurate rotation timer caused the entire shop/market tree
+    // (including all cards and image nodes) to rerender every second.
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") setClock(Date.now());
+    }, 30000);
     return () => window.clearInterval(timer);
   }, [shop?.expires_at]);
 
@@ -460,12 +489,14 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
         </div></div>
       </div>
 
-      <div className={`equipment-action-status ${shopActionsAvailable ? "ready" : "offline"}`}>
-        <strong>{shopActionsAvailable ? "The counter is open" : "The counter is closed for now"}</strong>
-        <span>{shopActionsAvailable
+      <div className={`equipment-action-status ${shopStateAvailable ? "ready" : "offline"}`}>
+        <strong>{shopStateAvailable ? "The counter is open" : "The counter is closed for now"}</strong>
+        <span>{shopStateAvailable
           ? "Looking for supplies? Browse the Emporium, sell a few spare items, or see what other adventurers have posted at the Trading Post. We’ll confirm the price before you buy."
           : "The moogles are taking a short break while the Guild reconnects. Your Gil and items are safe."}</span>
-        {message ? <small aria-live="polite">{message}</small> : null}
+        {message && !shopLoadError && !marketLoadError ? <small aria-live="polite">{message}</small> : null}
+        {shopLoadError ? <div className="moogle-load-error" role="alert"><span>{shopLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={Boolean(busyKey)} onClick={() => loadShop()}>Retry Emporium</button></div> : null}
+        {marketLoadError && mode === "market" ? <div className="moogle-load-error" role="alert"><span>{marketLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={Boolean(busyKey)} onClick={() => loadMarket()}>Retry Trading Post</button></div> : null}
       </div>
 
       <div className="moogle-toolbar">
@@ -485,8 +516,9 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
         </div>
       ) : null}
 
-      {!shop && shopActionsAvailable ? <div className="state-message compact-state">Loading your current Moogle rotation…</div> : null}
-      {!shop && !shopActionsAvailable ? <div className="state-message compact-state">Current stock becomes available when Crystal Guild reconnects.</div> : null}
+      {!shop && shopStateAvailable && !shopLoadError ? <div className="state-message compact-state" role="status">{busyKey === "shop-state" ? "Loading your current Moogle rotation…" : "Preparing the counter…"}</div> : null}
+      {!shop && !shopStateAvailable ? <div className="state-message compact-state">Current stock becomes available when the Bot action service reconnects. Check your sign-in and Bot connection, then reopen this tab.</div> : null}
+      {shop && !shopActionsAvailable ? <div className="state-message compact-state">Browsing is available; buying and selling will resume when both transaction permissions are connected.</div> : null}
 
       {shop ? (
         <>
@@ -579,7 +611,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
               {!tradingPostActionsAvailable ? (
                 <div className="state-message compact-state">Trading Post controls become available when the v1.9 Portal action service is connected.</div>
               ) : !market ? (
-                <div className="state-message compact-state">Loading the Fellowship Trading Post…</div>
+                !marketLoadError ? <div className="state-message compact-state" role="status">Loading the Fellowship Trading Post…</div> : null
               ) : !market.unlocked ? (
                 <div className="trading-post-locked">
                   <img src="/trading-post/a1/locked.webp" alt="Locked Moogle Trading Post storefront" />

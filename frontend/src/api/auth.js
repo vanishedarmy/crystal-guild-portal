@@ -17,7 +17,6 @@ export async function logoutPortal(csrfToken) {
     method: "POST",
     headers: {
       "X-Crystal-Guild-CSRF": csrfToken || "",
-      "Idempotency-Key": idempotencyKey || "",
     },
   });
 }

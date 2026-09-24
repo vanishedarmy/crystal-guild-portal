@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.1",
+    name: "Performance & Stability",
+    title: "The Moogle counter is back in business",
+    summary: "A faster Emporium, clearer connection recovery, and lighter artwork across the Guild. No combat or economy balance changes.",
+    highlights: [
+      { title: "Emporium connection recovery", description: "Shop and Trading Post failures now show an explanation and a Retry button instead of a forever-loading counter." },
+      { title: "Faster shopping on mobile", description: "Lighter shop artwork and fewer costly redraws keep the counter more responsive while browsing." },
+      { title: "More efficient hosting", description: "29 oversized illustrations were carefully recompressed, reducing the public-asset footprint by over 41 MiB without renaming image paths." },
+      { title: "Progress preserved", description: "Existing save data, market prices, active listings, combat rules and the Portal protocol are unchanged." },
+    ],
+    action: { tab: "shop", label: "Open Moogle Emporium" },
+  },
+  {
     version: "v1.9.0 Alpha 13",
     name: "Trading Post QoL",
     title: "A clearer market board — without automated trading",

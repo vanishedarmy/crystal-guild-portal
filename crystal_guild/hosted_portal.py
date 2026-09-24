@@ -281,6 +281,10 @@ class HostedPortalStore:
                 ON portal_actions(status, created_at);
                 CREATE INDEX IF NOT EXISTS idx_portal_actions_player
                 ON portal_actions(twitch_id, created_at DESC);
+                -- The completed-action retention sweep runs when players submit
+                -- Portal actions. Avoid a table scan as the action ledger grows.
+                CREATE INDEX IF NOT EXISTS idx_portal_actions_retention
+                ON portal_actions(status, updated_at) WHERE status IN ('completed','failed');
                 CREATE TABLE IF NOT EXISTS portal_user_preferences (
                     twitch_id TEXT PRIMARY KEY,
                     gear_favorites_json TEXT NOT NULL DEFAULT '[]',
@@ -1429,7 +1433,7 @@ class HostedPortalStore:
             # Keep the relay bounded even if a browser retries aggressively or a
             # signed-in user repeatedly submits while the Bot is slow to poll.
             conn.execute(
-                "DELETE FROM portal_actions WHERE status IN ('completed','failed') AND updated_at<?",
+                "DELETE FROM portal_actions INDEXED BY idx_portal_actions_retention WHERE status IN ('completed','failed') AND updated_at<?",
                 (now - (30 * 24 * 60 * 60),),
             )
             # Read-only state refreshes are separately coalesced and must never

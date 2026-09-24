@@ -1,3 +1,7 @@
+# Crystal Guild Alpha 13 Trading Post — Matching runtime requirements
+
+Current Bot/Web release: `1.9.0-trading-post-qol-alpha13`. Portal Action protocol **39**, local Bot schema **25**, hosted sync **1**. Preserve existing tokens, databases and environment secrets. Follow `START_HERE.md`.
+
 # Portal Actions — v1.9.0 Alpha 12
 
 Portal Action protocol **38**, hosted sync **1**. Deploy matching `1.9.0-camp-recovery-alpha12` Web and Bot source packages together, preserving all OAuth/session keys, secrets and private sync configuration.

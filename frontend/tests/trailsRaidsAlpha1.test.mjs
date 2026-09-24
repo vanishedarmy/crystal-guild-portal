@@ -19,7 +19,7 @@ test("Trails & Raids identity is current", () => {
 test("Ifrit guide data declares Inferno Crucible and the four Alpha 1 mechanics", () => {
   const data = JSON.parse(read("public/guide-data.json"));
   const ifrit = data.bosses.find((boss) => boss.id === "ifrit");
-  assert.equal(data.meta.release, "1.9.0-camp-recovery-alpha12");
+  assert.equal(data.meta.release, "1.9.0-trading-post-qol-alpha13");
   assert.equal(ifrit.encounter_type, "Trial");
   assert.equal(ifrit.encounter_name, "Inferno Crucible");
   assert.equal(ifrit.raid_script, "ifrit_inferno_crucible");

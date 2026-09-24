@@ -121,6 +121,14 @@ export function submitTradingPostState(csrfToken, idempotencyKey) {
   return submitPortalAction("TRADING_POST_STATE", {}, csrfToken, idempotencyKey);
 }
 
+export function submitTradingPostWatch(itemId, watched, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRADING_POST_WATCH", { item_id: itemId, watched }, csrfToken, idempotencyKey);
+}
+
+export function submitTradingPostHistory(itemId, csrfToken, idempotencyKey) {
+  return submitPortalAction("TRADING_POST_HISTORY", { item_id: itemId }, csrfToken, idempotencyKey);
+}
+
 export function submitTradingPostList(itemId, quantity, unitPrice, csrfToken, idempotencyKey) {
   return submitPortalAction("TRADING_POST_LIST", { item_id: itemId, quantity, unit_price: unitPrice }, csrfToken, idempotencyKey);
 }

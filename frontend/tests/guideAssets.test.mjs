@@ -6,12 +6,12 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("lazy guide data is valid and versioned for v1.2.0 Expeditions", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.9.0 Alpha 12 — Camp & Recovery");
+  assert.equal(data.meta.version, "v1.9.0 Alpha 13 — Trading Post QoL");
   assert.equal(data.meta.encounter_rally, 60);
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);
   assert.equal(data.meta.raid_round, 60);
-  assert.equal(data.meta.release, "1.9.0-camp-recovery-alpha12");
+  assert.equal(data.meta.release, "1.9.0-trading-post-qol-alpha13");
   assert.ok(data.jobs.length > 0);
   assert.ok(data.achievements.length > 0);
   assert.equal(Object.keys(data.active_abilities).length, data.jobs.length);
@@ -71,8 +71,8 @@ test("GuidePage cache-busts lazy assets and uses the shared release label", asyn
   assert.match(page, /initGuide\(guide\.data, WEB_RELEASE\)/);
   assert.match(legacy, /releaseLabel/);
   assert.match(legacy, /activeAbilityBlock/);
-  assert.match(version, /v1\.9\.0 Alpha 12/);
-  assert.match(version, /Camp & Recovery/);
+  assert.match(version, /v1\.9\.0 Alpha 13/);
+  assert.match(version, /Trading Post QoL/);
 });
 
 

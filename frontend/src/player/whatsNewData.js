@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 13",
+    name: "Trading Post QoL",
+    title: "A clearer market board — without automated trading",
+    summary: "Keep an item watchlist, see your inventory while browsing, review completed-sale prices and reuse your old listings in a click.",
+    highlights: [
+      { title: "Your 30-item watchlist", description: "Save eligible items even when there are no active listings; the list follows your character across devices." },
+      { title: "Real prices, not guesses", description: "Browse the last 30 days of completed sales. Quantity-weighted averages and gentle above/below indicators appear only when at least three sales exist." },
+      { title: "Quick relist", description: "Relist sold, expired or cancelled entries using their old price and quantity if you have enough unequipped stock and can pay the normal listing fee." },
+      { title: "Know what you own", description: "Owned quantities and current lowest asking prices show up where you shop. No auto-bidding, auto-pricing or automated purchases." },
+      { title: "Existing market rules protected", description: "A verified local schema 25 upgrade and matching Portal Action protocol 39 preserve prior trades, fees and inventory safeguards." },
+    ],
+    action: { tab: "shop", label: "Open Trading Post" },
+  },
+  {
     version: "v1.9.0 Alpha 12",
     name: "Camp & Recovery",
     title: "A better start to every Solo Venture",

@@ -15,9 +15,9 @@ class RetainerHostedAlpha2Tests(unittest.TestCase):
     def tearDown(self): self.temp.cleanup()
 
     def test_alpha2_contract(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-camp-recovery-alpha12")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-camp-recovery-alpha12")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 38)
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-trading-post-qol-alpha13")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-trading-post-qol-alpha13")
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 39)
 
     def test_dispatch_accepts_optional_bounded_priority(self):
         general = self.store.create_action("100", "RETAINER_DISPATCH", {"assignment":"field_gathering"}, "retainer-a2-general")

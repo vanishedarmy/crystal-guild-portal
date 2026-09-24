@@ -25,7 +25,7 @@ class CampPortalContractTests(unittest.TestCase):
         self.tmp.cleanup()
 
     def test_supported_actions_and_protocol(self):
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 38)
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 39)
         self.assertEqual(self.store.create_action('123', 'CAMP_EAT_MEAL', {}, 'camp-meal-001')['type'], 'CAMP_EAT_MEAL')
         self.assertEqual(self.store.create_action('123', 'CAMP_SET_PREPARATION', {'preparation': 'scout'}, 'camp-prep-001')['type'], 'CAMP_SET_PREPARATION')
         for id in ('sharpen', 'supplies'):

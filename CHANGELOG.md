@@ -1,3 +1,8 @@
+# Changelog
+
+## v1.9.0 Alpha 13 — Trading Post QoL
+Character-saved 30-item watchlist, completed-sales 30-day weighted-price history, owned counts while browsing, price context after at least three sales, and a stock- and fee-checked quick relist. Schema 25 / Portal protocol 39.
+
 # Crystal Guild Web/Portal — Release history
 
 ## v1.9.0 Alpha 12 — Camp & Recovery

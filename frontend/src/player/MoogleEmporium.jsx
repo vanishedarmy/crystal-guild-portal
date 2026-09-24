@@ -7,6 +7,8 @@ import {
   submitTradingPostList,
   submitTradingPostBuy,
   submitTradingPostCancel,
+  submitTradingPostWatch,
+  submitTradingPostHistory,
   waitForPortalAction,
 } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
@@ -17,6 +19,7 @@ import ItemArtwork from "../components/ItemArtwork.jsx";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 import { compareTradingPostItems } from "../utils/tradingPostSort.js";
 import ContextHelp from "../components/ContextHelp.jsx";
+import { recentPricePosition, marketDate } from "../utils/tradingPostInsights.js";
 
 
 const EQUIPMENT_TYPES = new Set(["weapon", "armor", "accessory"]);
@@ -94,8 +97,14 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const [category, setCategory] = useState("weapons");
   const [marketView, setMarketView] = useState("browse");
   const [marketCategory, setMarketCategory] = useState("all");
+  const [marketItemFilter, setMarketItemFilter] = useState("");
   const [marketQty, setMarketQty] = useState({});
   const [marketPrice, setMarketPrice] = useState({});
+  const [watchSearch, setWatchSearch] = useState("");
+  const [historySearch, setHistorySearch] = useState("");
+  const [history, setHistory] = useState(null);
+  const [historyItem, setHistoryItem] = useState("");
+  const [relistTarget, setRelistTarget] = useState("");
 
   const playerUsername = String(data?.player?.username || overview?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -128,12 +137,30 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const filteredStock = useMemo(() => displayedStock.filter((item) => shopCategory(item) === category), [displayedStock, category]);
   const filteredSellableItems = useMemo(() => sellableItems.filter((item) => shopCategory(item) === category), [sellableItems, category]);
   const marketListings = useMemo(() => (Array.isArray(market?.listings) ? market.listings : [])
-    .filter((listing) => marketCategory === "all" || shopCategory(listing?.item) === marketCategory)
-    .slice().sort(compareTradingPostItems), [market?.listings, marketCategory]);
+    .filter((listing) => (marketCategory === "all" || shopCategory(listing?.item) === marketCategory)
+      && (!marketItemFilter || listing?.item?.id === marketItemFilter))
+    .slice().sort(compareTradingPostItems), [market?.listings, marketCategory, marketItemFilter]);
   const marketEligibleItems = useMemo(() => (Array.isArray(market?.eligible_items) ? market.eligible_items : [])
     .slice().sort(compareTradingPostItems), [market?.eligible_items]);
   const ownMarketListings = useMemo(() => (Array.isArray(market?.my_listings) ? market.my_listings : [])
     .slice().sort(compareTradingPostItems), [market?.my_listings]);
+  const watchedIds = useMemo(() => new Set(market?.watchlist || []), [market?.watchlist]);
+  const marketCatalog = useMemo(() => Array.isArray(market?.catalog_items) ? market.catalog_items : [], [market?.catalog_items]);
+  const watchedItems = useMemo(() => (market?.watchlist || [])
+    .map((id) => marketCatalog.find((item) => item.id === id))
+    .filter(Boolean), [market?.watchlist, marketCatalog]);
+  const watchCandidates = useMemo(() => {
+    const query = watchSearch.trim().toLowerCase();
+    if (query.length < 2) return [];
+    return marketCatalog.filter((item) => !watchedIds.has(item.id)
+      && (item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query))).slice(0, 12);
+  }, [watchSearch, marketCatalog, watchedIds]);
+  const historyCandidates = useMemo(() => {
+    const query = historySearch.trim().toLowerCase();
+    if (query.length < 2) return [];
+    return marketCatalog.filter((item) => item.name.toLowerCase().includes(query)
+      || item.id.toLowerCase().includes(query)).slice(0, 12);
+  }, [historySearch, marketCatalog]);
 
   const annexUnlocked = Boolean(shop?.annex_unlocked);
   const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 21 : 9));
@@ -152,6 +179,8 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     && capabilities.has("TRADING_POST_LIST")
     && capabilities.has("TRADING_POST_BUY")
     && capabilities.has("TRADING_POST_CANCEL")
+    && capabilities.has("TRADING_POST_WATCH")
+    && capabilities.has("TRADING_POST_HISTORY")
   );
   const csrfToken = auth.csrf_token || "";
 
@@ -292,7 +321,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     );
   };
 
-  const runMarketMutation = async (key, submit, successFallback) => {
+  const runMarketMutation = async (key, submit, successFallback, { refreshShop = true } = {}) => {
     if (!tradingPostActionsAvailable || busyKey) return;
     setBusyKey(key);
     setMessage("Updating the Trading Post ledger…");
@@ -305,9 +334,11 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       }
       setMessage(finished.result?.message || successFallback);
       if (finished.status === "completed" && finished.result?.ok !== false) {
-        await Promise.all([loadMarket({ quiet: true }), loadShop({ quiet: true })]);
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        await Promise.all([loadMarket({ quiet: true }), ...(refreshShop ? [loadShop({ quiet: true })] : [])]);
+        if (refreshShop) {
+          onRefresh?.();
+          window.setTimeout(() => onRefresh?.(), 3200);
+        }
       }
     } catch (error) {
       setMessage(error.message);
@@ -338,6 +369,69 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     () => submitTradingPostCancel(listing.id, csrfToken, actionKey("market-cancel", listing.id)),
     "Listing cancelled and items returned.",
   );
+
+  const toggleWatch = (itemId) => {
+    const currentlyWatched = watchedIds.has(itemId);
+    return runMarketMutation(
+      `market-watch:${itemId}`,
+      () => submitTradingPostWatch(itemId, !currentlyWatched, csrfToken, actionKey("market-watch", itemId)),
+      currentlyWatched ? "Removed from watchlist." : "Added to watchlist.",
+      { refreshShop: false },
+    );
+  };
+
+  const loadItemHistory = async (itemId) => {
+    if (!tradingPostActionsAvailable || busyKey) return;
+    setHistoryItem(itemId);
+    setHistory(null);
+    setHistorySearch("");
+    setMarketView("history");
+    setBusyKey(`history:${itemId}`);
+    try {
+      const response = await submitTradingPostHistory(itemId, csrfToken, actionKey("market-history", itemId));
+      const finished = await finishedAction(response);
+      if (finished?.status === "completed" && finished.result?.ok !== false) {
+        setHistory(finished.result?.data || null);
+        setMessage("");
+      } else {
+        setMessage(finished?.result?.message || "Price history is not yet available. Please try again.");
+      }
+    } catch (error) {
+      setMessage(error.message);
+    } finally {
+      setBusyKey("");
+    }
+  };
+
+  // This explicitly lists from current inventory through the existing atomic
+  // listing endpoint. Past inventory is never silently recreated.
+  const quickRelist = (listing) => runMarketMutation(
+    `market-relist:${listing.id}`,
+    () => submitTradingPostList(listing.item.id, listing.quantity, listing.unit_price,
+      csrfToken, actionKey("market-relist", listing.id)),
+    "The item has been relisted using its former price and quantity.",
+  );
+
+  const editAndRelist = (listing) => {
+    const itemId = listing.item.id;
+    const eligible = marketEligibleItems.find((item) => item.id === itemId);
+    setMarketQty((current) => ({ ...current,
+      [itemId]: Math.min(Number(eligible?.max_quantity || 1), Number(listing.quantity || 1)),
+    }));
+    setMarketPrice((current) => ({ ...current, [itemId]: Number(listing.unit_price || 1) }));
+    setRelistTarget(itemId);
+    setMarketView("sell");
+    setMessage(`Relist draft prepared for ${listing.item.name}. Review the quantity and price before posting.`);
+  };
+
+  useEffect(() => {
+    if (marketView !== "sell" || !relistTarget) return undefined;
+    const timer = window.setTimeout(() => {
+      document.getElementById(`market-sell-${relistTarget}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setRelistTarget("");
+    }, 50);
+    return () => window.clearTimeout(timer);
+  }, [marketView, relistTarget]);
 
   const shopRemaining = shop?.expires_at ? Math.max(0, Math.ceil(((Number(shop.expires_at) * 1000) - clock) / 1000)) : 0;
   const expiresText = shop?.expires_at ? (shopRemaining > 0 ? duration(shopRemaining) : "Ready") : "—";
@@ -526,6 +620,8 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
 
                   <div className="trading-post-view-tabs" role="tablist" aria-label="Trading Post view" onKeyDown={(event) => handleTabListKeyDown(event, setMarketView)}>
                     <button type="button" role="tab" data-tab-value="browse" tabIndex={marketView === "browse" ? 0 : -1} aria-selected={marketView === "browse"} className={marketView === "browse" ? "active" : ""} onClick={() => setMarketView("browse")}>Browse Market</button>
+                    <button type="button" role="tab" data-tab-value="watchlist" tabIndex={marketView === "watchlist" ? 0 : -1} aria-selected={marketView === "watchlist"} className={marketView === "watchlist" ? "active" : ""} onClick={() => setMarketView("watchlist")}>Watchlist ({watchedIds.size})</button>
+                    <button type="button" role="tab" data-tab-value="history" tabIndex={marketView === "history" ? 0 : -1} aria-selected={marketView === "history"} className={marketView === "history" ? "active" : ""} onClick={() => setMarketView("history")}>Recently Sold</button>
                     <button type="button" role="tab" data-tab-value="sell" tabIndex={marketView === "sell" ? 0 : -1} aria-selected={marketView === "sell"} className={marketView === "sell" ? "active" : ""} onClick={() => setMarketView("sell")}>My Listings &amp; Sell</button>
                   </div>
 
@@ -533,9 +629,10 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     <>
                       <div className="trading-post-filters" role="group" aria-label="Trading Post category filter">
                         {[["all", "All"], ["weapons", "Weapons"], ["armor", "Armor"], ["items", "Items"]].map(([value, label]) => (
-                          <button key={value} type="button" className={marketCategory === value ? "active" : ""} onClick={() => setMarketCategory(value)}>{label}</button>
+                          <button key={value} type="button" className={marketCategory === value ? "active" : ""} onClick={() => { setMarketItemFilter(""); setMarketCategory(value); }}>{label}</button>
                         ))}
                       </div>
+                      {marketItemFilter ? <div className="trading-post-item-focus">Showing {marketCatalog.find((item) => item.id === marketItemFilter)?.name || marketItemFilter} <button type="button" className="market-history-button" onClick={() => setMarketItemFilter("")}>Show all items</button></div> : null}
                       {marketListings.length ? (
                         <div className="trading-post-listing-grid">
                           {marketListings.map((listing) => {
@@ -546,12 +643,21 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                               <article className={`trading-post-listing ${listing.mine ? "mine" : ""}`} key={listing.id}>
                                 <div className="trading-post-listing-head">
                                   <ItemArtwork item={listing.item} className="moogle-item-artwork" />
-                                  <div><span className="slot-label">{typeLabel(listing.item?.type)}</span><strong className={`item-name rarity-${listing.item?.rarity || "common"}`}>{listing.item?.name || "Unknown Item"}</strong><small>{listing.mine ? "Your listing" : `Seller: ${listing.seller_name || listing.seller_username || "Adventurer"}`}</small></div>
+                                  <div><span className="slot-label">{typeLabel(listing.item?.type)}</span><strong className={`item-name rarity-${listing.item?.rarity || "common"}`}>{listing.item?.name || "Unknown Item"}</strong><small>{listing.mine ? "Your listing" : `Seller: ${listing.seller_name || listing.seller_username || "Adventurer"}`}</small><small>In your bag: {number(market.owned_quantities?.[listing.item?.id] || 0)}</small></div>
                                 </div>
                                 <div className="trading-post-market-metrics">
                                   <span><strong>{number(listing.unit_price)}g</strong><small>each · Qty {number(listing.quantity)}</small></span>
                                   <span><small>Total</small><strong>{number(listing.total_price)}g</strong></span>
                                   <small className="trading-post-expiry">Expires in {remaining > 0 ? duration(remaining) : "moments"}</small>
+                                </div>
+                                <div className="trading-post-insight">
+                                  {(() => { const insight = recentPricePosition(listing.unit_price, market.price_stats?.[listing.item?.id]);
+                                    return insight ? <small className={`market-price-indicator ${insight.tone}`} title="Based on completed sales, weighted by quantity, over the last 30 days. Not a recommended price.">{insight.label} · {number(market.price_stats[listing.item.id].average_price)}g avg ({number(market.price_stats[listing.item.id].sale_count)} sales)</small>
+                                      : <small className="market-price-indicator no-history">Fewer than 3 recent sales</small>; })()}
+                                  <div className="trading-post-inline-actions">
+                                    <button type="button" className={`market-watch-button ${watchedIds.has(listing.item.id) ? "watched" : ""}`} aria-pressed={watchedIds.has(listing.item.id)} disabled={Boolean(busyKey) || (!watchedIds.has(listing.item.id) && watchedIds.size >= Number(market.watch_limit || 30))} onClick={() => toggleWatch(listing.item.id)}>{watchedIds.has(listing.item.id) ? "★ Watching" : "☆ Watch"}</button>
+                                    <button type="button" className="market-history-button" disabled={Boolean(busyKey)} onClick={() => loadItemHistory(listing.item.id)}>Price history</button>
+                                  </div>
                                 </div>
                                 {listing.item?.description ? <p className="trading-post-description">{listing.item.description}</p> : null}
                                 {Object.keys(itemBonuses(listing.item)).length ? <small>{formatBonuses(itemBonuses(listing.item))}</small> : null}
@@ -564,6 +670,51 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                         <div className="trading-post-empty"><img src="/trading-post/a1/no-results.webp" alt="Moogle checking an empty Trading Post board" /><div><strong>No listings found.</strong><span>Try another category, or be the first adventurer to post something for sale.</span></div></div>
                       )}
                     </>
+                  ) : marketView === "watchlist" ? (
+                    <section className="trading-post-watch-view" aria-label="Trading Post watchlist">
+                      <div className="panel-title-row"><div><span className="panel-kicker">Saved to this character</span><h3>Watched items</h3></div><span className="small-badge">{watchedIds.size} / {number(market.watch_limit || 30)}</span></div>
+                      <p className="trading-post-small-note">Your watchlist stays across devices. It does not place bids or trigger automatic purchases.</p>
+                      <label className="market-catalog-search">Find an item to watch
+                        <input type="search" value={watchSearch} onChange={(event) => setWatchSearch(event.target.value)} placeholder="Search eligible gear, materials or supplies…" />
+                      </label>
+                      {watchCandidates.length ? <div className="market-search-results" role="group" aria-label="Matching items">
+                        {watchCandidates.map((item) => <button type="button" key={item.id} disabled={Boolean(busyKey) || watchedIds.size >= Number(market.watch_limit || 30)} onClick={() => { toggleWatch(item.id); setWatchSearch(""); }}>☆ Watch {item.name}</button>)}
+                      </div> : null}
+                      {watchSearch.trim().length >= 2 && !watchCandidates.length ? <small>No unwatched eligible items match.</small> : null}
+                      {watchedItems.length ? <div className="trading-post-watch-grid">
+                        {watchedItems.map((item) => {
+                          const marketSummary = market.watchlist_market?.[item.id];
+                          const recent = market.price_stats?.[item.id];
+                          return <article key={item.id} className="trading-post-watch-card">
+                            <div className="trading-post-listing-head"><ItemArtwork item={item} className="moogle-item-artwork" /><div><strong>{item.name}</strong><small>Owned {number(market.owned_quantities?.[item.id] || 0)} · {number(marketSummary?.listing_count || 0)} current listings</small></div></div>
+                            <div className="market-watch-stat"><span>Lowest current asking price</span><strong>{marketSummary ? `${number(marketSummary.min_asking_price)}g` : "No active listing"}</strong></div>
+                            <div className="market-watch-stat"><span>30-day completed-sale average</span><strong>{recent ? `${number(recent.average_price)}g (${number(recent.sale_count)} sales)` : "No recent sales"}</strong></div>
+                            <div className="trading-post-inline-actions">
+                              <button type="button" className="market-history-button" disabled={Boolean(busyKey)} onClick={() => loadItemHistory(item.id)}>Price history</button>
+                              <button type="button" className="market-watch-button watched" disabled={Boolean(busyKey)} onClick={() => toggleWatch(item.id)}>★ Unwatch</button>
+                              {marketSummary ? <button type="button" className="market-history-button" onClick={() => { setMarketItemFilter(item.id); setMarketCategory(shopCategory(item)); setMarketView("browse"); }}>View listings</button> : null}
+                            </div>
+                          </article>;
+                        })}
+                      </div> : <div className="state-message compact-state">No watched items yet. Search above or watch items directly on the marketplace.</div>}
+                    </section>
+                  ) : marketView === "history" ? (
+                    <section className="trading-post-history-view" aria-label="Recently sold items">
+                      <div className="panel-title-row"><div><span className="panel-kicker">Actual sales, not asking prices</span><h3>Recently sold</h3></div><span className="small-badge">Last {number(market.history_days || 30)} days</span></div>
+                      <p className="trading-post-small-note">Prices reflect player-to-player transactions. Average prices are weighted by quantity. A few trades may not reflect typical prices.</p>
+                      <label className="market-catalog-search">Look up an item’s last 12 sales
+                        <input type="search" value={historySearch} onChange={(event) => setHistorySearch(event.target.value)} placeholder="Find an item for detailed history…" />
+                      </label>
+                      {historyCandidates.length ? <div className="market-search-results" role="group" aria-label="History search matches">
+                        {historyCandidates.map((item) => <button type="button" key={item.id} disabled={Boolean(busyKey)} onClick={() => loadItemHistory(item.id)}>{item.name}</button>)}
+                      </div> : null}
+                      {historyItem ? <div className="trading-post-history-detail">
+                        <h4>{history?.item_name || marketCatalog.find((item) => item.id === historyItem)?.name || historyItem}</h4>
+                        {history ? (history.sales?.length ? <div className="market-recent-sale-list">{history.sales.map((sale, index) => <div className="market-sale-row" key={`${sale.sold_at}-${index}`}><strong>{number(sale.unit_price)}g each</strong><span>×{number(sale.quantity)}</span><time dateTime={new Date(sale.sold_at * 1000).toISOString()}>{marketDate(sale.sold_at)}</time></div>)}</div> : <p>No completed sales for this item in the past 30 days.</p>) : <p>{busyKey.startsWith("history:") ? "Loading item history…" : "Select an item to load its history."}</p>}
+                      </div> : null}
+                      <h4 className="market-recent-title">Latest completed sales across the Trading Post</h4>
+                      {(market.recent_sales || []).length ? <div className="market-recent-sale-list">{market.recent_sales.map((sale,index) => <div className="market-sale-row" key={`${sale.item_id}-${sale.sold_at}-${index}`}><button type="button" className="market-history-button" disabled={Boolean(busyKey)} onClick={() => loadItemHistory(sale.item_id)}>{sale.item_name}</button><strong>{number(sale.unit_price)}g each</strong><span>×{number(sale.quantity)}</span><time dateTime={new Date(sale.sold_at * 1000).toISOString()}>{marketDate(sale.sold_at)}</time></div>)}</div> : <div className="state-message compact-state">No completed Trading Post sales in the last 30 days.</div>}
+                    </section>
                   ) : (
                     <div className="trading-post-seller-view">
                       <section className="trading-post-sell-section">
@@ -577,13 +728,13 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                             const fee = Math.max(1, Math.ceil(total * Number(market.listing_fee_rate || 0.02)));
                             const busy = busyKey === `market-list:${item.id}`;
                             return (
-                              <article className="trading-post-sell-card" key={item.id}>
+                              <article className="trading-post-sell-card" key={item.id} id={`market-sell-${item.id}`}>
                                 <div className="trading-post-listing-head"><ItemArtwork item={item} className="moogle-item-artwork" /><div><span className="slot-label">{typeLabel(item.type)}</span><strong className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</strong><small>Owned {number(item.quantity)} · Listable {number(item.max_quantity)}</small></div></div>
                                 <div className="trading-post-list-form">
                                   <label><span>Qty</span><input type="number" inputMode="numeric" min="1" max={max} value={marketQty[item.id] ?? 1} onChange={(event) => setMarketQty((current) => ({ ...current, [item.id]: Math.max(1, Math.min(max, Number(event.target.value) || 1)) }))} /></label>
                                   <label><span>Gil each</span><input type="number" inputMode="numeric" min="1" max="1000000" value={marketPrice[item.id] ?? item.reference_price ?? 1} onChange={(event) => setMarketPrice((current) => ({ ...current, [item.id]: Math.max(1, Math.min(1000000, Number(event.target.value) || 1)) }))} /></label>
                                 </div>
-                                <small className="trading-post-fee-summary">Total {number(total)}g · Fee {number(fee)}g</small>
+                                <small className="trading-post-fee-summary">{market.price_stats?.[item.id] ? `30-day sold avg: ${number(market.price_stats[item.id].average_price)}g across ${number(market.price_stats[item.id].sale_count)} sales · ` : "No recent sold-price history · "}Total {number(total)}g · Fee {number(fee)}g</small>
                                 <button type="button" className="equipment-action-button secondary" disabled={market.combat_locked || Number(market.gil || 0) < fee || Number(market.active_count || 0) >= Number(market.active_limit || 24) || Boolean(busyKey)} onClick={() => listOnMarket(item)}>{busy ? "Posting…" : `Post Listing · ${number(fee)}g fee`}</button>
                               </article>
                             );
@@ -598,7 +749,19 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                             <article key={listing.id} className={`trading-post-own-row status-${listing.status}`}>
                               <ItemArtwork item={listing.item} className="moogle-sell-item-artwork" />
                               <div><strong>{listing.item?.name || "Item"} ×{number(listing.quantity)}</strong><span>{number(listing.unit_price)}g each · {number(listing.total_price)}g total</span><small>{String(listing.status || "active").toUpperCase()}{listing.status === "sold" ? ` · Payout ${number(listing.payout_gil)}g · Tax ${number(listing.tax_gil)}g` : ""}</small></div>
-                              {listing.status === "active" ? <button type="button" className="equipment-action-button secondary" disabled={market.combat_locked || Boolean(busyKey)} onClick={() => cancelMarketListing(listing)}>{busyKey === `market-cancel:${listing.id}` ? "Cancelling…" : "Cancel"}</button> : null}
+                              {listing.status === "active" ? <button type="button" className="equipment-action-button secondary" disabled={market.combat_locked || Boolean(busyKey)} onClick={() => cancelMarketListing(listing)}>{busyKey === `market-cancel:${listing.id}` ? "Cancelling…" : "Cancel"}</button> : (
+                                <div className="market-relist-actions">
+                                  {(() => { const inventory = marketEligibleItems.find((item) => item.id === listing.item.id);
+                                    const canRelist = Number(inventory?.max_quantity || 0) >= Number(listing.quantity || 0);
+                                    const fee = Math.max(1, Math.ceil(Number(listing.total_price || 0) * Number(market.listing_fee_rate || 0.02)));
+                                    const canPost = canRelist && Number(market.gil || 0) >= fee && Number(market.active_count || 0) < Number(market.active_limit || 24) && !market.combat_locked && !busyKey;
+                                    return <>
+                                      <button type="button" className="equipment-action-button secondary" disabled={!canPost} title={!canRelist ? "You need the original quantity back in your unequipped inventory." : `Lists at the same price; charges a new ${number(fee)}g listing fee.`} onClick={() => quickRelist(listing)}>{busyKey === `market-relist:${listing.id}` ? "Relisting…" : canRelist ? `Quick relist · ${number(fee)}g fee` : "Not enough items"}</button>
+                                      {inventory ? <button type="button" className="market-history-button" disabled={Boolean(busyKey)} onClick={() => editAndRelist(listing)}>Edit &amp; relist</button> : null}
+                                    </>;
+                                  })()}
+                                </div>
+                              )}
                             </article>
                           ))}
                         </div> : <div className="state-message compact-state">You have not posted any Trading Post listings yet.</div>}

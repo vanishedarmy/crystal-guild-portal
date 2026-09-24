@@ -1,11 +1,24 @@
-# Crystal Guild v1.9.0 Alpha 11 — Mobile Combat HUD
+# Crystal Guild v1.9.0 Alpha 12 — Camp & Recovery
 
-This is a **frontend presentation update** to the verified Alpha 10 Records & Moments Bot/Web/public baseline. Its quick combat HUD was first added during Alpha 6; Alpha 11 fixes the nested-sticky and picker-overlap limitations.
+The complete Alpha 12 release builds on Alpha 11 Mobile Combat HUD and includes the matching Bot source, hosted Web source, and **all public assets already assembled at `Web/frontend/public/`**. Extract the one ZIP once.
 
-On mobile (760 px or less), the action bar is fixed to the bottom of the viewport instead of the scrolling battle card. It shows your HP, enemy HP/name, available MP/AP and four commands. The HUD height is measured so the active Ability/Item drawer opens just above it, with a scrollable list. It closes with the existing Close control or Escape, and full desktop combat decks remain in place. All combat actions still call the existing authenticated Bot/Portal endpoints.
+## Three deliberately small Camp choices
 
-**Compatibility:** Local Bot schema 23, hosted sync 1 and Portal Action protocol 37 are unchanged. No player-data migration, combat balance change, new artwork or new backend action is required. Deploy the matching Alpha 11 Bot metadata and Web source; use the separately supplied public archive for assets and updated Player Guide. Preserve your existing live database, configuration and secrets.
+- **Eat a meal:** Trail Rations are available in the shop for 95 Gil and craftable in batches of two from Fish Scale ×1, Potion ×1 and 20 Gil. Eat one at the Adventure Board Camp to gain **+10% damage throughout the next Solo Venture**, provided you depart within **45 minutes**. Eating uses one ration once, prevents accidental double-consumption, and lasts all three stages once the run begins.
+- **Recover:** Preserve the existing free timed Camp. The new Camp panel also offers one-click use of a carried **Potion** or **Tent** through the original server-owned field-item rules. No gear degradation or repair economy is introduced.
+- **Choose one free preparation:** **Scout the Route** grants **+10% secured stage XP and JP**; **Check Your Gear** grants **+8% damage** for the entire Solo Venture; **Pack Supplies** restores **10% HP and MP/AP** after each defeated Solo Venture enemy. Switch plans freely before departure; the choice is consumed only when a Solo Venture actually starts.
 
-**Build requirement:** Web/frontend/dist from Alpha 10 must not be deployed unchanged. Install platform-native pinned dependencies in the build environment (`cd Web/frontend && npm ci && npm run build`). The delivered Web source package excludes the previous prebuilt dist so an outdated UI cannot be deployed accidentally.
+Meals and choices persist safely in the local SQLite database until a run begins or the meal expires. Their bonuses are intentionally limited to **Portal Solo Ventures**; Hunts, Rally Ventures, Dungeons, Raids and other combat modes keep their existing behavior.
 
-**Validation:** Source wiring and Node/Python regression checks can be run before deployment. A fresh production Vite build and manual browser walkthrough at 320/375/390/760 px, landscape and mobile safe-area devices must be completed in the target build/browser environment.
+## Compatibility and safety
+
+- Bot and hosted Web release `1.9.0-camp-recovery-alpha12`. Local Bot DB schema **24** (verified pre-migration backup from schema 23), hosted sync schema **1**, Portal Action protocol **38**. Both services must be upgraded together.
+- The original Alpha 11 mobile combat HUD and losslessly optimized Trading Post WebP artwork are carried forward; the public assets are supplied in their proper folder.
+- Authoritative Bot actions, idempotency receipts and strict hosted-action shape checks prevent duplicate meals and arbitrary client-provided bonuses. The Adventure Board projection stays within its existing compact response budget.
+- Preserve the existing live Bot SQLite database, mounted data volumes, hosted Web store, OAuth/session credentials and environment variables. Test migration on a backup before live deployment. **Do not deploy only one half of the protocol upgrade.**
+
+## Build status
+
+This is a **complete source handoff**, not a live deployment or prebuilt Vite bundle. From `Web/frontend`, install pinned dependencies with `npm ci` and create fresh assets with `npm run build` on the target build machine, then do a responsive browser walkthrough of Camp and the retained mobile combat HUD.
+
+The hosted relay shape tests are in `Web/tests/test_camp_alpha12.py`; frontend UI contract tests are in `Web/frontend/tests/campImprovementsAlpha12.test.mjs`.

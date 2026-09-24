@@ -18,9 +18,9 @@ function fellowshipSection(html) {
 
 test("current Dungeons & Delves identity is consistent while Guild Expansion remains in history", () => {
   assert.match(version, /WEB_BUILD = "Records & Moments"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-mobile-combat-hud-alpha11"/);
-  assert.equal(guideData.meta.version, "v1.9.0 Alpha 11 — Mobile Combat HUD");
-  assert.equal(guideData.meta.release, "1.9.0-mobile-combat-hud-alpha11");
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-camp-recovery-alpha12"/);
+  assert.equal(guideData.meta.version, "v1.9.0 Alpha 12 — Camp & Recovery");
+  assert.equal(guideData.meta.release, "1.9.0-camp-recovery-alpha12");
   assert.equal(manifest.release, "v1.5.1 — Relic Arsenal Complete");
   assert.equal(manifest.frontend_asset_revision, "1.5.1-relic-arsenal-complete");
 });

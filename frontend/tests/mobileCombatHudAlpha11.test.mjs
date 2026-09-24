@@ -71,6 +71,6 @@ test("all six combat experiences share the overlay with existing backend callbac
   assert.match(live, /targetFor\(item, selectedTarget\)/);
   assert.match(live, /onAction\?\.\("ability", ability\.id, target\)/);
   assert.match(live, /onAction\?\.\("item", item\.id, target\)/);
-  assert.match(version, /1\.9\.0-mobile-combat-hud-alpha11/);
+  assert.match(version, /1\.9\.0-camp-recovery-alpha12/);
   assert.match(guide, /drawer just above the bar/);
 });

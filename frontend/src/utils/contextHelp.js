@@ -17,6 +17,7 @@ export const CONTEXT_HELP = {
       "Camp restores HP and all Job resource families, including MP and AP used by Jobs you are not currently playing.",
       "LIVE and OFFLINE camp durations differ; the displayed timer already includes applicable Fellowship bonuses.",
       "Recovery items can be used when you need an immediate fix instead of waiting for Camp.",
+      "Trail Rations grant +10% Solo Venture damage if you depart within 45 minutes; choose one free Venture preparation for XP/JP, damage, or post-fight recovery.",
     ],
     tip: "A completed rest follows your character across Job switches—each Job resolves at its own full resource maximum.",
     guide: "recovery",

@@ -23,15 +23,15 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.0-mobile-combat-hud-alpha11"
-FRONTEND_ASSET_REVISION = "1.9.0-mobile-combat-hud-alpha11"
+HOSTED_PORTAL_VERSION = "1.9.0-camp-recovery-alpha12"
+FRONTEND_ASSET_REVISION = "1.9.0-camp-recovery-alpha12"
 SCHEMA_VERSION = 1
-ACTION_PROTOCOL_VERSION = 37
+ACTION_PROTOCOL_VERSION = 38
 ALLOWED_PORTAL_ACTIONS = {
     "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "TRADING_POST_STATE", "TRADING_POST_LIST", "TRADING_POST_BUY", "TRADING_POST_CANCEL",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
-    "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST",
+    "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST", "CAMP_EAT_MEAL", "CAMP_SET_PREPARATION",
     "FELLOWSHIP_STATE", "CONTRIBUTE_GIL", "CONTRIBUTE_ITEM", "WORKSHOP_EXCHANGE",
     "CRAFTING_STATE", "CRAFT_RECIPE", "FORGE_ITEM", "RESYNTHESIZE_ITEM", "DAILY_STATE", "CLAIM_DAILY",
     "ADVENTURE_STATE", "LIVE_EVENT_JOIN", "LIVE_EVENT_ACTION", "TRAVEL_REGION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION", "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN", "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
@@ -95,7 +95,7 @@ READ_ONLY_STATE_ACTIONS = {
 # still pending/processing. This prevents a browser retry from applying a Solo
 # Venture round twice after the first request completed slowly.
 COALESCED_PENDING_ACTIONS = READ_ONLY_STATE_ACTIONS | {
-    "CLAIM_DAILY", "LIVE_EVENT_JOIN", "LIVE_EVENT_ACTION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
+    "CLAIM_DAILY", "LIVE_EVENT_JOIN", "LIVE_EVENT_ACTION", "CAMP_EAT_MEAL", "CAMP_SET_PREPARATION", "SOLO_VENTURE", "SOLO_EXPEDITION_ACTION",
     "SOLO_EXPEDITION_CONTINUE", "SOLO_EXPEDITION_RETURN",
     "SOLO_EXPEDITION_RETREAT", "CHALLENGE_HUNT", "ACK_ADVENTURE_RESULT",
     "EXPEDITION_START", "EXPEDITION_RESOLVE_STAGE", "EXPEDITION_ACTION", "EXPEDITION_CONTINUE",
@@ -833,6 +833,13 @@ class HostedPortalStore:
         elif kind == "START_REST":
             if payload:
                 raise ValueError("START_REST does not accept parameters.")
+        elif kind == "CAMP_EAT_MEAL":
+            if payload:
+                raise ValueError("CAMP_EAT_MEAL does not accept parameters.")
+        elif kind == "CAMP_SET_PREPARATION":
+            if set(payload) != {"preparation"} or payload.get("preparation") not in {"scout", "sharpen", "supplies"}:
+                raise ValueError("CAMP_SET_PREPARATION requires a supported preparation.")
+            payload = {"preparation": str(payload["preparation"])}
         elif kind == "FELLOWSHIP_STATE":
             if payload:
                 raise ValueError("FELLOWSHIP_STATE does not accept parameters.")

@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 12",
+    name: "Camp & Recovery",
+    title: "A better start to every Solo Venture",
+    summary: "Eat a Trail Rations meal, recover directly with your supplies, and pick one simple preparation before your next Solo Venture.",
+    highlights: [
+      { title: "A meal worth making", description: "Trail Rations are purchasable or craftable, and grant +10% damage during your next Solo Venture if you depart within 45 minutes." },
+      { title: "One free departure plan", description: "Scout for +10% XP/JP, check your gear for +8% damage, or pack supplies to restore 10% HP and resources after each victory. Swap plans freely before departure." },
+      { title: "Recovery at your fingertips", description: "Potion and Tent actions appear directly next to the existing timed Camp recovery. No equipment durability or additional repair economy." },
+      { title: "Progress preserved", description: "Meals and preparations save to your character; a verified schema 24 backup migration and matching Portal Action protocol 38 protect existing progress." },
+    ],
+    action: { tab: "adventure", label: "Open Camp & Recovery" },
+  },
+  {
     version: "v1.9.0 Alpha 11",
     name: "Mobile Combat HUD",
     title: "The whole fight, always in reach",

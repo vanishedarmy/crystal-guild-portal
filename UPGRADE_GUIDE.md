@@ -1,9 +1,12 @@
-# Upgrade to Crystal Guild v1.9.0 Alpha 11 — Mobile Combat HUD
+# Upgrade to Crystal Guild v1.9.0 Alpha 12 — Camp & Recovery
 
-**Baseline:** Complete matching Alpha 10 — Records & Moments Bot.zip, Web.zip and public.zip (the public assets were distributed separately). This Alpha 11 is a complete source package, not a patch for an unknown older build.
+Starting baseline: complete matching Alpha 11 Mobile Combat HUD (`1.9.0-mobile-combat-hud-alpha11`). This Alpha 12 archive includes all source trees and public assets; you need nothing else to assemble them.
 
-1. Back up the live Bot database, environment files, Twitch tokens, mounted persistent volumes and hosted secrets. Do not overwrite them with packaged examples.
-2. Deploy the matching Alpha 11 `Bot/` and `Web/` source trees. Place the contents of `public.zip` at `Web/frontend/public/` before building (the archive already has a single `public/` root).
-3. Run `cd Web/frontend`, `npm ci`, `npm test --if-present` or `npm run test:unit`, then `npm run build` on the target platform. **Do not reuse the Alpha 10 `dist`**. Use the regular build Dockerfile, not the prebuilt-only Dockerfile until a new Alpha 11 dist exists.
-4. Run Bot/Web regression tests and restart the matching services. Schema remains 23, hosted sync 1, Portal Action protocol 37 and seasonal event activation remains unchanged. No migration is expected from Alpha 10.
-5. Mobile walkthrough: scroll a long fight, check HUD visibility, MP/AP switching, Ability and Item drawers above the bar, disabled commands, keyboard Escape, safe-area insets, and all six combat surfaces. Desktop command layout and existing API behavior must remain unchanged.
+1. Back up local Bot SQLite, hosted Web SQLite and secrets outside the application tree. Test with a copy first.
+2. Extract once. Deploy matching `Bot/` and `Web/` source simultaneously. Bot schema 23→24 automatically creates a verified backup before migration; hosted sync stays **1**; action protocol increases to **38** on both sides.
+3. From `Web/frontend/`, run `npm ci` then `npm run build` with the pinned lockfile. Assets are already in `public/` inside this complete archive. Do not reuse any earlier `dist` bundle.
+4. Reuse your own existing environment files and mounted player database; never overwrite with a test DB. Stage-test the Camp UI, meal timer, two rations from the crafting recipe, free preparation switching, actual Solo Venture buffs and old mobile combat controls. Promote together after smoke testing.
+
+Changes: Trail Rations +10% Solo damage (45-minute departure window), scout +10% Solo XP/JP, gear check +8% Solo damage, supplies 10% post-victory HP/resources, and direct existing Potion/Tent and timed Camp. No durability economy and no effects on other modes.
+
+Rollback: take the Bot and Web releases back to Alpha 11 **with the pre-migration local schema 23 backup**. Do not boot an older Bot against a schema-24 DB.

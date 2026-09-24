@@ -38,9 +38,9 @@ class ResynthesisHostedAlpha1Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_resynthesis_release_contract(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-mobile-combat-hud-alpha11")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-mobile-combat-hud-alpha11")
-        self.assertEqual(ACTION_PROTOCOL_VERSION, 37)
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.0-camp-recovery-alpha12")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.0-camp-recovery-alpha12")
+        self.assertEqual(ACTION_PROTOCOL_VERSION, 38)
         self.assertIn("RESYNTHESIZE_ITEM", ALLOWED_PORTAL_ACTIONS)
 
     def test_store_accepts_one_bounded_resynthesis_item_id(self):

@@ -23,7 +23,7 @@ test("drawer headers remain pinned while long ability and item lists scroll", ()
 });
 
 test("Hotfix 10 cache-busts the Portal and documents bounded mobile drawers", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-mobile-combat-hud-alpha11"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-camp-recovery-alpha12"/);
   assert.match(guide, /bounded drawer just above the bar/);
   assert.match(guide, /page remains scrollable outside the drawer/);
 });

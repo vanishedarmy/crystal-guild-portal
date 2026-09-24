@@ -1,0 +1,23 @@
+/* Alpha 12 — compact Camp choices, responsive without trapping scroll */
+.camp-improvements { margin-top: 1.2rem; padding-top: 1.05rem; border-top: 1px solid var(--border-color, rgba(176,201,225,.24)); }
+.camp-improvements-heading { display:flex; gap:.4rem 1rem; justify-content:space-between; flex-wrap:wrap; margin-bottom:.8rem; }
+.camp-improvements-heading > strong { font-size:1.03rem; }
+.camp-improvements-heading > span { opacity:.77; font-size:.87rem; }
+.camp-choice-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr)); gap:.85rem; align-items:stretch; }
+.camp-choice-card { min-width:0; display:flex; flex-direction:column; gap:.6rem; padding:.95rem; border:1px solid rgba(151,178,215,.30); border-radius:12px; background:rgba(17,31,54,.30); }
+.camp-choice-card p { margin:0; line-height:1.5; }
+.camp-choice-card > button { margin-top:auto; }
+.camp-choice-head { display:flex; gap:.55rem; align-items:baseline; justify-content:space-between; flex-wrap:wrap; }
+.camp-choice-head strong { font-size:1rem; }
+.camp-choice-head .small-badge { white-space:normal; text-align:center; }
+.camp-compact-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.5rem; margin-top:auto; }
+.camp-compact-actions button { min-width:0; white-space:normal; }
+.camp-preparation-options { display:grid; gap:.48rem; margin-top:.2rem; }
+.camp-preparation-option { width:100%; padding:.65rem .75rem; text-align:left; display:grid; gap:.23rem; border-radius:8px; border:1px solid rgba(151,178,215,.40); background:rgba(20,35,59,.48); color:inherit; cursor:pointer; }
+.camp-preparation-option span { font-size:.84rem; opacity:.85; line-height:1.45; }
+.camp-preparation-option em { font-size:.8rem; color:#aee7b0; font-style:normal; }
+.camp-preparation-option.selected { border-color:#8fca9f; background:rgba(40,91,67,.32); }
+.camp-preparation-option:focus-visible { outline:2px solid #bcdfff; outline-offset:2px; }
+.camp-preparation-option:disabled { cursor:default; }
+.camp-preparation-option:disabled:not(.selected) { opacity:.6; }
+@media (max-width:600px) { .camp-choice-grid { grid-template-columns:minmax(0,1fr); } .camp-choice-card { padding:.85rem; } }

@@ -43,6 +43,6 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
   assert.match(guide, /Priority material/);
-  assert.equal(guideData.meta.version, "v1.9.0 Alpha 11 — Mobile Combat HUD");
-  assert.equal(guideData.meta.release, "1.9.0-mobile-combat-hud-alpha11");
+  assert.equal(guideData.meta.version, "v1.9.0 Alpha 12 — Camp & Recovery");
+  assert.equal(guideData.meta.release, "1.9.0-camp-recovery-alpha12");
 });

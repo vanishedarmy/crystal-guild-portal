@@ -10,6 +10,9 @@ import {
   submitSoloExpeditionReturn,
   submitSoloExpeditionRetreat,
   submitStartRest,
+  submitCampMeal,
+  submitCampPreparation,
+  submitUseFieldItem,
   waitForPortalAction,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -118,6 +121,64 @@ function soloVentureSummary(summary) {
     return `Solo Venture: Victory over ${enemyLabel} — +${number(rewards.xp)} XP · +${number(rewards.jp)} JP · +${number(rewards.gil)} Gil.`;
   }
   return `Solo Venture: Defeated by ${enemyLabel}.`;
+}
+
+// Camp remains one lightweight panel; no new durability economy or duplicate combat logic.
+function CampImprovements({ camp, clock, csrfToken, ready, busy, runRequest }) {
+  const plan = camp?.preparation;
+  if (!plan) return null; // Older Bot revisions still show the original Camp controls.
+  const canPrepare = Boolean(ready && plan.can_prepare && !busy);
+  const mealRemaining = remainingUntil(plan.meal_until, clock);
+  const hpMissing = Number(camp.hp ?? 0) < Number(camp.max_hp ?? 0);
+  const mpMissing = Number(camp.max_mp ?? 0) > 0 && Number(camp.mp ?? 0) < Number(camp.max_mp ?? 0);
+  const apMissing = Number(camp.max_ap ?? 0) > 0 && Number(camp.ap ?? 0) < Number(camp.max_ap ?? 0);
+  const needsRecovery = hpMissing || mpMissing || apMissing;
+  const mealAction = () => runRequest("camp:meal", "camp-meal", "trail-rations", (idem) => submitCampMeal(csrfToken, idem), "Meal prepared.");
+  const setPlan = (id) => runRequest(`camp:prep:${id}`, "camp-preparation", id, (idem) => submitCampPreparation(id, csrfToken, idem), "Preparation selected.");
+  const useItem = (id) => runRequest(`camp:item:${id}`, "camp-recovery", id, (idem) => submitUseFieldItem(id, csrfToken, idem), `${id === "tent" ? "Tent" : "Potion"} used.`);
+  return (
+    <div className="camp-improvements" aria-label="Camp meal recovery and Venture preparation">
+      <div className="camp-improvements-heading"><strong>Before you venture</strong><span>Three small choices. No daily chores.</span></div>
+      <div className="camp-choice-grid">
+        <div className="camp-choice-card">
+          <div className="camp-choice-head"><strong>Eat a Meal</strong><span className="small-badge">45 minutes to depart</span></div>
+          <p>Trail Rations grant <strong>+10% damage</strong> for one complete Solo Venture if you depart before the timer ends.</p>
+          <p className="muted">{mealRemaining > 0 ? `Meal ready · ${duration(mealRemaining)} to depart` : `Trail Rations in your bag: ${number(plan.rations_owned)}`}</p>
+          <button className="equipment-action-button" type="button"
+            disabled={!canPrepare || mealRemaining > 0 || !plan.rations_owned}
+            onClick={mealAction}>{busy === "camp:meal" ? "Preparing…" : mealRemaining > 0 ? "Meal Ready" : "Eat Trail Rations"}</button>
+          {!plan.rations_owned && mealRemaining <= 0 ? <small className="muted">Craft two at the Forge with 1 Fish Scale, 1 Potion and 20 Gil, or buy them from the shop.</small> : null}
+        </div>
+        <div className="camp-choice-card">
+          <div className="camp-choice-head"><strong>Recover & Maintain</strong><span className="small-badge">Existing items</span></div>
+          <p>Camp still restores full HP and resources on its timer. Need to leave sooner? Use what you already carry.</p>
+          <div className="camp-compact-actions">
+            <button className="equipment-action-button secondary" type="button" disabled={!canPrepare || !needsRecovery || !plan.tent_owned}
+              onClick={() => useItem("tent")}>{busy === "camp:item:tent" ? "Using…" : `Use Tent (${number(plan.tent_owned)})`}</button>
+            <button className="equipment-action-button secondary" type="button" disabled={!canPrepare || !hpMissing || Number(camp.hp || 0) <= 0 || !plan.potion_owned}
+              onClick={() => useItem("potion")}>{busy === "camp:item:potion" ? "Using…" : `Use Potion (${number(plan.potion_owned)})`}</button>
+          </div>
+          <small className="muted">Gear checks do not consume equipment or introduce durability.</small>
+        </div>
+        <div className="camp-choice-card">
+          <div className="camp-choice-head"><strong>Pick One Preparation</strong><span className="small-badge">Next Solo Venture</span></div>
+          <p>Choose one free plan. Change your mind before departing; it is used when you begin your next Solo Venture.</p>
+          <div className="camp-preparation-options" role="group" aria-label="Choose one Solo Venture preparation">
+            {[{ id: "scout", label: "Scout the Route", description: "+10% secured XP and JP from the next Solo Venture." },
+              { id: "sharpen", label: "Check Your Gear", description: "+8% damage throughout your next Solo Venture." },
+              { id: "supplies", label: "Pack Supplies", description: "Restore 10% HP and Job resources after each Solo Venture combat victory." }].map((choice) => <button key={choice.id} type="button"
+              className={`camp-preparation-option ${plan.preparation === choice.id ? "selected" : ""}`}
+              aria-pressed={plan.preparation === choice.id} disabled={!canPrepare || plan.preparation === choice.id}
+              onClick={() => setPlan(choice.id)}>
+                <strong>{choice.label}</strong><span>{choice.description}</span>
+                {plan.preparation === choice.id ? <em>Selected</em> : null}
+              </button>)}
+          </div>
+          {plan.reason ? <small className="adventure-disabled-reason">{plan.reason}</small> : null}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function ResultConfirmation({ resultId, onConfirm, confirming, label = "Confirm Result" }) {
@@ -673,6 +734,14 @@ export default function Hunts({ data, overview, onRefresh }) {
           <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !boardStateReady || !state?.camp?.can_start || Boolean(busy)} onClick={() => runRequest("camp:start", "camp", "start", (idem) => submitStartRest(csrfToken, idem), "Camp started.")}>{busy === "camp:start" ? "Setting Camp…" : state?.camp?.resting ? "Camp in Progress" : "Set Up Camp"}</button>
           {state?.camp?.reason ? <span className="adventure-disabled-reason">{state.camp.reason}</span> : null}
         </div>
+        <CampImprovements
+          camp={state?.camp}
+          clock={authoritativeClock}
+          csrfToken={csrfToken}
+          ready={actionsAvailable && boardStateReady}
+          busy={busy}
+          runRequest={runRequest}
+        />
       </section>
 
       <Dungeons

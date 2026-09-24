@@ -1,1 +1,1 @@
-__version__ = "1.9.0-mobile-combat-hud-alpha11"
+__version__ = "1.9.0-camp-recovery-alpha12"

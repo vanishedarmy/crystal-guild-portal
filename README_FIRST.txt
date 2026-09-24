@@ -1,5 +1,6 @@
-CRYSTAL GUILD v1.9.0 Alpha 11 — Mobile Combat HUD
+Crystal Guild v1.9.0 Alpha 12 — Camp & Recovery
+Runtime: 1.9.0-camp-recovery-alpha12 | local Bot schema 24 | hosted sync 1 | Portal Action protocol 38
 
-Web/source package. For supported upgrades, read UPGRADE_GUIDE.md. Install pinned frontend dependencies and run your standard Vite build on staging. Do not overwrite hosted secrets or persistent state. The production Vite and deployed browser walkthrough remain outstanding.
+The Web source contains the revised Camp & Recovery interface and action relay. The COMPLETE handoff already includes the matching Bot source and entire public folder at Web/frontend/public. You do not need a second archive. Preserve existing hosting secrets, OAuth keys and mounted data when upgrading.
 
-Place the matching standalone public.zip at Web/frontend/public before running a fresh Vite build. The earlier Alpha 10 dist is deliberately not included.
+**Fresh frontend build required.** Run npm ci && npm run build inside Web/frontend on the deployment build machine; do not deploy an old dist. Stage-test camp meals, preparations, recovery and the retained mobile combat HUD. Read UPGRADE_GUIDE.md.

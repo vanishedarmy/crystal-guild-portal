@@ -174,6 +174,14 @@ export function submitUseFieldItem(itemId, csrfToken, idempotencyKey, targetUser
   return submitPortalAction("USE_FIELD_ITEM", payload, csrfToken, idempotencyKey);
 }
 
+export function submitCampMeal(csrfToken, idempotencyKey) {
+  return submitPortalAction("CAMP_EAT_MEAL", {}, csrfToken, idempotencyKey);
+}
+
+export function submitCampPreparation(preparation, csrfToken, idempotencyKey) {
+  return submitPortalAction("CAMP_SET_PREPARATION", { preparation }, csrfToken, idempotencyKey);
+}
+
 export function submitStartRest(csrfToken, idempotencyKey) {
   return submitPortalAction("START_REST", {}, csrfToken, idempotencyKey);
 }

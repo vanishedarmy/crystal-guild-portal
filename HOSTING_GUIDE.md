@@ -1,7 +1,5 @@
-# Crystal Guild Portal — Hosting Guide (v1.9.0 Alpha 11)
+# Crystal Guild Portal — Hosting Guide (v1.9.0 Alpha 12)
 
-Deploy the matching Alpha 11 Web and Bot packages, runtime `1.9.0-mobile-combat-hud-alpha11`, local Bot schema **23**, hosted sync **1**, Portal Action protocol **37**. The hosted sync database schema is unchanged; the Bot's local schema 22→23 migration creates a verified backup. Preserve all existing live data and secrets.
+Deploy matching Alpha 12 Web and Bot runtime `1.9.0-camp-recovery-alpha12`; local Bot schema **24**, hosted sync **1**, Portal Action protocol **38**. The hosted sync database schema is unchanged; the Bot's local schema 23→24 migration creates a verified backup. Preserve all existing live data, assets, OAuth/session credentials and private configuration.
 
-The `Dockerfile`, `render.yaml`, `run_hosted_portal.py`, `requirements.txt`, `frontend/vite.config.js` and `.env.example` files are included in this source package. The production Vite build was **not** completed in the development environment because package-registry access was unavailable. Build and run the complete suite on staging with dependency access before production.
-
-For current upgrade instructions, read `UPGRADE_GUIDE.md`. For historical context, see `CHANGELOG.md`.
+The one-ZIP handoff already includes `Web/frontend/public/`. Run `npm ci && npm run build` in `Web/frontend/`; never reuse an old `dist`. Use your existing hosting provider configuration, bind the hosted SQLite file and static assets to persistent volumes, and test new Camp actions against the matching Bot before switching production traffic. See `UPGRADE_GUIDE.md`.

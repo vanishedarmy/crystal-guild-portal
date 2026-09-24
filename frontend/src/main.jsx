@@ -10,9 +10,11 @@ import "./styles/monster-identity.css";
 import "./styles/environment-pass.css";
 import "./styles/button-fit.css";
 import "./styles/uiux-polish.css";
+import "./styles/camp-improvements.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
 );
+

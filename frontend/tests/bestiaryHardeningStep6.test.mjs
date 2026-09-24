@@ -9,8 +9,8 @@ const load = (name) => readFileSync(new URL(name, import.meta.url),'utf8');
 test('Step 6 synchronizes release identity and keeps protocol/schema contract', () => {
   const version = load('../src/version.js');
   const news = load('../src/player/whatsNewData.js');
-  assert.match(version, /v1\.9\.0 Alpha 11/);
-  assert.match(version, /1\.9\.0-mobile-combat-hud-alpha11/);
+  assert.match(version, /v1\.9\.0 Alpha 12/);
+  assert.match(version, /1\.9\.0-camp-recovery-alpha12/);
   assert.match(news, /name: "Bestiary Discovery"/);
   assert.doesNotMatch(news.slice(0, news.indexOf("version: \"v1.9.0 Alpha 8\"")), /schema 22|Portal Action protocol/);
 });
@@ -19,7 +19,7 @@ test('Step 6 Guide now covers all 112 base monsters and its current metadata', (
   const guide = JSON.parse(load('../public/guide-data.json'));
   assert.equal(guide.monsters.length,112);
   assert.equal(new Set(guide.monsters.map(x=>x.id)).size,112);
-  assert.equal(guide.meta.release,'1.9.0-mobile-combat-hud-alpha11');
+  assert.equal(guide.meta.release,'1.9.0-camp-recovery-alpha12');
   for(const id of ['elder_ochu','inferno_drake','malboro_sovereign','frost_behemoth','rift_wyrm']){
     assert.ok(guide.monsters.find(x=>x.id===id),id);
   }

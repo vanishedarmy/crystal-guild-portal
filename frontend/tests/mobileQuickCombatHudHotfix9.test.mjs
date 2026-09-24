@@ -19,7 +19,7 @@ test("Hotfix 9 adds a mobile sticky combat HUD with compact vitals and four core
   assert.match(hud, /label="Enemy"/);
   assert.match(hud, /label="You"/);
   assert.match(hud, />Attack<\/button>[\s\S]*?>Ability<\/button>[\s\S]*?>Item<\/button>[\s\S]*?>Defend<\/button>/);
-  assert.match(hud, /resourceFor/);
+  assert.match(hud, /resourcesFor/);
 });
 
 test("mobile ability and item choices use bounded drawers instead of long page round-trips", () => {
@@ -56,7 +56,7 @@ test("mobile hides duplicate core command rows while desktop source remains inta
 
 
 test("Hotfix 9 cache-busts the Portal and documents the mobile quick bar", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-records-moments-alpha10"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-mobile-combat-hud-alpha11"/);
   assert.match(guide, /How do mobile battle controls work\?/);
-  assert.match(guide, /enemy HP, your HP and MP or AP/);
+  assert.match(guide, /your HP, enemy HP, your MP and\/or AP/);
 });

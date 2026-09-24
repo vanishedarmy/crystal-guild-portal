@@ -15,6 +15,7 @@ import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
+import MobileCombatDrawer from "../components/MobileCombatDrawer.jsx";
 import MobileCombatHud from "../components/MobileCombatHud.jsx";
 
 const DEPTH_COPY = {
@@ -401,6 +402,7 @@ export default function Expeditions({
                   picker={mobileCombatPicker}
                   hasAbilities={(active.combat.abilities || []).length > 0}
                   hasItems={(active.combat.items || []).length > 0}
+                  onDismissPicker={() => setMobileCombatPicker("")}
                   onAttack={() => doRequest("expedition:attack", "expedition-action", `attack:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction("attack", csrfToken, idem), "Attack complete.")}
                   onToggleAbility={() => setMobileCombatPicker(mobileCombatPicker === "ability" ? "" : "ability")}
                   onToggleItem={() => setMobileCombatPicker(mobileCombatPicker === "item" ? "" : "item")}
@@ -418,7 +420,7 @@ export default function Expeditions({
                 </div>
 
                 {(active.combat.abilities || []).length ? (
-                  <div className={`expedition-action-section expedition-abilities-section mobile-combat-drawer ${mobileCombatPicker === "ability" ? "mobile-picker-open" : ""}`}>
+                  <MobileCombatDrawer open={mobileCombatPicker === "ability"} kind="ability" onClose={() => setMobileCombatPicker("")}><div className={`expedition-action-section expedition-abilities-section mobile-combat-drawer ${mobileCombatPicker === "ability" ? "mobile-picker-open" : ""}`}>
                     <div className="expedition-action-section-header">
                       <h3>{active.combat.player?.job_name || "Job"} Abilities</h3>
                       <button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobileCombatPicker("")}>Close</button>
@@ -439,11 +441,11 @@ export default function Expeditions({
                         </section>
                       ) : null)}
                     </div>
-                  </div>
+                  </div></MobileCombatDrawer>
                 ) : null}
 
                 {(active.combat.items || []).length ? (
-                  <div className={`expedition-action-section expedition-consumables-section mobile-combat-drawer ${mobileCombatPicker === "item" ? "mobile-picker-open" : ""}`}>
+                  <MobileCombatDrawer open={mobileCombatPicker === "item"} kind="item" onClose={() => setMobileCombatPicker("")}><div className={`expedition-action-section expedition-consumables-section mobile-combat-drawer ${mobileCombatPicker === "item" ? "mobile-picker-open" : ""}`}>
                     <div className="expedition-action-section-header">
                       <h3>Items</h3>
                       <button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobileCombatPicker("")}>Close</button>
@@ -466,7 +468,7 @@ export default function Expeditions({
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div></MobileCombatDrawer>
                 ) : null}
 
                 <button type="button" className="equipment-action-button ghost danger expedition-retreat-action" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Expedition encounter? Your Chocobo will rescue you, but part of the Expedition Cache may be lost.")) doRequest("expedition:retreat", "expedition-retreat", String(active.stage), (idem) => submitExpeditionRetreat(csrfToken, idem), "Chocobo rescue complete."); }}>Retreat · Chocobo Rescue</button>

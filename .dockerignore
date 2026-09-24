@@ -19,3 +19,6 @@ frontend/tests
 *.md
 *.txt
 frontend/.env.example
+
+# Never copy stale Alpha 10 build output into the Alpha 11 builder.
+frontend/dist

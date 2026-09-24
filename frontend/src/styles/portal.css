@@ -14401,3 +14401,97 @@ textarea {
  .moment-discovery-item img { width: 3.75rem; height: 3.75rem; flex-basis: 3.75rem; }
 }
 @media (prefers-reduced-motion: reduce) { .moment-discovery-notice { animation: none; } }
+
+/* ============================================================
+   v1.9.0 Alpha 11 — viewport-anchored mobile combat
+   The previous sticky bar could scroll away inside a clipped/collapsed combat
+   panel, and the fixed picker covered its own controls. Both now render in
+   document.body and the drawer rests ABOVE the measured quick-action bar.
+   ============================================================ */
+@media (max-width: 760px) {
+  body.mobile-combat-hud-present #root {
+    padding-bottom: calc(var(--mobile-combat-hud-height, 132px) + max(8px, env(safe-area-inset-bottom)) + 18px);
+  }
+
+  .mobile-combat-hud {
+    position: fixed;
+    top: auto;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    z-index: 100;
+    box-sizing: border-box;
+    margin: 0;
+    width: auto;
+    max-width: none;
+  }
+
+  .mobile-combat-hud-vitals {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(64px, auto);
+    align-items: stretch;
+  }
+
+  .mobile-combat-hud-enemy-name {
+    display: block;
+    margin-top: .24rem;
+    overflow: hidden;
+    color: #d5baba;
+    font-size: .64rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .mobile-combat-hud-resources {
+    display: grid;
+    gap: .25rem;
+    min-width: 0;
+  }
+
+  .mobile-combat-hud-resource {
+    min-width: 0;
+    min-height: 0;
+    padding: .24rem .36rem;
+  }
+
+  .mobile-combat-drawer {
+    inset-inline: max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-right));
+    bottom: calc(var(--mobile-combat-hud-height, 132px) + max(8px, env(safe-area-inset-bottom)) + 8px);
+    max-height: min(55dvh, calc(100dvh - var(--mobile-combat-hud-height, 132px) - max(8px, env(safe-area-inset-bottom)) - 36px));
+    z-index: 110;
+    box-sizing: border-box;
+    animation: mobile-combat-drawer-enter .16s ease-out both;
+  }
+
+  .mobile-combat-drawer:focus-visible,
+  .mobile-combat-hud :is(button, select):focus-visible {
+    outline: 2px solid #ffe8a8;
+    outline-offset: -2px;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobile-combat-hud-vitals {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .mobile-combat-hud-resources {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mobile-combat-hud-resource {
+    grid-column: auto;
+    flex-direction: row;
+    min-height: 24px;
+  }
+  .mobile-combat-hud-resources:has(> :only-child) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes mobile-combat-drawer-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-combat-drawer { animation: none !important; }
+}

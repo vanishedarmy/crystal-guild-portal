@@ -3,13 +3,8 @@ FROM node:22-alpine AS frontend-build
 WORKDIR /build/frontend
 # Copy the manifest/config first so dependency installation can be cached.
 COPY frontend/package*.json frontend/.npmrc ./
-# Alpha 10 does not ship a package-lock.json yet. When it is generated on a
-# network-enabled machine and committed, switch automatically to npm ci.
-RUN if [ -f package-lock.json ]; then \
-      npm ci --include=dev --no-audit --no-fund; \
-    else \
-      npm install --include=dev --no-audit --no-fund; \
-    fi
+# Resolve the pinned platform-native Vite/Rolldown dependencies in this Linux build.
+RUN npm ci --include=dev --no-audit --no-fund
 COPY frontend/ ./
 RUN npm run build
 

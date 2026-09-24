@@ -1,7 +1,7 @@
-Crystal Guild Alpha 10 Web source package
-Release: 1.9.0-records-moments-alpha10
-Packaged Web source files (excludes caches and generated assets): 1342
+Crystal Guild Alpha 11 Web source package
+Release: 1.9.0-mobile-combat-hud-alpha11
+Packaged Web source files (excludes node_modules, dist, and separate public assets): 398
 Independent Moments badges: 12 WebP
 Independent earned/locked Moment trophy art: 4 WebP
 Local DB schema: 23 | Hosted sync: 1 | Portal Action: 37
-For authoritative per-file SHA-256, see the top-level release MANIFEST.json and SHA256SUMS.txt.
+See the standalone Alpha 11 SHA256SUMS.txt for archive integrity and the included RELEASE_NOTES.md for source-build requirements.

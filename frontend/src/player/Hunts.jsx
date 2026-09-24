@@ -23,6 +23,7 @@ import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
+import MobileCombatDrawer from "../components/MobileCombatDrawer.jsx";
 import MobileCombatHud from "../components/MobileCombatHud.jsx";
 
 const volatileAdventureActionKeys = new Map();
@@ -778,6 +779,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                   picker={soloPicker}
                   hasAbilities={availableSoloAbilities.length > 0}
                   hasItems={(expedition.combat.items || []).length > 0}
+                  onDismissPicker={() => setSoloPicker("")}
                   onAttack={() => runRequest("solo:attack", "solo-action", "attack", (idem) => submitSoloExpeditionAction("attack", csrfToken, idem), "Attack complete.")}
                   onToggleAbility={() => setSoloPicker(soloPicker === "ability" ? "" : "ability")}
                   onToggleItem={() => setSoloPicker(soloPicker === "item" ? "" : "item")}
@@ -804,7 +806,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                 </div>
 
                 {soloPicker === "ability" ? (
-                  <div className="solo-action-picker mobile-combat-drawer">
+                  <MobileCombatDrawer open={soloPicker === "ability"} kind="ability" onClose={() => setSoloPicker("")}><div className="solo-action-picker mobile-combat-drawer">
                     <div className="panel-title-row compact-combat-picker"><h3>Abilities</h3><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid solo-ability-grid">
                       {availableSoloAbilities.length ? availableSoloAbilities.map((ability) => (
@@ -815,11 +817,11 @@ export default function Hunts({ data, overview, onRefresh }) {
                         </button>
                       )) : <p className="muted">No abilities available.</p>}
                     </div>
-                  </div>
+                  </div></MobileCombatDrawer>
                 ) : null}
 
                 {soloPicker === "item" ? (
-                  <div className="solo-action-picker mobile-combat-drawer">
+                  <MobileCombatDrawer open={soloPicker === "item"} kind="item" onClose={() => setSoloPicker("")}><div className="solo-action-picker mobile-combat-drawer">
                     <div className="panel-title-row compact-combat-picker"><h3>Items</h3><button type="button" className="equipment-action-button secondary" onClick={() => setSoloPicker("")}>Close</button></div>
                     <div className="solo-action-grid">
                       {(expedition.combat.items || []).length ? sortBattleItems(expedition.combat.items || []).map((item) => (
@@ -829,7 +831,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                         </button>
                       )) : <p className="muted">No battle items available.</p>}
                     </div>
-                  </div>
+                  </div></MobileCombatDrawer>
                 ) : null}
 
                 <div className="solo-retreat-row">

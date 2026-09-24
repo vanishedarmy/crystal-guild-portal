@@ -1,8 +1,8 @@
-# Crystal Guild — Web / Portal (v1.9.0 Alpha 10 — Records & Moments)
+# Crystal Guild — Web / Portal (v1.9.0 Alpha 11 — Mobile Combat HUD)
 
-Player Portal, Streamer Control Center, and public artwork. Deploy alongside the matching **Alpha 10 Bot**. This is source-only Web: install the pinned frontend dependencies and build with Vite in a deployment environment.
+Player Portal, Streamer Control Center, and public artwork. Deploy alongside the matching **Alpha 11 Bot**. This is source-only Web: install the pinned frontend dependencies and build with Vite in a deployment environment.
 
-**Runtime:** `1.9.0-records-moments-alpha10` · **Local Bot database schema:** 23 · **Hosted sync:** 1 · **Portal Action protocol:** 37.
+**Runtime:** `1.9.0-mobile-combat-hud-alpha11` · **Local Bot database schema:** 23 · **Hosted sync:** 1 · **Portal Action protocol:** 37.
 
 ## Records & Moments
 
@@ -10,7 +10,7 @@ Records now tracks additional personal bests. The Moments collection awards 12 u
 
 ## Deployment
 
-Begin with `UPGRADE_GUIDE.md` and `HOSTING_GUIDE.md`. Do not overwrite the Bot's real database, persistent runtime state or your private `.env` and authentication files. The exact supported incremental baseline is **v1.9.0 Alpha 9 Player Language Hotfix 1**. If uncertain, deploy matching Alpha 10 Complete or Web/Bot source packages, not an incremental patch.
+Begin with `UPGRADE_GUIDE.md` and `HOSTING_GUIDE.md`. Do not overwrite the Bot's real database, persistent runtime state or your private `.env` and authentication files. This complete source release is based on the matched **v1.9.0 Alpha 10 — Records & Moments** Bot, Web and separate public archive. Deploy the three matching Alpha 11 packages; do not overlay this onto an unknown older baseline.
 
 **Validation status:** source-level backend and targeted frontend checks passed; inherited frontend failures, dependency-installed Vite production bundling and a deployed-browser visual walkthrough are outstanding. Check on staging before production.
 

@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.0 Alpha 11",
+    name: "Mobile Combat HUD",
+    title: "The whole fight, always in reach",
+    summary: "On phones, the combat bar now stays at the bottom of the screen through long battles, while Ability and Item slide into compact panels just above it.",
+    highlights: [
+      { title: "Battle vitals without scrolling", description: "Your HP, available MP/AP, enemy HP and name stay visible alongside Attack, Ability, Item and Defend." },
+      { title: "Drawers that keep commands free", description: "Ability and Item pickers open above the bar, respect phone safe areas, and remain scrollable on their own. Escape closes them on a keyboard." },
+      { title: "Across your adventures", description: "Solo Ventures, Dungeons, Expeditions, stream Ventures, Raids and World Events share the same compact mobile behavior. Desktop decks remain unchanged." },
+      { title: "No battle-rule changes", description: "Damage, resource costs, item rules, rewards and your existing progress stay the same." },
+    ],
+    action: { tab: "adventure", label: "Open Adventure Board" },
+  },
+  {
     version: "v1.9.0 Alpha 10",
     name: "Records & Moments",
     title: "Your victories have witnesses. So do your spectacular mistakes.",

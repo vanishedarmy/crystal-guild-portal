@@ -488,7 +488,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                 <div className="state-message compact-state">Loading the Fellowship Trading Post…</div>
               ) : !market.unlocked ? (
                 <div className="trading-post-locked">
-                  <img src="/trading-post/a1/locked.png" alt="Locked Moogle Trading Post storefront" />
+                  <img src="/trading-post/a1/locked.webp" alt="Locked Moogle Trading Post storefront" />
                   <div className="trading-post-locked-copy">
                     <span className="panel-kicker">Fellowship Building · Level 1</span>
                     <h3>Moogle Trading Post</h3>
@@ -508,7 +508,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
               ) : (
                 <>
                   <div className="trading-post-hero">
-                    <img src="/trading-post/a1/marketplace.png" alt="Moogle Trading Post marketplace" />
+                    <img src="/trading-post/a1/marketplace.webp" alt="Moogle Trading Post marketplace" />
                     <div>
                       <span className="panel-kicker">Fellowship Player Market</span>
                       <h3>Moogle Trading Post</h3>
@@ -561,7 +561,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                           })}
                         </div>
                       ) : (
-                        <div className="trading-post-empty"><img src="/trading-post/a1/no-results.png" alt="Moogle checking an empty Trading Post board" /><div><strong>No listings found.</strong><span>Try another category, or be the first adventurer to post something for sale.</span></div></div>
+                        <div className="trading-post-empty"><img src="/trading-post/a1/no-results.webp" alt="Moogle checking an empty Trading Post board" /><div><strong>No listings found.</strong><span>Try another category, or be the first adventurer to post something for sale.</span></div></div>
                       )}
                     </>
                   ) : (

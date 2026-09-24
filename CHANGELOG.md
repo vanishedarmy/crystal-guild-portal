@@ -1,5 +1,11 @@
 # Crystal Guild Web/Portal — Release history
 
+## v1.9.0 Alpha 11 — Mobile Combat HUD
+- Mobile-only presentation hardening: viewport-anchored quick combat actions and dynamically measured Ability/Item drawers across Solo Ventures, Dungeons, Expeditions, stream Ventures, Raids and World Events.
+- Live HP/resource readouts and existing authoritative action callbacks are unchanged; no combat balance, player records, schema, hosted sync or Portal Action protocol changes.
+- Previous Alpha 10 Records & Moments features and all artwork carry forward.
+
+
 ## v1.9.0 Alpha 10 — Records & Moments
 - Six collapsible personal-record chapters and 12 one-time Moments, including seven secret identities and cosmetic Titles.
 - Individual 16-bit-style badges and Hall of Trophies rewards remain separate files; new personal unlock notices and responsive Records layout.

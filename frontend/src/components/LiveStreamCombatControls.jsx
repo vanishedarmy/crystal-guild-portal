@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ItemArtwork from "./ItemArtwork.jsx";
 import ProgressBar from "./ProgressBar.jsx";
+import MobileCombatDrawer from "./MobileCombatDrawer.jsx";
 import MobileCombatHud from "./MobileCombatHud.jsx";
 import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, number, pct } from "../utils/formatters.js";
 
@@ -72,7 +73,8 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
         picker={mobilePicker}
         hasAbilities={abilities.length > 0}
         hasItems={items.length > 0}
-        onAttack={() => onAction?.("attack", "", "")}
+        onDismissPicker={() => setMobilePicker("")}
+                  onAttack={() => onAction?.("attack", "", "")}
         onToggleAbility={() => setMobilePicker(mobilePicker === "ability" ? "" : "ability")}
         onToggleItem={() => setMobilePicker(mobilePicker === "item" ? "" : "item")}
         onDefend={() => onAction?.("defend", "", "")}
@@ -94,7 +96,7 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
       ) : null}
 
       {abilities.length ? (
-        <div className={`live-stream-action-block mobile-combat-drawer ${mobilePicker === "ability" ? "mobile-picker-open" : ""}`}>
+        <MobileCombatDrawer open={mobilePicker === "ability"} kind="ability" onClose={() => setMobilePicker("")}><div className={`live-stream-action-block mobile-combat-drawer ${mobilePicker === "ability" ? "mobile-picker-open" : ""}`}>
           <div className="live-stream-action-heading"><strong>Abilities</strong><button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobilePicker("")}>Close</button></div>
           {targets.length > 1 ? (
             <label className="live-stream-target-control mobile-combat-target">
@@ -121,11 +123,11 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
               </div>
             </section>
           ) : null)}
-        </div>
+        </div></MobileCombatDrawer>
       ) : null}
 
       {items.length ? (
-        <div className={`live-stream-action-block live-stream-items mobile-combat-drawer ${mobilePicker === "item" ? "mobile-picker-open" : ""}`}>
+        <MobileCombatDrawer open={mobilePicker === "item"} kind="item" onClose={() => setMobilePicker("")}><div className={`live-stream-action-block live-stream-items mobile-combat-drawer ${mobilePicker === "item" ? "mobile-picker-open" : ""}`}>
           <div className="live-stream-action-heading"><strong>Items</strong><button type="button" className="equipment-action-button secondary mobile-combat-drawer-close" onClick={() => setMobilePicker("")}>Close</button></div>
           {targets.length > 1 ? (
             <label className="live-stream-target-control mobile-combat-target">
@@ -149,7 +151,7 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
               </button>;
             })}
           </div>
-        </div>
+        </div></MobileCombatDrawer>
       ) : null}
     </div>
   );

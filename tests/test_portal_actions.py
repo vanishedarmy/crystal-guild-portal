@@ -11,6 +11,7 @@ from pathlib import Path
 
 from crystal_guild.hosted_portal import (
     ACTION_PROTOCOL_VERSION,
+    MAX_ACTION_RESULT_BYTES,
     HostedPortalHandler,
     HostedPortalHTTPServer,
     HostedPortalStore,
@@ -951,7 +952,8 @@ class PortalActionServerCase(unittest.TestCase):
         claimed = self.store.claim_actions("bot:h3-bound", limit=1)
         with self.assertRaises(ValueError):
             self.store.complete_action(
-                claimed[0]["id"], claimed[0]["lease_token"], True, "oversized", {"blob": "x" * (70 * 1024)}
+                claimed[0]["id"], claimed[0]["lease_token"], True, "oversized",
+                {"blob": "x" * (MAX_ACTION_RESULT_BYTES + 1024)}
             )
 
     def test_hotfix2_duplicate_solo_round_retry_reuses_inflight_action(self):

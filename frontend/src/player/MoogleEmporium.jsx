@@ -107,6 +107,9 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const [relistTarget, setRelistTarget] = useState("");
   const [shopLoadError, setShopLoadError] = useState("");
   const [marketLoadError, setMarketLoadError] = useState("");
+  // Market reads can take longer than a shop purchase, especially on a busy
+  // relay. They must never hold the shared transaction lock for Buy and Sell.
+  const [marketLoading, setMarketLoading] = useState(false);
   // React Strict Mode and quick tab switching can otherwise queue duplicate
   // authoritative SHOP_STATE requests before the first response arrives.
   const shopRequest = useRef(null);
@@ -248,7 +251,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     if (marketRequest.current) return marketRequest.current;
     const task = (async () => {
       if (!quiet) {
-        setBusyKey("market-state");
+        setMarketLoading(true);
         setMessage("Checking the Trading Post ledger…");
       }
       setMarketLoadError("");
@@ -275,7 +278,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
         setMarketLoadError(error?.message || "The Trading Post could not be reached.");
         return null;
       } finally {
-        if (!quiet) setBusyKey("");
+        if (!quiet) setMarketLoading(false);
       }
     })();
     const pending = task.finally(() => { if (marketRequest.current === pending) marketRequest.current = null; });
@@ -496,7 +499,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
           : "The moogles are taking a short break while the Guild reconnects. Your Gil and items are safe."}</span>
         {message && !shopLoadError && !marketLoadError ? <small aria-live="polite">{message}</small> : null}
         {shopLoadError ? <div className="moogle-load-error" role="alert"><span>{shopLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={Boolean(busyKey)} onClick={() => loadShop()}>Retry Emporium</button></div> : null}
-        {marketLoadError && mode === "market" ? <div className="moogle-load-error" role="alert"><span>{marketLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={Boolean(busyKey)} onClick={() => loadMarket()}>Retry Trading Post</button></div> : null}
+        {marketLoadError && mode === "market" ? <div className="moogle-load-error" role="alert"><span>{marketLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={marketLoading || Boolean(busyKey)} onClick={() => loadMarket()}>Retry Trading Post</button></div> : null}
       </div>
 
       <div className="moogle-toolbar">
@@ -611,7 +614,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
               {!tradingPostActionsAvailable ? (
                 <div className="state-message compact-state">Trading Post controls become available when the v1.9 Portal action service is connected.</div>
               ) : !market ? (
-                !marketLoadError ? <div className="state-message compact-state" role="status">Loading the Fellowship Trading Post…</div> : null
+                !marketLoadError ? <div className="state-message compact-state" role="status">{marketLoading ? "Loading the Fellowship Trading Post…" : "Preparing the Fellowship Trading Post…"}</div> : null
               ) : !market.unlocked ? (
                 <div className="trading-post-locked">
                   <img src="/trading-post/a1/locked.webp" alt="Locked Moogle Trading Post storefront" />

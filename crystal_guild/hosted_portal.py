@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import base64
+import binascii
 import gzip
 import hashlib
 import hmac
@@ -10,6 +12,7 @@ import re
 import sqlite3
 import threading
 import time
+import zlib
 from collections import OrderedDict
 from contextlib import contextmanager
 from http import HTTPStatus
@@ -72,7 +75,12 @@ CHOCOBO_PORTRAIT_IDS = {
     "cobalt_blue", "arcane_violet", "desert_gold", "frost_silver", "rose_pink",
 }
 MAX_ACTION_BYTES = 16 * 1024
-MAX_ACTION_RESULT_BYTES = 64 * 1024
+# Trading Post's Alpha 13 catalog, sold-price statistics and up to 200 live
+# listings can exceed the legacy 64 KiB relay result limit. The old limit
+# rejected the Bot's acknowledgement, making the market time out and holding
+# subsequent shop actions behind the retried lease. Bound the decoded result
+# generously, but compress large completed snapshots in SQLite below.
+MAX_ACTION_RESULT_BYTES = 512 * 1024
 # The authenticated Bot result POST includes protocol/id/lease/message metadata
 # around the bounded result payload. Give the HTTP envelope a small, explicit
 # allowance while complete_action() still enforces MAX_ACTION_RESULT_BYTES on
@@ -653,10 +661,19 @@ class HostedPortalStore:
         result = None
         if row["result_json"]:
             try:
-                parsed = json.loads(row["result_json"])
+                raw_result = str(row["result_json"])
+                if raw_result.startswith("z1:"):
+                    packed = base64.b64decode(raw_result[3:], validate=True)
+                    decompressor = zlib.decompressobj()
+                    decoded = decompressor.decompress(packed, MAX_ACTION_RESULT_BYTES + 1)
+                    if len(decoded) > MAX_ACTION_RESULT_BYTES or not decompressor.eof or decompressor.unconsumed_tail:
+                        raise ValueError("Stored action result exceeds its size limit.")
+                    parsed = json.loads(decoded)
+                else:
+                    parsed = json.loads(raw_result)
                 if isinstance(parsed, dict):
                     result = parsed
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, ValueError, binascii.Error, zlib.error):
                 result = {"ok": False, "message": "Action result could not be read."}
         return {
             "id": row["action_id"],
@@ -1436,6 +1453,16 @@ class HostedPortalStore:
                 "DELETE FROM portal_actions INDEXED BY idx_portal_actions_retention WHERE status IN ('completed','failed') AND updated_at<?",
                 (now - (30 * 24 * 60 * 60),),
             )
+            # Huge read-only snapshots are not audit records: retain completed
+            # purchases and other mutations for the usual 30 days, but reclaim
+            # completed shop/market state snapshots after one day. This runs
+            # on normal action submission without VACUUM or touching game data.
+            conn.execute(
+                "DELETE FROM portal_actions INDEXED BY idx_portal_actions_retention "
+                "WHERE status IN ('completed','failed') AND updated_at<? "
+                "AND action_type IN ('SHOP_STATE','TRADING_POST_STATE','TRADING_POST_HISTORY')",
+                (now - 24 * 60 * 60,),
+            )
             # Read-only state refreshes are separately coalesced and must never
             # consume the mutation queue budget. Otherwise a few stale tab
             # refreshes can prevent Attack/Ability/Daily claim actions entirely.
@@ -1614,8 +1641,17 @@ class HostedPortalStore:
             "data": result_data,
         }
         encoded = json.dumps(result, separators=(",", ":"), sort_keys=True, ensure_ascii=False)
-        if len(encoded.encode("utf-8")) > MAX_ACTION_RESULT_BYTES:
+        encoded_bytes = encoded.encode("utf-8")
+        if len(encoded_bytes) > MAX_ACTION_RESULT_BYTES:
             raise ValueError("Action result is too large.")
+        # Persist large read-only snapshots compressed. The public API still
+        # serves ordinary JSON via _public_action; older uncompressed records
+        # remain readable and the database schema does not change.
+        stored_result = encoded
+        if len(encoded_bytes) >= 16 * 1024:
+            packed = base64.b64encode(zlib.compress(encoded_bytes, level=3)).decode("ascii")
+            if len(packed) + 3 < len(encoded_bytes):
+                stored_result = "z1:" + packed
         now = int(time.time())
         with self._action_condition, self._connect() as conn:
             row = conn.execute(
@@ -1633,7 +1669,7 @@ class HostedPortalStore:
                 SET status=?,result_json=?,lease_hash=NULL,lease_until=0,worker_id=NULL,updated_at=?
                 WHERE action_id=?
                 """,
-                (status, encoded, now, action_id),
+                (status, stored_result, now, action_id),
             )
             conn.commit()
             self._action_condition.notify_all()

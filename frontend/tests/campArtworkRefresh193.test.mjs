@@ -10,11 +10,15 @@ const read = (rel) => readFileSync(resolve(root, rel), "utf8");
 
 test("separate desktop and portrait camp assets are wired into both Camp and Recovery", () => {
   const css = read("src/styles/portal.css");
-  const desktop = "/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp";
+  const desktop = "/retro-phase-iii/scene-backgrounds-v4/camp-desktop-wide.webp";
+  const recoveryDesktop = "/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp";
   const mobile = "/retro-phase-iii/scene-backgrounds-v4/camp-mobile.webp";
   assert.ok(existsSync(resolve(root, `public${desktop}`)));
+  assert.ok(existsSync(resolve(root, `public${recoveryDesktop}`)));
   assert.ok(existsSync(resolve(root, `public${mobile}`)));
-  assert.equal(css.split(`url('${desktop}')`).length - 1, 2);
+  assert.equal(css.split(`url('${desktop}')`).length - 1, 1);
+  assert.equal(css.split(`url('${recoveryDesktop}')`).length - 1, 1);
+  assert.match(css, /\.adventure-camp-panel::after\s*\{[\s\S]*height:\s*100%/);
   assert.equal(css.split(`url('${mobile}')`).length - 1, 2);
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*camp-mobile\.webp/);
   assert.match(css, /recovery-dashboard::before/);

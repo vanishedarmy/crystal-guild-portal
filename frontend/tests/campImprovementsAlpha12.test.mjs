@@ -27,6 +27,6 @@ test("Camp actions use authoritative Portal dispatch and pending-safe idempotenc
 test("Camp panel remains phone-friendly and release/guide identify Alpha 12", () => {
   assert.match(css, /@media \(max-width:600px\)/);
   assert.match(css, /grid-template-columns:minmax\(0,1fr\)/);
-  assert.match(version, /Alpha 13/);
+  assert.match(version, /Alpha 13|v1\.9\.3/);
   assert.match(guide, /Trail Rations/);
 });

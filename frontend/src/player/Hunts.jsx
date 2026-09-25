@@ -125,6 +125,14 @@ function soloVentureSummary(summary) {
 
 // Camp remains one lightweight panel; no new durability economy or duplicate combat logic.
 function CampImprovements({ camp, clock, csrfToken, ready, busy, runRequest }) {
+  const [choicesOpen, setChoicesOpen] = useState(() => {
+    try { return window.localStorage?.getItem("crystal-guild:adventure:camp-choices") === "open"; }
+    catch { return false; }
+  });
+  useEffect(() => {
+    try { window.localStorage?.setItem("crystal-guild:adventure:camp-choices", choicesOpen ? "open" : "closed"); }
+    catch { /* Private browsing can disable localStorage. */ }
+  }, [choicesOpen]);
   const plan = camp?.preparation;
   if (!plan) return null; // Older Bot revisions still show the original Camp controls.
   const canPrepare = Boolean(ready && plan.can_prepare && !busy);
@@ -136,9 +144,22 @@ function CampImprovements({ camp, clock, csrfToken, ready, busy, runRequest }) {
   const mealAction = () => runRequest("camp:meal", "camp-meal", "trail-rations", (idem) => submitCampMeal(csrfToken, idem), "Meal prepared.");
   const setPlan = (id) => runRequest(`camp:prep:${id}`, "camp-preparation", id, (idem) => submitCampPreparation(id, csrfToken, idem), "Preparation selected.");
   const useItem = (id) => runRequest(`camp:item:${id}`, "camp-recovery", id, (idem) => submitUseFieldItem(id, csrfToken, idem), `${id === "tent" ? "Tent" : "Potion"} used.`);
+  const selectedPreparation = {
+    scout: "Scout the Route", sharpen: "Check Your Gear", supplies: "Pack Supplies",
+  }[plan.preparation] || "";
   return (
-    <div className="camp-improvements" aria-label="Camp meal recovery and Venture preparation">
-      <div className="camp-improvements-heading"><strong>Before you venture</strong><span>Three small choices. No daily chores.</span></div>
+    <div className={`camp-improvements ${choicesOpen ? "is-expanded" : "is-collapsed"}`} aria-label="Camp meal recovery and Venture preparation">
+      <button type="button" className="camp-improvements-toggle" aria-expanded={choicesOpen}
+        aria-controls="camp-pre-venture-options"
+        onClick={(event) => toggleWithViewportAnchor(event, setChoicesOpen)}>
+        <span className="camp-improvements-toggle-title"><strong>Before you venture</strong><small>Meals · Recovery · Preparation</small></span>
+        <span className="camp-improvements-toggle-status">
+          {mealRemaining > 0 ? <span className="small-badge success">Meal ready · {duration(mealRemaining)}</span> : null}
+          {selectedPreparation ? <span className="small-badge">{selectedPreparation} selected</span> : null}
+        </span>
+        <CollapsePointer open={choicesOpen} />
+      </button>
+      <div id="camp-pre-venture-options" className="camp-improvements-content" hidden={!choicesOpen}>
       <div className="camp-choice-grid">
         <div className="camp-choice-card">
           <div className="camp-choice-head"><strong>Eat a Meal</strong><span className="small-badge">45 minutes to depart</span></div>
@@ -176,6 +197,7 @@ function CampImprovements({ camp, clock, csrfToken, ready, busy, runRequest }) {
           </div>
           {plan.reason ? <small className="adventure-disabled-reason">{plan.reason}</small> : null}
         </div>
+      </div>
       </div>
     </div>
   );

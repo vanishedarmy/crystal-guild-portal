@@ -7,8 +7,9 @@ const css = fs.readFileSync(new URL("../src/styles/portal.css", import.meta.url)
 
 test("Emporium Hotfix 4 shows compact usable-item purpose copy in Buy and Sell views", () => {
   assert.match(shop, /formatItemUse/);
-  assert.match(shop, /className="moogle-item-brief">\{formatItemUse\(item\.use\)\}/);
-  assert.match(shop, /<small className="moogle-item-brief">\{formatItemUse\(item\.use\)\}<\/small>/);
+  assert.match(shop, /function shopItemPurpose\(item\)/);
+  assert.match(shop, /className="moogle-item-brief">\{shopItemPurpose\(item\)\}/);
+  assert.match(shop, /<small className="moogle-item-brief">\{shopItemPurpose\(item\)\}<\/small>/);
   assert.match(css, /v1\.7\.1 Alpha 2 Hotfix 4 — compact Emporium item-purpose copy/);
   assert.match(css, /-webkit-line-clamp:\s*2/);
 });

@@ -8093,9 +8093,8 @@ main h1,
   .chocobo-portrait-toggle { width: 100%; min-width: 0; }
 }
 
-/* v1.2 Beta 2 Hotfix 2 — portrait scenic backgrounds.
-   The new long-form artwork follows the full workspace instead of being cropped
-   into a short header band. Camp retains its existing horizontal scene treatment. */
+/* Camp and portrait scenic backgrounds follow their actual panel dimensions.
+   The Camp backdrop fills both expanded and collapsed configurations. */
 .adventure-camp-panel,
 .blacksmith-panel,
 .chocobo-stable-panel,
@@ -8118,11 +8117,13 @@ main h1,
   opacity: 1;
 }
 
-/* Camp uses separate SNES/FF landscape and mobile portrait artwork. */
+/* Desktop Camp is a dedicated panoramic crop. Both collapsed and expanded
+   layouts fill the entire panel, with no fixed 560px backdrop cutoff. */
 .adventure-camp-panel::after {
-  inset: 0 0 auto 0;
-  height: clamp(320px, 48vw, 560px);
+  inset: 0;
+  height: 100%;
   background-size: cover;
+  image-rendering: auto;
 }
 
 /* Portrait scenes cover the complete long-form tab so scrolling continues through
@@ -8146,9 +8147,9 @@ main h1,
 
 .adventure-camp-panel::after {
   background-image:
-    linear-gradient(180deg, rgba(5, 14, 24, .12) 0%, rgba(5, 14, 24, .38) 48%, rgba(5, 14, 24, .95) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp');
-  background-position: center 52%;
+    linear-gradient(180deg, rgba(5, 14, 24, .15) 0%, rgba(5, 14, 24, .30) 46%, rgba(5, 14, 24, .66) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v4/camp-desktop-wide.webp');
+  background-position: center 46%;
 }
 
 .blacksmith-panel::after {
@@ -8191,12 +8192,11 @@ main h1,
 
 @media (max-width: 720px) {
   .adventure-camp-panel::after {
-    /* Preserve more of the portrait composition rather than cropping a landscape scene. */
-    height: clamp(440px, 155vw, 930px);
+    height: 100%;
     background-image:
-      linear-gradient(180deg, rgba(5, 14, 24, .12) 0%, rgba(5, 14, 24, .36) 52%, rgba(5, 14, 24, .96) 100%),
+      linear-gradient(180deg, rgba(5, 14, 24, .16) 0%, rgba(5, 14, 24, .39) 52%, rgba(5, 14, 24, .69) 100%),
       url('/retro-phase-iii/scene-backgrounds-v4/camp-mobile.webp');
-    background-position: center top;
+    background-position: center 40%;
   }
   .blacksmith-panel::after,
   .chocobo-stable-panel::after,

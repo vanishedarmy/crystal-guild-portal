@@ -7,7 +7,7 @@ const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 const PUBLIC = path.join(ROOT, "public");
 const CSS = fs.readFileSync(path.join(ROOT, "src/styles/portal.css"), "utf8");
 const scenes = {
-  camp: "/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp",
+  camp: "/retro-phase-iii/scene-backgrounds-v4/camp-desktop-wide.webp",
   blacksmith: "/retro-phase-iii/scene-backgrounds-v3/blacksmith.webp",
   chocobo_stable: "/retro-phase-iii/scene-backgrounds-v3/chocobo_stable.webp",
   emporium: "/retro-phase-iii/scene-backgrounds-v3/emporium.webp",
@@ -30,11 +30,11 @@ test("current scenic backgrounds exist and are bound to live Portal components",
     const source = fs.readFileSync(path.join(ROOT, rel), "utf8");
     assert.match(source, new RegExp(className), `${className} is present on live component`);
   }
-  assert.match(CSS, /\.adventure-camp-panel::after[\s\S]*scene-backgrounds-v4\/camp-desktop\.webp/);
+  assert.match(CSS, /\.adventure-camp-panel::after[\s\S]*scene-backgrounds-v4\/camp-desktop-wide\.webp/);
   assert.match(CSS, /\.blacksmith-panel::after[\s\S]*scene-backgrounds-v3\/blacksmith\.webp/);
   assert.match(CSS, /\.chocobo-stable-panel::after[\s\S]*scene-backgrounds-v3\/chocobo_stable\.webp/);
   assert.match(CSS, /\.moogle-panel::after[\s\S]*scene-backgrounds-v3\/emporium\.webp/);
-  assert.match(CSS, /\.adventure-camp-panel::after[\s\S]*height:\s*clamp\(320px,\s*48vw,\s*560px\)/);
+  assert.match(CSS, /\.adventure-camp-panel::after[\s\S]*height:\s*100%/);
   assert.match(CSS, /\.blacksmith-panel::after,[\s\S]*height:\s*100%/);
   assert.match(CSS, /recovery-dashboard::before/);
   assert.match(CSS, /scene-backgrounds-v4\/camp-mobile\.webp/);

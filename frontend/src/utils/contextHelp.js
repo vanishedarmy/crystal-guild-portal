@@ -217,13 +217,14 @@ export const CONTEXT_HELP = {
   },
   relics: {
     title: "Relic Arsenal",
-    summary: "Track the multi-stage Relic weapon journey for every supported Job from first requirement through completion.",
+    summary: "Your personal weapon collection: stage-by-stage objectives, live progress, resource costs, and every Relic form's stats.",
     bullets: [
-      "Each Job has its own Relic path and stage progress.",
-      "Requirements can involve combat, materials, currency, crafting, or progression milestones.",
-      "Completed Relics remain recorded permanently in your Arsenal.",
+      "Search by weapon or Job; filter lines that are ready, in progress, not started, or finished at Zenith.",
+      "Open any weapon to inspect all three stages. Your current stage shows recorded kills, Hunt clears, currency, and materials held.",
+      "A ready stage still requires you to finish any active Solo Venture or Dungeon before using !awaken in chat.",
+      "Each stage awards another weapon form. Completed stages remain recorded even after their costs are spent.",
     ],
-    tip: "Open a Relic card for its exact next requirement instead of trying to memorize the whole chain.",
+    tip: "Use the next-objective cue on each card to see what is missing, then open the weapon for the complete materials and reward breakdown.",
     guide: "relics",
   },
 };

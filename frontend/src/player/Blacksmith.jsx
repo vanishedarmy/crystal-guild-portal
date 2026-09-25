@@ -11,8 +11,9 @@ import { number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
-import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
+import { clampQuantity } from "../utils/quantityInput.js";
 import ContextHelp from "../components/ContextHelp.jsx";
+import CraftingWorkbench from "./CraftingWorkbench.jsx";
 
 function actionKey(kind, target = "blacksmith") {
   const suffix = globalThis.crypto?.randomUUID
@@ -71,14 +72,14 @@ export default function Blacksmith({ data, overview, onRefresh }) {
   );
   const csrfToken = auth.csrf_token || "";
 
-  const loadState = useCallback(async ({ quiet = false } = {}) => {
-    if (!actionsAvailable || busyKey) return null;
+  const loadState = useCallback(async ({ quiet = false, force = false } = {}) => {
+    if (!actionsAvailable || (busyKey && !force)) return null;
     if (!quiet) {
       setBusyKey("state");
       setMessage("Checking the Guild Blacksmith…");
     }
     try {
-      const response = await submitCraftingState(csrfToken, actionKey("crafting-state"));
+      const response = await submitCraftingState(csrfToken, actionKey("crafting-state"), "reforged");
       const finished = await finishedAction(response);
       if (!finished) {
         setMessage("The Blacksmith is still updating. Try again in a moment.");
@@ -118,8 +119,21 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       }
       setMessage(finished.result?.message || fallback);
       const next = finished.result?.data?.crafting_state;
-      if (next) setState(next);
-      else if (finished.status === "completed" && finished.result?.ok !== false) await loadState({ quiet: true });
+      if (finished.status === "completed" && finished.result?.ok !== false && key.startsWith("craft:")) {
+        // Mutation receipts intentionally remain small and legacy-compatible;
+        // fetch the complete Reforged catalog only after a successful craft.
+        await loadState({ quiet: true, force: true });
+      } else if (next) {
+        setState((current) => current ? {
+          ...next,
+          recipes: current.recipes,
+          recipe_categories: current.recipe_categories,
+          known_recipe_count: current.known_recipe_count,
+          recipe_total: current.recipe_total,
+        } : next);
+      } else if (finished.status === "completed" && finished.result?.ok !== false) {
+        await loadState({ quiet: true, force: true });
+      }
       if (finished.status === "completed" && finished.result?.ok !== false) {
         onRefresh?.();
         window.setTimeout(() => onRefresh?.(), 3200);
@@ -133,11 +147,8 @@ export default function Blacksmith({ data, overview, onRefresh }) {
 
   const recipes = useMemo(() => {
     let values = Array.isArray(state?.recipes) ? [...state.recipes] : [];
-    const needle = query.trim().toLowerCase();
-    if (needle) values = values.filter((recipe) => [recipe.name, recipe.output?.name, ...(recipe.materials || []).map((item) => item.name)]
-      .some((value) => String(value || "").toLowerCase().includes(needle)));
     return values.sort((a, b) => Number(a?.level || a?.min_level || 1) - Number(b?.level || b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
-  }, [state?.recipes, query]);
+  }, [state?.recipes]);
 
   const forgeItems = useMemo(() => {
     if (!state) return [];
@@ -345,8 +356,8 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       </div>
 
       <div className="blacksmith-toolbar">
-        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith views" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setView)}>
-          <button type="button" role="tab" id="blacksmith-tab-recipes" data-tab-value="recipes" tabIndex={view === "recipes" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Recipes</span><small>Craft items</small></button>
+        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith services" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setView)}>
+          <button type="button" role="tab" id="blacksmith-tab-recipes" data-tab-value="recipes" tabIndex={view === "recipes" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Crafting</span><small>Items and equipment</small></button>
           <button type="button" role="tab" id="blacksmith-tab-forge" data-tab-value="forge" tabIndex={view === "forge" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}><span>Forge Gear</span><small>Upgrade equipment</small></button>
           <button type="button" role="tab" id="blacksmith-tab-resynthesis" data-tab-value="resynthesis" tabIndex={view === "resynthesis" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "resynthesis"} className={view === "resynthesis" ? "active" : ""} onClick={() => setView("resynthesis")}><span>Resynthesize Gear</span><small>Recover materials</small></button>
         </div>
@@ -358,53 +369,17 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       {state?.combat_locked ? <div className="moogle-combat-lock">Blacksmith actions are locked while this adventurer is committed to an active encounter or raid.</div> : null}
 
       {state && view === "recipes" ? (
-        <>
-          <div className="blacksmith-summary-row">
-            <span><strong>{number(state.known_recipe_count)}</strong> / {number(state.recipe_total)} recipes discovered</span>
-            <span>Craft quantity is capped at 20 per action.</span>
-          </div>
-          <div id="blacksmith-active-panel" className="blacksmith-grid blacksmith-recipe-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-recipes">
-            {recipes.map((recipe) => {
-              const maximum = Math.max(0, Number(recipe.max_quantity || 0));
-              const quantity = clampQuantity(quantities[recipe.id] ?? 1, Math.max(1, maximum));
-              const busy = busyKey === `craft:${recipe.id}`;
-              return (
-                <article className="blacksmith-card" key={recipe.id}>
-                  <div className="blacksmith-card-head">
-                    <div><span className="slot-label">Recipe · Lv. {number(recipe.min_level)}</span><h3>{recipe.name}</h3></div>
-                    <span className={`small-badge ${recipe.craftable ? "ready" : ""}`}>{recipe.craftable ? `Up to ${number(maximum)}` : "Missing requirements"}</span>
-                  </div>
-                  <div className="blacksmith-output">
-                    <ItemArtwork item={recipe.output} className="blacksmith-output-artwork" />
-                    <span>Creates</span>
-                    <strong className={`rarity-${recipe.output?.rarity || "common"}`}>{recipe.output?.name} × {number(recipe.output?.quantity || 1)}</strong>
-                    <small>Owned {number(recipe.output?.owned || 0)} · {titleCase(recipe.output?.type)}</small>
-                  </div>
-                  {recipe.output?.description ? <p className="blacksmith-description">{recipe.output.description}</p> : null}
-                  <div className="blacksmith-costs">
-                    {Number(recipe.gil_each || 0) > 0 ? <span>{number(recipe.gil_each)} Gil each</span> : null}
-                    {Number(recipe.seals_each || 0) > 0 ? <span>{number(recipe.seals_each)} Seals each</span> : null}
-                    {!Number(recipe.gil_each || 0) && !Number(recipe.seals_each || 0) ? <span>No currency cost</span> : null}
-                  </div>
-                  <div className="blacksmith-material-list">
-                    {(recipe.materials || []).length ? recipe.materials.map((material) => (
-                      <div className={material.enough ? "enough" : "missing"} key={material.item_id}>
-                        <ItemArtwork item={{ ...material, type: "material" }} className="blacksmith-material-artwork" /><span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
-                      </div>
-                    )) : <div className="enough"><span>No materials required</span><strong>Ready</strong></div>}
-                  </div>
-                  <div className="blacksmith-card-actions">
-                    <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max={Math.max(1, maximum)} value={quantityInputValue(quantities, recipe.id)} disabled={maximum < 1} onFocus={() => beginQuantityEdit(setQuantities, quantities, recipe.id)} onChange={(event) => updateQuantityInput(setQuantities, recipe.id, event.target.value, Math.max(1, maximum))} onBlur={(event) => finishQuantityEdit(setQuantities, recipe.id, event.target.value, Math.max(1, maximum))} /></label>
-                    <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !recipe.craftable || maximum < 1 || Boolean(busyKey)} onClick={() => craft(recipe)}>
-                      {busy ? "Crafting…" : `Craft ${recipe.output?.name || recipe.name} × ${number(quantity)}`}
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-          {!recipes.length ? <div className="state-message compact-state">No known recipes match that search.</div> : null}
-        </>
+        <CraftingWorkbench
+          recipes={recipes}
+          categories={state.recipe_categories || {}}
+          username={username}
+          query={query}
+          quantities={quantities}
+          setQuantities={setQuantities}
+          busyKey={busyKey}
+          actionsAvailable={actionsAvailable}
+          onCraft={craft}
+        />
       ) : null}
 
       {state && view === "forge" ? (

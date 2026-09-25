@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.4",
+    name: "Crafting Reforged",
+    title: "The Guild's crafting workbench has been rebuilt",
+    summary: "183 field-item, weapon, armor, and accessory recipes are now in the ledger, alongside a redesigned desktop and mobile crafting experience.",
+    highlights: [
+      { title: "157 new recipes", description: "Craft 37 field supplies, 82 weapons, 33 armor pieces, and 31 accessories. The original 26 recipes remain available, including earned discoveries." },
+      { title: "Find ingredients with less guesswork", description: "Every recipe shows your current materials, usable copies, missing requirements, and real in-game acquisition hints where available." },
+      { title: "A workbench for every screen", description: "Browse by category, material, level, readiness or favorites. Comfortable text, high contrast, keyboard navigation, and mobile-friendly controls are built in." },
+      { title: "Your gear and progress stay safe", description: "Crafting cannot consume the last equipped copy, uses replay-safe server transactions, and leaves Forge upgrades and resynthesis in their existing services." },
+    ],
+    action: { tab: "blacksmith", label: "Open the Crafting Workbench" },
+  },
+  {
     version: "v1.9.3",
     name: "Guild Initiatives",
     title: "New contracts for the whole Guild — and daily adventures for you",

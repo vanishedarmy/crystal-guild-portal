@@ -209,8 +209,8 @@ export function submitWorkshopExchange(exchangeId, batches, csrfToken, idempoten
   return submitPortalAction("WORKSHOP_EXCHANGE", { exchange_id: exchangeId, batches }, csrfToken, idempotencyKey);
 }
 
-export function submitCraftingState(csrfToken, idempotencyKey) {
-  return submitPortalAction("CRAFTING_STATE", {}, csrfToken, idempotencyKey);
+export function submitCraftingState(csrfToken, idempotencyKey, mode = "legacy") {
+  return submitPortalAction("CRAFTING_STATE", mode === "reforged" ? { mode } : {}, csrfToken, idempotencyKey);
 }
 
 export function submitCraftRecipe(recipeId, quantity, csrfToken, idempotencyKey) {

@@ -53,6 +53,13 @@ function typeLabel(type) {
   return value.replace(/^./, (letter) => letter.toUpperCase());
 }
 
+function shopItemPurpose(item) {
+  if (String(item?.id || item?.item_id || "").toLowerCase() === "trail_rations") {
+    return "Eat at Camp: +10% damage for your next Solo Venture if started within 45 minutes. One meal at a time.";
+  }
+  return Array.isArray(item?.use?.effects) && item.use.effects.length ? formatItemUse(item.use) : "";
+}
+
 function shopCategory(item) {
   const type = String(item?.type || "item").toLowerCase();
   if (type === "weapon") return "weapons";
@@ -558,9 +565,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     </div>
                     <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span></div>
                     <div className="card-meta">Owned {number(item.owned)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</div>
-                    {Array.isArray(item?.use?.effects) && item.use.effects.length ? (
-                      <p className="moogle-item-brief">{formatItemUse(item.use)}</p>
-                    ) : null}
+                    {shopItemPurpose(item) ? <p className="moogle-item-brief">{shopItemPurpose(item)}</p> : null}
                     {item.equipment && Object.keys(itemBonuses(item)).length ? (
                       <div className="moogle-stat-summary">
                         <span className="moogle-stat-label">Stat boosts</span>
@@ -598,7 +603,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
                       <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
                       {["weapon", "armor"].includes(String(item.type || "").toLowerCase()) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
-                      {Array.isArray(item?.use?.effects) && item.use.effects.length ? <small className="moogle-item-brief">{formatItemUse(item.use)}</small> : null}
+                      {shopItemPurpose(item) ? <small className="moogle-item-brief">{shopItemPurpose(item)}</small> : null}
                       {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
                     </div>
                     <div className="moogle-card-actions sell-actions">

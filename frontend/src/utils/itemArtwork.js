@@ -18,6 +18,7 @@ export const ITEM_ART_IDS = new Set([
   "turbo_ether",
   "phoenix_down",
   "tent",
+  "trail_rations",
   "elixir",
   "antidote",
   "echo_herbs",

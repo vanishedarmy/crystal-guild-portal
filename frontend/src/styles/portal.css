@@ -8118,7 +8118,7 @@ main h1,
   opacity: 1;
 }
 
-/* Camp still uses the approved landscape scene band. */
+/* Camp uses separate SNES/FF landscape and mobile portrait artwork. */
 .adventure-camp-panel::after {
   inset: 0 0 auto 0;
   height: clamp(320px, 48vw, 560px);
@@ -8147,7 +8147,7 @@ main h1,
 .adventure-camp-panel::after {
   background-image:
     linear-gradient(180deg, rgba(5, 14, 24, .12) 0%, rgba(5, 14, 24, .38) 48%, rgba(5, 14, 24, .95) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/camp.webp');
+    url('/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp');
   background-position: center 52%;
 }
 
@@ -8191,7 +8191,11 @@ main h1,
 
 @media (max-width: 720px) {
   .adventure-camp-panel::after {
-    height: 360px;
+    /* Preserve more of the portrait composition rather than cropping a landscape scene. */
+    height: clamp(440px, 155vw, 930px);
+    background-image:
+      linear-gradient(180deg, rgba(5, 14, 24, .12) 0%, rgba(5, 14, 24, .36) 52%, rgba(5, 14, 24, .96) 100%),
+      url('/retro-phase-iii/scene-backgrounds-v4/camp-mobile.webp');
     background-position: center top;
   }
   .blacksmith-panel::after,
@@ -8226,13 +8230,21 @@ main h1,
   pointer-events: none;
   background-image:
     linear-gradient(180deg, rgba(5, 14, 24, .16) 0%, rgba(5, 14, 24, .50) 52%, rgba(5, 14, 24, .96) 100%),
-    url('/retro-phase-iii/scene-backgrounds-v2/camp.webp');
+    url('/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 52%;
 }
 .recovery-dashboard > * { position: relative; z-index: 1; }
-@media (max-width: 720px) { .recovery-dashboard::before { opacity: .72; background-position: center top; } }
+@media (max-width: 720px) {
+  .recovery-dashboard::before {
+    opacity: .72;
+    background-image:
+      linear-gradient(180deg, rgba(5, 14, 24, .16) 0%, rgba(5, 14, 24, .50) 52%, rgba(5, 14, 24, .96) 100%),
+      url('/retro-phase-iii/scene-backgrounds-v4/camp-mobile.webp');
+    background-position: center top;
+  }
+}
 @media (prefers-contrast: more) { .recovery-dashboard::before { opacity: .38; } }
 
 

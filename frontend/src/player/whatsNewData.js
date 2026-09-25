@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.2",
+    name: "Relic Arsenal Overhaul",
+    title: "Every Relic has a story — and a clearer path forward",
+    summary: "Explore all 18 Job-specific Relic weapons, track your next objective, and compare the requirements and rewards for every stage of your journey.",
+    highlights: [
+      { title: "All 18 Relic lines", description: "Browse a complete Relic catalog with weapon and Job search, progression filters, and individual armory notes." },
+      { title: "Your next objective", description: "See which Relics are in progress, ready to advance, or completed, with your current requirements and tracked progress." },
+      { title: "Every stage explained", description: "Inspect Dormant, Awakened, and Zenith forms, including required materials, Gil and Hunt Seal costs, equip levels, stat bonuses, and weapon comparisons." },
+      { title: "Your progress preserved", description: "The new reference uses your existing Relic records and artwork. Advancement rules, prices, rewards, and saved progress are unchanged." },
+    ],
+    action: { tab: "relics", label: "Open Relic Arsenal" },
+  },
+  {
     version: "v1.9.1",
     name: "Performance & Stability",
     title: "The Moogle counter is back in business",

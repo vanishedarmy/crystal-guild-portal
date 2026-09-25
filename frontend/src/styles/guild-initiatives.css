@@ -1,0 +1,29 @@
+/* v1.9.3: compact, responsive shared contract and personal board cards. */
+.initiative-card-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .78rem; min-width: 0; margin-top: .75rem;
+}
+.initiative-card {
+  min-width: 0; border: 1px solid var(--line, #46505b);
+  border-radius: 12px; padding: clamp(.75rem, 1.7vw, 1rem);
+  display: flex; flex-direction: column; gap: .55rem;
+  background: color-mix(in srgb, var(--panel, #192331) 82%, transparent);
+}
+.initiative-card.initiative-complete { border-color: color-mix(in srgb, #55b88f 65%, var(--line, #46505b)); }
+.initiative-card-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem; }
+.initiative-card h3 { margin: .15rem 0 0; line-height: 1.3; font-size: 1.03rem; overflow-wrap: anywhere; }
+.initiative-description { margin: 0; flex: 1; color: var(--text-muted, #c5cbd4); font-size: .92rem; }
+.initiative-count { margin-top: .4rem; display: flex; gap: .6rem; justify-content: space-between; align-items: baseline; }
+.initiative-count strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.initiative-reward { border-top: 1px solid var(--line, #46505b); margin-top: .5rem; padding-top: .6rem; display: grid; gap: .25rem; }
+.initiative-reward > span { color: var(--text-muted, #c5cbd4); font-size: .78rem; }
+.initiative-reward strong { font-size: .91rem; font-weight: 650; overflow-wrap: anywhere; text-transform: capitalize; }
+.initiative-contributors { margin-top: .35rem; }
+.initiative-contributors summary { cursor: pointer; font-size: .84rem; }
+.initiative-contributors ol { margin: .5rem 0 0; padding-left: 1.3rem; font-size: .82rem; }
+.initiative-contributors li { display: flex; justify-content: space-between; gap: .65rem; padding: .15rem 0; }
+.guild-contracts-description { margin: .35rem 0 .7rem; }
+.guild-initiatives-page .panel { min-width: 0; }
+@media (max-width: 980px) { .initiative-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .initiative-card-grid { grid-template-columns: minmax(0, 1fr); gap: .65rem; } .initiative-card { padding: .8rem; } }
+@media (prefers-reduced-motion: reduce) { .initiative-card * { transition: none !important; } }

@@ -149,6 +149,24 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertTrue(json.loads(raw)["seasonal"]["sync_pending"])
 
+    def test_guild_board_snapshot_and_legacy_pending_fallback(self):
+        payload = snapshot_payload("van")
+        payload["snapshot"]["guild_board"] = {"player": {"username": "van"},
+            "board": {"daily": {"period": "2026-09-24", "objectives": [{"id": "daily_crafts", "progress": 2, "target": 3}]},
+                      "weekly": {"period": "2026-W39", "objectives": []}}}
+        self.assertEqual(self.post("/api/sync/player", payload)[0], 200)
+        status, raw, _ = self.get("/api/player/van/guild_board")
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(raw)["board"]["daily"]["objectives"][0]["progress"], 2)
+        self.assertNotIn("twitch_id", raw)
+        payload["snapshot"].pop("guild_board")
+        self.assertEqual(self.post("/api/sync/player", payload)[0], 200)
+        with self.store._lock:
+            self.store._snapshot_cache.clear()
+        status, raw, _ = self.get("/api/player/van/guild_board")
+        self.assertEqual(status, 200)
+        self.assertTrue(json.loads(raw)["sync_pending"])
+
     def test_manifest_reports_only_missing_shared_snapshots_for_recovery(self):
         manifest = {"schema_version": 1, "sync_version": "http-efficiency-test", "usernames": []}
         status, result = self.post("/api/sync/manifest", manifest)
@@ -288,8 +306,8 @@ class PortalServerCase(unittest.TestCase):
         payload = json.loads(body)
         self.assertEqual(status, 200)
         self.assertTrue(payload["ok"])
-        self.assertIn("1.9.0-trading-post-qol-alpha13", payload["version"])
-        self.assertEqual(payload["frontend_asset_revision"], "1.9.0-trading-post-qol-alpha13")
+        self.assertIn("1.9.3-guild-initiatives", payload["version"])
+        self.assertEqual(payload["frontend_asset_revision"], "1.9.3-guild-initiatives")
         self.assertEqual(payload["database"], "ok")
         self.assertIn("sync_age_seconds", payload)
         self.assertIn("sync_connected", payload)

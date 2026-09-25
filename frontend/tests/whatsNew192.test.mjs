@@ -4,16 +4,16 @@ import { MAJOR_UPDATES } from "../src/player/whatsNewData.js";
 import { WEB_VERSION } from "../src/version.js";
 import { readFile } from "node:fs/promises";
 
-test("What's New promotes the shipped v1.9.2 Relic Arsenal release", () => {
+test("What's New promotes v1.9.3 and preserves the v1.9.2 entry", () => {
   const [latest, previous] = MAJOR_UPDATES;
-  assert.equal(latest.version, "v1.9.2");
+  assert.equal(latest.version, "v1.9.3");
   assert.equal(latest.version, WEB_VERSION);
-  assert.equal(latest.name, "Relic Arsenal Overhaul");
-  assert.equal(latest.action.tab, "relics");
+  assert.equal(latest.name, "Guild Initiatives");
+  assert.equal(latest.action.tab, "guild_board");
   assert.equal(latest.highlights.length, 4);
-  assert.match(latest.summary, /18 Job-specific Relic/);
-  assert.equal(previous.version, "v1.9.1");
-  assert.equal(previous.name, "Performance & Stability");
+  assert.match(latest.summary, /Fellowship Contracts/);
+  assert.equal(previous.version, "v1.9.2");
+  assert.equal(previous.name, "Relic Arsenal Overhaul");
 });
 
 test("What's New action points to the existing Relics page", async () => {

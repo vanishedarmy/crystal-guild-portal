@@ -26,8 +26,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.0-trading-post-qol-alpha13"
-FRONTEND_ASSET_REVISION = "1.9.0-trading-post-qol-alpha13"
+HOSTED_PORTAL_VERSION = "1.9.3-guild-initiatives"
+FRONTEND_ASSET_REVISION = "1.9.3-guild-initiatives"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {
@@ -2041,6 +2041,8 @@ class HostedPortalStore:
             snapshot = self._snapshot_cache.get(username)
             if snapshot is not None:
                 self._snapshot_cache.move_to_end(username)
+                if module == "guild_board":
+                    return snapshot.get("guild_board") or {"board": {}, "sync_pending": True}
                 if module == "trophies":
                     return build_trophy_hall(snapshot)
                 if module == "seasonal":
@@ -2072,6 +2074,8 @@ class HostedPortalStore:
         with self._lock:
             self._alias_cache[lookup] = username
             self._cache_snapshot(username, snapshot)
+        if module == "guild_board":
+            return snapshot.get("guild_board") or {"board": {}, "sync_pending": True}
         if module == "trophies":
             return build_trophy_hall(snapshot)
         if module == "seasonal":
@@ -2786,6 +2790,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             "relics",
             "achievements",
             "records",
+            "guild_board",
             "trophies",
             "seasonal",
         }

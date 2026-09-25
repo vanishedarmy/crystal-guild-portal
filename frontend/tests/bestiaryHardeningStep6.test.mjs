@@ -19,7 +19,7 @@ test('Step 6 Guide now covers all 112 base monsters and its current metadata', (
   const guide = JSON.parse(load('../public/guide-data.json'));
   assert.equal(guide.monsters.length,112);
   assert.equal(new Set(guide.monsters.map(x=>x.id)).size,112);
-  assert.equal(guide.meta.release,'1.9.0-trading-post-qol-alpha13');
+  assert.equal(guide.meta.release,'1.9.3-guild-initiatives');
   for(const id of ['elder_ochu','inferno_drake','malboro_sovereign','frost_behemoth','rift_wyrm']){
     assert.ok(guide.monsters.find(x=>x.id===id),id);
   }

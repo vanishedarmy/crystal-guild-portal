@@ -18,6 +18,7 @@ const DetailDialog = lazy(() => import("../components/DetailDialog.jsx"));
 const MODULES = {
   overview: Overview,
   fellowship: lazy(() => import("../player/Fellowship.jsx")),
+  guild_board: lazy(() => import("../player/GuildBoard.jsx")),
   chocobo: lazy(() => import("../player/ChocoboStable.jsx")),
   gold_saucer: lazy(() => import("../player/GoldSaucer.jsx")),
   retainer: lazy(() => import("../player/RetainerService.jsx")),
@@ -49,6 +50,7 @@ const TABS = [
   ["mercs", "Hero Merc Service", "⚔"],
   ["gold_saucer", "Gold Saucer", "✺"],
   ["fellowship", "Fellowship", "✥"],
+  ["guild_board", "Guild Board", "▤"],
   ["bestiary", "Bestiary", "◈"],
   ["relics", "Relics", "✧"],
   ["achievements", "Achievements & Titles", "★"],
@@ -70,6 +72,7 @@ const TAB_TONES = {
   mercs: "blue",
   gold_saucer: "gold",
   fellowship: "green",
+  guild_board: "gold",
   bestiary: "violet",
   relics: "azure",
   achievements: "magenta",
@@ -82,7 +85,7 @@ const TAB_GROUPS = [
   ["Core", ["overview", "hunts", "stream", "jobs", "inventory"]],
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
   ["Attractions", ["gold_saucer"]],
-  ["Guild", ["fellowship"]],
+  ["Guild", ["fellowship", "guild_board"]],
   ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies", "seasonal"]],
 ];
 

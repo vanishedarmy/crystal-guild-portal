@@ -7,6 +7,7 @@ import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
+import { InitiativeCards } from "../components/InitiativeCards.jsx";
 
 function projectTypeLabel(project) {
   if (project?.project_type === "supply_drive") return "Supply Drive";
@@ -167,6 +168,12 @@ export default function FellowshipPage() {
               <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)} Complete</strong><small>{(data.orders?.orders || []).find((order) => !order.complete)?.name || "Weekly set cleared"}</small></div>
               <div className="fellowship-summary"><span>Guild Legacy</span><strong>{data.legacy?.stage_name || "Founding Hall"}</strong><small>{number(data.legacy?.completed)} / {number(data.legacy?.total)} accomplishments</small></div>
             </div>
+
+            <section className="panel fellowship-section guild-contracts" aria-labelledby="guild-contracts-title">
+              <div className="panel-title-row"><div><span className="panel-kicker">Weekly community objectives</span><h2 id="guild-contracts-title">Fellowship Contracts</h2></div><span className="small-badge">{number(data.contracts?.completed || 0)} / {number(data.contracts?.total || 3)} · {data.contracts?.period || "This week"}</span></div>
+              <p className="muted guild-contracts-description">Three optional contracts rotate each Monday at 00:00 UTC. Qualifying actions from every member count. When a contract is completed, its reward is automatically granted to all current Fellowship members.</p>
+              <InitiativeCards communal objectives={data.contracts?.objectives || []} />
+            </section>
 
             <ProjectCard project={data.active_project} />
 

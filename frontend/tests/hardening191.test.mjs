@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 
-test('v1.9.1 version and deployed asset revision are current', () => {
-  assert.match(read('../src/version.js'), /1\.9\.1-performance-hardening/);
-  assert.match(read('../package.json'), /"version": "1\.9\.1"/);
+test('current release version and deployed asset revision are consistent', () => {
+  assert.match(read('../src/version.js'), /1\.9\.3-guild-initiatives/);
+  assert.match(read('../package.json'), /"version": "1\.9\.3"/);
 });
 
 test('shop state browsing does not require buy and sell permissions', () => {

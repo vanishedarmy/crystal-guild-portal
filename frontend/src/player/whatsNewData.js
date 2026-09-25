@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.3",
+    name: "Guild Initiatives",
+    title: "New contracts for the whole Guild — and daily adventures for you",
+    summary: "Three rotating Fellowship Contracts bring the community together. The optional Guild Board offers three daily and three weekly objectives with automatic Gil, material and occasional gear rewards.",
+    highlights: [
+      { title: "Weekly Fellowship Contracts", description: "Fight, craft, forge and complete adventures together. Each completed contract grants a one-time payout to all current members." },
+      { title: "Your Daily & Weekly Guild Board", description: "Three daily and three weekly optional objectives reward the activities you already enjoy. Completion rewards arrive automatically." },
+      { title: "One action, shared progress", description: "The same verified victory or crafting action can contribute to the personal Board and a Fellowship Contract without duplicate accounting." },
+      { title: "Your existing progress is safe", description: "A verified schema upgrade adds only new objective records. Existing characters, trade listings, Relics, construction projects and Weekly Orders are retained." },
+    ],
+    action: { tab: "guild_board", label: "Open Guild Board" },
+  },
+  {
     version: "v1.9.2",
     name: "Relic Arsenal Overhaul",
     title: "Every Relic has a story — and a clearer path forward",

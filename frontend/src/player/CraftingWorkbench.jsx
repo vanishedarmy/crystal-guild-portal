@@ -4,7 +4,7 @@ import { number } from "../utils/formatters.js";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 import "../styles/crafting-194.css";
 
-import { CRAFTING_CATEGORIES, filterCraftingRecipes } from "../utils/craftingFilters.js";
+import { CRAFTING_CATEGORIES, filterCraftingRecipes, readable } from "../utils/craftingFilters.js";
 
 function readFavorites(username) {
   try {
@@ -95,7 +95,7 @@ export default function CraftingWorkbench({ recipes = [], categories = {}, usern
               <span className={`crafting-status ${selected.craftable ? "ready" : "unavailable"}`}>{selected.craftable ? "Ready" : "Requirements missing"}</span>
             </div>
             {selected.output?.description ? <p className="crafting-item-description">{selected.output.description}</p> : null}
-            {selected.output?.type !== "consumable" ? <div className="crafting-gear-preview"><h5>Equipment preview</h5><p>Equip Lv. {number(selected.output?.min_level || 1)}{selected.output?.gear_family ? ` · ${readable(selected.output.gear_family)}` : ""}</p>
+            {["weapon", "armor", "accessory"].includes(selected.output?.type) ? <div className="crafting-gear-preview"><h5>Equipment preview</h5><p>Equip Lv. {number(selected.output?.min_level || 1)}{selected.output?.gear_family ? ` · ${readable(selected.output.gear_family)}` : ""}</p>
               <div className="crafting-stat-grid">{Object.entries(selected.output?.bonuses || {}).map(([stat, value]) => <span key={stat}><strong>{readable(stat)}</strong><b>{Number(value) >= 0 ? "+" : ""}{number(value)}</b></span>)}</div>
               {(selected.output?.allowed_jobs || []).length ? <p><strong>Compatible Jobs:</strong> {selected.output.allowed_jobs.map(readable).join(", ")}</p> : null}
             </div> : null}

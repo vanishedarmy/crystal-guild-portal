@@ -16,6 +16,7 @@ test("Portal Phase 7 exposes typed Blacksmith and Daily actions without arbitrar
 test("signed-in owners get a visual Blacksmith workspace with recipe, forge, and resynthesis comparisons", async () => {
   const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
   const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
+  const recovery = await readFile(new URL("player/ResynthesisWorkbench.jsx", SRC), "utf8");
   assert.match(profile, /blacksmith: lazy/);
   assert.match(profile, /\["blacksmith", "Blacksmith"/);
   assert.match(smith, /Guild Blacksmith/);
@@ -24,7 +25,8 @@ test("signed-in owners get a visual Blacksmith workspace with recipe, forge, and
   assert.match(smith, /submitForgeItem/);
   assert.match(smith, /submitResynthesizeItem/);
   assert.match(smith, /Resynthesize Gear/);
-  assert.match(smith, /Materials Recovered/);
+  assert.match(smith, /<ResynthesisWorkbench/);
+  assert.match(recovery, /Guaranteed material recovery/);
   assert.match(smith, /window\.confirm/);
   assert.match(smith, /Workshop facility discounts are already included/);
   assert.match(smith, /material\.owned/);

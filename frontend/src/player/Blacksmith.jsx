@@ -14,6 +14,7 @@ import { DetailsPointer } from "../components/CollapsePointer.jsx";
 import { clampQuantity } from "../utils/quantityInput.js";
 import ContextHelp from "../components/ContextHelp.jsx";
 import CraftingWorkbench from "./CraftingWorkbench.jsx";
+import ResynthesisWorkbench from "./ResynthesisWorkbench.jsx";
 
 function actionKey(kind, target = "blacksmith") {
   const suffix = globalThis.crypto?.randomUUID
@@ -65,6 +66,13 @@ export default function Blacksmith({ data, overview, onRefresh }) {
   const [loadStatus, setLoadStatus] = useState("idle");
   const [loadError, setLoadError] = useState("");
   const stateRequestRef = useRef(null);
+
+  // Searches are scoped to the current service. Carrying a potion search
+  // into resynthesis (or vice versa) otherwise looks like an empty catalog.
+  const switchView = useCallback((next) => {
+    setView(next);
+    setQuery("");
+  }, []);
 
   const username = String(overview?.identity?.username || data?.identity?.username || data?.player?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -232,20 +240,6 @@ export default function Blacksmith({ data, overview, onRefresh }) {
     { id: "unforged", title: "Unforged Gear", description: "Owned +0 gear grouped as Weapon, Armor, then Accessory.", collapsible: true, items: forgeItems.filter((item) => !item.equipped && item.current_upgrade === 0) },
   ]), [forgeItems]);
 
-  const resynthesisItems = useMemo(() => {
-    let values = Array.isArray(state?.resynthesis_items) ? [...state.resynthesis_items] : [];
-    const needle = query.trim().toLowerCase();
-    if (needle) values = values.filter((item) => [item.name, item.type, ...(item.recovery || []).map((entry) => entry.name)]
-      .some((value) => String(value || "").toLowerCase().includes(needle)));
-    return values.sort((a, b) => forgeTypeRank(a.type) - forgeTypeRank(b.type)
-      || Number(a.min_level || 1) - Number(b.min_level || 1)
-      || String(a.name || "").localeCompare(String(b.name || "")));
-  }, [state?.resynthesis_items, query]);
-
-  const resynthesisGroups = useMemo(() => ["weapon", "armor"]
-    .map((type) => ({ type, items: resynthesisItems.filter((item) => String(item.type || "").toLowerCase() === type) }))
-    .filter((group) => group.items.length), [resynthesisItems]);
-
   if (!isOwnProfile) {
     return (
       <section className="panel blacksmith-panel">
@@ -282,40 +276,6 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       `resynthesis:${item.item_id}`,
       () => submitResynthesizeItem(item.item_id, csrfToken, actionKey("resynthesis", item.item_id)),
       "Resynthesis complete.",
-    );
-  };
-
-  const renderResynthesisCard = (item) => {
-    const busy = busyKey === `resynthesis:${item.item_id}`;
-    return (
-      <article className="blacksmith-card resynthesis-card" key={item.item_id}>
-        <ItemArtwork item={item} className="blacksmith-forge-artwork" />
-        <div className="blacksmith-card-head">
-          <div>
-            <span className="slot-label">{titleCase(item.type)} · Lv. {number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span>
-            <h3 className={`rarity-${item.rarity || "common"}`}>{item.name}{Number(item.upgrade_level || 0) > 0 ? ` +${number(item.upgrade_level)}` : ""}</h3>
-          </div>
-          <span className="small-badge">Owned {number(item.owned)}</span>
-        </div>
-        <div className="resynthesis-recovery">
-          <span>Materials Recovered</span>
-          <div className="resynthesis-recovery-list">
-            {(item.recovery || []).map((entry) => (
-              <div key={entry.item_id}>
-                <ItemArtwork item={{ ...entry, type: "material" }} className="blacksmith-material-artwork" />
-                <strong>{entry.name}</strong>
-                <span>× {number(entry.quantity)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        {Number(item.upgrade_level || 0) > 0 && Number(item.owned || 0) > 1 ? <small className="resynthesis-note">Forge-material recovery applies when the final owned copy is broken down.</small> : null}
-        <div className="blacksmith-card-actions forge-action">
-          <button type="button" className="equipment-action-button" title={item.reason || "Permanently break down one copy into crafting materials."} disabled={!actionsAvailable || !item.resynthesizable || Boolean(busyKey)} onClick={() => resynthesize(item)}>
-            {busy ? "Resynthesizing…" : item.resynthesizable ? "Resynthesize" : item.reason || "Unavailable"}
-          </button>
-        </div>
-      </article>
     );
   };
 
@@ -378,10 +338,10 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       </div>
 
       <div className="blacksmith-toolbar">
-        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith services" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setView)}>
-          <button type="button" role="tab" id="blacksmith-tab-recipes" data-tab-value="recipes" tabIndex={view === "recipes" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => setView("recipes")}><span>Crafting</span><small>Items and equipment</small></button>
-          <button type="button" role="tab" id="blacksmith-tab-forge" data-tab-value="forge" tabIndex={view === "forge" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => setView("forge")}><span>Forge Gear</span><small>Upgrade equipment</small></button>
-          <button type="button" role="tab" id="blacksmith-tab-resynthesis" data-tab-value="resynthesis" tabIndex={view === "resynthesis" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "resynthesis"} className={view === "resynthesis" ? "active" : ""} onClick={() => setView("resynthesis")}><span>Resynthesize Gear</span><small>Recover materials</small></button>
+        <div className="blacksmith-view-switch" role="tablist" aria-label="Blacksmith services" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, switchView)}>
+          <button type="button" role="tab" id="blacksmith-tab-recipes" data-tab-value="recipes" tabIndex={view === "recipes" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "recipes"} className={view === "recipes" ? "active" : ""} onClick={() => switchView("recipes")}><span>Crafting</span><small>Items and equipment</small></button>
+          <button type="button" role="tab" id="blacksmith-tab-forge" data-tab-value="forge" tabIndex={view === "forge" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => switchView("forge")}><span>Forge Gear</span><small>Upgrade equipment</small></button>
+          <button type="button" role="tab" id="blacksmith-tab-resynthesis" data-tab-value="resynthesis" tabIndex={view === "resynthesis" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "resynthesis"} className={view === "resynthesis" ? "active" : ""} onClick={() => switchView("resynthesis")}><span>Resynthesize Gear</span><small>Recover materials</small></button>
         </div>
         <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : view === "resynthesis" ? "Gear or recovered material…" : "Equipment…"} /></label>
       </div>
@@ -474,27 +434,15 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       ) : null}
 
       {state && view === "resynthesis" ? (
-        <>
-          <div className="blacksmith-summary-row">
-            <span><strong>{number(state.resynthesis_count || 0)}</strong> items resynthesized</span>
-            <span>Weapons and armor only · Relic and Artifact gear protected</span>
-          </div>
-          <div className="resynthesis-warning" role="note"><strong>Warning:</strong> Resynthesizing permanently destroys the selected gear.</div>
-          <div id="blacksmith-active-panel" className="resynthesis-shell" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-resynthesis">
-            {resynthesisGroups.map((group) => (
-              <section className="forge-type-group" key={`resynthesis-${group.type}`} aria-label={`${titleCase(group.type)} resynthesis`}>
-                <div className="forge-type-heading">
-                  <strong>{titleCase(group.type)}</strong>
-                  <span>{number(group.items.length)}</span>
-                </div>
-                <div className="forge-group-grid resynthesis-grid">
-                  {group.items.map(renderResynthesisCard)}
-                </div>
-              </section>
-            ))}
-          </div>
-          {!resynthesisItems.length ? <div className="state-message compact-state">No resynthesizable weapons or armor match that search.</div> : null}
-        </>
+        <ResynthesisWorkbench
+          items={state.resynthesis_items || []}
+          count={state.resynthesis_count || 0}
+          username={username}
+          query={query}
+          busyKey={busyKey}
+          actionsAvailable={actionsAvailable}
+          onResynthesize={resynthesize}
+        />
       ) : null}
     </section>
   );

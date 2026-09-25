@@ -21,7 +21,7 @@ class GoldSaucerHostedAlpha5Tests(unittest.TestCase):
 
     def test_alpha5_contract_adds_triple_triad_actions(self):
         self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.4-crafting-reforged")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.4.1-blacksmith-hardening")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.4.2-resynthesis-workbench")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 39)
         for action in ("TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY"):
             self.assertIn(action, ALLOWED_PORTAL_ACTIONS)

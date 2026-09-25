@@ -6,7 +6,10 @@ export const CRAFTING_CATEGORIES = [
   { id: "accessories", label: "Accessories", short: "Accessories" },
 ];
 
-function readable(value) {
+// Shared between the filter catalogue and equipment detail rendering.
+// Missing this import previously crashed Weapons, Armor and Accessories
+// when their equipment preview rendered, while Field Items still worked.
+export function readable(value) {
   return String(value || "").replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 

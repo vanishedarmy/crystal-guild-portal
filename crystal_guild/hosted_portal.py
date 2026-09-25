@@ -27,7 +27,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.9.4-crafting-reforged"
-FRONTEND_ASSET_REVISION = "1.9.4.1-blacksmith-hardening"
+FRONTEND_ASSET_REVISION = "1.9.4.2-resynthesis-workbench"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {

@@ -46,3 +46,20 @@ test('accessible mobile interface includes semantic controls and reduced-motion 
   assert.match(parent, /submitCraftingState\(csrfToken, actionKey\("crafting-state"\), "reforged"\)/);
   assert.match(parent, /force: true/);
 });
+
+test('Blacksmith load failures expose a retry instead of an endless loading placeholder', async () => {
+  const parent = await readFile(new URL('../src/player/Blacksmith.jsx', import.meta.url), 'utf8');
+  assert.match(parent, /loadStatus === "error"/);
+  assert.match(parent, /loadStatus !== "idle"/);
+  assert.match(parent, /role="alert"/);
+  assert.match(parent, /Retry Blacksmith/);
+  assert.match(parent, /stateRequestRef\.current/);
+  assert.match(parent, /older Blacksmith catalog/);
+});
+
+test('a successful forge or resynthesis refreshes all recipe readiness', async () => {
+  const parent = await readFile(new URL('../src/player/Blacksmith.jsx', import.meta.url), 'utf8');
+  assert.match(parent, /Every successful operation may change materials or inventory/);
+  assert.match(parent, /await loadState\(\{ quiet: true, force: true \}\)/);
+  assert.doesNotMatch(parent, /recipes: current\.recipes/);
+});

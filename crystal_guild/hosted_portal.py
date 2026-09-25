@@ -27,7 +27,7 @@ from .trophy_hall import build_trophy_hall
 
 
 HOSTED_PORTAL_VERSION = "1.9.4-crafting-reforged"
-FRONTEND_ASSET_REVISION = "1.9.4-crafting-reforged"
+FRONTEND_ASSET_REVISION = "1.9.4.1-blacksmith-hardening"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {
@@ -1065,7 +1065,14 @@ class HostedPortalStore:
             if priority and (len(priority) > 100 or not re.fullmatch(r"[a-z0-9_]+", priority)):
                 raise ValueError("Invalid Retainer priority material.")
             payload = {"assignment": assignment, "priority": priority}
-        elif kind in {"CRAFTING_STATE", "DAILY_STATE", "CLAIM_DAILY"}:
+        elif kind == "CRAFTING_STATE":
+            # Older Portal clients send {}, while the v1.9.4 workbench sends
+            # {"mode":"reforged"}. Previously grouped with no-arg Daily actions,
+            # this rejected the new client *before* the Bot could load recipes.
+            if payload not in ({}, {"mode": "legacy"}, {"mode": "reforged"}):
+                raise ValueError("CRAFTING_STATE accepts only optional mode: legacy or reforged.")
+            payload = {"mode": payload["mode"]} if "mode" in payload else {}
+        elif kind in {"DAILY_STATE", "CLAIM_DAILY"}:
             if payload:
                 raise ValueError(f"{kind} does not accept parameters.")
         elif kind == "CRAFT_RECIPE":

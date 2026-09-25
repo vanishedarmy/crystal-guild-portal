@@ -84,3 +84,8 @@
 @media (max-width: 750px) { .crafting-category-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .crafting-layout { grid-template-columns: minmax(0,1fr); } .crafting-directory { max-height: min(48vh,450px); } .crafting-intro { flex-direction: column; } .crafting-progress { text-align: left; grid-template-columns: auto 1fr; align-items: baseline; column-gap: .5rem; } .crafting-progress > small { grid-column: 1 / -1; } .crafting-mobile-back { display: block; } .crafting-workbench.mobile-detail .crafting-directory { display: none; } .crafting-workbench.mobile-detail .crafting-detail { display: grid; } }
 @media (max-width: 480px) { .crafting-filterbar > label:not(.crafting-check) { flex: 1 1 130px; } .crafting-create-row > label { width: 100%; } .crafting-create-row input { width: 100%; } .crafting-quantity-shortcuts { width: 100%; } .crafting-quantity-shortcuts button { flex: 1 1 auto; } .crafting-ingredient { grid-template-columns: 32px minmax(0,1fr); } .crafting-ingredient-qty { grid-column: 2; } }
 @media (prefers-reduced-motion: reduce) { .crafting-workbench *, .crafting-workbench *::before, .crafting-workbench *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+.blacksmith-load-alert { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; border-color: #d9a66b; }
+.blacksmith-load-alert > span { flex: 1 1 280px; overflow-wrap: anywhere; }
+.blacksmith-load-alert > strong { flex: 1 1 100%; }
+.blacksmith-load-retry { min-height: 44px; width: fit-content; }

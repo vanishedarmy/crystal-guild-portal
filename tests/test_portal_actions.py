@@ -11,10 +11,10 @@ from pathlib import Path
 
 from crystal_guild.hosted_portal import (
     ACTION_PROTOCOL_VERSION,
-    MAX_ACTION_RESULT_BYTES,
     HostedPortalHandler,
     HostedPortalHTTPServer,
     HostedPortalStore,
+    MAX_ACTION_RESULT_BYTES,
 )
 from crystal_guild.portal_auth import TwitchOAuthConfig, TwitchOAuthClient, safe_return_path
 
@@ -671,6 +671,38 @@ class PortalActionServerCase(unittest.TestCase):
                 )
             self.assertEqual(caught.exception.code, 400)
 
+    def test_reforged_blacksmith_state_mode_is_strict_and_does_not_merge_with_legacy(self):
+        # The 1.9.4 browser opts in to the full recipe catalog. Legacy Portal
+        # users still send {}, and neither request may coalesce with the other.
+        for index, payload in enumerate(({}, {"mode": "reforged"}, {"mode": "legacy"})):
+            status, response, _ = self.request(
+                "/api/actions", method="POST",
+                payload={"type": "CRAFTING_STATE", "payload": payload},
+                headers={**self.user_headers(csrf=True), "Idempotency-Key": f"1941-crafting-{index}"},
+            )
+            self.assertEqual(status, 202)
+            self.assertEqual(response["action"]["type"], "CRAFTING_STATE")
+
+        claimed = self.store.claim_actions("bot:1941", limit=10)
+        self.assertEqual(len(claimed), 3)
+        self.assertEqual({json.dumps(row["payload"], sort_keys=True) for row in claimed},
+                         {"{}", '{"mode": "reforged"}', '{"mode": "legacy"}'})
+        for row in claimed:
+            self.assertTrue(self.store.complete_action(row["id"], row["lease_token"], True, "ok"))
+
+        for index, payload in enumerate((
+            {"mode": "unknown"}, {"mode": ""}, {"mode": None},
+            {"mode": False}, {"mode": ["reforged"]},
+            {"mode": "reforged", "extra": 1}, {"unexpected": True},
+        )):
+            with self.subTest(payload=payload), self.assertRaises(urllib.error.HTTPError) as caught:
+                self.request(
+                    "/api/actions", method="POST",
+                    payload={"type": "CRAFTING_STATE", "payload": payload},
+                    headers={**self.user_headers(csrf=True), "Idempotency-Key": f"1941-invalid-{index}"},
+                )
+            self.assertEqual(caught.exception.code, 400)
+
     def test_chocobo_companions_accept_only_typed_stable_actions(self):
         for action_type, payload, key in (
             ("CHOCOBO_STATE", {}, "chocobo-state"),
@@ -952,8 +984,7 @@ class PortalActionServerCase(unittest.TestCase):
         claimed = self.store.claim_actions("bot:h3-bound", limit=1)
         with self.assertRaises(ValueError):
             self.store.complete_action(
-                claimed[0]["id"], claimed[0]["lease_token"], True, "oversized",
-                {"blob": "x" * (MAX_ACTION_RESULT_BYTES + 1024)}
+                claimed[0]["id"], claimed[0]["lease_token"], True, "oversized", {"blob": "x" * (MAX_ACTION_RESULT_BYTES + 1)}
             )
 
     def test_hotfix2_duplicate_solo_round_retry_reuses_inflight_action(self):

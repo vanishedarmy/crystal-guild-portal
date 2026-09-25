@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   submitCraftingState,
   submitCraftRecipe,
@@ -33,6 +33,14 @@ function titleCase(value) {
   return String(value || "item").replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function blacksmithLoadError(error) {
+  const message = String(error?.message || "The Blacksmith ledger could not be loaded.");
+  if (/CRAFTING_STATE does not accept parameters/i.test(message)) {
+    return "The hosted Portal is running the old Blacksmith validator. Deploy the 1.9.4.1 hosted Web hotfix, restart the service, and retry.";
+  }
+  return message;
+}
+
 const FORGE_TYPE_ORDER = { weapon: 0, armor: 1, accessory: 2 };
 const FORGE_TYPE_SEQUENCE = ["weapon", "armor", "accessory"];
 
@@ -54,6 +62,9 @@ export default function Blacksmith({ data, overview, onRefresh }) {
   const [quantities, setQuantities] = useState({});
   const [busyKey, setBusyKey] = useState("");
   const [message, setMessage] = useState("");
+  const [loadStatus, setLoadStatus] = useState("idle");
+  const [loadError, setLoadError] = useState("");
+  const stateRequestRef = useRef(null);
 
   const username = String(overview?.identity?.username || data?.identity?.username || data?.player?.username || "").toLowerCase();
   const isOwnProfile = Boolean(
@@ -74,37 +85,60 @@ export default function Blacksmith({ data, overview, onRefresh }) {
 
   const loadState = useCallback(async ({ quiet = false, force = false } = {}) => {
     if (!actionsAvailable || (busyKey && !force)) return null;
+    // Only one large catalog request at a time. After a craft/forge mutation,
+    // force a *fresh* read even if an earlier read was still in progress.
+    if (stateRequestRef.current) {
+      if (!force) return stateRequestRef.current;
+      await stateRequestRef.current;
+    }
     if (!quiet) {
       setBusyKey("state");
       setMessage("Checking the Guild Blacksmith…");
     }
+    setLoadStatus("loading");
+    setLoadError("");
+    const request = (async () => {
+      try {
+        const response = await submitCraftingState(csrfToken, actionKey("crafting-state"), "reforged");
+        const finished = await finishedAction(response);
+        if (!finished) throw new Error("The Blacksmith did not respond in time. Check the Bot connection and retry.");
+        if (finished.status !== "completed" || finished.result?.ok === false) {
+          throw new Error(finished.result?.message || "Blacksmith state could not be loaded.");
+        }
+        const next = finished.result?.data?.crafting_state;
+        if (!Array.isArray(next?.recipes) || !next?.recipe_categories) {
+          throw new Error("The Bot returned an older Blacksmith catalog. Ensure the 1.9.4 Bot is deployed and running alongside the hosted Web.");
+        }
+        setState(next);
+        setLoadStatus("ready");
+        if (!quiet) setMessage("Blacksmith inventory refreshed.");
+        return next;
+      } catch (error) {
+        const detail = blacksmithLoadError(error);
+        setLoadError(detail);
+        setLoadStatus("error");
+        // The alert below announces the failure once, rather than repeating
+        // the same message in both the polite header and the assertive alert.
+        setMessage("");
+        return null;
+      } finally {
+        if (!quiet) setBusyKey("");
+      }
+    })();
+    stateRequestRef.current = request;
     try {
-      const response = await submitCraftingState(csrfToken, actionKey("crafting-state"), "reforged");
-      const finished = await finishedAction(response);
-      if (!finished) {
-        setMessage("The Blacksmith is still updating. Try again in a moment.");
-        return null;
-      }
-      if (finished.status !== "completed" || finished.result?.ok === false) {
-        setMessage(finished.result?.message || "Blacksmith state could not be loaded.");
-        return null;
-      }
-      const next = finished.result?.data?.crafting_state || null;
-      if (next) setState(next);
-      if (!quiet) setMessage("Blacksmith inventory refreshed.");
-      return next;
-    } catch (error) {
-      setMessage(error.message);
-      return null;
+      return await request;
     } finally {
-      if (!quiet) setBusyKey("");
+      if (stateRequestRef.current === request) stateRequestRef.current = null;
     }
   }, [actionsAvailable, busyKey, csrfToken]);
 
   useEffect(() => {
-    if (!actionsAvailable || state) return;
+    // Failure is terminal until the user requests a retry. Without this gate,
+    // busy-key changes can cause repeated rejected requests and endless loading.
+    if (!actionsAvailable || state || loadStatus !== "idle") return;
     void loadState({ quiet: true });
-  }, [actionsAvailable, state, loadState]);
+  }, [actionsAvailable, state, loadStatus, loadState]);
 
   const runMutation = async (key, submit, fallback) => {
     if (!actionsAvailable || busyKey) return;
@@ -118,23 +152,11 @@ export default function Blacksmith({ data, overview, onRefresh }) {
         return;
       }
       setMessage(finished.result?.message || fallback);
-      const next = finished.result?.data?.crafting_state;
-      if (finished.status === "completed" && finished.result?.ok !== false && key.startsWith("craft:")) {
-        // Mutation receipts intentionally remain small and legacy-compatible;
-        // fetch the complete Reforged catalog only after a successful craft.
-        await loadState({ quiet: true, force: true });
-      } else if (next) {
-        setState((current) => current ? {
-          ...next,
-          recipes: current.recipes,
-          recipe_categories: current.recipe_categories,
-          known_recipe_count: current.known_recipe_count,
-          recipe_total: current.recipe_total,
-        } : next);
-      } else if (finished.status === "completed" && finished.result?.ok !== false) {
-        await loadState({ quiet: true, force: true });
-      }
       if (finished.status === "completed" && finished.result?.ok !== false) {
+        // Every successful operation may change materials or inventory. The
+        // mutation receipt intentionally contains only the legacy recipe set,
+        // so merging it with 176 Reforged rows leaves craftability stale.
+        await loadState({ quiet: true, force: true });
         onRefresh?.();
         window.setTimeout(() => onRefresh?.(), 3200);
       }
@@ -348,7 +370,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       </div>
 
       <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>
-        <strong>{actionsAvailable ? "The forge is open" : "The forge is closed for now"}</strong>
+        <strong>{!actionsAvailable ? "The forge is closed for now" : !state && loadStatus === "error" ? "Blacksmith ledger unavailable" : "The forge is open"}</strong>
         <span>{actionsAvailable
           ? "Recipe costs, forge levels, and resynthesis eligibility are checked again before every action."
           : "Crafting, forging, and resynthesis return when Crystal Guild reconnects."}</span>
@@ -364,7 +386,14 @@ export default function Blacksmith({ data, overview, onRefresh }) {
         <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : view === "resynthesis" ? "Gear or recovered material…" : "Equipment…"} /></label>
       </div>
 
-      {!state && actionsAvailable ? <div className="state-message compact-state">Opening your Blacksmith ledger…</div> : null}
+      {!state && actionsAvailable && loadStatus !== "error" ? <div className="state-message compact-state" role="status">Opening your Blacksmith ledger…</div> : null}
+      {actionsAvailable && loadStatus === "error" ? (
+        <div className="state-message compact-state blacksmith-load-alert" role="alert">
+          <strong>{state ? "Blacksmith refresh failed; displayed materials may be outdated." : "Blacksmith ledger could not load."}</strong>
+          <span>{loadError}</span>
+          <button type="button" className="equipment-action-button blacksmith-load-retry" disabled={Boolean(busyKey)} onClick={() => void loadState({ force: true })}>Retry Blacksmith</button>
+        </div>
+      ) : null}
       {!state && !actionsAvailable ? <div className="state-message compact-state">Live Blacksmith data becomes available when Crystal Guild is online.</div> : null}
       {state?.combat_locked ? <div className="moogle-combat-lock">Blacksmith actions are locked while this adventurer is committed to an active encounter or raid.</div> : null}
 

@@ -15,8 +15,8 @@ class RetainerHostedAlpha2Tests(unittest.TestCase):
     def tearDown(self): self.temp.cleanup()
 
     def test_alpha2_contract(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.3-guild-initiatives")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.3-guild-initiatives")
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.4-crafting-reforged")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.4.1-blacksmith-hardening")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 39)
 
     def test_dispatch_accepts_optional_bounded_priority(self):

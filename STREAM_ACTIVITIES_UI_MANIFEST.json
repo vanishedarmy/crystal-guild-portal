@@ -1,0 +1,38 @@
+{
+  "release": "Crystal Guild v1.8.0 Final — Stream Activities UI Refinement",
+  "baseline": "CrystalGuild-v1.8-Merc-Service-Final-Expedition-UI-Complete.zip",
+  "runtime_frontend": "1.8.0-merc-final",
+  "local_schema": 17,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 34,
+  "scope": [
+    "Dedicated Stream Activities profile tab",
+    "Move Stream Venture presentation out of Adventure Board",
+    "Move Trial & Raid Board out of Adventure Board",
+    "Keep Adventure Board focused on Portal and off-stream adventures",
+    "Remove historical version labels from live feature-board headers",
+    "Update Overview shortcut and Player Guide navigation wording",
+    "Keep 17-tab desktop navigation balanced"
+  ],
+  "gameplay_changes": false,
+  "backend_changes": false,
+  "migration_required": false,
+  "validation": {
+    "targeted_frontend": "71/71 PASS",
+    "full_frontend": "664/665 PASS (1 pre-existing stale v1.7.0 identity assertion)",
+    "hosted_web_api": "78/78 PASS",
+    "bot": "733/733 PASS"
+  },
+  "primary_changed_source_files": [
+    "frontend/src/pages/PlayerProfile.jsx",
+    "frontend/src/player/Overview.jsx",
+    "frontend/src/player/Hunts.jsx",
+    "frontend/src/player/StreamActivities.jsx",
+    "frontend/src/player/ChocoboStable.jsx",
+    "frontend/src/player/Dungeons.jsx",
+    "frontend/src/player/Expeditions.jsx",
+    "frontend/src/player/GoldSaucer.jsx",
+    "frontend/src/styles/portal.css",
+    "frontend/public/guide-body.html"
+  ]
+}

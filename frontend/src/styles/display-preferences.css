@@ -1,0 +1,106 @@
+/* v1.9.4.4 — Accessible icon controls and selective profile typography.
+ * Intentionally excludes Gold Saucer games, Stream Activities combat HUD and OBS overlays.
+ */
+.cg-display-controls {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: .35rem;
+  white-space: nowrap;
+}
+.cg-display-control {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  border: 1px solid var(--line-bright, #79bfe4);
+  border-radius: .45rem;
+  background: var(--panel, #101a2b);
+  color: var(--text, #fff);
+  font-family: var(--font-body, system-ui), sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color .12s ease, background .12s ease;
+}
+.cg-display-control[aria-pressed="true"] {
+  border: 2px solid var(--crystal, #8fe7ff);
+  color: #fff;
+  background: #214b67;
+  box-shadow: inset 0 0 0 1px #0a1625;
+}
+.cg-display-control:hover { border-color: #fff; }
+.cg-display-control:focus-visible { outline: 3px solid #e5f7ff; outline-offset: 3px; }
+.cg-text-glyph { font-size: 1.17rem; letter-spacing: -.04em; }
+.cg-text-glyph span { position: relative; top: -.26em; font-size: .72em; }
+.cg-contrast-glyph { font-size: 1.55rem; line-height: 1; }
+.cg-profile-display-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .55rem;
+  margin: 0 0 .5rem;
+  color: var(--muted);
+}
+.cg-profile-display-row > span { font-size: .83rem; font-weight: 700; }
+/* Use specificity to win over the older workbench's long-text button styles. */
+.crafting-display-controls .cg-display-control { padding: 0; width: 44px; min-width: 44px; }
+.crafting-display-controls .cg-display-controls { margin: 0; }
+
+/* Selectively apply to information-heavy pages, not artwork, minigames or combat. */
+.cg-guide-display-row { max-width: 1520px; margin: .6rem auto; padding-inline: clamp(.5rem, 2vw, 1.5rem); }
+.cg-guide-display { min-width: 0; }
+.cg-standalone-readable.cg-text-comfortable :where(p, li, label, small, td, th, summary) {
+  font-size: max(.94rem, .98em);
+  line-height: 1.6;
+}
+.cg-standalone-readable.cg-high-contrast {
+  --muted: #e1efff;
+  --line: #c3e6ff;
+  --line-bright: #e1f3ff;
+  --text: #fff;
+  --panel: #0a1929;
+  --panel2: #12283f;
+  --panel3: #0d2234;
+  --crystal: #a9ebff;
+  --crystal-soft: #d3f3ff;
+  color: #fff;
+}
+.cg-standalone-readable.cg-high-contrast :where(.panel, .fellowship-facility, .player-card, .guide-section-accordion, .card) {
+  border-color: var(--line);
+}
+.cg-guide-display.cg-text-comfortable .guide-react-host :where(p, li, small, td, th) {
+  font-size: max(.94rem, .98em);
+  line-height: 1.6;
+}
+
+.profile-content.cg-readable.cg-text-comfortable :where(p, li, label, small, td, th, summary) {
+  font-size: max(.94rem, .98em);
+  line-height: 1.6;
+}
+.profile-content.cg-readable.cg-text-comfortable :where(.panel, .inventory-card, .equipment-card) {
+  line-height: 1.6;
+}
+.profile-content.cg-readable.cg-high-contrast {
+  color: #fff;
+  --muted: #e1efff;
+  --line: #c3e6ff;
+  --line-bright: #e1f3ff;
+  --text: #fff;
+  --panel: #0a1929;
+  --panel-soft: #0d2234;
+  --crystal: #a9ebff;
+  --crystal-soft: #d3f3ff;
+}
+.profile-content.cg-readable.cg-high-contrast :where(.panel, .inventory-card, .equipment-card, .crafting-directory, .crafting-detail) {
+  border-color: var(--line);
+}
+/* Avoid changing the intentionally compact overlay and mini-game interfaces. */
+@media (max-width: 480px) {
+  .cg-profile-display-row { margin-bottom: .55rem; }
+  .cg-profile-display-row > span { font-size: .78rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cg-display-control { transition: none; }
+}

@@ -1,0 +1,46 @@
+export const TROPHY_CATEGORIES = [
+  { id: "all", label: "All Trophies" },
+  { id: "world_events", label: "World Events" },
+  { id: "raids", label: "Raids" },
+  { id: "hunts", label: "Hunts" },
+  { id: "triple_triad", label: "Triple Triad" },
+  { id: "fellowship", label: "Fellowship" },
+  { id: "mystery", label: "Mysteries" },
+];
+
+export const TROPHY_CATALOG = [
+  ["we_notorious_behemoth","world_events","Horn of the Notorious","A horn taken from the Notorious Behemoth, proof that you stood against one of the realm's fiercest World Events.","Defeat Notorious Behemoth in a World Event.","/trophies/a1/world-events/horn-of-the-notorious.webp"],
+  ["we_tainted_malboro","world_events","Breath of Blight","A preserved specimen from the Tainted Malboro and its ruinous breath.","Defeat Tainted Malboro in a World Event.","/trophies/a1/world-events/breath-of-blight.webp"],
+  ["we_dark_iron_giant","world_events","Black Iron Crest","A shattered crest from the Dark Iron Giant's immense armor.","Defeat Dark Iron Giant in a World Event.","/trophies/a1/world-events/black-iron-crest.webp"],
+  ["we_elder_adamantoise","world_events","Elder's Carapace","A weathered fragment of the Elder Adamantoise's ancient shell.","Defeat Elder Adamantoise in a World Event.","/trophies/a1/world-events/elders-carapace.webp"],
+  ["we_cursed_tonberry_king","world_events","The King's Lantern","The royal lantern left behind by the Cursed Tonberry King.","Defeat Cursed Tonberry King in a World Event.","/trophies/a1/world-events/the-kings-lantern.webp"],
+  ["we_savage_coeurl","world_events","Stormwhisker","A lightning-scarred relic from the Savage Coeurl.","Defeat Savage Coeurl in a World Event.","/trophies/a1/world-events/stormwhisker.webp"],
+  ["we_dread_bomb_king","world_events","Crown of Cinders","A crown tempered in the blast of the Dread Bomb King.","Defeat Dread Bomb King in a World Event.","/trophies/a1/world-events/crown-of-cinders.webp"],
+  ["we_twisted_ahriman","world_events","Eye of the Twisted","An unsettling trophy taken from the Twisted Ahriman.","Defeat Twisted Ahriman in a World Event.","/trophies/a1/world-events/eye-of-the-twisted.webp"],
+  ["we_ravenous_dragon","world_events","Ravenous Fang","A massive fang from the Ravenous Dragon's final charge.","Defeat Ravenous Dragon in a World Event.","/trophies/a1/world-events/ravenous-fang.webp"],
+  ["we_bloodied_deathclaw","world_events","Bloodied Talon","A brutal talon claimed from the Bloodied Deathclaw.","Defeat Bloodied Deathclaw in a World Event.","/trophies/a1/world-events/bloodied-talon.webp"],
+  ["we_all_phase1","world_events","Notorious Menagerie","The complete first collection of World Event trophies gathered into one crest.","Earn all 10 World Event trophies.","/trophies/a1/world-events/notorious-menagerie.webp"],
+  ["raid_ifrit","raids","Ember of Ifrit","A burning crystal ember displayed in remembrance of victory over Ifrit.","Clear the Ifrit Raid.","/trophies/a1/raids/ember-of-ifrit.webp"],
+  ["raid_shiva","raids","Diamond of Shiva","An impossible shard of ice preserved from Shiva's frozen throne.","Clear the Shiva Raid.","/trophies/a1/raids/diamond-of-shiva.webp"],
+  ["raid_titan","raids","Heart of the Crag","A stone heart still glowing with the force of Titan's domain.","Clear the Titan Raid.","/trophies/a1/raids/heart-of-the-crag.webp"],
+  ["raid_bahamut","raids","Shard of the Final Coil","A draconic crystal shard recovered after conquering Bahamut's Final Coil.","Clear the Bahamut Raid.","/trophies/a1/raids/shard-of-the-final-coil.webp"],
+  ["raid_primals","raids","Primal Conqueror","A sixfold crest honoring mastery over the Guild's original Primal trials.","Clear Ifrit, Shiva, Ramuh, Garuda, Titan, and Leviathan.","/trophies/a1/raids/primal-conqueror.webp"],
+  ["hunt_tyrant","hunts","Tyrant's Crown","A grim crown mounted for the hunter who brought down the Tyrant of the Rift.","Clear Tyrant of the Rift.","/trophies/a1/hunts/tyrants-crown.webp"],
+  ["hunt_mountain","hunts","The Mountain's Plate","An enormous armored plate claimed when the Mountain finally stopped moving.","Clear The Mountain Moves.","/trophies/a1/hunts/the-mountains-plate.webp"],
+  ["hunt_veilscale","hunts","Veilscale","An iridescent scale from the dragon beyond the veil.","Clear Dragon Beyond the Veil.","/trophies/a1/hunts/veilscale.webp"],
+  ["hunt_srank_all","hunts","S-Rank Bounty Board","A completed board bearing the marks of every current S-Rank Hunt.","Clear all 3 current S-Rank Hunts.","/trophies/a1/hunts/s-rank-bounty-board.webp"],
+  ["tt_first_win","triple_triad","Opening Hand","The first winning hand in a growing Triple Triad career.","Win a Triple Triad match.","/trophies/a1/triple-triad/opening-hand.webp"],
+  ["tt_streak_3","triple_triad","Hot Streak","Three victories in succession, remembered in flame and gold.","Reach a 3-win Triple Triad streak.","/trophies/a1/triple-triad/hot-streak.webp"],
+  ["tt_cards_10","triple_triad","Collector's Folio","A carefully kept folio celebrating a collection of ten unique cards.","Own 10 unique Triple Triad cards.","/trophies/a1/triple-triad/collectors-folio.webp"],
+  ["tt_cards_all","triple_triad","Master Deck","The complete original fifteen-card collection displayed as a master set.","Own all 15 current Triple Triad cards.","/trophies/a1/triple-triad/master-deck.webp"],
+  ["fellowship_guildhall_3","fellowship","Crystal Foundation","A miniature of the Guild Hall honoring those who helped raise it to Lv. 3.","Contribute to Guild Hall Lv. 3 before its completion.","/trophies/a1/fellowship/crystal-foundation.webp"],
+  ["fellowship_workshop_3","fellowship","Masterwork Anvil","The Fellowship's forge immortalized for a contributor to Workshop Lv. 3.","Contribute to Workshop Lv. 3 before its completion.","/trophies/a1/fellowship/masterwork-anvil.webp"],
+  ["fellowship_archive_3","fellowship","Living Archive","An enchanted archive honoring contributors to Guild Archive Lv. 3.","Contribute to Guild Archive Lv. 3 before its completion.","/trophies/a1/fellowship/living-archive.webp"],
+  ["fellowship_airship_3","fellowship","Skybound Berth","A model of the completed Airship Dock and the journeys it made possible.","Contribute to Airship Dock Lv. 3 before its completion.","/trophies/a1/fellowship/skybound-berth.webp"],
+  ["fellowship_annex","fellowship","Kupo Expansion Permit","A cheerful permit commemorating construction of the Moogle Emporium Annex.","Contribute to the Moogle Emporium Annex before its completion.","/trophies/a1/fellowship/kupo-expansion-permit.webp"],
+  ["fellowship_trading_post","fellowship","Merchant's Bell","The market bell rung for those who helped establish the Moogle Trading Post.","Contribute to the Moogle Trading Post before its completion.","/trophies/a1/fellowship/merchants-bell.webp"],
+].map(([id, category, name, description, requirement, art], index) => ({
+  id, category, name, description, requirement, art, order: index, secret: false,
+}));
+
+export const TROPHIES_BY_ID = Object.fromEntries(TROPHY_CATALOG.map((row) => [row.id, row]));

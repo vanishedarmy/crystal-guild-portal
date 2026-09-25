@@ -28,8 +28,10 @@ test("signed-in owners get a visual Blacksmith workspace with recipe, forge, and
   assert.match(smith, /<ResynthesisWorkbench/);
   assert.match(recovery, /Guaranteed material recovery/);
   assert.match(smith, /window\.confirm/);
-  assert.match(smith, /Workshop facility discounts are already included/);
-  assert.match(smith, /material\.owned/);
+  assert.match(smith, /<ForgeWorkbench/);
+  const forge = await readFile(new URL("player/ForgeWorkbench.jsx", SRC), "utf8");
+  assert.match(forge, /Workshop saves/);
+  assert.match(forge, /material\.owned/);
   assert.match(smith, /current_upgrade/);
   assert.match(smith, /combat_locked/);
   assert.doesNotMatch(smith, /COMMAND|READYALL|VENTURE|RAID_ACTION/);
@@ -60,20 +62,18 @@ test("Phase 7 Blacksmith and Daily layouts collapse without horizontal-scrolling
 });
 
 
-test("Forge Gear keeps Currently Equipped flat and groups only forged/unforged by Weapon, Armor, Accessory", async () => {
+test("Forge Gear keeps equipped first in its new workbench", async () => {
   const smith = await readFile(new URL("player/Blacksmith.jsx", SRC), "utf8");
-  assert.match(smith, /const groupA = a\.equipped \? 0 : a\.current_upgrade > 0 \? 1 : 2/);
-  assert.match(smith, /if \(groupA === 0\) return Number\(a\.inventory_order/);
-  assert.match(smith, /return forgeTypeRank\(a\.type\) - forgeTypeRank\(b\.type\)[\s\S]*a\.min_level - b\.min_level/);
-  assert.match(smith, /FORGE_TYPE_SEQUENCE = \["weapon", "armor", "accessory"\]/);
-  assert.match(smith, /group\.id === "equipped" \? \[\] : forgeTypeGroups\(group\.items\)/);
-  assert.match(smith, /forge-equipped-grid/);
-  assert.match(smith, /Currently Equipped/);
-  assert.match(smith, /Forged Gear/);
-  assert.match(smith, /Unforged Gear/);
-  assert.match(smith, /forge-group-disclosure/);
-  assert.match(smith, /DetailsPointer/);
-  assert.match(smith, /Lv\. \{number\(item\.min_level\)\}/);
+  const ui = await readFile(new URL("player/ForgeWorkbench.jsx", SRC), "utf8");
+  const filters = await readFile(new URL("utils/forgeFilters.js", SRC), "utf8");
+  assert.match(smith, /<ForgeWorkbench/);
+  assert.match(filters, /inventory_order/);
+  assert.match(filters, /ordered: \[\.\.\.equipped, \.\.\.forged, \.\.\.unforged\]/);
+  assert.match(ui, /Currently Equipped/);
+  assert.match(ui, /Forged Gear/);
+  assert.match(ui, /Unforged Gear/);
+  assert.match(ui, /forge-directory-disclosure/);
+  assert.match(ui, /Lv\. \{number\(item\.min_level\)\}/);
 });
 
 test("Forged and unforged Blacksmith sections use shared collapsible pointer styling", async () => {

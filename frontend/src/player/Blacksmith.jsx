@@ -9,12 +9,11 @@ import {
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
-import ItemArtwork from "../components/ItemArtwork.jsx";
-import { DetailsPointer } from "../components/CollapsePointer.jsx";
 import { clampQuantity } from "../utils/quantityInput.js";
 import ContextHelp from "../components/ContextHelp.jsx";
 import CraftingWorkbench from "./CraftingWorkbench.jsx";
 import ResynthesisWorkbench from "./ResynthesisWorkbench.jsx";
+import ForgeWorkbench from "./ForgeWorkbench.jsx";
 
 function actionKey(kind, target = "blacksmith") {
   const suffix = globalThis.crypto?.randomUUID
@@ -30,29 +29,12 @@ async function finishedAction(response) {
   return waitForPortalAction(action.id, { attempts: 28, delayMs: 650 });
 }
 
-function titleCase(value) {
-  return String(value || "item").replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
-}
-
 function blacksmithLoadError(error) {
   const message = String(error?.message || "The Blacksmith ledger could not be loaded.");
   if (/CRAFTING_STATE does not accept parameters/i.test(message)) {
     return "The hosted Portal is running the old Blacksmith validator. Deploy the 1.9.4.1 hosted Web hotfix, restart the service, and retry.";
   }
   return message;
-}
-
-const FORGE_TYPE_ORDER = { weapon: 0, armor: 1, accessory: 2 };
-const FORGE_TYPE_SEQUENCE = ["weapon", "armor", "accessory"];
-
-function forgeTypeRank(value) {
-  return FORGE_TYPE_ORDER[String(value || "").toLowerCase()] ?? 99;
-}
-
-function forgeTypeGroups(items = []) {
-  return FORGE_TYPE_SEQUENCE
-    .map((type) => ({ type, items: items.filter((item) => String(item.type || "").toLowerCase() === type) }))
-    .filter((group) => group.items.length);
 }
 
 export default function Blacksmith({ data, overview, onRefresh }) {
@@ -185,7 +167,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
     const inventory = Array.isArray(data?.items) ? data.items : [];
     const owned = new Map(inventory.map((item) => [item.id, Number(item.quantity || 0)]));
     const rules = new Map((Array.isArray(state.forge_rules) ? state.forge_rules : []).map((rule) => [Number(rule.current_upgrade || 0), rule]));
-    let values = inventory
+    const values = inventory
       .filter((item) => ["weapon", "armor", "accessory"].includes(String(item.type || "").toLowerCase()) && Number(item.quantity || 0) > 0)
       .map((item, inventoryOrder) => {
         const current = Number(item.upgrade_level || 0);
@@ -203,6 +185,10 @@ export default function Blacksmith({ data, overview, onRefresh }) {
           name: item.name,
           type: item.type,
           rarity: item.rarity,
+          description: item.description,
+          bonuses: item.bonuses,
+          allowed_jobs: item.allowed_jobs,
+          gear_family: item.gear_family,
           min_level: Number(item.min_level || item.level || 1),
           owned: item.quantity,
           equipped: Boolean(item.equipped),
@@ -218,27 +204,9 @@ export default function Blacksmith({ data, overview, onRefresh }) {
             ? Number(rules.get(Math.max(0, current - 1))?.bonus_percent || 0)
             : Number(rule.bonus_percent || 0),
         };
-      })
-      .sort((a, b) => {
-        const groupA = a.equipped ? 0 : a.current_upgrade > 0 ? 1 : 2;
-        const groupB = b.equipped ? 0 : b.current_upgrade > 0 ? 1 : 2;
-        if (groupA !== groupB) return groupA - groupB;
-        if (groupA === 0) return Number(a.inventory_order || 0) - Number(b.inventory_order || 0);
-        return forgeTypeRank(a.type) - forgeTypeRank(b.type)
-          || a.min_level - b.min_level
-          || b.current_upgrade - a.current_upgrade
-          || String(a.name).localeCompare(String(b.name));
       });
-    const needle = query.trim().toLowerCase();
-    if (needle) values = values.filter((item) => [item.name, item.type].some((value) => String(value || "").toLowerCase().includes(needle)));
     return values;
-  }, [state, data?.items, query]);
-
-  const forgeGroups = useMemo(() => ([
-    { id: "equipped", title: "Currently Equipped", description: "Your active weapon, armor, and accessories appear first.", collapsible: false, items: forgeItems.filter((item) => item.equipped) },
-    { id: "forged", title: "Forged Gear", description: "Upgraded gear grouped as Weapon, Armor, then Accessory.", collapsible: true, items: forgeItems.filter((item) => !item.equipped && item.current_upgrade > 0) },
-    { id: "unforged", title: "Unforged Gear", description: "Owned +0 gear grouped as Weapon, Armor, then Accessory.", collapsible: true, items: forgeItems.filter((item) => !item.equipped && item.current_upgrade === 0) },
-  ]), [forgeItems]);
+  }, [state, data?.items]);
 
   if (!isOwnProfile) {
     return (
@@ -279,43 +247,6 @@ export default function Blacksmith({ data, overview, onRefresh }) {
     );
   };
 
-  const renderForgeCard = (item) => {
-    const busy = busyKey === `forge:${item.item_id}`;
-    return (
-      <article className="blacksmith-card forge-card" key={item.item_id}>
-        <ItemArtwork item={item} className="blacksmith-forge-artwork" />
-        <div className="blacksmith-card-head">
-          <div><span className="slot-label">{titleCase(item.type)} · Lv. {number(item.min_level)}{item.equipped ? " · Equipped" : ""}</span><h3 className={`rarity-${item.rarity || "common"}`}>{item.name} +{number(item.current_upgrade)}</h3></div>
-          <span className="small-badge">{item.maxed ? "MAX" : `Next +${number(item.next_upgrade)}`}</span>
-        </div>
-        {item.description ? <p className="blacksmith-description">{item.description}</p> : null}
-        {item.maxed ? (
-          <div className="blacksmith-maxed">Maximum forge level reached · +{number(item.next_bonus_percent)}% equipment stat bonus.</div>
-        ) : (
-          <>
-            <div className="blacksmith-forge-price">
-              <span>Forge fee</span><strong>{number(item.effective_gil)} Gil</strong>
-              {Number(item.discount_gil || 0) > 0 ? <small>Workshop saves {number(item.discount_gil)} Gil</small> : null}
-            </div>
-            <div className="blacksmith-material-list">
-              {(item.materials || []).map((material) => (
-                <div className={material.enough ? "enough" : "missing"} key={material.item_id}>
-                  <ItemArtwork item={{ ...material, type: "material" }} className="blacksmith-material-artwork" /><span>{material.name}</span><strong>{number(material.owned)} / {number(material.quantity)}</strong>
-                </div>
-              ))}
-            </div>
-            <div className="blacksmith-next-bonus">After forging: <strong>+{number(item.next_bonus_percent)}%</strong> equipment stat bonus over base.</div>
-            <div className="blacksmith-card-actions forge-action">
-              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || !item.forgeable || Boolean(busyKey)} onClick={() => forge(item)}>
-                {busy ? "Forging…" : `Forge ${item.name} to +${number(item.next_upgrade)}`}
-              </button>
-            </div>
-          </>
-        )}
-      </article>
-    );
-  };
-
   return (
     <section className="panel blacksmith-panel">
       <div className="panel-title-row blacksmith-title-row">
@@ -343,7 +274,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
           <button type="button" role="tab" id="blacksmith-tab-forge" data-tab-value="forge" tabIndex={view === "forge" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "forge"} className={view === "forge" ? "active" : ""} onClick={() => switchView("forge")}><span>Forge Gear</span><small>Upgrade equipment</small></button>
           <button type="button" role="tab" id="blacksmith-tab-resynthesis" data-tab-value="resynthesis" tabIndex={view === "resynthesis" ? 0 : -1} aria-controls="blacksmith-active-panel" aria-selected={view === "resynthesis"} className={view === "resynthesis" ? "active" : ""} onClick={() => switchView("resynthesis")}><span>Resynthesize Gear</span><small>Recover materials</small></button>
         </div>
-        <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : view === "resynthesis" ? "Gear or recovered material…" : "Equipment…"} /></label>
+        <label className="blacksmith-search"><span>Search</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={view === "recipes" ? "Recipe, output, material…" : view === "resynthesis" ? "Gear or recovered material…" : "Gear or forge material…"} /></label>
       </div>
 
       {!state && actionsAvailable && loadStatus !== "error" ? <div className="state-message compact-state" role="status">Opening your Blacksmith ledger…</div> : null}
@@ -372,65 +303,17 @@ export default function Blacksmith({ data, overview, onRefresh }) {
       ) : null}
 
       {state && view === "forge" ? (
-        <>
-          <div className="blacksmith-summary-row">
-            <span>Owned forgeable equipment · maximum +{number(state.forge_max)}</span>
-            <span>Workshop facility discounts are already included.</span>
-          </div>
-          <div id="blacksmith-active-panel" className="blacksmith-grid forge-grid" role="tabpanel" tabIndex="0" aria-labelledby="blacksmith-tab-forge">
-            {forgeGroups.map((group) => {
-              if (!group.items.length) return null;
-              const typeGroups = group.id === "equipped" ? [] : forgeTypeGroups(group.items);
-              const groupBody = group.id === "equipped" ? (
-                <div className="forge-group-body forge-group-body-flat">
-                  <div className="forge-group-grid forge-equipped-grid">
-                    {group.items.map(renderForgeCard)}
-                  </div>
-                </div>
-              ) : (
-                <div className="forge-group-body">
-                  {typeGroups.map((typeGroup) => (
-                    <section className="forge-type-group" key={`${group.id}-${typeGroup.type}`} aria-label={`${titleCase(typeGroup.type)} gear`}>
-                      <div className="forge-type-heading">
-                        <strong>{titleCase(typeGroup.type)}</strong>
-                        <span>{number(typeGroup.items.length)}</span>
-                      </div>
-                      <div className="forge-group-grid">
-                        {typeGroup.items.map(renderForgeCard)}
-                      </div>
-                    </section>
-                  ))}
-                </div>
-              );
-
-              const heading = (
-                <>
-                  <div>
-                    <h3 id={`forge-group-${group.id}`}>{group.title}</h3>
-                    <p>{group.description}</p>
-                  </div>
-                  <span className="forge-group-heading-meta">
-                    <span className="small-badge">{number(group.items.length)} item{group.items.length === 1 ? "" : "s"}</span>
-                    {group.collapsible ? <DetailsPointer /> : null}
-                  </span>
-                </>
-              );
-
-              return group.collapsible ? (
-                <details className="forge-group forge-group-disclosure" key={group.id} aria-labelledby={`forge-group-${group.id}`}>
-                  <summary className="forge-group-heading">{heading}</summary>
-                  {groupBody}
-                </details>
-              ) : (
-                <section className="forge-group" key={group.id} aria-labelledby={`forge-group-${group.id}`}>
-                  <div className="forge-group-heading">{heading}</div>
-                  {groupBody}
-                </section>
-              );
-            })}
-          </div>
-          {!forgeItems.length ? <div className="state-message compact-state">No owned equipment matches that search.</div> : null}
-        </>
+        <ForgeWorkbench
+          items={forgeItems}
+          username={username}
+          query={query}
+          busyKey={busyKey}
+          actionsAvailable={actionsAvailable}
+          combatLocked={Boolean(state.combat_locked)}
+          gil={Number(state.gil || 0)}
+          forgeMax={Number(state.forge_max || 0)}
+          onForge={forge}
+        />
       ) : null}
 
       {state && view === "resynthesis" ? (

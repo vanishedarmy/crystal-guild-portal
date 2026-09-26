@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ItemArtwork from "../components/ItemArtwork.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
 import { number } from "../utils/formatters.js";
 import { readable } from "../utils/craftingFilters.js";
 import { FORGE_CATEGORIES, filterForgeItems, forgeUnavailableReasons } from "../utils/forgeFilters.js";
@@ -25,7 +23,8 @@ export default function ForgeWorkbench({
   const [sort, setSort] = useState("type");
   const [selectedId, setSelectedId] = useState("");
   const [favorites, setFavorites] = useState(() => readFavorites(username));
-  const { comfortable, highContrast } = useDisplayPreferences();
+  const [comfortable, setComfortable] = useState(true);
+  const [highContrast, setHighContrast] = useState(false);
   const [mobileDetail, setMobileDetail] = useState(false);
   const [expanded, setExpanded] = useState({ forged: true, unforged: true });
   const directoryRef = useRef(null);
@@ -96,7 +95,10 @@ export default function ForgeWorkbench({
         </select></label>
         <label className="crafting-check"><input type="checkbox" checked={forgeableOnly} onChange={(event) => { setForgeableOnly(event.target.checked); setMobileDetail(false); }}/><span>Can forge now</span></label>
         <label className="crafting-check"><input type="checkbox" checked={favoritesOnly} onChange={(event) => { setFavoritesOnly(event.target.checked); setMobileDetail(false); }}/><span>Favorites only</span></label>
-        <div className="crafting-display-controls"><DisplayPreferenceControls /></div>
+        <div className="crafting-display-controls" role="group" aria-label="Visual accessibility options">
+          <button type="button" aria-pressed={comfortable} onClick={() => setComfortable((value) => !value)}>{comfortable ? "Comfortable text" : "Compact text"}</button>
+          <button type="button" aria-pressed={highContrast} onClick={() => setHighContrast((value) => !value)}>{highContrast ? "Standard contrast" : "High contrast"}</button>
+        </div>
       </div>
       <div className="crafting-layout forge-layout">
         <section className="crafting-directory" ref={directoryRef} tabIndex="-1" aria-label="Forge gear results">

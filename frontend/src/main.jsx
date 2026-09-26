@@ -14,7 +14,6 @@ import "./styles/camp-improvements.css";
 import "./styles/trading-post-insights.css";
 import "./styles/relic-overhaul.css";
 import "./styles/guild-initiatives.css";
-import "./styles/display-preferences.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

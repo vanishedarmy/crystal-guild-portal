@@ -64,9 +64,7 @@ test("new workbench has accessible detail actions, pinned equipped section and m
   assert.match(ui, /forge-directory-disclosure/);
   assert.match(ui, /crafting-layout forge-layout/);
   assert.match(ui, /Back to equipment/);
-  assert.match(ui, /<DisplayPreferenceControls/);
-  const display = await readFile(new URL('../src/components/DisplayPreferenceControls.jsx', import.meta.url), 'utf8');
-  assert.match(display, /High contrast/);
+  assert.match(ui, /High contrast/);
   assert.match(ui, /!actionsAvailable \|\| !selected\.forgeable \|\| busy/);
   assert.match(ui, /Workshop saves/);
   assert.match(css, /max-width: 750px/);

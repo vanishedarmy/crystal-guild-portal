@@ -84,10 +84,8 @@ test('accessible mobile interface includes semantic controls and reduced-motion 
   assert.match(ui, /aria-pressed=/);
   assert.match(ui, /aria-live="polite"/);
   assert.match(ui, /aria-label="Recipe results"/);
-  assert.match(ui, /<DisplayPreferenceControls/);
-  const display = await readFile(new URL('../src/components/DisplayPreferenceControls.jsx', import.meta.url), 'utf8');
-  assert.match(display, /High contrast/);
-  assert.match(display, /Comfortable text/);
+  assert.match(ui, /High contrast/);
+  assert.match(ui, /Comfortable text/);
   assert.match(ui, /Back to recipes/);
   assert.match(styles, /prefers-reduced-motion/);
   assert.match(styles, /prefers-contrast/);

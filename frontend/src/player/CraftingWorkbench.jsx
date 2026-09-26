@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ItemArtwork from "../components/ItemArtwork.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
 import { number } from "../utils/formatters.js";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 import "../styles/crafting-194.css";
@@ -24,7 +22,8 @@ export default function CraftingWorkbench({ recipes = [], categories = {}, usern
   const [sort, setSort] = useState("level");
   const [selectedId, setSelectedId] = useState("");
   const [favorites, setFavorites] = useState(() => readFavorites(username));
-  const { comfortable, highContrast } = useDisplayPreferences();
+  const [comfortable, setComfortable] = useState(true);
+  const [highContrast, setHighContrast] = useState(false);
   const [mobileDetail, setMobileDetail] = useState(false);
   const detailRef = useRef(null);
 
@@ -67,7 +66,10 @@ export default function CraftingWorkbench({ recipes = [], categories = {}, usern
         <label>Sort<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="level">Level: low to high</option><option value="high">Level: high to low</option><option value="name">Name: A to Z</option><option value="ready">Craftable first</option></select></label>
         <label className="crafting-check"><input type="checkbox" checked={craftableOnly} onChange={(event) => { setCraftableOnly(event.target.checked); setMobileDetail(false); }}/><span>Can craft now</span></label>
         <label className="crafting-check"><input type="checkbox" checked={favoritesOnly} onChange={(event) => { setFavoritesOnly(event.target.checked); setMobileDetail(false); }}/><span>Favorites only</span></label>
-        <div className="crafting-display-controls"><DisplayPreferenceControls /></div>
+        <div className="crafting-display-controls" role="group" aria-label="Visual accessibility options">
+          <button type="button" aria-pressed={comfortable} onClick={() => setComfortable((value) => !value)}>{comfortable ? "Comfortable text" : "Compact text"}</button>
+          <button type="button" aria-pressed={highContrast} onClick={() => setHighContrast((value) => !value)}>{highContrast ? "Standard contrast" : "High contrast"}</button>
+        </div>
       </div>
       <div className="crafting-layout">
         <section className="crafting-directory" tabIndex="-1" aria-label="Recipe results">

@@ -4,8 +4,6 @@ import { fetchFellowship } from "../api/fellowship.js";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PageRefreshButton from "../components/PageRefreshButton.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import { number, pct, timeAgo } from "../utils/formatters.js";
 import { DetailsPointer } from "../components/CollapsePointer.jsx";
@@ -93,7 +91,6 @@ function FacilityCard({ facility }) {
 }
 
 export default function FellowshipPage() {
-  const { comfortable, highContrast } = useDisplayPreferences();
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [refreshToken, setRefreshToken] = useState(0);
@@ -150,8 +147,7 @@ export default function FellowshipPage() {
         {error ? <div className="state-message compact-state">{error}</div> : null}
         {!data && !error ? <div className="state-message" role="status" aria-live="polite">Fellowship data is updating.</div> : null}
         {data ? (
-          <section className={`view fellowship-view cg-standalone-readable ${comfortable ? "cg-text-comfortable" : "cg-text-compact"} ${highContrast ? "cg-high-contrast" : ""}`}>
-            <div className="cg-profile-display-row"><span>Display</span><DisplayPreferenceControls /></div>
+          <section className="view fellowship-view">
             <div className="fellowship-hero">
               <div>
                 <p className="eyebrow">Crystal Guild Fellowship</p>

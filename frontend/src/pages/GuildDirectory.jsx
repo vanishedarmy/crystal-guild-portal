@@ -2,8 +2,6 @@ import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "rea
 import { Link } from "react-router-dom";
 import { fetchPlayers } from "../api/players.js";
 import SiteHeader from "../components/SiteHeader.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
 import RecruitPanel from "../components/RecruitPanel.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import PageRefreshButton from "../components/PageRefreshButton.jsx";
@@ -13,7 +11,6 @@ import { number } from "../utils/formatters.js";
 import { sortGuildDirectory } from "../utils/playerDirectorySort.js";
 
 export default function GuildDirectory() {
-  const { comfortable, highContrast } = useDisplayPreferences();
   const [players, setPlayers] = useState([]);
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search);
@@ -69,8 +66,7 @@ export default function GuildDirectory() {
       <div className="ambient ambient-two" />
       <SiteHeader liveStatus={liveStatus} />
       <main id="main-content" className="shell" tabIndex="-1">
-        <section className={`view cg-standalone-readable ${comfortable ? "cg-text-comfortable" : "cg-text-compact"} ${highContrast ? "cg-high-contrast" : ""}`}>
-          <div className="cg-profile-display-row"><span>Display</span><DisplayPreferenceControls /></div>
+        <section className="view">
           <div className="hero-intro">
             <div>
               <p className="eyebrow">Crystal Guild</p>

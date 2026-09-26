@@ -5,12 +5,9 @@ import JobPortrait from "../components/JobPortrait.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PortalLinkPanel from "../components/PortalLinkPanel.jsx";
 import PageRefreshButton from "../components/PageRefreshButton.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
 import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
-import { ACCESSIBLE_PROFILE_TABS } from "../utils/displayPreferences.js";
 import Overview from "../player/Overview.jsx";
 import { duration, number, pct } from "../utils/formatters.js";
 import { campDeadlineMs, campRemainingSeconds } from "../utils/campCountdown.js";
@@ -99,7 +96,6 @@ const StableProfileModule = memo(function StableProfileModule({ Module, data, ov
 });
 
 export default function PlayerProfile() {
-  const { comfortable, highContrast } = useDisplayPreferences();
   const { username: routeUsername } = useParams();
   const username = decodeURIComponent(routeUsername || "");
   const [overview, setOverview] = useState(null);
@@ -275,9 +271,6 @@ export default function PlayerProfile() {
           <PortalLinkPanel username={username} />
 
           <div className="profile-navigation">
-            {ACCESSIBLE_PROFILE_TABS.has(activeTab) && activeTab !== "blacksmith" ? (
-              <div className="cg-profile-display-row"><span>Display</span><DisplayPreferenceControls /></div>
-            ) : null}
             <label className="profile-tab-select">
               <span>Crystal Guild section</span>
               <select value={activeTab} onChange={(event) => setActiveTab(event.target.value)} aria-label="Choose adventurer profile section">
@@ -309,9 +302,7 @@ export default function PlayerProfile() {
             </nav>
           </div>
 
-          <div id="profile-active-panel"
-            className={`profile-content ${ACCESSIBLE_PROFILE_TABS.has(activeTab) ? `cg-readable ${comfortable ? "cg-text-comfortable" : "cg-text-compact"} ${highContrast ? "cg-high-contrast" : ""}` : ""}`}
-            role="tabpanel" aria-labelledby={`profile-tab-${activeTab}`} tabIndex="0" aria-busy={overviewLoading || tabLoading}>
+          <div id="profile-active-panel" className="profile-content" role="tabpanel" aria-labelledby={`profile-tab-${activeTab}`} tabIndex="0" aria-busy={overviewLoading || tabLoading}>
             <SectionErrorBoundary resetKey={`${username}:${activeTab}:${refreshToken}`}>
               <Suspense fallback={<div className="state-message">Opening {activeTab}...</div>}>
                 {!moduleData || !ActiveModule

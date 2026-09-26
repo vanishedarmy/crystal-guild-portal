@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { initGuide } from "./guideRuntime.js";
 import { WEB_ASSET_REVISION, WEB_RELEASE } from "../version.js";
 import SiteHeader from "../components/SiteHeader.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 
 export default function GuidePage() {
-  const { comfortable, highContrast } = useDisplayPreferences();
   const liveStatus = useLiveUpdates();
   const [guide, setGuide] = useState({ markup: "", data: null, error: "" });
 
@@ -68,10 +65,7 @@ export default function GuidePage() {
   return (
     <>
       <SiteHeader liveStatus={liveStatus} sectionTitle="Player Guide" brandHref="/guide" skipHref="#mainContent" skipLabel="Skip to guide content" />
-      <div className={`cg-guide-display cg-standalone-readable ${comfortable ? "cg-text-comfortable" : "cg-text-compact"} ${highContrast ? "cg-high-contrast" : ""}`}>
-        <div className="cg-profile-display-row cg-guide-display-row"><span>Display</span><DisplayPreferenceControls /></div>
-        <div className="guide-react-host" dangerouslySetInnerHTML={{ __html: guide.markup }} />
-      </div>
+      <div className="guide-react-host" dangerouslySetInnerHTML={{ __html: guide.markup }} />
     </>
   );
 }

@@ -2153,7 +2153,7 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
         "active", "status", "boss", "tier", "encounter_type", "encounter_name",
         "hp", "max_hp", "round", "phase", "signature", "raiders", "alive",
         "ready_actions", "actionable_raiders", "enraged", "summon_gauge", "top", "adds", "mechanic", "last_mechanic",
-        "next_round_at", "updated_at",
+        "next_round_at", "updated_at", "members", "boss_statuses", "rally_closes_at", "rounds_to_enrage",
     }
     extra = set(overlay) - allowed
     if extra:
@@ -2169,6 +2169,53 @@ def validate_overlay_payload(payload: dict[str, Any]) -> None:
                 raise ValueError("Overlay raid action readiness is invalid.")
     if int(overlay.get("ready_actions", 0) or 0) > int(overlay.get("actionable_raiders", overlay.get("raiders", 0)) or 0):
         raise ValueError("Overlay raid action readiness is invalid.")
+
+    # The overlay is public, read-only stream content. Do not permit IDs,
+    # private combat internals or arbitrary nested fields from a sync client.
+    status_keys = {"id", "turns"}
+    def validate_statuses(rows: Any) -> None:
+        if not isinstance(rows, list) or len(rows) > 12:
+            raise ValueError("Overlay status list is invalid.")
+        for row in rows:
+            if not isinstance(row, dict) or set(row) != status_keys:
+                raise ValueError("Overlay status entry is invalid.")
+            status_id = row["id"]
+            if (not isinstance(status_id, str) or not 1 <= len(status_id) <= 32 or
+                    not all(ch.isalnum() or ch == "_" for ch in status_id)):
+                raise ValueError("Overlay status ID is invalid.")
+            if type(row["turns"]) is not int or not 1 <= row["turns"] <= 99:
+                raise ValueError("Overlay status duration is invalid.")
+    if "boss_statuses" in overlay:
+        validate_statuses(overlay["boss_statuses"])
+    if "members" in overlay:
+        rows = overlay["members"]
+        if not isinstance(rows, list) or len(rows) > 64:
+            raise ValueError("Overlay member list is invalid.")
+        member_keys = {"name", "role", "job", "hp", "max_hp", "resource", "resource_value", "resource_max",
+                       "state", "action", "action_kind", "target", "statuses"}
+        lengths = {"name": 80, "role": 24, "job": 40, "resource": 2, "state": 12,
+                   "action": 56, "action_kind": 24, "target": 80}
+        for row in rows:
+            if not isinstance(row, dict) or set(row) - member_keys:
+                raise ValueError("Overlay member entry is invalid.")
+            if any(not isinstance(row.get(key, ""), str) or len(row.get(key, "")) > maximum
+                   for key, maximum in lengths.items()):
+                raise ValueError("Overlay member text is invalid.")
+            if row.get("resource", "") not in {"", "MP", "AP"} or row.get("state", "WAITING") not in {
+                "KO", "RESTRAINED", "JOINED", "READY", "WAITING"}:
+                raise ValueError("Overlay member state is invalid.")
+            for key in ("hp", "max_hp", "resource_value", "resource_max"):
+                if type(row.get(key, 0)) is not int or not 0 <= row.get(key, 0) <= 10_000_000:
+                    raise ValueError("Overlay member value is invalid.")
+            if row.get("max_hp", 1) < 1 or row.get("hp", 0) > row.get("max_hp", 1):
+                raise ValueError("Overlay member HP is invalid.")
+            if row.get("resource_value", 0) > row.get("resource_max", 0):
+                raise ValueError("Overlay member resource is invalid.")
+            validate_statuses(row.get("statuses", []))
+    for key in ("rally_closes_at", "rounds_to_enrage"):
+        value = overlay.get(key)
+        if value is not None and (type(value) is not int or value < 0):
+            raise ValueError("Overlay countdown is invalid.")
 
     top = overlay.get("top", [])
     if not isinstance(top, list) or len(top) > 5:

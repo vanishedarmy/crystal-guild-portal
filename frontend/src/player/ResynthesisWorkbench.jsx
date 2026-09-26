@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ItemArtwork from "../components/ItemArtwork.jsx";
-import DisplayPreferenceControls from "../components/DisplayPreferenceControls.jsx";
-import useDisplayPreferences from "../hooks/useDisplayPreferences.js";
 import { number } from "../utils/formatters.js";
 import { RESYNTHESIS_CATEGORIES, filterResynthesisItems } from "../utils/resynthesisFilters.js";
 import { readable } from "../utils/craftingFilters.js";
@@ -25,7 +23,8 @@ export default function ResynthesisWorkbench({
   const [selectedId, setSelectedId] = useState("");
   const [favorites, setFavorites] = useState(() => readFavorites(username));
   const [favoritesOnly, setFavoritesOnly] = useState(false);
-  const { comfortable, highContrast } = useDisplayPreferences();
+  const [comfortable, setComfortable] = useState(true);
+  const [highContrast, setHighContrast] = useState(false);
   const [mobileDetail, setMobileDetail] = useState(false);
   const directoryRef = useRef(null);
   const detailRef = useRef(null);
@@ -78,7 +77,10 @@ export default function ResynthesisWorkbench({
         </select></label>
         <label className="crafting-check"><input type="checkbox" checked={availableOnly} onChange={(event) => { setAvailableOnly(event.target.checked); setMobileDetail(false); }} /><span>Available to resynthesize</span></label>
         <label className="crafting-check"><input type="checkbox" checked={favoritesOnly} onChange={(event) => { setFavoritesOnly(event.target.checked); setMobileDetail(false); }} /><span>Favorites only</span></label>
-        <div className="crafting-display-controls"><DisplayPreferenceControls /></div>
+        <div className="crafting-display-controls" role="group" aria-label="Visual accessibility options">
+          <button type="button" aria-pressed={comfortable} onClick={() => setComfortable((value) => !value)}>{comfortable ? "Comfortable text" : "Compact text"}</button>
+          <button type="button" aria-pressed={highContrast} onClick={() => setHighContrast((value) => !value)}>{highContrast ? "Standard contrast" : "High contrast"}</button>
+        </div>
       </div>
       <div className="resynthesis-warning" role="note"><strong>Permanent destruction:</strong> Only weapons and armor are eligible; Relic and Artifact gear remains protected. Each action destroys one selected copy and requires confirmation.</div>
 

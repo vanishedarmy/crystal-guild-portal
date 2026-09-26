@@ -1,0 +1,183 @@
+/* Crystal Guild 1.9.4.5 — site-wide readability and contrast hardening.
+ * Additive presentation fixes only. No 1.9.4.4 accessibility-toggle rollout,
+ * localStorage preferences, gameplay changes, or blanket art removal.
+ * Imported after the existing visual layers to target confirmed weak spots.
+ */
+:root {
+  --muted: #cedbea;
+  --muted-soft: #c0d3e5;
+  --cg-visible-focus: #ffecaa;
+}
+
+/* Native form hints and subdued labels must remain legible over deep-blue panels. */
+#root :is(input, textarea)::placeholder {
+  color: #bed1e2;
+  opacity: 1;
+}
+#root :is(input, select, textarea) {
+  caret-color: #f7e2aa;
+}
+#root :is(input, select, textarea):not(:disabled) {
+  border-color: rgba(182, 213, 247, .6);
+}
+
+/* A predictable visible keyboard path on pages, popovers and dialogs. */
+#root :is(a, button, [role="button"], input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--cg-visible-focus) !important;
+  outline-offset: 3px !important;
+}
+#root :is(.crafting-workbench, .detail-dialog, .inventory-group, .mobile-site-menu)
+  :is(button, input, select, textarea, summary):focus-visible {
+  outline-offset: -3px !important; /* Visible inside clipped/scrolling panes. */
+}
+#root .skip-link:focus-visible { outline-offset: 2px !important; }
+
+/* Table and registry copy formerly relied on very dark grey and 10px headers. */
+#root .data-table .locked {
+  color: #c1d1e2;
+  font-style: italic;
+}
+#root .data-table thead th {
+  color: #f5dea5;
+  font-size: .8rem;
+  line-height: 1.35;
+  letter-spacing: .055em;
+}
+#root .registry-stat small,
+#root .search-field > span,
+#root .card-footer,
+#root .last-update {
+  color: #ccdded;
+  font-size: max(.78rem, 12px);
+  line-height: 1.4;
+  letter-spacing: .045em;
+}
+#root .search-field > span { color: #f5dda0; }
+
+/* Streamer dashboard: several late-stage labels were under 10px on desktop. */
+#root .streamer-dashboard :is(
+  .streamer-summary-card small,
+  .streamer-panel-heading small,
+  .streamer-activity small,
+  .streamer-player-row small,
+  .streamer-command-description,
+  .streamer-command > small,
+  .streamer-command-copy,
+  .streamer-sync-card small,
+  .streamer-command-group-heading p,
+  .streamer-empty
+) {
+  color: #d1dfed;
+  font-size: .78rem;
+  line-height: 1.4;
+}
+#root .streamer-dashboard :is(
+  .streamer-roster-header,
+  .streamer-jumpbar a,
+  .streamer-panel-heading > div > span,
+  .streamer-summary-card > span,
+  .streamer-leader-card > span
+) {
+  color: #cbdced;
+  font-size: .75rem;
+  line-height: 1.35;
+  letter-spacing: .07em;
+}
+#root .streamer-toolbar :is(input, select):focus-visible {
+  outline-offset: 2px !important;
+}
+
+/* Crafting, Resynthesis and Forge: preserve their local controls and preferences,
+ * but do not dim disabled actions until their labels become difficult to read. */
+#root .crafting-workbench button:disabled {
+  opacity: .86;
+  filter: saturate(.76);
+  cursor: not-allowed;
+}
+#root .crafting-workbench .crafting-list-row.selected,
+#root .crafting-workbench .crafting-category-grid button.active {
+  border-color: #f0d999;
+  box-shadow: inset 0 0 0 1px #e8cf8f;
+}
+#root .crafting-workbench .crafting-directory-heading span,
+#root .crafting-workbench .crafting-pick small,
+#root .crafting-workbench .crafting-ingredient small,
+#root .crafting-workbench .crafting-safety-note,
+#root .crafting-workbench .crafting-selected-head p {
+  color: #d1deed;
+  font-size: max(.82rem, 12px);
+  line-height: 1.4;
+}
+#root .crafting-workbench .crafting-ingredient.missing small {
+  color: var(--craft-bad, #ffc8d0);
+}
+#root .crafting-workbench .crafting-status {
+  font-size: .82rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+#root .crafting-workbench .crafting-cost-summary,
+#root .crafting-workbench .crafting-section-title {
+  flex-wrap: wrap;
+  row-gap: .35rem;
+}
+
+/* Layer a legible text surface over scenic raid artwork without removing it. */
+#root .raid-board-panel.collapsed::after {
+  background: linear-gradient(90deg,rgba(4,10,27,.86),rgba(5,12,34,.66) 55%,rgba(4,10,26,.78));
+}
+#root .raid-board-panel.open::after {
+  background: linear-gradient(90deg,rgba(4,10,27,.86),rgba(5,12,34,.73) 55%,rgba(4,10,26,.78));
+}
+
+/* Shopping, inventory, guide and market metadata stay readable over art/card fills. */
+#root .moogle-panel .moogle-item-card {
+  background-color: rgba(6, 17, 32, .94);
+}
+#root .guide-react-host .muted,
+#root .inventory-group .muted {
+  color: #d1deeb;
+}
+#root .guide-react-host a:not([role="button"]):not(.primary-link) {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: .17em;
+}
+#root .market-price-indicator {
+  font-size: max(.8rem, 12px);
+}
+#root .market-price-indicator:is(.near, .no-history),
+#root .trading-post-small-note {
+  opacity: 1;
+  color: #d5e2f0;
+}
+#root :is(.market-watch-button, .market-history-button, .market-search-results button):disabled {
+  opacity: .82;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+#root .market-sale-row time {
+  color: #d1dfed;
+  opacity: 1;
+  font-size: .8rem;
+}
+
+@media (max-width: 720px) {
+  #root :is(.panel, .info-panel, .streamer-panel, .profile-header)
+    :is(p, li, .muted) {
+    overflow-wrap: anywhere;
+  }
+  #root .streamer-dashboard :is(.streamer-panel-heading, .streamer-roster-header) {
+    letter-spacing: .025em;
+  }
+  #root .crafting-workbench :is(.crafting-intro, .crafting-section-title,
+      .crafting-cost-summary, .forge-level-preview) {
+    min-width: 0;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root { --muted: #e7f1ff; --muted-soft: #e7f1ff; --line: rgba(218, 233, 255, .85); }
+  #root .panel, #root .streamer-panel { border-color: #c9dcf4; }
+  #root .crafting-workbench button:disabled { opacity: 1; }
+}

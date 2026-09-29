@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: crystal-guild-web
+    runtime: docker
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORTAL_SYNC_KEY
+        sync: false
+      - key: HOSTED_PORTAL_DB
+        value: crystal_guild_hosted.db
+      - key: PORTAL_TWITCH_CLIENT_ID
+        sync: false
+      - key: PORTAL_TWITCH_CLIENT_SECRET
+        sync: false
+      - key: PORTAL_TWITCH_REDIRECT_URI
+        sync: false
+      - key: PORTAL_ACTIONS_ENABLED
+        value: true
+      - key: PORTAL_AUTH_COOKIE_SECURE
+        value: true

@@ -153,12 +153,25 @@
       <div class="chips" id="heroChips">
       </div>
      </div>
+     <nav class="guide-quick-links" aria-label="Player Guide quick links">
+      <a href="#quickstart">Quick Start</a>
+      <a href="#commands">Commands</a>
+      <a href="#progression">Progression</a>
+      <a href="#items">Gear &amp; Items</a>
+      <a href="#faq">FAQ</a>
+     </nav>
     </header>
     <div class="topsearch">
-     <input aria-label="Search the entire Player Guide" class="search" id="globalSearch" placeholder="Search the guide: command, Job, Retainer, item, hunt&hellip;"/>
+     <label class="guide-global-search-label" for="globalSearch">Search Player Guide</label>
+     <input aria-describedby="guideSearchHint searchCount" aria-label="Search the entire Player Guide" autocomplete="off" class="search" enterkeyhint="search" id="globalSearch" placeholder="Command, Job, item, Hunt, system&hellip;"/>
      <button aria-label="Clear Player Guide search" class="guide-search-clear" hidden id="globalSearchClear" type="button">Clear</button>
+     <span class="guide-search-hint" id="guideSearchHint"><kbd>/</kbd> search <span aria-hidden="true">&middot;</span> <kbd>Esc</kbd> clear</span>
      <span aria-live="polite" class="resultcount" id="searchCount">
      </span>
+    </div>
+    <div class="guide-search-empty" id="guideSearchEmpty" role="status" hidden>
+     <strong>No matching guide section.</strong>
+     <span>Try a broader term, a command name, or use the section index.</span>
     </div>
     <div class="content">
      <section class="section searchable" id="quickstart">

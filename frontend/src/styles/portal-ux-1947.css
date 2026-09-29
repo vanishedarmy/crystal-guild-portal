@@ -884,3 +884,17 @@ button.streamer-summary-card {
     color: #d3deed !important;
   }
 }
+
+/* v1.9.4.7 hotfix — grid children must not inherit vertical panel-stack spacing.
+   Without this reset, the second Gold Saucer card receives a top margin inside
+   its two-column grid, making Crystal Slots sit lower than Mini Cactpot. */
+:where(
+  .dashboard-grid,
+  .content-grid,
+  .saucer-game-grid,
+  .streamer-pulse-grid,
+  .streamer-control-grid
+) > :where(.panel, details.panel) {
+  margin-top: 0;
+}
+

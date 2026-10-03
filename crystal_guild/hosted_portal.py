@@ -362,6 +362,79 @@ class HostedPortalStore:
         while len(self._snapshot_cache) > self._snapshot_cache_limit:
             self._snapshot_cache.popitem(last=False)
 
+    def _seasonal_module_with_live_control(self, snapshot: dict[str, Any]) -> dict[str, Any]:
+        """Return a player seasonal module with the freshest global control state overlaid.
+
+        Player progress remains sourced from that player's mirrored snapshot.  Only the
+        global event-control fields are bridged from a completed owner command while the
+        normal Bot snapshot catches up.
+        """
+        raw = snapshot.get("seasonal") if isinstance(snapshot, dict) else None
+        if isinstance(raw, dict):
+            module = dict(raw)
+        else:
+            module = {}
+        seasonal = module.get("seasonal")
+        event = dict(seasonal) if isinstance(seasonal, dict) else {
+            "state": "unavailable", "active": False, "redemption": False, "sync_pending": True
+        }
+        override = dict(self._streamer_seasonal_override) if self._streamer_seasonal_override else None
+        if override:
+            event.update(override)
+            # A completed Bot control command is newer than a stale mirrored state.
+            # Do not leave the player page marked unavailable while that bridge is live.
+            event.pop("sync_pending", None)
+        module["seasonal"] = event
+        return module
+
+    def _patch_player_seasonal_from_action(
+        self, conn: sqlite3.Connection, *, twitch_id: str, username: str,
+        seasonal: dict[str, Any], synced_at: int,
+    ) -> bool:
+        """Patch the hosted mirror from an authoritative per-player Bot action result.
+
+        SEASONAL_STATE and SEASONAL_BUY both return the complete player Seasonal
+        snapshot.  Applying it immediately prevents the player page from waiting on the
+        next periodic full Portal sync.
+        """
+        identity = str(twitch_id or "").strip()
+        name = str(username or "").strip().lower()
+        row = None
+        if identity:
+            row = conn.execute(
+                "SELECT username,snapshot_json FROM portal_players WHERE twitch_id=? LIMIT 1",
+                (identity,),
+            ).fetchone()
+        if row is None and name:
+            row = conn.execute(
+                "SELECT username,snapshot_json FROM portal_players WHERE lower(username)=lower(?) LIMIT 1",
+                (name,),
+            ).fetchone()
+        if row is None:
+            return False
+        try:
+            snapshot = json.loads(str(row["snapshot_json"] or "{}"))
+        except json.JSONDecodeError:
+            return False
+        if not isinstance(snapshot, dict):
+            return False
+        previous = snapshot.get("seasonal")
+        player_meta = previous.get("player") if isinstance(previous, dict) and isinstance(previous.get("player"), dict) else {}
+        snapshot["seasonal"] = {"player": dict(player_meta), "seasonal": dict(seasonal)}
+        encoded = json.dumps(snapshot, separators=(",", ":"), sort_keys=True, ensure_ascii=False)
+        digest = hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+        canonical = str(row["username"]).lower()
+        conn.execute(
+            "UPDATE portal_players SET snapshot_json=?,snapshot_hash=?,synced_at=? WHERE lower(username)=lower(?)",
+            (encoded, digest, int(synced_at), canonical),
+        )
+        self._cache_snapshot(canonical, snapshot)
+        self._last_sync = max(self._last_sync, int(synced_at))
+        self._streamer_cache = None
+        self._streamer_cache_revision = -1
+        self._bump_revision()
+        return True
+
     def _cache_directory_entry(self, item: dict[str, Any]) -> None:
         username = item["username"].lower()
         previous = next((row for row in self._directory_cache if row["username"].lower() == username), None)
@@ -1674,7 +1747,7 @@ class HostedPortalStore:
         now = int(time.time())
         with self._action_condition, self._connect() as conn:
             row = conn.execute(
-                "SELECT status,lease_hash,action_type FROM portal_actions WHERE action_id=?",
+                "SELECT status,lease_hash,action_type,twitch_id,username,payload_json FROM portal_actions WHERE action_id=?",
                 (action_id,),
             ).fetchone()
             if not row or row["status"] != "processing" or not row["lease_hash"]:
@@ -1691,6 +1764,22 @@ class HostedPortalStore:
                 (status, stored_result, now, action_id),
             )
             conn.commit()
+
+            # A player's explicit Seasonal state/read or purchase result already
+            # contains the complete authoritative Seasonal snapshot. Apply it to
+            # the hosted mirror immediately instead of waiting for the periodic
+            # full Bot sync. This closes the gap where Streamer View says ACTIVE
+            # while the player's Seasonal page still shows DISABLED/TBD.
+            player_seasonal = result_data.get("seasonal") if bool(ok) and row["action_type"] in {"SEASONAL_STATE", "SEASONAL_BUY"} else None
+            if isinstance(player_seasonal, dict):
+                if self._patch_player_seasonal_from_action(
+                    conn,
+                    twitch_id=str(row["twitch_id"] or ""),
+                    username=str(row["username"] or ""),
+                    seasonal=player_seasonal,
+                    synced_at=now,
+                ):
+                    conn.commit()
 
             # STREAMER_COMMAND results are authoritative Bot responses. Seasonal
             # enable/disable commands can finish several seconds before the next
@@ -2133,12 +2222,10 @@ class HostedPortalStore:
                 if module == "trophies":
                     return build_trophy_hall(snapshot)
                 if module == "seasonal":
-                    # Older Bot snapshots can predate Alpha 8. Do not leave the
-                    # profile on a permanent loading screen while they resync.
-                    return snapshot.get("seasonal") or {
-                        "seasonal": {"state": "unavailable", "active": False,
-                                     "redemption": False, "sync_pending": True}
-                    }
+                    # Older Bot snapshots can predate Alpha 8. The live control
+                    # bridge keeps global state current while a per-player
+                    # SEASONAL_STATE request refreshes the full event payload.
+                    return self._seasonal_module_with_live_control(snapshot)
                 value = snapshot.get(module)
                 if module == "inventory" and isinstance(value, dict):
                     value = dict(value)
@@ -2166,10 +2253,7 @@ class HostedPortalStore:
         if module == "trophies":
             return build_trophy_hall(snapshot)
         if module == "seasonal":
-            return snapshot.get("seasonal") or {
-                "seasonal": {"state": "unavailable", "active": False,
-                             "redemption": False, "sync_pending": True}
-            }
+            return self._seasonal_module_with_live_control(snapshot)
         value = snapshot.get(module)
         if module == "inventory" and isinstance(value, dict):
             value = dict(value)

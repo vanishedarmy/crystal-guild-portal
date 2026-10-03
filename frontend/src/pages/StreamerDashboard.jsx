@@ -322,7 +322,10 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
         });
       }
       refreshAuth?.();
-      onDashboardRefresh?.();
+      // Seasonal controls already return the authoritative Bot event state.
+      // Avoid immediately replacing it with a pre-sync dashboard snapshot; the
+      // live-update channel will refresh naturally when the mirror catches up.
+      if (item.id !== "seasonalevent") onDashboardRefresh?.();
     } catch (error) {
       setResult({ tone: "danger", message: error?.message || `${item.label} failed.` });
     } finally {
@@ -354,7 +357,9 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
         });
       }
       refreshAuth?.();
-      onDashboardRefresh?.();
+      // The completed action result is already authoritative and is also
+      // bridged by the hosted Portal until the next player snapshot sync.
+      // Do not force a stale dashboard fetch immediately after toggling.
     } catch (error) {
       setResult({ tone: "danger", message: error?.message || `${label} failed.` });
     } finally {

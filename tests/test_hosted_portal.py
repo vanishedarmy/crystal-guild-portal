@@ -251,6 +251,93 @@ class PortalServerCase(unittest.TestCase):
         self.assertNotIn("tokens", data["seasonal_event"])
         self.assertNotIn("snapshot", data["players"][0])
 
+    def test_streamer_seasonal_command_result_bridges_snapshot_lag(self):
+        payload = snapshot_payload("van")
+        payload["snapshot"]["seasonal"] = {
+            "player": {"username": "van"},
+            "seasonal": {
+                "event_id": "night_of_the_hollow_crystal",
+                "edition_id": "halloween_2026",
+                "name": "Night of the Hollow Crystal",
+                "enabled": False, "paused": False, "activation_mode": "scheduled",
+                "starts_at": "2026-10-01T00:00:00Z",
+                "ends_at": "2026-11-02T23:59:59Z",
+                "redemption_ends_at": "2026-11-05T23:59:59Z",
+                "state": "disabled", "active": False, "redemption": False,
+            },
+        }
+        self.assertEqual(self.post("/api/sync/player", payload)[0], 200)
+        self.assertFalse(self.store.streamer_dashboard()["seasonal_event"]["enabled"])
+
+        action = self.store.create_action(
+            "999",
+            "STREAMER_COMMAND",
+            {"command": "seasonalevent", "argument": "on"},
+            "seasonal-toggle-bridge-test",
+            trusted_username="van",
+            trusted_display_name="Van",
+        )
+        claimed = self.store.claim_actions("test-worker", limit=1, lease_seconds=30)
+        self.assertEqual(len(claimed), 1)
+        self.assertEqual(claimed[0]["id"], action["id"])
+
+        authoritative = {
+            "event_id": "night_of_the_hollow_crystal",
+            "edition_id": "halloween_2026",
+            "name": "Night of the Hollow Crystal",
+            "enabled": True, "paused": False, "activation_mode": "scheduled",
+            "starts_at": "2026-10-01T00:00:00Z",
+            "ends_at": "2026-11-02T23:59:59Z",
+            "redemption_ends_at": "2026-11-05T23:59:59Z",
+            "state": "active", "active": True, "redemption": True,
+        }
+        self.assertTrue(self.store.complete_action(
+            action["id"], claimed[0]["lease_token"], True,
+            "Seasonal event enabled.", {"seasonal": authoritative},
+        ))
+
+        # The mirrored player snapshot is deliberately still disabled. The
+        # completed Bot action must nevertheless drive the Streamer toggle.
+        state = self.store.streamer_dashboard()["seasonal_event"]
+        self.assertTrue(state["enabled"])
+        self.assertEqual(state["state"], "active")
+        self.assertEqual(state["activation_mode"], "scheduled")
+
+    def test_streamer_seasonal_state_uses_freshest_player_snapshot(self):
+        stale = snapshot_payload("alpha")
+        stale["snapshot"]["overview"]["identity"]["level"] = 99
+        stale["snapshot"]["seasonal"] = {
+            "player": {"username": "alpha"},
+            "seasonal": {
+                "name": "Night of the Hollow Crystal",
+                "enabled": False, "paused": False, "activation_mode": "manual",
+                "state": "disabled", "active": False, "redemption": False,
+            },
+        }
+        self.assertEqual(self.post("/api/sync/player", stale)[0], 200)
+
+        # Make the second snapshot observably newer than the high-level player.
+        time.sleep(1.05)
+        fresh = snapshot_payload("beta")
+        fresh["snapshot"]["overview"]["identity"]["display_name"] = "Beta"
+        fresh["snapshot"]["seasonal"] = {
+            "player": {"username": "beta"},
+            "seasonal": {
+                "name": "Night of the Hollow Crystal",
+                "enabled": True, "paused": False, "activation_mode": "scheduled",
+                "starts_at": "2026-10-01T00:00:00Z",
+                "ends_at": "2026-11-02T23:59:59Z",
+                "redemption_ends_at": "2026-11-05T23:59:59Z",
+                "state": "active", "active": True, "redemption": True,
+            },
+        }
+        self.assertEqual(self.post("/api/sync/player", fresh)[0], 200)
+
+        state = self.store.streamer_dashboard()["seasonal_event"]
+        self.assertTrue(state["enabled"])
+        self.assertEqual(state["activation_mode"], "scheduled")
+        self.assertEqual(state["ends_at"], "2026-11-02T23:59:59Z")
+
     def test_fellowship_sync_and_public_api(self):
         payload = {
             "schema_version": 1,

@@ -32,6 +32,8 @@ test("streamer page exposes a dedicated authenticated seasonal event switch", ()
   assert.match(page, /submitStreamerCommand\("seasonalevent", mode/);
   assert.match(page, /actionResult\.data\?\.seasonal/);
   assert.match(page, /seasonalEvent=\{dashboard\?\.seasonal_event/);
+  assert.match(page, /if \(item\.id !== "seasonalevent"\) onDashboardRefresh\?\.\(\)/);
+  assert.match(page, /Do not force a stale dashboard fetch immediately after toggling/);
   assert.match(css, /Seasonal event quick control/);
   assert.match(css, /streamer-seasonal-switch\[aria-checked="true"\]/);
 });

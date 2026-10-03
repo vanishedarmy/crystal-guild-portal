@@ -48,6 +48,12 @@ ALLOWED_PORTAL_ACTIONS = {
     "STREAMER_COMMAND",
 }
 
+STREAMER_SEASONAL_FIELDS = (
+    "event_id", "edition_id", "name", "enabled", "paused",
+    "activation_mode", "starts_at", "ends_at",
+    "redemption_ends_at", "state", "active", "redemption",
+)
+
 STREAMER_COMMAND_SPECS = {
     "health": "none",
     "economy": "days",
@@ -197,6 +203,12 @@ class HostedPortalStore:
         # re-parse every stored snapshot when nothing in the Guild changed.
         self._streamer_cache: dict[str, Any] | None = None
         self._streamer_cache_revision = -1
+        # Seasonal streamer commands complete on the authoritative Bot before
+        # the next periodic player snapshot reaches this hosted mirror. Keep
+        # that command result as a temporary authority bridge so the quick
+        # toggle cannot snap back to stale pre-command data.
+        self._streamer_seasonal_override: dict[str, Any] | None = None
+        self._streamer_seasonal_override_at = 0
         self._last_sync = 0
         # Broadcaster authority is supplied by the authenticated Bot manifest.
         # It is intentionally not configurable on the public Web process.
@@ -1662,7 +1674,7 @@ class HostedPortalStore:
         now = int(time.time())
         with self._action_condition, self._connect() as conn:
             row = conn.execute(
-                "SELECT status,lease_hash FROM portal_actions WHERE action_id=?",
+                "SELECT status,lease_hash,action_type FROM portal_actions WHERE action_id=?",
                 (action_id,),
             ).fetchone()
             if not row or row["status"] != "processing" or not row["lease_hash"]:
@@ -1679,6 +1691,27 @@ class HostedPortalStore:
                 (status, stored_result, now, action_id),
             )
             conn.commit()
+
+            # STREAMER_COMMAND results are authoritative Bot responses. Seasonal
+            # enable/disable commands can finish several seconds before the next
+            # player snapshot sync. Cache the returned global event state here so
+            # /api/streamer reflects the completed command immediately instead
+            # of re-serving the stale pre-command snapshot.
+            seasonal_result = result_data.get("seasonal") if bool(ok) and row["action_type"] == "STREAMER_COMMAND" else None
+            if isinstance(seasonal_result, dict):
+                sanitized = {
+                    key: seasonal_result.get(key)
+                    for key in STREAMER_SEASONAL_FIELDS
+                    if key in seasonal_result
+                }
+                if sanitized:
+                    self._streamer_seasonal_override = sanitized
+                    self._streamer_seasonal_override_at = now
+                    if self._streamer_cache is not None:
+                        cached = dict(self._streamer_cache)
+                        cached["seasonal_event"] = dict(sanitized)
+                        self._streamer_cache = cached
+
             self._action_condition.notify_all()
         return True
 
@@ -1910,6 +1943,8 @@ class HostedPortalStore:
             last_sync = self._last_sync
             if self._streamer_cache is not None and self._streamer_cache_revision == revision:
                 cached = dict(self._streamer_cache)
+                if self._streamer_seasonal_override is not None:
+                    cached["seasonal_event"] = dict(self._streamer_seasonal_override)
                 cached["last_sync"] = last_sync
                 cached["revision"] = revision
                 return cached
@@ -1941,24 +1976,23 @@ class HostedPortalStore:
         ready = resting = ko = 0
         total_level = 0
         seasonal_event: dict[str, Any] | None = None
+        seasonal_event_synced_at = -1
 
         for row in rows:
             snapshot = json.loads(row["snapshot_json"])
             overview = snapshot.get("overview") or {}
-            if seasonal_event is None:
-                seasonal_module = snapshot.get("seasonal") or {}
-                seasonal_state = seasonal_module.get("seasonal") if isinstance(seasonal_module, dict) else None
-                if isinstance(seasonal_state, dict):
-                    allowed_seasonal_fields = (
-                        "event_id", "edition_id", "name", "enabled", "paused",
-                        "activation_mode", "starts_at", "ends_at",
-                        "redemption_ends_at", "state", "active", "redemption",
-                    )
-                    seasonal_event = {
-                        key: seasonal_state.get(key)
-                        for key in allowed_seasonal_fields
-                        if key in seasonal_state
-                    }
+            seasonal_module = snapshot.get("seasonal") or {}
+            seasonal_state = seasonal_module.get("seasonal") if isinstance(seasonal_module, dict) else None
+            row_synced_at = int(row["synced_at"] or 0)
+            # Seasonal control is global, so choose the freshest mirrored player
+            # snapshot rather than whichever adventurer happens to rank first.
+            if isinstance(seasonal_state, dict) and row_synced_at >= seasonal_event_synced_at:
+                seasonal_event_synced_at = row_synced_at
+                seasonal_event = {
+                    key: seasonal_state.get(key)
+                    for key in STREAMER_SEASONAL_FIELDS
+                    if key in seasonal_state
+                }
             identity = overview.get("identity") or {}
             job = overview.get("job") or {}
             status = overview.get("status") or {}
@@ -2029,6 +2063,29 @@ class HostedPortalStore:
                 "display_name": winner["display_name"],
                 "value": int(winner.get(metric) or 0),
             }
+
+        with self._lock:
+            seasonal_override = dict(self._streamer_seasonal_override) if self._streamer_seasonal_override else None
+            seasonal_override_at = int(self._streamer_seasonal_override_at or 0)
+
+        if seasonal_override is not None:
+            snapshot_matches_override = (
+                seasonal_event is not None
+                and all(
+                    seasonal_event.get(key) == seasonal_override.get(key)
+                    for key in ("enabled", "paused", "activation_mode", "state")
+                    if key in seasonal_override
+                )
+            )
+            # Once a newer mirrored snapshot confirms (or supersedes) the Bot
+            # command, retire the bridge. Until then, keep the authoritative
+            # command result to prevent the UI from flipping back.
+            if snapshot_matches_override or seasonal_event_synced_at > seasonal_override_at:
+                with self._lock:
+                    self._streamer_seasonal_override = None
+                    self._streamer_seasonal_override_at = 0
+            else:
+                seasonal_event = seasonal_override
 
         result = {
             "summary": {

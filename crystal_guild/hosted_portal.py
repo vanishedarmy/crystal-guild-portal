@@ -1940,10 +1940,25 @@ class HostedPortalStore:
         activity: list[dict[str, Any]] = []
         ready = resting = ko = 0
         total_level = 0
+        seasonal_event: dict[str, Any] | None = None
 
         for row in rows:
             snapshot = json.loads(row["snapshot_json"])
             overview = snapshot.get("overview") or {}
+            if seasonal_event is None:
+                seasonal_module = snapshot.get("seasonal") or {}
+                seasonal_state = seasonal_module.get("seasonal") if isinstance(seasonal_module, dict) else None
+                if isinstance(seasonal_state, dict):
+                    allowed_seasonal_fields = (
+                        "event_id", "edition_id", "name", "enabled", "paused",
+                        "activation_mode", "starts_at", "ends_at",
+                        "redemption_ends_at", "state", "active", "redemption",
+                    )
+                    seasonal_event = {
+                        key: seasonal_state.get(key)
+                        for key in allowed_seasonal_fields
+                        if key in seasonal_state
+                    }
             identity = overview.get("identity") or {}
             job = overview.get("job") or {}
             status = overview.get("status") or {}
@@ -2032,6 +2047,14 @@ class HostedPortalStore:
             "players": players,
             "activity": activity,
             "fellowship": self.fellowship(),
+            "seasonal_event": seasonal_event or {
+                "name": "Seasonal Event",
+                "state": "unavailable",
+                "enabled": False,
+                "paused": False,
+                "active": False,
+                "redemption": False,
+            },
             "last_sync": last_sync,
             "revision": revision,
             "degraded": False,

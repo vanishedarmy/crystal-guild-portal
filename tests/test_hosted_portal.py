@@ -219,6 +219,20 @@ class PortalServerCase(unittest.TestCase):
             "kind": "gil", "asset": "gil", "amount": 250,
             "source": "monster:iron_giant", "created_at": "2026-08-14 12:01:00",
         }]
+        payload["snapshot"]["seasonal"] = {
+            "player": {"username": "van"},
+            "seasonal": {
+                "event_id": "night_of_the_hollow_crystal",
+                "edition_id": "halloween_2026",
+                "name": "Night of the Hollow Crystal",
+                "enabled": True, "paused": False, "activation_mode": "scheduled",
+                "starts_at": "2026-10-01T00:00:00Z",
+                "ends_at": "2026-11-02T23:59:59Z",
+                "redemption_ends_at": "2026-11-05T23:59:59Z",
+                "state": "active", "active": True, "redemption": True,
+                "tokens": 999,
+            },
+        }
         status, _ = self.post("/api/sync/player", payload)
         self.assertEqual(status, 200)
 
@@ -231,6 +245,10 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(data["players"][0]["boss_clears"], 4)
         self.assertEqual(data["leaders"]["boss_clears"]["display_name"], "Van")
         self.assertEqual(data["activity"][0]["display_name"], "Van")
+        self.assertEqual(data["seasonal_event"]["name"], "Night of the Hollow Crystal")
+        self.assertTrue(data["seasonal_event"]["enabled"])
+        self.assertEqual(data["seasonal_event"]["state"], "active")
+        self.assertNotIn("tokens", data["seasonal_event"])
         self.assertNotIn("snapshot", data["players"][0])
 
     def test_fellowship_sync_and_public_api(self):

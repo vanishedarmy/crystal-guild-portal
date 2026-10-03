@@ -80,8 +80,8 @@ const OWNER_COMMAND_GROUPS = [
     ],
   },
   {
-    title: "Seasonal Event Control",
-    description: "Activate, pause, schedule, or archive the installed seasonal event without changing its content pack.",
+    title: "Advanced Seasonal Event Control",
+    description: "Pause, resume, change schedule mode, or inspect the installed event. Use the switch above for normal enable/disable control.",
     commands: [
       { id: "seasonalevent", command: "!seasonalevent <mode>", label: "Seasonal Event", description: "Modes: on, off, pause, resume, manual, scheduled, status", risk: "caution", argument: { type: "text", placeholder: "status", label: "Mode" } },
     ],
@@ -131,6 +131,13 @@ function hpTone(player) {
   if (value <= 30) return "danger";
   if (value <= 60) return "warning";
   return "good";
+}
+
+function formatSeasonalDate(value, fallback = "Not scheduled") {
+  if (!value) return fallback;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return fallback;
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(date);
 }
 
 function HostedOverlayCard() {
@@ -244,7 +251,7 @@ function actionKey(command) {
   return `streamer-${command}-${entropy}`;
 }
 
-function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players = [], fellowshipProjects = [] }) {
+function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players = [], fellowshipProjects = [], seasonalEvent = null, onSeasonalEventChange = null }) {
   const initialInputs = useMemo(() => {
     const values = {};
     OWNER_COMMAND_GROUPS.forEach((group) => group.commands.forEach((item) => {
@@ -307,6 +314,8 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
         setResult({ tone: "warning", message: `${item.label} is still processing. Check again shortly.` });
       } else {
         const actionResult = finished.result || {};
+        const nextSeasonal = item.id === "seasonalevent" ? actionResult.data?.seasonal : null;
+        if (nextSeasonal && typeof nextSeasonal === "object") onSeasonalEventChange?.(nextSeasonal);
         setResult({
           tone: actionResult.ok ? "good" : "danger",
           message: actionResult.message || (actionResult.ok ? `${item.label} completed.` : `${item.label} failed.`),
@@ -320,6 +329,42 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
       setRunning("");
     }
   };
+
+  const toggleSeasonalEvent = async () => {
+    if (running || seasonalEvent?.state === "unavailable") return;
+    const enabled = Boolean(seasonalEvent?.enabled);
+    const mode = enabled ? "off" : "on";
+    const label = enabled ? "Disable Seasonal Event" : "Enable Seasonal Event";
+    setRunning("seasonalevent-toggle");
+    setResult({ tone: "working", message: `${label} queued…` });
+    try {
+      const queued = await submitStreamerCommand("seasonalevent", mode, auth.csrf_token, actionKey(`seasonalevent-${mode}`));
+      const actionId = queued?.action?.id;
+      if (!actionId) throw new Error("Streamer Control did not return an action ID.");
+      const finished = await waitForPortalAction(actionId, { attempts: 32, delayMs: 650 });
+      if (!finished) {
+        setResult({ tone: "warning", message: `${label} is still processing. Check again shortly.` });
+      } else {
+        const actionResult = finished.result || {};
+        const nextSeasonal = actionResult.data?.seasonal;
+        if (nextSeasonal && typeof nextSeasonal === "object") onSeasonalEventChange?.(nextSeasonal);
+        setResult({
+          tone: actionResult.ok ? "good" : "danger",
+          message: actionResult.message || (actionResult.ok ? `${label} completed.` : `${label} failed.`),
+        });
+      }
+      refreshAuth?.();
+      onDashboardRefresh?.();
+    } catch (error) {
+      setResult({ tone: "danger", message: error?.message || `${label} failed.` });
+    } finally {
+      setRunning("");
+    }
+  };
+
+  const seasonalEnabled = Boolean(seasonalEvent?.enabled);
+  const seasonalState = String(seasonalEvent?.state || "unavailable");
+  const seasonalAvailable = seasonalState !== "unavailable";
 
   const accessState = auth.loading
     ? "checking"
@@ -358,6 +403,32 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
             <span className="streamer-control-ready">READY</span>
           </div>
           {result ? <div className={`streamer-control-result ${result.tone}`} aria-live="polite">{result.message}</div> : null}
+          <section className={`streamer-seasonal-toggle-card state-${seasonalState}`} aria-labelledby="streamer-seasonal-title">
+            <div className="streamer-seasonal-toggle-copy">
+              <span className="panel-kicker">Seasonal Event</span>
+              <div className="streamer-seasonal-title-row">
+                <h3 id="streamer-seasonal-title">{seasonalEvent?.name || "Seasonal Event"}</h3>
+                <span className={`streamer-seasonal-state ${seasonalState}`}>{humanizeLabel(seasonalState)}</span>
+              </div>
+              <p>{seasonalAvailable ? `Scheduled through ${formatSeasonalDate(seasonalEvent?.ends_at)} · ${humanizeLabel(seasonalEvent?.activation_mode, "Manual")} activation` : "Seasonal state has not reached the hosted Portal yet. Refresh after the next Bot sync."}</p>
+              {seasonalEvent?.paused ? <small>The event is enabled but paused. Use Advanced Seasonal Event Control to resume it, or use the switch to disable it completely.</small> : <small>Use this switch for the normal live/off control. Advanced pause and scheduling controls remain below.</small>}
+            </div>
+            <div className="streamer-seasonal-switch-wrap">
+              <span>{seasonalEnabled ? "Enabled" : "Disabled"}</span>
+              <button
+                type="button"
+                className="streamer-seasonal-switch"
+                role="switch"
+                aria-checked={seasonalEnabled}
+                aria-label={`${seasonalEnabled ? "Disable" : "Enable"} ${seasonalEvent?.name || "seasonal event"}`}
+                disabled={Boolean(running) || !seasonalAvailable}
+                onClick={toggleSeasonalEvent}
+              >
+                <span aria-hidden="true" />
+              </button>
+              <small>{running === "seasonalevent-toggle" ? "Updating…" : seasonalEnabled ? "Click to disable" : "Click to enable"}</small>
+            </div>
+          </section>
           <div className="streamer-control-groups">
             {OWNER_COMMAND_GROUPS.map((group, index) => (
               <details className="streamer-control-group" key={group.title} defaultOpen={index === 0}>
@@ -508,6 +579,9 @@ export default function StreamerDashboard() {
   const { auth, refreshAuth } = usePortalAuth();
 
   const refresh = useCallback(() => setRefreshToken((value) => value + 1), []);
+  const updateSeasonalEvent = useCallback((nextSeasonal) => {
+    setDashboard((current) => current ? { ...current, seasonal_event: { ...(current.seasonal_event || {}), ...nextSeasonal } } : current);
+  }, []);
   const liveStatus = useLiveUpdates(refresh);
 
   useEffect(() => {
@@ -575,7 +649,7 @@ export default function StreamerDashboard() {
 
         {dashboard ? (
           <div className="streamer-flow-layout">
-            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} players={players} fellowshipProjects={fellowship?.available_projects || []} />
+            <StreamerControlPanel auth={auth} refreshAuth={refreshAuth} onDashboardRefresh={refresh} players={players} fellowshipProjects={fellowship?.available_projects || []} seasonalEvent={dashboard?.seasonal_event || null} onSeasonalEventChange={updateSeasonalEvent} />
 
             <section className="streamer-panel streamer-roster-panel" id="roster">
               <div className="streamer-panel-heading">

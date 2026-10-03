@@ -25,7 +25,7 @@ function defaultOpen() {
     const stored = window.localStorage?.getItem("crystal-guild:overview:whats-new");
     if (stored === "open") return true;
     if (stored === "closed") return false;
-    return !window.matchMedia?.("(max-width: 760px)")?.matches;
+    return false;
   } catch {
     return true;
   }

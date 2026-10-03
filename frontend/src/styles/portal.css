@@ -14861,3 +14861,541 @@ textarea {
   .retainer-assignment-row-art,.retainer-assignment-row-art img{min-height:68px}
   .retainer-assignment-row-description{display:none}
 }
+
+/* v1.9.4.7 Overview Readability Rework — summary-first hierarchy.
+   The Overview is intentionally a dashboard again: one consolidated character
+   summary, one loadout section, and a collapsed activity ledger. Detailed
+   management stays in the dedicated tabs. */
+.overview-redesign {
+  gap: .78rem;
+}
+.overview-redesign > .panel {
+  scroll-margin-top: 9.5rem;
+}
+
+/* Daily provisions remain actionable, but no longer dominate the first screen. */
+.overview-redesign .daily-reward-panel {
+  padding: .82rem 1rem;
+  border-color: rgba(230, 203, 136, .2);
+}
+.overview-redesign .daily-reward-copy {
+  gap: 1rem;
+}
+.overview-redesign .daily-reward-copy h2 {
+  font-size: 1.02rem;
+  margin-bottom: .22rem;
+}
+.overview-redesign .daily-reward-copy .eyebrow {
+  margin-bottom: .12rem;
+}
+.overview-redesign .daily-reward-copy p.muted {
+  font-size: .78rem;
+  line-height: 1.45;
+}
+.overview-redesign .daily-subscriber-perk {
+  margin-top: .28rem;
+  font-size: .72rem;
+  line-height: 1.4;
+}
+.overview-redesign .daily-reward-timer,
+.overview-redesign .daily-reward-message {
+  margin-top: .35rem;
+  font-size: .75rem;
+}
+.overview-redesign .daily-reward-actions {
+  min-width: min(100%, 250px);
+}
+.overview-redesign .daily-reward-actions .equipment-action-button {
+  min-height: 38px;
+  padding: .48rem .78rem;
+  font-size: .76rem;
+}
+
+/* What’s New defaults collapsed after this pass. Keep its closed state a short
+   announcement strip so the page starts with current character information. */
+.overview-redesign .whats-new-panel {
+  padding: .78rem 1rem;
+}
+.overview-redesign .whats-new-panel.collapsed .whats-new-heading {
+  align-items: center;
+  min-height: 38px;
+}
+.overview-redesign .whats-new-panel.collapsed .whats-new-heading h2 {
+  font-size: 1rem;
+}
+.overview-redesign .whats-new-panel.collapsed .eyebrow {
+  margin-bottom: .08rem;
+}
+
+.overview-summary-panel {
+  padding: clamp(.9rem, 1.7vw, 1.15rem);
+}
+.overview-summary-title-row,
+.overview-loadout-title-row {
+  margin-bottom: .78rem;
+  padding-bottom: .62rem;
+}
+.overview-summary-title-row > div,
+.overview-loadout-title-row > div {
+  min-width: 0;
+}
+.overview-summary-title-row .eyebrow,
+.overview-loadout-title-row .eyebrow,
+.overview-recent-activity-summary .eyebrow {
+  margin: 0 0 .12rem;
+}
+.overview-location-badge {
+  max-width: min(100%, 440px);
+}
+.overview-summary-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(225px, .82fr) minmax(235px, .88fr);
+  gap: .72rem;
+  align-items: stretch;
+}
+.overview-summary-block {
+  min-width: 0;
+  padding: .82rem;
+  border: 1px solid rgba(143, 219, 255, .13);
+  border-radius: 5px 13px 5px 13px;
+  background:
+    linear-gradient(145deg, rgba(7, 25, 40, .76), rgba(3, 15, 25, .64)),
+    rgba(2, 13, 22, .38);
+}
+.overview-summary-block-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .65rem;
+  margin-bottom: .7rem;
+  padding-bottom: .55rem;
+  border-bottom: 1px solid rgba(143, 219, 255, .09);
+}
+.overview-summary-block-heading > div {
+  min-width: 0;
+}
+.overview-summary-block-heading h3 {
+  margin: .08rem 0 0;
+  color: #f0f8fd;
+  font-size: .98rem;
+  font-weight: 600;
+  letter-spacing: .035em;
+}
+.overview-block-kicker,
+.overview-subsection-heading span {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.overview-block-note {
+  color: var(--muted);
+  font-size: .68rem;
+  white-space: nowrap;
+}
+.overview-text-action {
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: .28rem .42rem;
+  border: 0;
+  background: transparent;
+  color: var(--crystal-soft);
+  font: inherit;
+  font-size: .7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.overview-text-action:hover,
+.overview-text-action:focus-visible {
+  color: var(--gold-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.overview-power-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  margin-bottom: .55rem;
+}
+.overview-power-stat {
+  position: relative;
+  min-width: 0;
+  padding: .68rem .72rem;
+  border: 1px solid rgba(143, 219, 255, .13);
+  border-radius: 4px 10px 4px 10px;
+  background: rgba(143, 219, 255, .035);
+}
+.overview-power-stat.magic {
+  border-color: rgba(186, 157, 255, .17);
+  background: rgba(154, 115, 216, .04);
+}
+.overview-power-stat > span,
+.overview-core-stat > span {
+  display: block;
+  color: var(--muted);
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.overview-power-stat > strong {
+  display: block;
+  margin-top: .18rem;
+  color: #d8f3ff;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1;
+}
+.overview-power-stat.magic > strong {
+  color: #e0d6ff;
+}
+.overview-power-stat > small {
+  display: block;
+  margin-top: .22rem;
+  color: #8399a8;
+  font-size: .64rem;
+}
+.overview-core-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .42rem;
+}
+.overview-core-stat {
+  min-width: 0;
+  padding: .5rem .52rem;
+  border: 1px solid rgba(143, 219, 255, .085);
+  border-radius: 4px 9px 4px 9px;
+  background: rgba(255, 255, 255, .018);
+}
+.overview-core-stat > strong {
+  display: block;
+  margin-top: .13rem;
+  color: #d7e9f4;
+  font-family: var(--font-display);
+  font-size: .96rem;
+  line-height: 1.05;
+}
+
+.overview-progress-list {
+  display: grid;
+  gap: .6rem;
+}
+.overview-progress-item {
+  min-width: 0;
+}
+.overview-progress-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .6rem;
+  margin-bottom: .28rem;
+}
+.overview-progress-heading span {
+  min-width: 0;
+  color: #c8d8e2;
+  font-size: .74rem;
+  font-weight: 700;
+}
+.overview-progress-heading strong {
+  flex: 0 0 auto;
+  color: var(--gold-soft, #ead99f);
+  font-family: var(--font-display);
+  font-size: .76rem;
+}
+.overview-progress-item .progress-track {
+  height: 6px;
+}
+.overview-progress-rule {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(230, 203, 136, .28), rgba(143, 219, 255, .08));
+}
+
+.overview-guild-standing {
+  display: grid;
+  gap: .16rem;
+  padding: .62rem .68rem;
+  border: 1px solid rgba(230, 203, 136, .13);
+  border-radius: 4px 10px 4px 10px;
+  background: rgba(230, 203, 136, .035);
+}
+.overview-guild-standing strong {
+  color: #f1e4b5;
+  font-family: var(--font-display);
+  font-size: .98rem;
+}
+.overview-guild-standing > span:last-child {
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.35;
+}
+.overview-guild-standing.empty {
+  border-color: rgba(143, 219, 255, .1);
+  background: rgba(143, 219, 255, .025);
+}
+.overview-mastery-summary {
+  margin-top: .68rem;
+  padding-top: .62rem;
+  border-top: 1px solid rgba(143, 219, 255, .09);
+}
+.overview-subsection-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: .45rem;
+}
+.overview-subsection-heading strong {
+  color: var(--crystal-soft);
+  font-size: .68rem;
+}
+.overview-mastery-compact-list {
+  display: grid;
+  gap: .38rem;
+}
+.overview-mastery-compact {
+  display: grid;
+  gap: .1rem;
+  padding: .48rem .52rem;
+  border: 1px solid rgba(143, 219, 255, .085);
+  border-radius: 4px 9px 4px 9px;
+  background: rgba(255, 255, 255, .017);
+}
+.overview-mastery-compact strong {
+  color: #e1edf4;
+  font-size: .78rem;
+}
+.overview-mastery-compact small {
+  color: var(--muted);
+  font-size: .66rem;
+  line-height: 1.34;
+}
+.overview-empty-state {
+  padding: .7rem;
+  border: 1px dashed rgba(143, 219, 255, .14);
+  border-radius: 5px 11px 5px 11px;
+  color: var(--muted);
+  font-size: .75rem;
+  line-height: 1.45;
+}
+
+.overview-loadout-panel {
+  padding: clamp(.9rem, 1.7vw, 1.15rem);
+}
+.overview-title-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.overview-manage-button {
+  min-height: 34px;
+  padding: .38rem .62rem;
+  font-size: .7rem;
+}
+.overview-equipment-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 225px), 1fr));
+  gap: .55rem;
+}
+.overview-equipment-card {
+  min-height: 0;
+  padding: .68rem .72rem;
+}
+.overview-equipment-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+}
+.overview-equipment-level {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: .66rem;
+}
+.overview-equipment-card .item-name {
+  margin: .22rem 0 .18rem;
+  font-size: .92rem;
+}
+.overview-equipment-card .item-meta {
+  font-size: .7rem;
+  line-height: 1.4;
+}
+.overview-equipment-card .equipment-job-recommendation {
+  margin-top: .25rem;
+  font-size: .64rem;
+}
+
+.overview-recent-activity {
+  padding: .8rem 1rem;
+}
+.overview-recent-activity > summary {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+  min-height: 40px;
+  align-items: center;
+}
+.overview-recent-activity[open] > summary {
+  margin-bottom: .68rem;
+  padding-bottom: .58rem;
+  border-bottom: 1px solid rgba(143, 219, 255, .09);
+}
+.overview-recent-activity-summary > div {
+  min-width: 0;
+}
+.overview-recent-activity-summary h2 {
+  font-size: 1rem;
+}
+.overview-activity-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .45rem;
+}
+.overview-activity-list .activity-row {
+  min-width: 0;
+  padding: .55rem .62rem;
+}
+.overview-activity-list .activity-row strong {
+  font-size: .75rem;
+}
+.overview-activity-list .activity-row .muted {
+  font-size: .66rem;
+  line-height: 1.3;
+}
+.overview-activity-list .activity-amount {
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+@media (max-width: 1080px) {
+  .overview-summary-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  }
+  .overview-guild-block {
+    grid-column: 1 / -1;
+  }
+  .overview-guild-block .overview-guild-standing,
+  .overview-guild-block .overview-mastery-summary {
+    max-width: none;
+  }
+  .overview-guild-block {
+    display: grid;
+    grid-template-columns: minmax(190px, .7fr) minmax(0, 1.3fr);
+    gap: .7rem;
+    align-content: start;
+  }
+  .overview-guild-block .overview-summary-block-heading {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+  .overview-mastery-summary {
+    margin-top: 0;
+    padding-top: 0;
+    padding-left: .7rem;
+    border-top: 0;
+    border-left: 1px solid rgba(143, 219, 255, .09);
+  }
+}
+
+@media (max-width: 760px) {
+  .overview-redesign {
+    gap: .62rem;
+  }
+  .overview-redesign .daily-reward-panel,
+  .overview-redesign .whats-new-panel,
+  .overview-summary-panel,
+  .overview-loadout-panel,
+  .overview-recent-activity {
+    padding: .76rem;
+  }
+  .overview-redesign .daily-reward-copy {
+    gap: .58rem;
+  }
+  .overview-redesign .daily-reward-actions {
+    min-width: 0;
+  }
+  .overview-redesign .daily-reward-actions .equipment-action-button {
+    width: 100%;
+  }
+  .overview-summary-title-row,
+  .overview-loadout-title-row {
+    display: grid;
+    gap: .45rem;
+  }
+  .overview-location-badge {
+    justify-self: start;
+  }
+  .overview-summary-layout {
+    grid-template-columns: 1fr;
+  }
+  .overview-guild-block {
+    display: block;
+  }
+  .overview-guild-block .overview-summary-block-heading {
+    margin-bottom: .7rem;
+  }
+  .overview-mastery-summary {
+    margin-top: .68rem;
+    padding-top: .62rem;
+    padding-left: 0;
+    border-top: 1px solid rgba(143, 219, 255, .09);
+    border-left: 0;
+  }
+  .overview-title-actions {
+    justify-content: flex-start;
+  }
+  .overview-manage-button {
+    flex: 1 1 180px;
+  }
+  .overview-equipment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .overview-activity-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .overview-summary-block {
+    padding: .68rem;
+  }
+  .overview-summary-block-heading {
+    gap: .4rem;
+  }
+  .overview-block-note {
+    display: none;
+  }
+  .overview-power-pair {
+    gap: .42rem;
+  }
+  .overview-core-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .34rem;
+  }
+  .overview-core-stat {
+    padding: .44rem .42rem;
+  }
+  .overview-text-action {
+    padding-right: 0;
+  }
+  .overview-equipment-grid {
+    grid-template-columns: 1fr;
+  }
+  .overview-title-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .overview-title-actions .small-badge {
+    justify-self: start;
+  }
+  .overview-manage-button {
+    width: 100%;
+  }
+  .overview-recent-activity-summary {
+    display: flex;
+  }
+}

@@ -14547,3 +14547,317 @@ textarea {
      painting a full multi-screen pseudo-element under long market lists. */
   .moogle-panel::after { height: min(780px, 100%); }
 }
+
+/* v1.9.4.7 Retainer Service — full usability redesign
+   Preserves the existing Moogle Retainer system while consolidating status,
+   replacing the card wall with an assignment board/detail view, and making
+   haul history collapsible. */
+.retainer-service-redesign{
+  --retainer-gold:#f0c95c;
+  --retainer-gold-soft:rgba(240,201,92,.2);
+  --retainer-blue-soft:rgba(143,219,255,.14);
+  --retainer-panel:rgba(7,13,25,.82);
+}
+.retainer-service-redesign .retainer-hero-panel{
+  min-height:0;
+  grid-template-columns:minmax(0,1.5fr) minmax(220px,.5fr);
+  padding:clamp(14px,2vw,20px);
+  gap:clamp(14px,2.5vw,28px);
+  border-color:rgba(240,201,92,.19);
+  background:
+    radial-gradient(circle at 83% 35%,rgba(105,70,152,.16),transparent 32%),
+    linear-gradient(135deg,rgba(17,29,52,.97),rgba(7,12,23,.98));
+}
+.retainer-service-redesign .retainer-office-art{max-height:168px;object-position:center 54%}
+.retainer-service-redesign .retainer-lead{max-width:760px;margin-bottom:0}
+
+.retainer-command-panel{
+  display:grid;
+  grid-template-columns:minmax(280px,.9fr) minmax(360px,1.25fr) minmax(220px,.65fr);
+  gap:0;
+  padding:0 !important;
+  overflow:hidden;
+  border-color:rgba(240,201,92,.19);
+  background:linear-gradient(180deg,rgba(10,18,33,.96),rgba(6,11,21,.96));
+}
+.retainer-command-profile,
+.retainer-command-current,
+.retainer-command-records{
+  min-width:0;
+  padding:16px;
+}
+.retainer-command-current,
+.retainer-command-records{border-left:1px solid rgba(204,220,255,.12)}
+.retainer-command-profile{
+  display:grid;
+  grid-template-columns:96px minmax(0,1fr);
+  gap:13px;
+  align-items:center;
+}
+.retainer-command-profile .retainer-profile-art{
+  width:96px;
+  height:96px;
+  max-height:96px;
+  margin:0;
+  border:1px solid rgba(240,201,92,.2);
+  border-radius:12px;
+  background:radial-gradient(circle at 50% 56%,rgba(118,74,160,.18),rgba(5,10,22,.5) 70%);
+}
+.retainer-command-profile .retainer-portrait-art{max-width:88px !important;max-height:94px}
+.retainer-command-profile .retainer-rank-crest{right:0;bottom:1px;width:31px;height:43px}
+.retainer-command-profile .retainer-profile-copy h3{margin:.08rem 0 .22rem;font-size:1.05rem}
+.retainer-command-profile .retainer-profile-copy>small{display:block;margin-top:.35rem;color:var(--muted);font-size:.72rem;line-height:1.35}
+.retainer-command-profile .retainer-rank-line{display:grid;gap:1px;margin:.38rem 0 .32rem}
+.retainer-command-profile .retainer-rank-line strong{font-size:.8rem;line-height:1.3}
+.retainer-command-profile .retainer-rank-line span{font-size:.72rem}
+.retainer-command-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
+.retainer-command-heading h3{margin:.08rem 0 0;font-size:1rem}
+.retainer-command-heading .eyebrow{margin-bottom:0}
+.retainer-command-current .retainer-idle-state,
+.retainer-command-current .retainer-away-state,
+.retainer-command-current .retainer-return-state{
+  min-height:0;
+  padding:10px 10px 10px 82px;
+  gap:7px;
+  border-radius:10px;
+  background:rgba(4,9,18,.48);
+}
+.retainer-command-current .retainer-status-art{
+  right:auto;
+  left:7px;
+  bottom:6px;
+  width:68px;
+  max-height:74px;
+  object-position:left bottom;
+}
+.retainer-command-current .retainer-timer{padding:8px 9px}
+.retainer-command-current .retainer-timer strong{font-size:1.05rem}
+.retainer-command-current .retainer-haul-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.retainer-command-current .retainer-haul-grid>div{padding:7px 8px}
+.retainer-command-current .equipment-action-button{min-height:40px}
+.retainer-command-records .retainer-stat-grid{grid-template-columns:1fr;gap:7px;margin-top:0}
+.retainer-command-records .retainer-stat-grid>div{
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  padding:9px 10px;
+  text-align:left;
+}
+.retainer-command-records .retainer-stat-grid strong{grid-column:2;grid-row:1;font-size:1rem}
+.retainer-command-records .retainer-stat-grid span{grid-column:1;grid-row:1;font-size:.73rem}
+
+.retainer-board-title-row{align-items:end;gap:18px}
+.retainer-board-hint{max-width:520px;color:var(--muted);font-size:.78rem;line-height:1.4;text-align:right}
+.retainer-board-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr);
+  gap:14px;
+  align-items:start;
+}
+.retainer-assignment-list{display:grid;gap:7px;min-width:0}
+.retainer-assignment-row{
+  width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:132px minmax(0,1fr);
+  gap:12px;
+  align-items:stretch;
+  padding:7px;
+  border:1px solid rgba(204,220,255,.13);
+  border-radius:11px;
+  background:linear-gradient(180deg,rgba(12,21,37,.86),rgba(7,13,24,.86));
+  color:var(--text);
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+  transition:border-color .16s ease,background .16s ease,transform .16s ease;
+}
+.retainer-assignment-row:hover{border-color:rgba(143,219,255,.28);background:rgba(15,28,47,.92)}
+.retainer-assignment-row:focus-visible{outline:2px solid var(--crystal-soft);outline-offset:2px}
+.retainer-assignment-row.selected{
+  border-color:rgba(240,201,92,.66);
+  background:linear-gradient(90deg,rgba(240,201,92,.075),rgba(12,22,38,.93) 35%);
+  box-shadow:inset 3px 0 0 rgba(240,201,92,.82);
+}
+.retainer-assignment-row.locked{opacity:.62}
+.retainer-assignment-row-art{
+  display:block;
+  overflow:hidden;
+  min-height:92px;
+  border:1px solid rgba(204,220,255,.12);
+  border-radius:9px;
+  background:#060b14;
+}
+.retainer-assignment-row-art img{display:block;width:100%;height:100%;min-height:92px;object-fit:cover}
+.retainer-assignment-row-copy{display:grid;align-content:center;gap:5px;min-width:0;padding:2px 2px 2px 0}
+.retainer-assignment-row-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;min-width:0}
+.retainer-assignment-row-head strong{font-family:var(--display);color:#ffe7a1;font-size:.92rem;line-height:1.25}
+.retainer-assignment-row-head .small-badge{flex:0 0 auto}
+.retainer-assignment-row-description{color:var(--muted);font-size:.78rem;line-height:1.35}
+.retainer-assignment-row-meta{display:flex;flex-wrap:wrap;gap:5px}
+.retainer-assignment-row-meta>span{padding:3px 6px;border:1px solid rgba(204,220,255,.09);border-radius:999px;background:rgba(255,255,255,.025);color:#dbe6fa;font-size:.69rem}
+
+.retainer-assignment-detail{
+  position:sticky;
+  top:calc(var(--site-header-height,0px) + 12px);
+  min-width:0;
+  display:grid;
+  gap:10px;
+  padding:13px;
+  border:1px solid rgba(240,201,92,.21);
+  border-radius:12px;
+  background:
+    radial-gradient(circle at 85% 0,rgba(118,74,160,.1),transparent 28%),
+    linear-gradient(180deg,rgba(10,19,34,.96),rgba(5,11,21,.96));
+  box-shadow:0 14px 28px rgba(0,0,0,.18);
+}
+.retainer-assignment-detail.locked{filter:saturate(.78)}
+.retainer-assignment-detail-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.retainer-assignment-detail-title h3{margin:.08rem 0 0;font-size:1.05rem}
+.retainer-assignment-detail-title .eyebrow{margin:0}
+.retainer-assignment-detail-icon{width:44px;height:44px;object-fit:contain;padding:3px;border:1px solid rgba(240,201,92,.24);border-radius:9px;background:rgba(4,8,18,.7)}
+.retainer-assignment-detail-art-frame{position:relative;overflow:hidden;border:1px solid rgba(240,201,92,.19);border-radius:10px;background:#060b14}
+.retainer-assignment-detail-art-frame>img{display:block;width:100%;aspect-ratio:4/3;max-height:290px;object-fit:cover}
+.retainer-assignment-current-ribbon{position:absolute;right:8px;top:8px;padding:5px 8px;border:1px solid rgba(240,201,92,.5);border-radius:999px;background:rgba(9,14,23,.88);color:#ffe7a1;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.retainer-assignment-detail-description{margin:0;color:var(--muted);font-size:.82rem;line-height:1.42}
+.retainer-assignment-detail-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.retainer-assignment-detail-meta>div{display:grid;gap:2px;padding:8px 7px;border:1px solid rgba(204,220,255,.11);border-radius:9px;background:rgba(255,255,255,.022);text-align:center}
+.retainer-assignment-detail-meta span{color:var(--muted);font-size:.64rem;line-height:1.2}
+.retainer-assignment-detail-meta strong{color:#ffe7a1;font-size:.78rem;line-height:1.25}
+.retainer-find-block{display:grid;gap:6px;padding-top:2px}
+.retainer-find-block>span{color:#dbe6fa;font-size:.73rem;font-weight:700}
+.retainer-find-tags{display:flex;flex-wrap:wrap;gap:5px}
+.retainer-find-tags span{padding:4px 7px;border:1px solid rgba(143,219,255,.12);border-radius:999px;background:rgba(143,219,255,.045);color:#dcecff;font-size:.69rem}
+.retainer-detail-priority{padding-top:3px}
+.retainer-detail-priority>span{font-weight:700}
+.retainer-detail-priority>span small{font-weight:400;color:var(--muted)}
+.retainer-assignment-lock-note{display:grid;gap:3px;padding:10px;border:1px solid rgba(240,201,92,.17);border-radius:9px;background:rgba(240,201,92,.045)}
+.retainer-assignment-lock-note strong{color:#ffe7a1;font-size:.82rem}
+.retainer-assignment-lock-note span{color:var(--muted);font-size:.75rem;line-height:1.35}
+.retainer-dispatch-button{width:100%;min-height:44px;margin-top:1px;font-weight:800}
+.retainer-assignment-detail-empty{position:static;color:var(--muted)}
+
+.retainer-history-disclosure{padding:0 !important;overflow:hidden}
+.retainer-history-summary{
+  list-style:none;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto 18px;
+  align-items:center;
+  gap:10px;
+  padding:14px 16px;
+  cursor:pointer;
+  user-select:none;
+}
+.retainer-history-summary::-webkit-details-marker{display:none}
+.retainer-history-summary::after{content:"▸";justify-self:end;color:#ffe7a1;font-size:1rem;transition:transform .16s ease}
+.retainer-history-disclosure[open] .retainer-history-summary::after{transform:rotate(90deg)}
+.retainer-history-summary h3{margin:.08rem 0 0}
+.retainer-history-summary .eyebrow{margin:0}
+.retainer-history-summary:hover{background:rgba(255,255,255,.018)}
+.retainer-history-summary:focus-visible{outline:2px solid var(--crystal-soft);outline-offset:-3px}
+.retainer-history-body{padding:0 16px 16px;border-top:1px solid rgba(204,220,255,.1)}
+.retainer-history-list{padding-top:12px}
+
+@media (prefers-reduced-motion:reduce){
+  .retainer-assignment-row,.retainer-history-summary::after{transition:none}
+}
+
+@media(max-width:1080px){
+  .retainer-command-panel{grid-template-columns:minmax(260px,.9fr) minmax(360px,1.1fr)}
+  .retainer-command-records{grid-column:1/-1;border-left:0;border-top:1px solid rgba(204,220,255,.12);padding-top:12px}
+  .retainer-command-records .retainer-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .retainer-command-records .retainer-stat-grid>div{grid-template-columns:1fr;text-align:center}
+  .retainer-command-records .retainer-stat-grid strong,.retainer-command-records .retainer-stat-grid span{grid-column:1}
+  .retainer-command-records .retainer-stat-grid strong{grid-row:1}.retainer-command-records .retainer-stat-grid span{grid-row:2}
+  .retainer-board-layout{grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr)}
+  .retainer-assignment-row{grid-template-columns:112px minmax(0,1fr)}
+}
+
+@media(max-width:820px){
+  .retainer-service-redesign .retainer-hero-panel{grid-template-columns:minmax(0,1fr) 128px}
+  .retainer-service-redesign .retainer-office-art{width:128px;max-height:105px}
+  .retainer-command-panel{grid-template-columns:1fr}
+  .retainer-command-current,.retainer-command-records{border-left:0;border-top:1px solid rgba(204,220,255,.12)}
+  .retainer-command-records .retainer-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .retainer-board-layout{grid-template-columns:1fr}
+  .retainer-assignment-detail{position:static}
+  .retainer-board-hint{max-width:420px}
+}
+
+@media(max-width:760px){
+  .retainer-service-redesign .retainer-mobile-nav{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .retainer-service-redesign .retainer-command-panel{order:3}
+  .retainer-service-redesign .retainer-assignments-panel{order:4}
+  .retainer-service-redesign .retainer-history-panel{order:5}
+  .retainer-service-redesign #retainer-current,
+  .retainer-service-redesign #retainer-assignments,
+  .retainer-service-redesign #retainer-profile,
+  .retainer-service-redesign #retainer-history{scroll-margin-top:9rem}
+  .retainer-command-profile,.retainer-command-current,.retainer-command-records{padding:12px}
+  .retainer-command-current .retainer-idle-state,
+  .retainer-command-current .retainer-away-state,
+  .retainer-command-current .retainer-return-state{
+    grid-template-columns:64px minmax(0,1fr);
+    padding:9px;
+    gap:6px 9px;
+  }
+  .retainer-command-current .retainer-status-art{
+    position:static;
+    grid-column:1;
+    grid-row:1 / span 5;
+    width:64px;
+    height:64px;
+    max-height:64px;
+    object-position:center;
+  }
+  .retainer-command-current .retainer-idle-state>strong,
+  .retainer-command-current .retainer-idle-state>span,
+  .retainer-command-current .retainer-away-state>div,
+  .retainer-command-current .retainer-away-state>small{grid-column:2}
+  .retainer-command-current .retainer-timer{grid-column:2}
+  .retainer-command-current .retainer-return-state>div:first-of-type{grid-column:2}
+  .retainer-command-current .retainer-return-state>.retainer-haul-grid,
+  .retainer-command-current .retainer-return-state>.retainer-bonus-find,
+  .retainer-command-current .retainer-return-state>.equipment-action-button{grid-column:1/-1}
+  .retainer-board-title-row{display:grid;grid-template-columns:1fr;gap:5px;align-items:start}
+  .retainer-board-hint{text-align:left;max-width:none}
+  .retainer-assignment-row{grid-template-columns:106px minmax(0,1fr)}
+  .retainer-assignment-row-art,.retainer-assignment-row-art img{min-height:82px}
+  .retainer-assignment-detail-art-frame>img{max-height:330px}
+  .retainer-history-summary{padding:12px}
+  .retainer-history-body{padding:0 12px 12px}
+}
+
+@media(max-width:560px){
+  .retainer-service-redesign .retainer-hero-panel{grid-template-columns:1fr}
+  .retainer-service-redesign .retainer-office-art{display:none}
+  .retainer-command-profile{grid-template-columns:82px minmax(0,1fr);gap:10px}
+  .retainer-command-profile .retainer-profile-art{width:82px;height:82px;max-height:82px}
+  .retainer-command-profile .retainer-portrait-art{max-width:76px !important;max-height:80px}
+  .retainer-command-profile .retainer-rank-crest{width:28px;height:39px}
+  .retainer-command-records .retainer-stat-grid{gap:5px}
+  .retainer-command-records .retainer-stat-grid>div{padding:7px 4px}
+  .retainer-assignment-row{grid-template-columns:86px minmax(0,1fr);gap:9px;padding:6px}
+  .retainer-assignment-row-art,.retainer-assignment-row-art img{min-height:76px}
+  .retainer-assignment-row-description{font-size:.74rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .retainer-assignment-row-meta{gap:3px}
+  .retainer-assignment-row-meta>span{font-size:.64rem;padding:2px 5px}
+  .retainer-assignment-row-head strong{font-size:.84rem}
+  .retainer-assignment-row-head .small-badge{font-size:.62rem}
+  .retainer-assignment-detail{padding:10px}
+  .retainer-assignment-detail-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .retainer-assignment-detail-art-frame>img{max-height:none}
+  .retainer-history-summary{grid-template-columns:minmax(0,1fr) auto 14px;gap:6px}
+}
+
+@media(max-width:390px){
+  .retainer-service-redesign .retainer-mobile-nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .retainer-command-current .retainer-idle-state,
+  .retainer-command-current .retainer-away-state,
+  .retainer-command-current .retainer-return-state{grid-template-columns:54px minmax(0,1fr)}
+  .retainer-command-current .retainer-status-art{width:54px;height:54px;max-height:54px}
+  .retainer-command-current .retainer-haul-grid{grid-template-columns:1fr}
+  .retainer-assignment-row{grid-template-columns:72px minmax(0,1fr);gap:7px}
+  .retainer-assignment-row-art,.retainer-assignment-row-art img{min-height:68px}
+  .retainer-assignment-row-description{display:none}
+}

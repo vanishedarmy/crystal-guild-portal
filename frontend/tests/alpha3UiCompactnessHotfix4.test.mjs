@@ -24,9 +24,9 @@ test("Emporium buy cards omit long item description copy", () => {
 });
 
 test("registered companion and recipe grids hug their content", () => {
-  assert.match(chocobo, /chocobo-companion-card featured/);
-  assert.match(css, /\.chocobo-owned-layout \{ align-items: start; \}/);
-  assert.match(css, /\.chocobo-companion-card\.featured \{[\s\S]*?min-height: 0;[\s\S]*?align-self: start;/);
+  assert.match(chocobo, /chocobo-companion-command/);
+  assert.match(css, /\.chocobo-companion-command\{[\s\S]*?grid-template-columns:minmax\(0,1\.45fr\)/);
+  assert.match(css, /@media\(max-width:1040px\)\{[\s\S]*?\.chocobo-companion-command\{grid-template-columns:1fr\}/);
   assert.match(css, /\.blacksmith-grid \{ align-items: start; \}/);
   assert.match(css, /\.blacksmith-card \{[\s\S]*?padding: 13px;[\s\S]*?gap: 8px;/);
 });

@@ -14,14 +14,14 @@ test("Fellowship page presents the active Expedition Board gate", async () => {
   assert.match(page, /Expedition launch project/);
 });
 
-test("Chocobo Stable presents live Expedition readiness and active trait effects", async () => {
+test("Chocobo Stable presents live Expedition readiness and active Bond specialization", async () => {
   const stable = await readFile(new URL("player/ChocoboStable.jsx", SRC), "utf8");
   const guide = await readFile(new URL("../public/guide-body.html", import.meta.url), "utf8");
-  assert.match(stable, /panel-kicker">Active/);
-  assert.doesNotMatch(stable, /v1\.2 · Active/);
-  assert.match(stable, /EXPEDITIONS OPEN/);
+  assert.match(stable, /Expedition Readiness/);
+  assert.match(stable, /Ready to Venture/);
   assert.match(stable, /Adventure Board/);
-  assert.match(stable, /persistent trait now modifies travel|persistent trait becomes a Guardian/);
+  assert.match(stable, /Bond Specialty/);
+  assert.match(stable, /scaling Expedition specialty/);
   assert.match(guide, /Expeditions — v1\.2/);
   assert.match(guide, /Emerald Wilds, Ashen Highlands, Mistfen Marshes, Frostveil Reach, or the Astral Scar/);
 });
@@ -29,7 +29,8 @@ test("Chocobo Stable presents live Expedition readiness and active trait effects
 test("Expedition readiness cards remain responsive", async () => {
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
   assert.match(css, /\.fellowship-expedition-grid[\s\S]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.chocobo-expedition-notes[\s\S]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.chocobo-stable-dashboard/);
+  assert.match(css, /\.chocobo-readiness-list/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*\.chocobo-management-heading/);
   assert.match(css, /\.expedition-region-grid/);
-  assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.expedition-region-grid/);
 });

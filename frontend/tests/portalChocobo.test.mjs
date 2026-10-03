@@ -17,7 +17,7 @@ test("Chocobo Stable remains available from profile navigation after Overview sh
 
 test("Chocobo Stable exposes quest, one-hour Writ, registration, Bond and Expedition readiness", async () => {
   const source = await read("src/player/ChocoboStable.jsx");
-  for (const token of ["CHOCOBO_STATE", "Complete Quest", "Chocobo Registration Writ", "one hour", "Register Chocobo", "Bond XP", "Expedition Preparation", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT", "Apply Portrait", "10 PORTRAITS"]) {
+  for (const token of ["CHOCOBO_STATE", "Complete Quest", "Chocobo Registration Writ", "one hour", "Register Chocobo", "Bond XP", "Expedition Readiness", "RENAME_CHOCOBO", "SET_CHOCOBO_PORTRAIT", "Apply Portrait", "10 PORTRAITS"]) {
     assert.match(source, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
   }
   assert.match(source, /ready_at/);
@@ -35,7 +35,8 @@ test("Portal auth exports strict Chocobo action helpers", async () => {
 test("Chocobo Stable keeps responsive Phase 8 touch-friendly layout", async () => {
   const css = await read("src/styles/portal.css");
   assert.match(css, /v1\.1\.10 — Chocobo Companions/);
-  assert.match(css, /\.chocobo-acquisition-grid/);
+  assert.match(css, /\.chocobo-registration-layout/);
+  assert.match(css, /\.chocobo-companion-command/);
   assert.match(css, /@media\(max-width:900px\)/);
   assert.match(css, /\.chocobo-name-field input\{[^}]*min-height:44px/);
 });

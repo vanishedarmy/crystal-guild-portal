@@ -15399,3 +15399,151 @@ textarea {
     display: flex;
   }
 }
+
+/* v1.9.4.7 — Chocobo Stable readability rework */
+.chocobo-stable-redesign{gap:13px}
+.chocobo-stable-redesign .chocobo-stable-heading{padding-bottom:2px}
+.chocobo-stable-redesign .chocobo-heading-copy{min-width:0}
+.chocobo-stable-redesign .chocobo-heading-copy h2{margin:.05rem 0 .28rem}
+.chocobo-stable-redesign .chocobo-heading-copy p:last-child{margin:0;max-width:720px;line-height:1.45}
+.chocobo-inline-status{display:flex;align-items:center;gap:9px;min-height:36px;padding:8px 11px;border:1px solid rgba(204,220,255,.12);border-radius:10px;background:rgba(7,12,22,.62);font-size:.82rem}
+.chocobo-inline-status strong{color:#ffe7a1}
+.chocobo-inline-status span{color:var(--muted)}
+.chocobo-inline-status.ready{border-color:rgba(127,216,164,.18)}
+.chocobo-inline-status.offline{border-color:rgba(225,145,145,.22)}
+
+.chocobo-companion-command{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(390px,.95fr);gap:12px;padding:13px;border:1px solid rgba(240,201,92,.2);border-radius:16px;background:linear-gradient(135deg,rgba(12,20,35,.9),rgba(5,10,19,.88));box-shadow:inset 0 0 0 1px rgba(255,255,255,.018)}
+.chocobo-companion-hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;min-width:0}
+.chocobo-portrait-large{width:104px;height:104px;border-radius:16px;background:linear-gradient(145deg,rgba(255,214,98,.12),rgba(102,177,223,.06));overflow:hidden}
+.chocobo-portrait-large img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.chocobo-companion-identity{display:grid;gap:8px;min-width:0}
+.chocobo-name-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.chocobo-name-row h3{margin:0;font-family:var(--display);font-size:1.42rem;color:#ffe7a1;letter-spacing:.035em}
+.chocobo-bond-summary{display:grid;gap:5px;max-width:640px}
+.chocobo-bond-summary .vital-label{margin:0}
+.chocobo-bond-summary>small{color:var(--muted);font-size:.72rem}
+.chocobo-trait-inline{display:flex;flex-wrap:wrap;gap:6px}
+.chocobo-trait-inline>span{display:grid;gap:1px;min-width:min(240px,100%);padding:7px 9px;border:1px solid rgba(204,220,255,.11);border-radius:9px;background:rgba(255,255,255,.025)}
+.chocobo-trait-inline strong{color:#e9dcab;font-size:.82rem}
+.chocobo-trait-inline small{color:var(--muted);font-size:.72rem;line-height:1.35}
+.chocobo-quick-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;align-content:start}
+.chocobo-quick-stats>div{display:grid;gap:2px;padding:9px 10px;border:1px solid rgba(204,220,255,.11);border-radius:10px;background:rgba(255,255,255,.025);min-width:0}
+.chocobo-quick-stats span{color:var(--muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.065em}
+.chocobo-quick-stats strong{color:#ffe7a1;font-family:var(--display);font-size:.95rem;overflow-wrap:anywhere}
+.chocobo-quick-stats small{color:var(--muted);font-size:.68rem;line-height:1.3}
+
+.chocobo-stable-dashboard{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);gap:12px;align-items:stretch}
+.chocobo-readiness-card,.chocobo-specialization-rework,.chocobo-management,.chocobo-registration-shell{border:1px solid rgba(204,220,255,.14);border-radius:14px;background:rgba(6,12,23,.74)}
+.chocobo-readiness-card{display:grid;gap:10px;padding:13px}
+.chocobo-readiness-card.ready{border-color:rgba(127,216,164,.25);background:linear-gradient(145deg,rgba(127,216,164,.045),rgba(6,12,23,.76))}
+.chocobo-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;min-width:0}
+.chocobo-card-heading h3{margin:.12rem 0 0;color:#ffe7a1;font-size:1rem}
+.chocobo-card-heading p{margin:.25rem 0 0;color:var(--muted);font-size:.78rem;line-height:1.4}
+.chocobo-readiness-card>p{margin:0;color:var(--muted);font-size:.8rem;line-height:1.42}
+.chocobo-readiness-list{display:grid;gap:6px}
+.chocobo-readiness-list>span{display:grid;grid-template-columns:20px minmax(0,1fr);gap:7px;align-items:start;padding:8px 9px;border:1px solid rgba(204,220,255,.09);border-radius:9px;background:rgba(255,255,255,.02);color:#aab5c8}
+.chocobo-readiness-list>span.complete{border-color:rgba(127,216,164,.16);color:#9ed8b5}
+.chocobo-readiness-list>span>span{display:grid;gap:1px}
+.chocobo-readiness-list strong{font-size:.79rem;color:var(--text)}
+.chocobo-readiness-list small{font-size:.69rem;color:var(--muted);line-height:1.3}
+.chocobo-readiness-note{color:var(--muted);font-size:.69rem;line-height:1.35}
+.chocobo-specialization-rework{display:grid;gap:10px;padding:13px;margin:0}
+.chocobo-specialization-rework .chocobo-specialization-effects{gap:5px}
+.chocobo-specialization-rework .chocobo-specialization-effects span{padding:4px 7px;font-size:.72rem}
+.chocobo-records-compact{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:0}
+.chocobo-records-compact div{padding:7px 8px;background:rgba(255,255,255,.02)}
+.chocobo-records-compact span{font-size:.63rem}
+.chocobo-records-compact strong{font-size:.9rem;color:#ffe7a1}
+.chocobo-specialty-note{color:var(--muted);font-size:.66rem;line-height:1.35}
+
+.chocobo-management{display:grid;gap:10px;padding:12px 13px}
+.chocobo-management-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.chocobo-management-heading h3{margin:.08rem 0 .18rem;color:#ffe7a1;font-size:1rem}
+.chocobo-management-heading p{margin:0;font-size:.76rem;line-height:1.35}
+.chocobo-management-summary{display:flex;flex-wrap:wrap;gap:8px;padding-top:1px}
+.chocobo-management-summary>span{display:grid;gap:1px;min-width:150px;padding:7px 9px;border:1px solid rgba(204,220,255,.09);border-radius:9px;background:rgba(255,255,255,.018)}
+.chocobo-management-summary small{color:var(--muted);font-size:.63rem;text-transform:uppercase;letter-spacing:.06em}
+.chocobo-management-summary strong{font-size:.78rem}
+.chocobo-management-body{display:grid;gap:10px;padding-top:2px;border-top:1px solid rgba(204,220,255,.09)}
+.chocobo-rename-service{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(220px,1fr) auto;gap:10px;align-items:end;padding:10px;border:1px solid rgba(204,220,255,.09);border-radius:10px;background:rgba(255,255,255,.018)}
+.chocobo-rename-service>div{display:grid;gap:2px}
+.chocobo-rename-service>div>strong{color:#ffe7a1;font-size:.82rem}
+.chocobo-rename-service>div>small{color:var(--muted);font-size:.68rem}
+.chocobo-management .chocobo-portrait-picker{margin:0;border-radius:10px;background:rgba(255,255,255,.015)}
+
+.chocobo-registration-shell{display:grid;gap:12px;padding:13px}
+.chocobo-registration-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.chocobo-registration-progress>div{position:relative;display:grid;grid-template-columns:26px minmax(0,1fr);gap:7px;align-items:center;padding:8px 9px;border:1px solid rgba(204,220,255,.1);border-radius:9px;background:rgba(255,255,255,.018);min-width:0}
+.chocobo-registration-progress>div>span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(204,220,255,.16);color:var(--muted);font-family:var(--display);font-size:.75rem}
+.chocobo-registration-progress>div>small{min-width:0;color:var(--muted);font-size:.69rem;line-height:1.25}
+.chocobo-registration-progress>div.current{border-color:rgba(240,201,92,.36);background:rgba(240,201,92,.055)}
+.chocobo-registration-progress>div.current>span{border-color:rgba(240,201,92,.42);color:#ffe7a1}
+.chocobo-registration-progress>div.current>small{color:#ffe7a1}
+.chocobo-registration-progress>div.complete{border-color:rgba(127,216,164,.2);background:rgba(127,216,164,.035)}
+.chocobo-registration-progress>div.complete>span,.chocobo-registration-progress>div.complete>small{color:#9ed8b5}
+.chocobo-registration-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:12px;align-items:start}
+.chocobo-registration-focus{display:grid;gap:7px;min-height:250px;padding:15px;border:1px solid rgba(240,201,92,.2);border-radius:12px;background:linear-gradient(145deg,rgba(240,201,92,.045),rgba(4,9,18,.78))}
+.chocobo-registration-focus-copy{display:grid;gap:10px;align-content:start}
+.chocobo-registration-focus-copy h3{margin:0;color:#ffe7a1;font-family:var(--display);font-size:1.14rem}
+.chocobo-registration-focus-copy p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.48}
+.chocobo-registration-focus-copy .equipment-action-button{justify-self:start;min-width:180px}
+.chocobo-step-callout{padding:9px 10px;border:1px solid rgba(240,201,92,.16);border-radius:9px;background:rgba(240,201,92,.045);color:#e9dcab;font-size:.76rem;line-height:1.4}
+.chocobo-registration-cost{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;border:1px solid rgba(204,220,255,.1);border-radius:9px;background:rgba(255,255,255,.02)}
+.chocobo-registration-cost span{color:var(--muted);font-size:.72rem}
+.chocobo-registration-cost strong{color:#ffe7a1;font-family:var(--display)}
+.chocobo-registration-roadmap{display:grid;gap:7px;padding:13px;border:1px solid rgba(204,220,255,.11);border-radius:12px;background:rgba(255,255,255,.018)}
+.chocobo-registration-roadmap h3{margin:.1rem 0 .2rem;color:#ffe7a1;font-size:1rem}
+.chocobo-roadmap-step{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:center;padding:8px;border:1px solid rgba(204,220,255,.08);border-radius:9px;background:rgba(255,255,255,.015)}
+.chocobo-roadmap-step.current{border-color:rgba(240,201,92,.24);background:rgba(240,201,92,.04)}
+.chocobo-roadmap-step.complete{border-color:rgba(127,216,164,.15)}
+.chocobo-roadmap-number{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1px solid rgba(204,220,255,.13);color:var(--muted);font-family:var(--display);font-size:.73rem}
+.chocobo-roadmap-step.current .chocobo-roadmap-number{color:#ffe7a1;border-color:rgba(240,201,92,.3)}
+.chocobo-roadmap-step.complete .chocobo-roadmap-number{color:#9ed8b5;border-color:rgba(127,216,164,.25)}
+.chocobo-roadmap-step>span:last-child{display:grid;gap:1px}
+.chocobo-roadmap-step strong{font-size:.76rem}
+.chocobo-roadmap-step small{color:var(--muted);font-size:.65rem;line-height:1.25}
+.chocobo-registration-roadmap>p{margin:4px 0 0;font-size:.7rem;line-height:1.4}
+
+@media(max-width:1040px){
+  .chocobo-companion-command{grid-template-columns:1fr}
+  .chocobo-quick-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .chocobo-stable-dashboard{grid-template-columns:1fr}
+  .chocobo-registration-layout{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .chocobo-stable-redesign .chocobo-stable-status{justify-content:flex-start}
+  .chocobo-companion-command{padding:11px}
+  .chocobo-companion-hero{grid-template-columns:84px minmax(0,1fr);gap:11px}
+  .chocobo-portrait-large{width:84px;height:84px}
+  .chocobo-name-row h3{font-size:1.18rem}
+  .chocobo-quick-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chocobo-management-heading,.chocobo-card-heading{display:grid;grid-template-columns:1fr;gap:7px;align-items:start}
+  .chocobo-management-heading .equipment-action-button{justify-self:start}
+  .chocobo-rename-service{grid-template-columns:1fr}
+  .chocobo-rename-service .equipment-action-button{width:100%}
+  .chocobo-registration-progress{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  .chocobo-stable-redesign{gap:10px}
+  .chocobo-inline-status{align-items:flex-start;flex-direction:column;gap:2px}
+  .chocobo-companion-hero{grid-template-columns:1fr}
+  .chocobo-portrait-large{width:76px;height:76px}
+  .chocobo-quick-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .chocobo-quick-stats>div{padding:7px}
+  .chocobo-quick-stats strong{font-size:.82rem}
+  .chocobo-records-compact{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .chocobo-records-compact div{padding:6px 4px;text-align:center}
+  .chocobo-records-compact span{font-size:.56rem}
+  .chocobo-management{padding:10px}
+  .chocobo-management-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .chocobo-management-summary>span{min-width:0;padding:6px 7px}
+  .chocobo-registration-shell{padding:10px}
+  .chocobo-registration-progress{grid-template-columns:1fr 1fr;gap:5px}
+  .chocobo-registration-progress>div{grid-template-columns:22px minmax(0,1fr);padding:6px}
+  .chocobo-registration-progress>div>span{width:22px;height:22px}
+  .chocobo-registration-focus{min-height:0;padding:12px}
+  .chocobo-registration-focus-copy .equipment-action-button{width:100%;min-width:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .chocobo-stable-redesign *{scroll-behavior:auto}
+}

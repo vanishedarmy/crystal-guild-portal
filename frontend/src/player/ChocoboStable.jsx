@@ -58,6 +58,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
   const [rename, setRename] = useState("");
   const [portraitChoice, setPortraitChoice] = useState("classic_gold");
   const [showPortraitPicker, setShowPortraitPicker] = useState(false);
+  const [showManagement, setShowManagement] = useState(false);
   const [clock, setClock] = useState(() => Date.now());
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
@@ -210,13 +211,27 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
   const writRemaining = writDeadline ? Math.max(0, Math.ceil((writDeadline - clock) / 1000)) : Number(writ?.remaining_seconds || 0);
   const writActive = Boolean(writ?.quantity > 0 && (writ?.active || writRemaining <= 0));
 
+  const registrationStep = !stable?.unlocked
+    ? 1
+    : !quest?.complete
+      ? 2
+      : Number(writ?.quantity || 0) <= 0
+        ? 3
+        : 4;
+  const registrationSteps = [
+    { id: 1, label: "Build Stable", complete: Boolean(stable?.unlocked) },
+    { id: 2, label: "Personal Quest", complete: Boolean(quest?.complete) },
+    { id: 3, label: "Registration Writ", complete: Number(writ?.quantity || 0) > 0 },
+    { id: 4, label: "Register Chocobo", complete: Boolean(companion?.registered) },
+  ];
+
   return (
-    <section className="panel chocobo-stable-panel">
-      <div className="panel-title-row chocobo-title-row">
-        <div>
+    <section className="panel chocobo-stable-panel chocobo-stable-redesign">
+      <div className="panel-title-row chocobo-title-row chocobo-stable-heading">
+        <div className="chocobo-heading-copy">
           <p className="eyebrow">Chocobo Companions</p>
           <h2>Chocobo Stable</h2>
-          <p className="muted">A registered Chocobo is required to launch Expeditions from the Adventure Board.</p>
+          <p className="muted">Raise your companion, manage Bond progress, and prepare for Expeditions.</p>
         </div>
         <div className="chocobo-stable-status">
           <ContextHelp topic="chocobo" />
@@ -225,196 +240,229 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         </div>
       </div>
 
-      <div className={`equipment-action-status ${actionsAvailable ? "ready" : "offline"}`}>
-        <strong>{actionsAvailable ? "Stable connection ready" : "Stable controls unavailable"}</strong>
-        <span>{actionsAvailable ? "Quest, Writ timing, registration, and companion progress are checked by the live Guild." : "Chocobo actions return when Crystal Guild reconnects."}</span>
-        {message ? <small aria-live="polite">{message}</small> : null}
-      </div>
+      {!actionsAvailable ? (
+        <div className="chocobo-inline-status offline">
+          <strong>Stable controls unavailable</strong>
+          <span>Chocobo actions return when Crystal Guild reconnects.</span>
+        </div>
+      ) : message ? (
+        <div className="chocobo-inline-status ready" aria-live="polite">
+          <span>{message}</span>
+        </div>
+      ) : null}
 
       {!state ? (
         <div className="state-message">{actionsAvailable ? "Loading Chocobo Stable…" : "Crystal Guild must be online to manage your Chocobo."}</div>
       ) : companion?.registered ? (
         <>
-        <div className="chocobo-owned-layout">
-          <div className="chocobo-companion-card featured">
-            <div className="chocobo-portrait">
-              <img loading="lazy" decoding="async" src={portraitFor(companion.portrait_id).src} alt={`${companion.name} Chocobo portrait`} />
-            </div>
-            <div className="chocobo-companion-copy">
-              <span className="slot-label">Registered Companion</span>
-              <h3>{companion.name}</h3>
-              <div className="chocobo-level-line"><strong>Lv. {number(companion.level)}</strong><span>Bond XP {number(companion.total_xp)}</span></div>
-              {Number(companion.xp_next || 0) > 0 ? (
-                <div className="vital-row">
-                  <div className="vital-label"><span>Next Level</span><span>{number(companion.xp_current)} / {number(companion.xp_next)}</span></div>
-                  <ProgressBar value={pct(companion.xp_current, companion.xp_next)} />
+          <section className="chocobo-companion-command" aria-label="Registered Chocobo overview">
+            <div className="chocobo-companion-hero">
+              <div className="chocobo-portrait chocobo-portrait-large">
+                <img loading="lazy" decoding="async" src={portraitFor(companion.portrait_id).src} alt={`${companion.name} Chocobo portrait`} />
+              </div>
+              <div className="chocobo-companion-identity">
+                <span className="slot-label">Registered Companion</span>
+                <div className="chocobo-name-row">
+                  <h3>{companion.name}</h3>
+                  <span className="small-badge">LV. {number(companion.level)}</span>
                 </div>
-              ) : <span className="small-badge">MAX LEVEL</span>}
-              <div className="chocobo-traits">
-                {(companion.traits || []).map((trait) => (
-                  <article key={trait.id} className="chocobo-trait-card">
-                    <strong>{trait.name}</strong><span>{trait.description}</span>
-                  </article>
-                ))}
+                <div className="chocobo-bond-summary">
+                  <div className="vital-label"><span>Bond Progress</span><span>{Number(companion.xp_next || 0) > 0 ? `${number(companion.xp_current)} / ${number(companion.xp_next)}` : "MAX"}</span></div>
+                  {Number(companion.xp_next || 0) > 0 ? <ProgressBar value={pct(companion.xp_current, companion.xp_next)} /> : <span className="small-badge success">MAX LEVEL</span>}
+                  <small>{number(companion.total_xp)} total Bond XP</small>
+                </div>
+                {(companion.traits || []).length ? (
+                  <div className="chocobo-trait-inline">
+                    {(companion.traits || []).map((trait) => (
+                      <span key={trait.id}><strong>{trait.name}</strong><small>{trait.description}</small></span>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </div>
-          </div>
-          <div className="chocobo-side-card">
-            <span className="slot-label">Expedition Preparation</span>
-            <strong>{expedition?.ready ? "READY" : "PREPARING"}</strong>
-            <p>{expedition?.message}</p>
-            <div className="chocobo-checklist">
-              <span className={expedition?.chocobo_ready ? "complete" : ""}>{expedition?.chocobo_ready ? "✓" : "○"} Registered Chocobo</span>
-              <span className={expedition?.board_ready ? "complete" : ""}>{expedition?.board_ready ? "✓" : "○"} Fellowship Expedition Board</span>
-            </div>
-            <label className="chocobo-name-field"><span>Rename companion</span><input value={rename} maxLength={20} onChange={(event) => setRename(event.target.value)} placeholder={companion.name} /></label>
-            <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || rename.trim().length < 2} onClick={() => runMutation("rename", () => submitRenameChocobo(rename, csrfToken, actionKey("rename-chocobo")), "Renaming companion…")}>{busy === "rename" ? "Renaming…" : "Rename Chocobo"}</button>
-          </div>
-        </div>
-        {companion.specialization ? (
-          <section className="chocobo-specialization-panel" aria-label="Chocobo Expedition specialization">
-            <div className="panel-title-row compact">
-              <div><span className="slot-label">Expedition Specialty</span><h3>{companion.specialization.name} · Tier {number(companion.specialization.tier)}</h3><p className="muted">{companion.specialization.tier_name} · {companion.specialization.summary}</p></div>
-              <span className={`small-badge ${companion.specialization.maxed ? "success" : ""}`}>{companion.specialization.maxed ? "MAX BOND TIER" : `NEXT · LV.${number(companion.specialization.next_tier_level)}`}</span>
-            </div>
-            <div className="chocobo-specialization-effects">{(companion.specialization.effects || []).map((effect) => <span key={effect}>{effect}</span>)}</div>
-            <div className="chocobo-expedition-records">
-              <div><span>Expeditions</span><strong>{number(companion.accomplishments?.completed || 0)}</strong></div>
-              <div><span>Boss clears</span><strong>{number(companion.accomplishments?.boss_clears || 0)}</strong></div>
-              <div><span>Rare finds</span><strong>{number(companion.accomplishments?.rare_events || 0)}</strong></div>
-              <div><span>Rescues</span><strong>{number(companion.accomplishments?.rescues || 0)}</strong></div>
-              <div><span>Legendary</span><strong>{number(companion.accomplishments?.legendary_contracts || 0)}</strong></div>
+
+            <div className="chocobo-quick-stats" aria-label="Chocobo quick stats">
+              <div><span>Specialty</span><strong>{companion.specialization?.name || "Unassigned"}</strong><small>{companion.specialization ? `Tier ${number(companion.specialization.tier)}` : "Raise Bond to develop"}</small></div>
+              <div><span>Expeditions</span><strong>{number(companion.accomplishments?.completed || 0)}</strong><small>Completed together</small></div>
+              <div><span>Rare Finds</span><strong>{number(companion.accomplishments?.rare_events || 0)}</strong><small>Special discoveries</small></div>
+              <div><span>Boss Clears</span><strong>{number(companion.accomplishments?.boss_clears || 0)}</strong><small>Expedition bosses</small></div>
             </div>
           </section>
-        ) : null}
-        <section className={`chocobo-portrait-picker ${showPortraitPicker ? "expanded" : "collapsed"}`} aria-labelledby="chocobo-portrait-picker-title">
-          <div className="chocobo-portrait-picker-heading">
-            <div>
-              <span className="slot-label">Companion Portrait</span>
-              <h3 id="chocobo-portrait-picker-title">Choose {companion.name}'s portrait</h3>
-              <p className="muted">Portraits are cosmetic only. Choose any style and apply it to your registered Chocobo.</p>
-            </div>
-            <div className="chocobo-portrait-heading-actions">
-              <span className="small-badge">10 PORTRAITS</span>
+
+          <div className="chocobo-stable-dashboard">
+            <section className={`chocobo-readiness-card ${expedition?.ready ? "ready" : ""}`} aria-label="Expedition readiness">
+              <div className="chocobo-card-heading">
+                <div><span className="slot-label">Expedition Readiness</span><h3>{expedition?.ready ? "Ready to Venture" : "Preparation Needed"}</h3></div>
+                <span className={`small-badge ${expedition?.ready ? "success" : ""}`}>{expedition?.ready ? "READY" : "PREPARING"}</span>
+              </div>
+              <p>{expedition?.message}</p>
+              <div className="chocobo-readiness-list">
+                <span className={expedition?.chocobo_ready ? "complete" : ""}>{expedition?.chocobo_ready ? "✓" : "○"}<span><strong>Registered Chocobo</strong><small>Your companion is ready to travel.</small></span></span>
+                <span className={expedition?.board_ready ? "complete" : ""}>{expedition?.board_ready ? "✓" : "○"}<span><strong>Fellowship Expedition Board</strong><small>The shared Guild gate for distant contracts.</small></span></span>
+              </div>
+              <small className="chocobo-readiness-note">Launch Expeditions from the Adventure Board once both requirements are complete.</small>
+            </section>
+
+            {companion.specialization ? (
+              <section className="chocobo-specialization-panel chocobo-specialization-rework" aria-label="Chocobo Expedition specialization">
+                <div className="chocobo-card-heading">
+                  <div><span className="slot-label">Bond Specialty</span><h3>{companion.specialization.name} · Tier {number(companion.specialization.tier)}</h3><p>{companion.specialization.tier_name} · {companion.specialization.summary}</p></div>
+                  <span className={`small-badge ${companion.specialization.maxed ? "success" : ""}`}>{companion.specialization.maxed ? "MAX BOND TIER" : `NEXT · LV.${number(companion.specialization.next_tier_level)}`}</span>
+                </div>
+                <div className="chocobo-specialization-effects">{(companion.specialization.effects || []).map((effect) => <span key={effect}>{effect}</span>)}</div>
+                <div className="chocobo-expedition-records chocobo-records-compact">
+                  <div><span>Rescues</span><strong>{number(companion.accomplishments?.rescues || 0)}</strong></div>
+                  <div><span>Legendary</span><strong>{number(companion.accomplishments?.legendary_contracts || 0)}</strong></div>
+                  <div><span>Total Bond XP</span><strong>{number(companion.total_xp)}</strong></div>
+                </div>
+                <small className="chocobo-specialty-note">Alpha 5 turns each persistent trait into a scaling Expedition specialty and records your adventures together.</small>
+              </section>
+            ) : null}
+          </div>
+
+          <section className={`chocobo-management ${showManagement ? "expanded" : "collapsed"}`} aria-labelledby="chocobo-management-title">
+            <div className="chocobo-management-heading">
+              <div>
+                <span className="slot-label">Stable Services</span>
+                <h3 id="chocobo-management-title">Companion Management</h3>
+                <p className="muted">Rename your Chocobo or change its cosmetic portrait when you need it.</p>
+              </div>
               <button
                 type="button"
-                className="equipment-action-button secondary chocobo-portrait-toggle"
-                aria-expanded={showPortraitPicker}
-                aria-controls="chocobo-portrait-gallery"
-                onClick={(event) => toggleWithViewportAnchor(event, setShowPortraitPicker)}
+                className="equipment-action-button secondary"
+                aria-expanded={showManagement}
+                aria-controls="chocobo-management-body"
+                onClick={(event) => toggleWithViewportAnchor(event, setShowManagement)}
               >
-                {showPortraitPicker ? "Hide Portrait Gallery" : "Show Portrait Gallery"}
+                {showManagement ? "Hide Stable Services" : "Manage Companion"}
               </button>
             </div>
-          </div>
-          <div className="chocobo-portrait-picker-summary">
-            <div className="chocobo-portrait-picker-current">
-              <span className="slot-label">Current Portrait</span>
-              <strong>{portraitFor(companion.portrait_id).name}</strong>
-            </div>
-            <div className="chocobo-portrait-picker-current">
-              <span className="slot-label">Selected</span>
-              <strong>{portraitFor(portraitChoice).name}</strong>
-            </div>
-          </div>
-          {showPortraitPicker ? (
-            <>
-              <div id="chocobo-portrait-gallery" className="chocobo-portrait-grid" role="group" aria-label="Chocobo portrait choices">
-                {CHOCOBO_PORTRAITS.map((portrait) => {
-                  const selected = portraitChoice === portrait.id;
-                  const applied = companion.portrait_id === portrait.id;
-                  return (
-                    <button
-                      key={portrait.id}
-                      type="button"
-                      className={`chocobo-portrait-option ${selected ? "selected" : ""} ${applied ? "applied" : ""}`}
-                      aria-pressed={selected}
-                      onClick={() => setPortraitChoice(portrait.id)}
-                      disabled={Boolean(busy)}
-                    >
-                      <img loading="lazy" decoding="async" src={portrait.src} alt="" aria-hidden="true" />
-                      <span>{portrait.name}</span>
-                      {applied ? <small>Applied</small> : null}
-                    </button>
-                  );
-                })}
+            {!showManagement ? (
+              <div className="chocobo-management-summary">
+                <span><small>Name</small><strong>{companion.name}</strong></span>
+                <span><small>Portrait</small><strong>{portraitFor(companion.portrait_id).name}</strong></span>
               </div>
-              <div className="chocobo-portrait-picker-actions">
-                <span className="muted">Selected: <strong>{portraitFor(portraitChoice).name}</strong></span>
-                <button
-                  type="button"
-                  className="equipment-action-button"
-                  disabled={!actionsAvailable || Boolean(busy) || portraitChoice === companion.portrait_id}
-                  onClick={() => runMutation(
-                    "portrait",
-                    () => submitSetChocoboPortrait(portraitChoice, csrfToken, actionKey("chocobo-portrait", portraitChoice)),
-                    "Applying Chocobo portrait…",
-                  )}
-                >
-                  {busy === "portrait" ? "Applying…" : portraitChoice === companion.portrait_id ? "Portrait Applied" : "Apply Portrait"}
-                </button>
+            ) : (
+              <div id="chocobo-management-body" className="chocobo-management-body">
+                <div className="chocobo-rename-service">
+                  <div><span className="slot-label">Rename Service</span><strong>Change companion name</strong><small>Names can be 2–20 characters.</small></div>
+                  <label className="chocobo-name-field"><span>New Chocobo name</span><input value={rename} maxLength={20} onChange={(event) => setRename(event.target.value)} placeholder={companion.name} /></label>
+                  <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || rename.trim().length < 2} onClick={() => runMutation("rename", () => submitRenameChocobo(rename, csrfToken, actionKey("rename-chocobo")), "Renaming companion…")}>{busy === "rename" ? "Renaming…" : "Rename Chocobo"}</button>
+                </div>
+
+                <section className={`chocobo-portrait-picker ${showPortraitPicker ? "expanded" : "collapsed"}`} aria-labelledby="chocobo-portrait-picker-title">
+                  <div className="chocobo-portrait-picker-heading">
+                    <div>
+                      <span className="slot-label">Companion Portrait</span>
+                      <h3 id="chocobo-portrait-picker-title">Choose {companion.name}'s portrait</h3>
+                      <p className="muted">Portraits are cosmetic only and do not change Chocobo stats.</p>
+                    </div>
+                    <div className="chocobo-portrait-heading-actions">
+                      <span className="small-badge">10 PORTRAITS</span>
+                      <button
+                        type="button"
+                        className="equipment-action-button secondary chocobo-portrait-toggle"
+                        aria-expanded={showPortraitPicker}
+                        aria-controls="chocobo-portrait-gallery"
+                        onClick={(event) => toggleWithViewportAnchor(event, setShowPortraitPicker)}
+                      >
+                        {showPortraitPicker ? "Hide Portrait Gallery" : "Show Portrait Gallery"}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="chocobo-portrait-picker-summary">
+                    <div className="chocobo-portrait-picker-current"><span className="slot-label">Current Portrait</span><strong>{portraitFor(companion.portrait_id).name}</strong></div>
+                    <div className="chocobo-portrait-picker-current"><span className="slot-label">Selected</span><strong>{portraitFor(portraitChoice).name}</strong></div>
+                  </div>
+                  {showPortraitPicker ? (
+                    <>
+                      <div id="chocobo-portrait-gallery" className="chocobo-portrait-grid" role="group" aria-label="Chocobo portrait choices">
+                        {CHOCOBO_PORTRAITS.map((portrait) => {
+                          const selected = portraitChoice === portrait.id;
+                          const applied = companion.portrait_id === portrait.id;
+                          return (
+                            <button key={portrait.id} type="button" className={`chocobo-portrait-option ${selected ? "selected" : ""} ${applied ? "applied" : ""}`} aria-pressed={selected} onClick={() => setPortraitChoice(portrait.id)} disabled={Boolean(busy)}>
+                              <img loading="lazy" decoding="async" src={portrait.src} alt="" aria-hidden="true" />
+                              <span>{portrait.name}</span>
+                              {applied ? <small>Applied</small> : null}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <div className="chocobo-portrait-picker-actions">
+                        <span className="muted">Selected: <strong>{portraitFor(portraitChoice).name}</strong></span>
+                        <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || portraitChoice === companion.portrait_id} onClick={() => runMutation("portrait", () => submitSetChocoboPortrait(portraitChoice, csrfToken, actionKey("chocobo-portrait", portraitChoice)), "Applying Chocobo portrait…")}>{busy === "portrait" ? "Applying…" : portraitChoice === companion.portrait_id ? "Portrait Applied" : "Apply Portrait"}</button>
+                      </div>
+                    </>
+                  ) : null}
+                </section>
               </div>
-            </>
-          ) : null}
-        </section>
+            )}
+          </section>
         </>
       ) : (
-        <div className="chocobo-acquisition-grid">
-          <article className={`chocobo-step-card ${stable?.unlocked ? "complete" : ""}`}>
-            <span className="chocobo-step-number">1</span>
-            <div><span className="slot-label">Fellowship Requirement</span><h3>Build the Chocobo Stable</h3><p className="muted">A shared Fellowship project. The Stable costs only 5,000 Gil plus 10 completed Ventures and requires Fellowship LVL 2.</p><strong>{stable?.unlocked ? "Stable constructed" : "Stable project still required"}</strong></div>
-          </article>
-
-          <article className={`chocobo-step-card ${quest?.complete ? "complete" : ""}`}>
-            <span className="chocobo-step-number">2</span>
-            <div className="chocobo-step-content">
-              <span className="slot-label">Personal Quest</span><h3>{quest?.name}</h3><p className="muted">{quest?.description}</p>
-              <div className="chocobo-requirements">
-                {(quest?.requirements || []).map((req, index) => <span key={`${req.type}-${index}`} className={req.complete ? "complete" : ""}>{req.complete ? "✓" : "○"} {req.label}</span>)}
+        <section className="chocobo-registration-shell" aria-label="Chocobo registration progress">
+          <div className="chocobo-registration-progress">
+            {registrationSteps.map((step) => (
+              <div key={step.id} className={`${step.complete ? "complete" : ""} ${registrationStep === step.id ? "current" : ""}`}>
+                <span>{step.complete ? "✓" : step.id}</span>
+                <small>{step.label}</small>
               </div>
-              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || quest?.complete || !quest?.ready} onClick={() => runMutation("quest", () => submitCompleteChocoboQuest(csrfToken, actionKey("chocobo-quest")), "Filing Chocobo quest paperwork…")}>{quest?.complete ? "Quest Complete" : busy === "quest" ? "Completing…" : "Complete Quest"}</button>
-            </div>
-          </article>
+            ))}
+          </div>
 
-          <article className={`chocobo-step-card ${writ?.quantity > 0 ? "complete" : ""}`}>
-            <span className="chocobo-step-number">3</span>
-            <div className="chocobo-step-content">
-              <span className="slot-label">Registration Writ</span><h3>Chocobo Registration Writ</h3>
-              <p className="muted">Issued for {number(writ?.cost_gil || 500)} Gil once both the Stable and personal quest are ready. The Writ takes exactly one hour to activate.</p>
-              {writ?.quantity > 0 ? (
-                <div className="chocobo-writ-timer"><span>{writActive ? "WRIT ACTIVE" : "VALIDATING WRIT"}</span><strong>{writActive ? "Ready for registration" : duration(writRemaining)}</strong></div>
-              ) : null}
-              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || writ?.quantity > 0 || !writ?.can_purchase} onClick={() => runMutation("writ", () => submitPurchaseChocoboWrit(csrfToken, actionKey("chocobo-writ")), "Issuing Chocobo Registration Writ…")}>{writ?.quantity > 0 ? "Writ Issued" : busy === "writ" ? "Purchasing…" : `Purchase Writ · ${number(writ?.cost_gil || 500)} Gil`}</button>
-            </div>
-          </article>
+          <div className="chocobo-registration-layout">
+            <article className="chocobo-registration-focus">
+              <span className="slot-label">Current Step · {registrationStep} of 4</span>
+              {registrationStep === 1 ? (
+                <div className="chocobo-registration-focus-copy">
+                  <h3>Build the Chocobo Stable</h3>
+                  <p>A Fellowship must construct the Stable before personal Chocobo registration can begin.</p>
+                  <div className="chocobo-requirements">
+                    <span>○ Fellowship LVL 2</span>
+                    <span>○ 5,000 Gil project cost</span>
+                    <span>○ 10 completed Ventures</span>
+                  </div>
+                  <strong className="chocobo-step-callout">Complete this shared project from the Fellowship page.</strong>
+                </div>
+              ) : registrationStep === 2 ? (
+                <div className="chocobo-registration-focus-copy">
+                  <h3>{quest?.name || "Personal Chocobo Quest"}</h3>
+                  <p>{quest?.description}</p>
+                  <div className="chocobo-requirements">{(quest?.requirements || []).map((req, index) => <span key={`${req.type}-${index}`} className={req.complete ? "complete" : ""}>{req.complete ? "✓" : "○"} {req.label}</span>)}</div>
+                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || quest?.complete || !quest?.ready} onClick={() => runMutation("quest", () => submitCompleteChocoboQuest(csrfToken, actionKey("chocobo-quest")), "Filing Chocobo quest paperwork…")}>{quest?.complete ? "Quest Complete" : busy === "quest" ? "Completing…" : "Complete Quest"}</button>
+                </div>
+              ) : registrationStep === 3 ? (
+                <div className="chocobo-registration-focus-copy">
+                  <h3>Chocobo Registration Writ</h3>
+                  <p>Purchase the {number(writ?.cost_gil || 500)} Gil Writ. It takes exactly one hour to activate before registration.</p>
+                  <div className="chocobo-registration-cost"><span>Writ Cost</span><strong>{number(writ?.cost_gil || 500)} Gil</strong></div>
+                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || writ?.quantity > 0 || !writ?.can_purchase} onClick={() => runMutation("writ", () => submitPurchaseChocoboWrit(csrfToken, actionKey("chocobo-writ")), "Issuing Chocobo Registration Writ…")}>{writ?.quantity > 0 ? "Writ Issued" : busy === "writ" ? "Purchasing…" : `Purchase Writ · ${number(writ?.cost_gil || 500)} Gil`}</button>
+                </div>
+              ) : (
+                <div className="chocobo-registration-focus-copy">
+                  <h3>{writActive ? "Name your Chocobo" : "Writ Validation"}</h3>
+                  {writ?.quantity > 0 ? <div className="chocobo-writ-timer"><span>{writActive ? "WRIT ACTIVE" : "VALIDATING WRIT"}</span><strong>{writActive ? "Ready for registration" : duration(writRemaining)}</strong></div> : null}
+                  <p>{writActive ? "Choose a name and the Stable will assign one persistent Expedition trait." : "Your Writ is being validated. Registration unlocks automatically when the timer reaches zero."}</p>
+                  <label className="chocobo-name-field"><span>Chocobo name</span><input value={name} maxLength={20} onChange={(event) => setName(event.target.value)} placeholder="e.g. Biscuit" disabled={!writActive} /></label>
+                  <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !writActive || name.trim().length < 2} onClick={() => runMutation("register", () => submitRegisterChocobo(name, csrfToken, actionKey("register-chocobo")), "Registering your Chocobo…")}>{busy === "register" ? "Registering…" : "Register Chocobo"}</button>
+                </div>
+              )}
+            </article>
 
-          <article className={`chocobo-step-card ${writActive ? "ready-step" : ""}`}>
-            <span className="chocobo-step-number">4</span>
-            <div className="chocobo-step-content">
-              <span className="slot-label">Companion Registration</span><h3>Name your Chocobo</h3><p className="muted">Once the Writ is active, choose a name and the Stable will assign one persistent Expedition trait.</p>
-              <label className="chocobo-name-field"><span>Chocobo name</span><input value={name} maxLength={20} onChange={(event) => setName(event.target.value)} placeholder="e.g. Biscuit" /></label>
-              <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !writActive || name.trim().length < 2} onClick={() => runMutation("register", () => submitRegisterChocobo(name, csrfToken, actionKey("register-chocobo")), "Registering your Chocobo…")}>{busy === "register" ? "Registering…" : "Register Chocobo"}</button>
-            </div>
-          </article>
-        </div>
+            <aside className="chocobo-registration-roadmap">
+              <div><span className="slot-label">Registration Roadmap</span><h3>Journey to your Companion</h3></div>
+              {registrationSteps.map((step) => (
+                <div key={step.id} className={`chocobo-roadmap-step ${step.complete ? "complete" : ""} ${registrationStep === step.id ? "current" : ""}`}>
+                  <span className="chocobo-roadmap-number">{step.complete ? "✓" : step.id}</span>
+                  <span><strong>{step.label}</strong><small>{step.complete ? "Complete" : registrationStep === step.id ? "Current step" : "Locked until prior steps are complete"}</small></span>
+                </div>
+              ))}
+              <p className="muted">Once registered, your Chocobo gains Bond XP from Ventures, treasure, Hunts, and Expeditions.</p>
+            </aside>
+          </div>
+        </section>
       )}
-
-      <section className="chocobo-expedition-preview" aria-label="Expedition readiness">
-        <div className="panel-title-row">
-          <div><span className="panel-kicker">Active</span><h3>Expeditions</h3></div>
-          <span className="small-badge success">EXPEDITIONS OPEN</span>
-        </div>
-        <p className="muted">The Stable is your first step toward Expeditions. Once your Chocobo is registered and the Fellowship Expedition Board is complete, launch distant contracts from the Adventure Board.</p>
-        <div className="chocobo-expedition-notes">
-          <article className={companion?.registered ? "complete" : ""}><strong>{companion?.registered ? "✓" : "○"} Register a Chocobo</strong><span>Every adventurer needs a registered companion to launch.</span></article>
-          <article className={expedition?.board_ready ? "complete" : ""}><strong>{expedition?.board_ready ? "✓" : "○"} Prepare the Guild Board</strong><span>The Fellowship Expedition Board is the shared Guild gate.</span></article>
-          <article><strong>Bond Specialization</strong><span>Your persistent trait becomes a Guardian, Scout, Pathfinder, Forager, or Treasure Hunter specialty whose Expedition bonuses improve with Bond level.</span></article>
-        </div>
-      </section>
-
-      <div className="chocobo-footer-actions">
-        <span className="muted">Registered Chocobos gain Bond XP from Ventures, treasure, Hunts, and Expeditions. Alpha 5 turns each persistent trait into a scaling Expedition specialty and records your adventures together.</span>
-      </div>
     </section>
   );
 }

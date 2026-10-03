@@ -1,0 +1,31 @@
+{
+  "release": "Crystal Guild v1.8.0 Final — Expedition UI Polish",
+  "baseline": "CrystalGuild-v1.8-Merc-Service-Final-Complete.zip",
+  "runtime_frontend": "1.8.0-merc-final",
+  "local_schema": 17,
+  "hosted_sync_schema": 1,
+  "portal_action_protocol": 34,
+  "scope": [
+    "Expedition Board readability hierarchy",
+    "Stronger actionable and selected control states",
+    "Two-step route select then Travel interaction",
+    "Combat separation into Core Actions, Abilities, and Consumables",
+    "Ability grouping by Offense, Restoration, and Support",
+    "Consumable grouping by Healing, Support, and Damage",
+    "Responsive Expedition action layout polish"
+  ],
+  "gameplay_changes": false,
+  "backend_changes": false,
+  "migration_required": false,
+  "validation": {
+    "expedition_regression": "42/42 PASS",
+    "new_ui_plus_item_sort": "9/9 PASS",
+    "full_frontend": "659/660 PASS (1 pre-existing stale v1.7.0 identity assertion)",
+    "source_balance_checks": "PASS"
+  },
+  "changed_source_files": [
+    "frontend/src/player/Expeditions.jsx",
+    "frontend/src/styles/portal.css",
+    "frontend/tests/expeditionUiPolish.test.mjs"
+  ]
+}

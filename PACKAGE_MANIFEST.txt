@@ -1,0 +1,11 @@
+Crystal Guild Alpha 13 — Trading Post QoL
+Release 1.9.0-trading-post-qol-alpha13 | Bot DB schema 25 | Hosted sync 1 | Protocol 39
+Included in complete Alpha13 source package with all public assets. See START_HERE.md and RELEASE_NOTES.md.
+
+Previous manifest (historical):
+Crystal Guild v1.9.0 Alpha 12 — Camp & Recovery — Hosted Web + frontend source
+Release: 1.9.0-camp-recovery-alpha12 | local Bot DB 24 | hosted sync 1 | Portal Actions 38
+- Hosted relay Camp payload validation and current protocol
+- Camp & Recovery responsive frontend, client dispatch, Player Guide and full public assets in Web/frontend/public/
+- Preserved Alpha 11 Mobile Combat HUD and previous systems
+See README_FIRST.txt / UPGRADE_GUIDE.md / RELEASE_NOTES.md; build production dist from source.

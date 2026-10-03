@@ -1,0 +1,12 @@
+{
+  "release": "v1.1.19 — Retro Phase III",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h9",
+  "active_directory": "frontend/public/retro-phase-iii/equipment-families-v1/",
+  "active_asset_count": 22,
+  "retired_directories": [
+    "frontend/public/retro-phase-ii/accessory-families-v2/",
+    "frontend/public/retro-phase-ii/armor-tiers-v2/"
+  ],
+  "live_armor_accessory_items_audited": 103,
+  "retired_path_references_remaining": 0
+}

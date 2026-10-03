@@ -1,0 +1,72 @@
+{
+  "release": "v1.1.19 \u2014 Retro Phase III",
+  "frontend_asset_revision": "1.1.19-retro-phase-iii14-rc1h9",
+  "directory": "frontend/public/retro-phase-iii/material-icons-v1/",
+  "active_png_count": 39,
+  "waves": {
+    "CG-MAT-R01": {
+      "status": "active",
+      "items": [
+        "wolf_fang",
+        "cactuar_needle",
+        "bone_chip",
+        "fish_scale",
+        "coeurl_whisker",
+        "chimera_scale",
+        "malboro_tendril",
+        "behemoth_horn",
+        "bomb_kings_fuse",
+        "morbol_bulb"
+      ]
+    },
+    "CG-MAT-R02": {
+      "status": "active",
+      "items": [
+        "triple_chimera_fang",
+        "dragon_scale",
+        "ancient_cloth",
+        "celestial_thread",
+        "imp_wing",
+        "cockatrice_pinion",
+        "ochu_vine",
+        "basilisk_eye",
+        "lamia_scale",
+        "mindflayer_tentacle"
+      ]
+    },
+    "CG-MAT-R03": {
+      "status": "active",
+      "items": [
+        "antlion_mandible",
+        "sandworm_fang",
+        "garuda_feather",
+        "death_claw_pincer",
+        "dragon_fang",
+        "ultros_tentacle",
+        "demon_wall_fragment",
+        "deathgaze_plume",
+        "earth_harp",
+        "desert_rose"
+      ]
+    },
+    "CG-MAT-R04": {
+      "status": "active",
+      "items": [
+        "nemesis_mark",
+        "yiazmat_scale",
+        "kaiser_scale",
+        "long_gui_plate",
+        "ahriman_lens",
+        "morbol_spore",
+        "magitek_capacitor",
+        "behemoth_hide",
+        "chocobo_writ"
+      ]
+    }
+  },
+  "material_catalog": {
+    "total": 84,
+    "art": 84,
+    "no_art": 0
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "release": "v1.5.1 — Relic Arsenal Complete",
+  "frontend_asset_revision": "1.5.1-relic-arsenal-complete",
+  "assets": [
+    {
+      "file": "collapse-pointer-right-a2.webp",
+      "path": "/ui/collapse-pointer-right-a2.webp",
+      "width": 96,
+      "height": 96,
+      "bytes": 3162,
+      "usage": "Collapsed disclosure indicator",
+      "rendered_size": "1.35rem / 22px Guide"
+    },
+    {
+      "file": "collapse-pointer-down-a2.webp",
+      "path": "/ui/collapse-pointer-down-a2.webp",
+      "width": 96,
+      "height": 96,
+      "bytes": 4924,
+      "usage": "Expanded disclosure indicator",
+      "rendered_size": "1.35rem / 22px Guide"
+    },
+    {
+      "file": "rally_venture.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/rally_venture.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 147704,
+      "usage": [
+        "Adventure Board — Rally Venture"
+      ],
+      "format": "wide"
+    },
+    {
+      "file": "dungeon_board.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 183336,
+      "usage": [
+        "Adventure Board — Dungeon Board"
+      ],
+      "format": "wide"
+    }
+  ],
+  "implementation": {
+    "collapse_pointer": "real state-selected DOM image; right when closed, down when open; canonical shared rendered size",
+    "rally_venture": "real DOM image layer",
+    "dungeon_board": "real DOM background image layer; shared section-collapse-button; right closed / down open"
+  }
+}

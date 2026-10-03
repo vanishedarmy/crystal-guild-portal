@@ -1,0 +1,128 @@
+/* v1.9.2 — Relic Arsenal. Scoped styles avoid disturbing other card/dialog views. */
+.relic-arsenal-panel .relic-introduction {
+  max-width: 70ch;
+  margin: 0 0 1rem;
+  color: #cfdfeb;
+}
+.relic-overview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .7rem;
+  margin-bottom: .85rem;
+}
+.relic-overview-stats > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .2rem;
+  padding: .75rem .8rem;
+  background: rgba(5, 19, 32, .89);
+  border: 1px solid rgba(154, 204, 235, .35);
+  border-radius: 7px;
+}
+.relic-overview-stats strong { font-size: clamp(1.2rem, 3vw, 1.8rem); color: #f6dfa2; line-height: 1.25; }
+.relic-overview-stats strong span { font-size: .76em; color: #c5d9e8; }
+.relic-overview-stats small { color: #c4d5e5; font-size: .78rem; }
+.relic-arsenal-progress { display: grid; gap: .3rem; color: #bbd7e8; font-size: .83rem; margin-bottom: 1rem; }
+.relic-arsenal-guide { border: 1px solid rgba(238, 202, 127, .45); background: rgba(21, 21, 27, .91); border-radius: 7px; padding: .85rem 1rem; margin: .8rem 0 1.15rem; }
+.relic-arsenal-guide strong { color: #f4d58a; }
+.relic-arsenal-guide p { margin: .35rem 0 0; color: #e1e9f2; }
+.relic-arsenal-guide code, .relic-detail-command code { color: #ffe3a5; overflow-wrap: anywhere; }
+.relic-controls { display: grid; grid-template-columns: minmax(180px, 1.6fr) repeat(2, minmax(145px, 1fr)); gap: .7rem; margin: 0 0 .5rem; }
+.relic-controls label { min-width: 0; display: grid; gap: .28rem; color: #e3dcba; font-size: .8rem; font-weight: 600; }
+.relic-controls :is(input, select) { width: 100%; min-width: 0; min-height: 44px; padding: .55rem .65rem; border: 1px solid rgba(168, 213, 244, .48); border-radius: 5px; color: #f0f5ff; background: #0c2135; font: inherit; font-size: .93rem; }
+.relic-controls :is(input, select):focus-visible { outline: 2px solid #f2d08b; outline-offset: 2px; }
+.relic-result-count { color: #b4cadb; font-size: .84rem; margin: .2rem 0 .8rem; }
+.relic-arsenal-panel .relic-card-enriched { display: flex; flex-direction: column; min-width: 0; gap: .45rem; padding: 1rem; background-color: rgba(3, 15, 26, .93); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.relic-card-enriched .relic-card-heading { display: flex; align-items: flex-start; flex-wrap: wrap; gap: .45rem; justify-content: space-between; }
+.relic-state-tag { display: inline-flex; align-items: center; padding: .14rem .4rem; border: 1px solid rgba(154, 205, 238, .55); background: rgba(14, 44, 63, .94); color: #d9f0ff; border-radius: 3px; font-size: .72rem; font-weight: 700; }
+.relic-state-tag.ready { color: #bef8d2; border-color: rgba(103, 235, 153, .65); background: rgba(13, 59, 43, .95); }
+.relic-state-tag.complete { color: #f6e2b2; border-color: rgba(244, 203, 130, .65); background: rgba(63, 43, 17, .95); }
+.relic-card-enriched .relic-progress { margin: .1rem 0 0; }
+.relic-card-objective { margin: .15rem 0; color: #d9e6f2; font-size: .86rem; line-height: 1.45; overflow-wrap: anywhere; }
+.relic-card-reward { display: grid; gap: .13rem; padding-top: .55rem; margin-top: auto; border-top: 1px solid rgba(153, 196, 228, .28); font-size: .82rem; color: #d7e6f1; }
+.relic-card-reward span:first-child { color: #f3d89a; font-weight: 700; }
+.relic-card-detail-link { color: #b9e5ff; font-size: .79rem; font-weight: 700; margin-top: .15rem; }
+.relic-empty { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.relic-empty button { border: 1px solid #e6c77b; color: #f4e0ad; background: rgba(36, 32, 21, .9); padding: .5rem .8rem; border-radius: 4px; min-height: 44px; cursor: pointer; }
+.relic-snapshot-note { font-size: .78rem; color: #b9c9d7; margin: .85rem 0 .1rem; }
+
+/* Rich, progressively disclosed weapon details. */
+.relic-detail-body { display: grid; gap: .75rem; padding-bottom: 1.1rem; }
+.relic-detail-body > h2 { margin: -.4rem 0 .1rem; }
+.relic-detail-hero { display: grid; grid-template-columns: minmax(125px, 190px) minmax(0, 1fr); gap: 1rem; align-items: center; padding: .65rem; border: 1px solid rgba(153, 203, 235, .28); border-radius: 6px; background: rgba(8, 24, 39, .72); }
+.relic-detail-hero .detail-relic-artwork { width: 100%; height: 155px; max-width: 190px; margin: 0; }
+.relic-detail-hero-copy { min-width: 0; display: grid; gap: .45rem; font-size: .88rem; color: #d2e1f0; }
+.relic-detail-hero-copy strong { font-size: 1.03rem; color: #f2d99e; }
+.relic-detail-final, .relic-detail-roadmap, .relic-detail-steps { min-width: 0; }
+.relic-detail-final { border: 1px solid rgba(226, 194, 133, .4); border-radius: 6px; padding: .8rem; background: rgba(30, 26, 24, .61); }
+.relic-detail-final > .data-label { margin-bottom: .4rem; }
+.relic-weapon-reward { display: grid; gap: .35rem; min-width: 0; }
+.relic-weapon-reward p { margin: 0; line-height: 1.45; color: #e5eaf2; overflow-wrap: anywhere; }
+.relic-weapon-reward p.muted { color: #b6c9d8; }
+.relic-weapon-reward-title { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .3rem; color: #f4dba5; }
+.relic-weapon-reward-title span { font-size: .81rem; color: #d8e4ee; }
+.relic-roadmap { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .35rem; }
+.relic-roadmap-step { flex: 1 1 125px; min-width: 0; border: 1px solid rgba(150, 189, 222, .32); border-radius: 4px; padding: .45rem .5rem; font-size: .8rem; color: #d3e1ee; background: rgba(6, 20, 33, .82); }
+.relic-roadmap-step.completed { border-color: #77b796; color: #d4f2df; }
+.relic-roadmap-step.current { border-color: #ebce89; color: #ffe7b1; }
+.relic-detail-steps > .data-label { margin-bottom: .5rem; }
+.relic-stage-details { border: 1px solid rgba(153, 201, 231, .31); border-radius: 5px; background: rgba(6, 21, 34, .79); margin-bottom: .6rem; overflow: hidden; }
+.relic-stage-details[open] { border-color: rgba(241, 205, 138, .58); }
+.relic-stage-details summary { list-style: none; display: flex; align-items: center; gap: .7rem; padding: .7rem .75rem; cursor: pointer; min-height: 55px; }
+.relic-stage-details summary::-webkit-details-marker { display: none; }
+.relic-stage-details summary:focus-visible { outline: 2px solid #f4d48b; outline-offset: -3px; }
+.relic-stage-number { display: grid; place-items: center; flex: 0 0 35px; height: 35px; border: 1px solid rgba(241, 201, 125, .5); border-radius: 4px; color: #f2d697; font-weight: 700; }
+.relic-stage-heading { display: grid; min-width: 0; gap: .03rem; flex: 1; }
+.relic-stage-heading strong { overflow-wrap: anywhere; }
+.relic-stage-heading small { color: #b6cbdb; }
+.relic-stage-expander { color: #e7d29a; font-size: 1.25rem; transition: transform .16s ease; }
+.relic-stage-details[open] .relic-stage-expander { transform: rotate(180deg); }
+.relic-stage-content { display: grid; gap: .5rem; padding: .75rem; border-top: 1px solid rgba(145, 194, 224, .22); }
+.relic-stage-artwork { display: block; height: 145px; width: min(100%, 240px); justify-self: center; margin-bottom: .25rem; }
+.relic-stage-content > .data-label { margin-top: .35rem; }
+.relic-stage-note { background: rgba(26, 44, 57, .76); border-left: 3px solid #a2cce7; color: #d4e3ed; padding: .55rem .65rem; margin: 0; font-size: .82rem; }
+.relic-check-list { display: grid; gap: .33rem; margin: 0; padding: 0; list-style: none; }
+.relic-check-list li { display: grid; grid-template-columns: 1.3rem minmax(0,1fr) auto; align-items: center; gap: .45rem; padding: .42rem .5rem; background: rgba(6, 23, 36, .84); border: 1px solid rgba(153, 195, 225, .2); border-radius: 4px; font-size: .84rem; }
+.relic-check-list li > span:nth-child(2) { overflow-wrap: anywhere; }
+.relic-check-list strong { font-variant-numeric: tabular-nums; white-space: nowrap; font-size: .81rem; }
+.relic-check-list li.met .relic-check-icon { color: #a6ebc2; }
+.relic-check-list li.missing strong { color: #ffe0ac; }
+.relic-check-list li.upcoming strong { color: #c0ccdc; }
+.relic-stage-content .relic-weapon-reward { padding: .55rem; background: rgba(24, 34, 44, .79); border: 1px solid rgba(199, 168, 110, .33); border-radius: 4px; }
+.relic-stage-verdict { padding: .65rem; margin: .35rem 0 0; border-radius: 4px; font-size: .85rem; }
+.relic-stage-verdict.ready { background: rgba(18, 65, 43, .64); border: 1px solid #6bbf89; color: #cdf5dc; }
+.relic-stage-verdict.pending { background: rgba(61, 43, 21, .55); border: 1px solid #b39054; color: #ffe2b0; }
+.relic-detail-command { padding: .7rem; background: rgba(8, 26, 41, .8); }
+.relic-detail-command p { margin: .3rem 0 0; }
+@media (max-width: 760px) {
+  .relic-overview-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .relic-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .relic-controls label:first-child { grid-column: 1 / -1; }
+  .relic-arsenal-panel .relic-card-enriched { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (max-width: 430px) {
+  .relic-detail-hero { grid-template-columns: 1fr; }
+  .relic-detail-hero .detail-relic-artwork { justify-self: center; }
+  .relic-controls { grid-template-columns: 1fr; }
+  .relic-controls label:first-child { grid-column: auto; }
+  .relic-check-list li { grid-template-columns: 1rem minmax(0,1fr); }
+  .relic-check-list strong { grid-column: 2; }
+  .relic-roadmap-step { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .relic-stage-expander { transition: none; } }
+
+.relic-compare { border: 1px solid rgba(153, 201, 231, .34); border-radius: 5px; background: rgba(8, 24, 39, .79); }
+.relic-compare summary { cursor: pointer; padding: .65rem .8rem; color: #f2dba9; font-weight: 700; min-height: 44px; }
+.relic-compare summary:focus-visible { outline: 2px solid #f4d48b; outline-offset: -2px; }
+.relic-compare-scroll { overflow-x: auto; padding: .15rem .7rem .7rem; }
+.relic-compare table { border-collapse: collapse; width: 100%; min-width: 450px; font-size: .81rem; }
+.relic-compare :is(td,th) { padding: .5rem .45rem; border-bottom: 1px solid rgba(162, 201, 229, .24); vertical-align: top; text-align: left; }
+.relic-compare thead th { color: #e3cd94; }
+.relic-compare tbody th { min-width: 135px; color: #f3ead5; }
+.relic-compare tbody th small { display: block; font-weight: 400; color: #a9d9ee; }
+.relic-compare tbody tr:last-child :is(td,th) { border-bottom: none; }
+
+.relic-card-lore { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; margin: 0; font-size: .82rem; line-height: 1.45; color: #c6d7e8; }
+.relic-lore { display: grid; gap: .2rem; margin: 0; border-left: 3px solid #e2c37e; padding: .4rem .65rem; background: rgba(31, 31, 35, .63); color: #e5e3dc; font-size: .9rem; }

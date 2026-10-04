@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { number } from "../utils/formatters.js";
@@ -79,7 +80,7 @@ export default function CraftingWorkbench({ recipes = [], categories = {}, usern
               <div className={`crafting-list-row ${selected?.id === recipe.id ? "selected" : ""}`} key={recipe.id}>
                 <button className="crafting-pick" type="button" aria-pressed={selected?.id === recipe.id} onClick={() => selectRecipe(recipe.id)}>
                   <span><strong>{recipe.output?.name || recipe.name}</strong><small>{recipe.subcategory || readable(recipe.category)} · Lv. {number(recipe.min_level)}</small></span>
-                  <span className={`crafting-status ${recipe.craftable ? "ready" : "unavailable"}`}>{recipe.craftable ? `Ready · ${number(recipe.max_quantity)}` : recipe.level_ready ? "Need materials" : "Level locked"}</span>
+                  <span className={`crafting-status ${recipe.craftable ? "ready" : "unavailable"}`}>{recipe.craftable ? `Ready · ${number(recipe.max_quantity)}` : recipe.level_ready ? "Need materials" : <LockIcon label="Recipe locked: level requirement not met" />}</span>
                 </button>
                 <button className="crafting-favorite" type="button" aria-pressed={favoriteSet.has(recipe.id)} onClick={() => toggleFavorite(recipe.id)} aria-label={`${favoriteSet.has(recipe.id) ? "Remove" : "Add"} ${recipe.output?.name || recipe.name} ${favoriteSet.has(recipe.id) ? "from" : "to"} favorites`} title={favoriteSet.has(recipe.id) ? "Remove favorite" : "Add favorite"}>{favoriteSet.has(recipe.id) ? "★" : "☆"}</button>
               </div>

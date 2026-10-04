@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TROPHY_CATALOG, TROPHY_CATEGORIES } from "./trophyCatalog.js";
 
@@ -192,7 +193,7 @@ export default function TrophyHall({ data = {} }) {
                   <span className="slot-label">{CATEGORY_LABELS[trophy.category]}</span>
                   <strong>{trophy.secret && !unlocked ? "???" : trophy.name}</strong>
                   <span>{unlocked ? trophy.description : trophy.secret ? "Its story has yet to be written." : trophy.requirement}</span>
-                  <small>{unlocked ? formatDate(ownership.unlocked_at) : "Locked"}</small>
+                  <small>{unlocked ? formatDate(ownership.unlocked_at) : <LockIcon label={trophy.secret ? "Locked secret trophy" : `Locked trophy: ${trophy.name}`} />}</small>
                 </div>
               </button>
             );
@@ -214,7 +215,7 @@ export default function TrophyHall({ data = {} }) {
               <h2 id="trophy-detail-title">{selected.secret && !selectedUnlocked ? "???" : selected.name}</h2>
               <p>{selectedUnlocked ? selected.description : selected.secret ? "Its story has yet to be written." : selected.description}</p>
               {!selected.secret || selectedUnlocked ? <div><strong>Requirement</strong><span>{selected.requirement}</span></div> : null}
-              <div><strong>Status</strong><span>{selectedUnlocked ? `Unlocked ${formatDate(selectedState?.unlocked_at)}` : "Locked"}</span></div>
+              <div><strong>Status</strong><span>{selectedUnlocked ? `Unlocked ${formatDate(selectedState?.unlocked_at)}` : <LockIcon label="Trophy locked" />}</span></div>
             </div>
           </section>
         </div>

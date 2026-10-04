@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   submitRetainerCollect,
@@ -294,7 +295,7 @@ export default function RetainerService({ data, overview, onRefresh }) {
                   <span className="retainer-assignment-row-copy">
                     <span className="retainer-assignment-row-head">
                       <strong>{option.name}</strong>
-                      <span className={`small-badge ${current ? "ready" : option.unlocked ? "" : "locked"}`}>{current ? "CURRENT" : option.unlocked ? `${number(option.cost_gil)} Gil` : `Rank ${number(option.rank_required)}`}</span>
+                      <span className={`small-badge ${current ? "ready" : option.unlocked ? "" : "locked"}`}>{current ? "CURRENT" : option.unlocked ? `${number(option.cost_gil)} Gil` : <LockIcon label={`Assignment locked. Requires Retainer Rank ${number(option.rank_required)}.`} />}</span>
                     </span>
                     <span className="retainer-assignment-row-description">{option.description}</span>
                     <span className="retainer-assignment-row-meta"><span>{duration(option.duration_seconds)}</span><span>Rank {number(option.rank_required)}+</span><span>+{number(option.retainer_xp)} EXP</span></span>

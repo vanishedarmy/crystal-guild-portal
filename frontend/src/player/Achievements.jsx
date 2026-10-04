@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useMemo, useState } from "react";
 import { submitSetTitle, waitForPortalAction } from "../api/auth.js";
@@ -66,7 +67,7 @@ function TitleCard({ title, canManage, busy, blocked, onEquip }) {
       <div className="card-meta">{title.description}</div>
       <div className="title-card-foot">
         <span>{humanizeLabel(title.category)}</span>
-        {title.equipped ? <strong>Equipped</strong> : title.unlocked ? <strong>Unlocked</strong> : <span>Locked</span>}
+        {title.equipped ? <strong>Equipped</strong> : title.unlocked ? <strong>Unlocked</strong> : <LockIcon label={`Locked title: ${title.name}`} />}
       </div>
       {title.unlocked && canManage ? (
         <div className="title-card-actions">
@@ -190,7 +191,7 @@ export default function Achievements({ data, onRefresh }) {
           <div className="filter-row compact">
             {["all", "unlocked", "locked"].map((item) => (
               <button key={item} type="button" className={`filter-chip ${state === item ? "active" : ""}`} onClick={() => setState(item)}>
-                {humanizeLabel(item)}
+                {item === "locked" ? <LockIcon label="Show locked achievements" /> : humanizeLabel(item)}
               </button>
             ))}
           </div>
@@ -210,7 +211,7 @@ export default function Achievements({ data, onRefresh }) {
           <div className="filter-row">
             {["unlocked", "locked", "all"].map((item) => (
               <button key={item} type="button" className={`filter-chip ${titleState === item ? "active" : ""}`} onClick={() => setTitleState(item)}>
-                {humanizeLabel(item)}
+                {item === "locked" ? <LockIcon label="Show locked titles" /> : humanizeLabel(item)}
               </button>
             ))}
           </div>

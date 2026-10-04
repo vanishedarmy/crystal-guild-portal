@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   submitChocoboState,
@@ -235,7 +236,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         </div>
         <div className="chocobo-stable-status">
           <ContextHelp topic="chocobo" />
-          <span className={`small-badge ${stable?.unlocked ? "ready" : "locked"}`}>{stable?.unlocked ? "STABLE OPEN" : "STABLE LOCKED"}</span>
+          <span className={`small-badge ${stable?.unlocked ? "ready" : "locked"}`}>{stable?.unlocked ? "STABLE OPEN" : <LockIcon label="Chocobo Stable locked" />}</span>
           <span className="small-badge">{number(state?.gil ?? overview?.identity?.gil ?? 0)} Gil</span>
         </div>
       </div>
@@ -455,7 +456,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
               {registrationSteps.map((step) => (
                 <div key={step.id} className={`chocobo-roadmap-step ${step.complete ? "complete" : ""} ${registrationStep === step.id ? "current" : ""}`}>
                   <span className="chocobo-roadmap-number">{step.complete ? "✓" : step.id}</span>
-                  <span><strong>{step.label}</strong><small>{step.complete ? "Complete" : registrationStep === step.id ? "Current step" : "Locked until prior steps are complete"}</small></span>
+                  <span><strong>{step.label}</strong><small>{step.complete ? "Complete" : registrationStep === step.id ? "Current step" : <LockIcon label="Locked until prior steps are complete" />}</small></span>
                 </div>
               ))}
               <p className="muted">Once registered, your Chocobo gains Bond XP from Ventures, treasure, Hunts, and Expeditions.</p>

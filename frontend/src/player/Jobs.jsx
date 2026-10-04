@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ProgressBar from "../components/ProgressBar.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
@@ -269,7 +270,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
                         <div className="slot-label">{humanizeLabel(job.tier)} Job</div>
                         <div className="card-status-badges" aria-label="Job status">
                           {job.current ? <span className="small-badge success">Current</span> : null}
-                          {!unlocked ? <span className="small-badge locked">Locked</span> : null}
+                          {!unlocked ? <LockIcon className="small-badge locked" label={`Locked job: ${job.name}`} /> : null}
                           {job.mastered ? <span className="small-badge mastered">Mastered</span> : null}
                         </div>
                       </div>

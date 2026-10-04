@@ -1,3 +1,4 @@
+import LockIcon from "./LockIcon.jsx";
 import BossArtwork from "./BossArtwork.jsx";
 import ItemArtwork from "./ItemArtwork.jsx";
 import RelicDetail from "./RelicDetail.jsx";
@@ -147,7 +148,7 @@ function DetailBody({ detail }) {
                 <div className="job-detail-ability-head"><strong>JLv. {ability.level} · {ability.name}</strong><span>{ability.cost} {String(ability.resource || job.resource_mode || "mp").toUpperCase()} · {humanizeLabel(ability.target)}</span></div>
                 {abilityTraitLabels(ability).length ? <div className="ability-trait-row">{abilityTraitLabels(ability).map((label) => <span className="small-badge ability-trait" key={label}>{label}</span>)}</div> : null}
                 <p>{ability.description}</p>
-                <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : `Unlocks at JLv. ${ability.level}`}</span>
+                <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : <span className="lock-requirement"><LockIcon label={`Unlocks at Job Level ${ability.level}`} />JLv. {ability.level}</span>}</span>
               </div>
             )) : <span className="muted">Battle ability reference unavailable.</span>}
           </div>
@@ -157,7 +158,7 @@ function DetailBody({ detail }) {
           <div className="job-detail-ability-list">
             {passiveAbilities.length ? passiveAbilities.map((ability) => (
               <div className={`job-detail-ability ${ready(ability) ? "ready" : "locked"}`} key={`${ability.level}-${ability.name}`}>
-                <div className="job-detail-ability-head"><strong>JLv. {ability.level} · {ability.name}</strong><span>{ready(ability) ? "Learned" : "Locked"}</span></div>
+                <div className="job-detail-ability-head"><strong>JLv. {ability.level} · {ability.name}</strong><span>{ready(ability) ? "Learned" : <LockIcon label={`Locked ability: ${ability.name}. Unlocks at JLv. ${ability.level}.`} />}</span></div>
                 <p>{ability.description}</p>
               </div>
             )) : <span className="muted">No passive Job milestones listed.</span>}

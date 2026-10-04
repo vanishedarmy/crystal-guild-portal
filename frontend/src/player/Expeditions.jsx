@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useEffect, useMemo, useState } from "react";
 import {
   submitExpeditionStart,
@@ -228,7 +229,7 @@ export default function Expeditions({
           </div>
           <div className="section-collapse-actions">
             <ContextHelp topic="expeditions" />
-            <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : "LOCKED"}</span>
+            <span className={`small-badge ${data?.ready || active ? "success" : "locked"}`}>{active ? String(active.status || "active").toUpperCase() : data?.ready ? "READY" : <LockIcon label="Expedition Board locked" />}</span>
             <button type="button" className="section-collapse-button" aria-expanded={boardOpen} aria-label={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} title={boardOpen ? "Collapse Expedition Board" : "Expand Expedition Board"} onClick={(event) => toggleWithViewportAnchor(event, setBoardOpen)}><CollapsePointer open={boardOpen} /></button>
           </div>
         </div>
@@ -286,7 +287,7 @@ export default function Expeditions({
                     <strong>{region.name}</strong>
                     <small>{region.identity} · {region.hazard}</small>
                     <small>{number(progress.landmarks_found || 0)} / {number(REGION_LANDMARK_COUNT)} landmarks charted</small>
-                    <span className={`small-badge ${region.unlocked ? "success" : "locked"}`}>{region.unlocked ? "Available" : region.reason}</span>
+                    <span className={`small-badge ${region.unlocked ? "success" : "locked"}`}>{region.unlocked ? "Available" : <span className="lock-requirement"><LockIcon label={`Locked region: ${region.name}. ${region.reason || ""}`} />{region.reason}</span>}</span>
                   </button>
                 );
               })}
@@ -308,7 +309,7 @@ export default function Expeditions({
                       <div key={`${pickedRegion.id}:${threshold}`} className={Number(pickedRegion.progress?.progress || 0) >= Number(threshold || 0) ? "complete" : ""}>
                         <span>{number(threshold)}%</span>
                         <strong>{name}</strong>
-                        <small>{Number(pickedRegion.progress?.progress || 0) >= Number(threshold || 0) ? "Complete" : "Locked"}</small>
+                        <small>{Number(pickedRegion.progress?.progress || 0) >= Number(threshold || 0) ? "Complete" : <LockIcon label={`Locked milestone: ${name}. Requires ${number(threshold)}% progress.`} />}</small>
                       </div>
                     ))}
                   </div>
@@ -337,7 +338,7 @@ export default function Expeditions({
                   <div className="expedition-boss-contract-row">
                     <div><span className="slot-label">Regional Boss</span><strong>{pickedRegion.boss_name || "Regional Boss"}</strong><small>{pickedRegion.progress?.boss_unlocked ? `${number(pickedRegion.progress?.boss_clears || 0)} clear${Number(pickedRegion.progress?.boss_clears || 0) === 1 ? "" : "s"} · +${STIPEND_SEALS.boss} Seals on completion` : `Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}%`}</small></div>
                     <div className="expedition-contract-actions">
-                      <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.boss_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:boss", "expedition-start", `${pickedRegion.id}:boss`, (idem) => submitExpeditionStart(pickedRegion.id, "boss", csrfToken, idem), "Regional Boss Expedition launched.")}>{busy === "expedition:boss" ? "Preparing Contract…" : pickedRegion.progress?.boss_unlocked ? `Challenge ${pickedRegion.boss_name}` : "Boss Locked"}</button>
+                      <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.boss_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:boss", "expedition-start", `${pickedRegion.id}:boss`, (idem) => submitExpeditionStart(pickedRegion.id, "boss", csrfToken, idem), "Regional Boss Expedition launched.")}>{busy === "expedition:boss" ? "Preparing Contract…" : pickedRegion.progress?.boss_unlocked ? `Challenge ${pickedRegion.boss_name}` : <LockIcon label={`Regional boss locked. Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}% progress.`} />}</button>
                       {pickedRegion.progress?.mastered ? <button type="button" className="equipment-action-button legendary-contract-button" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.legendary_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:legendary", "expedition-start", `${pickedRegion.id}:legendary`, (idem) => submitExpeditionStart(pickedRegion.id, "legendary", csrfToken, idem), "Legendary Regional Contract launched.")}>{busy === "expedition:legendary" ? "Preparing Legendary Route…" : pickedRegion.progress?.legendary_unlocked ? `Launch Legendary Contract · +${STIPEND_SEALS.legendary} Seals` : "Clear Boss to Unlock"}</button> : null}
                     </div>
                   </div>

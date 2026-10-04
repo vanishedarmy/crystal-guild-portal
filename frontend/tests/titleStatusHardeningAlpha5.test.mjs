@@ -15,7 +15,7 @@ test("Achievement cards use authoritative unlocked state rather than current pro
   const source = read("../src/player/Achievements.jsx");
   assert.match(source, /achievement\.unlocked \? "Unlocked"/);
   assert.match(source, /achievement\.unlocked\) return "earned"|achievementAttainmentState/);
-  assert.match(source, /title\.unlocked \? <strong>Unlocked<\/strong> : <span>Locked<\/span>/);
+  assert.match(source, /title\.unlocked \? <strong>Unlocked<\/strong> : <LockIcon label=/);
 });
 
 test("What's New documents proactive retroactive reconciliation", () => {

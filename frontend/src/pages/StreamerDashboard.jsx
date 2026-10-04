@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useDeferredValue, useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchStreamerDashboard } from "../api/streamer.js";
@@ -391,7 +392,7 @@ function StreamerControlPanel({ auth, refreshAuth, onDashboardRefresh, players =
       {accessState !== "ready" ? (
         <div className={`streamer-control-access ${accessState}`}>
           <div>
-            <strong>{accessState === "checking" ? "Checking streamer access…" : accessState === "signed-out" ? "Streamer controls are locked" : accessState === "unauthorized" ? "Read-only dashboard" : "Bot connection required"}</strong>
+            <strong>{accessState === "checking" ? "Checking streamer access…" : accessState === "signed-out" ? <span className="lock-requirement"><LockIcon label="Streamer controls locked. Sign in to unlock." />Streamer controls</span> : accessState === "unauthorized" ? "Read-only dashboard" : "Bot connection required"}</strong>
             <p>
               {accessState === "checking" ? "Verifying your Twitch session and Bot manifest." :
                 accessState === "signed-out" ? "Sign in with Twitch to verify the configured broadcaster account. The public dashboard remains visible without signing in." :

@@ -1,3 +1,9 @@
+## v1.9.6 — Shared Lock Icon UI
+
+- Replace locked status text throughout compact Portal cards, badges, filters and controls with a shared accessible pixel-style padlock.
+- Keep unlock instructions, useful numeric requirements and disabled-state rules.
+- Include rebuilt frontend output and updated obsolete-chunk cleanup audit; retain the Triple Triad progression fix.
+
 ## v1.9.6 — Progression Hotfix 1
 
 - Validate Triple Triad challenges against the bundled expanded catalog so all ten opponents can reach the Bot.

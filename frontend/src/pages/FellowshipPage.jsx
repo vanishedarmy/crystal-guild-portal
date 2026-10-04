@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchFellowship } from "../api/fellowship.js";
@@ -81,7 +82,7 @@ function FacilityCard({ facility }) {
           <span className="panel-kicker">{facility.locked ? "Future Construction" : "Guild Facility"}</span>
           <h3>{facility.name}</h3>
         </div>
-        <span className="small-badge">{facility.locked ? "LOCKED" : `Lv. ${level} / ${maxLevel}`}</span>
+        <span className="small-badge">{facility.locked ? <LockIcon label={`Locked facility: ${facility.name}`} /> : `Lv. ${level} / ${maxLevel}`}</span>
       </div>
       <p>{facility.description}</p>
       <strong>{facility.current_benefit}</strong>
@@ -136,7 +137,7 @@ export default function FellowshipPage() {
       ? "UNDER CONSTRUCTION"
       : expeditionProject
         ? "PROJECT AVAILABLE"
-        : "LOCKED";
+        : <LockIcon label="Guild Expedition Board locked" />;
 
   return (
     <>
@@ -239,7 +240,7 @@ export default function FellowshipPage() {
                   <div className="fellowship-airship-grid">
                     {(data.airship?.missions || []).map((mission) => (
                       <article className={`fellowship-airship-mission ${mission.unlocked ? "" : "locked"}`} key={mission.id}>
-                        <span className="panel-kicker">{mission.unlocked ? "Mission" : `Crystal Core Tier ${number(mission.required_core)} Required`}</span>
+                        <span className="panel-kicker">{mission.unlocked ? "Mission" : <span className="lock-requirement"><LockIcon label={`Mission locked. Requires Crystal Core Tier ${number(mission.required_core)}.`} />Core Tier {number(mission.required_core)}</span>}</span>
                         <h3>{mission.name}</h3>
                         <p>{mission.description}</p>
                         <small>{number(mission.target_effective)} progress · about {Math.max(1, Math.round(Number(mission.duration_seconds || 0) / 3600))}h · +{number(mission.guild_renown)} base Guild Renown</small>

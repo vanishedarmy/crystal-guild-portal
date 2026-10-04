@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useMemo, useState } from "react";
 import { formatMonsterSpecial, number } from "../utils/formatters.js";
 import { humanizeLabel, locationLabel } from "../utils/displayLabels.js";
@@ -240,7 +241,7 @@ function MonsterCard({ monster, expanded, onToggle }) {
           </div>
           <div className="bestiary-card-tags">
             <span>{scopeLabel(monster?.scope)}</span>
-            {monster?.category ? <span>{categoryLabel(monster.category)}</span> : <span>Undiscovered</span>}
+            {monster?.category ? <span>{categoryLabel(monster.category)}</span> : <LockIcon label="Undiscovered Bestiary entry" />}
             {monster?.family ? <span>{humanizeLabel(monster.family)}</span> : null}
           </div>
           <ResearchTrack monster={monster} />

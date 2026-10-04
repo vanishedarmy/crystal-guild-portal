@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import TripleTriad from "./TripleTriad.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -541,7 +542,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                     <button type="button" key={course.id} className={`saucer-race-course ${raceCourse === course.id ? "selected" : ""} ${course.eligible ? "" : "locked"}`} onClick={() => setRaceCourse(course.id)} disabled={Boolean(busy)} aria-pressed={raceCourse === course.id}>
                       <span className="saucer-race-course-art"><img loading="lazy" decoding="async" src={RACE_COURSE_ART[displayText(course.id, "")] || `${RACE_ART_ROOT}/race-arena.webp`} alt="" aria-hidden="true" /></span>
                       <span className="saucer-race-course-body">
-                        <span className="saucer-race-course-meta"><span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : `Bond Lv. ${number(course.min_level)}`}</span>{raceCourse === course.id ? <span className="small-badge ready">SELECTED</span> : null}</span>
+                        <span className="saucer-race-course-meta"><span className={`small-badge ${course.eligible ? "ready" : "locked"}`}>{course.eligible ? `${number(course.cost)} MGP` : <span className="lock-requirement"><LockIcon label={`Course locked. Requires Bond Level ${number(course.min_level)}.`} />Bond Lv. {number(course.min_level)}</span>}</span>{raceCourse === course.id ? <span className="small-badge ready">SELECTED</span> : null}</span>
                         <strong>{displayText(course.name, "Race Course")}</strong>
                         <small>{displayText(course.description, "Gold Saucer race course.")}</small>
                         <span className="saucer-race-podium">{asObjectArray(course.payouts).map((row) => `${row.place}: ${number(row.payout)}`).join(" · ")} MGP</span>

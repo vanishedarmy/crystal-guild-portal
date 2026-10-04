@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   submitAdventureState,
@@ -668,8 +669,8 @@ export default function Hunts({ data, overview, onRefresh }) {
             ? "Camp · Resting"
             : "No active adventure";
   const soloBoardLabel = expedition ? `Stage ${number(expedition.stage)}` : soloRemaining > 0 ? duration(soloRemaining) : state?.solo_venture?.ready ? "Ready" : "Unavailable";
-  const expeditionBoardLabel = fieldExpedition ? `Stage ${number(fieldExpedition.stage)}` : state?.expeditions?.ready ? "Ready" : "Locked";
-  const dungeonBoardLabel = dungeonRun ? `Room ${number(dungeonRun.room_number)} / ${number(dungeonRun.room_count)}` : readyDungeonCount ? `${number(readyDungeonCount)} ready` : "Locked";
+  const expeditionBoardLabel = fieldExpedition ? `Stage ${number(fieldExpedition.stage)}` : state?.expeditions?.ready ? "Ready" : <LockIcon label="Expedition Board locked" />;
+  const dungeonBoardLabel = dungeonRun ? `Room ${number(dungeonRun.room_number)} / ${number(dungeonRun.room_count)}` : readyDungeonCount ? `${number(readyDungeonCount)} ready` : <LockIcon label="Dungeon Board locked" />;
   const huntBoardLabel = activeHunt ? `Returns in ${duration(activeHuntRemaining)}` : readyHuntCount ? `${number(readyHuntCount)} ready` : "No marks ready";
 
 
@@ -981,7 +982,7 @@ export default function Hunts({ data, overview, onRefresh }) {
               </div>
               <div className="card-status-row adventure-region-head">
                 <div className="slot-label">Lv. {number(region.min_level)}+</div>
-                <span className={`small-badge ${region.current ? "success" : !region.unlocked ? "locked" : ""}`}>{region.current ? "Current" : region.unlocked ? "Unlocked" : "Locked"}</span>
+                <span className={`small-badge ${region.current ? "success" : !region.unlocked ? "locked" : ""}`}>{region.current ? "Current" : region.unlocked ? "Unlocked" : <LockIcon label={`Locked region: ${region.name}`} />}</span>
               </div>
               <h3>{region.name}</h3>
               <p className="adventure-region-summary">{region.description}</p>
@@ -1081,7 +1082,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                   <MonsterPortrait monster={hunt.monster} name={hunt.monster?.name} className="hunt-card-portrait" />
                   <div className="adventure-hunt-head">
                     <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv. {number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
-                    <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : "Locked"}</span>
+                    <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : <LockIcon label={`Locked hunt: ${hunt.name}`} />}</span>
                   </div>
                 </div>
                 <div className="hunt-reward-grid">

@@ -1,3 +1,4 @@
+import LockIcon from "../components/LockIcon.jsx";
 import { useMemo, useState } from "react";
 import {
   submitDungeonStart,
@@ -250,7 +251,7 @@ export default function Dungeons({
                 <article key={dungeon.id} className={`dungeon-card ${dungeon.unlocked ? "unlocked" : "locked"}`}>
                   {dungeon.art ? <img loading="lazy" decoding="async" className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
                   <div className="dungeon-card-content">
-                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · {dungeon.identity || `Lv. ${number(dungeon.min_level)}+`}</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : "Locked"}</span></div>
+                  <div className="panel-title-row"><div><p className="eyebrow">{number(dungeon.rooms)} Chambers · {dungeon.identity || `Lv. ${number(dungeon.min_level)}+`}</p><h3>{dungeon.name}</h3><p className="muted">{dungeon.subtitle || "A persistent multi-room delve with combat, hazards, treasure, and a final boss."}</p></div><span className={`small-badge ${dungeon.unlocked ? "success" : ""}`}>{dungeon.unlocked ? "Available" : <LockIcon label={`Locked dungeon: ${dungeon.name}`} />}</span></div>
                   <div className="dungeon-card-stats">
                     <span><strong>Recommended</strong> Lv. {number(dungeon.recommended_level || dungeon.min_level)} · Entry Lv. {number(dungeon.min_level)}</span>
                     <span><strong>Length</strong> {number(dungeon.rooms)} chambers</span>

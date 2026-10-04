@@ -111,6 +111,7 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === String(data.player?.username || "").toLowerCase());
   const capabilities = new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []);
   const equipmentActionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && capabilities.has("EQUIP_ITEM") && capabilities.has("UNEQUIP_SLOT"));
+  const cacheActionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && capabilities.has("USE_FIELD_ITEM"));
   const recoveryActionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && capabilities.has("RECOVERY_STATE") && capabilities.has("USE_FIELD_ITEM") && capabilities.has("START_REST"));
 
   const currentBySlot = useMemo(() => { const map = new Map(); for (const entry of overview?.equipment || []) map.set(entry.slot, entry); return map; }, [overview?.equipment]);
@@ -368,17 +369,26 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
     setRecoveryMessage(message); const state = finished?.result?.data?.recovery_state; if (state) setRecoveryState(state); if (finished?.status === "completed") onRefresh?.();
   });
 
+  const openCache = (item) => runQueuedAction(`open:${item.id}`, () => submitUseFieldItem(item.id, auth.csrf_token, actionKey("open-cache", item.id)), "Cache opened.", (finished, message) => {
+    setActionMessage(message);
+    const state = finished?.result?.data?.recovery_state;
+    if (state) setRecoveryState(state);
+    if (finished?.status === "completed") onRefresh?.();
+  });
+
   const renderInventoryCard = (item, groupKey, index, { favorite = false } = {}) => {
     const upgrade = item.upgrade_level ? ` +${item.upgrade_level}` : "";
     const rawType = String(item.type || "").toLowerCase();
     const isHeldConsumable = groupKey === "item" && !["accessory", "weapon", "armor", "material"].includes(rawType);
+    const isCache = item.use?.effects?.some((effect) => effect.type === "open_cache");
+    const cacheLockReason = recoveryState?.cache_open_reason || "";
     const isEquipment = EQUIPMENT_GROUPS.has(groupKey);
     const current = isEquipment ? currentBySlot.get(groupKey) : null;
     const canUse = eligibility(item, overview);
     const itemBusy = busyKey === `equip:${item.id}` || busyKey === `unequip:${groupKey}`;
     const isFavorite = favorite || favoriteIds.has(String(item.id));
     return (
-      <article className={`inventory-card inventory-action-card ${item.equipped ? "is-equipped" : ""} ${isFavorite ? "is-favorite" : ""}`} key={`${groupKey}-${item.id || item.name}-${index}`}>
+      <article className={`inventory-card inventory-action-card ${isCache ? "is-cache" : ""} ${item.equipped ? "is-equipped" : ""} ${isFavorite ? "is-favorite" : ""}`} key={`${groupKey}-${item.id || item.name}-${index}`}>
         <button type="button" className="inventory-card-detail" onClick={() => onDetail?.({ type: "inventory", inventoryGroup: groupKey, item })}>
           <ItemArtwork item={item} className="inventory-item-artwork" />
           <span className="slot-label">{slotLabel(item)}{isEquipment ? ` · Lv. ${number(itemLevel(item))}` : ""}</span>
@@ -389,6 +399,10 @@ export default function Inventory({ data, overview, onDetail, onRefresh }) {
           {["weapon", "armor"].includes(rawType) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
           {isHeldConsumable && item.description ? <span className="inventory-consumable-description">{item.description}</span> : null}
         </button>
+        {isCache && isOwnProfile ? <div className="equipment-card-actions">
+          <button type="button" className="equipment-action-button" disabled={!cacheActionsAvailable || Boolean(busyKey) || Boolean(cacheLockReason)} title={cacheLockReason || undefined} onClick={() => openCache(item)}>{busyKey === `open:${item.id}` ? "Opening…" : `Open ${item.name}`}</button>
+          {cacheLockReason ? <small>{cacheLockReason}</small> : null}
+        </div> : null}
         {isEquipment ? <div className="equipment-card-actions">
           <div className="equipment-compare">{item.equipped ? <span>Currently equipped in this slot.</span> : <small>{equipmentDelta(item, current)}</small>}</div>
           {isOwnProfile ? <button type="button" className={`gear-favorite-button ${isFavorite ? "active" : ""}`} aria-pressed={isFavorite} aria-label={isFavorite ? `Remove ${item.name} from Favorites` : `Add ${item.name} to Favorites`} title={!favoriteSyncReady ? "Syncing Favorites…" : isFavorite ? "Remove from Favorites" : "Add to Favorites"} disabled={!favoriteSyncReady} onClick={() => toggleFavorite(item.id)}>{isFavorite ? "★" : "☆"}</button> : null}

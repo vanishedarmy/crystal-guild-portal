@@ -5,7 +5,7 @@ import { number } from "../utils/formatters.js";
 import { humanizeLabel } from "../utils/displayLabels.js";
 
 const REWARD_DESCRIPTIONS = {
-  spooky_supply_cache: "A repeatable seasonal collectible. This reward grants no supplies or Gil.",
+  spooky_supply_cache: "Adds one sealed cache to Inventory. Open for one reward: 45% common, 25% uncommon, 10% rare, 4% artifact, 1% legendary item, or 15% chance of 100–750 Gil.",
   nightwatcher: "Unlocks the Nightwatcher title for your adventurer. Cosmetic only; no stat bonus.",
   haunted_candle: "A Halloween keepsake for your seasonal collection. Cosmetic only; no stat bonus.",
   hollow_crystal_display: "A seasonal display collectible that also unlocks the Keeper of the Hollow trophy. No stat bonus.",

@@ -529,6 +529,7 @@ export function itemArtworkId(item = {}) {
 }
 
 export function itemArtworkPath(item = {}) {
+  if (normalizeItemId(item.id || item.item_id) === "spooky_supply_cache") return "/seasonal/halloween-2026/spooky-supply-cache.webp";
   const direct = itemArtworkId(item);
   if (direct) return `${ITEM_ART_BASE}/${direct}.webp`;
   const type = itemType(item);

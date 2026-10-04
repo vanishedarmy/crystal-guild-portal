@@ -15597,3 +15597,20 @@ textarea {
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
+
+/* Sealed caches keep the odds readable beside compact existing artwork. */
+#root .inventory-card.is-cache .inventory-card-detail {
+  padding-right: 1rem;
+}
+#root .inventory-card.is-cache .inventory-card-detail > .slot-label,
+#root .inventory-card.is-cache .inventory-card-detail > .item-name,
+#root .inventory-card.is-cache .inventory-card-detail > .card-meta {
+  padding-right: 3.5rem;
+}
+#root .inventory-card.is-cache .inventory-item-artwork {
+  width: 48px;
+  height: 48px;
+}
+#root .inventory-card.is-cache .equipment-card-actions {
+  grid-template-columns: minmax(0, 1fr);
+}

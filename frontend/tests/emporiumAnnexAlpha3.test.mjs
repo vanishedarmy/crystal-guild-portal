@@ -7,13 +7,13 @@ const SRC = new URL("../src/", import.meta.url);
 test("Alpha 3 surfaces the Moogle Emporium Annex in shop and Fellowship UI", async () => {
   const shop = await readFile(new URL("player/MoogleEmporium.jsx", SRC), "utf8");
   const fellowship = await readFile(new URL("pages/FellowshipPage.jsx", SRC), "utf8");
-  assert.match(shop, /Moogle Emporium Annex/);
+  assert.match(shop, /Moogle Annex/);
   assert.match(shop, /annexUnlocked/);
   assert.match(shop, /stockSlots/);
-  assert.match(shop, /\+2 Weapons, \+4 Armor & Accessories, and \+6 Items/);
+  assert.match(shop, /10% off regional counter purchases/);
   assert.match(fellowship, /Moogle Emporium Annex/);
   assert.match(fellowship, /emporium_annex/);
-  assert.match(fellowship, /facility_count \|\| 6/);
+  assert.match(fellowship, /facility_count \|\| 7/);
 });
 
 test("Alpha 3 Annex status stays fluid on narrow Emporium layouts", async () => {
@@ -26,6 +26,6 @@ test("Alpha 3 Annex status stays fluid on narrow Emporium layouts", async () => 
 
 test("Alpha 3 release identity is visible in the frontend", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
-  assert.match(version, /Elite Mercs/);
-  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(version, /Triple Triad Expanded/);
+  assert.match(version, /1\.9\.6-triple-triad-expanded/);
 });

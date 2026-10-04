@@ -15,6 +15,8 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { duration, formatBestUse, formatBonuses, formatItemUse, number } from "../utils/formatters.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 import { loadGuideData, mergeItemListWithCatalog } from "../utils/itemCatalog.js";
+import LockIcon from "../components/LockIcon.jsx";
+import "../styles/emporium-regional.css";
 import ItemArtwork from "../components/ItemArtwork.jsx";
 import { beginQuantityEdit, clampQuantity, finishQuantityEdit, quantityInputValue, updateQuantityInput } from "../utils/quantityInput.js";
 import { compareTradingPostItems } from "../utils/tradingPostSort.js";
@@ -101,7 +103,9 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   const [clock, setClock] = useState(() => Date.now());
   const [guideData, setGuideData] = useState(null);
   const [mode, setMode] = useState("buy");
-  const [category, setCategory] = useState("weapons");
+  const [category, setCategory] = useState("all");
+  const [stockSearch, setStockSearch] = useState("");
+  const [stockSort, setStockSort] = useState("recommended");
   const [marketView, setMarketView] = useState("browse");
   const [marketCategory, setMarketCategory] = useState("all");
   const [marketItemFilter, setMarketItemFilter] = useState("");
@@ -150,8 +154,16 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     () => mergeItemListWithCatalog(Array.isArray(shop?.stock) ? shop.stock : [], guideData).sort(compareShopItems),
     [shop?.stock, guideData],
   );
-  const filteredStock = useMemo(() => displayedStock.filter((item) => shopCategory(item) === category), [displayedStock, category]);
-  const filteredSellableItems = useMemo(() => sellableItems.filter((item) => shopCategory(item) === category), [sellableItems, category]);
+  const filterCounter = useCallback((items) => {
+    const query = stockSearch.trim().toLowerCase();
+    const filtered = items.filter((item) => (category === "all" || shopCategory(item) === category)
+      && (!query || `${item.name} ${item.description || ""}`.toLowerCase().includes(query)));
+    if (stockSort === "price") filtered.sort((a, b) => Number(a.sell_price ?? a.price ?? 0) - Number(b.sell_price ?? b.price ?? 0) || compareShopItems(a, b));
+    if (stockSort === "name") filtered.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    return filtered;
+  }, [category, stockSearch, stockSort]);
+  const filteredStock = useMemo(() => filterCounter(displayedStock), [displayedStock, filterCounter]);
+  const filteredSellableItems = useMemo(() => filterCounter(sellableItems), [sellableItems, filterCounter]);
   const marketListings = useMemo(() => (Array.isArray(market?.listings) ? market.listings : [])
     .filter((listing) => (marketCategory === "all" || shopCategory(listing?.item) === marketCategory)
       && (!marketItemFilter || listing?.item?.id === marketItemFilter))
@@ -178,8 +190,11 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       || item.id.toLowerCase().includes(query)).slice(0, 12);
   }, [historySearch, marketCatalog]);
 
-  const annexUnlocked = Boolean(shop?.annex_unlocked);
-  const stockSlots = Number(shop?.stock_slots || (annexUnlocked ? 21 : 9));
+  const annexUnlocked = Boolean(shop?.guild_perks?.annex_built ?? shop?.annex_unlocked);
+  const stockSlots = Number(shop?.stock_slots || 12);
+  const regionalShop = shop?.regional_shop;
+  const regionalModel = Boolean(regionalShop?.id);
+  const guildDiscount = Number(shop?.guild_perks?.purchase_discount || 0) * 100;
 
   // Browsing must not disappear just because an older Bot has not advertised
   // a buy/sell permission. Keep read and mutation permissions independent.
@@ -237,7 +252,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
         setShop(next);
         // Fresh recruits and low-level characters can have no weapon stock.
         // Open the first populated category instead of showing an empty page.
-        setCategory((previous) => next.stock.some((item) => shopCategory(item) === previous)
+        setCategory((previous) => previous === "all" || next.stock.some((item) => shopCategory(item) === previous)
           ? previous : (["items", "armor", "weapons"].find((kind) => next.stock.some((item) => shopCategory(item) === kind)) || previous));
         if (!quiet) setMessage("Moogle Emporium updated.");
         return next;
@@ -296,7 +311,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
   useEffect(() => {
     if (!shopStateAvailable) return;
     loadShop();
-  }, [shopStateAvailable, loadShop]);
+  }, [shopStateAvailable, loadShop, overview?.region?.id, overview?.job?.id, overview?.identity?.level]);
 
   useEffect(() => {
     if (mode !== "market" || !tradingPostActionsAvailable) return;
@@ -481,7 +496,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
         <div className="panel-title-row"><h2>Moogle Emporium</h2><span className="small-badge">Personal shop</span></div>
         <div className="moogle-access-note">
           <strong>This Emporium belongs to its adventurer.</strong>
-          <span>Sign in with the Twitch account linked to this character to view their personal rotation or make transactions.</span>
+          <span>Sign in with the Twitch account linked to this character to view their regional stock or make transactions.</span>
         </div>
       </section>
     );
@@ -491,7 +506,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
     <section className="panel moogle-panel">
       <div className="panel-title-row moogle-title-row">
         <div>
-          <p className="eyebrow">Kupo commerce, regrettably legitimate</p>
+          <p className="eyebrow">A Moogle counter at every stop</p>
           <h2>Moogle Emporium</h2>
         </div>
         <div className="context-help-actions"><ContextHelp topic="emporium" /><div className="moogle-wallet" aria-label={`${number(shop?.gil ?? overview?.identity?.gil ?? 0)} Gil`}>
@@ -502,28 +517,40 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       <div className={`equipment-action-status ${shopStateAvailable ? "ready" : "offline"}`}>
         <strong>{shopStateAvailable ? "The counter is open" : "The counter is closed for now"}</strong>
         <span>{shopStateAvailable
-          ? "Looking for supplies? Browse the Emporium, sell a few spare items, or see what other adventurers have posted at the Trading Post. We’ll confirm the price before you buy."
+          ? "Looking for supplies? Shop the local counter, sell spare items, or browse the Guild-wide player market. Prices below include active Guild discounts."
           : "The moogles are taking a short break while the Guild reconnects. Your Gil and items are safe."}</span>
         {message && !shopLoadError && !marketLoadError ? <small aria-live="polite">{message}</small> : null}
         {shopLoadError ? <div className="moogle-load-error" role="alert"><span>{shopLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={Boolean(busyKey)} onClick={() => loadShop()}>Retry Emporium</button></div> : null}
         {marketLoadError && mode === "market" ? <div className="moogle-load-error" role="alert"><span>{marketLoadError}</span><button type="button" className="equipment-action-button secondary" disabled={marketLoading || Boolean(busyKey)} onClick={() => loadMarket()}>Retry Trading Post</button></div> : null}
       </div>
 
-      <div className="moogle-toolbar">
-        <div className="moogle-shop-meta">
-          <span><strong>{shop?.job_name || overview?.job?.name || "Adventurer"}</strong> stock</span>
-          <span>Rotation refresh: <strong>{expiresText}</strong></span>
-        </div>
-      </div>
-
       {shop ? (
-        <div className={`moogle-annex-status ${annexUnlocked ? "open" : "closed"}`}>
-          <div><span className="panel-kicker">Guild Expansion</span><strong>Moogle Emporium Annex</strong></div>
-          <div><strong>{annexUnlocked ? "OPEN" : "NOT BUILT"}</strong><span>{number(stockSlots)} stock slots</span></div>
-          <small>{annexUnlocked
-            ? "Fixed Annex stock bonus: +2 Weapons · +4 Armor & Accessories · +6 Items."
-            : "Construct the Annex to add +2 Weapons, +4 Armor & Accessories, and +6 Items to each rotation."}</small>
-        </div>
+        <>
+          <div className="moogle-region-counter">
+            <img src={regionalModel ? `/retro-phase-ii/regions-hd/${regionalShop.id}.webp` : "/retro-phase-iii/scene-backgrounds-v3/emporium.webp"} alt="" />
+            <div className="moogle-region-copy">
+              <span className="panel-kicker">{regionalModel ? regionalShop.region_name : "Personal counter"}</span>
+              <h3>{regionalShop?.name || "Moogle Counter"}</h3>
+              <p>{regionalShop?.specialty || "Connect the updated Bot to browse regional stock."}</p>
+              <div className="moogle-counter-facts">
+                <span><strong>{number(displayedStock.length)} / {number(stockSlots)}</strong> listings</span>
+                <span><strong>{shop.job_name || "Adventurer"}</strong> gear</span>
+                <span>Refresh <strong>{expiresText}</strong></span>
+              </div>
+            </div>
+          </div>
+          <div className="moogle-counter-note">{regionalModel
+            ? "Travel on the world map to visit another counter. Staple supplies stay on the shelves; local gear follows the region and your current Job. Returning keeps that counter’s rotation until it expires."
+            : "This counter uses the connected Bot’s stock rules. Update both Bot and Web to activate regional counters and Guild service perks."}</div>
+          <details className="moogle-guild-perks">
+            <summary><span>Guild merchant perks</span><strong>{guildDiscount > 0 ? `${number(guildDiscount)}% off purchases` : "View improvements"}</strong></summary>
+            <div className="moogle-perk-grid">
+              <article><strong>Moogle Annex {annexUnlocked && regionalModel ? <span className="small-badge">Active</span> : <LockIcon label="Build the Annex to activate the purchase discount" />}</strong><span>10% off regional counter purchases.</span><small>{annexUnlocked && regionalModel ? "Your displayed prices already include the discount." : "Regional stock is available before construction."}</small></article>
+              <article><strong>Trading Post {shop.guild_perks?.trading_post_built ? <span className="small-badge">Active</span> : <LockIcon label="Build the Trading Post to improve market fees and listing capacity" />}</strong><span>1% listing fee · 3% sale tax · 10 active listings.</span><small>The market starts open with 2% listing fees, 5% sale tax, and 6 active listings.</small></article>
+              <article><strong>Quartermaster</strong><span>{number(Number(shop.guild_perks?.refresh_reduction || 0) * 100)}% faster restocks</span><small>3% faster rotations per tier. Current rotations keep their deadline.</small></article>
+            </div>
+          </details>
+        </>
       ) : null}
 
       {!shop && shopStateAvailable && !shopLoadError ? <div className="state-message compact-state" role="status">{busyKey === "shop-state" ? "Loading your current Moogle rotation…" : "Preparing the counter…"}</div> : null}
@@ -533,20 +560,26 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       {shop ? (
         <>
           {shop.combat_locked ? (
-            <div className="moogle-combat-lock">Transactions are locked while this adventurer is committed to an active encounter or raid.</div>
+            <div className="moogle-combat-lock"><LockIcon label="Transactions unavailable during an active adventure or battle" /> Return from your adventure or battle to use the counter.</div>
           ) : null}
           <div className="moogle-commerce-tabs" role="tablist" aria-label="Moogle Emporium transaction mode" aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setMode)}>
-            <button type="button" role="tab" id="moogle-mode-buy" data-tab-value="buy" tabIndex={mode === "buy" ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={mode === "buy"} className={mode === "buy" ? "active" : ""} onClick={() => setMode("buy")}><span>Buy</span><small>Current Moogle stock</small></button>
+            <button type="button" role="tab" id="moogle-mode-buy" data-tab-value="buy" tabIndex={mode === "buy" ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={mode === "buy"} className={mode === "buy" ? "active" : ""} onClick={() => setMode("buy")}><span>Buy</span><small>Local counter</small></button>
             <button type="button" role="tab" id="moogle-mode-sell" data-tab-value="sell" tabIndex={mode === "sell" ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={mode === "sell"} className={mode === "sell" ? "active" : ""} onClick={() => setMode("sell")}><span>Sell</span><small>Your eligible inventory</small></button>
             <button type="button" role="tab" id="moogle-mode-market" data-tab-value="market" tabIndex={mode === "market" ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={mode === "market"} className={mode === "market" ? "active" : ""} onClick={() => setMode("market")}><span>Trading Post</span><small>Player market</small></button>
           </div>
           {mode !== "market" ? (
             <div className="moogle-category-tabs" role="tablist" aria-label={`${mode === "buy" ? "Buy" : "Sell"} category`} aria-orientation="horizontal" onKeyDown={(event) => handleTabListKeyDown(event, setCategory)}>
-              {[["weapons", "Weapons"], ["armor", "Armor"], ["items", "Items"]].map(([value, label]) => (
-                <button key={value} type="button" role="tab" id={`moogle-category-${value}`} data-tab-value={value} tabIndex={category === value ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={category === value} className={category === value ? "active" : ""} onClick={() => setCategory(value)}>{label}</button>
+              {[["all", "All"], ["weapons", "Weapons"], ["armor", "Armor & Accessories"], ["items", "Supplies"]].map(([value, label]) => (
+                <button key={value} type="button" role="tab" id={`moogle-category-${value}`} data-tab-value={value} tabIndex={category === value ? 0 : -1} aria-controls="moogle-mode-panel" aria-selected={category === value} className={category === value ? "active" : ""} onClick={() => setCategory(value)}>{label}<small>{number((mode === "buy" ? displayedStock : sellableItems).filter((item) => value === "all" || shopCategory(item) === value).length)}</small></button>
               ))}
             </div>
           ) : null}
+
+          {mode !== "market" ? <div className="moogle-counter-filters">
+            <label><span>Find an item</span><input type="search" value={stockSearch} placeholder="Name or description" onChange={(event) => setStockSearch(event.target.value)} /></label>
+            <label><span>Sort</span><select aria-label="Sort counter items" value={stockSort} onChange={(event) => setStockSort(event.target.value)}><option value="recommended">Recommended</option><option value="price">Price: low to high</option><option value="name">Name</option></select></label>
+            <button type="button" className="equipment-action-button secondary" disabled={Boolean(busyKey) || !shopStateAvailable} onClick={() => loadShop()}>Check counter</button>
+          </div> : null}
 
           {mode === "buy" ? (
             <div id="moogle-mode-panel" className="moogle-stock-grid" role="tabpanel" tabIndex="0" aria-labelledby={`moogle-mode-${mode} moogle-category-${category}`}>
@@ -563,9 +596,10 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                       <span className="slot-label">{typeLabel(item.type)}</span>
                       <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
                     </div>
-                    <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span></div>
+                    <div className="moogle-item-price"><strong>{number(item.price)}</strong><span>Gil</span>{Number(item.base_price || 0) > Number(item.price) ? <><del>{number(item.base_price)}g</del><small>Guild price</small></> : null}</div>
                     <div className="card-meta">Owned {number(item.owned)} · {String(item.rarity || "common").replace(/^./, (c) => c.toUpperCase())}</div>
-                    {shopItemPurpose(item) ? <p className="moogle-item-brief">{shopItemPurpose(item)}</p> : null}
+                    {item.description ? <p className="moogle-item-brief">{item.description}</p> : null}
+                    {shopItemPurpose(item) ? <p className="moogle-item-brief moogle-item-use">{shopItemPurpose(item)}</p> : null}
                     {item.equipment && Object.keys(itemBonuses(item)).length ? (
                       <div className="moogle-stat-summary">
                         <span className="moogle-stat-label">Stat boosts</span>
@@ -586,7 +620,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     </div>
                   </article>
                 );
-              }) : <div className="state-message compact-state moogle-empty-category">No {category} are available in this rotation.</div>}
+              }) : <div className="state-message compact-state moogle-empty-category">No items match these filters at this counter.</div>}
             </div>
           ) : mode === "sell" ? (
             <div id="moogle-mode-panel" className="moogle-sell-grid moogle-sell-panel" role="tabpanel" tabIndex="0" aria-labelledby={`moogle-mode-${mode} moogle-category-${category}`}>
@@ -612,7 +646,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     </div>
                   </article>
                 );
-              }) : <div className="state-message compact-state moogle-empty-category">No sellable {category} are currently in your inventory.</div>}
+              }) : <div className="state-message compact-state moogle-empty-category">No sellable items match these filters.</div>}
             </div>
           ) : (
             <div id="moogle-mode-panel" className="trading-post-panel" role="tabpanel" tabIndex="0" aria-labelledby="moogle-mode-market">
@@ -621,24 +655,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
               ) : !market ? (
                 !marketLoadError ? <div className="state-message compact-state" role="status">{marketLoading ? "Loading the Fellowship Trading Post…" : "Preparing the Fellowship Trading Post…"}</div> : null
               ) : !market.unlocked ? (
-                <div className="trading-post-locked">
-                  <img src="/trading-post/a1/locked.webp" alt="Locked Moogle Trading Post storefront" />
-                  <div className="trading-post-locked-copy">
-                    <span className="panel-kicker">Fellowship Building · Level 1</span>
-                    <h3>Moogle Trading Post</h3>
-                    <p>The player market opens after the Fellowship completes this construction project.</p>
-                    {market.project?.requirements?.length ? (
-                      <div className="trading-post-requirements">
-                        {market.project.requirements.map((requirement) => (
-                          <div key={requirement.key} className={requirement.complete ? "complete" : ""}>
-                            <span>{requirement.label}</span>
-                            <strong>{number(requirement.current)} / {number(requirement.target)}</strong>
-                          </div>
-                        ))}
-                      </div>
-                    ) : <small>Construction requirements: Fellowship LVL 1 · 25,000 Gil · 3 Mythril Ore · 15 Ventures.</small>}
-                  </div>
-                </div>
+                <div className="state-message compact-state"><LockIcon label="Updated Trading Post service required" /> This Bot still uses the construction access gate. Update the Bot to enable the open player market and Guild fee perks.</div>
               ) : (
                 <>
                   <div className="trading-post-hero">
@@ -646,17 +663,17 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                     <div>
                       <span className="panel-kicker">Fellowship Player Market</span>
                       <h3>Moogle Trading Post</h3>
-                      <p>Buy directly from other adventurers or post eligible gear, materials, and supplies for a fixed Gil price.</p>
+                      <p>A Guild-wide market shared across all regions. Post eligible gear, materials, and supplies for a fixed Gil price.</p>
                       <div className="trading-post-rules">
                         <span><strong>{number(Number(market.listing_fee_rate || 0.02) * 100)}%</strong> listing fee</span>
                         <span><strong>{number(Number(market.sale_tax_rate || 0.05) * 100)}%</strong> sale tax</span>
                         <span><strong>{number(Math.round(Number(market.listing_seconds || 172800) / 3600))}h</strong> duration</span>
-                        <span><strong>{number(market.active_count || 0)} / {number(market.active_limit || 24)}</strong> active listings</span>
+                        <span><strong>{number(market.active_count || 0)} / {number(market.active_limit || 6)}</strong> active listings</span>
                       </div>
                     </div>
                   </div>
 
-                  {market.combat_locked ? <div className="moogle-combat-lock">Trading Post mutations are locked while this adventurer is committed to an active encounter or raid.</div> : null}
+                  {market.combat_locked ? <div className="moogle-combat-lock"><LockIcon label="Trading Post transactions unavailable during battle" /> Finish your battle to trade.</div> : null}
 
                   <div className="trading-post-view-tabs" role="tablist" aria-label="Trading Post view" onKeyDown={(event) => handleTabListKeyDown(event, setMarketView)}>
                     <button type="button" role="tab" data-tab-value="browse" tabIndex={marketView === "browse" ? 0 : -1} aria-selected={marketView === "browse"} className={marketView === "browse" ? "active" : ""} onClick={() => setMarketView("browse")}>Browse Market</button>
@@ -758,7 +775,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                   ) : (
                     <div className="trading-post-seller-view">
                       <section className="trading-post-sell-section">
-                        <div className="panel-title-row"><div><span className="panel-kicker">Create Listing</span><h3>Sell to other adventurers</h3></div><span className="small-badge">{number(market.active_count || 0)} / {number(market.active_limit || 24)} Active</span></div>
+                        <div className="panel-title-row"><div><span className="panel-kicker">Create Listing</span><h3>Sell to other adventurers</h3></div><span className="small-badge">{number(market.active_count || 0)} / {number(market.active_limit || 6)} Active</span></div>
                         {marketEligibleItems.length ? <div className="trading-post-sell-grid">
                           {marketEligibleItems.map((item) => {
                             const max = Math.max(1, Number(item.max_quantity || 1));
@@ -775,7 +792,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                                   <label><span>Gil each</span><input type="number" inputMode="numeric" min="1" max="1000000" value={marketPrice[item.id] ?? item.reference_price ?? 1} onChange={(event) => setMarketPrice((current) => ({ ...current, [item.id]: Math.max(1, Math.min(1000000, Number(event.target.value) || 1)) }))} /></label>
                                 </div>
                                 <small className="trading-post-fee-summary">{market.price_stats?.[item.id] ? `30-day sold avg: ${number(market.price_stats[item.id].average_price)}g across ${number(market.price_stats[item.id].sale_count)} sales · ` : "No recent sold-price history · "}Total {number(total)}g · Fee {number(fee)}g</small>
-                                <button type="button" className="equipment-action-button secondary" disabled={market.combat_locked || Number(market.gil || 0) < fee || Number(market.active_count || 0) >= Number(market.active_limit || 24) || Boolean(busyKey)} onClick={() => listOnMarket(item)}>{busy ? "Posting…" : `Post Listing · ${number(fee)}g fee`}</button>
+                                <button type="button" className="equipment-action-button secondary" disabled={market.combat_locked || Number(market.gil || 0) < fee || Number(market.active_count || 0) >= Number(market.active_limit || 6) || Boolean(busyKey)} onClick={() => listOnMarket(item)}>{busy ? "Posting…" : `Post Listing · ${number(fee)}g fee`}</button>
                               </article>
                             );
                           })}
@@ -794,7 +811,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                                   {(() => { const inventory = marketEligibleItems.find((item) => item.id === listing.item.id);
                                     const canRelist = Number(inventory?.max_quantity || 0) >= Number(listing.quantity || 0);
                                     const fee = Math.max(1, Math.ceil(Number(listing.total_price || 0) * Number(market.listing_fee_rate || 0.02)));
-                                    const canPost = canRelist && Number(market.gil || 0) >= fee && Number(market.active_count || 0) < Number(market.active_limit || 24) && !market.combat_locked && !busyKey;
+                                    const canPost = canRelist && Number(market.gil || 0) >= fee && Number(market.active_count || 0) < Number(market.active_limit || 6) && !market.combat_locked && !busyKey;
                                     return <>
                                       <button type="button" className="equipment-action-button secondary" disabled={!canPost} title={!canRelist ? "You need the original quantity back in your unequipped inventory." : `Lists at the same price; charges a new ${number(fee)}g listing fee.`} onClick={() => quickRelist(listing)}>{busyKey === `market-relist:${listing.id}` ? "Relisting…" : canRelist ? `Quick relist · ${number(fee)}g fee` : "Not enough items"}</button>
                                       {inventory ? <button type="button" className="market-history-button" disabled={Boolean(busyKey)} onClick={() => editAndRelist(listing)}>Edit &amp; relist</button> : null}

@@ -135,11 +135,11 @@ export const CONTEXT_HELP = {
   },
   emporium: {
     title: "Moogle Emporium",
-    summary: "Your rotating personal shop for buying useful stock and selling eligible inventory back for Gil.",
+    summary: "Regional Moogle counters follow your world-map location, with local gear and reliable travel supplies.",
     bullets: [
-      "Stock is personalized and refreshes on its own schedule.",
+      "Regional counters hold up to 12–18 listings, tailored to your Job and the region. Returning keeps the rotation until it expires.",
       "Buy and Sell are separate views; every transaction is rechecked by the authoritative Guild Bot.",
-      "Gear cards show useful Jobs and item information before you spend Gil.",
+      "The Guild Annex gives 10% off purchases. Trading Post construction lowers fees and raises your listing allowance; the market starts open.",
     ],
     tip: "If an item disappears or a price changes after refresh, trust the current card—the Bot revalidates every purchase.",
     guide: "items",

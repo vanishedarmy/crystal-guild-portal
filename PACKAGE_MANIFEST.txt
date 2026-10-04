@@ -1,4 +1,4 @@
-Crystal Guild v1.9.6 — Triple Triad Expanded: complete Web source and built-output inventory
+Crystal Guild v1.9.6 — Triple Triad Expanded with Progression Hotfix 1: complete Web inventory
 Path | SHA-256 | Bytes
 Web/.dockerignore | b926d5e1dadaa5441de525b18e6bd8667fd78ed9c59f97384d1efead2f7e8953 | 292
 Web/.gitignore | f418544f5d42fdafe7e745a33ab8e27cec6fb5b36bedeb05edfce986a73340d7 | 187
@@ -6,7 +6,7 @@ Web/ARTWORK_ROUTING_AUDIT.json | 2deb5546d3c4d6f8f2809482d360bfa595824e47512b962
 Web/ARTWORK_STEP5_MANIFEST.json | 20d1a2f15359f4b243825bd5f33f1d501681921c5ac3f9ec71e3c3229cb5a406 | 8261
 Web/BESTIARY_APPROVED_STANDALONE_ART_MANIFEST.json | aa08533bb7634691f2c6d793ce316dea85ae017c887bee8fb3657664cb5bccf8 | 1913
 Web/BUILD_DEPENDENCIES.md | fe259a96a52c5cafccc9b9b3a62f24850e140859da143bdef9479ba42dd1c3b6 | 3663
-Web/CHANGELOG.md | 8f7c500b43006d9d0e70db192d8c1bc9a3989234029ce0fae17c59dd9bac3083 | 4808
+Web/CHANGELOG.md | 0c9f5dd88aa613acb0c4a097ebf55d3be383a739753587945b4179575d94a2b5 | 5138
 Web/CHOCOBO_PORTRAIT_MANIFEST.json | 42ebc53e4ab6b8b77f28f9e9b52ae16d0b7fc7597c2c25f0ae9e4efac29726ed | 3014
 Web/DEPLOY_1_9_6.md | 34e4fe834dae8efa1c52a16eea4bf732e4671a8dc113d7c50d44f3d8a32fd60f | 650
 Web/Dockerfile | 8c2d3eadf2c17bb32211cdc5711dbf17526cb943b376a84876712d132f8c16f3 | 1008
@@ -29,7 +29,8 @@ Web/README_OVERVIEW_TAB_REWORK.md | 34e4efcc21a015503636cb203d021f32cfb285ad5971
 Web/README_RETAINER_SERVICE_REDESIGN.md | be3778635d338ce785d406600cdea33ae2331fbd949d87628d1f19b8e1dfe706 | 2413
 Web/README_SEASONAL_EVENT_PAGE_REWORK.md | be54735a21e5ee7558b436f96007a8d802e3c536b3dde2132abeffc331ffa007 | 3749
 Web/README_SEASONAL_TOGGLE_STATE_FIX.md | 2812fbfe08ff15b18b8666ff92b8d225168aeaf129e9d332c84b5d135c130109 | 2383
-Web/RELEASE_NOTES.md | f6e9366e6aa94e66a80b6d8b2106a72cbb3f12c4835fe776f1502027f46b598f | 5876
+Web/README_TRIPLE_TRIAD_PROGRESSION_HOTFIX_1.md | ced3d95b619905b560b019fd0b95572c913861f0bffb83b1504ed048ace426bb | 3097
+Web/RELEASE_NOTES.md | a81cc4806170997f902b4efd4a8faabe583cf6b5275a2d0a9ba639a9badf74f4 | 6105
 Web/RELEASE_VALIDATION.md | 931e6bda14c682c8b7f4f00f38cc09e30bcb65318a561926e10d8d2c7711f174 | 3078
 Web/RELIC_ARTWORK_MANIFEST.json | 986abbb09140358ad24e627350d2ee5f239d8bd2a40665128f3818d88a3f4634 | 25414
 Web/SCENE_BACKGROUND_MANIFEST.json | 15a2045e275b40736021f542dd471e617d65fa5a95d6abc8298d4aef61aab59e | 3916
@@ -47,8 +48,9 @@ Web/WORLD_EVENTS.md | 37ad6af1770733a93212bf68e518a225e6719f8952172fdf40629c4f69
 Web/WORLD_EVENTS_ARTWORK_MANIFEST.json | e515d3c552e7acdee36c1297a5f2aacef7697921e7fca8ff1259285557bd8c7d | 3771
 Web/crystal_guild/__init__.py | 521e023de38146e86433e97d4d5a30d6f84cd3f3e03745a6005124c7793fdce5 | 44
 Web/crystal_guild/config.py | 4c779ce2fa5ce0a2a053187aa034c3fcd5eedc3d748852a70469e08ed81a4660 | 589
-Web/crystal_guild/hosted_portal.py | 5d59945e7bdae5878b29efd99ae0fdb1ea50e098bba864eccce51587f11018d1 | 164406
+Web/crystal_guild/hosted_portal.py | 354d7b847e3d113c8ea34317a5ec752e6f89c6bcd2e4ae0fd10c0f311fcd075c | 164804
 Web/crystal_guild/portal_auth.py | f8c79a38e1d0ea5e69bf8d387beb7a4dcaf781d000b40a972550d3bfaaf54675 | 6328
+Web/crystal_guild/triple_triad_catalog.json | 9510ccb77d03e6e4a1200d6c953e2cf41f947529779a017a4c8c6a0d19592583 | 16942
 Web/crystal_guild/trophy_hall.py | 5a0f4188daa873b2697687fca8b8e184f7beec19d82902762a5d6bde35f7e1fe | 2800
 Web/frontend/.env.example | f5941a7dfef62effcb8fbc901439a15a7d0fe36cb00abe9f2e289dc9c9052875 | 98
 Web/frontend/.npmrc | 2020dece789b1dd7f7ed154567a5ebf1ff353aee233004e9fface3075e041dca | 247
@@ -2458,3 +2460,4 @@ Web/tests/test_retainer_alpha1.py | 900365734311265b6be10c3dbbbdcb5698395cf14367
 Web/tests/test_retainer_alpha2.py | 6a74462e4a4502a02c28c146c26087ccc410e1eef2acd0843df82bddc64554b3 | 2167
 Web/tests/test_trading_post_alpha1.py | 589ec81a8714168c2227e713b17a45f045dd6dd8f9f1ddb41b0b418f6b64856b | 3061
 Web/tests/test_trading_post_alpha13.py | b9ca78ab7116997affb1ea51cf9207917d41c2022f15f7e8437fc65a3e791fd3 | 2405
+Web/tests/test_triple_triad_expanded_actions.py | a2e395e1e9aa1190d7ff20e276ff4a31942d65d1a976388093579dfaa5dce257 | 3022

@@ -1,5 +1,7 @@
 # Crystal Guild v1.9.6 — Triple Triad Expanded
 
+**Includes Progression Hotfix 1 (2026-10-04).** The hosted Web service now accepts all ten Triple Triad opponents. See `Web/README_TRIPLE_TRIAD_PROGRESSION_HOTFIX_1.md`. No progress reset or npm rebuild is required for the fix.
+
 Complete Bot + Web release based on the latest valid Seasonal Player Sync Fix Bot/Web packages and the completed Triple Triad rework. The abandoned Living World 1A/1B and site-wide Accessibility update are excluded. Apply Bot and Web together.
 
 ## Install or upgrade

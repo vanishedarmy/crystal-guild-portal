@@ -1,3 +1,9 @@
+## v1.9.6 — Progression Hotfix 1
+
+- Validate Triple Triad challenges against the bundled expanded catalog so all ten opponents can reach the Bot.
+- Preserve Bot circuit locks, entry limits, active matches and saved progression.
+- Add Web action and combined HTTP/Bot relay regression coverage. No npm rebuild or schema change.
+
 ## v1.9.6 — Triple Triad Expanded
 
 - Expand Triple Triad to 45 cards, ten opponents and five circuits, with gentler novice play and five dedicated UI sections.

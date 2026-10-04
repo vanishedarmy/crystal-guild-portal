@@ -26,6 +26,15 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
+# Shipped with this Web service from the authoritative Bot catalog. Do not
+# maintain a separate legacy allowlist: new circuit opponents must reach the
+# Bot, which enforces the player's unlocks, daily entries and MGP balance.
+TRIPLE_TRIAD_OPPONENT_IDS = frozenset(
+    opponent["id"] for opponent in json.loads(
+        Path(__file__).with_name("triple_triad_catalog.json").read_text(encoding="utf-8")
+    )["opponents"]
+)
+
 HOSTED_PORTAL_VERSION = "1.9.6-triple-triad-expanded"
 FRONTEND_ASSET_REVISION = "1.9.6-triple-triad-expanded"
 SCHEMA_VERSION = 1
@@ -1073,7 +1082,7 @@ class HostedPortalStore:
             if set(payload) != {"opponent"}:
                 raise ValueError("TRIAD_START requires only opponent.")
             opponent = str(payload.get("opponent") or "").strip().lower()
-            if opponent not in {"saucer_attendant", "card_shark", "crystal_master"}:
+            if opponent not in TRIPLE_TRIAD_OPPONENT_IDS:
                 raise ValueError("Invalid Triple Triad opponent.")
             payload = {"opponent": opponent}
         elif kind == "TRIAD_PLAY":

@@ -9,7 +9,7 @@ test("Phase 8 UI/UX layer remains intact under the current release identity", as
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const css = await readFile(new URL("styles/portal.css", SRC), "utf8");
   assert.match(version, /WEB_VERSION = "v1\.9\.4\.7"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.4\.7-portal-ux"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.4\.7-triple-triad-rework"/);
   assert.match(css, /v1\.1\.8 — Phase 8 UI\/UX Pass & Polish/);
 });
 

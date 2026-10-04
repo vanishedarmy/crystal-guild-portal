@@ -65,7 +65,7 @@ test('Web version and package metadata describe this incremental pass consistent
   const lock=JSON.parse(fs.readFileSync(path.join(root,'package-lock.json'),'utf8'));
   assert.equal(WEB_VERSION,'v1.9.4.7');
   assert.equal(WEB_BUILD,'Portal Usability Overhaul');
-  assert.equal(WEB_ASSET_REVISION,'1.9.4.7-portal-ux');
+  assert.equal(WEB_ASSET_REVISION,'1.9.4.7-triple-triad-rework');
   assert.equal(pkg.version,'1.9.4.7');
   assert.equal(lock.version,'1.9.4.7');
   assert.equal(lock.packages[''].version,'1.9.4.7');

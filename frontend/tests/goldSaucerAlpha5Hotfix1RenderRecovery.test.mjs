@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const saucer = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
+const saucer = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const profile = fs.readFileSync(path.join(root, "src/pages/PlayerProfile.jsx"), "utf8");
 const version = fs.readFileSync(path.join(root, "src/version.js"), "utf8");
 
@@ -19,7 +19,7 @@ test("Alpha 5 Hotfix 1 normalizes partial Gold Saucer payloads before render", (
   assert.match(saucer, /function asObjectArray\(value\)/);
   assert.match(saucer, /const saucerState = asRecord\(state\)/);
   assert.match(saucer, /const futureAttractions = asObjectArray\(saucerState\.attractions\)/);
-  assert.match(saucer, /const triadHand = asObjectArray\(triadMatch\?\.player_hand\)/);
+  assert.match(saucer, /const hand = records\(match\?\.player_hand\)/);
   assert.match(saucer, /const tossThrows = asObjectArray\(tossGame\?\.throws\)/);
 });
 

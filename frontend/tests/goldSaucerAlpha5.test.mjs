@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const component = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
+const component = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const auth = fs.readFileSync(path.join(root, "src/api/auth.js"), "utf8");
 const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
 const whatsNew = fs.readFileSync(path.join(root, "src/player/whatsNewData.js"), "utf8");
@@ -17,11 +17,11 @@ test("Alpha 5 opens the authoritative Triple Triad loop", () => {
   assert.match(auth, /TRIAD_SET_DECK/);
   assert.match(auth, /TRIAD_START/);
   assert.match(auth, /TRIAD_PLAY/);
-  assert.match(component, /Alpha 5 Attraction/);
+  assert.match(component, /The Card Hall/);
   assert.match(component, /Triple Triad/);
   assert.match(component, /triad-board/);
-  assert.match(component, /triad-opponent-grid/);
-  assert.match(component, /triad-collection-grid/);
+  assert.match(component, /tt-opponents/);
+  assert.match(component, /tt-collection-grid/);
   assert.match(component, /submitTriadPlay/);
 });
 
@@ -45,8 +45,8 @@ test("Triple Triad remains readable and responsive", () => {
   assert.match(css, /\.triad-card-values/);
   assert.match(css, /\.triad-opponent-grid/);
   assert.match(css, /@media\(max-width:540px\)/);
-  assert.match(component, /\/ 5 selected/);
-  assert.match(component, /Open rule only/);
+  assert.match(component, /\/ 5/);
+  assert.match(component, /Open · Basic capture/);
 });
 
 test("Alpha 5 player copy, Guide, and compatibility contract are current", () => {

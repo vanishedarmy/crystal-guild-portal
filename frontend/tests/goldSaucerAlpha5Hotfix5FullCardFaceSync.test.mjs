@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const component = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
+const component = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
 const version = fs.readFileSync(path.join(root, "src/version.js"), "utf8");
 const artRoot = path.join(root, "public/gold-saucer/a5h5/triple-triad/cards");
@@ -21,7 +21,7 @@ test("Hotfix 5 uses the full cache-busted Triple Triad card faces", () => {
 });
 
 test("Hotfix 5 removes visible duplicate stat overlays and preserves accessible values", () => {
-  const triadCard = component.slice(component.indexOf("function triadAccessibleLabel"), component.indexOf("export default function GoldSaucer"));
+  const triadCard = component.slice(component.indexOf("const triadAccessibleLabel"), component.indexOf("export default function GoldSaucer"));
   assert.match(triadCard, /triadAccessibleLabel/);
   assert.match(triadCard, /Top|top/);
   assert.doesNotMatch(triadCard, /className="triad-card-values"/);

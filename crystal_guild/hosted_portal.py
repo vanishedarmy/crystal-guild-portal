@@ -26,8 +26,8 @@ from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, saf
 from .trophy_hall import build_trophy_hall
 
 
-HOSTED_PORTAL_VERSION = "1.9.4-crafting-reforged"
-FRONTEND_ASSET_REVISION = "1.9.4.3-forge-workbench"
+HOSTED_PORTAL_VERSION = "1.9.6-triple-triad-expanded"
+FRONTEND_ASSET_REVISION = "1.9.6-triple-triad-expanded"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {

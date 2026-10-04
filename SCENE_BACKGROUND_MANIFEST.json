@@ -1,18 +1,7 @@
 {
-  "release": "v1.5.1 \u2014 Relic Arsenal Complete",
-  "frontend_asset_revision": "1.5.1-relic-arsenal-complete",
+  "release": "v1.9.6 \u2014 Triple Triad Expanded",
+  "frontend_asset_revision": "1.9.6-triple-triad-expanded",
   "scene_backgrounds": [
-    {
-      "file": "camp.webp",
-      "path": "/retro-phase-iii/scene-backgrounds-v2/camp.webp",
-      "width": 1440,
-      "height": 810,
-      "bytes": 659480,
-      "usage": [
-        "Adventure Board \u2014 Camp & Recovery",
-        "Inventory \u2014 Recovery"
-      ]
-    },
     {
       "file": "blacksmith.webp",
       "path": "/retro-phase-iii/scene-backgrounds-v3/blacksmith.webp",
@@ -133,6 +122,36 @@
         "Adventure Board \u2014 Trial & Raid Board \u2014 Open"
       ],
       "format": "portrait"
+    },
+    {
+      "file": "camp-desktop-wide.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/camp-desktop-wide.webp",
+      "width": 1672,
+      "height": 818,
+      "bytes": 546598,
+      "usage": [
+        "Camp desktop wide"
+      ]
+    },
+    {
+      "file": "camp-desktop.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 615496,
+      "usage": [
+        "Camp desktop"
+      ]
+    },
+    {
+      "file": "camp-mobile.webp",
+      "path": "/retro-phase-iii/scene-backgrounds-v4/camp-mobile.webp",
+      "width": 941,
+      "height": 1672,
+      "bytes": 644580,
+      "usage": [
+        "Camp mobile"
+      ]
     }
   ]
 }

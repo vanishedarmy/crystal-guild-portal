@@ -73,7 +73,7 @@ test("Web metadata identifies the usability release", () => {
   const lock = JSON.parse(read("package-lock.json"));
   assert.equal(WEB_VERSION, "v1.9.4.7");
   assert.equal(WEB_BUILD, "Portal Usability Overhaul");
-  assert.equal(WEB_ASSET_REVISION, "1.9.4.7-portal-ux");
+  assert.equal(WEB_ASSET_REVISION, "1.9.4.7-triple-triad-rework");
   assert.equal(pkg.version, "1.9.4.7");
   assert.equal(lock.version, "1.9.4.7");
   assert.equal(lock.packages[""].version, "1.9.4.7");

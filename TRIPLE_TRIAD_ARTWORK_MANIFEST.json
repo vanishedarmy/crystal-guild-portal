@@ -1,0 +1,542 @@
+[
+  {
+    "id": "goblin",
+    "name": "Goblin",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/goblin.webp",
+    "rarity": 1,
+    "values": {
+      "top": 4,
+      "right": 1,
+      "bottom": 2,
+      "left": 3
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 619062,
+    "sha256": "7833fc5c8aee1589fc983b95793e385cecb7dc0cad241bc2b8cce9f58f78e69b",
+    "source_png_sha256": "2f519adf0888fd63aec0a9ca1a37443bdaa0e6baa59961b1ea8f767f6148f704"
+  },
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/wolf.webp",
+    "rarity": 1,
+    "values": {
+      "top": 2,
+      "right": 4,
+      "bottom": 3,
+      "left": 1
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 598444,
+    "sha256": "c04598ff9bdec4cbe8906ba0052ebc63007f3a42443f5c9b22d89881b6c2628a",
+    "source_png_sha256": "7134bc05057b8e0e26f60e7661fca78534ce0086aae5271602c1ead7f0ab1c76"
+  },
+  {
+    "id": "mandragora",
+    "name": "Mandragora",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/mandragora.webp",
+    "rarity": 1,
+    "values": {
+      "top": 3,
+      "right": 2,
+      "bottom": 1,
+      "left": 4
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 533438,
+    "sha256": "38b685a21351a8e01ba3c909e8c41d4f14732c3895a016cfa0f341aee53da17e",
+    "source_png_sha256": "e497edb95fe4245a56ee015062fdffd051e37f74f4b1ff8c62e001aceb316868"
+  },
+  {
+    "id": "imp",
+    "name": "Imp",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/imp.webp",
+    "rarity": 1,
+    "values": {
+      "top": 1,
+      "right": 3,
+      "bottom": 4,
+      "left": 2
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 562458,
+    "sha256": "c9d513285cdf2ff4caca7a071aa56e046e42bd4cd1c09733e40e04084b77e80d",
+    "source_png_sha256": "85753c045221482462b8242f6b3c4ca150c570e31a811c8afa1d035f44fb203d"
+  },
+  {
+    "id": "bat",
+    "name": "Bat",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/bat.webp",
+    "rarity": 1,
+    "values": {
+      "top": 4,
+      "right": 2,
+      "bottom": 3,
+      "left": 1
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 569450,
+    "sha256": "9f5962b3733db567a9a7b140ef26e54bb09b7bc527b37276fbf2af20efe77e5a",
+    "source_png_sha256": "cf0f77dec5742dd89f14900e13c37ce20e4fccaa226592c77314bca070a53cdd"
+  },
+  {
+    "id": "skeleton",
+    "name": "Skeleton",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/skeleton.webp",
+    "rarity": 1,
+    "values": {
+      "top": 5,
+      "right": 2,
+      "bottom": 3,
+      "left": 2
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 614742,
+    "sha256": "0de689cb54da80af46dca64065e6d3ac746efe71c1078eaf4ec3ab57d0fcc57f",
+    "source_png_sha256": "56427b131ede37b39de468fd17de1c237c374a8db3ded2e40a0b6928bdcfe2f3"
+  },
+  {
+    "id": "spriggan",
+    "name": "Spriggan",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/spriggan.webp",
+    "rarity": 1,
+    "values": {
+      "top": 2,
+      "right": 5,
+      "bottom": 2,
+      "left": 4
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 584182,
+    "sha256": "ccc2a185fb7dd757096d8258afef73767a1aef968171d7987f11e486e9e334c2",
+    "source_png_sha256": "12b88def2ea4efc7570db11b8b69c2e7efb6f27f5f7337fc9aa5d9ab42d24589"
+  },
+  {
+    "id": "sahagin",
+    "name": "Sahagin",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/sahagin.webp",
+    "rarity": 1,
+    "values": {
+      "top": 3,
+      "right": 2,
+      "bottom": 5,
+      "left": 3
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 625886,
+    "sha256": "bfd104fbe2710d0f4a5cb37c27bfcb89447980dbe15d2ef4adadd2b81a986eea",
+    "source_png_sha256": "7865cf7ca760dac90fa6fb81dd70f24f6f9c6cd9cbb4ebfae6d4ff80b5570332"
+  },
+  {
+    "id": "hornet",
+    "name": "Hornet",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/hornet.webp",
+    "rarity": 1,
+    "values": {
+      "top": 5,
+      "right": 1,
+      "bottom": 3,
+      "left": 4
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 635540,
+    "sha256": "8e1a53b32b4d3c310e87c724ae580ea55349a8642561c0e9b6d31ff35315cc94",
+    "source_png_sha256": "46dbee4dc515bee6413f3c863e124ed3f5bc653d51ff46d831c189424e5df8f1"
+  },
+  {
+    "id": "killer_fish",
+    "name": "Killer Fish",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/killer_fish.webp",
+    "rarity": 1,
+    "values": {
+      "top": 2,
+      "right": 4,
+      "bottom": 5,
+      "left": 2
+    },
+    "batch": 1,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 678066,
+    "sha256": "70ac6196506d985ebb06047b58f45b23f46e01bf432f7631fe7a1e73c71d6498",
+    "source_png_sha256": "3f7cea6b80c17319b443c0af3acf3b4748d7f11abab2eb871fdfff2ccca7f8fe"
+  },
+  {
+    "id": "mimic",
+    "name": "Mimic",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/mimic.webp",
+    "rarity": 2,
+    "values": {
+      "top": 6,
+      "right": 2,
+      "bottom": 4,
+      "left": 5
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 632732,
+    "sha256": "165419a9660fd23f9beddcd0ea4b5f2586af025fb8198f51f7077b093c82b1df",
+    "source_png_sha256": "c9c175732f5d36ba02bf5752753c3e19456ffb10aea866d6afa2649492bd6a60"
+  },
+  {
+    "id": "ochu",
+    "name": "Ochu",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/ochu.webp",
+    "rarity": 2,
+    "values": {
+      "top": 3,
+      "right": 6,
+      "bottom": 5,
+      "left": 3
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 666968,
+    "sha256": "7f577bb29584da336a6bf7b7cb15158663340b90c52aa76c95904d021d546640",
+    "source_png_sha256": "11cda0ea225e81d4c2e376c9e4df7cbc068467e416aaa43452382207290735dd"
+  },
+  {
+    "id": "basilisk",
+    "name": "Basilisk",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/basilisk.webp",
+    "rarity": 2,
+    "values": {
+      "top": 5,
+      "right": 3,
+      "bottom": 6,
+      "left": 2
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 635628,
+    "sha256": "9ce7794f4b89a49a58a83fe28f4cf885e04763543cf83f1050c90440c53aa4a4",
+    "source_png_sha256": "af4e205660b2f3bcb3effc221227a3238c1213940f6ccd424a7862a8fdfb348b"
+  },
+  {
+    "id": "cockatrice",
+    "name": "Cockatrice",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/cockatrice.webp",
+    "rarity": 2,
+    "values": {
+      "top": 6,
+      "right": 4,
+      "bottom": 2,
+      "left": 5
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 629934,
+    "sha256": "e8b9d1d6b90a70636c706539c247efa78f8fca699eebe530f787f4832d06f882",
+    "source_png_sha256": "5e826d37d0c29efeaa3bdff84c3440bbd7e8e1e9cdaca46862da35b9202ee405"
+  },
+  {
+    "id": "magitek_drone",
+    "name": "Magitek Drone",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/magitek_drone.webp",
+    "rarity": 2,
+    "values": {
+      "top": 3,
+      "right": 5,
+      "bottom": 3,
+      "left": 6
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 632126,
+    "sha256": "7a23e5891e1cc1e6c14053debd8377cfb843da5628ddaef2f97a7308a903e344",
+    "source_png_sha256": "89c3b0112b1c71f467c687d9c6d5a870ab3123c4408389aa1945b8bf46f23f64"
+  },
+  {
+    "id": "antlion",
+    "name": "Antlion",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/antlion.webp",
+    "rarity": 2,
+    "values": {
+      "top": 5,
+      "right": 2,
+      "bottom": 6,
+      "left": 4
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 667062,
+    "sha256": "8c210d9d4730ab8e6022f95fc0776be08615336df76ccc8b81ed58beb505f5df",
+    "source_png_sha256": "53bb431215001990491e1b5567f8c15722bf2e70e86db85d2d5e198d989f2d50"
+  },
+  {
+    "id": "magic_pot",
+    "name": "Magic Pot",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/magic_pot.webp",
+    "rarity": 2,
+    "values": {
+      "top": 2,
+      "right": 6,
+      "bottom": 4,
+      "left": 6
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 621464,
+    "sha256": "767795f42bd7ac3d450e5689e26cbe0431ae75cbba7a27f696c24296617cc2ee",
+    "source_png_sha256": "d9e5889e227b28f7448c0baacbc63b626a9e79cd71cb32d73a31847fbbc3c23f"
+  },
+  {
+    "id": "chimera",
+    "name": "Chimera",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/chimera.webp",
+    "rarity": 3,
+    "values": {
+      "top": 7,
+      "right": 3,
+      "bottom": 6,
+      "left": 5
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 660986,
+    "sha256": "68315e350576d6effe3a16cb2ffe325c04490f72fbb9d3e682a5408c548d6686",
+    "source_png_sha256": "74fdeac45750ecf0de7a5d8e83b778f6fd31978cc3850b5f1e2059da3e57bcf4"
+  },
+  {
+    "id": "gigas",
+    "name": "Gigas",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/gigas.webp",
+    "rarity": 3,
+    "values": {
+      "top": 6,
+      "right": 7,
+      "bottom": 2,
+      "left": 6
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 628426,
+    "sha256": "75512aa1814cf41296e99ce37ed82654715a43838a1eeeaaead04013476e9b0c",
+    "source_png_sha256": "a7f636ef5ca1d8a1e75a930c9d55dacfbe4de9b20a86e91c5bc498c37cf63a6c"
+  },
+  {
+    "id": "zu",
+    "name": "Zu",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/zu.webp",
+    "rarity": 3,
+    "values": {
+      "top": 7,
+      "right": 5,
+      "bottom": 6,
+      "left": 3
+    },
+    "batch": 2,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 622744,
+    "sha256": "8c62732720f600bf911bc3f9e372f4f343a02dd8593924c324cf210b9a59ee63",
+    "source_png_sha256": "4433a49b4378315c5e9f163175e07bd906229de5cab04c1b134f42ab64c9a320"
+  },
+  {
+    "id": "red_dragon",
+    "name": "Red Dragon",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/red_dragon.webp",
+    "rarity": 3,
+    "values": {
+      "top": 5,
+      "right": 7,
+      "bottom": 6,
+      "left": 3
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 623030,
+    "sha256": "8b055cbf5ca066a7d4a1ab221c4bb773ebd49349ecb21114794002c101bf924d",
+    "source_png_sha256": "101e469576d4be381d91b464fd77c0d424b53aeeb66e76e60865f509bc3b2414"
+  },
+  {
+    "id": "iron_giant",
+    "name": "Iron Giant",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/iron_giant.webp",
+    "rarity": 3,
+    "values": {
+      "top": 7,
+      "right": 3,
+      "bottom": 5,
+      "left": 7
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 628794,
+    "sha256": "7264a55136c3fda77ced554f233c13e66d418e0f10ab64446d22c97787393bd4",
+    "source_png_sha256": "58757aca09f6f3333e5dadd95efd6dcc3742561c3980d77d7e22d8a7167c9224"
+  },
+  {
+    "id": "behemoth",
+    "name": "Behemoth",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/behemoth.webp",
+    "rarity": 4,
+    "values": {
+      "top": 8,
+      "right": 4,
+      "bottom": 7,
+      "left": 6
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 636120,
+    "sha256": "9a3f0b8672daa49e38f9c7a6f88dd4838dbc89d589fd242d9b87559e78915ca0",
+    "source_png_sha256": "50704f9797ef474aa6af83ed64424be35ff43c1cb3a9d11e608b6acb29c217ab"
+  },
+  {
+    "id": "tonberry_king",
+    "name": "Tonberry King",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/tonberry_king.webp",
+    "rarity": 4,
+    "values": {
+      "top": 4,
+      "right": 8,
+      "bottom": 6,
+      "left": 7
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 626718,
+    "sha256": "cb53939b796c293cbeb7f857686991a0b1a35ce969979ff1dac652d51ca4d173",
+    "source_png_sha256": "5fdb2fa1d16d7d85db7d534a4780624fe16533eb6fb9149871846358c1f992d1"
+  },
+  {
+    "id": "crystal_golem",
+    "name": "Crystal Golem",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/crystal_golem.webp",
+    "rarity": 4,
+    "values": {
+      "top": 7,
+      "right": 6,
+      "bottom": 8,
+      "left": 3
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 658286,
+    "sha256": "e6990d293fca7592c7d4b392ad0149d11eddf51e69e9e78d36cfb2ba09bcffd5",
+    "source_png_sha256": "2862846a38e1b79ff06419397060c2aa66ee4ca0db9f5d2d43da7a0138785ce0"
+  },
+  {
+    "id": "garuda",
+    "name": "Garuda",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/garuda.webp",
+    "rarity": 4,
+    "values": {
+      "top": 8,
+      "right": 7,
+      "bottom": 3,
+      "left": 6
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 661736,
+    "sha256": "97348708acc5ca9c8922eb51d2fef12fb2c99be841f9bb6a0aeb74d0b8b199b0",
+    "source_png_sha256": "652a9296ce10e62fdc9c15803db6f59ad7950eb13fd8a966634efa27ee2a3851"
+  },
+  {
+    "id": "titan",
+    "name": "Titan",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/titan.webp",
+    "rarity": 4,
+    "values": {
+      "top": 6,
+      "right": 4,
+      "bottom": 8,
+      "left": 7
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 663720,
+    "sha256": "6561ee8c68ff860689113461e2dbad460728a896b812813aba56c63df6c6c0c4",
+    "source_png_sha256": "9d1862dc9d8ae5cc0e851ba4a6afc285c637f5f8e1ce99589465506bd240d4e5"
+  },
+  {
+    "id": "crystal_dragon",
+    "name": "Crystal Dragon",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/crystal_dragon.webp",
+    "rarity": 5,
+    "values": {
+      "top": 9,
+      "right": 5,
+      "bottom": 8,
+      "left": 7
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 684482,
+    "sha256": "2ea4cac371c011f86d41b9f8e639fd94466fefa1acc6e8c7c1fcf7e8aa7026a3",
+    "source_png_sha256": "93efcfbda726d53e73d57127ff04df9090cd006fa4081076a10606fb2bc57121"
+  },
+  {
+    "id": "omega_fragment",
+    "name": "Omega Fragment",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/omega_fragment.webp",
+    "rarity": 5,
+    "values": {
+      "top": 8,
+      "right": 9,
+      "bottom": 4,
+      "left": 8
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 642528,
+    "sha256": "d16048b7b8552f43e07bf6490a6f73170a6957f3070a184afccf054308c91b04",
+    "source_png_sha256": "301c70e0977c399daec043d12ff7fd76497dac22c1b13ff3837f68bb752b3c40"
+  },
+  {
+    "id": "void_avatar",
+    "name": "Void Avatar",
+    "art": "/gold-saucer/expanded-196/triple-triad/cards/void_avatar.webp",
+    "rarity": 5,
+    "values": {
+      "top": 10,
+      "right": 4,
+      "bottom": 8,
+      "left": 7
+    },
+    "batch": 3,
+    "width": 1060,
+    "height": 1484,
+    "bytes": 629706,
+    "sha256": "4126cf86a1d33f9155a882eab1c5f068bdb6f32c75e44ae2f667239daaaec8b9",
+    "source_png_sha256": "7c4128e9caa8d4ee17c62320c933f7e44e6915a2e09be4e4e441f0704a4078f5"
+  }
+]

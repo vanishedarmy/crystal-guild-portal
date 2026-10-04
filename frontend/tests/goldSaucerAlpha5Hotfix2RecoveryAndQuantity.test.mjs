@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const saucer = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
+const saucer = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const emporium = fs.readFileSync(path.join(root, "src/player/MoogleEmporium.jsx"), "utf8");
 const blacksmith = fs.readFileSync(path.join(root, "src/player/Blacksmith.jsx"), "utf8");
 const fellowship = fs.readFileSync(path.join(root, "src/player/Fellowship.jsx"), "utf8");
@@ -18,7 +18,7 @@ test("Alpha 5 Hotfix 2 sanitizes live Gold Saucer display scalars", () => {
   assert.match(saucer, /function triadRarity\(value\)/);
   assert.match(saucer, /displayText\(card\?\.name, "Unknown Card"\)/);
   assert.match(saucer, /displayText\(course\.description, "Gold Saucer race course\."\)/);
-  assert.match(saucer, /displayText\(opponent\.description, "Triple Triad challenger\."\)/);
+  assert.match(saucer, /displayText\(opponent\?\.description, "Triple Triad challenger\."\)/);
   assert.match(saucer, /const details = asRecord\(entry\.details\)/);
 });
 

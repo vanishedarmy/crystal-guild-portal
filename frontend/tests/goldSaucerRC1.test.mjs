@@ -7,7 +7,7 @@ import { WEB_ASSET_REVISION, WEB_VERSION } from "../src/version.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
-const component = fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
+const component = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const guide = fs.readFileSync(path.join(root, "public/guide-body.html"), "utf8");
 
 test("Gold Saucer freezes the current release identity", () => {

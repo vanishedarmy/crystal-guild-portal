@@ -1,3 +1,4 @@
+import TripleTriad from "./TripleTriad.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -8,9 +9,6 @@ import {
   submitMonsterTossStart,
   submitMonsterTossThrow,
   submitChocoboRace,
-  submitTriadSetDeck,
-  submitTriadStart,
-  submitTriadPlay,
   submitSaucerBuy,
   submitSlotsSpin,
   waitForPortalAction,
@@ -25,15 +23,6 @@ const SAUCER_ART_ROOT = "/gold-saucer/a1h1";
 const TOSS_ART_ROOT = "/gold-saucer/a2h2/monster-toss";
 const CHOCOBO_PORTRAIT_ROOT = "/retro-phase-iii/chocobo-portraits-v1";
 const RACE_ART_ROOT = "/gold-saucer/a4h1/chocobo-racing";
-const TRIAD_ART_ROOT = "/gold-saucer/a5h5/triple-triad";
-const TRIAD_CARD_ART_ROOT = "/gold-saucer/rc2h1/triple-triad/cards";
-const TRIAD_ART_FALLBACK = `${SAUCER_ART_ROOT}/saucer-lobby.webp`;
-const TRIAD_CARD_ART = Object.fromEntries(["chocobo", "moogle", "cactuar", "bomb", "flan", "tonberry", "coeurl", "ahriman", "malboro", "ifrit", "shiva", "ramuh", "leviathan", "bahamut", "odin"].map((id) => [id, `${TRIAD_CARD_ART_ROOT}/${id}.webp`]));
-const TRIAD_OPPONENT_ART = {
-  saucer_attendant: `${TRIAD_ART_ROOT}/opponents/saucer_attendant.webp`,
-  card_shark: `${TRIAD_ART_ROOT}/opponents/card_shark.webp`,
-  crystal_master: `${TRIAD_ART_ROOT}/opponents/crystal_master.webp`,
-};
 const RACE_COURSE_ART = {
   manderville_sprint: `${RACE_ART_ROOT}/courses/manderville-sprint.webp`,
   crystal_circuit: `${RACE_ART_ROOT}/courses/crystal-circuit.webp`,
@@ -144,26 +133,6 @@ function Reel({ id, label }) {
   );
 }
 
-function triadAccessibleLabel(card) {
-  const name = displayText(card?.name, "Unknown Card");
-  const rarity = triadRarity(card?.rarity);
-  return `${name}, ${rarity}-star card. Top ${displayText(card?.top, "0")}, right ${displayText(card?.right, "0")}, bottom ${displayText(card?.bottom, "0")}, left ${displayText(card?.left, "0")}.`;
-}
-
-function TriadCard({ card, owner = "player", selected = false, disabled = false, onClick = null, compact = false }) {
-  if (!card) return null;
-  const cardId = displayId(card.id, "unknown");
-  const art = TRIAD_CARD_ART[cardId] || null;
-  const label = triadAccessibleLabel(card);
-  const content = art
-    ? <span className="triad-card-art" aria-hidden="true"><ArtImage src={art} fallbackSrc={`${TRIAD_ART_ROOT}/cards/card-back.webp`} alt="" /></span>
-    : <span className="triad-card-missing" aria-hidden="true">?</span>;
-  if (onClick) {
-    return <button type="button" className={`triad-card full-face owner-${owner} ${selected ? "selected" : ""} ${compact ? "compact" : ""}`} disabled={disabled} onClick={onClick} aria-pressed={selected} aria-label={label}>{content}</button>;
-  }
-  return <div className={`triad-card full-face owner-${owner} ${selected ? "selected" : ""} ${compact ? "compact" : ""}`} role="img" aria-label={label}>{content}</div>;
-}
-
 
 export default function GoldSaucer({ data, overview, onRefresh }) {
   const { auth } = usePortalAuth();
@@ -178,9 +147,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const [tossStyle, setTossStyle] = useState("normal");
   const [raceCourse, setRaceCourse] = useState("manderville_sprint");
   const [raceStrategy, setRaceStrategy] = useState("balanced");
-  const [triadOpponent, setTriadOpponent] = useState("saucer_attendant");
-  const [triadDeckDraft, setTriadDeckDraft] = useState([]);
-  const [triadSelectedCard, setTriadSelectedCard] = useState("");
 
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
@@ -238,18 +204,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
     if (!courses.length || courses.some((course) => course.id === raceCourse)) return;
     setRaceCourse((courses.find((course) => course.eligible) || courses[0]).id);
   }, [state, raceCourse]);
-
-  useEffect(() => {
-    const triad = asRecord(state?.triple_triad);
-    const deck = asArray(triad.deck).filter((cardId) => typeof cardId === "string");
-    if (deck.length === 5 && triadDeckDraft.length === 0) setTriadDeckDraft([...deck]);
-    const opponents = asObjectArray(triad.opponents);
-    if (opponents.length && !opponents.some((row) => row.id === triadOpponent && row.unlocked)) {
-      setTriadOpponent((opponents.find((row) => row.unlocked) || opponents[0]).id);
-    }
-    const hand = asObjectArray(asRecord(triad.match).player_hand);
-    if (triadSelectedCard && !hand.some((card) => card.id === triadSelectedCard)) setTriadSelectedCard("");
-  }, [state, triadDeckDraft.length, triadOpponent, triadSelectedCard]);
 
   const mutate = async (key, submit, fallback) => {
     if (!actionsAvailable || busy) return;
@@ -360,20 +314,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const lastRaceDetails = asRecord(lastRace?.details);
   const raceCanEnter = Boolean(selectedRaceCourse?.can_enter);
   const triad = asRecord(saucerState.triple_triad);
-  const triadCollection = asObjectArray(triad.collection);
-  const triadOwnedCards = triadCollection.filter((card) => Boolean(card.owned));
-  const triadOpponents = asObjectArray(triad.opponents);
-  const selectedTriadOpponent = triadOpponents.find((row) => row.id === triadOpponent) || triadOpponents[0] || null;
-  const triadMatch = Object.keys(asRecord(triad.match)).length ? asRecord(triad.match) : null;
-  const triadMatchOpponent = triadOpponents.find((row) => row.id === triadMatch?.opponent_id) || null;
-  const triadBoard = Array.isArray(triadMatch?.board) ? triadMatch.board.slice(0, 9) : Array(9).fill(null);
-  while (triadBoard.length < 9) triadBoard.push(null);
-  const triadHand = asObjectArray(triadMatch?.player_hand);
-  const triadResetRemaining = Math.max(0, Number(triad.next_daily_reset_at || 0) - nowSeconds);
-  const savedTriadDeck = asArray(triad.deck).filter((cardId) => typeof cardId === "string");
-  const triadDeckChanged = triadDeckDraft.length === 5 && JSON.stringify(triadDeckDraft) !== JSON.stringify(savedTriadDeck);
-  const triadCanStart = Boolean(selectedTriadOpponent?.can_start) && triadDeckDraft.length === 5;
-  const triadResultKey = ["win", "loss", "draw"].includes(String(triadMatch?.result || "")) ? String(triadMatch.result) : "draw";
   const futureAttractions = asObjectArray(saucerState.attractions).filter((attraction) => attraction.status !== "open");
   const revealed = new Set(asArray(ticket?.revealed));
   const lastSlots = slots?.last_spin?.details || null;
@@ -637,111 +577,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </div>
           </details>
 
-          <details className="panel saucer-triad-panel saucer-section-disclosure" defaultOpen={Boolean(triad.active)}>
-            <summary className="saucer-section-summary">
-              <div><p className="eyebrow">Alpha 5 Attraction</p><h3>Triple Triad</h3></div>
-              <span className={`small-badge ${Number(triad.matches_remaining || 0) > 0 ? "ready" : "locked"}`}>{number(triad.matches_remaining)} / {number(triad.daily_matches || 5)} matches left</span>
-              <DetailsPointer className="saucer-details-pointer" />
-            </summary>
-            <div className="saucer-section-body triad-section-body">
-              <div className="triad-hero" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/hero.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
-              <p className="muted triad-intro">Build a five-card deck, challenge Gold Saucer opponents, and capture adjacent cards by placing a higher number against a lower opposing side. Alpha 5 uses the clean Open rule only—no Same, Plus, or elemental modifiers.</p>
-
-              {triadMatch?.state === "active" ? (
-                <div className="triad-match-live">
-                  <div className="triad-match-head">
-                    <div><span>Current Match</span><strong>vs {displayText(triadMatchOpponent?.name, "Gold Saucer Opponent")}</strong><small>Your cards {number(triadMatch.player_score)} · Opponent {number(triadMatch.npc_score)}</small></div>
-                    <span className="small-badge ready">YOUR TURN</span>
-                  </div>
-                  <div className="triad-table-layout">
-                    <div className="triad-board" aria-label="Triple Triad board">
-                      {triadBoard.map((cell, index) => cell ? (
-                        <div className={`triad-board-cell occupied owner-${displayId(cell.owner, "player")}`} key={index} aria-label={`Board cell ${index + 1}: ${displayText(cell.card?.name, "card")}, owned by ${displayText(cell.owner, "player")}`}>
-                          <TriadCard card={cell.card} owner={cell.owner} compact />
-                        </div>
-                      ) : (
-                        <button
-                          type="button"
-                          className={`triad-board-cell empty ${triadSelectedCard ? "playable" : ""}`}
-                          key={index}
-                          disabled={!actionsAvailable || Boolean(busy) || !triadSelectedCard}
-                          onClick={() => mutate(`triad-play-${index}`, () => submitTriadPlay(triadSelectedCard, index, csrfToken, actionKey("triad-play", `${triadSelectedCard}-${index}`)), "Playing Triple Triad card…")}
-                          aria-label={triadSelectedCard ? `Play selected card in cell ${index + 1}` : `Empty cell ${index + 1}`}
-                        >{triadSelectedCard ? "+" : "·"}</button>
-                      ))}
-                    </div>
-                    <div className="triad-hand-panel">
-                      <div className="saucer-race-section-head"><div><span className="slot-label">Your Hand</span><small className="muted">Select a card, then choose an empty board cell.</small></div><span className="triad-hidden-opponent"><ArtImage src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" /><span className="small-badge">{number(triadMatch.npc_cards_remaining)} hidden opponent cards</span></span></div>
-                      <div className="triad-hand-grid">
-                        {triadHand.map((card) => <TriadCard key={card.id} card={card} selected={triadSelectedCard === card.id} disabled={Boolean(busy)} onClick={() => setTriadSelectedCard(card.id)} />)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {triadMatch?.state === "resolved" ? (
-                    <div className={`triad-last-result result-${triadResultKey}`}>
-                      <ArtImage className="triad-result-art" src={`${TRIAD_ART_ROOT}/results/${triadResultKey}.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" />
-                      <div className="triad-result-copy"><span>Last Match</span><strong>{String(triadMatch.result || "complete").toUpperCase()} · {number(triadMatch.player_score)}–{number(triadMatch.npc_score)}</strong><small>vs {displayText(triadMatchOpponent?.name, "Gold Saucer Opponent")}</small></div>
-                      <span className="small-badge">Match Complete</span>
-                    </div>
-                  ) : null}
-
-                  <div className="triad-context-banner triad-deck-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/deck-builder.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
-                  <div className="triad-builder-head">
-                    <div><span className="slot-label">Deck Builder</span><small className="muted">Choose exactly five owned cards. Your starter deck is granted automatically on first entry.</small></div>
-                    <span className={`small-badge ${triadDeckDraft.length === 5 ? "ready" : "locked"}`}>{number(triadDeckDraft.length)} / 5 selected</span>
-                  </div>
-                  <div className="triad-collection-grid deck-builder" aria-label="Triple Triad deck builder">
-                    {triadOwnedCards.map((card) => (
-                      <TriadCard
-                        key={card.id}
-                        card={card}
-                        selected={triadDeckDraft.includes(card.id)}
-                        disabled={Boolean(busy) || (!triadDeckDraft.includes(card.id) && triadDeckDraft.length >= 5)}
-                        onClick={() => setTriadDeckDraft((current) => current.includes(card.id) ? current.filter((id) => id !== card.id) : current.length < 5 ? [...current, card.id] : current)}
-                      />
-                    ))}
-                  </div>
-                  <div className="triad-deck-actions">
-                    <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || Boolean(busy) || triadDeckDraft.length !== 5 || !triadDeckChanged} onClick={() => mutate("triad-save-deck", () => submitTriadSetDeck(triadDeckDraft, csrfToken, actionKey("triad-set-deck")), "Saving Triple Triad deck…")}>{busy === "triad-save-deck" ? "Saving…" : triadDeckChanged ? "Save Deck" : "Deck Saved"}</button>
-                  </div>
-
-                  <div className="triad-builder-head triad-opponent-heading">
-                    <div><span className="slot-label">Choose Opponent</span><small className="muted">Wins unlock tougher tables, stronger card rewards, and larger MGP purses.</small></div>
-                    <span className="small-badge triad-collection-count">{number(triad.owned_count)} / {number(triad.total_cards)} cards collected</span>
-                  </div>
-                  <div className="triad-opponent-grid">
-                    {triadOpponents.map((opponent) => (
-                      <button type="button" className={`triad-opponent ${triadOpponent === opponent.id ? "selected" : ""} ${opponent.unlocked ? "" : "locked"}`} key={opponent.id} disabled={Boolean(busy) || !opponent.unlocked} onClick={() => setTriadOpponent(opponent.id)} aria-pressed={triadOpponent === opponent.id}>
-                        <span className="triad-opponent-art"><ArtImage src={TRIAD_OPPONENT_ART[displayId(opponent.id, "")] || TRIAD_ART_FALLBACK} fallbackSrc={TRIAD_ART_FALLBACK} alt="" aria-hidden="true" /></span>
-                        <span className="triad-opponent-meta"><span className={`small-badge ${opponent.unlocked ? "ready" : "locked"}`}>{opponent.unlocked ? `${number(opponent.cost)} MGP` : `${number(opponent.unlock_wins)} wins`}</span><span className="triad-opponent-status">{triadOpponent === opponent.id && opponent.unlocked ? "SELECTED" : displayText(opponent.difficulty, "Opponent")}</span></span>
-                        <strong>{displayText(opponent.name, "Gold Saucer Opponent")}</strong>
-                        <span>{displayText(opponent.description, "Triple Triad challenger.")}</span>
-                        <small>Win {number(opponent.win_payout)} · Draw {number(opponent.draw_payout)} MGP</small>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="triad-entry-strip">
-                    <div><span>Selected Match</span><strong>{displayText(selectedTriadOpponent?.name, "Saucer Attendant")}</strong><small>{number(selectedTriadOpponent?.cost || 0)} MGP · {number(triad.matches_remaining)} matches remaining today</small></div>
-                    <button type="button" className="equipment-action-button" disabled={!actionsAvailable || Boolean(busy) || !triadCanStart || triadDeckChanged} onClick={() => mutate("triad-start", () => submitTriadStart(selectedTriadOpponent?.id, csrfToken, actionKey("triad-start", selectedTriadOpponent?.id)), `Challenging ${displayText(selectedTriadOpponent?.name, "Triple Triad opponent")}…`)}>
-                      {busy === "triad-start" ? "Dealing Cards…" : Number(triad.matches_remaining || 0) <= 0 ? `Daily reset ${duration(triadResetRemaining)}` : triadDeckChanged ? "Save Deck First" : !selectedTriadOpponent?.unlocked ? `Requires ${number(selectedTriadOpponent?.unlock_wins || 0)} Wins` : mgp < Number(selectedTriadOpponent?.cost || 0) ? "Not Enough MGP" : `Start Match · ${number(selectedTriadOpponent?.cost || 0)} MGP`}
-                    </button>
-                  </div>
-
-                  {Number(triad.owned_count || 0) >= Number(triad.total_cards || 15) ? <div className="triad-context-banner triad-complete-banner"><ArtImage src={`${TRIAD_ART_ROOT}/ui/collection-complete.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="Collection complete" /><span /></div> : null}
-                  <details className="saucer-balance-notes triad-collection-disclosure">
-                    <summary>Card Collection · {number(triad.owned_count)} / {number(triad.total_cards)}<DetailsPointer className="saucer-details-pointer" /></summary>
-                    <div className="triad-context-banner triad-collection-banner" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/ui/collection.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /><span /></div>
-                    <div className="triad-collection-grid collection-view">
-                      {triadCollection.map((card) => card.owned ? <TriadCard key={card.id} card={card} compact /> : <div className="triad-card full-face locked compact" key={card.id} role="img" aria-label="Locked Triple Triad card"><span className="triad-card-art" aria-hidden="true"><ArtImage src={`${TRIAD_ART_ROOT}/cards/card-back.webp`} fallbackSrc={TRIAD_ART_FALLBACK} alt="" /></span><span className="triad-card-lock">Locked</span></div>)}
-                    </div>
-                  </details>
-                </>
-              )}
-            </div>
-          </details>
+          <TripleTriad triad={triad} busy={busy} mutate={mutate} actionsAvailable={actionsAvailable} csrfToken={csrfToken} actionKey={actionKey} mgp={mgp} />
 
           <details className="panel saucer-prize-panel saucer-scenic-panel saucer-section-disclosure">
             <summary className="saucer-section-summary">
@@ -843,7 +679,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 {history.map((entry, index) => {
                   const game = humanizeLabel(entry.game || "activity");
                   const details = asRecord(entry.details);
-                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "daily_reward" ? "Daily MGP reward" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : game;
+                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "daily_reward" ? "Daily MGP reward" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : entry.game === "triad_circuit" ? `Triple Triad · ${details.name || "Circuit"} cleared` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
                     <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${humanizeLabel(entry.outcome || "")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : entry.game === "triple_triad" ? `${number(details.player_score)}–${number(details.npc_score)}${details.card_reward_name ? ` · won ${details.card_reward_name}` : ""}` : humanizeLabel(entry.outcome || "")}</small></span>
                     <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} MGP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} MGP` : "—"}</b>

@@ -7,7 +7,11 @@ const web = path.resolve(root, '..');
 const pub = path.join(root, 'public');
 test('retired Triple Triad art families are gone without touching current card art', () => {
   for (const old of ['a5h3', 'a5h4']) assert.ok(!fs.existsSync(path.join(pub, 'gold-saucer', old)));
-  for (const name of ['ifrit.webp','shiva.webp','ramuh.webp','card-back.webp']) assert.ok(fs.existsSync(path.join(pub, 'gold-saucer/a5h5/triple-triad/cards',name)));
+  for (const name of ['ifrit.webp','shiva.webp','ramuh.webp']) {
+    assert.ok(fs.existsSync(path.join(pub, 'gold-saucer/rc2h1/triple-triad/cards',name)));
+    assert.ok(!fs.existsSync(path.join(pub, 'gold-saucer/a5h5/triple-triad/cards',name)));
+  }
+  assert.ok(fs.existsSync(path.join(pub, 'gold-saucer/a5h5/triple-triad/cards/card-back.webp')));
 });
 test('only active Hunt/Raid backgrounds ship and scene manifest points to them', () => {
   const m = JSON.parse(fs.readFileSync(path.join(web,'SCENE_BACKGROUND_MANIFEST.json'),'utf8'));

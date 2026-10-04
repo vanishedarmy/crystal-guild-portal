@@ -32,7 +32,7 @@ export const TROPHY_CATALOG = [
   ["tt_first_win","triple_triad","Opening Hand","The first winning hand in a growing Triple Triad career.","Win a Triple Triad match.","/trophies/a1/triple-triad/opening-hand.webp"],
   ["tt_streak_3","triple_triad","Hot Streak","Three victories in succession, remembered in flame and gold.","Reach a 3-win Triple Triad streak.","/trophies/a1/triple-triad/hot-streak.webp"],
   ["tt_cards_10","triple_triad","Collector's Folio","A carefully kept folio celebrating a collection of ten unique cards.","Own 10 unique Triple Triad cards.","/trophies/a1/triple-triad/collectors-folio.webp"],
-  ["tt_cards_all","triple_triad","Master Deck","The complete original fifteen-card collection displayed as a master set.","Own all 15 current Triple Triad cards.","/trophies/a1/triple-triad/master-deck.webp"],
+  ["tt_cards_all","triple_triad","Master Deck","The complete original fifteen-card collection displayed as a master set.","Own all 15 original Triple Triad cards.","/trophies/a1/triple-triad/master-deck.webp"],
   ["fellowship_guildhall_3","fellowship","Crystal Foundation","A miniature of the Guild Hall honoring those who helped raise it to Lv. 3.","Contribute to Guild Hall Lv. 3 before its completion.","/trophies/a1/fellowship/crystal-foundation.webp"],
   ["fellowship_workshop_3","fellowship","Masterwork Anvil","The Fellowship's forge immortalized for a contributor to Workshop Lv. 3.","Contribute to Workshop Lv. 3 before its completion.","/trophies/a1/fellowship/masterwork-anvil.webp"],
   ["fellowship_archive_3","fellowship","Living Archive","An enchanted archive honoring contributors to Guild Archive Lv. 3.","Contribute to Guild Archive Lv. 3 before its completion.","/trophies/a1/fellowship/living-archive.webp"],

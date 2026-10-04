@@ -15588,3 +15588,12 @@ textarea {
 @media(max-width:900px){.seasonal-event-rework .span-5,.seasonal-event-rework .span-7{grid-column:span 12}.seasonal-event-rework .seasonal-secondary-grid{grid-template-columns:1fr}.seasonal-event-rework .seasonal-shop-grid-rework{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.seasonal-event-rework .seasonal-event-command-hero{padding:.75rem}.seasonal-event-rework .seasonal-event-window,.seasonal-event-rework .seasonal-event-stat-grid,.seasonal-event-rework .seasonal-shop-grid-rework,.seasonal-event-rework .seasonal-monster-grid-rework,.seasonal-event-rework .seasonal-trophy-grid-rework{grid-template-columns:1fr}.seasonal-event-rework .seasonal-event-banner{aspect-ratio:16/7;object-fit:cover}.seasonal-event-rework .seasonal-shop-grid-rework .seasonal-shop-card{grid-template-columns:52px minmax(0,1fr);align-items:center}.seasonal-event-rework .seasonal-shop-grid-rework .seasonal-shop-card img{width:52px;height:52px}.seasonal-event-rework .seasonal-shop-grid-rework .seasonal-shop-card button{grid-column:1/-1;width:100%}.seasonal-event-rework .seasonal-monster-grid-rework .seasonal-monster-card{grid-template-columns:76px minmax(0,1fr)}.seasonal-event-rework .seasonal-monster-grid-rework .seasonal-monster-card img{width:76px;height:76px}.seasonal-event-rework .seasonal-warden-callout{grid-template-columns:1fr}.seasonal-event-rework .seasonal-warden-callout img{width:100%;height:auto;max-height:210px}.seasonal-event-rework .seasonal-shop-heading-row,.seasonal-event-rework .seasonal-compact-heading{align-items:flex-start;flex-direction:column}.seasonal-event-rework .seasonal-heading-count{align-self:flex-start}}
 @media(max-width:440px){.seasonal-event-rework .seasonal-objective-head{align-items:flex-start;flex-direction:column;gap:.2rem}.seasonal-event-rework .seasonal-scenery-rework .seasonal-scenery-grid{grid-template-columns:1fr}.seasonal-event-rework .seasonal-secondary-grid details>summary{align-items:flex-start}.seasonal-event-rework .seasonal-summary-meta{text-align:right}}
+
+/* Seasonal reward snippets stay readable without hiding the reward cost. */
+#root .seasonal-shop-card-copy .seasonal-reward-description {
+  margin-top: .35rem;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}

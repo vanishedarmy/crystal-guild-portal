@@ -4,6 +4,13 @@ import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
 import { humanizeLabel } from "../utils/displayLabels.js";
 
+const REWARD_DESCRIPTIONS = {
+  spooky_supply_cache: "A repeatable seasonal collectible. This reward grants no supplies or Gil.",
+  nightwatcher: "Unlocks the Nightwatcher title for your adventurer. Cosmetic only; no stat bonus.",
+  haunted_candle: "A Halloween keepsake for your seasonal collection. Cosmetic only; no stat bonus.",
+  hollow_crystal_display: "A seasonal display collectible that also unlocks the Keeper of the Hollow trophy. No stat bonus.",
+};
+
 const HALLOWEEN_ART = "/seasonal/halloween-2026/";
 const ART_REVISION = "halloween-art-hotfix3";
 const SCENES = [
@@ -212,9 +219,10 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
           {rewards.map((reward) => {
             const unaffordable = Number(event.tokens || 0) < Number(reward.cost || 0);
             const owned = Boolean(reward.owned && !reward.repeatable);
+            const description = reward.description || REWARD_DESCRIPTIONS[reward.id];
             return <article className={`seasonal-shop-card ${owned ? "is-owned" : ""}`} key={reward.id}>
               <img src={artURL(reward.art)} alt="" loading="lazy" decoding="async" />
-              <div className="seasonal-shop-card-copy"><strong>{reward.name}</strong><span>{reward.repeatable ? "Repeatable reward" : owned ? "Collected" : "Limited reward"}</span><p>{number(reward.cost)} {event.token_name || "Moonlit Tokens"}</p></div>
+              <div className="seasonal-shop-card-copy"><strong>{reward.name}</strong><span>{reward.repeatable ? "Repeatable reward" : owned ? "Collected" : "Limited reward"}</span><p>{number(reward.cost)} {event.token_name || "Moonlit Tokens"}</p>{description ? <p className="seasonal-reward-description">{description}</p> : null}</div>
               <button type="button" className="equipment-action-button" disabled={!canBuy || Boolean(busy) || owned || unaffordable} onClick={() => buy(reward)}>{owned ? "Owned" : busy === reward.id ? "Claiming…" : unaffordable ? "Need Tokens" : "Claim"}</button>
             </article>;
           })}

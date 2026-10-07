@@ -62,5 +62,7 @@ def build_trophy_hall(snapshot: dict[str, Any]) -> dict[str, Any]:
         },
         "unlocked": unlocked,
         "moment_slots": moment_slots,
-        "summary": {"unlocked": len(unlocked), "total": 30 + len(moment_slots)},
+        "seasonal_trophies": trophies.get("seasonal_trophies") or [],
+        "keepsakes": trophies.get("keepsakes") or [],
+        "summary": {"unlocked": len(unlocked), "total": 30 + len(moment_slots) + len(trophies.get("seasonal_trophies") or [])},
     }

@@ -1,3 +1,4 @@
+import SeasonalKeepsakes from "./SeasonalKeepsakes.jsx";
 import LockIcon from "../components/LockIcon.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TROPHY_CATALOG, TROPHY_CATEGORIES } from "./trophyCatalog.js";
@@ -41,7 +42,8 @@ export default function TrophyHall({ data = {} }) {
   const trophyCatalog = useMemo(() => [
     ...TROPHY_CATALOG,
     ...(data.moment_slots || []).map((slot, offset) => ({ ...slot, order: TROPHY_CATALOG.length + offset })),
-  ], [data.moment_slots]);
+    ...(data.seasonal_trophies || []).map((trophy, offset) => ({ ...trophy, order: TROPHY_CATALOG.length + (data.moment_slots || []).length + offset })),
+  ], [data.moment_slots, data.seasonal_trophies]);
   const unlockedCount = trophyCatalog.filter((trophy) => unlockedById.has(trophy.id)).length;
   const percent = Math.round((unlockedCount / trophyCatalog.length) * 100);
   const complete = unlockedCount === trophyCatalog.length;
@@ -123,6 +125,8 @@ export default function TrophyHall({ data = {} }) {
           </div>
         </div>
       </section>
+
+      <SeasonalKeepsakes keepsakes={data.keepsakes || []} />
 
       <section className="panel span-12 trophy-hall-controls" aria-label="Trophy filters">
         <div className="trophy-category-tabs" role="tablist" aria-label="Trophy categories">

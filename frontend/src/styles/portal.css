@@ -15614,3 +15614,16 @@ textarea {
 #root .inventory-card.is-cache .equipment-card-actions {
   grid-template-columns: minmax(0, 1fr);
 }
+
+/* Seasonal cache opening and permanent keepsake display */
+.seasonal-cache-grid,.seasonal-keepsake-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.seasonal-cache-panel,.seasonal-keepsakes{min-width:0}
+.seasonal-keepsake-card{display:flex;align-items:center;gap:16px;min-width:0;padding:14px;border:1px solid #61708d;border-radius:12px;background:#0b1429}
+.seasonal-keepsake-card img{width:100px;height:100px;flex:none;object-fit:contain}
+.seasonal-keepsake-card div{min-width:0;overflow-wrap:anywhere}
+.seasonal-keepsake-card strong{color:#f5e6b8}
+.seasonal-keepsake-card p{margin:6px 0;color:#d3ddef;line-height:1.5}
+.seasonal-cache-reward{display:flex;flex-direction:column;gap:8px;margin-top:16px;padding:18px;border:1px solid #d8b965;border-radius:12px;background:#101d32;color:#edf3ff;overflow-wrap:anywhere}
+.seasonal-cache-reward strong{font-size:1.2rem;color:#ffe5a1}
+.seasonal-cache-reward p{margin:0}
+@media(max-width:480px){.seasonal-keepsake-card{gap:12px;padding:12px}.seasonal-keepsake-card img{width:72px;height:72px}.seasonal-cache-panel .seasonal-shop-card{grid-template-columns:56px minmax(0,1fr)}.seasonal-cache-panel .equipment-action-button{grid-column:1/-1;width:100%}}

@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { submitSeasonalBuy, submitSeasonalState, waitForPortalAction } from "../api/auth.js";
+import { submitSeasonalBuy, submitSeasonalState, submitUseFieldItem, waitForPortalAction } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
 import { number } from "../utils/formatters.js";
+import SeasonalKeepsakes from "./SeasonalKeepsakes.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 
 const REWARD_DESCRIPTIONS = {
-  spooky_supply_cache: "Adds one sealed cache to Inventory. Open for one reward: 45% common, 25% uncommon, 10% rare, 4% artifact, 1% legendary item, or 15% chance of 100–750 Gil.",
+  spooky_supply_cache: "Adds one sealed cache. Open below in Seasonal Caches or from Inventory for one reward: 45% common, 25% uncommon, 10% rare, 4% artifact, 1% legendary item, or 15% chance of 100–750 Gil.",
   nightwatcher: "Unlocks the Nightwatcher title for your adventurer. Cosmetic only; no stat bonus.",
   haunted_candle: "A Halloween keepsake for your seasonal collection. Cosmetic only; no stat bonus.",
-  hollow_crystal_display: "A seasonal display collectible that also unlocks the Keeper of the Hollow trophy. No stat bonus.",
+  hollow_crystal_display: "Displayed in Seasonal Keepsakes here and in the Trophy Hall. Also unlocks Keeper of the Hollow in the Hall’s Seasonal category. No stat bonus.",
 };
 
 const HALLOWEEN_ART = "/seasonal/halloween-2026/";
@@ -60,6 +61,8 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   const { auth } = usePortalAuth();
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
+  const [cacheReward, setCacheReward] = useState(null);
+  const cacheOpeningRef = useRef(false);
   const [liveEvent, setLiveEvent] = useState(null);
   const [liveSyncing, setLiveSyncing] = useState(false);
   const stateRequestRef = useRef("");
@@ -70,6 +73,7 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   const canStateSync = Boolean(own && auth.actions_enabled && capabilities.has("SEASONAL_STATE"));
   const event = liveEvent || mirroredEvent;
   const canBuy = Boolean(own && auth.actions_enabled && capabilities.has("SEASONAL_BUY") && event.redemption);
+  const canOpen = Boolean(own && auth.actions_enabled && capabilities.has("USE_FIELD_ITEM"));
   const mirroredIncomplete = !Array.isArray(mirroredEvent?.variants) || !Array.isArray(mirroredEvent?.objectives) || !Array.isArray(mirroredEvent?.shop);
 
   useEffect(() => {
@@ -131,6 +135,8 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
   const objectives = Array.isArray(event.objectives) ? event.objectives : [];
   const rewards = Array.isArray(event.shop) ? event.shop : [];
   const trophies = Array.isArray(event.trophies) ? event.trophies : [];
+  const caches = Array.isArray(event.caches) ? event.caches : [];
+  const keepsakes = Array.isArray(event.keepsakes) ? event.keepsakes : [];
   const discoveredVariants = variants.filter((monster) => Number(monster.clears || 0) > 0).length;
   const completedObjectives = objectives.filter((objective) => objective.complete).length;
   const unlockedTrophies = trophies.filter((trophy) => trophy.unlocked_at).length;
@@ -154,6 +160,29 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
     } catch (error) {
       setMessage(String(error?.message || error));
     } finally {
+      setBusy("");
+    }
+  };
+
+  const openCache = async (cache) => {
+    if (!canOpen || busy || cacheOpeningRef.current || Number(cache.quantity || 0) < 1) return;
+    cacheOpeningRef.current = true;
+    setBusy(`open:${cache.id}`);
+    setMessage(`Opening ${cache.name}…`);
+    try {
+      const response = await submitUseFieldItem(cache.id, auth.csrf_token || "", actionKey("seasonal-open", cache.id));
+      const finished = await finishedAction(response);
+      const result = finished?.result;
+      if (result?.data?.seasonal) setLiveEvent(result.data.seasonal);
+      if (finished?.status === "completed" && result?.data?.cache_reward) {
+        setCacheReward({ ...result.data.cache_reward, cache_name: cache.name });
+      }
+      setMessage(result?.message || "The cache request is still pending. Refresh to check its result.");
+      onRefresh?.();
+    } catch (error) {
+      setMessage(String(error?.message || error));
+    } finally {
+      cacheOpeningRef.current = false;
       setBusy("");
     }
   };
@@ -230,6 +259,29 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
         {!event.redemption ? <p className="seasonal-shop-note">The Emporium opens while the event is active and remains available during the redemption window.</p> : null}
         {message ? <div className="state-message compact-state" role="status">{message}</div> : null}
       </section>
+
+      <section className="panel span-12 seasonal-cache-panel" aria-label="Seasonal caches">
+        <div className="panel-heading seasonal-compact-heading"><div><p className="eyebrow">Purchased Supplies</p><h3>Seasonal Caches</h3></div></div>
+        <p className="seasonal-section-copy">Open one sealed cache at a time to reveal your reward. Caches remain openable after the event ends; return from adventures and combat first.</p>
+        <div className="seasonal-cache-grid">
+          {caches.map((cache) => <article className="seasonal-shop-card" key={cache.id}>
+            <img src={artURL(cache.art)} alt="" loading="lazy" decoding="async" />
+            <div className="seasonal-shop-card-copy"><strong>{cache.name}</strong><p>{number(cache.quantity || 0)} unopened</p></div>
+            <button type="button" className="equipment-action-button" disabled={!canOpen || Boolean(busy) || Number(cache.quantity || 0) < 1} onClick={() => openCache(cache)}>
+              {busy === `open:${cache.id}` ? "Opening…" : "Open Cache"}
+            </button>
+          </article>)}
+        </div>
+        {!caches.length ? <p className="seasonal-empty-state">Purchase a cache from the Moonlit Emporium to open it here.</p> : null}
+        {cacheReward ? <div className="seasonal-cache-reward" role="status" aria-live="polite" aria-atomic="true">
+          <span className="eyebrow">Received from {cacheReward.cache_name}</span>
+          <strong>{cacheReward.kind === "gil" ? `${number(cacheReward.amount)} Gil` : `${number(cacheReward.quantity || 1)} × ${cacheReward.name || humanizeLabel(cacheReward.item_id)}`}</strong>
+          {cacheReward.rarity ? <span>{humanizeLabel(cacheReward.rarity)} item</span> : null}
+          <p>Added to your {cacheReward.kind === "gil" ? "Gil balance" : "inventory"}.</p>
+        </div> : null}
+      </section>
+
+      <SeasonalKeepsakes keepsakes={keepsakes} />
 
       <section className="panel span-12 seasonal-bestiary-panel seasonal-bestiary-rework">
         <div className="panel-heading seasonal-compact-heading">

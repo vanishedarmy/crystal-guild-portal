@@ -430,6 +430,20 @@ class HostedPortalStore:
         previous = snapshot.get("seasonal")
         player_meta = previous.get("player") if isinstance(previous, dict) and isinstance(previous.get("player"), dict) else {}
         snapshot["seasonal"] = {"player": dict(player_meta), "seasonal": dict(seasonal)}
+        # Seasonal purchases also update the permanent Hall immediately.
+        if isinstance(seasonal.get("trophies"), list) and isinstance(seasonal.get("keepsakes"), list):
+            hall = dict(snapshot.get("trophies") or {})
+            catalog = [{**entry, "category": "seasonal", "requirement": entry.get("description", ""), "secret": False}
+                       for entry in seasonal["trophies"]]
+            ids = {entry["id"] for entry in catalog}
+            hall["seasonal_trophies"] = catalog
+            hall["keepsakes"] = seasonal["keepsakes"]
+            hall["unlocked"] = [entry for entry in hall.get("unlocked", []) if entry.get("id") not in ids] + [
+                {"id": entry["id"], "unlocked_at": entry["unlocked_at"], "unlock_source": "seasonal", "seen_at": None}
+                for entry in catalog if entry.get("unlocked_at")
+            ]
+            hall.setdefault("player", dict(player_meta))
+            snapshot["trophies"] = hall
         encoded = json.dumps(snapshot, separators=(",", ":"), sort_keys=True, ensure_ascii=False)
         digest = hashlib.sha256(encoded.encode("utf-8")).hexdigest()
         canonical = str(row["username"]).lower()
@@ -1779,7 +1793,7 @@ class HostedPortalStore:
             # the hosted mirror immediately instead of waiting for the periodic
             # full Bot sync. This closes the gap where Streamer View says ACTIVE
             # while the player's Seasonal page still shows DISABLED/TBD.
-            player_seasonal = result_data.get("seasonal") if bool(ok) and row["action_type"] in {"SEASONAL_STATE", "SEASONAL_BUY"} else None
+            player_seasonal = result_data.get("seasonal") if bool(ok) and row["action_type"] in {"SEASONAL_STATE", "SEASONAL_BUY", "USE_FIELD_ITEM"} else None
             if isinstance(player_seasonal, dict):
                 if self._patch_player_seasonal_from_action(
                     conn,

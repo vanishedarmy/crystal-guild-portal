@@ -376,6 +376,29 @@ class PortalServerCase(unittest.TestCase):
         self.assertEqual(len(current["shop"]), 1)
         self.assertEqual(current["state"], "active")
 
+    def test_cache_open_result_updates_seasonal_counts_and_permanent_hall_immediately(self):
+        payload = snapshot_payload("van")
+        payload["player_twitch_id"] = "999"
+        payload["snapshot"]["trophies"] = {"player": {"username": "van"}, "unlocked": [{"id": "tt_first_win"}]}
+        self.assertEqual(self.post("/api/sync/player", payload)[0], 200)
+        action = self.store.create_action("999", "USE_FIELD_ITEM", {"item_id": "spooky_supply_cache"}, "seasonal-cache-result")
+        claimed = self.store.claim_actions("test-worker", limit=1, lease_seconds=30)
+        seasonal = {"state": "active", "tokens": 10, "caches": [{"id": "spooky_supply_cache", "quantity": 0}],
+                    "keepsakes": [{"id": "hollow_crystal_display", "name": "Hollow Crystal Display"}],
+                    "trophies": [{"id": "season_halloween_keeper", "name": "Keeper of the Hollow",
+                                  "description": "Acquire the display.", "unlocked_at": "2026-10-07"}]}
+        self.assertTrue(self.store.complete_action(action["id"], claimed[0]["lease_token"], True, "Found 750 Gil!",
+                                                   {"cache_reward": {"kind": "gil", "amount": 750}, "seasonal": seasonal}))
+        status, raw, _ = self.get("/api/player/van/seasonal")
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(raw)["seasonal"]["caches"][0]["quantity"], 0)
+        status, raw, _ = self.get("/api/player/van/trophies")
+        hall = json.loads(raw)
+        self.assertEqual(status, 200)
+        self.assertEqual({entry["id"] for entry in hall["unlocked"]}, {"tt_first_win", "season_halloween_keeper"})
+        self.assertEqual(hall["keepsakes"][0]["id"], "hollow_crystal_display")
+        self.assertEqual(hall["seasonal_trophies"][0]["category"], "seasonal")
+
     def test_streamer_seasonal_state_uses_freshest_player_snapshot(self):
         stale = snapshot_payload("alpha")
         stale["snapshot"]["overview"]["identity"]["level"] = 99

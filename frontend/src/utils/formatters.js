@@ -68,7 +68,6 @@ function formatItemEffect(effect = {}) {
     if (Number.isFinite(amount) && amount > 0) return `Restores ${number(amount)} ${resource}`;
     if (Number.isFinite(fraction) && fraction > 0) return `Restores ${formatPercent(fraction)} max ${resource}`;
   }
-  if (type === "open_cache") return "Open for one random item or Gil reward";
   if (type === "revive") {
     if (Number.isFinite(fraction) && fraction > 0) return `Revives with ${formatPercent(fraction)} HP`;
     return "Revives a fallen hero";

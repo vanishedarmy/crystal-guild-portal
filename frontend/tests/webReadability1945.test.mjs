@@ -22,7 +22,8 @@ function contrast(a,b) {
 test('the visibility layer remains installed beneath the final usability layer and does not add removed controls',()=>{
   assert.ok(main.includes('import "./styles/readability-1945.css";'));
   const last=main.matchAll(/import "\.\/styles\/[^\"]+";/g);
-  assert.equal([...last].at(-1)?.[0],'import "./styles/portal-ux-1947.css";');
+  assert.equal([...last].at(-1)?.[0],'import "./styles/compact-ui.css";');
+  assert.ok(main.indexOf('import "./styles/readability-1945.css";') < main.indexOf('import "./styles/portal-ux-1947.css";'));
   assert.doesNotMatch(css.replace(/\/\*[\s\S]*?\*\//g,''),/localStorage|cg-accessibility|display-preferences|backdrop-filter\s*:/);
   assert.match(css,/#root \.data-table \.locked/);
   assert.match(css,/#root \.raid-board-panel\.open::after/);

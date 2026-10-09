@@ -27,5 +27,5 @@ test("Alpha 3 Annex status stays fluid on narrow Emporium layouts", async () => 
 test("Alpha 3 release identity is visible in the frontend", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   assert.match(version, /Triple Triad Expanded/);
-  assert.match(version, /1\.9\.6-triple-triad-expanded/);
+  assert.match(version, /1\.9\.6-compact-ui-overhaul/);
 });

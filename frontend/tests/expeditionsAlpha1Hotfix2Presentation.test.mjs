@@ -40,5 +40,5 @@ test("Expedition cards favor actionable status over redundant prose", () => {
   const expeditions = src("src/player/Expeditions.jsx");
   assert.doesNotMatch(expeditions, /<p>\{region\.description\}<\/p>/);
   assert.match(expeditions, /Choose a region and route/);
-  assert.match(expeditions, /Progress is saved if you leave the Portal/);
+  assert.match(expeditions, /Progress saved · Safe to leave the Portal/);
 });

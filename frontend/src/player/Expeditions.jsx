@@ -14,7 +14,7 @@ import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration, number, pct, sortBattleItems } from "../utils/formatters.js";
 import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
-import CollapsePointer from "../components/CollapsePointer.jsx";
+import CollapsePointer, { DetailsPointer } from "../components/CollapsePointer.jsx";
 import ContextHelp from "../components/ContextHelp.jsx";
 import MobileCombatDrawer from "../components/MobileCombatDrawer.jsx";
 import MobileCombatHud from "../components/MobileCombatHud.jsx";
@@ -118,8 +118,8 @@ function ExpeditionJournal({ history = [] }) {
   const entries = [...history].slice(-6).reverse();
   if (!entries.length) return null;
   return (
-    <div className="expedition-journal" aria-label="Expedition Journal">
-      <div className="expedition-journal-title"><span className="slot-label">Expedition Journal</span><small>Latest route events</small></div>
+    <details className="expedition-journal" aria-label="Expedition Journal">
+      <summary className="expedition-journal-title"><span className="slot-label">Expedition Journal</span><small>{entries.length} recent events</small><DetailsPointer /><span className="expedition-journal-preview">{entries[0]?.label || "Route event"}</span></summary>
       <div className="expedition-journal-list">
         {entries.map((entry, index) => (
           <div key={`${entry?.stage || 0}:${entry?.type || "event"}:${index}`} className={`expedition-journal-entry ${entry?.type === "rare" ? "rare" : ""}`}>
@@ -128,7 +128,7 @@ function ExpeditionJournal({ history = [] }) {
           </div>
         ))}
       </div>
-    </div>
+    </details>
   );
 }
 
@@ -225,7 +225,7 @@ export default function Expeditions({
           <div>
             <p className="eyebrow">Chocobo Expeditions</p>
             <h2>{active ? `${active.region?.name} · Stage ${number(active.stage)} / ${number(active.max_stages)}` : "Distant Expedition Board"}</h2>
-            {boardOpen ? <p className="muted">{active ? "Your progress is saved. Follow the current stage, then choose how to continue." : "Choose a region and route, then bring your Expedition Cache home safely."}</p> : null}
+            {boardOpen && !active ? <p className="muted">Choose a region and route, then bring your Expedition Cache home safely.</p> : null}
           </div>
           <div className="section-collapse-actions">
             <ContextHelp topic="expeditions" />
@@ -360,25 +360,24 @@ export default function Expeditions({
           </>
         ) : (
           <div className="expedition-active-shell">
-            <div className="expedition-section-heading"><span className="slot-label">Expedition Status</span><small>Current progress and route</small></div>
+            <div className="expedition-summary-group">
             <div className="expedition-active-meta">
               <div><span>{active.legendary_contract ? "Legendary Contract" : active.boss_contract ? "Contract" : "Depth"}</span><strong>{active.depth?.name}</strong></div>
               <div><span>Current route</span><strong>{active.route?.name}</strong></div>
               <div><span>Regional survey</span><strong>{number(active.progress?.progress || 0)}%</strong></div>
-              <div><span>Stage</span><strong>{number(active.stage)} / {number(active.base_stages)}{active.legendary_contract ? " · LEGENDARY" : active.boss_contract ? " · BOSS CONTRACT" : active.bonus_stage ? " · BONUS" : ""}</strong></div>
+              <div><span>Stage</span><strong>{number(active.stage)} / {number(active.max_stages ?? active.base_stages)}{active.legendary_contract ? " · LEGENDARY" : active.boss_contract ? " · BOSS CONTRACT" : active.bonus_stage ? " · BONUS" : ""}</strong></div>
               <div><span>Completion stipend</span><strong>+{number(active.legendary_contract ? STIPEND_SEALS.legendary : active.boss_contract ? STIPEND_SEALS.boss : STIPEND_SEALS[active.depth?.id] || 0)} Seals</strong></div>
             </div>
             <div className="expedition-section-heading expedition-cache-heading"><span className="slot-label">Expedition Cache</span><small>Bank these rewards by returning safely</small></div>
             <ExpeditionCache cache={active.cache} />
             {(active.cache?.items || []).length ? <p className="expedition-loot-line"><strong>Cache:</strong> {active.cache.items.map((row) => `${row.name || row.id} × ${number(row.quantity)}`).join(" · ")}</p> : null}
-            <ExpeditionJournal history={active.history || []} />
+            </div>
 
             {active.status === "travel" ? (
               <div className="expedition-travel-card">
-                <span className="slot-label">Traveling · Stage {number(active.stage)}</span>
+                <div className="expedition-travel-copy"><span className="slot-label">Traveling · Stage {number(active.stage)}</span><small>Progress saved · Safe to leave the Portal</small></div>
                 <strong>{travelRemaining > 0 ? duration(travelRemaining) : "Stage ready"}</strong>
                 <ProgressBar value={travelRemaining > 0 ? Math.max(2, 100 - (travelRemaining / Math.max(1, Number((depths.find((row) => row.id === active.depth?.id)?.travel_seconds) || travelRemaining))) * 100) : 100} />
-                <p>Progress is saved if you leave the Portal.</p>
                 <button type="button" className="equipment-action-button" disabled={!active.travel_ready || Boolean(busy)} onClick={() => doRequest("expedition:resolve", "expedition-resolve", String(active.stage), (idem) => submitExpeditionResolveStage(csrfToken, idem), "Expedition stage resolved.")}>{busy === "expedition:resolve" ? "Resolving…" : active.travel_ready ? "Resolve Stage" : `Ready in ${duration(travelRemaining)}`}</button>
               </div>
             ) : null}
@@ -514,6 +513,7 @@ export default function Expeditions({
                 ) : <p className="adventure-disabled-reason">Maximum Expedition depth reached. Return to the Guild to secure the cache.</p>}
               </div>
             ) : null}
+            <ExpeditionJournal history={active.history || []} />
           </div>
         )) : null}
       </section>

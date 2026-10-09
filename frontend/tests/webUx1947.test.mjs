@@ -17,10 +17,12 @@ const guideHtml = read("public/guide-body.html");
 const guideCss = read("public/guide-ux-1947.css");
 const guideRuntime = read("src/guide/guideRuntime.js");
 
-test("1.9.4.7 usability layer is the final Portal cascade and keeps 1.9.4.5 readability beneath it", () => {
+test("compact layout follows the usability and readability layers", () => {
   const imports = [...main.matchAll(/import "\.\/styles\/[^"]+";/g)].map((match) => match[0]);
   assert.ok(imports.includes('import "./styles/readability-1945.css";'));
-  assert.equal(imports.at(-1), 'import "./styles/portal-ux-1947.css";');
+  assert.equal(imports.at(-1), 'import "./styles/compact-ui.css";');
+  assert.ok(imports.indexOf('import "./styles/readability-1945.css";') < imports.indexOf('import "./styles/portal-ux-1947.css";'));
+  assert.equal(imports.at(-2), 'import "./styles/portal-ux-1947.css";');
   assert.match(portalCss, /--portal-hit-target:\s*44px/);
   assert.match(portalCss, /--portal-hit-target-mobile:\s*48px/);
   assert.match(portalCss, /site-header\.mobile-header-collapsed[\s\S]*transform:\s*none !important/);

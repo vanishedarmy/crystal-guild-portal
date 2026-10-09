@@ -633,12 +633,16 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
                   <article className="moogle-sell-row" key={item.id}>
                     <div className="moogle-sell-copy">
                       <ItemArtwork item={item} className="moogle-sell-item-artwork" />
-                      <span className="slot-label">{typeLabel(item.type)}</span>
-                      <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
-                      <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
-                      {["weapon", "armor"].includes(String(item.type || "").toLowerCase()) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
-                      {shopItemPurpose(item) ? <small className="moogle-item-brief">{shopItemPurpose(item)}</small> : null}
-                      {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
+                      <div className="moogle-sell-details">
+                        <div className="moogle-sell-heading">
+                          <span className={`item-name rarity-${item.rarity || "common"}`}>{item.name}</span>
+                          <span className="slot-label">{typeLabel(item.type)}</span>
+                        </div>
+                        <span>Owned {number(item.quantity)} · {number(item.sell_price)}g each{item.equipped ? " · Equipped" : ""}</span>
+                        {["weapon", "armor"].includes(String(item.type || "").toLowerCase()) ? <small className="equipment-job-recommendation">{formatBestUse(item)}</small> : null}
+                        {shopItemPurpose(item) ? <small className="moogle-item-brief">{shopItemPurpose(item)}</small> : null}
+                        {max <= 0 ? <small>Unequip this item before selling your last copy.</small> : null}
+                      </div>
                     </div>
                     <div className="moogle-card-actions sell-actions">
                       <label className="moogle-quantity"><span>Qty</span><input type="number" inputMode="numeric" min="1" max={Math.max(1, max)} value={quantityInputValue(sellQty, item.id)} disabled={max <= 0} onFocus={() => beginQuantityEdit(setSellQty, sellQty, item.id)} onChange={(event) => updateQuantityInput(setSellQty, item.id, event.target.value, Math.max(1, max))} onBlur={(event) => finishQuantityEdit(setSellQty, item.id, event.target.value, Math.max(1, max))} /></label>

@@ -147,8 +147,7 @@
 .profile-content .chocobo-stable-dashboard { gap: .6rem; margin-block: .6rem; }
 .profile-content :is(.chocobo-readiness-card, .chocobo-specialization-panel, .chocobo-management) { padding: .65rem; }
 
-/* Card directories retain their feature-owned column rules. Sell entries are
-   horizontal rows with a fixed action area, not interchangeable item cards. */
+/* Card directories retain their feature-owned column rules. */
 .profile-content .moogle-sell-grid { grid-template-columns: minmax(0, 1fr); }
 .profile-content .current-loadout-summary { padding: .6rem; margin-block: .55rem; }
 .profile-content .current-loadout-grid { gap: .45rem; }
@@ -212,4 +211,98 @@
 
 @media (prefers-reduced-motion: reduce) {
   .profile-content details { scroll-behavior: auto; }
+}
+
+/* Emporium Sell: size columns against the panel itself, not the viewport.
+   Each card gives its copy the full width before laying out its controls. */
+#root .profile-content .moogle-panel .moogle-sell-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr));
+  gap: .5rem;
+  align-items: start;
+}
+#root .profile-content .moogle-panel .moogle-sell-row {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: .35rem;
+  padding: .55rem .65rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy {
+  min-width: 0;
+  gap: .12rem .5rem;
+  line-height: 1.4;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy:has(.moogle-sell-item-artwork) {
+  grid-template-columns: 44px minmax(0, 1fr);
+}
+#root .profile-content .moogle-panel .moogle-sell-item-artwork {
+  width: 44px;
+  height: 44px;
+  align-self: center;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy > :not(.moogle-sell-item-artwork) {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy .item-name {
+  line-height: 1.35;
+}
+#root .profile-content .moogle-panel .sell-actions {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: end;
+  gap: .5rem;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+#root .profile-content .moogle-panel .sell-actions .moogle-quantity {
+  min-width: 0;
+}
+#root .profile-content .moogle-panel .sell-actions :is(input, button) {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+#root .profile-content .moogle-panel .sell-actions button {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-height: 1.35;
+  height: auto;
+}
+
+#root .profile-content .moogle-panel .moogle-sell-copy:has(.moogle-sell-item-artwork) {
+  grid-template-rows: auto;
+  align-items: center;
+}
+#root .profile-content .moogle-panel .moogle-sell-item-artwork {
+  grid-row: 1;
+}
+#root .profile-content .moogle-panel .moogle-sell-details {
+  display: grid;
+  gap: .15rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .15rem .5rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-heading > * {
+  min-width: 0;
+  max-width: 100%;
+}
+#root .profile-content .moogle-panel .moogle-sell-heading .slot-label {
+  font-size: .65rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-details .moogle-item-brief {
+  display: block;
+  overflow: visible;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+  white-space: normal;
+  overflow-wrap: break-word;
 }

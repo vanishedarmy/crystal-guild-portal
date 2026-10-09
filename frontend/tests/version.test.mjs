@@ -8,7 +8,7 @@ test("v1.9.6 Triple Triad Expanded web identity is centralized", () => {
   assert.equal(WEB_BUILD, "Triple Triad Expanded");
   assert.equal(WEB_RELEASE, "v1.9.6 — Triple Triad Expanded");
   assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.9.6 — Triple Triad Expanded");
-  assert.equal(WEB_ASSET_REVISION, "1.9.6-compact-ui-layout-fix");
+  assert.equal(WEB_ASSET_REVISION, "1.9.6-emporium-compact-sell");
 });
 
 

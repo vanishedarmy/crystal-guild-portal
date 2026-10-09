@@ -147,13 +147,9 @@
 .profile-content .chocobo-stable-dashboard { gap: .6rem; margin-block: .6rem; }
 .profile-content :is(.chocobo-readiness-card, .chocobo-specialization-panel, .chocobo-management) { padding: .65rem; }
 
-/* Inventory, shops, Forge and collections: more items per row on wide screens. */
-@media (min-width: 1050px) {
-  .profile-content :is(.inventory-equipment-grid, .moogle-stock-grid, .moogle-sell-grid,
-    .job-grid, .relic-grid, .achievement-grid, .boss-grid) {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  }
-}
+/* Card directories retain their feature-owned column rules. Sell entries are
+   horizontal rows with a fixed action area, not interchangeable item cards. */
+.profile-content .moogle-sell-grid { grid-template-columns: minmax(0, 1fr); }
 .profile-content .current-loadout-summary { padding: .6rem; margin-block: .55rem; }
 .profile-content .current-loadout-grid { gap: .45rem; }
 .profile-content .inventory-action-card .equipment-card-actions { grid-template-columns: 44px minmax(0, 1fr); gap: .4rem; padding: .55rem; }
@@ -207,8 +203,6 @@
   .profile-content .expedition-travel-card > strong { font-size: 1.2rem; }
   .profile-content .expedition-journal-entry { grid-template-columns: 54px minmax(0, 1fr); }
   .profile-content .expedition-journal-title > small { font-size: .68rem; }
-  .profile-content :is(.inventory-equipment-grid, .moogle-stock-grid, .moogle-sell-grid,
-    .job-grid, .relic-grid, .achievement-grid, .boss-grid) { grid-template-columns: minmax(0, 1fr); }
   .profile-content .retainer-service-redesign .retainer-office-art { max-height: 85px; }
   .profile-content .overview-power-stat { grid-template-columns: 1fr auto; }
   .profile-content .seasonal-event-rework .seasonal-secondary-grid { grid-template-columns: minmax(0, 1fr); }

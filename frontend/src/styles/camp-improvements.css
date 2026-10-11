@@ -37,3 +37,82 @@
   .camp-improvements-toggle { flex-wrap: wrap; }
   .camp-improvements-toggle-status { justify-content: flex-start; order: 3; flex: 1 1 100%; }
 }
+
+/* Camp contrast: keep the panorama visible behind consistently dark surfaces.
+   Scoped rules override later scenic layers without changing other workspaces. */
+#root .profile-content .adventure-camp-panel {
+  --camp-readable-copy: #d7e3f1;
+  color: #f5f8ff;
+}
+#root .profile-content .adventure-camp-panel::after {
+  background-image:
+    linear-gradient(180deg, rgba(5, 14, 24, .82) 0%, rgba(5, 14, 24, .76) 48%, rgba(5, 14, 24, .88) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v4/camp-desktop-wide.webp');
+}
+#root .profile-content .recovery-dashboard::before {
+  background-image:
+    linear-gradient(180deg, rgba(5, 14, 24, .82) 0%, rgba(5, 14, 24, .76) 48%, rgba(5, 14, 24, .88) 100%),
+    url('/retro-phase-iii/scene-backgrounds-v4/camp-desktop.webp');
+}
+#root .profile-content .adventure-camp-panel > .panel-title-row,
+#root .profile-content .adventure-camp-panel > p.muted,
+#root .profile-content .adventure-camp-panel > .venture-action-row {
+  background: rgba(6, 17, 30, .9);
+  border: 1px solid rgba(151, 178, 215, .36);
+  border-radius: 6px;
+  padding: .55rem .65rem;
+  min-width: 0;
+}
+#root .profile-content .adventure-camp-panel > p.muted {
+  max-width: none;
+  line-height: 1.55;
+}
+#root .profile-content .adventure-camp-panel :is(.muted, .adventure-disabled-reason,
+  .adventure-camp-grid span, .camp-improvements-toggle-title > small, .small-badge) {
+  color: var(--camp-readable-copy);
+  opacity: 1;
+}
+#root .profile-content .adventure-camp-panel .eyebrow { color: #ffe29a; }
+#root .profile-content .adventure-camp-panel .camp-choice-card {
+  background: rgba(6, 17, 30, .95);
+}
+#root .profile-content .adventure-camp-panel .camp-improvements-toggle {
+  background: rgba(6, 17, 30, .95);
+}
+#root .profile-content .adventure-camp-panel .adventure-camp-grid > div {
+  background: rgba(6, 17, 30, .94);
+}
+#root .profile-content .adventure-camp-panel button:disabled {
+  opacity: 1;
+  color: #c5d2e2;
+  background: #172536;
+  border-color: #53677e;
+  box-shadow: none;
+  text-shadow: none;
+  cursor: not-allowed;
+}
+#root .profile-content .adventure-camp-panel .camp-preparation-option span {
+  color: #d7e3f1;
+  opacity: 1;
+}
+#root .profile-content .adventure-camp-panel .camp-preparation-option.selected {
+  background: #19392d;
+  border-color: #8fca9f;
+  color: #f5f8ff;
+}
+#root .profile-content .adventure-camp-panel .camp-preparation-option.selected em {
+  color: #bcecc6;
+}
+@media (max-width: 720px) {
+  #root .profile-content .adventure-camp-panel::after,
+  #root .profile-content .recovery-dashboard::before {
+    background-image:
+      linear-gradient(180deg, rgba(5, 14, 24, .82) 0%, rgba(5, 14, 24, .76) 48%, rgba(5, 14, 24, .88) 100%),
+      url('/retro-phase-iii/scene-backgrounds-v4/camp-mobile.webp');
+  }
+}
+#root .profile-content .adventure-camp-panel::after,
+#root .profile-content .recovery-dashboard::before {
+  box-sizing: border-box;
+}
+#root .profile-content .adventure-camp-panel::after { inset: 0; }

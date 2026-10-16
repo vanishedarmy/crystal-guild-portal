@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -153,8 +154,7 @@ export default function Jobs({ data, overview, onDetail, onRefresh }) {
       const next = finished.result?.data?.character_state;
       if (next?.jobs) setLiveState(next);
       if (finished.status === "completed" && finished.result?.ok !== false) {
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       setMessage(error.message);

@@ -232,7 +232,9 @@ class HostedPortalStore:
     def _connect(self):
         conn = sqlite3.connect(self.database_path, timeout=10.0)
         conn.row_factory = sqlite3.Row
-        conn.execute("PRAGMA journal_mode=WAL")
+        # Journal mode is database-persistent. Reapplying it on every short
+        # request connection introduces unnecessary lock negotiation and can
+        # delay action polls under concurrent player and Bot traffic.
         conn.execute("PRAGMA synchronous=NORMAL")
         conn.execute("PRAGMA temp_store=MEMORY")
         conn.execute("PRAGMA busy_timeout=10000")
@@ -243,6 +245,8 @@ class HostedPortalStore:
 
     def _initialize(self) -> None:
         with self._lock, self._connect() as conn:
+            # Set WAL once during bootstrap/migration, not on each GET/POST.
+            conn.execute("PRAGMA journal_mode=WAL")
             conn.executescript(
                 """
                 CREATE TABLE IF NOT EXISTS portal_players (
@@ -419,7 +423,7 @@ class HostedPortalStore:
             ).fetchone()
         if row is None and name:
             row = conn.execute(
-                "SELECT username,snapshot_json FROM portal_players WHERE lower(username)=lower(?) LIMIT 1",
+                "SELECT username,snapshot_json FROM portal_players WHERE username=? COLLATE NOCASE LIMIT 1",
                 (name,),
             ).fetchone()
         if row is None:
@@ -451,7 +455,7 @@ class HostedPortalStore:
         digest = hashlib.sha256(encoded.encode("utf-8")).hexdigest()
         canonical = str(row["username"]).lower()
         conn.execute(
-            "UPDATE portal_players SET snapshot_json=?,snapshot_hash=?,synced_at=? WHERE lower(username)=lower(?)",
+            "UPDATE portal_players SET snapshot_json=?,snapshot_hash=?,synced_at=? WHERE username=? COLLATE NOCASE",
             (encoded, digest, int(synced_at), canonical),
         )
         self._cache_snapshot(canonical, snapshot)
@@ -1661,7 +1665,7 @@ class HostedPortalStore:
                         """
                         SELECT 1 FROM portal_actions a
                         LEFT JOIN portal_players p
-                          ON p.twitch_id=a.twitch_id AND lower(p.username)=lower(a.username)
+                          ON p.twitch_id=a.twitch_id AND p.username=a.username COLLATE NOCASE
                         WHERE a.status='pending'
                           AND (a.action_type IN ('RECRUIT','STREAMER_COMMAND') OR p.username IS NOT NULL)
                         LIMIT 1
@@ -1698,7 +1702,7 @@ class HostedPortalStore:
             rows = conn.execute(
                 f"""
                 SELECT a.* FROM portal_actions a
-                LEFT JOIN portal_players p ON p.twitch_id=a.twitch_id AND lower(p.username)=lower(a.username)
+                LEFT JOIN portal_players p ON p.twitch_id=a.twitch_id AND p.username=a.username COLLATE NOCASE
                 WHERE a.status='pending' AND (a.action_type IN ('RECRUIT','STREAMER_COMMAND') OR p.username IS NOT NULL)
                 ORDER BY CASE WHEN a.action_type IN ({state_placeholders}) THEN 1 ELSE 0 END,
                          a.created_at ASC,a.action_id ASC
@@ -1856,7 +1860,7 @@ class HostedPortalStore:
                 # ownership key, so remove an obsolete alias row before inserting
                 # the newly synced username. Public snapshots never expose this ID.
                 old_rows = conn.execute(
-                    "SELECT username FROM portal_players WHERE twitch_id=? AND lower(username)<>lower(?)",
+                    "SELECT username FROM portal_players WHERE twitch_id=? AND username<>? COLLATE NOCASE",
                     (player_twitch_id, username),
                 ).fetchall()
                 for old_row in old_rows:
@@ -1972,12 +1976,12 @@ class HostedPortalStore:
             stale = sorted(existing - normalized)
             missing = sorted(normalized - existing)
             for username in stale:
-                conn.execute("DELETE FROM portal_players WHERE lower(username)=lower(?)", (username,))
+                conn.execute("DELETE FROM portal_players WHERE username=? COLLATE NOCASE", (username,))
                 conn.execute(
                     """
                     UPDATE portal_actions
                     SET status='failed',result_json=?,lease_hash=NULL,lease_until=0,worker_id=NULL,updated_at=?
-                    WHERE lower(username)=lower(?) AND status IN ('pending','processing')
+                    WHERE username=? COLLATE NOCASE AND status IN ('pending','processing')
                     """,
                     (json.dumps({"ok": False, "message": "Player is no longer available in the hosted Guild.", "data": {}}, separators=(",", ":")), heartbeat_at, username),
                 )
@@ -2261,7 +2265,7 @@ class HostedPortalStore:
             row = conn.execute(
                 """
                 SELECT username, snapshot_json, synced_at FROM portal_players
-                WHERE lower(username)=lower(?) OR lower(display_name)=lower(?)
+                WHERE username=? COLLATE NOCASE OR lower(display_name)=lower(?)
                 LIMIT 1
                 """,
                 (lookup, lookup),
@@ -2574,6 +2578,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             super().log_message(fmt, *args)
 
     def do_GET(self) -> None:
+        self._request_started_at = time.perf_counter()
         parsed = urlparse(self.path)
         path = parsed.path
         if path == "/auth/twitch":
@@ -2634,6 +2639,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         self._serve_static(path)
 
     def do_POST(self) -> None:
+        self._request_started_at = time.perf_counter()
         parsed = urlparse(self.path)
         path = parsed.path
         if path == "/api/auth/logout":
@@ -3256,11 +3262,16 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         conditional: bool = False,
     ) -> None:
         raw_body = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        # Browser DevTools can distinguish hosted request time from the Bot
+        # action queue/network round trip without exposing player data.
+        elapsed_ms = max(0.0, (time.perf_counter() - getattr(self, "_request_started_at", time.perf_counter())) * 1000)
+        timing = f"portal;dur={elapsed_ms:.1f}"
         etag = f'"{hashlib.sha256(raw_body).hexdigest()[:32]}"' if conditional and status == HTTPStatus.OK else ""
         if etag and self.headers.get("If-None-Match", "").strip() == etag:
             self.send_response(HTTPStatus.NOT_MODIFIED)
             self.send_header("Cache-Control", cache_control)
             self.send_header("ETag", etag)
+            self.send_header("Server-Timing", timing)
             self.send_header("Content-Length", "0")
             self._security_headers()
             self.end_headers()
@@ -3270,6 +3281,7 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         body = gzip.compress(raw_body, compresslevel=DYNAMIC_GZIP_LEVEL) if compressed else raw_body
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Server-Timing", timing)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", cache_control)
         self._security_headers()

@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { submitClaimDaily, submitDailyState, waitForPortalAction } from "../api/auth.js";
 import { usePortalAuth } from "../hooks/usePortalAuth.js";
@@ -175,8 +176,7 @@ export default function DailyReward({ username, onRefresh }) {
         setDaily(null);
       }
       if (finished.status === "completed" && finished.result?.ok !== false) {
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       const text = String(error?.message || error);

@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   submitCraftingState,
@@ -147,8 +148,7 @@ export default function Blacksmith({ data, overview, onRefresh }) {
         // mutation receipt intentionally contains only the legacy recipe set,
         // so merging it with 176 Reforged rows leaves craftability stale.
         await loadState({ quiet: true, force: true });
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       setMessage(error.message);

@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import LockIcon from "../components/LockIcon.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useMemo, useState } from "react";
@@ -133,8 +134,7 @@ export default function Achievements({ data, onRefresh }) {
       const message = finished.result?.message || (finished.status === "completed" ? `${title.name} equipped.` : "Title change failed.");
       setTitleMessage(message);
       if (finished.status === "completed" && finished.result?.ok !== false) {
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 2200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       setTitleMessage(error.message);

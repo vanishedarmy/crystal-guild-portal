@@ -28,9 +28,17 @@ export function useLiveUpdates(onRefresh) {
     let lastRevision = null;
     let portalSyncKnown = false;
     let portalSyncConnected = false;
+    let hiddenRefreshPending = false;
 
     const queueRefresh = () => {
-      if (refreshTimer || stopped) return;
+      if (stopped) return;
+      // SSE stays connected in background tabs, but full profile fetches can
+      // wait until the player returns to the tab.
+      if (document.visibilityState === "hidden") {
+        hiddenRefreshPending = true;
+        return;
+      }
+      if (refreshTimer) return;
       refreshTimer = setTimeout(() => {
         refreshTimer = null;
         callbackRef.current?.();
@@ -177,6 +185,10 @@ export function useLiveUpdates(onRefresh) {
 
     const handleVisibility = () => {
       if (document.visibilityState !== "visible" || stopped) return;
+      if (hiddenRefreshPending) {
+        hiddenRefreshPending = false;
+        queueRefresh();
+      }
       const fresh = streamIsFresh(
         source?.readyState, EventSource.OPEN, lastEventAt, Date.now(), HEARTBEAT_STALE_MS,
       );

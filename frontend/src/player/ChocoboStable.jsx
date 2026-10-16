@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import LockIcon from "../components/LockIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -169,8 +170,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
         await loadState({ quiet: true });
       }
       if (finished.status === "completed" && finished.result?.ok !== false) {
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       setMessage(error.message);

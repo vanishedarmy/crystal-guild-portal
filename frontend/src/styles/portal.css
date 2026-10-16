@@ -15627,3 +15627,42 @@ textarea {
 .seasonal-cache-reward strong{font-size:1.2rem;color:#ffe5a1}
 .seasonal-cache-reward p{margin:0}
 @media(max-width:480px){.seasonal-keepsake-card{gap:12px;padding:12px}.seasonal-keepsake-card img{width:72px;height:72px}.seasonal-cache-panel .seasonal-shop-card{grid-template-columns:56px minmax(0,1fr)}.seasonal-cache-panel .equipment-action-button{grid-column:1/-1;width:100%}}
+
+
+/* v1.9.7 — portal text-fit / readability pass (non-destructive).
+   Compact cards should wrap complete words before forcing horizontal overflow. */
+#root .shell :is(.panel, .equipment-card, .inventory-card, .moogle-card,
+  .market-listing-card, .trading-post-listing, .record-moment-card,
+  .fellowship-requirement, .seasonal-shop-card) {
+  min-width: 0;
+}
+#root .shell :is(.panel, .equipment-card, .inventory-card, .moogle-card,
+  .record-moment-card, .fellowship-requirement, .seasonal-shop-card)
+  :is(h2, h3, h4, h5, p, li, figcaption, .item-name, .slot-label, .card-meta) {
+  overflow-wrap: break-word;
+}
+#root .shell :is(.equipment-action-button, .moogle-card-actions button,
+  .trading-post-inline-actions button, .seasonal-shop-card button) {
+  min-width: 0;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  text-align: center;
+}
+#root .shell :is(.moogle-card-actions, .trading-post-inline-actions,
+  .equipment-card-actions, .profile-jobline, .seasonal-shop-heading-row) > * {
+  min-width: 0;
+}
+#root .shell :is(.state-message, .moogle-load-error, .equipment-action-status,
+  .character-help-line, .trading-post-small-note) {
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+@media (max-width: 560px) {
+  #root .shell :is(.moogle-card-actions, .trading-post-inline-actions,
+    .equipment-card-actions) button { max-width: 100%; }
+  #root .shell :is(.equipment-action-button, .trading-post-inline-actions button) {
+    padding-block: .55rem;
+  }
+}

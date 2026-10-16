@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   submitBuyItem,
@@ -345,8 +346,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       setMessage(finished.result?.message || successFallback);
       if (finished.status === "completed" && finished.result?.ok !== false) {
         await loadShop({ quiet: true });
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       setMessage(error.message);
@@ -390,8 +390,7 @@ export default function MoogleEmporium({ data, overview, onRefresh }) {
       if (finished.status === "completed" && finished.result?.ok !== false) {
         await Promise.all([loadMarket({ quiet: true }), ...(refreshShop ? [loadShop({ quiet: true })] : [])]);
         if (refreshShop) {
-          onRefresh?.();
-          window.setTimeout(() => onRefresh?.(), 3200);
+          refreshAfterPortalMutation(onRefresh);
         }
       }
     } catch (error) {

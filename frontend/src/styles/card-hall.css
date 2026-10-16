@@ -611,3 +611,16 @@
   #root .profile-content .qb-hall .qb-hand-card:hover:not(:disabled),
   #root .profile-content .qb-hall .qb-tile.legal:hover:not(:disabled) { transform: none; }
 }
+
+/* v1.9.7 — playerboard text-fit follow-up: long names never collide with
+   score badges or force the five-column board beyond its parent. */
+.qb-hall :is(.qb-match-meta, .qb-library-head, .qb-deck-command,
+  .qb-scoreboard, .qb-duel-row, .qb-card-detail, .qb-hand-meta) > * { min-width: 0; }
+.qb-hall :is(.qb-match-meta strong, .qb-deck-pool strong, .qb-deck-command strong,
+  .qb-library-head strong, .qb-duel-row strong) { overflow-wrap: break-word; }
+.qb-hall .qb-scoreboard > strong { min-width: 0; }
+@media(max-width: 420px) {
+  .qb-hall .qb-scoreboard > strong { white-space: normal; line-height: 1.35; }
+  .qb-hall .qb-lane-score { flex-wrap: wrap; }
+  .qb-hall .qb-lane-score > * { min-width: 0; overflow-wrap: break-word; }
+}

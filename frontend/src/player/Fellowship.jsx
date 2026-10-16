@@ -1,3 +1,4 @@
+import { refreshAfterPortalMutation } from "../utils/actionRefresh.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
@@ -143,8 +144,7 @@ export default function Fellowship({ data, onRefresh }) {
         setGilAmount("");
         setItemAmounts({});
         setWorkshopBatches({});
-        onRefresh?.();
-        window.setTimeout(() => onRefresh?.(), 3200);
+        refreshAfterPortalMutation(onRefresh);
       }
     } catch (error) {
       setMessage(error.message);

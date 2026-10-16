@@ -24,6 +24,9 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from .portal_auth import TwitchOAuthClient, TwitchOAuthConfig, random_token, safe_return_path
 from .trophy_hall import build_trophy_hall
+from .queens_blood import RuleError
+from .queens_blood_store import QueensBloodStore, MatchConflict
+from .queens_blood_pvp import CorrespondenceStore
 
 
 # Shipped with this Web service from the authoritative Bot catalog. Do not
@@ -35,8 +38,8 @@ TRIPLE_TRIAD_OPPONENT_IDS = frozenset(
     )["opponents"]
 )
 
-HOSTED_PORTAL_VERSION = "1.9.6-triple-triad-expanded"
-FRONTEND_ASSET_REVISION = "1.9.6-triple-triad-expanded"
+HOSTED_PORTAL_VERSION = "1.9.7-queens-blood"
+FRONTEND_ASSET_REVISION = "1.9.7-queens-blood"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {
@@ -2542,6 +2545,8 @@ class HostedPortalHTTPServer(ThreadingHTTPServer):
     ):
         super().__init__(address, handler)
         self.store = store
+        self.card_hall = QueensBloodStore(store.database_path)
+        self.card_hall_pvp = CorrespondenceStore(store.database_path)
         self.static_dir = static_dir.resolve()
         self.sync_key = sync_key
         self.oauth_config = oauth_config or TwitchOAuthConfig("", "", "", cookie_secure=False)
@@ -2579,6 +2584,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             return
         if path == "/api/auth/status":
             self._auth_status()
+            return
+        if path in ("/api/card-hall", "/api/card-hall/pvp"):
+            self._card_hall(write=False)
             return
         if path == "/api/actions":
             self._action_history()
@@ -2630,6 +2638,9 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
         path = parsed.path
         if path == "/api/auth/logout":
             self._logout()
+            return
+        if path in ("/api/card-hall", "/api/card-hall/pvp"):
+            self._card_hall(write=True)
             return
         if path == "/api/actions":
             self._submit_action()
@@ -2904,6 +2915,34 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             {"ok": True},
             extra_headers=[("Set-Cookie", self._cookie_header("cg_session", "", max_age=0))],
         )
+
+    def _card_hall(self, *, write: bool) -> None:
+        # Hosted-only solo matches do not alter Bot economy or progression.
+        session = self._session()
+        if not session:
+            self._json({"error": "Sign in with Twitch to enter the Card Hall."}, HTTPStatus.UNAUTHORIZED)
+            return
+        if not session.get("player"):
+            self._json({"error": "Create your adventurer before entering the Card Hall."}, HTTPStatus.FORBIDDEN)
+            return
+        if write and not self._csrf_valid(session):
+            self._json({"error": "Invalid session protection token."}, HTTPStatus.FORBIDDEN)
+            return
+        if write and not self.portal.actions_enabled:
+            self._json({"error": "Card Hall play is disabled by the Portal administrator."}, HTTPStatus.SERVICE_UNAVAILABLE)
+            return
+        try:
+            card_store = self.portal.card_hall_pvp if urlparse(self.path).path == "/api/card-hall/pvp" else self.portal.card_hall
+            if write:
+                payload = card_store.submit(session["twitch_id"], self.headers.get("Idempotency-Key", ""), self._read_json(4096))
+            else:
+                payload = card_store.get(session["twitch_id"])
+            payload["play_enabled"] = self.portal.actions_enabled
+            self._json(payload, cache_control="private, no-store")
+        except MatchConflict as exc:
+            self._json({"error": str(exc)}, HTTPStatus.CONFLICT)
+        except (RuleError, ValueError, json.JSONDecodeError) as exc:
+            self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
 
     def _submit_action(self) -> None:
         session = self._session()

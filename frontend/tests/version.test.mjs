@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { WEB_ASSET_REVISION, WEB_BUILD, WEB_PRODUCT, WEB_RELEASE, WEB_VERSION } from "../src/version.js";
 
-test("v1.9.6 Triple Triad Expanded web identity is centralized", () => {
-  assert.equal(WEB_VERSION, "v1.9.6");
-  assert.equal(WEB_BUILD, "Triple Triad Expanded");
-  assert.equal(WEB_RELEASE, "v1.9.6 — Triple Triad Expanded");
-  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.9.6 — Triple Triad Expanded");
-  assert.equal(WEB_ASSET_REVISION, "1.9.6-emporium-compact-sell");
+test("v1.9.7 Queen's Blood web identity is centralized", () => {
+  assert.equal(WEB_VERSION, "v1.9.7");
+  assert.equal(WEB_BUILD, "Queen's Blood");
+  assert.equal(WEB_RELEASE, "v1.9.7 — Queen's Blood");
+  assert.equal(WEB_PRODUCT, "Crystal Guild Web v1.9.7 — Queen's Blood");
+  assert.equal(WEB_ASSET_REVISION, "1.9.7-queens-blood");
 });
 
 

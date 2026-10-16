@@ -1,5 +1,17 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.7", name: "Queen’s Blood",
+    title: "The Card Hall opens its tables",
+    summary: "Collect 48 illustrated Final Fantasy cards, challenge 14 solo opponents, and play live or correspondence duels with other adventurers.",
+    highlights: [
+      { title: "A complete illustrated roster", description: "Every card has its own portrait and a full-art view. All 48 cards are available through solo play." },
+      { title: "Learn, collect, and build", description: "A guided tutorial, practice matches, and a 14-opponent circuit help you master the board. Save three 15-card decks." },
+      { title: "Two ways to duel", description: "Invite an adventurer for a live game with 90-second turns, or a correspondence game with 48-hour turns. Moves save automatically." },
+      { title: "A clearer tabletop", description: "Compact illustrated hands, complete placement previews, readable card details, and mobile layouts keep the board in focus." },
+    ],
+    action: { tab: "card_hall", label: "Enter the Card Hall" },
+  },
+  {
     version: "v1.9.6",
     name: "Triple Triad Expanded",
     title: "A bigger collection and a fairer card table",

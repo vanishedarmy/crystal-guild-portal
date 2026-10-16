@@ -1,3 +1,7 @@
+# v1.9.7 — Queen’s Blood
+
+48 approved card portraits, 14-opponent solo circuit, live and correspondence invitations, compact illustrated Card Hall, server clocks and reconnect handling. Existing progression and saved matches are preserved. See RELEASE_NOTES.md.
+
 ## v1.9.6 — Shared Lock Icon UI
 
 - Replace locked status text throughout compact Portal cards, badges, filters and controls with a shared accessible pixel-style padlock.

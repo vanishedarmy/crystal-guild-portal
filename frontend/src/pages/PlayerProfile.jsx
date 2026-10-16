@@ -20,6 +20,7 @@ const MODULES = {
   fellowship: lazy(() => import("../player/Fellowship.jsx")),
   guild_board: lazy(() => import("../player/GuildBoard.jsx")),
   chocobo: lazy(() => import("../player/ChocoboStable.jsx")),
+  card_hall: lazy(() => import("../player/CardHall.jsx")),
   gold_saucer: lazy(() => import("../player/GoldSaucer.jsx")),
   retainer: lazy(() => import("../player/RetainerService.jsx")),
   mercs: lazy(() => import("../player/MercService.jsx")),
@@ -49,6 +50,7 @@ const TABS = [
   ["retainer", "Retainer Service", "◇"],
   ["mercs", "Hero Merc Service", "⚔"],
   ["gold_saucer", "Gold Saucer", "✺"],
+  ["card_hall", "Card Hall", "♜"],
   ["fellowship", "Fellowship", "✥"],
   ["guild_board", "Guild Board", "▤"],
   ["bestiary", "Bestiary", "◈"],
@@ -71,6 +73,7 @@ const TAB_TONES = {
   retainer: "teal",
   mercs: "blue",
   gold_saucer: "gold",
+  card_hall: "violet",
   fellowship: "green",
   guild_board: "gold",
   bestiary: "violet",
@@ -84,7 +87,7 @@ const TAB_TONES = {
 const TAB_GROUPS = [
   ["Core", ["overview", "hunts", "stream", "jobs", "inventory"]],
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
-  ["Attractions", ["gold_saucer"]],
+  ["Attractions", ["gold_saucer", "card_hall"]],
   ["Guild", ["fellowship", "guild_board"]],
   ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies", "seasonal"]],
 ];
@@ -149,7 +152,7 @@ export default function PlayerProfile() {
   }, [username, refreshToken]);
 
   useEffect(() => {
-    if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" || moduleVersions.current[activeTab] === refreshToken) return undefined;
+    if (!username || activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "card_hall" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" || moduleVersions.current[activeTab] === refreshToken) return undefined;
     const controller = new AbortController();
     if (!moduleCache[activeTab]) setTabLoading(true);
     setTabError(null);
@@ -196,7 +199,7 @@ export default function PlayerProfile() {
     };
   }, [overview?.status?.state, overview?.status?.until, overview?.status?.remaining_seconds]);
 
-  const moduleData = activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" ? overview : moduleCache[activeTab] || null;
+  const moduleData = activeTab === "overview" || activeTab === "fellowship" || activeTab === "chocobo" || activeTab === "gold_saucer" || activeTab === "card_hall" || activeTab === "retainer" || activeTab === "mercs" || activeTab === "stream" ? overview : moduleCache[activeTab] || null;
   const ActiveModule = MODULES[activeTab];
   const campRemaining = campRemainingSeconds(campDeadline, clockNow);
   const displayedStatusState = overview?.status?.state === "resting" && campDeadline && campRemaining <= 0

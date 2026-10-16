@@ -1,3 +1,7 @@
+# Current release: v1.9.7 — Queen’s Blood
+
+See `README_FIRST.txt` for this complete release and upgrade instructions. The setup and historical feature documentation below remains available.
+
 # Crystal Guild — Web (v1.9.6: Triple Triad Expanded)
 
 The hosted Player Portal, Streamer Control Center and React/Vite frontend. Deploy with the matching v1.9.6 Bot; hosted sync schema 1 and Portal Action protocol 39 are unchanged.

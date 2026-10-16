@@ -1,0 +1,2104 @@
+{
+  "revision": 4,
+  "cards": [
+    {
+      "id": "QB001",
+      "name": "Chocobo",
+      "reference": "Final Fantasy series",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "♞",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB002",
+      "name": "Moogle",
+      "reference": "Final Fantasy series",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "rules": "While on the board: allied cards directly above and below gain 1 power.",
+      "symbol": "✧",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 1
+    },
+    {
+      "id": "QB003",
+      "name": "Goblin",
+      "reference": "Final Fantasy I",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "◆",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB004",
+      "name": "Mandragora",
+      "reference": "Final Fantasy XI",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "❋",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB005",
+      "name": "Cactuar",
+      "reference": "Final Fantasy VI",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "rules": "While on the board: allied cards two columns forward gain 3 power.",
+      "symbol": "✣",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          0,
+          2
+        ]
+      ],
+      "amount": 3
+    },
+    {
+      "id": "QB006",
+      "name": "Bomb",
+      "reference": "Final Fantasy series",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "When destroyed: enemy cards directly above, below, forward, and behind lose 1 power.",
+      "symbol": "✹",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "destroyed",
+      "effect_offsets": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB007",
+      "name": "Tonberry",
+      "reference": "Final Fantasy V",
+      "group": "Foundation",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "Played: enemy cards one column forward lose 2 power.",
+      "symbol": "⚑",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -2,
+      "target": "enemy"
+    },
+    {
+      "id": "QB008",
+      "name": "Malboro",
+      "reference": "Final Fantasy series",
+      "group": "Foundation",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "Played: enemy cards on the forward diagonals lose 1 power.",
+      "symbol": "❋",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB009",
+      "name": "White Mage",
+      "reference": "Final Fantasy III",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "Played: allied cards directly above and below gain 1 power.",
+      "symbol": "✚",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 1
+    },
+    {
+      "id": "QB010",
+      "name": "Black Mage",
+      "reference": "Final Fantasy I",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "rules": "Played: allied and enemy cards one column forward lose 1 power.",
+      "symbol": "✧",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "all"
+    },
+    {
+      "id": "QB011",
+      "name": "Dragoon",
+      "reference": "Final Fantasy IV",
+      "group": "Foundation",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          2
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "⚔",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB012",
+      "name": "Magitek Armor",
+      "reference": "Final Fantasy VI",
+      "group": "Foundation",
+      "rank": 2,
+      "power": 4,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "▣",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB013",
+      "name": "Shinra Trooper",
+      "reference": "Final Fantasy VII",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "▥",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB014",
+      "name": "Flan",
+      "reference": "Final Fantasy series",
+      "group": "Foundation",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: this card gains 1 power for each enhanced allied card other than this card, anywhere on the board. Counts net modifications from other cards; this card’s own scaling does not create a qualifying status.",
+      "symbol": "◆",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "count",
+      "effect_offsets": [],
+      "amount": 1,
+      "count_status": "enhanced",
+      "target": "ally"
+    },
+    {
+      "id": "QB015",
+      "name": "Behemoth",
+      "reference": "Final Fantasy series",
+      "group": "Foundation",
+      "rank": 3,
+      "power": 7,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "♜",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB016",
+      "name": "Ahriman",
+      "reference": "Final Fantasy XIV",
+      "group": "Foundation",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "While on the board: this card gains 1 power for each enfeebled enemy card anywhere on the board. Counts net modifications from other cards; this card’s own scaling does not create a qualifying status.",
+      "symbol": "◉",
+      "copy_limit": 2,
+      "enabled": true,
+      "effect": "count",
+      "effect_offsets": [],
+      "amount": 1,
+      "count_status": "enfeebled",
+      "target": "enemy"
+    },
+    {
+      "id": "QB017",
+      "name": "Warrior of Light",
+      "reference": "Final Fantasy I",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: allied cards directly above and below gain 1 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 1
+    },
+    {
+      "id": "QB018",
+      "name": "Firion",
+      "reference": "Final Fantasy II",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "Played: allied cards directly above, below, forward, and behind gain 1 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 1
+    },
+    {
+      "id": "QB019",
+      "name": "Onion Knight",
+      "reference": "Final Fantasy III",
+      "group": "Hero",
+      "rank": 1,
+      "power": 1,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "When this card first reaches 4 power, allied cards directly above and below gain 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "threshold",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 2,
+      "threshold": 4,
+      "target": "ally"
+    },
+    {
+      "id": "QB020",
+      "name": "Cecil — Paladin",
+      "reference": "Final Fantasy IV",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: allied cards one column forward gain 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": 2
+    },
+    {
+      "id": "QB021",
+      "name": "Bartz",
+      "reference": "Final Fantasy V",
+      "group": "Hero",
+      "rank": 2,
+      "power": 4,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB022",
+      "name": "Terra",
+      "reference": "Final Fantasy VI",
+      "group": "Hero",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: enemy cards on the forward diagonals lose 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -2,
+      "target": "enemy"
+    },
+    {
+      "id": "QB023",
+      "name": "Cloud",
+      "reference": "Final Fantasy VII",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "rules": "When this card first reaches 6 power, allied cards on the forward diagonals gain 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "threshold",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": 2,
+      "threshold": 6,
+      "target": "ally"
+    },
+    {
+      "id": "QB024",
+      "name": "Squall",
+      "reference": "Final Fantasy VIII",
+      "group": "Hero",
+      "rank": 2,
+      "power": 4,
+      "claim": [
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "Played: enemy cards one column forward lose 1 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB025",
+      "name": "Zidane",
+      "reference": "Final Fantasy IX",
+      "group": "Hero",
+      "rank": 1,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB026",
+      "name": "Yuna",
+      "reference": "Final Fantasy X",
+      "group": "Hero",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: allied cards directly above, below, forward, and behind gain 1 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 1
+    },
+    {
+      "id": "QB027",
+      "name": "Shantotto",
+      "reference": "Final Fantasy XI",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "rules": "Played: allied and enemy cards two columns forward lose 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          2
+        ]
+      ],
+      "amount": -2,
+      "target": "all"
+    },
+    {
+      "id": "QB028",
+      "name": "Ashe",
+      "reference": "Final Fantasy XII",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: allied cards on the forward diagonals gain 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": 2
+    },
+    {
+      "id": "QB029",
+      "name": "Lightning",
+      "reference": "Final Fantasy XIII",
+      "group": "Hero",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "rules": "Played: enemy cards one column forward lose 1 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB030",
+      "name": "Y’shtola",
+      "reference": "Final Fantasy XIV",
+      "group": "Hero",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: allied cards on the forward diagonals gain 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": 2
+    },
+    {
+      "id": "QB031",
+      "name": "Noctis",
+      "reference": "Final Fantasy XV",
+      "group": "Hero",
+      "rank": "Replace",
+      "power": 2,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: this card gains the replaced card’s printed power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "inherit",
+      "effect_offsets": [],
+      "amount": 0,
+      "inherit_printed": true
+    },
+    {
+      "id": "QB032",
+      "name": "Clive",
+      "reference": "Final Fantasy XVI",
+      "group": "Hero",
+      "rank": 3,
+      "power": 5,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: enemy cards on the forward diagonals lose 2 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -2,
+      "target": "enemy"
+    },
+    {
+      "id": "QB033",
+      "name": "Ifrit",
+      "reference": "Final Fantasy X",
+      "group": "Summon",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "Played: allied and enemy cards on the forward diagonals lose 1 power.",
+      "symbol": "♨",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "all"
+    },
+    {
+      "id": "QB034",
+      "name": "Shiva",
+      "reference": "Final Fantasy VIII",
+      "group": "Summon",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: enemy cards one column forward lose 1 power.",
+      "symbol": "❄",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB035",
+      "name": "Ramuh",
+      "reference": "Final Fantasy IX",
+      "group": "Summon",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "rules": "Played: enemy cards two columns forward lose 3 power.",
+      "symbol": "ϟ",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          2
+        ]
+      ],
+      "amount": -3,
+      "target": "enemy"
+    },
+    {
+      "id": "QB036",
+      "name": "Titan",
+      "reference": "Final Fantasy XVI",
+      "group": "Summon",
+      "rank": 3,
+      "power": 7,
+      "claim": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "◇",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB037",
+      "name": "Leviathan",
+      "reference": "FF VII Remake",
+      "group": "Summon",
+      "rank": 3,
+      "power": 5,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "rules": "Played: enemy cards directly above and below lose 2 power.",
+      "symbol": "≈",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": -2,
+      "target": "enemy"
+    },
+    {
+      "id": "QB038",
+      "name": "Phoenix",
+      "reference": "Final Fantasy V",
+      "group": "Summon",
+      "rank": "Replace",
+      "power": 1,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "Played: allied cards directly above, below, forward, and behind gain 2 power.",
+      "symbol": "✺",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 2,
+      "target": "ally"
+    },
+    {
+      "id": "QB039",
+      "name": "Odin",
+      "reference": "FF III",
+      "group": "Summon",
+      "rank": 3,
+      "power": 5,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "rules": "Played: enemy cards one column forward lose 4 power.",
+      "symbol": "⚔",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -4,
+      "target": "enemy"
+    },
+    {
+      "id": "QB040",
+      "name": "Bahamut",
+      "reference": "Final Fantasy VII",
+      "group": "Summon",
+      "rank": 3,
+      "power": 6,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: allied and enemy cards on the forward diagonals lose 2 power.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -2,
+      "target": "all"
+    },
+    {
+      "id": "QB041",
+      "name": "Garland",
+      "reference": "Final Fantasy I",
+      "group": "Villain",
+      "rank": 2,
+      "power": 4,
+      "claim": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "No special ability; expand your territory.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": null,
+      "effect_offsets": [],
+      "amount": 0
+    },
+    {
+      "id": "QB042",
+      "name": "The Emperor",
+      "reference": "Final Fantasy II",
+      "group": "Villain",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: enemy cards on the forward diagonals lose 1 power.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "aura",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB043",
+      "name": "Cloud of Darkness",
+      "reference": "Final Fantasy III",
+      "group": "Villain",
+      "rank": 3,
+      "power": 4,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "rules": "Played: allied and enemy cards directly above and below lose 2 power.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": -2,
+      "target": "all"
+    },
+    {
+      "id": "QB044",
+      "name": "Golbez",
+      "reference": "Final Fantasy IV",
+      "group": "Villain",
+      "rank": 2,
+      "power": 3,
+      "claim": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: enemy cards on the forward diagonals lose 1 power.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "amount": -1,
+      "target": "enemy"
+    },
+    {
+      "id": "QB045",
+      "name": "Exdeath",
+      "reference": "Final Fantasy V",
+      "group": "Villain",
+      "rank": 3,
+      "power": 4,
+      "claim": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "While on the board: this card gains 1 power for each enfeebled enemy card anywhere on the board. Counts net modifications from other cards; this card’s own scaling does not create a qualifying status.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "count",
+      "effect_offsets": [],
+      "amount": 1,
+      "count_status": "enfeebled",
+      "target": "enemy"
+    },
+    {
+      "id": "QB046",
+      "name": "Kefka",
+      "reference": "Final Fantasy VI",
+      "group": "Villain",
+      "rank": 2,
+      "power": 2,
+      "claim": [
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "rules": "Played: allied and enemy cards directly above, below, forward, and behind lose 1 power.",
+      "symbol": "♜",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": -1,
+      "target": "all"
+    },
+    {
+      "id": "QB047",
+      "name": "Sephiroth",
+      "reference": "Final Fantasy VII",
+      "group": "Villain",
+      "rank": "Replace",
+      "power": 4,
+      "claim": [
+        [
+          0,
+          1
+        ]
+      ],
+      "rules": "Played: enemy cards one column forward lose 3 power.",
+      "symbol": "⚔",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          0,
+          1
+        ]
+      ],
+      "amount": -3,
+      "target": "enemy"
+    },
+    {
+      "id": "QB048",
+      "name": "Ultimecia",
+      "reference": "Final Fantasy VIII",
+      "group": "Villain",
+      "rank": "Replace",
+      "power": 1,
+      "claim": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "rules": "Played: this card gains the replaced card’s printed power; allied cards directly above and below gain 1 power.",
+      "symbol": "✦",
+      "copy_limit": 1,
+      "enabled": true,
+      "effect": "played",
+      "effect_offsets": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "amount": 1,
+      "inherit_printed": true,
+      "target": "ally"
+    }
+  ],
+  "starter_deck": [
+    "QB001",
+    "QB001",
+    "QB003",
+    "QB003",
+    "QB004",
+    "QB004",
+    "QB009",
+    "QB009",
+    "QB013",
+    "QB013",
+    "QB002",
+    "QB002",
+    "QB011",
+    "QB012",
+    "QB015"
+  ],
+  "presets": [
+    {
+      "name": "Frontier",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB002",
+        "QB002",
+        "QB011",
+        "QB012",
+        "QB015"
+      ]
+    },
+    {
+      "name": "Fellowship",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB002",
+        "QB002",
+        "QB004",
+        "QB004",
+        "QB005",
+        "QB005",
+        "QB009",
+        "QB009",
+        "QB017",
+        "QB020",
+        "QB026",
+        "QB030",
+        "QB011"
+      ]
+    },
+    {
+      "name": "Vanguard",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB013",
+        "QB013",
+        "QB011",
+        "QB011",
+        "QB012",
+        "QB012",
+        "QB021",
+        "QB025",
+        "QB018",
+        "QB041",
+        "QB036"
+      ]
+    },
+    {
+      "name": "Enfeeblement",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB010",
+        "QB007",
+        "QB008",
+        "QB022",
+        "QB035"
+      ]
+    },
+    {
+      "name": "Rebirth",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB006",
+        "QB006",
+        "QB009",
+        "QB031",
+        "QB038",
+        "QB047",
+        "QB048"
+      ]
+    },
+    {
+      "name": "Limit Break",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB005",
+        "QB005",
+        "QB009",
+        "QB009",
+        "QB014",
+        "QB014",
+        "QB019",
+        "QB023",
+        "QB026"
+      ]
+    },
+    {
+      "name": "Void Pressure",
+      "cards": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB010",
+        "QB010",
+        "QB016",
+        "QB016",
+        "QB007",
+        "QB007",
+        "QB034",
+        "QB035",
+        "QB045"
+      ]
+    }
+  ],
+  "opponents": [
+    {
+      "id": "chocobo_keeper",
+      "name": "Chocobo Keeper",
+      "lesson": "Expand early and deny the center.",
+      "rewards": [
+        "QB005",
+        "QB025"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB011",
+        "QB011",
+        "QB002",
+        "QB002",
+        "QB012"
+      ]
+    },
+    {
+      "id": "travelling_mage",
+      "name": "Travelling White Mage",
+      "lesson": "Place allies within enhancement patterns.",
+      "rewards": [
+        "QB017",
+        "QB020"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB002",
+        "QB002",
+        "QB004",
+        "QB004",
+        "QB009",
+        "QB009",
+        "QB003",
+        "QB003",
+        "QB011",
+        "QB011",
+        "QB012",
+        "QB017",
+        "QB020"
+      ]
+    },
+    {
+      "id": "wandering_swordsman",
+      "name": "Wandering Swordsman",
+      "lesson": "Balance reach, rank and lane power.",
+      "rewards": [
+        "QB018",
+        "QB021"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB013",
+        "QB013",
+        "QB004",
+        "QB004",
+        "QB009",
+        "QB009",
+        "QB011",
+        "QB011",
+        "QB012",
+        "QB018",
+        "QB021"
+      ]
+    },
+    {
+      "id": "crossing_summoner",
+      "name": "Summoner of the Crossing",
+      "lesson": "Build formations that support future cards.",
+      "rewards": [
+        "QB026",
+        "QB030"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB002",
+        "QB002",
+        "QB004",
+        "QB004",
+        "QB005",
+        "QB005",
+        "QB009",
+        "QB009",
+        "QB011",
+        "QB017",
+        "QB020",
+        "QB026",
+        "QB030"
+      ]
+    },
+    {
+      "id": "royal_marshal",
+      "name": "Royal Marshal",
+      "lesson": "Use diagonal formations and pressure two lanes.",
+      "rewards": [
+        "QB028",
+        "QB041"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB013",
+        "QB013",
+        "QB004",
+        "QB004",
+        "QB011",
+        "QB011",
+        "QB009",
+        "QB018",
+        "QB021",
+        "QB028",
+        "QB041"
+      ]
+    },
+    {
+      "id": "earth_guardian",
+      "name": "Guardian of the Earth",
+      "lesson": "Earn rank-3 positions without abandoning smaller lanes.",
+      "rewards": [
+        "QB036"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB013",
+        "QB013",
+        "QB011",
+        "QB011",
+        "QB012",
+        "QB012",
+        "QB021",
+        "QB025",
+        "QB018",
+        "QB041",
+        "QB036"
+      ]
+    },
+    {
+      "id": "arcane_apprentice",
+      "name": "Arcane Apprentice",
+      "lesson": "Use enfeeblement to remove a weak enemy. Black Mage can also hurt allies.",
+      "rewards": [
+        "QB010",
+        "QB007",
+        "QB008",
+        "QB024"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB010",
+        "QB007",
+        "QB024"
+      ]
+    },
+    {
+      "id": "tonberry_keeper",
+      "name": "Tonberry Keeper",
+      "lesson": "Removal opens positions; distant attacks can break support formations.",
+      "rewards": [
+        "QB006",
+        "QB022",
+        "QB029",
+        "QB035"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB007",
+        "QB022",
+        "QB035"
+      ]
+    },
+    {
+      "id": "esper_adept",
+      "name": "Esper Adept",
+      "lesson": "Ongoing enfeeblement follows its source. Watch out for attacks that hit both sides.",
+      "rewards": [
+        "QB027",
+        "QB033",
+        "QB034",
+        "QB037"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB034",
+        "QB033",
+        "QB027"
+      ]
+    },
+    {
+      "id": "rebirth_sage",
+      "name": "Sage of Rebirth",
+      "lesson": "Replacement uses an allied occupied position, regardless of its pawn rank.",
+      "rewards": [
+        "QB031",
+        "QB038",
+        "QB044",
+        "QB042"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB031",
+        "QB038",
+        "QB042"
+      ]
+    },
+    {
+      "id": "dread_marshal",
+      "name": "Dread Marshal",
+      "lesson": "Strong removal has high pawn requirements. Protect your lane support.",
+      "rewards": [
+        "QB032",
+        "QB039",
+        "QB040",
+        "QB043"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB013",
+        "QB013",
+        "QB039",
+        "QB040",
+        "QB032"
+      ]
+    },
+    {
+      "id": "astral_regent",
+      "name": "Astral Regent",
+      "lesson": "Bomb triggers when removed; replacements can start a destruction chain.",
+      "rewards": [
+        "QB046",
+        "QB047",
+        "QB048"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB006",
+        "QB006",
+        "QB046",
+        "QB047",
+        "QB048"
+      ]
+    },
+    {
+      "id": "crystal_strategist",
+      "name": "Crystal Strategist",
+      "lesson": "Enhance allies to grow Flan. Support Onion Knight and Cloud to trigger their one-time boosts.",
+      "rewards": [
+        "QB014",
+        "QB019",
+        "QB023"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB002",
+        "QB002",
+        "QB009",
+        "QB009",
+        "QB014",
+        "QB014",
+        "QB019",
+        "QB023",
+        "QB005"
+      ]
+    },
+    {
+      "id": "void_scholar",
+      "name": "Scholar of the Void",
+      "lesson": "Ahriman and Exdeath grow from surviving enfeebled enemies. Removing the enemy can also remove your count bonus.",
+      "rewards": [
+        "QB016",
+        "QB045"
+      ],
+      "deck": [
+        "QB001",
+        "QB001",
+        "QB003",
+        "QB003",
+        "QB004",
+        "QB004",
+        "QB010",
+        "QB010",
+        "QB002",
+        "QB016",
+        "QB016",
+        "QB034",
+        "QB007",
+        "QB035",
+        "QB045"
+      ]
+    }
+  ]
+}

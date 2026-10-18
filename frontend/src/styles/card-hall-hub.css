@@ -1,0 +1,17 @@
+/* Standalone Queen's Blood / Triple Triad hub. Keeps Gold Saucer styles untouched. */
+.card-hall-hub { display:grid;gap:16px;min-width:0; }
+.card-hall-hub-heading { display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:end;padding:16px 20px;border:1px solid #866b9b;border-radius:12px;background:linear-gradient(120deg,#1e1c38,#181324 65%,#2e2344);color:#efe4f8; }
+.card-hall-hub-heading h2 { margin:3px 0 6px;color:#ffdf96;font-family:var(--display,serif);font-size:clamp(1.4rem,3vw,2rem); }
+.card-hall-hub-heading p { margin:0;line-height:1.5; }
+.card-hall-games { display:flex;flex-wrap:wrap;gap:8px; }
+.card-hall-games button,.card-hall-triad-tools button,.card-hall-triad-loading button { border:1px solid #8c719f;border-radius:8px;padding:10px 16px;min-height:44px;font:inherit;background:#211d33;color:#f3e7f7;cursor:pointer; }
+.card-hall-games button[aria-pressed=true] { border-color:#f7ce77;background:#443257;color:#ffe9b4;box-shadow:inset 0 -3px 0 #dcaf54; }
+.card-hall-hub .qb-hall {min-width:0}
+.card-hall-triad {display:grid;gap:12px;min-width:0}
+.card-hall-triad-tools {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:10px 14px;border:1px solid #5a6178;border-radius:8px;background:#192338;color:#e7d9f5}
+.card-hall-triad-message {background:#202c38;border:1px solid #617d91;border-radius:8px;padding:10px 14px;color:#f0e9df;overflow-wrap:anywhere}
+.card-hall-triad .saucer-triad-panel {min-width:0}
+.card-hall-triad .saucer-triad-panel>summary {cursor:default}
+.card-hall-triad .tt-free-play {padding:12px;border:1px solid #669184;background:#142c2c;border-radius:8px;color:#e7f9e4}
+.card-hall-triad .triad-section-body{padding:16px}
+@media(max-width:540px){.card-hall-hub-heading {padding:12px;}.card-hall-games{width:100%;}.card-hall-games button{flex:1;white-space:normal;}.card-hall-triad .triad-section-body{padding:10px}}

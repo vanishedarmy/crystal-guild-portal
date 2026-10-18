@@ -1,5 +1,4 @@
 import LockIcon from "../components/LockIcon.jsx";
-import TripleTriad from "./TripleTriad.jsx";
 import { humanizeLabel } from "../utils/displayLabels.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -152,7 +151,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const username = String(overview?.identity?.username || data?.identity?.username || "").toLowerCase();
   const isOwnProfile = Boolean(auth.authenticated && auth.player?.username && String(auth.player.username).toLowerCase() === username);
   const capabilities = useMemo(() => new Set(Array.isArray(auth.action_capabilities) ? auth.action_capabilities : []), [auth.action_capabilities]);
-  const required = ["GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "TRIAD_SET_DECK", "TRIAD_START", "TRIAD_PLAY", "SAUCER_BUY"];
+  const required = ["GOLD_SAUCER_STATE", "CACTPOT_START", "CACTPOT_REVEAL", "CACTPOT_LINE", "SLOTS_SPIN", "MONSTER_TOSS_START", "MONSTER_TOSS_THROW", "CHOCOBO_RACE", "SAUCER_BUY"];
   const actionsAvailable = Boolean(isOwnProfile && auth.actions_enabled && required.every((kind) => capabilities.has(kind)));
   const csrfToken = auth.csrf_token || "";
 
@@ -314,7 +313,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
   const lastRace = Object.keys(asRecord(racing.last_race)).length ? asRecord(racing.last_race) : null;
   const lastRaceDetails = asRecord(lastRace?.details);
   const raceCanEnter = Boolean(selectedRaceCourse?.can_enter);
-  const triad = asRecord(saucerState.triple_triad);
   const futureAttractions = asObjectArray(saucerState.attractions).filter((attraction) => attraction.status !== "open");
   const revealed = new Set(asArray(ticket?.revealed));
   const lastSlots = slots?.last_spin?.details || null;
@@ -344,7 +342,7 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
         <div>
           <p className="eyebrow">Gold Saucer</p>
           <div className="context-help-title-line"><h2>Gold Saucer</h2><ContextHelp topic="gold_saucer" /></div>
-          <p className="muted">A low-stakes side hall for daily luck, quick games, Chocobo Racing, Triple Triad, cosmetic rewards, and collection records. First visit includes a 500 MGP welcome purse.</p>
+          <p className="muted">A low-stakes side hall for daily luck, quick games, Chocobo Racing, cosmetic rewards, and collection records. First visit includes a 500 MGP welcome purse.</p>
         </div>
         <div className="saucer-balance">
           <span>Current Balance</span>
@@ -578,8 +576,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
             </div>
           </details>
 
-          <TripleTriad triad={triad} busy={busy} mutate={mutate} actionsAvailable={actionsAvailable} csrfToken={csrfToken} actionKey={actionKey} mgp={mgp} />
-
           <details className="panel saucer-prize-panel saucer-scenic-panel saucer-section-disclosure">
             <summary className="saucer-section-summary">
               <div><p className="eyebrow">Cosmetic Rewards</p><h3>Prize Counter</h3></div>
@@ -657,12 +653,6 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
               <div><span>Race Win Rate</span><strong>{Number(records.chocobo_race_win_rate_pct || 0).toFixed(1)}%</strong></div>
               <div><span>Best Race Finish</span><strong>{records.chocobo_race_best_finish ? `#${number(records.chocobo_race_best_finish)}` : "—"}</strong></div>
               <div><span>Best Race Payout</span><strong>{number(records.chocobo_race_best_payout)} MGP</strong></div>
-              <div><span>Triad Matches</span><strong>{number(records.triple_triad_matches)}</strong></div>
-              <div><span>Triad Wins</span><strong>{number(records.triple_triad_wins)}</strong></div>
-              <div><span>Triad Win Rate</span><strong>{Number(records.triple_triad_win_rate_pct || 0).toFixed(1)}%</strong></div>
-              <div><span>Triad Cards</span><strong>{number(records.triple_triad_cards_owned)} / {number(triad.total_cards)}</strong></div>
-              <div><span>Cards Won</span><strong>{number(records.triple_triad_cards_won)}</strong></div>
-              <div><span>Best Triad Streak</span><strong>{number(records.triple_triad_best_streak)}</strong></div>
               <div><span>Lifetime Earned</span><strong>{number(account.lifetime_earned)} MGP</strong></div>
               <div><span>Lifetime Spent</span><strong>{number(account.lifetime_spent)} MGP</strong></div>
             </div>
@@ -680,9 +670,9 @@ export default function GoldSaucer({ data, overview, onRefresh }) {
                 {history.map((entry, index) => {
                   const game = humanizeLabel(entry.game || "activity");
                   const details = asRecord(entry.details);
-                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "daily_reward" ? "Daily MGP reward" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : entry.game === "triple_triad" ? `Triple Triad · ${details.opponent_name || "Match"}` : entry.game === "triad_circuit" ? `Triple Triad · ${details.name || "Circuit"} cleared` : game;
+                  const label = entry.game === "prize" ? String(details.name || entry.outcome || "Prize") : entry.game === "daily_allowance" ? "Daily floor allowance" : entry.game === "daily_reward" ? "Daily MGP reward" : entry.game === "welcome" ? "Welcome purse" : entry.game === "monster_toss" ? `Monster Toss · ${number(details.score || 0)} pts` : entry.game === "chocobo_racing" ? `Chocobo Racing · ${details.course_name || "Circuit"}` : game;
                   return <div className="saucer-history-row" key={`${entry.created_at || 0}-${index}`}>
-                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${humanizeLabel(entry.outcome || "")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : entry.game === "triple_triad" ? `${number(details.player_score)}–${number(details.npc_score)}${details.card_reward_name ? ` · won ${details.card_reward_name}` : ""}` : humanizeLabel(entry.outcome || "")}</small></span>
+                    <span><strong>{label}</strong><small>{entry.game === "slots" && Array.isArray(details.labels) ? details.labels.join(" · ") : entry.game === "monster_toss" ? `${number(details.hits || 0)} / ${number(details.throws || 0)} hits · ${humanizeLabel(entry.outcome || "")}` : entry.game === "chocobo_racing" ? `${details.chocobo_name || "Chocobo"} · ${details.strategy_name || "Balanced"} · place ${number(details.placement || 0)}` : humanizeLabel(entry.outcome || "")}</small></span>
                     <b className={Number(entry.payout || 0) > Number(entry.wager || 0) ? "positive" : ""}>{Number(entry.payout || 0) > 0 ? `+${number(entry.payout)} MGP` : Number(entry.wager || 0) > 0 ? `−${number(entry.wager)} MGP` : "—"}</b>
                   </div>;
                 })}

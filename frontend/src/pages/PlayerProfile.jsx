@@ -21,6 +21,7 @@ const MODULES = {
   guild_board: lazy(() => import("../player/GuildBoard.jsx")),
   chocobo: lazy(() => import("../player/ChocoboStable.jsx")),
   card_hall: lazy(() => import("../player/CardHall.jsx")),
+  living_world: lazy(() => import("../player/LivingWorld.jsx")),
   gold_saucer: lazy(() => import("../player/GoldSaucer.jsx")),
   retainer: lazy(() => import("../player/RetainerService.jsx")),
   mercs: lazy(() => import("../player/MercService.jsx")),
@@ -41,6 +42,7 @@ const MODULES = {
 const TABS = [
   ["overview", "Overview", "◇"],
   ["hunts", "Adventure Board", "⌖"],
+  ["living_world", "Living World", "✥"],
   ["stream", "Stream Activities", "◉"],
   ["jobs", "Jobs", "✦"],
   ["inventory", "Equipment & Inventory", "◆"],
@@ -64,6 +66,7 @@ const TABS = [
 const TAB_TONES = {
   overview: "aqua",
   hunts: "gold",
+  living_world: "green",
   stream: "cyan",
   jobs: "violet",
   inventory: "emerald",
@@ -86,6 +89,7 @@ const TAB_TONES = {
 
 const TAB_GROUPS = [
   ["Core", ["overview", "hunts", "stream", "jobs", "inventory"]],
+  ["Exploration", ["living_world"]],
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
   ["Attractions", ["gold_saucer", "card_hall"]],
   ["Guild", ["fellowship", "guild_board"]],

@@ -1,0 +1,96 @@
+{
+  "milestone": "LW-0",
+  "enabled": false,
+  "playable": false,
+  "sync_pending": true,
+  "offline_completion_required": true,
+  "fellowship_is_optional": true,
+  "regions": [
+    {
+      "id": "verdant_wilds",
+      "name": "Verdant Wilds",
+      "order": 1,
+      "biome": "temperate woodland",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "amber_highlands",
+      "name": "Amber Highlands",
+      "order": 2,
+      "biome": "sunlit highlands",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "mistfen",
+      "name": "Mistfen",
+      "order": 3,
+      "biome": "misty wetlands",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "crystal_hollows",
+      "name": "Crystal Hollows",
+      "order": 4,
+      "biome": "crystalline caves",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "frostbound_reach",
+      "name": "Frostbound Reach",
+      "order": 5,
+      "biome": "frozen mountains",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "ashen_expanse",
+      "name": "Ashen Expanse",
+      "order": 6,
+      "biome": "volcanic badlands",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "sunken_coast",
+      "name": "Sunken Coast",
+      "order": 7,
+      "biome": "forgotten coastal ruins",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    },
+    {
+      "id": "astral_ruins",
+      "name": "Astral Ruins",
+      "order": 8,
+      "biome": "ancient star-touched ruins",
+      "status": "locked",
+      "unlocked": false,
+      "discovery_count": 0,
+      "progress": 0
+    }
+  ],
+  "summary": {
+    "regions_unlocked": 0,
+    "discoveries": 0,
+    "world_events_active": 0
+  },
+  "events": []
+}

@@ -8,7 +8,7 @@ class MercBatch3HostedTests(unittest.TestCase):
         self.store.upsert_player({'schema_version':1,'username':'van','player_twitch_id':'100','snapshot':{'overview':{'identity':{'username':'van','display_name':'Van','level':30,'title':'Hunter','updated_at':'2026-09-16 00:00:00'},'job':{'name':'Warrior'},'status':{'state':'ready','label':'Ready'}},'jobs':{'jobs':[]},'inventory':{'items':[]},'hunts':{'summary':{},'hunts':[]},'bestiary':{'summary':{'discovered':0,'total':0},'monsters':[]},'relics':{'relics':[]},'achievements':{'summary':{'unlocked':0,'total':0},'achievements':[]},'records':{'career':{},'bosses':[]}}})
     def tearDown(self): self.tmp.cleanup()
     def test_contract_and_capabilities(self):
-        self.assertEqual(ACTION_PROTOCOL_VERSION,39); self.assertEqual(HOSTED_PORTAL_VERSION,'1.9.4-crafting-reforged')
+        self.assertEqual(ACTION_PROTOCOL_VERSION,39); self.assertEqual(HOSTED_PORTAL_VERSION,'1.9.7-queens-blood')
         self.assertTrue({'MERC_STATE','MERC_HIRE','MERC_CANCEL'} <= ALLOWED_PORTAL_ACTIONS)
     def test_merc_payloads_are_strict(self):
         state=self.store.create_action('100','MERC_STATE',{},'merc-state-1234'); self.assertEqual(state['type'],'MERC_STATE')

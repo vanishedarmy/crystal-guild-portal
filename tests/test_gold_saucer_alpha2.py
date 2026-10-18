@@ -20,8 +20,8 @@ class GoldSaucerHostedAlpha2Tests(unittest.TestCase):
         self.temp.cleanup()
 
     def test_alpha2_contract_and_actions(self):
-        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.4-crafting-reforged")
-        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.4.3-forge-workbench")
+        self.assertEqual(HOSTED_PORTAL_VERSION, "1.9.7-queens-blood")
+        self.assertEqual(FRONTEND_ASSET_REVISION, "1.9.7-queens-blood")
         self.assertEqual(ACTION_PROTOCOL_VERSION, 39)
         self.assertIn("MONSTER_TOSS_START", ALLOWED_PORTAL_ACTIONS)
         self.assertIn("MONSTER_TOSS_THROW", ALLOWED_PORTAL_ACTIONS)

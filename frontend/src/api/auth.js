@@ -257,6 +257,10 @@ export function submitChocoboRace(course, strategy, csrfToken, idempotencyKey) {
   return submitPortalAction("CHOCOBO_RACE", { course: String(course || ""), strategy: String(strategy || "") }, csrfToken, idempotencyKey);
 }
 
+export function submitTriadState(csrfToken, idempotencyKey) {
+  return submitPortalAction("TRIAD_STATE", {}, csrfToken, idempotencyKey);
+}
+
 export function submitTriadSetDeck(cards, csrfToken, idempotencyKey) {
   return submitPortalAction("TRIAD_SET_DECK", { cards: Array.isArray(cards) ? cards.map((value) => String(value || "")) : [] }, csrfToken, idempotencyKey);
 }

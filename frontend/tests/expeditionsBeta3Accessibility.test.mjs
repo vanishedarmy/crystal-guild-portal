@@ -11,8 +11,8 @@ test("Expeditions preserves the mobile and accessibility pass", async () => {
   const version = await load("version.js");
   const news = await load("player/whatsNewData.js");
   const guide = await load("guide-body.html", PUBLIC);
-  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
-  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(version, /WEB_BUILD = "Queen's Blood"/);
+  assert.match(version, /1\.9\.7-queens-blood/);
   assert.match(news, /name: "Expeditions"/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
   assert.doesNotMatch(previous, /name: "[^"]*(?:Alpha|Beta|RC\d*)[^"]*"/i);
@@ -35,7 +35,7 @@ test("Portal tablists use roving keyboard focus with Arrow Home and End keys", a
   assert.match(profile, /tabIndex=\{activeTab === id \? 0 : -1\}/);
   assert.match(moogle, /handleTabListKeyDown\(event, setMode\)/);
   assert.match(moogle, /handleTabListKeyDown\(event, setCategory\)/);
-  assert.match(blacksmith, /handleTabListKeyDown\(event, setView\)/);
+  assert.match(blacksmith, /handleTabListKeyDown\(event, switchView\)/);
 });
 
 test("mobile Portal CSS enforces touch targets safe areas readable forms and narrow layouts", async () => {

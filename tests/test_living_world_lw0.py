@@ -5,14 +5,16 @@ import json
 import unittest
 
 from crystal_guild.hosted_portal import HostedPortalStore, LIVING_WORLD_FALLBACK, validate_snapshot_payload
-from test_hosted_portal import PortalServerCase, snapshot_payload
+import test_hosted_portal as _hosted_fixture
+
+snapshot_payload = _hosted_fixture.snapshot_payload
 
 
 class LivingWorldHostedTests(unittest.TestCase):
-    setUp = PortalServerCase.setUp
-    tearDown = PortalServerCase.tearDown
-    get = PortalServerCase.get
-    post = PortalServerCase.post
+    setUp = _hosted_fixture.PortalServerCase.setUp
+    tearDown = _hosted_fixture.PortalServerCase.tearDown
+    get = _hosted_fixture.PortalServerCase.get
+    post = _hosted_fixture.PortalServerCase.post
     def test_legacy_player_snapshot_gets_safe_dormant_living_world_fallback(self):
         self.post('/api/sync/player', snapshot_payload('van'))
         status, raw, _ = self.get('/api/player/van/living_world')

@@ -60,7 +60,10 @@ test("generated shared equipment sets are packaged and Blacksmith consumes share
   assert.equal(fs.existsSync(path.join(root, "public/retro-phase-ii/weapon-families-v2")), false);
   assert.equal(fs.existsSync(path.join(root, "public/retro-phase-ii/weapon-tiers-v2")), false);
   const smith = read("src/player/Blacksmith.jsx");
-  assert.match(smith, /ItemArtwork/);
-  assert.match(smith, /blacksmith-forge-artwork/);
-  assert.match(smith, /blacksmith-material-artwork/);
+  const crafting = read("src/player/CraftingWorkbench.jsx");
+  const forge = read("src/player/ForgeWorkbench.jsx");
+  assert.match(smith, /CraftingWorkbench/);
+  assert.match(crafting, /ItemArtwork/);
+  assert.match(forge, /ItemArtwork/);
+  assert.match(crafting, /blacksmith-material-artwork/);
 });

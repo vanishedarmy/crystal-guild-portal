@@ -288,6 +288,7 @@ export default function SeasonalEvent({ data = {}, overview, onRefresh }) {
           <div><p className="eyebrow">Event Bestiary</p><h3>Things Stirring in the Dark</h3></div>
           <span className="seasonal-heading-count">{discoveredVariants} / {variants.length} discovered</span>
         </div>
+        <img className="seasonal-bestiary-header" src={localArt("bestiary-header.webp")} alt="Night of the Hollow Crystal — Event Bestiary" loading="lazy" decoding="async" />
         <div className="seasonal-monster-grid seasonal-monster-grid-rework">
           {variants.map((monster) => {
             const discovered = Number(monster.clears || 0) > 0;

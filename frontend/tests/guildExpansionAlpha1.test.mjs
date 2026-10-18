@@ -30,9 +30,9 @@ test("Player Guide explains facility play without backend implementation jargon"
 });
 
 test("Final release identity and launch summary are current", () => {
-  assert.match(version, /WEB_VERSION = "v1\.8\.2"/);
-  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
+  assert.match(version, /WEB_VERSION = "v1\.9\.7"/);
+  assert.match(version, /WEB_BUILD = "Queen.s Blood"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
   assert.match(whatsNew, /name: "Guild Expansion"/);
   assert.match(whatsNew, /Build the Guild together/);
   assert.match(whatsNew, /The Crystal Guild Airship/);

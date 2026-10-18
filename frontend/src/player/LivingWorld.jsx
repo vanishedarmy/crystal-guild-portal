@@ -1,12 +1,21 @@
 import { useState } from "react";
 
 const MARKERS = {
-  available: "/living-world/ui/atlas-markers/available.png",
-  completed: "/living-world/ui/atlas-markers/completed.png",
-  locked: "/living-world/ui/atlas-markers/locked.png",
-  selected: "/living-world/ui/atlas-markers/selected.png",
-  discovery: "/living-world/ui/atlas-markers/discovery.png",
+  available: "/living-world/ui/atlas-markers/available.webp",
+  completed: "/living-world/ui/atlas-markers/completed.webp",
+  locked: "/living-world/ui/atlas-markers/locked.webp",
+  selected: "/living-world/ui/atlas-markers/selected.webp",
+  discovery: "/living-world/ui/atlas-markers/discovery.webp",
 };
+
+// ART-1B: illustrations are never rendered until the server marks a location discovered.
+// Keys are derived from the existing Bot catalog rather than new gameplay definitions.
+const DISCOVERY_IMAGES = Object.freeze({
+  oldstone_arch: "/living-world/discoveries/verdant_wilds/oldstone_arch.webp",
+  whispering_grove: "/living-world/discoveries/verdant_wilds/whispering_grove.webp",
+  silverrun_crossing: "/living-world/discoveries/verdant_wilds/silverrun_crossing.webp",
+  mossroot_shrine: "/living-world/discoveries/verdant_wilds/mossroot_shrine.webp",
+});
 
 function Progress({ value, total, label }) {
   const fraction = total > 0 ? Math.min(100, Math.round((value / total) * 100)) : 0;
@@ -69,7 +78,9 @@ export default function LivingWorld({ data, onNavigate }) {
       {ready && region?.unlocked ? <section className="lw-discovery-section" aria-label="Discovery journal">
         <div className="lw-section-heading"><div><p className="lw-eyebrow">Field notes</p><h3>Discoveries</h3></div><span>{discoveries.filter((entry) => entry.discovered).length} of {discoveries.length} found</span></div>
         <div className="lw-discovery-grid">{discoveries.map((entry, index) => <article key={entry.id} className={`lw-discovery ${entry.discovered ? "lw-found" : ""}`}>
-          <img src={MARKERS.discovery} width="30" height="30" alt="" />
+          {entry.discovered && DISCOVERY_IMAGES[entry.id] ?
+            <img className="lw-discovery-art" src={DISCOVERY_IMAGES[entry.id]} alt="" loading="lazy" /> :
+            <img className="lw-discovery-marker" src={MARKERS.discovery} width="30" height="30" alt="" />}
           <div className="lw-discovery-copy"><div className="lw-discovery-meta"><p className="lw-eyebrow">Field note {index + 1}</p>
             <span className="lw-discovery-status">{entry.discovered ? "Discovered" : "Unknown"}</span></div>
             <h4>{entry.name}</h4><p>{entry.description}</p></div>

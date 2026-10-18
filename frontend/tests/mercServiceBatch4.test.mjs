@@ -9,13 +9,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),"utf8");
 
 test("Batch 4 publishes the v1.8 Merc Service identity",()=>{
-  assert.equal(WEB_VERSION,"v1.8.2");
-  assert.equal(WEB_BUILD,"Elite Mercs");
-  assert.equal(WEB_RELEASE,"v1.8.2 — Elite Mercs");
-  assert.equal(WEB_ASSET_REVISION,"1.8.2-elite-mercs");
+  assert.equal(WEB_VERSION,"v1.9.7");
+  assert.equal(WEB_BUILD,"Queen's Blood");
+  assert.equal(WEB_RELEASE,"v1.9.7 — Queen's Blood");
+  assert.equal(WEB_ASSET_REVISION,"1.9.7-queens-blood");
   const data=JSON.parse(read("public/guide-data.json"));
-  assert.equal(data.meta.version,"v1.8.2 — Elite Mercs");
-  assert.equal(data.meta.release,"1.8.2-elite-mercs");
+  assert.equal(data.meta.version,"v1.9.7 — Queen's Blood");
+  assert.equal(data.meta.release,"1.9.7-queens-blood");
 });
 
 test("Player Guide documents Hunt Seals and all six Hero contracts",()=>{

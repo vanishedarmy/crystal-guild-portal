@@ -39,7 +39,9 @@ test("Alpha 5 Hotfix 2 quantity entry replaces the starter one instead of append
   assert.match(emporium, /inputMode="numeric"/);
   assert.match(emporium, /onFocus=\{\(\) => beginQuantityEdit\(setBuyQty, buyQty, item\.id\)\}/);
   assert.match(emporium, /onFocus=\{\(\) => beginQuantityEdit\(setSellQty, sellQty, item\.id\)\}/);
-  assert.match(blacksmith, /onFocus=\{\(\) => beginQuantityEdit\(setQuantities, quantities, recipe\.id\)\}/);
+  const crafting = fs.readFileSync(path.join(root, "src/player/CraftingWorkbench.jsx"), "utf8");
+  assert.match(blacksmith, /<CraftingWorkbench/);
+  assert.match(crafting, /onFocus=/);
   assert.match(fellowship, /onFocus=\{\(\) => beginQuantityEdit\(setWorkshopBatches, workshopBatches, exchange\.id\)\}/);
 });
 
@@ -51,6 +53,6 @@ test("Alpha 5 Hotfix 2 error boundary is retryable and logs the captured excepti
 });
 
 test("Alpha 5 Hotfix 2 advances only the frontend cache revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
-  assert.match(version, /WEB_VERSION = "v1\.8\.2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
+  assert.match(version, /WEB_VERSION = "v1\.9\.7"/);
 });

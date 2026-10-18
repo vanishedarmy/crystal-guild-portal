@@ -52,6 +52,6 @@ test("all support banners, Moonlit Token, and four stand-alone backgrounds are w
     assert.ok(seasonal.includes(`${image}.webp`), `${image} not rendered`);
   }
   assert.match(seasonal, /event\.art\?\.banner/);
-  assert.match(seasonal, /<details className="seasonal-scenery-details">/);
+  assert.match(seasonal, /<details className="panel seasonal-scenery-panel seasonal-scenery-rework">/);
   assert.match(seasonal, /reward\.owned && !reward\.repeatable/);
 });

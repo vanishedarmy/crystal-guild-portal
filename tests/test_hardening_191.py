@@ -1,4 +1,5 @@
 """Portal action retention query remains indexed as the host ledger grows."""
+from contextlib import closing
 import sqlite3
 import tempfile
 import unittest
@@ -11,7 +12,7 @@ class HostedHardening191Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'hosted.db'
             HostedPortalStore(path)
-            with sqlite3.connect(path) as db:
+            with closing(sqlite3.connect(path)) as db, db:
                 plan = db.execute("EXPLAIN QUERY PLAN DELETE FROM portal_actions INDEXED BY idx_portal_actions_retention WHERE status IN ('completed','failed') AND updated_at<?", (12345,)).fetchall()
                 self.assertTrue(any('idx_portal_actions_retention' in str(row) for row in plan), plan)
 

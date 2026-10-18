@@ -15666,3 +15666,6 @@ textarea {
     padding-block: .55rem;
   }
 }
+
+/* Keep the illustrated Event Bestiary heading distinct from monster thumbnails. */
+.seasonal-bestiary-rework .seasonal-bestiary-header{display:block;width:100%;height:clamp(100px,18vw,180px);object-fit:cover;object-position:center 50%;border-radius:8px;margin:.5rem 0 .85rem;border:1px solid rgba(157,119,210,.25)}

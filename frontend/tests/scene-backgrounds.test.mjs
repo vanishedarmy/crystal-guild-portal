@@ -1,9 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import test from "node:test";
 
-const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
+const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const PUBLIC = path.join(ROOT, "public");
 const CSS = fs.readFileSync(path.join(ROOT, "src/styles/portal.css"), "utf8");
 const scenes = {

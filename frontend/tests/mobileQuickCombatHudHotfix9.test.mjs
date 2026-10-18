@@ -56,7 +56,7 @@ test("mobile hides duplicate core command rows while desktop source remains inta
 
 
 test("Hotfix 9 cache-busts the Portal and documents the mobile quick bar", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.0-camp-recovery-alpha12"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
   assert.match(guide, /How do mobile battle controls work\?/);
-  assert.match(guide, /your HP, enemy HP, your MP and\/or AP/);
+  assert.match(guide, /your HP and available MP\/AP/);
 });

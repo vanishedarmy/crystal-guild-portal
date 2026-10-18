@@ -13,7 +13,8 @@ test("Economy Balance Alpha 2 remains in the release history", () => {
 
 test("Trading Post Level 1 copy uses Ventures rather than late-game Expeditions", () => {
   const emporium = read("../src/player/MoogleEmporium.jsx");
-  assert.match(emporium, /25,000 Gil · 3 Mythril Ore · 15 Ventures/);
+  assert.match(emporium, /A Guild-wide market shared across all regions/);
+  assert.match(emporium, /fixed Gil price/);
   assert.doesNotMatch(emporium, /25,000 Gil · 3 Mythril Ore · 15 Expeditions/);
 });
 

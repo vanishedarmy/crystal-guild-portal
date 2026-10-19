@@ -38,8 +38,6 @@ TRIPLE_TRIAD_OPPONENT_IDS = frozenset(
     )["opponents"]
 )
 
-LIVING_WORLD_FALLBACK = json.loads(Path(__file__).with_name("living_world_fallback.json").read_text(encoding="utf-8"))
-
 HOSTED_PORTAL_VERSION = "1.9.7-queens-blood"
 FRONTEND_ASSET_REVISION = "1.9.7-queens-blood"
 SCHEMA_VERSION = 1
@@ -2249,8 +2247,6 @@ class HostedPortalStore:
             snapshot = self._snapshot_cache.get(username)
             if snapshot is not None:
                 self._snapshot_cache.move_to_end(username)
-                if module == "living_world":
-                    return snapshot.get("living_world") or dict(LIVING_WORLD_FALLBACK)
                 if module == "guild_board":
                     return snapshot.get("guild_board") or {"board": {}, "sync_pending": True}
                 if module == "trophies":
@@ -2282,8 +2278,6 @@ class HostedPortalStore:
         with self._lock:
             self._alias_cache[lookup] = username
             self._cache_snapshot(username, snapshot)
-        if module == "living_world":
-            return snapshot.get("living_world") or dict(LIVING_WORLD_FALLBACK)
         if module == "guild_board":
             return snapshot.get("guild_board") or {"board": {}, "sync_pending": True}
         if module == "trophies":
@@ -2321,22 +2315,6 @@ def validate_snapshot_payload(payload: dict[str, Any]) -> None:
     }
     if not required.issubset(snapshot):
         raise ValueError("Snapshot is missing one or more required modules.")
-    # The Living World module is public. No internal player/Twitch IDs may
-    # escape inside future discovery/event structures, even if the rest of the
-    # historic Portal contract permits noncredential identifiers elsewhere.
-    living_world = snapshot.get("living_world")
-    if living_world is not None:
-        if not isinstance(living_world, dict):
-            raise ValueError("Living World snapshot must be an object.")
-        def has_private_id(obj: Any) -> bool:
-            if isinstance(obj, dict):
-                return any(str(key).lower() in {"player_id", "twitch_id", "player_twitch_id"} or has_private_id(value)
-                           for key, value in obj.items())
-            if isinstance(obj, list):
-                return any(has_private_id(value) for value in obj)
-            return False
-        if has_private_id(living_world):
-            raise ValueError("Living World public snapshot contains a private player identifier.")
     forbidden = find_forbidden_key(snapshot)
     if forbidden:
         raise ValueError(f"Snapshot contains forbidden private field: {forbidden}")
@@ -3101,7 +3079,6 @@ class HostedPortalHandler(BaseHTTPRequestHandler):
             "guild_board",
             "trophies",
             "seasonal",
-            "living_world",
         }
         module = aliases.get(module, module)
         if module not in valid:

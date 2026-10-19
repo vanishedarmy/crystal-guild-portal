@@ -4,17 +4,14 @@ import { MAJOR_UPDATES } from "../src/player/whatsNewData.js";
 import { WEB_VERSION } from "../src/version.js";
 import { readFile } from "node:fs/promises";
 
-test("What's New shows v1.9.7 first while preserving Guild Initiatives and Relics history", () => {
-  const [latest] = MAJOR_UPDATES;
-  const initiative = MAJOR_UPDATES.find((item) => item.version === "v1.9.3");
-  const previous = MAJOR_UPDATES.find((item) => item.version === "v1.9.2");
-  assert.equal(latest.version, "v1.9.7");
-  assert.equal(latest.action.tab, "card_hall");
-  assert.equal(initiative?.name, "Guild Initiatives");
+test("What's New promotes v1.9.3 and preserves the v1.9.2 entry", () => {
+  const [latest, previous] = MAJOR_UPDATES;
+  assert.equal(latest.version, "v1.9.3");
   assert.equal(latest.version, WEB_VERSION);
-  assert.equal(initiative.action.tab, "guild_board");
-  assert.equal(initiative.highlights.length, 4);
-  assert.match(initiative.summary, /Fellowship Contracts/);
+  assert.equal(latest.name, "Guild Initiatives");
+  assert.equal(latest.action.tab, "guild_board");
+  assert.equal(latest.highlights.length, 4);
+  assert.match(latest.summary, /Fellowship Contracts/);
   assert.equal(previous.version, "v1.9.2");
   assert.equal(previous.name, "Relic Arsenal Overhaul");
 });

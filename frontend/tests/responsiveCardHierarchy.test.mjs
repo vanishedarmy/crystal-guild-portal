@@ -16,7 +16,7 @@ test("locked Job state lives in the upper-right card header without duplicate Lo
 test("Region cards use the same upper-right status grammar while keeping travel actions separate", async () => {
   const hunts = await readFile(new URL("player/Hunts.jsx", SRC), "utf8");
   assert.match(hunts, /card-status-row adventure-region-head/);
-  assert.match(hunts, /region\.current \? "Current" : region\.unlocked \? "Unlocked" : <LockIcon/);
+  assert.match(hunts, /region\.current \? "Current" : region\.unlocked \? "Unlocked" : "Locked"/);
   const header = hunts.indexOf("card-status-row adventure-region-head");
   const travel = hunts.indexOf('className="adventure-card-footer"', header);
   assert.ok(header >= 0 && travel > header, "Region status should render before the separate Travel action row");

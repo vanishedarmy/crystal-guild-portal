@@ -1,7 +1,11 @@
-# Crystal Guild Web — v1.9.7 + Living World LW-1 / ART-1
+# Current release: v1.9.7 — Queen’s Blood
 
-This release contains the full Python hosted Portal, React/Vite frontend source, complete public static artwork and **prebuilt, verified** `frontend/dist` output. No npm build is needed for a prebuilt deployment (`Dockerfile.prebuilt`). For a source-built deployment, follow existing hosting instructions.
+See `README_FIRST.txt` for this complete release and upgrade instructions. The setup and historical feature documentation below remains available.
 
-The Card Hall hosts **Queen's Blood and Triple Triad**, independent from Gold Saucer; Triple Triad no longer grants or spends MGP. LW-1 introduces the Atlas foundation and Verdant Wilds discovery. The eight-region framework rolls out progressively. ART-1 contains themed artwork and reserved World Event visuals; it **does not** turn on unfinished Living World World Events or aftermath gameplay.
+# Crystal Guild — Web (v1.9.6: Triple Triad Expanded)
 
-The current technical baseline remains v1.9.7 Queen's Blood; hosted sync schema remains 1, Portal Action protocol remains 39. Back up live databases, service configuration and secrets before deploying. For new installations use `HOSTING_GUIDE.md` and `README_FIRST.txt`. This top-level release README supersedes historical version descriptions in other documents.
+The hosted Player Portal, Streamer Control Center and React/Vite frontend. Deploy with the matching v1.9.6 Bot; hosted sync schema 1 and Portal Action protocol 39 are unchanged.
+
+This complete release includes current frontend source, rebuilt `frontend/dist` output and thirty new card artworks. No npm rebuild is needed when deploying the included output. Source-building hosts can use their usual `npm ci` and `npm run build` workflow. Preserve all untouched assets and live configuration.
+
+Read `RELEASE_NOTES.md`, `DEPLOY_1_9_6.md` and `README_FIRST.txt` for installation, validation and hash-checked obsolete-file cleanup. Historical changelogs and hosting guides remain available.

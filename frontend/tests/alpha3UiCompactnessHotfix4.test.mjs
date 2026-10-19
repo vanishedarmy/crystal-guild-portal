@@ -11,7 +11,7 @@ const css = fs.readFileSync(new URL("../src/styles/portal.css", import.meta.url)
 
 // Focused UI pass requested after Alpha 3 H3; no gameplay contract changes.
 test("blacksmith tab subtitles are concise", () => {
-  assert.match(blacksmith, /<small>Items and equipment<\/small>/);
+  assert.match(blacksmith, /<small>Craft items<\/small>/);
   assert.match(blacksmith, /<small>Upgrade equipment<\/small>/);
   assert.doesNotMatch(blacksmith, /Active · (?:Craft items|Upgrade equipment)/);
 });

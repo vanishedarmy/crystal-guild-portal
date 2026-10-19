@@ -50,13 +50,12 @@ test("Triple Triad remains readable and responsive", () => {
 });
 
 test("Alpha 5 player copy, Guide, and compatibility contract are current", () => {
-  assert.match(version, /1\.9\.7-queens-blood/);
+  assert.match(version, /1\.8\.2-elite-mercs/);
   assert.match(whatsNew, /v1\.6\.0/);
   assert.match(whatsNew, /Triple Triad opens the card hall/);
   assert.match(whatsNew, /schema advances to 13/);
   assert.match(whatsNew, /Portal Action protocol advances to 29/);
-  assert.match(guide, /Card Hall/);
-  assert.match(guide, /no MGP affiliation/);
-  assert.match(whatsNew, /Matches have no MGP entry fee or payout/);
+  assert.match(guide, /Gold Saucer — v1\.7\.1 Alpha 2 balance/);
+  assert.match(guide, /five matches per UTC day/i);
   assert.match(guide, /Mini Cactpot and Crystal Slots remain permanently open/);
 });

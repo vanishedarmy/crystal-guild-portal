@@ -18,11 +18,11 @@ export const MAJOR_UPDATES = [
     summary: "Collect 45 cards, build your five-card deck, and climb five circuits from Starter to Crystal. Thirty new illustrated card faces complete the expanded set.",
     highlights: [
       { title: "45 cards to collect", description: "Ten starter cards and five rarities give you more ways to build a deck. The original fifteen cards remain available with their original values." },
-      { title: "Ten opponents, five circuits", description: "Beginner tables use gentler decks and visible hands. Defeat both opponents in each circuit to unlock the next; Card Hall progression is independent of MGP." },
-      { title: "Clear rewards and steady progress", description: "Matches have no MGP entry fee or payout. Wins and draws may add collectible cards; losses never remove owned cards." },
+      { title: "Ten opponents, five circuits", description: "Beginner tables use gentler decks and visible hands. Defeat both opponents in each circuit to unlock the next and earn a one-time MGP bonus." },
+      { title: "Clear rewards and steady progress", description: "Wins reward MGP and prioritize missing cards. Draws refund the entry cost, losses award participation MGP, and your cards are never taken away." },
       { title: "A complete card folio", description: "Play, Deck, Collection, Opponents, and Rules make it easier to find cards, see reward sources, and prepare for the next table." },
     ],
-    action: { tab: "card_hall", label: "Open Triple Triad" },
+    action: { tab: "gold_saucer", label: "Open Triple Triad" },
   },
   {
     version: "v1.9.4",

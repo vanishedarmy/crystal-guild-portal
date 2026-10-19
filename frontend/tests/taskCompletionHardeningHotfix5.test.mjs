@@ -8,10 +8,10 @@ const guide = read("../public/guide-body.html");
 const whatsNew = read("../src/player/whatsNewData.js");
 
 test("Fellowship guide explains broad versus source-specific task progress", () => {
-  assert.match(guide, /Any valid Bestiary monster kill can count toward a broad Monsters Defeated requirement/);
-  assert.match(guide, /normal encounters, Hunts, Ventures, Expeditions, Dungeons, and World Events/);
-  assert.match(guide, /Raid participation is optional/);
-  assert.match(guide, /Guild construction and upgrade paths are designed to be completable offline/);
+  assert.match(guide, /Broad milestones count every valid source/);
+  assert.match(guide, /Monsters defeated[\s\S]*normal encounters, Hunts, Ventures, Expeditions, Dungeons, and World Events/);
+  assert.match(guide, /Combat victories[\s\S]*Raid victories/);
+  assert.match(guide, /Hunts won, Raid clears, Ventures completed, or Expeditions completed remain specific/);
 });
 
 test("Hotfix 5 is surfaced as progress accounting hardening", () => {

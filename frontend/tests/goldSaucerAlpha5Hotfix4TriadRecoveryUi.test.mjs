@@ -15,7 +15,7 @@ const ui = ["hero","board","deck-builder","collection","collection-complete","ho
 
 test("Current build packages the complete Triple Triad art family once", () => {
   assert.ok(fs.existsSync(artRoot), "current a5h5 art family remains packaged");
-  for (const id of cards) assert.ok(fs.existsSync(path.join(root, `public/gold-saucer/rc2h1/triple-triad/cards/${id}.webp`)), `${id} current card art missing`);
+  for (const id of cards) assert.ok(fs.existsSync(path.join(artRoot, `cards/${id}.webp`)), `${id} card art missing`);
   assert.ok(fs.existsSync(path.join(artRoot, "cards/card-back.webp")));
   for (const id of opponents) assert.ok(fs.existsSync(path.join(artRoot, `opponents/${id}.webp`)), `${id} opponent art missing`);
   for (const id of ["win","draw","loss"]) assert.ok(fs.existsSync(path.join(artRoot, `results/${id}.webp`)), `${id} result art missing`);

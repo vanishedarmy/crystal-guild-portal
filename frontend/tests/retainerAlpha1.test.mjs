@@ -43,6 +43,6 @@ test("Retainer Service is documented in What's New and the Player Guide", async 
   assert.match(updates, /tab: "retainer"/);
   assert.match(guide, /id="retainer-service"/);
   assert.match(guide, /Priority material/);
-  assert.equal(guideData.meta.version, "v1.9.7 — Queen's Blood");
-  assert.equal(guideData.meta.release, "1.9.7-queens-blood");
+  assert.equal(guideData.meta.version, "v1.9.0 Alpha 13 — Trading Post QoL");
+  assert.equal(guideData.meta.release, "1.9.3-guild-initiatives");
 });

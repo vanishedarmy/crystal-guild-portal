@@ -11,8 +11,8 @@ const component = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"),
 const guide = fs.readFileSync(path.join(root, "public/guide-body.html"), "utf8");
 
 test("Gold Saucer freezes the current release identity", () => {
-  assert.equal(WEB_VERSION, "v1.9.7");
-  assert.equal(WEB_ASSET_REVISION, "1.9.7-queens-blood");
+  assert.equal(WEB_VERSION, "v1.8.2");
+  assert.equal(WEB_ASSET_REVISION, "1.8.2-elite-mercs");
   assert.match(component, /className="eyebrow">Gold Saucer/);
   assert.doesNotMatch(component, /v1\.6\.0 · Gold Saucer/);
   assert.match(guide, /Gold Saucer v1\.6\.0 freezes local DB schema <b>13<\/b> and Portal Action protocol <b>29<\/b>/);

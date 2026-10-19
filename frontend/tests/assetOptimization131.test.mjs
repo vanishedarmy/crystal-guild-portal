@@ -21,8 +21,7 @@ function walk(dir) {
 
 test("v1.3.1 ships no superseded PNG artwork", () => {
   const pngs = walk(publicRoot).filter((p) => p.toLowerCase().endsWith(".png"));
-  assert.ok(pngs.length > 0, "Raid status icons must still be installed");
-  assert.ok(pngs.every((p) => path.relative(publicRoot, p).replaceAll("\\", "/").startsWith("raid-icons/")), "Only the intentional Raid icon PNG family may remain");
+  assert.deepEqual(pngs, []);
   const webps = walk(publicRoot).filter((p) => p.toLowerCase().endsWith(".webp"));
   assert.ok(webps.length >= 572, `expected optimized WebP library, found ${webps.length}`);
 });
@@ -44,9 +43,9 @@ test("current v1.7.0 production identity is consistent everywhere relevant", () 
   const py = fs.readFileSync(path.join(webRoot, "crystal_guild", "__init__.py"), "utf8");
   const overlay = fs.readFileSync(path.join(publicRoot, "raid-overlay.html"), "utf8");
   const index = fs.readFileSync(path.join(frontend, "index.html"), "utf8");
-  assert.match(version, /1\.9\.7-queens-blood/);
-  assert.match(py, /__version__ = "1\.9\.7-queens-blood"/);
-  assert.match(overlay, /raid-overlay\.js\?v=/);
+  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(py, /__version__ = "1\.8\.2-elite-mercs"/);
+  assert.match(overlay, /1\.8\.2-elite-mercs/);
   assert.ok(!overlay.includes("1.4.0-dungeons-delves-b2"));
   assert.match(index, /type="image\/webp" href="\/crystal-guild-portal-roundel\.webp"/);
 });

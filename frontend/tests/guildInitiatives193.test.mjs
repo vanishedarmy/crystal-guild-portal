@@ -26,7 +26,6 @@ test("responsive layout and release metadata are consistent", async () => {
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(main, /guild-initiatives\.css/);
   assert.equal(JSON.parse(guide).meta.release, WEB_ASSET_REVISION);
-  assert.equal(WEB_VERSION, "v1.9.7");
-  assert.equal(MAJOR_UPDATES[0].action.tab, "card_hall");
-  assert.equal(MAJOR_UPDATES.find((entry) => entry.version === "v1.9.3")?.action.tab, "guild_board");
+  assert.equal(WEB_VERSION, "v1.9.3");
+  assert.equal(MAJOR_UPDATES[0].action.tab, "guild_board");
 });

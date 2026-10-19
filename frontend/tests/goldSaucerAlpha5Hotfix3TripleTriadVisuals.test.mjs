@@ -13,7 +13,7 @@ const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","a
 const opponents = ["saucer_attendant","card_shark","crystal_master"];
 
 test("Hotfix 3 packages the full Triple Triad visual family", () => {
-  for (const id of cards) assert.ok(fs.existsSync(path.join(root, `public/gold-saucer/rc2h1/triple-triad/cards/${id}.webp`)), `${id} current card art missing`);
+  for (const id of cards) assert.ok(fs.existsSync(path.join(artRoot, `cards/${id}.webp`)), `${id} art missing`);
   assert.ok(fs.existsSync(path.join(artRoot, "cards/card-back.webp")));
   for (const id of opponents) assert.ok(fs.existsSync(path.join(artRoot, `opponents/${id}.webp`)), `${id} opponent art missing`);
   for (const id of ["win","draw","loss"]) assert.ok(fs.existsSync(path.join(artRoot, `results/${id}.webp`)));
@@ -32,9 +32,9 @@ test("Triple Triad keeps authoritative values accessible while the full card fac
 });
 
 test("Triple Triad artwork UI remains responsive and retains H2 collapse behavior", () => {
-  assert.match(css, /\.triad-board\{/);
-  assert.match(component, /tt-opponent-deck/);
+  assert.match(css, /\.triad-hero\{/);
+  assert.match(css, /\.triad-opponent-art/);
   assert.match(css, /@media\(max-width:540px\)/);
   assert.match(component, /<details className="panel saucer-triad-panel saucer-section-disclosure/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
 });

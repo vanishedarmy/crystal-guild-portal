@@ -26,8 +26,7 @@ test("level-oriented Portal lists use the intended sort direction", async () => 
   assert.match(hunts, /\.sort\(compareByLevel\)/);
   assert.match(hunts, /regions = \[\.\.\.\(state\?\.regions \|\| \[\]\)\]\.sort/);
   assert.match(shop, /sort\(compareShopItems\)/);
-  assert.match(blacksmith, /CraftingWorkbench/);
-  assert.match(shop, /shopLevel\(left\) - shopLevel\(right\)/);
+  assert.match(blacksmith, /a\.min_level - b\.min_level/);
 });
 
 test("Player Guide level catalogs use ascending level order", async () => {
@@ -59,6 +58,6 @@ test("Streamer Dashboard exposes the hosted OBS overlay and shared roundel", asy
   assert.match(overlay, /prefers-reduced-motion/);
   assert.match(overlayJs, /renderLeaders/);
   assert.match(overlayJs, /classList\.toggle\('critical'/);
-  assert.match(overlayJs, /renderLeaders/);
-  assert.match(overlayJs, /!s\.active&&!outcomeVisible\(s\)/);
+  assert.match(overlayJs, /Victory/);
+  assert.match(overlayJs, /if\(!s\.active\)\{hide\(\);return\}/);
 });

@@ -9,8 +9,8 @@ test("Expeditions preserves the Beta 2 UX consolidation", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
   const guide = await readFile(new URL("guide-body.html", PUBLIC), "utf8");
-  assert.match(version, /WEB_BUILD = "Queen.s Blood"/);
-  assert.match(version, /1\.9\.7-queens-blood/);
+  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
+  assert.match(version, /1\.8\.2-elite-mercs/);
   assert.match(news, /name: "Expeditions"/);
   assert.match(news, /Journeys stay saved/);
   assert.doesNotMatch(guide, /Beta 2 Portal Consolidation/);

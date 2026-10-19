@@ -4,8 +4,8 @@ import fs from 'node:fs';
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 
 test('current release version and deployed asset revision are consistent', () => {
-  assert.match(read('../src/version.js'), /1\.9\.7-queens-blood/);
-  assert.match(read('../package.json'), /"version": "1\.9\.7"/);
+  assert.match(read('../src/version.js'), /1\.9\.3-guild-initiatives/);
+  assert.match(read('../package.json'), /"version": "1\.9\.3"/);
 });
 
 test('shop state browsing does not require buy and sell permissions', () => {

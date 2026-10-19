@@ -25,7 +25,7 @@ test("Beta 3 player-facing copy documents shared-state and timer hardening",()=>
 
 test("Beta 3 features remain under RC1 runtime identity",()=>{
   const version=read("src/version.js"), manifest=read("../UI_SHARED_ASSET_MANIFEST.json");
-  assert.match(version,/Queen's Blood/);
-  assert.match(version,/1\.9\.7-queens-blood/);
+  assert.match(version,/Elite Mercs/);
+  assert.match(version,/1\.8\.2-elite-mercs/);
   assert.match(manifest,/v1\.5\.1 — Relic Arsenal Complete/);
 });

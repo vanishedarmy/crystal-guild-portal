@@ -35,11 +35,11 @@ test("Alpha 4 hosted OBS overlay understands Titan mechanic kinds", () => {
   const html=read("public/raid-overlay.html");
   const js=read("public/raid-overlay.js");
   for (const term of ["knockback","restraint","heart_check"]) {
-    assert.match(html, /id="mechanic"/);
+    assert.match(html,new RegExp(term));
     assert.match(js,new RegExp(term));
   }
-  assert.match(js,/restraint/);
-  assert.match(js,/knockback/);
+  assert.match(js,/RESCUE/);
+  assert.match(js,/DEFEND/);
 });
 
 test("Alpha 5 carries forward Titan and the collapsible Raid Board", () => {

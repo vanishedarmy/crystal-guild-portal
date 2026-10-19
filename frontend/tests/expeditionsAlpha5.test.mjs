@@ -12,8 +12,7 @@ test("Expeditions Alpha 5 exposes Chocobo specialties, accomplishments, and comp
   assert.match(expedition, /Chocobo Expedition Specialty/);
   assert.match(expedition, /STIPEND_SEALS/);
   assert.match(expedition, /Guild stipend/);
-  assert.match(stable, /Bond Specialty/);
-  assert.match(stable, /chocobo-specialization-panel/);
+  assert.match(stable, /Expedition Specialty/);
   assert.match(stable, /chocobo-expedition-records/);
   assert.match(stable, /Legendary/);
   assert.match(guide, /Chocobo Specialization &amp; Guild Stipends/);

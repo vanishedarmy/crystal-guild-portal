@@ -1,4 +1,3 @@
-from contextlib import closing
 import copy
 import json
 import sqlite3
@@ -35,7 +34,7 @@ class CollectionTests(unittest.TestCase):
     def finish_fixture(self, opponent, winner=0):
         # A prepared final-turn position tests settlement through the real endpoint contract.
         response = self.command({"kind": "start", "mode": "circuit", "opponent": opponent})
-        with closing(sqlite3.connect(self.path)) as conn, conn:
+        with sqlite3.connect(self.path) as conn:
             state = json.loads(conn.execute("SELECT state_json FROM qb_matches WHERE player_id='1'").fetchone()[0])
             state.update(phase="play", hands=[[], []], decks=[[], []])
             if winner is not None: state["board"][1][0 if winner == 0 else 4].update(owner=winner, card="QB001")
@@ -78,11 +77,11 @@ class CollectionTests(unittest.TestCase):
 
     def test_active_match_keeps_original_deck_and_catalog(self):
         self.command({"kind": "start", "mode": "practice"})
-        with closing(sqlite3.connect(self.path)) as conn, conn:
+        with sqlite3.connect(self.path) as conn:
             original = json.loads(conn.execute("SELECT state_json FROM qb_matches WHERE player_id='1'").fetchone()[0])
         deck = list(STARTER); deck[-1] = "QB011"
         self.save(deck, "Edited during match")
-        with closing(sqlite3.connect(self.path)) as conn, conn:
+        with sqlite3.connect(self.path) as conn:
             current = json.loads(conn.execute("SELECT state_json FROM qb_matches WHERE player_id='1'").fetchone()[0])
         self.assertEqual(original["hands"], current["hands"])
         self.assertEqual(original["decks"], current["decks"])
@@ -91,14 +90,14 @@ class CollectionTests(unittest.TestCase):
 
     def test_legacy_qb1_match_and_text_request_survive(self):
         state = new_match(); state.pop("card_snapshot"); state.pop("catalog_revision")
-        with closing(sqlite3.connect(self.path)) as conn, conn:
+        with sqlite3.connect(self.path) as conn:
             conn.execute("INSERT INTO qb_matches VALUES (?,?,?)", ("1", json.dumps(state), 1))
             payload = {"match_id": state["id"], "revision": 0, "action": {"kind": "mulligan", "indices": []}}
         response = self.store.submit("1", "legacy-open-key", payload)
         self.assertEqual(response["match"]["catalog_revision"], 1)
         self.assertEqual(len(response["match_cards"]), len(LEGACY_CARDS))
         # Legacy cached responses were TEXT; modern responses are compressed BLOBs.
-        with closing(sqlite3.connect(self.path)) as conn, conn:
+        with sqlite3.connect(self.path) as conn:
             conn.execute("UPDATE qb_requests SET response_json=?", (json.dumps(response),))
         self.assertEqual(self.store.submit("1", "legacy-open-key", payload), response)
 

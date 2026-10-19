@@ -3,12 +3,10 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const blacksmith = fs.readFileSync(new URL('../src/player/Blacksmith.jsx', import.meta.url), 'utf8');
-const crafting = fs.readFileSync(new URL('../src/player/CraftingWorkbench.jsx', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../src/styles/portal.css', import.meta.url), 'utf8');
 
 test('recipe grid has a dedicated compactness hook without changing forge grids', () => {
-  assert.match(blacksmith, /<CraftingWorkbench/);
-  assert.match(crafting, /aria-labelledby="blacksmith-tab-recipes"/);
+  assert.match(blacksmith, /className="blacksmith-grid blacksmith-recipe-grid"[\s\S]*aria-labelledby="blacksmith-tab-recipes"/);
   assert.match(css, /\.blacksmith-recipe-grid \.blacksmith-card \{[\s\S]*padding: 10px;[\s\S]*gap: 6px;/);
 });
 

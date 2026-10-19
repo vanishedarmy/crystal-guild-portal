@@ -47,9 +47,8 @@ test("Stream Venture uses a real DOM image layer rather than a CSS background UR
   assert.doesNotMatch(read("src/styles/environment-pass.css"), /rally_venture\.webp/);
 });
 
-test("only required legacy raid-overlay PNGs remain in public tree", () => {
+test("public tree remains PNG-free after UI4", () => {
   const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? walk(path.join(dir, entry.name)) : [path.join(dir, entry.name)]);
   const png = walk(path.join(root, "public")).filter((p) => p.toLowerCase().endsWith(".png"));
-  assert.ok(png.length > 0, "legacy Raid overlay PNGs must remain present");
-  assert.ok(png.every((p) => p.includes(`${path.sep}raid-icons${path.sep}`)), "non-Raid PNG should use optimized WebP");
+  assert.equal(png.length, 0);
 });

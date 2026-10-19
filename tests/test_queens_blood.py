@@ -1,5 +1,4 @@
 from __future__ import annotations
-from contextlib import closing
 
 import copy
 import json
@@ -242,7 +241,7 @@ class StoreTests(unittest.TestCase):
         a = self.start()
         with self.assertRaises(RuleError): self.store.submit("1", "invalid-key", self.command(a, {"kind": "play", "hand": 0, "row": 0, "col": 0}))
         self.assertEqual(self.store.get("1")["match"], a["match"])
-        with closing(sqlite3.connect(self.path)) as c, c:
+        with sqlite3.connect(self.path) as c:
             self.assertEqual(c.execute("SELECT count(*) FROM qb_requests").fetchone()[0], 1)
 
 

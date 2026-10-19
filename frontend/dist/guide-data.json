@@ -25089,7 +25089,7 @@
     }
   ],
   "meta": {
-    "version": "v1.9.7 \u2014 Queen's Blood",
+    "version": "v1.9.6 \u2014 Triple Triad Expanded",
     "venture_cooldown": 600,
     "encounter_rally": 60,
     "camp_rest": 3600,
@@ -25104,7 +25104,7 @@
     "solo_venture_encounter_chance": 80,
     "solo_venture_treasure_chance": 20,
     "solo_venture_max_stages": 3,
-    "release": "1.9.7-queens-blood",
+    "release": "1.9.6-triple-triad-expanded",
     "camp_rest_online": 900,
     "camp_rest_offline": 3600
   },

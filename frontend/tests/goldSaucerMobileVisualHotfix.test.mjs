@@ -20,5 +20,5 @@ test("Gold Saucer hero stacks cleanly at the established mobile breakpoint", () 
 });
 
 test("Hotfix 3 remains carried forward under the current Web asset revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.4\.7-triple-triad-rework"/);
 });

@@ -110,7 +110,7 @@ export function formatItemUse(use = {}) {
     .filter((effect) => !fullResources.has(String(effect?.type || "").toLowerCase()))
     .map((effect) => formatItemEffect(effect))
     .filter(Boolean);
-  return ["Restores All Stats", ...remaining].join(" · ");
+  return ["Fully restores HP and applicable MP/AP", ...remaining].join(" · ");
 }
 
 // Battle inventory ordering is purpose-first so emergency/recovery tools are

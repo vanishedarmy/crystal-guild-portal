@@ -5,8 +5,9 @@ WORKDIR /build/frontend
 COPY frontend/package*.json frontend/.npmrc ./
 # Resolve the pinned platform-native Vite/Rolldown dependencies in this Linux build.
 RUN npm ci --include=dev --no-audit --no-fund
+COPY ARTWORK_V197_CHECKSUMS.json /build/ARTWORK_V197_CHECKSUMS.json
 COPY frontend/ ./
-RUN npm run build
+RUN node scripts/verify-artwork-assets.mjs --source && npm run build && node scripts/verify-artwork-assets.mjs --dist
 
 FROM python:3.12-slim
 

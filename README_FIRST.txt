@@ -1,3 +1,11 @@
+WEB-ONLY CONSOLIDATED RELEASE (v1.9.7)
+======================================
+This archive contains a single complete Web/ directory; Bot is NOT included.
+For extraction, deploy steps, and the full-artwork verification commands,
+read README_COMPLETE_WEB_BUILD.md first.
+
+--- Historical v1.9.7 paired-release notes follow ---
+
 # Crystal Guild v1.9.7 — Queen’s Blood
 
 This is the complete Bot + Web release. It includes all 48 approved Queen’s Blood portraits, the solo circuit, live invitations, correspondence duels, and the prebuilt frontend.

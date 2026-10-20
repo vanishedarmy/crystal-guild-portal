@@ -1,0 +1,11 @@
+{
+  "VERSION.txt": "123bc12f861269e40fd73a346d299a6a2191da587089c1c4be805ef22f519793",
+  "Dockerfile": "6da4610f8d73d7edb4014d50fffdb046b576f7c6b8f95b4e5c07e5adf8859d0b",
+  "Dockerfile.prebuilt": "9b497ad001992c2927a7dce366fe1e11afb2e766557c61f640c9b71524829ec3",
+  "Dockerfile.prebuilt.dockerignore": "c4058bd351767a58e79e5a696095ad0820e8f88f3033d354ade9593b2000965b",
+  "ARTWORK_V197_CHECKSUMS.json": "f3b71fd413f3804404c9697accbb7e147c613d6d3be3eb6da35e52b32ea2a18b",
+  "frontend/dist/index.html": "a91e9af5ba305515b8760004533af041789286ec78414f9c40a0be1e3d1814be",
+  "frontend/public/guide-body.html": "e449ab010d93b914438fe9f7d59391ecd1a6e24d158faf951f2c90389bf68c16",
+  "frontend/dist/guide-body.html": "e449ab010d93b914438fe9f7d59391ecd1a6e24d158faf951f2c90389bf68c16",
+  "frontend/vite.config.js": "2c067ad1357047ec30af37d41a3ee497f27b98adf900b5ce0c9daa358b0b6354"
+}

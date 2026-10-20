@@ -8,8 +8,8 @@ const PUBLIC = new URL("../public/", import.meta.url);
 test("Expeditions carries forward Beta 4 hardening in player-facing language", async () => {
   const version = await readFile(new URL("version.js", SRC), "utf8");
   const news = await readFile(new URL("player/whatsNewData.js", SRC), "utf8");
-  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
-  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(version, /WEB_BUILD = "Queen.s Blood"/);
+  assert.match(version, /1\.9\.7-queens-blood/);
   assert.match(news, /Journeys stay saved/);
   assert.match(news, /Active Expeditions keep their current stage/);
   const previous = news.slice(news.indexOf('name: "Asset Optimization"'));
@@ -29,7 +29,7 @@ test("Player Guide is player-facing and omits release-engineering jargon", async
 
 test("Guide release metadata matches authoritative H9+ combat timings", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.release, "1.9.3-guild-initiatives");
+  assert.equal(data.meta.release, "1.9.6-triple-triad-expanded");
   assert.equal(data.meta.encounter_rally, 60);
   assert.equal(data.meta.encounter_round, 30);
   assert.equal(data.meta.raid_rally, 90);

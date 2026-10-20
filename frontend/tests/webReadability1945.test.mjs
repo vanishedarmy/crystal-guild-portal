@@ -64,10 +64,10 @@ test('Raid Command remains 4:3, adds legible labels and can show two warning lin
 test('Web version and package metadata describe this incremental pass consistently',()=>{
   const pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
   const lock=JSON.parse(fs.readFileSync(path.join(root,'package-lock.json'),'utf8'));
-  assert.equal(WEB_VERSION,'v1.9.4.7');
-  assert.equal(WEB_BUILD,'Portal Usability Overhaul');
-  assert.equal(WEB_ASSET_REVISION,'1.9.4.7-triple-triad-rework');
-  assert.equal(pkg.version,'1.9.4.7');
-  assert.equal(lock.version,'1.9.4.7');
-  assert.equal(lock.packages[''].version,'1.9.4.7');
+  assert.equal(WEB_VERSION,"v1.9.7");
+  assert.equal(WEB_BUILD,"Queen's Blood");
+  assert.equal(WEB_ASSET_REVISION,"1.9.7-queens-blood");
+  assert.equal(pkg.version,'1.9.7');
+  assert.equal(lock.version,'1.9.7');
+  assert.equal(lock.packages[''].version,'1.9.7');
 });

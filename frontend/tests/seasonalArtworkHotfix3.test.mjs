@@ -46,12 +46,13 @@ test("seasonal cards contain the complete illustration, not a clipped sprite-she
   assert.match(seasonal, /wardenDiscovered \? event\.world_event\.art : \(event\.world_event\.locked_art/);
 });
 
-test("all support banners, Moonlit Token, and four stand-alone backgrounds are wired", () => {
+test("active seasonal banners, token art, and four scenery illustrations are wired", () => {
   const seasonal = fs.readFileSync(path.join(frontend, "src/player/SeasonalEvent.jsx"), "utf8");
-  for (const image of [...groups.banners.filter((name) => name !== "event-banner"), ...groups.places, "moonlit-token"]) {
+  for (const image of ["seasonal-header", "emporium-header", ...groups.places, "moonlit-token"]) {
     assert.ok(seasonal.includes(`${image}.webp`), `${image} not rendered`);
   }
+  assert.ok(fs.existsSync(path.join(root, "bestiary-header.webp")), "optional bestiary banner is packaged");
   assert.match(seasonal, /event\.art\?\.banner/);
-  assert.match(seasonal, /<details className="seasonal-scenery-details">/);
+  assert.match(seasonal, /seasonal-scenery-panel/);
   assert.match(seasonal, /reward\.owned && !reward\.repeatable/);
 });

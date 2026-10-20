@@ -24,7 +24,7 @@ test("Beta 3 identity is exposed by the Dungeon Board and frontend revision", ()
   const board = read("src/player/Dungeons.jsx");
   const version = read("src/version.js");
   assert.match(board, /Dungeons &amp; Delves/);
-  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(version, /1\.9\.7-queens-blood/);
 });
 
 

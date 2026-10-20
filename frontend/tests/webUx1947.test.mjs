@@ -73,10 +73,10 @@ test("Player Guide slash shortcut, escape clear, empty results, and reading-posi
 test("Web metadata identifies the usability release", () => {
   const pkg = JSON.parse(read("package.json"));
   const lock = JSON.parse(read("package-lock.json"));
-  assert.equal(WEB_VERSION, "v1.9.4.7");
-  assert.equal(WEB_BUILD, "Portal Usability Overhaul");
-  assert.equal(WEB_ASSET_REVISION, "1.9.4.7-triple-triad-rework");
-  assert.equal(pkg.version, "1.9.4.7");
-  assert.equal(lock.version, "1.9.4.7");
-  assert.equal(lock.packages[""].version, "1.9.4.7");
+  assert.equal(WEB_VERSION, "v1.9.7");
+  assert.equal(WEB_BUILD, "Queen's Blood");
+  assert.equal(WEB_ASSET_REVISION, "1.9.7-queens-blood");
+  assert.equal(pkg.version, "1.9.7");
+  assert.equal(lock.version, "1.9.7");
+  assert.equal(lock.packages[""].version, "1.9.7");
 });

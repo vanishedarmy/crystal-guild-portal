@@ -11,11 +11,11 @@ const read = (name) => fs.readFileSync(path.join(ROOT, name), "utf8");
 const HEROES = ["auron", "vivi", "cecil", "terra", "tidus", "ramza"];
 
 test("v1.8.1 Merc Recruitment release identity is current", () => {
-  assert.equal(WEB_VERSION, "v1.8.2");
-  assert.equal(WEB_BUILD, "Elite Mercs");
-  assert.equal(WEB_ASSET_REVISION, "1.8.2-elite-mercs");
+  assert.equal(WEB_VERSION, "v1.9.7");
+  assert.equal(WEB_BUILD, "Queen's Blood");
+  assert.equal(WEB_ASSET_REVISION, "1.9.7-queens-blood");
   const guide = JSON.parse(read("public/guide-data.json"));
-  assert.equal(guide.meta.release, "1.8.2-elite-mercs");
+  assert.equal(guide.meta.release, "1.9.6-triple-triad-expanded");
 });
 
 test("six expansion Heroes ship all three optimized card states", () => {

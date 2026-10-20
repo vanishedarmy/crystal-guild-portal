@@ -5,8 +5,10 @@ import fs from "node:fs";
 const shop = fs.readFileSync(new URL("../src/player/MoogleEmporium.jsx", import.meta.url), "utf8");
 const fellowship = fs.readFileSync(new URL("../src/pages/FellowshipPage.jsx", import.meta.url), "utf8");
 
-test("Moogle Annex exposes fixed category stock bonuses", () => {
-  assert.match(shop, /annexUnlocked \? 21 : 9/);
-  assert.match(shop, /\+2 Weapons · \+4 Armor & Accessories · \+6 Items/);
-  assert.match(fellowship, /\+2 Weapons, \+4 Armor & Accessories, \+6 Items per rotation/);
+test("Moogle Annex now discounts regional prices without changing authoritative stock slots", () => {
+  assert.match(shop, /const stockSlots = Number\(shop\?\.stock_slots \|\| 12\)/);
+  assert.match(shop, /annexUnlocked && regionalModel/);
+  assert.match(shop, /10% off regional counter purchases/);
+  assert.match(fellowship, /emporium_annex\?\.purchase_discount/);
+  assert.doesNotMatch(shop, /annexUnlocked \? 21 : 9/);
 });

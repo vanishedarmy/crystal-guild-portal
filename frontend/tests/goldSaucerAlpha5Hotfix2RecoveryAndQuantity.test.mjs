@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const saucer = fs.readFileSync(path.join(root, "src/player/TripleTriad.jsx"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/player/GoldSaucer.jsx"), "utf8");
 const emporium = fs.readFileSync(path.join(root, "src/player/MoogleEmporium.jsx"), "utf8");
-const blacksmith = fs.readFileSync(path.join(root, "src/player/Blacksmith.jsx"), "utf8");
+const crafting = fs.readFileSync(path.join(root, "src/player/CraftingWorkbench.jsx"), "utf8");
 const fellowship = fs.readFileSync(path.join(root, "src/player/Fellowship.jsx"), "utf8");
 const quantity = fs.readFileSync(path.join(root, "src/utils/quantityInput.js"), "utf8");
 const boundary = fs.readFileSync(path.join(root, "src/components/SectionErrorBoundary.jsx"), "utf8");
@@ -39,7 +39,7 @@ test("Alpha 5 Hotfix 2 quantity entry replaces the starter one instead of append
   assert.match(emporium, /inputMode="numeric"/);
   assert.match(emporium, /onFocus=\{\(\) => beginQuantityEdit\(setBuyQty, buyQty, item\.id\)\}/);
   assert.match(emporium, /onFocus=\{\(\) => beginQuantityEdit\(setSellQty, sellQty, item\.id\)\}/);
-  assert.match(blacksmith, /onFocus=\{\(\) => beginQuantityEdit\(setQuantities, quantities, recipe\.id\)\}/);
+  assert.match(crafting, /onFocus=\{\(\) => beginQuantityEdit\(setQuantities, quantities, selected\.id\)\}/);
   assert.match(fellowship, /onFocus=\{\(\) => beginQuantityEdit\(setWorkshopBatches, workshopBatches, exchange\.id\)\}/);
 });
 
@@ -51,6 +51,6 @@ test("Alpha 5 Hotfix 2 error boundary is retryable and logs the captured excepti
 });
 
 test("Alpha 5 Hotfix 2 advances only the frontend cache revision", () => {
-  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
-  assert.match(version, /WEB_VERSION = "v1\.8\.2"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
+  assert.match(version, /WEB_VERSION = "v1\.9\.7"/);
 });

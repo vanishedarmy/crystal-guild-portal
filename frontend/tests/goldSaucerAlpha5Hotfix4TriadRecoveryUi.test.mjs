@@ -9,13 +9,21 @@ const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
 const pointer = fs.readFileSync(path.join(root, "src/components/CollapsePointer.jsx"), "utf8");
 const artRoot = path.join(root, "public/gold-saucer/a5h5/triple-triad");
 
+const catalog = JSON.parse(fs.readFileSync(path.join(root, "../crystal_guild/triple_triad_catalog.json"), "utf8"));
 const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","ahriman","malboro","ifrit","shiva","ramuh","leviathan","bahamut","odin"];
 const opponents = ["saucer_attendant","card_shark","crystal_master"];
 const ui = ["hero","board","deck-builder","collection","collection-complete","how-to-play","match-start","new-card","deck-saved","crystal-master-locked","opponents"];
 
-test("Current build packages the complete Triple Triad art family once", () => {
-  assert.ok(fs.existsSync(artRoot), "current a5h5 art family remains packaged");
-  for (const id of cards) assert.ok(fs.existsSync(path.join(artRoot, `cards/${id}.webp`)), `${id} card art missing`);
+test("Current build resolves the complete 45-card catalogue across its two art libraries", () => {
+  assert.equal(catalog.cards.length, 45);
+  assert.equal(new Set(catalog.cards.map((c) => c.id)).size, 45);
+  for (const card of catalog.cards) {
+    const artFile = path.join(root, "public", card.art);
+    assert.ok(fs.existsSync(artFile), `${card.id} card art missing`);
+    const bytes = fs.readFileSync(artFile);
+    assert.equal(bytes.toString("ascii", 0, 4), "RIFF", card.id);
+    assert.equal(bytes.toString("ascii", 8, 12), "WEBP", card.id);
+  }
   assert.ok(fs.existsSync(path.join(artRoot, "cards/card-back.webp")));
   for (const id of opponents) assert.ok(fs.existsSync(path.join(artRoot, `opponents/${id}.webp`)), `${id} opponent art missing`);
   for (const id of ["win","draw","loss"]) assert.ok(fs.existsSync(path.join(artRoot, `results/${id}.webp`)), `${id} result art missing`);

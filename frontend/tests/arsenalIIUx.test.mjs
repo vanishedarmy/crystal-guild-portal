@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 test("Arsenal II publishes the expanded ability curve to the shared Guide catalog", async () => {
   const data = JSON.parse(await readFile(new URL("guide-data.json", PUBLIC), "utf8"));
-  assert.equal(data.meta.version, "v1.9.0 Alpha 13 — Trading Post QoL");
+  assert.equal(data.meta.version, "v1.9.6 — Triple Triad Expanded");
   assert.equal(data.active_abilities.blackmage.length, 12);
   assert.equal(data.active_abilities.whitemage.length, 12);
   assert.equal(data.active_abilities.warrior.length, 8);
@@ -18,7 +18,7 @@ test("Moogle Emporium separates Buy and Sell into Weapons Armor and Items", asyn
   const source = await readFile(new URL("player/MoogleEmporium.jsx", SRC), "utf8");
   assert.match(source, /moogle-commerce-tabs/);
   assert.match(source, /moogle-category-tabs/);
-  assert.match(source, /\[\["weapons", "Weapons"\], \["armor", "Armor"\], \["items", "Items"\]\]/);
+  assert.match(source, /\["armor", "Armor & Accessories"\], \["items", "Supplies"\]/);
   assert.match(source, /mode === "buy"/);
   assert.match(source, /mode === "sell"/);
 });
@@ -28,7 +28,7 @@ test("Blacksmith has a clear Recipes Forge Gear switch without redundant active 
   assert.match(source, /blacksmith-view-switch/);
   assert.match(source, /aria-selected=\{view === "recipes"\}/);
   assert.match(source, /aria-selected=\{view === "forge"\}/);
-  assert.match(source, /<small>Craft items<\/small>/);
+  assert.match(source, /<small>Items and equipment<\/small>/);
   assert.match(source, /<small>Upgrade equipment<\/small>/);
   assert.doesNotMatch(source, /Active · (?:Craft items|Upgrade equipment)/);
 });
@@ -66,6 +66,6 @@ test("Player Guide release identity comes from the shared header and uses Expedi
   assert.doesNotMatch(guide, /Cloud Continuity/);
   assert.doesNotMatch(guide, /guide-build-badge|versionTop|buildTop/);
   assert.match(guidePage, /SiteHeader/);
-  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
-  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(version, /WEB_BUILD = "Queen.s Blood"/);
+  assert.match(version, /1\.9\.7-queens-blood/);
 });

@@ -6,9 +6,9 @@ const read = (path) => fs.readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("Alpha 5 publishes Title Status Hardening as the current web identity", () => {
   const version = read("../src/version.js");
-  assert.match(version, /WEB_VERSION = "v1\.9\.0 Alpha 12"/);
-  assert.match(version, /WEB_BUILD = "Mobile Combat HUD"/);
-  assert.match(version, /1\.9\.0-camp-recovery-alpha12/);
+  assert.match(version, /WEB_VERSION = "v1\.9\.7"/);
+  assert.match(version, /WEB_BUILD = "Queen.s Blood"/);
+  assert.match(version, /1\.9\.7-queens-blood/);
 });
 
 test("Achievement cards use authoritative unlocked state rather than current progress", () => {

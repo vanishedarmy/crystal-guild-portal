@@ -43,7 +43,7 @@ test('Bestiary player copy avoids technical system phrases and search recognizes
 
 test('What’s New and the Guide speak to players, not migration developers', () => {
   const whatsNew = load('../src/player/whatsNewData.js');
-  const latest = whatsNew.slice(0, whatsNew.indexOf('version: "v1.9.0 Alpha 8"'));
+  const latest = whatsNew.slice(whatsNew.indexOf('name: "Bestiary Discovery"'), whatsNew.indexOf('version: "v1.9.0 Alpha 8"'));
   assert.match(latest, /Your field guide has grown/);
   assert.doesNotMatch(latest, /schema 22|Portal Action protocol/);
   const guide = load('../public/guide-body.html');

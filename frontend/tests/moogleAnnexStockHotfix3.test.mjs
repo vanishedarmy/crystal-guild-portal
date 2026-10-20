@@ -4,12 +4,13 @@ import { readFile } from "node:fs/promises";
 
 const SRC = new URL("../src/", import.meta.url);
 
-test("Moogle Annex stock contract follows the current fixed category expansion", async () => {
+test("Moogle counter uses Bot-provided regional stock and Guild price discount", async () => {
   const shop = await readFile(new URL("player/MoogleEmporium.jsx", SRC), "utf8");
   const fellowship = await readFile(new URL("pages/FellowshipPage.jsx", SRC), "utf8");
-  assert.match(shop, /annexUnlocked \? 21 : 9/);
-  assert.match(shop, /Fixed Annex stock bonus: \+2 Weapons · \+4 Armor & Accessories · \+6 Items/);
-  assert.match(shop, /Construct the Annex to add \+2 Weapons, \+4 Armor & Accessories, and \+6 Items/);
-  assert.match(fellowship, /\+2 Weapons, \+4 Armor & Accessories, \+6 Items per rotation/);
-  assert.match(fellowship, /fixed \+2 Weapons, \+4 Armor & Accessories, \+6 Items stock bonuses/);
+  const guide = await readFile(new URL("guide-body.html", new URL("../public/", import.meta.url)), "utf8");
+  assert.match(shop, /const stockSlots = Number\(shop\?\.stock_slots \|\| 12\)/);
+  assert.match(shop, /displayedStock\.length/);
+  assert.match(shop, /discount/);
+  assert.match(fellowship, /Construction grants 10% off every regional counter/);
+  assert.match(guide, /stock capacity depends on the region/);
 });

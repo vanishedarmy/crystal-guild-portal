@@ -26,7 +26,7 @@ test("Dungeons Beta 2 has narrow-screen Dungeon layouts", () => {
 });
 
 test("Dungeons Beta 2 advances only Web identity and player-facing guidance", () => {
-  assert.match(version, /1\.8\.2-elite-mercs/);
+  assert.match(version, /1\.9\.7-queens-blood/);
   assert.match(news, /Dungeons & Delves/);
   assert.match(news, /Dungeons & Delves has arrived/);
   assert.match(guide, /Reading an active delve/);

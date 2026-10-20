@@ -38,7 +38,7 @@ test("formats Portal consumable effects into player-readable summaries", () => {
       { type: "restore_mp", fraction: 1 },
       { type: "restore_ap", fraction: 1 },
     ] }),
-    "Restores All Stats",
+    "Fully restores HP and applicable MP/AP",
   );
 });
 

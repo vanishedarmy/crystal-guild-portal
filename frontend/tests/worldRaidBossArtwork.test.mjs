@@ -23,5 +23,5 @@ test("boss artwork is wired into guide, portal records, detail dialog, and OBS o
   assert.match(read("src/player/Records.jsx"), /BossArtwork boss=\{boss\}/);
   assert.match(read("src/components/DetailDialog.jsx"), /detail-boss-artwork/);
   assert.match(read("public/raid-overlay.js"), /bossArtPath/);
-  assert.match(read("public/raid-overlay.html"), /--boss-art/);
+  assert.match(read("public/raid-overlay.html"), /id="boss-art"/);
 });

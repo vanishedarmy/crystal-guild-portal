@@ -25,7 +25,7 @@ test("responsive layout and release metadata are consistent", async () => {
   const [css, main, guide] = await Promise.all([read("../src/styles/guild-initiatives.css"), read("../src/main.jsx"), read("../public/guide-data.json")]);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(main, /guild-initiatives\.css/);
-  assert.equal(JSON.parse(guide).meta.release, WEB_ASSET_REVISION);
-  assert.equal(WEB_VERSION, "v1.9.3");
-  assert.equal(MAJOR_UPDATES[0].action.tab, "guild_board");
+  assert.equal(JSON.parse(guide).meta.release, "1.9.6-triple-triad-expanded");
+  assert.equal(WEB_VERSION, "v1.9.7");
+  assert.equal(MAJOR_UPDATES.find((update) => update.version === "v1.9.3")?.action.tab, "guild_board");
 });

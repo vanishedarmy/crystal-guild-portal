@@ -11,10 +11,14 @@ test("Economy Balance Alpha 2 remains in the release history", () => {
   assert.match(whatsNew, /A fairer economy without turning progression into a grind/);
 });
 
-test("Trading Post Level 1 copy uses Ventures rather than late-game Expeditions", () => {
+test("historical Trading Post gate used Ventures; current Trading Post is open with Guild perks", () => {
+  const news = read("../src/player/whatsNewData.js");
   const emporium = read("../src/player/MoogleEmporium.jsx");
-  assert.match(emporium, /25,000 Gil · 3 Mythril Ore · 15 Ventures/);
-  assert.doesNotMatch(emporium, /25,000 Gil · 3 Mythril Ore · 15 Expeditions/);
+  const guide = read("../public/guide-body.html");
+  assert.match(news, /15 completed Ventures instead of Expeditions/);
+  assert.match(emporium, /The market starts open with 2% listing fees, 5% sale tax, and 6 active listings/);
+  assert.match(guide, /The Moogle Trading Post is open to players before construction/);
+  assert.doesNotMatch(guide, /Fellowship Level 1 service built with 25,000 Gil/);
 });
 
 test("Economy Balance guidance exposes the Monster Toss payout buff", () => {

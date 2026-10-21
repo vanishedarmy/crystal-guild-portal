@@ -165,7 +165,7 @@ export default function FellowshipPage() {
 
             <div className="fellowship-summary-grid fellowship-priority-grid" aria-label="Current Guild priorities">
               <div className={`fellowship-summary ${data.active_project ? "active" : "idle"}`}><span>Current Project</span><strong>{data.active_project?.name || "Awaiting Selection"}</strong><small>{data.active_project ? `${number((data.active_project.requirements || []).filter((item) => !item.complete).length)} goals remaining` : "The streamer can choose the next unlocked project"}</small></div>
-              <div className={`fellowship-summary ${data.airship?.active_mission ? "active" : ""}`}><span>Guild Airship</span><strong>{data.airship?.built ? (data.airship?.active_mission ? data.airship.active_mission.name : "Ready") : "Building"}</strong><small>{data.airship?.active_mission ? `${number(data.airship.active_mission.progress)} / ${number(data.airship.active_mission.target)} mission progress` : data.airship?.built ? `${number(data.airship?.missions_completed)} missions completed` : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</small></div>
+              <div className={`fellowship-summary ${data.airship?.active_mission ? "active" : ""}`}><span>Guild Airship</span><strong>{data.airship?.built ? (data.airship?.active_mission ? data.airship.active_mission.name : "Ready") : "Building"}</strong><small>{data.airship?.active_mission ? "Legacy mission returning" : data.airship?.built ? "Personal sky expeditions unlocked" : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</small></div>
               <div className="fellowship-summary"><span>Weekly Orders</span><strong>{number(data.orders?.completed)} / {number(data.orders?.total)} Complete</strong><small>{(data.orders?.orders || []).find((order) => !order.complete)?.name || "Weekly set cleared"}</small></div>
               <div className="fellowship-summary"><span>Guild Legacy</span><strong>{data.legacy?.stage_name || "Founding Hall"}</strong><small>{number(data.legacy?.completed)} / {number(data.legacy?.total)} accomplishments</small></div>
             </div>
@@ -205,22 +205,22 @@ export default function FellowshipPage() {
             <section className="panel fellowship-section fellowship-airship" aria-labelledby="guild-airship-title">
               <div className="panel-title-row">
                 <div><span className="panel-kicker">Guild Airship</span><h2 id="guild-airship-title">{data.airship?.built ? "Crystal Guild Airship" : "Airship Construction"}</h2></div>
-                <span className="small-badge">{data.airship?.built ? (data.airship?.active_mission ? "MISSION ACTIVE" : "READY") : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</span>
+                <span className="small-badge">{data.airship?.built ? "EXPEDITIONS UNLOCKED" : `Dock Lv. ${number(data.airship?.dock_level)} / 3`}</span>
               </div>
               {!data.airship?.built ? (
                 <div className="fellowship-airship-empty">
                   <div>
                     <strong>Build the Guild&apos;s shared Airship</strong>
-                    <p>Complete <b>Airship Dock Lv. 1</b>, then finish the <b>Crystal Guild Airship</b> Fellowship project. Once launched, normal Ventures, Hunts, Expeditions, crafting, and raids can support shared Airship missions.</p>
+                    <p>Complete <b>Airship Dock Lv. 1</b>, then finish the <b>Crystal Guild Airship</b> Fellowship project. Once constructed, eligible adventurers can begin independent Airship Expeditions to three remote regions beyond Chocobo routes.</p>
                   </div>
-                  <span className="small-badge">Future missions unlock after construction</span>
+                  <span className="small-badge">Remote expeditions unlock after construction</span>
                 </div>
               ) : (
                 <>
                   {data.airship?.active_mission ? (
                     <article className={`fellowship-airship-active ${data.airship.active_mission.ready ? "ready" : ""}`}>
                       <div>
-                        <span className="panel-kicker">Current Mission</span>
+                        <span className="panel-kicker">Legacy Mission (completing automatically)</span>
                         <h3>{data.airship.active_mission.name}</h3>
                         <p>{data.airship.active_mission.description}</p>
                       </div>
@@ -231,21 +231,25 @@ export default function FellowshipPage() {
                       </div>
                     </article>
                   ) : (
-                    <div className="fellowship-airship-ready"><strong>Airship ready for deployment.</strong><span>The streamer can launch any unlocked mission from the Streamer Control Center or with <code>!airshipmission &lt;mission&gt;</code>.</span></div>
+                    <div className="fellowship-airship-ready"><strong>Airship Expeditions available to Guild members.</strong><span>Launch your personal remote Expedition from the Adventure Board or use <code>!airshipregions</code> in Twitch chat. No shared deployment queue.</span></div>
                   )}
 
                   <details className="fellowship-details fellowship-airship-details" open={disclosures.airshipDetails} onToggle={(event) => setDisclosure("airshipDetails", event.currentTarget.open)}>
-                    <summary><span><strong>Mission Catalog &amp; Airship Upgrades</strong><small>Browse unlocked missions, upgrade tracks, and recent deployments</small></span><span>{number(data.airship?.missions?.filter((mission) => mission.unlocked).length)} Missions</span><DetailsPointer /></summary>
+                    <summary><span><strong>Remote Regions &amp; Airship Upgrades</strong><small>Explore skybound destinations and view Guild-wide upgrades</small></span><span>3 Regions</span><DetailsPointer /></summary>
                     <div className="fellowship-airship-detail-body">
                   <div className="fellowship-airship-grid">
-                    {(data.airship?.missions || []).map((mission) => (
-                      <article className={`fellowship-airship-mission ${mission.unlocked ? "" : "locked"}`} key={mission.id}>
-                        <span className="panel-kicker">{mission.unlocked ? "Mission" : <span className="lock-requirement"><LockIcon label={`Mission locked. Requires Crystal Core Tier ${number(mission.required_core)}.`} />Core Tier {number(mission.required_core)}</span>}</span>
-                        <h3>{mission.name}</h3>
-                        <p>{mission.description}</p>
-                        <small>{number(mission.target_effective)} progress · about {Math.max(1, Math.round(Number(mission.duration_seconds || 0) / 3600))}h · +{number(mission.guild_renown)} base Guild Renown</small>
-                      </article>
-                    ))}
+                    {[
+                      {id:"shattered_sky_isles",name:"The Shattered Sky Isles",level:25,core:0,detail:"Floating islands and sky ruins"},
+                      {id:"aetherstorm_expanse",name:"The Aetherstorm Expanse",level:35,core:1,detail:"Aetherstorms and dangerous crystals"},
+                      {id:"forgotten_dominion",name:"The Forgotten Dominion",level:45,core:2,detail:"Ancient empire beyond the clouds"},
+                    ].map((region) => {
+                      const core = Number((data.airship?.upgrades || []).find((u) => u.id === "crystal_core")?.tier || 0);
+                      return <article className={`fellowship-airship-mission ${core >= region.core ? "" : "locked"}`} key={region.id}>
+                        <span className="panel-kicker">Core Tier {region.core} · Lv. {region.level}+</span>
+                        <h3>{region.name}</h3><p>{region.detail}</p>
+                        <small>{core >= region.core ? "Airship route unlocked — personal level requirement applies" : `Upgrade Crystal Core to Tier ${region.core}`}</small>
+                      </article>;
+                    })}
                   </div>
 
                   <div className="fellowship-airship-upgrades">
@@ -259,7 +263,7 @@ export default function FellowshipPage() {
 
                   {(data.airship?.history || []).length ? (
                     <div className="fellowship-airship-history">
-                      <strong>Recent Airship Missions</strong>
+                      <strong>Historic Airship Missions (pre-v1.9.8)</strong>
                       <div>
                         {data.airship.history.map((mission) => (
                           <p key={mission.run_id}><strong>{mission.name}</strong> · {mission.outcome === "success" ? "Success" : "Failed"} · {number(mission.progress)}/{number(mission.target)} · {number(mission.participant_count)} contributors · {timeAgo(new Date(Number(mission.ended_at) * 1000).toISOString())}</p>
@@ -276,7 +280,7 @@ export default function FellowshipPage() {
             <details className="panel fellowship-details fellowship-expedition-board" open={disclosures.expeditions} onToggle={(event) => setDisclosure("expeditions", event.currentTarget.open)}>
               <summary><span><strong>Expeditions — Guild Board</strong><small>Existing Guild-wide Expedition access</small></span><span className="small-badge">{expeditionStatus}</span><DetailsPointer /></summary>
               <div className="fellowship-expedition-body">
-              <p className="muted fellowship-expedition-copy">Distant contracts are now active. Complete the shared Guild Board, then each adventurer can launch Expeditions with a registered Chocobo from the Adventure Board.</p>
+              <p className="muted fellowship-expedition-copy">Complete the shared Guild Board to unlock Expeditions. Ground routes require a personal Chocobo; remote sky routes require a constructed Guild Airship.</p>
               <div className="fellowship-expedition-grid">
                 <article>
                   <span>Guild Requirement</span>
@@ -286,15 +290,15 @@ export default function FellowshipPage() {
                 <article>
                   <span>Adventurer Requirement</span>
                   <strong>Registered Chocobo</strong>
-                  <small>Each adventurer will need their own registered Chocobo before embarking.</small>
+                  <small>A registered Chocobo is required for ground routes; Airship routes instead require the Guild Airship.</small>
                 </article>
                 <article>
                   <span>Launch Status</span>
                   <strong>Open</strong>
-                  <small>Five regions and Scout, Journey, and Deep routes are available from the Adventure Board once unlocked.</small>
+                  <small>Five Chocobo regions and three Airship regions offer individual Expedition routes as they unlock.</small>
                 </article>
               </div>
-              <div className="fellowship-expedition-note"><strong>Guild Board Note:</strong> Complete the Expedition Board to open distant contracts Guild-wide. Individual adventurers still need their own registered Chocobo.</div>
+              <div className="fellowship-expedition-note"><strong>Guild Board Note:</strong> Complete the Expedition Board to open Expedition routes Guild-wide. Chocobo registration is required only for ground routes; Airship construction unlocks remote routes.</div>
               </div>
             </details>
 

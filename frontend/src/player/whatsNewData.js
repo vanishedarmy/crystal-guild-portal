@@ -1,5 +1,17 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.8", name: "Airship Expedition",
+    title: "Beyond the Chocobo roads",
+    summary: "The Crystal Guild Airship opens three remote sky regions. Explore independently, chart mysterious ruins, and bring rare materials home.",
+    highlights: [
+      { title: "Three sky destinations", description: "Reach the Shattered Sky Isles, Aetherstorm Expanse and Forgotten Dominion once the Guild Airship and required Crystal Core tiers are ready." },
+      { title: "Your own flight", description: "Airship and Chocobo Expeditions share a proven adventure engine, but each member's sky journey is independently saved." },
+      { title: "Upgrades that change flights", description: "Hull, Engine, Cargo Hold, Survey Array and Crystal Core shape dangers, flight times, salvage and route access." },
+      { title: "Chat friendly", description: "Browse routes with !airshipregions, then launch with !airshipexpedition. Existing Guild mission history is preserved." },
+    ],
+    action: { tab: "adventure", label: "Open Adventure Board" },
+  },
+  {
     version: "v1.9.7", name: "Queen’s Blood",
     title: "The Card Hall opens its tables",
     summary: "Collect 48 illustrated Final Fantasy cards, challenge 14 solo opponents, and play live or correspondence duels with other adventurers.",

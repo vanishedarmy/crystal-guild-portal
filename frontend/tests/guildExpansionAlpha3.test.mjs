@@ -26,10 +26,10 @@ test("Guild Expansion services remain available under the current Dungeon protoc
   const version = read("src/version.js");
   const guideData = JSON.parse(read("public/guide-data.json"));
   const hosted = read("../crystal_guild/hosted_portal.py");
-  assert.match(version, /WEB_BUILD = "Queen.s Blood"/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
-  assert.equal(guideData.meta.version, "v1.9.6 — Triple Triad Expanded");
-  assert.equal(guideData.meta.release, "1.9.6-triple-triad-expanded");
-  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 39/);
+  assert.match(version, /WEB_BUILD = "Elite Mercs"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
+  assert.equal(guideData.meta.version, "v1.8.2 — Elite Mercs");
+  assert.equal(guideData.meta.release, "1.8.2-elite-mercs");
+  assert.match(hosted, /ACTION_PROTOCOL_VERSION = 35/);
   assert.match(hosted, /"WORKSHOP_EXCHANGE"/);
 });

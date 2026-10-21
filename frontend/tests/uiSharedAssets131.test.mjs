@@ -50,7 +50,5 @@ test("Stream Venture uses a real DOM image layer rather than a CSS background UR
 test("public tree remains PNG-free after UI4", () => {
   const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? walk(path.join(dir, entry.name)) : [path.join(dir, entry.name)]);
   const png = walk(path.join(root, "public")).filter((p) => p.toLowerCase().endsWith(".png"));
-  // The Raid system ships a distinct icon PNG family, while legacy public art should remain WebP.
-  assert.equal(png.length, 70);
-  assert.deepEqual(png.filter((file) => !file.includes(`${path.sep}raid-icons${path.sep}`)), []);
+  assert.equal(png.length, 0);
 });

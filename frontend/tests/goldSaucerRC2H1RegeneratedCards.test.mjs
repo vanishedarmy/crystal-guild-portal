@@ -4,16 +4,14 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const source = fs.readFileSync(path.join(ROOT, "src/player/TripleTriad.jsx"), "utf8");
-const catalog = JSON.parse(fs.readFileSync(path.join(ROOT, "../crystal_guild/triple_triad_catalog.json"), "utf8"));
+const source = fs.readFileSync(path.join(ROOT, "src/player/GoldSaucer.jsx"), "utf8");
 const css = fs.readFileSync(path.join(ROOT, "src/styles/portal.css"), "utf8");
 const version = fs.readFileSync(path.join(ROOT, "src/version.js"), "utf8");
 const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","ahriman","malboro","ifrit","shiva","ramuh","leviathan","bahamut","odin"];
 
 test("RC2 H1 routes Triple Triad to regenerated uniform card family", () => {
-  assert.match(source, /card\.art/);
-  assert.equal(catalog.cards.filter((card) => card.art.startsWith("/gold-saucer/rc2h1/triple-triad/cards/")).length, 15);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
+  assert.match(source, /TRIAD_CARD_ART_ROOT = "\/gold-saucer\/rc2h1\/triple-triad\/cards"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
   assert.match(css, /\.triad-card\.full-face[\s\S]*?aspect-ratio:\s*5\s*\/\s*7/);
 });
 

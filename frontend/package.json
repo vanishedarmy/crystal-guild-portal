@@ -1,7 +1,7 @@
 {
   "name": "crystal-guild-fellowship",
   "private": true,
-  "version": "1.9.7",
+  "version": "1.9.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,6 +19,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "6.0.5",
-    "vite": "8.2.0"
+    "vite": "^8.3.4"
   }
 }

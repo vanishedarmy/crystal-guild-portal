@@ -293,7 +293,7 @@ export default function ChocoboStable({ data, overview, onRefresh }) {
           <div className="chocobo-stable-dashboard">
             <section className={`chocobo-readiness-card ${expedition?.ready ? "ready" : ""}`} aria-label="Expedition readiness">
               <div className="chocobo-card-heading">
-                <div><span className="slot-label">Expedition Readiness</span><h3>{expedition?.ready ? "Ready to Venture" : "Preparation Needed"}</h3></div>
+                <div><span className="slot-label">Expedition Readiness</span><h3>{(expedition?.ground_ready ?? expedition?.ready) ? "Ready to Venture" : "Preparation Needed"}</h3></div>
                 <span className={`small-badge ${expedition?.ready ? "success" : ""}`}>{expedition?.ready ? "READY" : "PREPARING"}</span>
               </div>
               <p>{expedition?.message}</p>

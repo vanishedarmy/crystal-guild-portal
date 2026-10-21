@@ -177,6 +177,7 @@ export default function Expeditions({
   onConfirmResult,
 }) {
   const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedTransport, setSelectedTransport] = useState("chocobo");
   const [selectedDepth, setSelectedDepth] = useState("scout");
   const [selectedRoute, setSelectedRoute] = useState("");
   const [consumableCategory, setConsumableCategory] = useState("healing");
@@ -184,7 +185,7 @@ export default function Expeditions({
   const [boardOpen, setBoardOpen] = useState(() => data?.active ? true : defaultBoardOpen());
   const [atlasOpen, setAtlasOpen] = useState(defaultAtlasOpen);
   const active = data?.active || null;
-  const regions = useMemo(() => [...(data?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1)), [data?.regions]);
+  const regions = useMemo(() => [...(data?.regions || [])].filter((r) => (r?.transport || "chocobo") === selectedTransport).sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1)), [data?.regions, selectedTransport]);
   const depths = data?.depths || [];
   const routes = data?.routes || [];
   const pickedRegion = regions.find((region) => region.id === selectedRegion) || regions.find((region) => region.unlocked) || regions[0];
@@ -223,9 +224,9 @@ export default function Expeditions({
       <section className={`panel expedition-board-panel collapsible-board-section ${boardOpen ? "open" : "collapsed"} ${active ? "active" : ""}`} data-region={active?.region?.id || ""}>
         <div className="panel-title-row section-collapsible-title-row">
           <div>
-            <p className="eyebrow">Chocobo Expeditions</p>
+            <p className="eyebrow">{active?.transport === "airship" ? "Guild Airship Expedition" : active ? "Chocobo Expedition" : "Expedition Routes"}</p>
             <h2>{active ? `${active.region?.name} · Stage ${number(active.stage)} / ${number(active.max_stages)}` : "Distant Expedition Board"}</h2>
-            {boardOpen && !active ? <p className="muted">Choose a region and route, then bring your Expedition Cache home safely.</p> : null}
+            {boardOpen && !active ? <p className="muted">Explore the known world by Chocobo, or take the Guild Airship beyond its borders. Each adventurer has their own journey.</p> : null}
           </div>
           <div className="section-collapse-actions">
             <ContextHelp topic="expeditions" />
@@ -236,22 +237,34 @@ export default function Expeditions({
 
         {boardOpen ? (!active ? (
           <>
+            <div className="expedition-transport-switch" role="group" aria-label="Expedition transport" style={{display:"flex",gap:"0.5rem",flexWrap:"wrap",marginBottom:"1rem"}}>
+              <button type="button" className={`equipment-action-button ${selectedTransport === "chocobo" ? "" : "secondary"}`} aria-pressed={selectedTransport === "chocobo"} onClick={() => { setSelectedTransport("chocobo"); setSelectedRegion(""); }}>Chocobo Routes · 5 Regions</button>
+              <button type="button" className={`equipment-action-button ${selectedTransport === "airship" ? "" : "secondary"}`} aria-pressed={selectedTransport === "airship"} onClick={() => { setSelectedTransport("airship"); setSelectedRegion(""); }}>Guild Airship · 3 Regions</button>
+            </div>
+            {selectedTransport === "airship" ? (
+              <div className="expedition-specialization-card">
+                <div><span className="slot-label">Beyond the Known World</span><h3>{data?.airship?.built ? "Guild Airship Ready" : "Guild Airship Not Yet Constructed"}</h3></div>
+                <p className="muted">Requires the shared Expedition Board and completed Guild Airship. Every player explores independently; a Chocobo is not required for Airship routes.</p>
+                <div className="expedition-specialization-effects">{(data?.airship?.upgrades || []).map((upgrade) => <span key={upgrade.id}>{upgrade.name} T{number(upgrade.tier)}</span>)}</div>
+                <small>Sky Atlas · {number(data?.airship_atlas?.regions_mastered || 0)} / 3 regions mastered · {number(data?.airship_atlas?.overall_progress || 0)}% surveyed</small>
+              </div>
+            ) : null}
             <div className="expedition-readiness-grid">
               <article className={data?.board_ready ? "complete" : ""}><span>Guild Gate</span><strong>{data?.board_ready ? "✓ Expedition Board" : "○ Expedition Board"}</strong><small>Shared unlock</small></article>
-              <article className={data?.chocobo_ready ? "complete" : ""}><span>Companion</span><strong>{data?.chocobo?.name || (data?.chocobo_ready ? "✓ Registered Chocobo" : "○ Registered Chocobo")}</strong><small>{data?.chocobo?.specialization ? `${data.chocobo.specialization.name} · Bond Tier ${number(data.chocobo.specialization.tier)}` : (data?.traits_active || []).length ? `${data.traits_active.length} active trait${data.traits_active.length === 1 ? "" : "s"}` : "Required"}</small></article>
+              <article className={selectedTransport === "airship" ? (data?.airship_ready ? "complete" : "") : (data?.chocobo_ready ? "complete" : "")}><span>{selectedTransport === "airship" ? "Guild Airship" : "Companion"}</span><strong>{selectedTransport === "airship" ? (data?.airship?.built ? "✓ Airship Complete" : "○ Airship Construction") : data?.chocobo?.name || (data?.chocobo_ready ? "✓ Registered Chocobo" : "○ Registered Chocobo")}</strong><small>{selectedTransport === "airship" ? "Shared Fellowship unlock" : data?.chocobo?.specialization ? `${data.chocobo.specialization.name} · Bond Tier ${number(data.chocobo.specialization.tier)}` : (data?.traits_active || []).length ? `${data.traits_active.length} active trait${data.traits_active.length === 1 ? "" : "s"}` : "Required"}</small></article>
               <article><span>Cache</span><strong>Bank on return</strong><small>Safe return keeps all</small></article>
             </div>
 
-            {!data?.ready ? <p className="adventure-disabled-reason expedition-gate-note">{data?.reason || "Complete the Expedition Board and register a Chocobo first."}</p> : null}
+            {!(selectedTransport === "airship" ? data?.airship_ready : data?.ground_ready) ? <p className="adventure-disabled-reason expedition-gate-note">{!data?.board_ready ? "Complete the shared Expedition Board first." : selectedTransport === "airship" ? "Construct the Guild Airship through Fellowship projects first." : "Register your Chocobo at the Stables first."}</p> : null}
 
-            {data?.chocobo?.specialization ? (
+            {selectedTransport === "chocobo" && data?.chocobo?.specialization ? (
               <div className="expedition-specialization-card">
                 <div><span className="slot-label">Chocobo Expedition Specialty</span><h3>{data.chocobo.specialization.name} · Tier {number(data.chocobo.specialization.tier)}</h3></div>
                 <div className="expedition-specialization-effects">{(data.chocobo.specialization.effects || []).map((effect) => <span key={effect}>{effect}</span>)}</div>
               </div>
             ) : null}
 
-            {data?.atlas ? (
+            {selectedTransport === "chocobo" && data?.atlas ? (
               <div className={`expedition-atlas-panel ${data.atlas?.all_mastered ? "mastered" : ""}`}>
                 <div className="panel-title-row compact expedition-atlas-heading">
                   <div>
@@ -285,7 +298,7 @@ export default function Expeditions({
                   <button type="button" key={region.id} data-region={region.id} className={`expedition-region-card ${selected ? "selected" : ""} ${!region.unlocked ? "locked" : ""}`} onClick={() => setSelectedRegion(region.id)} disabled={!region.unlocked}>
                     <div className="expedition-region-card-head"><span>Lv. {number(region.min_level)}{Number(region.recommended_max_level || 99) < 99 ? `–${number(region.recommended_max_level)}` : "+"}</span><b>{number(progress.progress || 0)}%</b></div>
                     <strong>{region.name}</strong>
-                    <small>{region.identity} · {region.hazard}</small>
+                    <small>{region.transport === "airship" ? `Guild Airship · Core Tier ${number(region.required_core)}` : "Chocobo Route"} · {region.identity} · {region.hazard}</small>
                     <small>{number(progress.landmarks_found || 0)} / {number(REGION_LANDMARK_COUNT)} landmarks charted</small>
                     <span className={`small-badge ${region.unlocked ? "success" : "locked"}`}>{region.unlocked ? "Available" : <span className="lock-requirement"><LockIcon label={`Locked region: ${region.name}. ${region.reason || ""}`} />{region.reason}</span>}</span>
                   </button>
@@ -338,8 +351,8 @@ export default function Expeditions({
                   <div className="expedition-boss-contract-row">
                     <div><span className="slot-label">Regional Boss</span><strong>{pickedRegion.boss_name || "Regional Boss"}</strong><small>{pickedRegion.progress?.boss_unlocked ? `${number(pickedRegion.progress?.boss_clears || 0)} clear${Number(pickedRegion.progress?.boss_clears || 0) === 1 ? "" : "s"} · +${STIPEND_SEALS.boss} Seals on completion` : `Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}%`}</small></div>
                     <div className="expedition-contract-actions">
-                      <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.boss_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:boss", "expedition-start", `${pickedRegion.id}:boss`, (idem) => submitExpeditionStart(pickedRegion.id, "boss", csrfToken, idem), "Regional Boss Expedition launched.")}>{busy === "expedition:boss" ? "Preparing Contract…" : pickedRegion.progress?.boss_unlocked ? `Challenge ${pickedRegion.boss_name}` : <LockIcon label={`Regional boss locked. Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}% progress.`} />}</button>
-                      {pickedRegion.progress?.mastered ? <button type="button" className="equipment-action-button legendary-contract-button" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || !pickedRegion.progress?.legendary_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:legendary", "expedition-start", `${pickedRegion.id}:legendary`, (idem) => submitExpeditionStart(pickedRegion.id, "legendary", csrfToken, idem), "Legendary Regional Contract launched.")}>{busy === "expedition:legendary" ? "Preparing Legendary Route…" : pickedRegion.progress?.legendary_unlocked ? `Launch Legendary Contract · +${STIPEND_SEALS.legendary} Seals` : "Clear Boss to Unlock"}</button> : null}
+                      <button type="button" className="equipment-action-button secondary" disabled={!actionsAvailable || !(selectedTransport === "airship" ? data?.airship_ready : data?.ground_ready) || !pickedRegion?.unlocked || !pickedRegion.progress?.boss_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:boss", "expedition-start", `${pickedRegion.id}:boss`, (idem) => submitExpeditionStart(pickedRegion.id, "boss", csrfToken, idem), "Regional Boss Expedition launched.")}>{busy === "expedition:boss" ? "Preparing Contract…" : pickedRegion.progress?.boss_unlocked ? `Challenge ${pickedRegion.boss_name}` : <LockIcon label={`Regional boss locked. Unlocks at ${number(pickedRegion.progress?.boss_unlock_progress || 75)}% progress.`} />}</button>
+                      {pickedRegion.progress?.mastered ? <button type="button" className="equipment-action-button legendary-contract-button" disabled={!actionsAvailable || !(selectedTransport === "airship" ? data?.airship_ready : data?.ground_ready) || !pickedRegion?.unlocked || !pickedRegion.progress?.legendary_unlocked || Boolean(busy)} onClick={() => doRequest("expedition:legendary", "expedition-start", `${pickedRegion.id}:legendary`, (idem) => submitExpeditionStart(pickedRegion.id, "legendary", csrfToken, idem), "Legendary Regional Contract launched.")}>{busy === "expedition:legendary" ? "Preparing Legendary Route…" : pickedRegion.progress?.legendary_unlocked ? `Launch Legendary Contract · +${STIPEND_SEALS.legendary} Seals` : "Clear Boss to Unlock"}</button> : null}
                     </div>
                   </div>
                 </div>
@@ -354,7 +367,7 @@ export default function Expeditions({
                     </button>
                   ))}
                 </div>
-                <button type="button" className="equipment-action-button expedition-launch-button" disabled={!actionsAvailable || !data?.ready || !pickedRegion?.unlocked || Boolean(busy)} onClick={() => doRequest("expedition:start", "expedition-start", `${pickedRegion.id}:${selectedDepth}`, (idem) => submitExpeditionStart(pickedRegion.id, selectedDepth, csrfToken, idem), "Expedition launched.")}>{busy === "expedition:start" ? "Preparing Chocobo…" : `Launch ${depths.find((row) => row.id === selectedDepth)?.name || "Expedition"}`}</button>
+                <button type="button" className="equipment-action-button expedition-launch-button" disabled={!actionsAvailable || !(selectedTransport === "airship" ? data?.airship_ready : data?.ground_ready) || !pickedRegion?.unlocked || Boolean(busy)} onClick={() => doRequest("expedition:start", "expedition-start", `${pickedRegion.id}:${selectedDepth}`, (idem) => submitExpeditionStart(pickedRegion.id, selectedDepth, csrfToken, idem), "Expedition launched.")}>{busy === "expedition:start" ? (selectedTransport === "airship" ? "Preparing Airship…" : "Preparing Chocobo…") : `Launch ${selectedTransport === "airship" ? "Airship " : ""}${depths.find((row) => row.id === selectedDepth)?.name || "Expedition"}`}</button>
               </div>
             ) : null}
           </>
@@ -471,7 +484,7 @@ export default function Expeditions({
                   </div></MobileCombatDrawer>
                 ) : null}
 
-                <button type="button" className="equipment-action-button ghost danger expedition-retreat-action" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Expedition encounter? Your Chocobo will rescue you, but part of the Expedition Cache may be lost.")) doRequest("expedition:retreat", "expedition-retreat", String(active.stage), (idem) => submitExpeditionRetreat(csrfToken, idem), "Chocobo rescue complete."); }}>Retreat · Chocobo Rescue</button>
+                <button type="button" className="equipment-action-button ghost danger expedition-retreat-action" disabled={Boolean(busy)} onClick={() => { if (window.confirm(`Retreat from this Expedition encounter? Your ${active.transport === "airship" ? "Guild Airship" : "Chocobo"} will rescue you, but part of the Expedition Cache may be lost.`)) doRequest("expedition:retreat", "expedition-retreat", String(active.stage), (idem) => submitExpeditionRetreat(csrfToken, idem), "Expedition rescue complete."); }}>Retreat · {active.transport === "airship" ? "Airship" : "Chocobo"} Rescue</button>
               </div>
             ) : null}
 

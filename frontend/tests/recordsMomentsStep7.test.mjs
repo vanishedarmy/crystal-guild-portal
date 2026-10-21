@@ -72,9 +72,9 @@ test('Step 7: responsive cards, keyboard close and reduced-motion behavior are e
 });
 
 test('Step 7: matching release identity is stamped into Bot, hosted Web and frontend', () => {
- const stamp='1.9.7-queens-blood';
+ const stamp='1.9.0-trading-post-qol-alpha13';
  assert.equal(fs.readFileSync(path.join(workspace,'Bot/VERSION.txt'),'utf8').trim(),stamp);
  for (const name of ['Bot/crystal_guild/__init__.py','Web/crystal_guild/__init__.py','Web/crystal_guild/hosted_portal.py']) assert.ok(fs.readFileSync(path.join(workspace,name),'utf8').includes(stamp),name);
- assert.match(read('src/version.js'),/1\.9\.7-queens-blood/);
- assert.equal(JSON.parse(read('package.json')).version,'1.9.7');
+ assert.match(read('src/version.js'),/1\.9\.0-trading-post-qol-alpha13/);
+ assert.equal(JSON.parse(read('package.json')).version,'1.9.0-alpha.13');
 });

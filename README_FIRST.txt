@@ -1,11 +1,3 @@
-WEB-ONLY CONSOLIDATED RELEASE (v1.9.7)
-======================================
-This archive contains a single complete Web/ directory; Bot is NOT included.
-For extraction, deploy steps, and the full-artwork verification commands,
-read README_COMPLETE_WEB_BUILD.md first.
-
---- Historical v1.9.7 paired-release notes follow ---
-
 # Crystal Guild v1.9.7 — Queen’s Blood
 
 This is the complete Bot + Web release. It includes all 48 approved Queen’s Blood portraits, the solo circuit, live invitations, correspondence duels, and the prebuilt frontend.
@@ -25,6 +17,6 @@ For a new installation, use `Bot/FULL_SETUP_README.md`, `Bot/RENDER_CLOUD_SETUP.
 
 Bot database schema stays **27**, hosted sync schema stays **1**, and Portal Action protocol stays **39**. Queen’s Blood creates its own tables in the hosted Web database as needed. Preserve that database: it holds card unlocks, saved decks, solo matches, and player duels. Existing matches keep their frozen card definitions and rules. Existing correspondence invitations retain their original deadlines and play style.
 
-Triple Triad and Queen’s Blood are now both in the standalone Card Hall. Triple Triad no longer belongs to Gold Saucer and does not award or charge MGP. The latest compact UI, wrapping corrections, Camp contrast, Emporium, Seasonal Cache, and Triple Triad progression fixes are carried forward from the approved source. Abandoned Living World 1A/1B and Accessibility v1.9.4.4 packages are not used.
+Triple Triad remains in Gold Saucer. Card Hall is separate. The latest compact UI, wrapping corrections, Camp contrast, Emporium, Seasonal Cache, and Triple Triad progression fixes are carried forward from the approved source. Abandoned Living World 1A/1B and Accessibility v1.9.4.4 packages are not used.
 
 See `RELEASE_NOTES.md` for features and `VALIDATION_v1_9_7.json` for checks and limitations. This package has not been deployed to your live services.

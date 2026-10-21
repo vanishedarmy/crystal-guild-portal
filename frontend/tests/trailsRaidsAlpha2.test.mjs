@@ -26,9 +26,9 @@ test("Alpha 2 OBS overlay displays adds roles and new mechanic kinds", () => {
   const html = read("public/raid-overlay.html");
   const js = read("public/raid-overlay.js");
   assert.match(html, /id="adds"/);
-  assert.match(html, /id="mechanic-warning"/);
+  assert.match(html, /break_check/);
   assert.match(js, /renderAdds/);
-  assert.match(js, /row\?\.role/);
+  assert.match(js, /entry\?\.role/);
   assert.match(js, /break_check/);
   assert.match(js, /stagger/);
 });

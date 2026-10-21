@@ -38,8 +38,8 @@ TRIPLE_TRIAD_OPPONENT_IDS = frozenset(
     )["opponents"]
 )
 
-HOSTED_PORTAL_VERSION = "1.9.7-queens-blood"
-FRONTEND_ASSET_REVISION = "1.9.7-queens-blood"
+HOSTED_PORTAL_VERSION = "1.9.8-airship-expedition"
+FRONTEND_ASSET_REVISION = "1.9.8-airship-expedition"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {

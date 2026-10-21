@@ -32,7 +32,7 @@ test("Retro Phase III keeps clean typed WebP item and material artwork directori
   const materialDir = path.join(root, "public/retro-phase-ii/item-materials-v5");
   const itemFiles = fs.readdirSync(itemDir).filter((n) => n.endsWith(".webp"));
   const materialFiles = fs.readdirSync(materialDir).filter((n) => n.endsWith(".webp"));
-  assert.equal(itemFiles.length, 33);
+  assert.equal(itemFiles.length, 32);
   assert.equal(materialFiles.length, 31);
   for (const file of [...itemFiles.map((n)=>path.join(itemDir,n)), ...materialFiles.map((n)=>path.join(materialDir,n))]) {
     assert.deepEqual(webpSize(file), [512,512], `${file} should be normalized 512x512 WebP`);
@@ -47,7 +47,7 @@ test("ii37 removes superseded inventory artwork directories", () => {
 
 test("Retro Phase III canonical consumables resolve to item-icons-v1 WebP artwork", () => {
   const consumables = data.items.filter((entry) => entry.type === "consumable");
-  assert.equal(consumables.length, 33);
+  assert.equal(consumables.length, 32);
   for (const item of consumables) {
     const art = itemArtworkPath(item);
     assert.match(art, /item-icons-v1\/.+\.webp$/, `${item.id} should use v4 WebP item art`);

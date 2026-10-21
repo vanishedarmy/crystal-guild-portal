@@ -37,9 +37,9 @@ test("visible level labels keep a space after their abbreviation", () => {
 });
 
 test("quantity joins use readable multiplication spacing", () => {
-  const crafting = read("src/player/CraftingWorkbench.jsx");
-  assert.match(crafting, /Creates ×\{number\(selected\.output\?\.quantity \|\| 1\)}/);
-  assert.match(crafting, /Craft \$\{selected\.output\?\.name \|\| "item"} × \$\{number\(quantity \* Number\(selected\.output\?\.quantity \|\| 1\)\)}/);
+  const blacksmith = read("src/player/Blacksmith.jsx");
+  assert.match(blacksmith, /output\?\.name} × \{number\(recipe\.output/);
+  assert.match(blacksmith, /Craft \$\{recipe\.output\?\.name \|\| recipe\.name} × \$\{number\(quantity\)}/);
 
   const retainer = read("src/player/RetainerService.jsx");
   assert.doesNotMatch(retainer, /item\.name} x\$\{number\(item\.quantity\)}/);

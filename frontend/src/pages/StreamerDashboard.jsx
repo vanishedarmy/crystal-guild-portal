@@ -42,7 +42,9 @@ const STREAM_COMMAND_GROUPS = [
     commands: [
       { command: "!fellowship", description: "Shared Guild level, your Guild Rank, and current project" },
       { command: "!project", description: "Current Fellowship project and requirements" },
-      { command: "!airship", description: "Guild Airship status and current mission" },
+      { command: "!airship", description: "Guild Airship status and new remote expedition unlocks" },
+      { command: "!airshipregions", description: "List three remote regions and unlock requirements" },
+      { command: "!airshipexpedition <region> <depth>", description: "Launch an individual Airship Expedition" },
       { command: "!orders", description: "Current weekly Fellowship Orders" },
       { command: "!rank", description: "Your personal Guild Rank and Renown progress" },
     ],
@@ -69,7 +71,6 @@ const OWNER_COMMAND_GROUPS = [
     description: "Choose which unlocked community project the Guild is currently building.",
     commands: [
       { id: "fellowshipproject", command: "!fellowshipproject <project>", label: "Set Fellowship Project", description: "Set the active unlocked Fellowship project", risk: "caution", argument: { type: "project", label: "Project" } },
-      { id: "airshipmission", command: "!airshipmission <mission>", label: "Launch Airship Mission", description: "Dispatch the completed Guild Airship on an unlocked mission", risk: "caution", argument: { type: "text", placeholder: "Mission name", label: "Airship mission" } },
     ],
   },
   {

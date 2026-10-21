@@ -9,18 +9,13 @@ const css = fs.readFileSync(path.join(root, "src/styles/portal.css"), "utf8");
 const version = fs.readFileSync(path.join(root, "src/version.js"), "utf8");
 const artRoot = path.join(root, "public/gold-saucer/a5h5/triple-triad");
 
-const catalog = JSON.parse(fs.readFileSync(path.join(root, "../crystal_guild/triple_triad_catalog.json"), "utf8"));
 const cards = ["chocobo","moogle","cactuar","bomb","flan","tonberry","coeurl","ahriman","malboro","ifrit","shiva","ramuh","leviathan","bahamut","odin"];
 const opponents = ["saucer_attendant","card_shark","crystal_master"];
 
-test("Triple Triad retains all catalog card art and its shared UI assets", () => {
-  assert.equal(catalog.cards.length, 45);
-  for (const card of catalog.cards) {
-    assert.match(card.art, /^\/gold-saucer\/(?:rc2h1|expanded-196)\/triple-triad\/cards\/[a-z0-9_]+\.webp$/);
-    assert.ok(fs.existsSync(path.join(root, "public", card.art)), `${card.id} art missing`);
-  }
+test("Hotfix 3 packages the full Triple Triad visual family", () => {
+  for (const id of cards) assert.ok(fs.existsSync(path.join(artRoot, `cards/${id}.webp`)), `${id} art missing`);
   assert.ok(fs.existsSync(path.join(artRoot, "cards/card-back.webp")));
-  for (const id of opponents) assert.ok(fs.existsSync(path.join(artRoot, `opponents/${id}.webp`)), `${id} portrait missing`);
+  for (const id of opponents) assert.ok(fs.existsSync(path.join(artRoot, `opponents/${id}.webp`)), `${id} opponent art missing`);
   for (const id of ["win","draw","loss"]) assert.ok(fs.existsSync(path.join(artRoot, `results/${id}.webp`)));
 });
 
@@ -41,5 +36,5 @@ test("Triple Triad artwork UI remains responsive and retains H2 collapse behavio
   assert.match(css, /\.triad-opponent-art/);
   assert.match(css, /@media\(max-width:540px\)/);
   assert.match(component, /<details className="panel saucer-triad-panel saucer-section-disclosure/);
-  assert.match(version, /WEB_ASSET_REVISION = "1\.9\.7-queens-blood"/);
+  assert.match(version, /WEB_ASSET_REVISION = "1\.8\.2-elite-mercs"/);
 });

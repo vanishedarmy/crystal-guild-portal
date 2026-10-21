@@ -10,10 +10,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ELITE = ["lightning", "sephiroth", "rikku", "yshtola", "noctis", "cid"];
 
 test("v1.8.2 Elite Mercs release identity is current", () => {
-  assert.equal(WEB_VERSION, "v1.9.7");
-  assert.equal(WEB_BUILD, "Queen's Blood");
-  assert.equal(WEB_RELEASE, "v1.9.7 — Queen's Blood");
-  assert.equal(WEB_ASSET_REVISION, "1.9.7-queens-blood");
+  assert.equal(WEB_VERSION, "v1.8.2");
+  assert.equal(WEB_BUILD, "Elite Mercs");
+  assert.equal(WEB_RELEASE, "v1.8.2 — Elite Mercs");
+  assert.equal(WEB_ASSET_REVISION, "1.8.2-elite-mercs");
 });
 
 test("six elite Heroes ship Locked, Unavailable, and Available art", () => {

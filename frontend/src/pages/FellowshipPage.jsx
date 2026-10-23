@@ -211,7 +211,7 @@ export default function FellowshipPage() {
                 <div className="fellowship-airship-empty">
                   <div>
                     <strong>Build the Guild&apos;s shared Airship</strong>
-                    <p>Complete <b>Airship Dock Lv. 1</b>, then finish the <b>Crystal Guild Airship</b> Fellowship project. Once constructed, eligible adventurers can begin independent Airship Expeditions to three remote regions beyond Chocobo routes.</p>
+                    <p>Complete <b>Airship Dock Lv. 1</b>, then finish the <b>Crystal Guild Airship</b> Fellowship project. Once constructed, eligible adventurers can begin independent Airship Expeditions to six remote regions beyond Chocobo routes.</p>
                   </div>
                   <span className="small-badge">Remote expeditions unlock after construction</span>
                 </div>
@@ -295,7 +295,7 @@ export default function FellowshipPage() {
                 <article>
                   <span>Launch Status</span>
                   <strong>Open</strong>
-                  <small>Five Chocobo regions and three Airship regions offer individual Expedition routes as they unlock.</small>
+                  <small>Five Chocobo regions and six Airship regions offer individual Expedition routes as they unlock.</small>
                 </article>
               </div>
               <div className="fellowship-expedition-note"><strong>Guild Board Note:</strong> Complete the Expedition Board to open Expedition routes Guild-wide. Chocobo registration is required only for ground routes; Airship construction unlocks remote routes.</div>

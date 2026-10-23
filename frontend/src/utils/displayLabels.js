@@ -79,6 +79,7 @@ export const LOCATION_NAMES = Object.freeze({
   "riftlands": "Riftlands",
   "interdimensional_rift": "Interdimensional Rift",
   "omega_ruins": "Omega Ruins",
+  "eclipsed_singularity_citadel": "Eclipsed Singularity Citadel",
   "emerald_wilds": "Emerald Wilds",
   "ashen_highlands": "Ashen Highlands",
   "mistfen_marshes": "Mistfen Marshes",

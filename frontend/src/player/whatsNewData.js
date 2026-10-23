@@ -1,5 +1,17 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.9", name: "Skybound Singularity",
+    title: "Three new skies and a threat beyond Omega",
+    summary: "Six Airship Expedition regions now span the skies, while the Eclipsed Singularity Citadel rises beyond Omega Ruins on the World Map.",
+    highlights: [
+      { title: "Three new Airship regions", description: "Explore Emberglass Caldera, Frostveil Observatory and the Gilded Mirage Expanse. Each introduces a unique regional boss and salvage material." },
+      { title: "Artwork for every sky region", description: "All six Airship regions have original illustrated artwork on the Expedition Board and during active flights." },
+      { title: "Beyond Omega Ruins", description: "Lv.97 adventurers can travel to Eclipsed Singularity Citadel and face the Eclipse Sovereign through the Guild's Ultimate Superboss raid board." },
+      { title: "Old routes preserved", description: "Existing Chocobo expeditions, three original Airship regions, saved flights and regional exploration progress are unchanged." },
+    ],
+    action: { tab: "adventure", label: "Explore the New Regions" },
+  },
+  {
     version: "v1.9.8", name: "Airship Expedition",
     title: "Beyond the Chocobo roads",
     summary: "The Crystal Guild Airship opens three remote sky regions. Explore independently, chart mysterious ruins, and bring rare materials home.",

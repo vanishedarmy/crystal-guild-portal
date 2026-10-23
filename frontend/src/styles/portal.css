@@ -15679,3 +15679,18 @@ textarea {
     padding-block: .55rem;
   }
 }
+
+
+/* v1.9.9 — all six airship routes have dedicated atlas and launch panel art. */
+.expedition-region-card[data-region="shattered_sky_isles"]::before { background-image: url('/expeditions/airship-shattered-sky-isles.webp'); }
+.expedition-board-panel[data-region="shattered_sky_isles"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-shattered-sky-isles.webp'); }
+.expedition-region-card[data-region="aetherstorm_expanse"]::before { background-image: url('/expeditions/airship-aetherstorm-expanse.webp'); }
+.expedition-board-panel[data-region="aetherstorm_expanse"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-aetherstorm-expanse.webp'); }
+.expedition-region-card[data-region="forgotten_dominion"]::before { background-image: url('/expeditions/airship-forgotten-dominion.webp'); }
+.expedition-board-panel[data-region="forgotten_dominion"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-forgotten-dominion.webp'); }
+.expedition-region-card[data-region="emberglass_caldera"]::before { background-image: url('/expeditions/airship-emberglass-caldera.webp'); }
+.expedition-board-panel[data-region="emberglass_caldera"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-emberglass-caldera.webp'); }
+.expedition-region-card[data-region="frostveil_observatory"]::before { background-image: url('/expeditions/airship-frostveil-observatory.webp'); }
+.expedition-board-panel[data-region="frostveil_observatory"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-frostveil-observatory.webp'); }
+.expedition-region-card[data-region="gilded_mirage_expanse"]::before { background-image: url('/expeditions/airship-gilded-mirage-expanse.webp'); }
+.expedition-board-panel[data-region="gilded_mirage_expanse"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-gilded-mirage-expanse.webp'); }

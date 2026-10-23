@@ -43,7 +43,7 @@ const STREAM_COMMAND_GROUPS = [
       { command: "!fellowship", description: "Shared Guild level, your Guild Rank, and current project" },
       { command: "!project", description: "Current Fellowship project and requirements" },
       { command: "!airship", description: "Guild Airship status and new remote expedition unlocks" },
-      { command: "!airshipregions", description: "List three remote regions and unlock requirements" },
+      { command: "!airshipregions", description: "List six remote regions and unlock requirements" },
       { command: "!airshipexpedition <region> <depth>", description: "Launch an individual Airship Expedition" },
       { command: "!orders", description: "Current weekly Fellowship Orders" },
       { command: "!rank", description: "Your personal Guild Rank and Renown progress" },

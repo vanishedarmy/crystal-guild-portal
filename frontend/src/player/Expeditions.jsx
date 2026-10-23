@@ -221,7 +221,7 @@ export default function Expeditions({
 
   return (
     <>
-      <section className={`panel expedition-board-panel collapsible-board-section ${boardOpen ? "open" : "collapsed"} ${active ? "active" : ""}`} data-region={active?.region?.id || ""}>
+      <section className={`panel expedition-board-panel collapsible-board-section ${boardOpen ? "open" : "collapsed"} ${active ? "active" : ""}`} data-region={active?.region?.id || pickedRegion?.id || ""}>
         <div className="panel-title-row section-collapsible-title-row">
           <div>
             <p className="eyebrow">{active?.transport === "airship" ? "Guild Airship Expedition" : active ? "Chocobo Expedition" : "Expedition Routes"}</p>
@@ -239,14 +239,14 @@ export default function Expeditions({
           <>
             <div className="expedition-transport-switch" role="group" aria-label="Expedition transport" style={{display:"flex",gap:"0.5rem",flexWrap:"wrap",marginBottom:"1rem"}}>
               <button type="button" className={`equipment-action-button ${selectedTransport === "chocobo" ? "" : "secondary"}`} aria-pressed={selectedTransport === "chocobo"} onClick={() => { setSelectedTransport("chocobo"); setSelectedRegion(""); }}>Chocobo Routes · 5 Regions</button>
-              <button type="button" className={`equipment-action-button ${selectedTransport === "airship" ? "" : "secondary"}`} aria-pressed={selectedTransport === "airship"} onClick={() => { setSelectedTransport("airship"); setSelectedRegion(""); }}>Guild Airship · 3 Regions</button>
+              <button type="button" className={`equipment-action-button ${selectedTransport === "airship" ? "" : "secondary"}`} aria-pressed={selectedTransport === "airship"} onClick={() => { setSelectedTransport("airship"); setSelectedRegion(""); }}>Guild Airship · 6 Regions</button>
             </div>
             {selectedTransport === "airship" ? (
               <div className="expedition-specialization-card">
                 <div><span className="slot-label">Beyond the Known World</span><h3>{data?.airship?.built ? "Guild Airship Ready" : "Guild Airship Not Yet Constructed"}</h3></div>
                 <p className="muted">Requires the shared Expedition Board and completed Guild Airship. Every player explores independently; a Chocobo is not required for Airship routes.</p>
                 <div className="expedition-specialization-effects">{(data?.airship?.upgrades || []).map((upgrade) => <span key={upgrade.id}>{upgrade.name} T{number(upgrade.tier)}</span>)}</div>
-                <small>Sky Atlas · {number(data?.airship_atlas?.regions_mastered || 0)} / 3 regions mastered · {number(data?.airship_atlas?.overall_progress || 0)}% surveyed</small>
+                <small>Sky Atlas · {number(data?.airship_atlas?.regions_mastered || 0)} / 6 regions mastered · {number(data?.airship_atlas?.overall_progress || 0)}% surveyed</small>
               </div>
             ) : null}
             <div className="expedition-readiness-grid">

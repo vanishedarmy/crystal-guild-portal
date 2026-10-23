@@ -7,7 +7,7 @@ const PUBLIC = new URL("../public/", import.meta.url);
 
 const REGIONS = [
   "greenwind_plains", "whispering_caverns", "sable_coast", "magitek_wastes",
-  "crystal_expanse", "riftlands", "interdimensional_rift", "omega_ruins",
+  "crystal_expanse", "riftlands", "interdimensional_rift", "omega_ruins", "eclipsed_singularity_citadel",
 ];
 
 test("Retro Phase II loads after the Phase 1 foundation", async () => {
@@ -19,7 +19,7 @@ test("Retro Phase II loads after the Phase 1 foundation", async () => {
   assert.match(css, /image-rendering: pixelated/);
 });
 
-test("all eight live regions have standalone production artwork", async () => {
+test("all nine live regions have standalone production artwork", async () => {
   for (const id of REGIONS) {
     const url = new URL(`retro-phase-ii/regions-hd/${id}.webp`, PUBLIC);
     await access(url);

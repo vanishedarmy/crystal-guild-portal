@@ -1,0 +1,52 @@
+{
+  "release": "1.9.9-skybound-singularity",
+  "existing_airship_regions": [
+    "shattered_sky_isles",
+    "aetherstorm_expanse",
+    "forgotten_dominion"
+  ],
+  "new_airship_regions": [
+    "emberglass_caldera",
+    "frostveil_observatory",
+    "gilded_mirage_expanse"
+  ],
+  "new_world_superboss_region": "eclipsed_singularity_citadel",
+  "world_superboss": "eclipse_sovereign",
+  "assets": [
+    {
+      "region_id": "shattered_sky_isles",
+      "path": "/expeditions/airship-shattered-sky-isles.webp",
+      "source_artwork": "wide_epic_fantasy_landscape_scene_a_breathtaking_1.png"
+    },
+    {
+      "region_id": "aetherstorm_expanse",
+      "path": "/expeditions/airship-aetherstorm-expanse.webp",
+      "source_artwork": "epic_fantasy_steampunk_airship_scene_in_a_dramatic_3_batch_2.png"
+    },
+    {
+      "region_id": "forgotten_dominion",
+      "path": "/expeditions/airship-forgotten-dominion.webp",
+      "source_artwork": "a_wide_epic_fantasy_landscape_scene_in_a_bright_2_batch_1.png"
+    },
+    {
+      "region_id": "emberglass_caldera",
+      "path": "/expeditions/airship-emberglass-caldera.webp",
+      "source_artwork": "epic_fantasy_landscape_a_dramatic_high_detail_fa_4_batch_3.png"
+    },
+    {
+      "region_id": "frostveil_observatory",
+      "path": "/expeditions/airship-frostveil-observatory.webp",
+      "source_artwork": "epic_fantasy_landscape_concept_art_wide_cinematic_5_batch_4.png"
+    },
+    {
+      "region_id": "gilded_mirage_expanse",
+      "path": "/expeditions/airship-gilded-mirage-expanse.webp",
+      "source_artwork": "wide_cinematic_fantasy_concept_art_scene_of_a_sky_6_batch_5.png"
+    },
+    {
+      "region_id": "eclipsed_singularity_citadel",
+      "path": "/retro-phase-ii/regions-hd/eclipsed_singularity_citadel.webp",
+      "source_artwork": "epic_fantasy_sci_fi_landscape_wide_cinematic_scene_7_batch_6.png"
+    }
+  ]
+}

@@ -420,6 +420,19 @@ h1 {
   color: var(--warning);
 }
 
+/* Current adventures supersede legacy Ready / Camp notices in profiles. */
+.status-badge.on_hunt,
+.status-badge.on_expedition,
+.status-badge.in_venture,
+.status-badge.in_dungeon {
+  color: var(--warning);
+}
+
+.status-badge.in_battle,
+.status-badge.in_raid {
+  color: var(--success);
+}
+
 .status-badge.ko {
   color: var(--danger);
 }

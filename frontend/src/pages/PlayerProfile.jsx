@@ -9,8 +9,9 @@ import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
 import { useLiveUpdates } from "../hooks/useLiveUpdates.js";
 import Overview from "../player/Overview.jsx";
-import { duration, number, pct } from "../utils/formatters.js";
-import { campDeadlineMs, campRemainingSeconds } from "../utils/campCountdown.js";
+import { number, pct } from "../utils/formatters.js";
+import { campRemainingSeconds } from "../utils/campCountdown.js";
+import { statusDeadlineMs, currentActivityLabel } from "../utils/activityStatus.js";
 import { handleTabListKeyDown } from "../utils/tabKeyboard.js";
 
 const DetailDialog = lazy(() => import("../components/DetailDialog.jsx"));
@@ -92,7 +93,7 @@ const TAB_GROUPS = [
   ["Progress & Legacy", ["bestiary", "relics", "achievements", "records", "trophies", "seasonal"]],
 ];
 
-// Camp has a live second-based countdown. Memoizing the active module prevents
+// Camp and active adventures use a live countdown. Memoizing the active module prevents
 // that parent timer from rerendering hundreds of shop, market and inventory cards.
 const StableProfileModule = memo(function StableProfileModule({ Module, data, overview, onDetail, onRefresh, onNavigate }) {
   return <Module data={data} overview={overview} onDetail={onDetail} onRefresh={onRefresh} onNavigate={onNavigate} />;
@@ -174,7 +175,7 @@ export default function PlayerProfile() {
 
   useEffect(() => {
     const receivedAt = Date.now();
-    const deadline = campDeadlineMs(overview?.status, receivedAt);
+    const deadline = statusDeadlineMs(overview?.status, receivedAt);
     setCampDeadline(deadline);
     setClockNow(receivedAt);
     if (!deadline) return undefined;
@@ -205,9 +206,7 @@ export default function PlayerProfile() {
   const displayedStatusState = overview?.status?.state === "resting" && campDeadline && campRemaining <= 0
     ? "ready_after_rest"
     : overview?.status?.state;
-  const statusText = overview?.status?.state === "resting"
-    ? (campRemaining > 0 ? `${overview.status.label} · ${duration(campRemaining)}` : "Rest Complete")
-    : overview?.status?.label;
+  const statusText = currentActivityLabel(overview?.status, campRemaining);
 
   return (
     <>

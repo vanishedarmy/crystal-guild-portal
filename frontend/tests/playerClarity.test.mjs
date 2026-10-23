@@ -46,7 +46,8 @@ test("streamer dashboard explains tools in plain language while preserving its l
 
 test("camp rest status counts down locally between Portal syncs", async () => {
   const profile = await readFile(new URL("pages/PlayerProfile.jsx", SRC), "utf8");
-  assert.match(profile, /campDeadlineMs/);
+  assert.match(profile, /statusDeadlineMs/);
+  assert.match(profile, /currentActivityLabel/);
   assert.match(profile, /campRemainingSeconds/);
   assert.match(profile, /setInterval/);
   assert.doesNotMatch(profile, /duration\(overview\.status\.remaining_seconds\)/);

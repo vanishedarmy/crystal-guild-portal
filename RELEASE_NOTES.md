@@ -1,3 +1,7 @@
+## v1.9.8 – Live Adventure Status / Raid Overlay Hotfix
+
+Player profile status now prioritizes active Hunts, Ventures, Raids, World Events, Expeditions and Dungeon activity over old Ready/Camp notices and shows a live countdown when the Bot supplies a deadline. The Web overlay already supports the joined Raid roster; the matching Bot Portal-sync hotfix fixes the missing broadcast fields. No artwork has been changed and source frontend must be rebuilt after applying the Web patch. Same release version, no database migration.
+
 # v1.9.7 — Queen’s Blood
 
 Queen’s Blood joins Crystal Guild in its own Card Hall, separate from Gold Saucer and Triple Triad.

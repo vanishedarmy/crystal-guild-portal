@@ -1,3 +1,4 @@
+import { itemArtworkPath } from "./itemArtwork.js";
 const RELIC_ART_BASE = "/retro-phase-iii/relic-weapons-v2";
 
 const RELIC_IDS = new Set([
@@ -40,7 +41,16 @@ export function relicArtworkStage(relic = {}, stageOverride = null) {
 }
 
 export function relicArtworkPath(relic = {}, stageOverride = null) {
-  const id = slug(relic.id || relic.relic_id || relic.name);
+  // Ultimate relics have their own illustrated Lv.90/95/99 forms.
+  // The old UI deliberately reused classic Zenith art, which is no longer needed.
+  if (relic.tier === "ultimate") {
+    const relicId = slug(relic.id || relic.relic_id || "");
+    const stage = relicArtworkStage(relic, stageOverride);
+    const suffix = { 1: "awakened", 2: "transcendent", 3: "eternal" }[stage];
+    const art = itemArtworkPath({ id: `${relicId}_${suffix}` });
+    if (art) return art;
+  }
+  const id = slug(relic.artwork_relic_id || relic.id || relic.relic_id || relic.name);
   if (!RELIC_IDS.has(id)) return "";
   const stage = relicArtworkStage(relic, stageOverride);
   return `${RELIC_ART_BASE}/${id}_${STAGE_SLUGS[stage]}.webp`;

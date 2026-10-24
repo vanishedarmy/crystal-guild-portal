@@ -11,20 +11,21 @@ const FILTERS = [
   ["ready", "Ready to awaken"],
   ["in_progress", "In progress"],
   ["not_started", "Not started"],
-  ["complete", "Zenith complete"],
+  ["complete", "Completed"],
 ];
 
 const STATUS_LABELS = {
   ready: "Ready to awaken",
   in_progress: "In progress",
   not_started: "Not started",
-  complete: "Zenith complete",
+  complete: "Completed",
 };
 
 export default function Relics({ data, onDetail }) {
   const relics = Array.isArray(data?.relics) ? data.relics : [];
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const [tier, setTier] = useState("all");
   const [sort, setSort] = useState("job");
   const summary = data?.summary || {};
   const complete = summary.complete ?? relics.filter((relic) => relic.completed).length;
@@ -34,19 +35,19 @@ export default function Relics({ data, onDetail }) {
   const totalStages = summary.total_stages ?? relics.reduce((count, relic) => count + Number(relic.total_stages || 0), 0);
 
   const visible = useMemo(
-    () => filterAndSortRelics(relics, { query, filter, sort }),
-    [filter, query, relics, sort],
+    () => filterAndSortRelics(relics.filter((relic) => tier === "all" || (relic.tier || "classic") === tier), { query, filter, sort }),
+    [filter, query, relics, sort, tier],
   );
 
   return (
     <section className="panel relic-arsenal-panel">
       <div className="panel-title-row">
-        <div><p className="eyebrow">18-Job Collection · Three Stages Each</p><h2>Relic Arsenal</h2></div>
-        <div className="context-help-actions"><ContextHelp topic="relics" /><span className="small-badge">{number(complete)} / {number(relics.length)} Zenith</span></div>
+        <div><p className="eyebrow">18 Jobs · Classic &amp; Ultimate · Three Stages Each</p><h2>Relic Arsenal</h2></div>
+        <div className="context-help-actions"><ContextHelp topic="relics" /><span className="small-badge">{number(complete)} / {number(relics.length)} Complete</span></div>
       </div>
-      <p className="relic-introduction">Follow your weapon from Dormant through Awakening to Zenith. Select a Relic to see its full requirements, materials, Gil and Seal costs, and the stats of every weapon form.</p>
+      <p className="relic-introduction">Classic Relics advance from Dormant to Zenith. Unlock a new Job-specific Ultimate Relic at character Lv.90 after mastering its Classic Zenith form; forge three new forms through Lv.99. Select a weapon to inspect every requirement, material, cost and stat.</p>
       <div className="relic-overview-stats" aria-label="Relic collection progress">
-        <div><strong>{number(complete)}<span> / {number(relics.length)}</span></strong><small>Zenith completed</small></div>
+        <div><strong>{number(complete)}<span> / {number(relics.length)}</span></strong><small>Relics completed</small></div>
         <div><strong>{number(ready)}</strong><small>Ready to awaken</small></div>
         <div><strong>{number(active)}</strong><small>Lines in progress</small></div>
         <div><strong>{number(earned)}<span> / {number(totalStages)}</span></strong><small>Stages earned</small></div>
@@ -57,6 +58,7 @@ export default function Relics({ data, onDetail }) {
         <p>Raise the matching Job, complete each stage's combat or Hunt objectives, and collect the listed materials, Gil, and Hunt Seals. Once the current stage is ready, use <code>!awaken &lt;Relic name&gt;</code> in chat when you are not in a Solo Venture or Dungeon. Each stage grants a new weapon form; advancement never replaces your existing inventory automatically.</p>
       </div>
       <div className="relic-controls">
+        <label>Relic tier<select value={tier} onChange={(event) => setTier(event.target.value)}><option value="all">Classic + Ultimate</option><option value="classic">Classic Relics</option><option value="ultimate">Ultimate Relics · Lv.90+</option></select></label>
         <label>Search weapons or Jobs<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Relic name, Job or stage" /></label>
         <label>Show<select value={filter} onChange={(event) => setFilter(event.target.value)}>{FILTERS.map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
         <label>Sort<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="job">Job name</option><option value="ready">Ready first</option><option value="progress">Most progress</option></select></label>
@@ -71,10 +73,10 @@ export default function Relics({ data, onDetail }) {
               <div className="relic-card-heading"><span className="slot-label">{relic.job} Relic</span><span className={`relic-state-tag ${status}`}>{STATUS_LABELS[status]}</span></div>
               <div className="relic-name">{relic.name}</div>
               {relic.description ? <p className="relic-card-lore">{relic.description}</p> : null}
-              <div className="card-meta">Stage {number(relic.stage)} / {number(relic.total_stages)}{relic.next_stage ? ` · Next: ${relic.next_stage}` : " · Zenith"}</div>
+              <div className="card-meta">Stage {number(relic.stage)} / {number(relic.total_stages)}{relic.next_stage ? ` · Next: ${relic.next_stage}` : (relic.tier === "ultimate" ? " · Eternal" : " · Zenith")}</div>
               <div className="relic-progress"><ProgressBar value={pct(relic.stage, relic.total_stages)} /></div>
               <p className="relic-card-objective">{nextRelicObjective(relic)}</p>
-              {relic.final_reward ? <div className="relic-card-reward"><span>Zenith · Lv. {number(relic.final_reward.min_level)}</span><span>{formatBonuses(relic.final_reward.bonuses)}</span></div> : null}
+              {relic.final_reward ? <div className="relic-card-reward"><span>{relic.tier === "ultimate" ? "Eternal" : "Zenith"} · Lv. {number(relic.final_reward.min_level)}</span><span>{formatBonuses(relic.final_reward.bonuses)}</span></div> : null}
               <span className="relic-card-detail-link">View all stages &amp; weapon stats →</span>
             </ClickableCard>
           );

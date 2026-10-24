@@ -1018,7 +1018,7 @@
         Items &amp; Equipment
        </span>
        <span class="catalog-launch-meta">
-        404 entries
+        618 entries
        </span>
        <span class="catalog-launch-action">
         Open Catalog
@@ -1033,13 +1033,19 @@
         Items &amp; Equipment
        </h2>
        <p class="lead">
-        The complete item catalog, organized by level band and class/job: consumables, materials, weapons, armor, accessories and raid trophies.
+        The full v1.9.91 item catalog (618 entries), organized by level band and class/job: consumables, materials, weapons, armor, accessories and raid trophies.
        </p>
+       <div class="callout" id="equipment-expansion-1991"><b>v1.9.91 — Equipment Expansion:</b> 173 newly illustrated Lv.70–99 equipment pieces: 119 regular upgrades and 54 Ultimate Relic forms. The catalog below contains their exact level requirements, Job restrictions, rarity, stats and image. Every new illustration is distinct; no generic armour, weapon, or ring substitutes.</div>
+       <div class="grid">
+         <div class="card"><h3>Gear beyond Lv.65</h3><p>New progression tiers span Zephyr (Lv.70), Mirage (Lv.75), Astral (Lv.80), Eclipseforged (Lv.85), Ascendant (Lv.90), Singularity (Lv.95), and Paragon (Lv.99). Equipment remains subject to the required character level and listed Job restrictions.</p></div>
+         <div class="card"><h3>Where to get new gear</h3><p>Check your personal Moogle Emporium stock, purchase eligible items, or craft matching recipes at the Guild Blacksmith with the listed ingredients. Materials are earned through higher-tier hunts and expeditions. Inventory stock varies; not every item is guaranteed in every shop rotation.</p></div>
+         <div class="card"><h3>Quick Twitch gear commands</h3><p>Use <code>!buyweapon</code>, <code>!buyarmor</code>, and <code>!buyaccessory</code> to choose and equip appropriate items from current stock. These commands respect Job, level, available Gil and existing equipment; insufficient funds do not trigger a purchase. Use <code>!shop</code> or the Portal for specific stock.</p></div>
+       </div>
        <div class="callout">
         <b>Portal character controls:</b> If you sign in with Twitch and open your own Adventurer profile, you can manage Jobs and Masteries, equipment and recovery, shop through the Moogle Emporium, contribute to Fellowship projects, craft, forge, and resynthesize gear at the Guild Blacksmith, claim Daily Guild Provisions, and use the <b>Adventure Board</b> for interactive Solo Ventures, Expeditions, Dungeons, Camp, travel, and Hunts. <b>Stream Activities</b> keeps live Stream Ventures, Trials, and Raids together. Twitch chat remains fully supported, while signed-in participants can also join active rallies and queue their live round actions from the Portal; successful Portal commands are echoed back into stream chat by Crystal Guild. The shared <b>Moogle Emporium Annex</b> is a one-time Fellowship construction project; once completed, every personal Emporium rotation gains a fixed +2 Weapons, +4 Armor & Accessories, and +6 Items stock bonus. The <b>Moogle Trading Post</b> is a separate Fellowship Level 1 service built with 25,000 Gil, 3 Mythril Ore, and 15 completed Ventures; it supports fixed-price player listings with a 2% listing fee and 5% completed-sale tax. Crystal Guild checks identity, cooldowns, requirements, resources, and availability before applying any change.
        </div>
        <div class="toolbar item-catalog-toolbar">
-        <input class="search" id="itemSearch" placeholder="Search items"/>
+        <input class="search" id="itemSearch" placeholder="Search all 618 items"/>
         <select class="select" id="itemType">
          <option value="">
           All item types
@@ -1118,7 +1124,7 @@
        Recipes turn monster drops into useful items and equipment. Some recipes are known from the start; others must be discovered. Rare drops use bad-luck protection. Selling returns 70% of material value, 50% of gear value and 40% of consumable value.
       </p>
       <div class="callout">
-       <b>Crafting Reforged (v1.9.4):</b> The signed-in Blacksmith now includes the Crafting Workbench: 183 recipes across field items, weapons, armor, and accessories. Search by recipe, output, ingredient, or Job; filter by craftability and favorites; inspect exact material shortages, ingredient sources, gear statistics, and batch costs. Comfortable text, high contrast, keyboard-friendly controls, and a phone-sized recipe detail view improve readability. Your original recipes and discoveries remain intact. Forge upgrades and resynthesis are still separate tabs.
+       <b>Crafting Reforged (v1.9.4):</b> The signed-in Blacksmith now includes the Crafting Workbench: 302 recipes across field items, weapons, armor, and accessories. Search by recipe, output, ingredient, or Job; filter by craftability and favorites; inspect exact material shortages, ingredient sources, gear statistics, and batch costs. Comfortable text, high contrast, keyboard-friendly controls, and a phone-sized recipe detail view improve readability. Your original recipes and discoveries remain intact. Forge upgrades and resynthesis are still separate tabs.
       </div>
       <div class="grid" id="recipeGrid">
       </div>
@@ -1200,10 +1206,11 @@
        Relic Weapons
       </h2>
       <p class="lead">
-       Eighteen three-stage endgame weapon questlines — one for every playable Job. Select any Relic to see its requirements, costs and rewards from Dormant &rarr; Awakened
-       &rarr; Zenith.
+       Thirty-six three-stage weapon questlines across 18 playable Jobs: 18 Classic paths (Dormant → Awakened → Zenith) and 18 Ultimate paths (Awakening Lv.90 → Transcendence Lv.95 → Eternal Lv.99). Select a Relic for exact objectives, costs, materials, and item artwork.
       </p>
+      <div class="callout" id="ultimate-relic-guide"><b>Ultimate Relics — Lv.90 onward:</b> Master the matching Job (JLv.50) and complete its Classic Zenith weapon to begin Awakening at character Lv.90. The Transcendence form begins at Lv.95 and requires three unique S-rank Hunt clears; the Eternal form begins at Lv.99 and requires defeating the Eclipse Sovereign. Each stage also has specific Gil, Hunt Seal and material costs shown in its dossier. These are <b>quest-earned</b> weapons, not ordinary shop stock. Check <code>!relics ultimate</code>, <code>!relic &lt;name&gt;</code>, and advance ready stages with <code>!awaken &lt;name&gt;</code>.</div>
       <div class="toolbar">
+       <label>Relic tier <select class="select" id="relicTier"><option value="">Classic + Ultimate</option><option value="classic">Classic</option><option value="ultimate">Ultimate Lv.90+</option></select></label>
        <input class="search" id="relicSearch" placeholder="Search Relics, Jobs or requirements"/>
        <select class="select" id="relicJob">
         <option value="">

@@ -1,5 +1,17 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.91", name: "Equipment Expansion",
+    title: "173 new equipment illustrations across endgame gear and Ultimate Relics",
+    summary: "Every Lv.70–99 item introduced in the Equipment Expansion has its own artwork, from Zephyr through Paragon and all 54 Ultimate Relic forms. The Player Guide now includes the expanded equipment catalog and both Relic tiers.",
+    highlights: [
+      { title: "173 individually illustrated items", description: "All 119 regular endgame items and 54 Ultimate Relic forms have dedicated artwork in inventory, equipment, shops, crafting, and the Player Guide." },
+      { title: "Each Relic form has its own appearance", description: "Awakening, Transcendence, and Eternal forms are shown in the Relic Arsenal and stage details instead of reusing Zenith illustrations." },
+      { title: "Player Guide refreshed", description: "Find the latest level 70–99 shop and crafting requirements, Ultimates, Job restrictions, and Twitch gear commands in the Guide." },
+      { title: "Characters and items preserved", description: "This is an artwork and guide integration release; it does not reset characters, Relic progress, shop stock, inventory or saved adventures." },
+    ],
+    action: { tab: "inventory", label: "Review Equipment" },
+  },
+  {
     version: "v1.9.9", name: "Skybound Singularity",
     title: "Three new skies and a threat beyond Omega",
     summary: "Six Airship Expedition regions now span the skies, while the Eclipsed Singularity Citadel rises beyond Omega Ruins on the World Map.",

@@ -1,1 +1,1 @@
-__version__ = "1.9.8-airship-expedition"
+__version__ = "1.9.91-equipment-expansion"

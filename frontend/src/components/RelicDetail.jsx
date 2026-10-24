@@ -89,21 +89,21 @@ export default function RelicDetail({ relic = {} }) {
       preview_missing: true,
     }));
   return <div className="detail-body relic-detail-body">
-    <p className="eyebrow">{relic.job} · Three-stage Relic</p>
+    <p className="eyebrow">{relic.job} · {relic.tier === "ultimate" ? "Ultimate Lv.90+" : "Classic"} · Three-stage Relic</p>
     <h2>{relic.name}</h2>
     {relic.description ? <p className="relic-lore"><span className="data-label">Armory note</span>{relic.description}</p> : null}
     <div className="relic-detail-hero">
       <RelicArtwork relic={relic} className="detail-relic-artwork" eager decorative={false} />
       <div className="relic-detail-hero-copy">
-        <strong>{relic.completed ? "Zenith mastered" : relic.ready ? "Ready to awaken" : relic.stage > 0 ? "Forging in progress" : "Awaiting the first stage"}</strong>
+        <strong>{relic.completed ? (relic.tier === "ultimate" ? "Eternal mastered" : "Zenith mastered") : relic.ready ? "Ready to awaken" : relic.stage > 0 ? "Forging in progress" : "Awaiting the first stage"}</strong>
         <span>Stages earned: {number(relic.stage)} / {number(relic.total_stages)}</span>
         <ProgressBar value={pct(relic.stage, relic.total_stages)} />
         {relic.current_reward ? <span>Current unlocked form: {relic.current_reward}</span> : null}
         {relic.next_stage ? <span>Next objective: {relic.next_stage}</span> : null}
-        {relic.completed_at ? <span>Zenith earned: {relic.completed_at.replace("T", " ").replace("Z", " UTC")}</span> : null}
+        {relic.completed_at ? <span>{relic.tier === "ultimate" ? "Eternal" : "Zenith"} earned: {relic.completed_at.replace("T", " ").replace("Z", " UTC")}</span> : null}
       </div>
     </div>
-    {relic.final_reward ? <section className="relic-detail-final"><div className="data-label">{relic.completed ? "Zenith weapon" : "Zenith preview"}</div><WeaponReward reward={relic.final_reward} /></section> : null}
+    {relic.final_reward ? <section className="relic-detail-final"><div className="data-label">{relic.completed ? (relic.tier === "ultimate" ? "Eternal weapon" : "Zenith weapon") : (relic.tier === "ultimate" ? "Eternal preview" : "Zenith preview")}</div><WeaponReward reward={relic.final_reward} /></section> : null}
     <section className="relic-detail-roadmap" aria-label="Weapon evolution path">
       <div className="data-label">Evolution path</div>
       <div className="relic-roadmap">{path.map((step) => <span className={`relic-roadmap-step ${step.state}`} key={step.number}>{step.number}. {step.name}</span>)}</div>

@@ -1,3 +1,4 @@
+import { equipmentExpansionArtworkPath } from "./equipmentExpansionArtwork.js";
 const ITEM_ART_BASE = "/retro-phase-iii/item-icons-v1";
 const ITEM_MATERIAL_BASE = "/retro-phase-ii/item-materials-v5";
 const MATERIAL_ITEM_BASE = "/retro-phase-iii/material-icons-v1";
@@ -529,6 +530,8 @@ export function itemArtworkId(item = {}) {
 }
 
 export function itemArtworkPath(item = {}) {
+  const expansion = equipmentExpansionArtworkPath(item);
+  if (expansion) return expansion;
   if (normalizeItemId(item.id || item.item_id) === "spooky_supply_cache") return "/seasonal/halloween-2026/spooky-supply-cache.webp";
   const direct = itemArtworkId(item);
   if (direct) return `${ITEM_ART_BASE}/${direct}.webp`;

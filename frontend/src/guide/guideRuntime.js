@@ -481,14 +481,14 @@ $('#sealRows').innerHTML=D.seal_shop.map(s=>`<tr><td><span class="table-primary"
 const relicJobs=[...new Set(D.relics.map(r=>r.job_id))].sort((a,b)=>jobName(a).localeCompare(jobName(b)));
 relicJobs.forEach(id=>$('#relicJob').insertAdjacentHTML('beforeend',`<option value="${esc(id)}">${esc(jobName(id))}</option>`));
 function relicOverview(r){let final=r.stages[r.stages.length-1],finalItem=byId(D.items,final.reward_item),art=finalItem?itemArtworkPath(finalItem):'';return `<button type="button" class="card relic-overview searchable" data-open-relic="${esc(r.id)}" aria-label="Open ${esc(r.name)}
-  Relic weapon details">${art?`<div class="relic-art-frame"><img src="${esc(art)}" alt="${esc(r.name)} Zenith artwork" loading="lazy" decoding="async"></div>`:''}<div class="statline"><span class="badge gold">${esc(jobName(r.job_id))}</span><span class="badge">3-stage Relic</span></div><h3>${esc(r.name)}</h3><p>${esc(r.description)}</p>
-  <div class="relic-path"><span>Dormant</span><i>→</i><span>Awakened</span><i>→</i><span>Zenith</span></div><p><b>Final form:</b> <span class="gold">${esc(itemName(final.reward_item))}</span></p>
+  Relic weapon details">${art?`<div class="relic-art-frame"><img src="${esc(art)}" alt="${esc(r.name)} final weapon artwork" loading="lazy" decoding="async"></div>`:''}<div class="statline"><span class="badge gold">${esc(jobName(r.job_id))}</span><span class="badge">${r.tier==='ultimate'?'Ultimate · Lv.90+':'Classic · 3 stages'}</span></div><h3>${esc(r.name)}</h3><p>${esc(r.description)}</p>
+  <div class="relic-path">${(r.tier==='ultimate'?['Awakening','Transcendence','Eternal']:['Dormant','Awakened','Zenith']).map((label,i)=>`${i?'<i>→</i>':''}<span>${label}</span>`).join('')}</div><p><b>Final form:</b> <span class="gold">${esc(itemName(final.reward_item))}</span></p>
   <div class="card-spacer"></div><div class="card-open-hint"><span>${r.stages.length} progression stages</span><b>Open Relic →</b></div></button>`;}
-function renderRelics(){let q=$('#relicSearch').value.toLowerCase(),j=$('#relicJob').value;let rs=D.relics.filter(r=>(!j||r.job_id===j)&&([r.name,r.description,jobName(r.job_id),
+function renderRelics(){let q=$('#relicSearch').value.toLowerCase(),j=$('#relicJob').value,t=$('#relicTier')?.value||'';let rs=D.relics.filter(r=>(!t||(r.tier||'classic')===t)&&(!j||r.job_id===j)&&([r.name,r.description,jobName(r.job_id),
   ...(r.stages||[]).flatMap(st=>[st.name,itemName(st.reward_item),...(st.requirements||[]).map(reqText),costText(st.cost)])].join(' ').toLowerCase().includes(q)));
   $('#relicGrid').innerHTML=rs.map(relicOverview).join('')||'<div class="command-empty">No Relic weapons match this filter.</div>';}
-function renderRelicInfo(r){let job=jobName(r.job_id),final=r.stages[r.stages.length-1];infoKicker.textContent='Relic Weapon';infoTitle.textContent=r.name;
-  infoBadges.innerHTML=`<span class="badge gold">${esc(job)}</span><span class="badge">3 stages</span><span class="badge">Zenith: ${esc(itemName(final.reward_item))}</span>`;
+function renderRelicInfo(r){let job=jobName(r.job_id),final=r.stages[r.stages.length-1];infoKicker.textContent=r.tier==='ultimate'?'Ultimate Relic Weapon':'Classic Relic Weapon';infoTitle.textContent=r.name;
+  infoBadges.innerHTML=`<span class="badge gold">${esc(job)}</span><span class="badge">3 stages</span><span class="badge">${r.tier==='ultimate'?'Eternal':'Zenith'}: ${esc(itemName(final.reward_item))}</span>`;
   infoBody.innerHTML=`<section class="info-section"><div class="info-section-title">Relic Identity</div><p>${esc(r.description)}</p><div class="info-actions">
   <button type="button" class="info-action" data-modal-job="${esc(r.job_id)}">Open ${esc(job)} Job Card</button></div></section><section class="info-section"><div class="info-section-title">
   Awakening Path</div><div class="info-stage-list">${r.stages.map(st=>{let reward=byId(D.items,st.reward_item),art=reward?itemArtworkPath(reward):'';return `<article class="info-stage">${art?`<div class="info-stage-art"><img src="${esc(art)}" alt="${esc(itemName(st.reward_item))} artwork" loading="lazy" decoding="async"></div>`:''}<div class="info-stage-content"><div class="info-stage-head"><div><span class="info-kicker">Stage ${st.stage}</span><h3>
@@ -496,7 +496,7 @@ function renderRelicInfo(r){let job=jobName(r.job_id),final=r.stages[r.stages.le
   ${(st.requirements||[]).map(reqText).map(esc).join('<br>')||'None'}</p></div><div class="info-stage-block"><b>Cost</b><p>${esc(costText(st.cost))}</p></div></div><div class="info-reward"><span>
   Stage Reward</span><b>${esc(itemName(st.reward_item))}</b></div></div></article>`}).join('')}</div></section><section class="info-section"><div class="info-section-title">Chat Commands</div>
   <div class="info-command-row"><code class="info-command">!relic ${esc(r.name)}</code><code class="info-command">!awaken ${esc(r.name)}</code></div></section>`;}
-$('#relicSearch').oninput=renderRelics;$('#relicJob').onchange=renderRelics;renderRelics();
+$('#relicSearch').oninput=renderRelics;$('#relicJob').onchange=renderRelics;$('#relicTier').onchange=renderRelics;renderRelics();
 
 // Bosses — independent raid dossiers
 const tiers=[...new Set(D.bosses.map(b=>b.tier))];tiers.forEach(x=>$('#bossTier').insertAdjacentHTML('beforeend',`<option>${esc(x)}</option>`));

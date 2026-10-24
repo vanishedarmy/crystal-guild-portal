@@ -1,4 +1,13 @@
 const MONSTER_PORTRAITS = {
+  // v1.9.91 — new Airship Expedition and post-Omega enemy illustrations.
+  tempest_roc: "/retro-phase-iii/monster-portraits-v1991/tempest_roc.webp",
+  aetherstorm_colossus: "/retro-phase-iii/monster-portraits-v1991/aetherstorm_colossus.webp",
+  dominion_sentinel: "/retro-phase-iii/monster-portraits-v1991/dominion_sentinel.webp",
+  emberglass_wyrm: "/retro-phase-iii/monster-portraits-v1991/emberglass_wyrm.webp",
+  frostveil_astrolabe: "/retro-phase-iii/monster-portraits-v1991/frostveil_astrolabe.webp",
+  mirage_pharaoh: "/retro-phase-iii/monster-portraits-v1991/mirage_pharaoh.webp",
+  eclipse_harbinger: "/retro-phase-iii/monster-portraits-v1991/eclipse_harbinger.webp",
+  singularity_archon: "/retro-phase-iii/monster-portraits-v1991/singularity_archon.webp",
   goblin: "/retro-phase-ii/monster-portraits-v10/goblin.webp",
   wolf: "/retro-phase-ii/monster-portraits-v10/wolf.webp",
   mandragora: "/retro-phase-ii/monster-portraits-v10/mandragora.webp",

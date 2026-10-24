@@ -1,3 +1,8 @@
+## v1.9.91 — Equipment Expansion: Expedition Artwork Integration (2026-10-24)
+- Integrated eight new endgame/airship Bestiary portraits, cinematic Eclipse Sovereign boss art and eight expedition material icons.
+- Hooked all artwork into shared Portal and Player Guide routing, refreshed Guide content, and preserved 173 equipment illustrations.
+- Artwork additions are Web source / static assets only; no Bot gameplay or schema changes.
+
 ## v1.9.91 — Equipment Expansion
 - Integrated all 173 item illustrations (119 regular gear; 54 Ultimate forms) into Web and refreshed Player Guide. Gameplay catalogs and player state remain unchanged.
 

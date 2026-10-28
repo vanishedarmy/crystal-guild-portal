@@ -311,15 +311,6 @@ const WEAPON_ART_BY_ID = new Map([
 ]);
 
 const MATERIAL_ART_BY_ID = new Map([
-  // v1.9.91 — dedicated late-game Expedition and SuperBoss salvage icons.
-  ["skyglass_shard", `${MATERIAL_ITEM_BASE}/skyglass_shard.webp`],
-  ["stormheart_crystal", `${MATERIAL_ITEM_BASE}/stormheart_crystal.webp`],
-  ["dominion_relic", `${MATERIAL_ITEM_BASE}/dominion_relic.webp`],
-  ["emberglass_core", `${MATERIAL_ITEM_BASE}/emberglass_core.webp`],
-  ["frostveil_prism", `${MATERIAL_ITEM_BASE}/frostveil_prism.webp`],
-  ["mirage_hourglass", `${MATERIAL_ITEM_BASE}/mirage_hourglass.webp`],
-  ["singularity_shard", `${MATERIAL_ITEM_BASE}/singularity_shard.webp`],
-  ["eclipse_core", `${MATERIAL_ITEM_BASE}/eclipse_core.webp`],
   // CG-MAT-R01 — verified monster-drop material identities.
   ["wolf_fang", `${MATERIAL_ITEM_BASE}/wolf_fang.webp`],
   ["cactuar_needle", `${MATERIAL_ITEM_BASE}/cactuar_needle.webp`],

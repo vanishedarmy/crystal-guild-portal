@@ -38,7 +38,6 @@ export const BOSS_ART_IDS = new Set([
   "penance",
   "absolute_virtue",
   "yiazmat",
-  "eclipse_sovereign",
 ]);
 
 const BOSS_ART_BY_NAME = new Map([
@@ -82,7 +81,6 @@ const BOSS_ART_BY_NAME = new Map([
   ["penance", "penance"],
   ["absolute virtue", "absolute_virtue"],
   ["yiazmat", "yiazmat"],
-  ["eclipse sovereign", "eclipse_sovereign"],
 ]);
 
 function normalizeBossName(value = "") {
@@ -97,6 +95,5 @@ export function bossArtworkId(boss = {}) {
 
 export function bossArtworkPath(boss = {}) {
   const id = bossArtworkId(boss);
-  if (id === "eclipse_sovereign") return "/retro-phase-iii/boss-art-v1991/eclipse_sovereign.webp";
   return id ? `${BOSS_ART_BASE}/${id}.webp` : "";
 }

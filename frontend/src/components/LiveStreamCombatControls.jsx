@@ -19,11 +19,15 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
   const targets = Array.isArray(controls?.targets) ? controls.targets : [];
   const abilities = Array.isArray(controls?.abilities) ? controls.abilities : [];
   const items = Array.isArray(controls?.items) ? controls.items : [];
+  const limit = controls?.limit || {};
+  const limitTechniques = Array.isArray(limit.techniques) ? limit.techniques : [];
+  const limitTier = limitTechniques.find((tech) => Number(tech.level) === preferredLimitTier) || limitTechniques[limitTechniques.length - 1] || null;
   const actor = controls?.actor || {};
   const selfTarget = targets.find((row) => row.self)?.username || targets.find((row) => !row.ko)?.username || "";
   const [selectedTarget, setSelectedTarget] = useState(selfTarget);
   const [itemGroup, setItemGroup] = useState("healing");
   const [mobilePicker, setMobilePicker] = useState("");
+  const [preferredLimitTier, setPreferredLimitTier] = useState(0);
 
   useEffect(() => {
     if (!selectedTarget || !targets.some((row) => row.username === selectedTarget)) setSelectedTarget(selfTarget);
@@ -63,6 +67,22 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
         {Number(actor.max_mp || 0) > 0 ? <div><span>MP</span><strong>{number(actor.mp)} / {number(actor.max_mp)}</strong><ProgressBar value={pct(actor.mp, actor.max_mp)} className="mp" /></div> : null}
         {Number(actor.max_ap || 0) > 0 ? <div><span>AP</span><strong>{number(actor.ap)} / {number(actor.max_ap)}</strong><ProgressBar value={pct(actor.ap, actor.max_ap)} className="ap" /></div> : null}
       </div>
+
+      <section className={`combat-limit-panel ${limit.ready ? "is-ready" : ""}`} aria-label="Job Limit Break charge">
+        <div className="combat-limit-heading"><strong>LIMIT BREAK</strong><span aria-live="polite">{limit.unlocked ? (limit.ready ? "READY — 100%" : `${number(limit.charge || 0)}% / 100%`) : "Unlocks at Job Lv. 50"}</span></div>
+        <div role="progressbar" aria-label="Limit Break gauge" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Number(limit.charge || 0)} className="combat-limit-track"><div className="combat-limit-fill" style={{ width: `${Math.max(0, Math.min(100, Number(limit.charge || 0)))}%` }} /></div>
+        {limitTier ? <div className="combat-limit-actions">
+          <label className="combat-limit-choice">Technique
+            <select aria-label="Limit Break tier" value={limitTier.level} onChange={(event) => setPreferredLimitTier(Number(event.target.value))}>
+              {limitTechniques.map((tech) => <option key={tech.level} value={tech.level}>Lv.{tech.level} — {tech.name}</option>)}
+            </select>
+          </label>
+          <button type="button" className="combat-limit-activate" disabled={disabled || !limit.ready} onClick={() => onAction?.("limit", String(limitTier.level), "")}>
+            {limit.ready ? `UNLEASH ${limitTier.name}` : `Charging ${limitTier.name}`}
+          </button>
+        </div> : <p className="combat-limit-hint">Your first class-specific Limit Break unlocks at Job Level 50.</p>}
+        {limit.ready && <p className="combat-limit-hint combat-limit-ready-hint">Full gauge! Select your technique and queue it for this round. No MP/AP cost.</p>}
+      </section>
 
       {!controls.can_act && controls.reason ? <p className="live-stream-command-reason">{controls.reason}</p> : null}
 

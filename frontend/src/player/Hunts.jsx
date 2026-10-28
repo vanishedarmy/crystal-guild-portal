@@ -17,6 +17,7 @@ import {
   waitForPortalAction,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
+import LimitGauge from "../components/LimitGauge.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import StatCard from "../components/StatCard.jsx";
@@ -864,6 +865,7 @@ export default function Hunts({ data, overview, onRefresh }) {
                   </div>
                 ) : null}
 
+                <LimitGauge limit={expedition.combat.limit} disabled={Boolean(busy)} onUse={(level) => runRequest(`solo:limit:${level}`, "solo-limit", String(level), (idem) => submitSoloExpeditionAction(`limit:${level}`, csrfToken, idem), "Limit Break complete.")} />
                 <MobileCombatHud
                   enemy={expedition.combat.enemy}
                   player={expedition.combat.player}

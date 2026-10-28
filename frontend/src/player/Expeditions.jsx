@@ -10,6 +10,7 @@ import {
   submitExpeditionRetreat,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
+import LimitGauge from "../components/LimitGauge.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, duration, number, pct, sortBattleItems } from "../utils/formatters.js";
@@ -408,6 +409,7 @@ export default function Expeditions({
                   </article>
                 </div>
                 {active.last_round?.events?.length ? <div className="adventure-combat-note expedition-round-log"><strong>Round {number(active.last_round.round)}</strong>{active.last_round.events.slice(-4).map((line, index) => <span key={`${index}:${line}`}>{line}</span>)}</div> : null}
+                <LimitGauge limit={active.combat.limit} disabled={Boolean(busy)} onUse={(level) => doRequest(`expedition:limit:${level}`, "expedition-action", `limit:${level}:${active.stage}:${active.combat.round}`, (idem) => submitExpeditionAction(`limit:${level}`, csrfToken, idem), "Limit Break complete.")} />
                 <MobileCombatHud
                   enemy={active.combat.enemy}
                   player={active.combat.player}

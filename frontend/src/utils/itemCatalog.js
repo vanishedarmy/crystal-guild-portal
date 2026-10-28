@@ -68,6 +68,9 @@ export function mergeJobsWithCatalog(jobs, guideData) {
   const activeCatalog = guideData?.active_abilities && typeof guideData.active_abilities === "object"
     ? guideData.active_abilities
     : {};
+  const limitCatalog = guideData?.limit_breaks && typeof guideData.limit_breaks === "object"
+    ? guideData.limit_breaks
+    : {};
   if (!catalogJobs.length) return jobs;
 
   const byId = new Map(catalogJobs.filter((job) => job?.id).map((job) => [String(job.id), job]));
@@ -80,6 +83,7 @@ export function mergeJobsWithCatalog(jobs, guideData) {
       abilities: Array.isArray(job?.abilities) ? job.abilities : [],
       passive_abilities: Array.isArray(catalogJob.abilities) ? catalogJob.abilities : [],
       active_abilities: Array.isArray(activeCatalog[catalogJob.id]) ? activeCatalog[catalogJob.id] : [],
+      limit_breaks: Array.isArray(limitCatalog[catalogJob.id]) ? limitCatalog[catalogJob.id] : [],
       mastery: { ...(catalogJob.mastery || {}), ...(job?.mastery || {}) },
     };
   });

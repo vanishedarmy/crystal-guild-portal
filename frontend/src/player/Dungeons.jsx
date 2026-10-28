@@ -8,6 +8,7 @@ import {
   submitDungeonRetreat,
 } from "../api/auth.js";
 import ProgressBar from "../components/ProgressBar.jsx";
+import LimitGauge from "../components/LimitGauge.jsx";
 import JobPortrait from "../components/JobPortrait.jsx";
 import MonsterPortrait from "../components/MonsterPortrait.jsx";
 import { battleAbilityPurpose, battleAbilitySummary, battleItemPurpose, number, pct, sortBattleItems } from "../utils/formatters.js";
@@ -195,7 +196,8 @@ export default function Dungeons({
                     </div>
                   </div>
                   {active.last_round?.events?.length ? <div className="solo-round-log" aria-live="polite"><strong>Round {number(active.last_round.round)}</strong>{active.last_round.events.map((line, index) => <span key={`${index}:${line}`}>{line}</span>)}</div> : null}
-                  <MobileCombatHud
+                  <LimitGauge limit={combat.limit} disabled={Boolean(busy)} onUse={(level) => runRequest(`dungeon:limit:${level}`, "dungeon-limit", String(level), (idem) => submitDungeonAction(active.run_id, active.room?.id, active.revision, `limit:${level}`, csrfToken, idem), "Limit Break complete.")} />
+                <MobileCombatHud
                     enemy={combat.enemy}
                     player={combat.player}
                     disabled={Boolean(busy)}

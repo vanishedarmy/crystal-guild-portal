@@ -1,5 +1,31 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.93", name: "Limit Break Awakening",
+    title: "Limit Breaks awaken — power up your Job to level 99",
+    summary: "Every Job has four signature Limit Breaks at Job Levels 50, 75, 90 and 99. Build your Limit Gauge in battle and unleash a powerful attack, group heal, shield or rally. The previous Job Ascension release also added 169 active abilities and 90 passives — read its full details below.",
+    highlights: [
+      { title: "Four Limit Breaks for every Job", description: "All 18 Jobs gain unique named techniques at JLv.50, 75, 90 and 99 — 72 total. Level 50 remains the first Limit Break and the familiar Job Mastery milestone." },
+      { title: "A charge bar you can actually see", description: "Watch your Limit Gauge fill from 0 to 100% during battles, choose any unlocked tier, and press Unleash when it flashes READY. The gauge resets after your Limit Break resolves." },
+      { title: "Each Job plays differently", description: "Offensive Jobs deliver finishers; White Mage and Sage heal the party; defensive Jobs protect allies; support Jobs bolster the team." },
+      { title: "Available across adventures", description: "Use Limit Breaks in raids, active Ventures, Expeditions, and Dungeons. Twitch chat players can type !limit for their strongest unlocked technique or !limit 50 / 75 / 90 / 99." },
+      { title: "Don't miss Job Ascension", description: "The v1.9.92 update introduced JLv.51–99 progression, 169 new active techniques, 90 passives, classic Black Mage -ga/-ja spells, and White Mage Curaga, Curaja and Arise. See Previous major updates for the full entry." },
+    ],
+    action: { tab: "jobs", label: "Explore Job Abilities" },
+  },
+  {
+    version: "v1.9.92", name: "Job Ascension",
+    title: "18 Jobs advance beyond mastery to level 99",
+    summary: "Job progression now extends to level 99 for all 18 classes. Learn 169 new active abilities and 90 new passives, including iconic high-tier Final Fantasy spell traditions for Black Mage and White Mage. Your existing level-50 Job Mastery and Ultimate Relic progression remain intact.",
+    highlights: [
+      { title: "169 new active abilities", description: "Each of the 18 Jobs learns new combat moves at JLv.52, 58, 64, 70, 76, 82, 88, 94 and 99, plus seven missing pre-50 spells for the Black and White Mages." },
+      { title: "90 new passives", description: "All 18 Jobs earn passive upgrades at JLv.55, 65, 75, 85 and 95, strengthening their established specialties." },
+      { title: "Black Mage spell mastery", description: "Add Firaga, Blizzaga, Thundaga, Firaja, Blizzaja, Thundaja, Meteor and more elemental magic to your arsenal." },
+      { title: "White Mage sacred arts", description: "Cura, Curaga, Curaja, Protectra, Shellra, Esunaga, Arise, Holyga, Regenra and advanced restorative magic continue the classic healing tradition." },
+      { title: "No progress reset", description: "Job Mastery still unlocks at 50. All earlier abilities, cross-Job progression and Ultimate Relic requirements remain compatible with the expanded leveling system." },
+    ],
+    action: { tab: "jobs", label: "Explore Your Job" },
+  },
+  {
     version: "v1.9.91", name: "Equipment Expansion",
     title: "173 new equipment illustrations across endgame gear and Ultimate Relics",
     summary: "Every Lv.70–99 item introduced in the Equipment Expansion has its own artwork, from Zephyr through Paragon and all 54 Ultimate Relic forms. The Player Guide now includes the expanded equipment catalog and both Relic tiers.",

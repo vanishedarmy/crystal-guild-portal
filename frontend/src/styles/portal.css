@@ -15694,3 +15694,32 @@ textarea {
 .expedition-board-panel[data-region="frostveil_observatory"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-frostveil-observatory.webp'); }
 .expedition-region-card[data-region="gilded_mirage_expanse"]::before { background-image: url('/expeditions/airship-gilded-mirage-expanse.webp'); }
 .expedition-board-panel[data-region="gilded_mirage_expanse"]::before { background-image: linear-gradient(90deg, rgba(5, 9, 20, .9), rgba(7, 12, 26, .62)), url('/expeditions/airship-gilded-mirage-expanse.webp'); }
+
+/* v1.9.93 Job Limit Breaks: compact, accessible gauge and prominent action on all screens. */
+.combat-limit-panel{margin:.7rem 0;padding:.7rem .8rem;border:1px solid rgba(231,190,102,.48);border-radius:11px;background:linear-gradient(105deg,rgba(60,38,14,.7),rgba(20,24,45,.93));}
+.combat-limit-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#f4dda3;font-size:.82rem;font-weight:800;letter-spacing:.06em}
+.combat-limit-panel.is-ready{border-color:#ffd16a;box-shadow:0 0 16px rgba(255,188,55,.23),inset 0 0 0 1px rgba(255,213,119,.18)}
+.combat-limit-panel.is-ready .combat-limit-heading span{color:#fff2b8}
+.combat-limit-track{height:14px;border-radius:99px;background:#20202e;margin:.45rem 0 .65rem;border:1px solid rgba(255,224,138,.32);overflow:hidden}
+.combat-limit-fill{height:100%;background:linear-gradient(90deg,#9f5e1d,#e99a31,#ffe186);transition:width .25s ease}
+.combat-limit-panel.is-ready .combat-limit-fill{background:linear-gradient(90deg,#de9b30,#ffda71,#fff4c7)}
+.combat-limit-actions{display:flex;align-items:flex-end;gap:.55rem}
+.combat-limit-choice{display:flex;flex-direction:column;gap:.25rem;min-width:0;flex:1;font-size:.72rem;color:#f1d49c;font-weight:700}
+.combat-limit-choice select{width:100%;min-height:40px;max-width:100%;border:1px solid rgba(243,204,126,.5);border-radius:7px;background:#10182b;color:#fff;padding:.4rem .55rem;font-size:.82rem}
+.combat-limit-activate{flex:1;min-height:40px;padding:.5rem .65rem;border-radius:8px;border:1px solid rgba(255,228,148,.8);background:linear-gradient(180deg,#da982f,#a6681c);color:#1a1009;font-weight:900;font-size:.78rem;cursor:pointer}
+.combat-limit-activate:disabled{background:#423b32;border-color:#706652;color:#e6d2a6;cursor:not-allowed}
+.combat-limit-hint{margin:.35rem 0 0;color:#e1d2b5;font-size:.78rem}
+.combat-limit-ready-hint{font-weight:700;color:#fff1c7}
+@media(max-width:620px){.combat-limit-actions{flex-direction:column;align-items:stretch}.combat-limit-choice,.combat-limit-activate{width:100%}.combat-limit-heading{font-size:.74rem}}
+@media(prefers-reduced-motion:reduce){.combat-limit-fill{transition:none}}
+
+/* v1.9.93: Release history contains full accessible notes, including v1.9.92 Job Ascension. */
+.whats-new-archive-entry{border:1px solid rgba(143,219,255,.16);border-radius:9px;background:rgba(255,255,255,.02);overflow:hidden}
+.whats-new-archive-entry>summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem .75rem;padding:.7rem .85rem;cursor:pointer;color:var(--text)}
+.whats-new-archive-entry>summary strong{color:var(--gold);font-size:.82rem}
+.whats-new-archive-entry>summary span{color:var(--muted);font-size:.82rem}
+.whats-new-archive-entry[open]>summary{border-bottom:1px solid rgba(143,219,255,.13)}
+.whats-new-archive-body{display:grid;gap:.85rem;padding:.85rem}
+.whats-new-archive-body>p{margin:0;color:var(--text);line-height:1.55;font-size:.87rem}
+.whats-new-archive-body .whats-new-action{justify-self:start}
+@media(max-width:620px){.whats-new-archive-body .whats-new-action{justify-self:stretch}}

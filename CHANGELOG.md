@@ -1,3 +1,13 @@
+## v1.9.93 — Limit Break Awakening (18 Jobs · 72 Limit Breaks)
+
+- Every playable Job unlocks four named Limit Break techniques at Job Levels 50, 75, 90 and 99. Job Mastery remains JLv.50, and the v1.9.92 169 active techniques and 90 passive milestones remain available.
+- The Limit Gauge builds during battle, displays 0–100% progress, illuminates when ready, and resets when a Limit Break resolves. Queueing or changing an action in a raid does not waste charge.
+- Limit Break categories are class-aligned: devastating damage, defensive party cover and counterstrike, party healing with high-tier revival, and party inspiration.
+- Commands: `!limit` activates the strongest unlocked technique when charged, or `!limit 50`, `!limit 75`, `!limit 90`, `!limit 99` selects an unlocked tier. The raid overlay shows charge for participating heroes.
+- Portal Solo Ventures, Expeditions and Dungeons also display the gauge and offer a dedicated Limit Break button. The Portal Overview What's New now includes detailed entries for **both** Job Ascension (v1.9.92) and Limit Break Awakening (v1.9.93), with expandable release history.
+- Battle-scoped charge, no MP/AP spend. Backward-compatible persistence; no player table/schema change.
+- Frontend production build and live Twitch/Portal verification are still required before public deployment.
+
 ## v1.9.91 — Equipment Expansion
 - Integrated all 173 item illustrations (119 regular gear; 54 Ultimate forms) into Web and refreshed Player Guide. Gameplay catalogs and player state remain unchanged.
 

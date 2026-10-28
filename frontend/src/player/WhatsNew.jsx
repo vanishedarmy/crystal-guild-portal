@@ -20,12 +20,15 @@ function UpdateHighlights({ highlights }) {
   );
 }
 
+// Each new major release opens once on the Overview, even if an older release
+// was dismissed. After that, preserve the player's open/closed choice.
+const RELEASE_NEWS_KEY = `crystal-guild:overview:whats-new:${MAJOR_UPDATES[0]?.version || "unknown"}`;
 function defaultOpen() {
   try {
-    const stored = window.localStorage?.getItem("crystal-guild:overview:whats-new");
+    const stored = window.localStorage?.getItem(RELEASE_NEWS_KEY);
     if (stored === "open") return true;
     if (stored === "closed") return false;
-    return false;
+    return true;
   } catch {
     return true;
   }
@@ -36,7 +39,7 @@ export default function WhatsNew({ onNavigate }) {
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
-    try { window.localStorage?.setItem("crystal-guild:overview:whats-new", open ? "open" : "closed"); } catch {}
+    try { window.localStorage?.setItem(RELEASE_NEWS_KEY, open ? "open" : "closed"); } catch {}
   }, [open]);
 
   if (!latest) return null;
@@ -77,10 +80,14 @@ export default function WhatsNew({ onNavigate }) {
               <summary>Previous major updates<DetailsPointer /></summary>
               <div className="whats-new-history-list">
                 {previous.map((update) => (
-                  <article key={`${update.version}-${update.name}`}>
-                    <strong>{update.version} · {update.name}</strong>
-                    <span>{update.title}</span>
-                  </article>
+                  <details className="whats-new-archive-entry" key={`${update.version}-${update.name}`}>
+                    <summary><strong>{update.version} · {update.name}</strong><span>{update.title}</span></summary>
+                    <div className="whats-new-archive-body">
+                      <p>{update.summary}</p>
+                      <UpdateHighlights highlights={update.highlights || []} />
+                      {update.action ? <button type="button" className="equipment-action-button secondary whats-new-action" onClick={() => onNavigate?.(update.action.tab)}>{update.action.label}</button> : null}
+                    </div>
+                  </details>
                 ))}
               </div>
             </details>

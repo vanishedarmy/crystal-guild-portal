@@ -4,16 +4,18 @@ import { MAJOR_UPDATES } from "../src/player/whatsNewData.js";
 import { WEB_VERSION } from "../src/version.js";
 import { readFile } from "node:fs/promises";
 
-test("What's New promotes v1.9.3 and preserves the v1.9.2 entry", () => {
+test("What's New promotes v1.9.93 and preserves v1.9.92 Job Ascension details", () => {
   const [latest, previous] = MAJOR_UPDATES;
-  assert.equal(latest.version, "v1.9.3");
+  assert.equal(latest.version, "v1.9.93");
   assert.equal(latest.version, WEB_VERSION);
-  assert.equal(latest.name, "Guild Initiatives");
-  assert.equal(latest.action.tab, "guild_board");
-  assert.equal(latest.highlights.length, 4);
-  assert.match(latest.summary, /Fellowship Contracts/);
-  assert.equal(previous.version, "v1.9.2");
-  assert.equal(previous.name, "Relic Arsenal Overhaul");
+  assert.equal(latest.name, "Limit Break Awakening");
+  assert.equal(latest.action.tab, "jobs");
+  assert.ok(latest.highlights.length >= 4);
+  assert.match(latest.summary, /169 active abilities/);
+  assert.match(latest.summary, /90 passives/);
+  assert.equal(previous.version, "v1.9.92");
+  assert.equal(previous.name, "Job Ascension");
+  assert.match(previous.summary, /Black Mage and White Mage/);
 });
 
 test("What's New action points to the existing Relics page", async () => {

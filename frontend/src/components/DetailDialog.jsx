@@ -115,6 +115,7 @@ function DetailBody({ detail }) {
   if (type === "job") {
     const job = detail.job;
     const activeAbilities = Array.isArray(job.active_abilities) ? job.active_abilities : [];
+    const jobLimits = Array.isArray(job.limit_breaks) ? job.limit_breaks : [];
     const passiveAbilities = Array.isArray(job.passive_abilities) ? job.passive_abilities : (job.abilities || []);
     const level = Number(job.level || 0);
     const ready = (ability) => Boolean(job.owned && level >= Number(ability.level || 0));
@@ -151,6 +152,16 @@ function DetailBody({ detail }) {
                 <span className={`small-badge ${ready(ability) ? "success" : "locked"}`}>{ready(ability) ? "Available" : <span className="lock-requirement"><LockIcon label={`Unlocks at Job Level ${ability.level}`} />JLv. {ability.level}</span>}</span>
               </div>
             )) : <span className="muted">Battle ability reference unavailable.</span>}
+          </div>
+        </section>
+        <section className="detail-section">
+          <div className="data-label">Job Limit Breaks · 50 / 75 / 90 / 99</div>
+          <p className="muted">Fill the Limit Gauge in combat, then use <code>!limit</code> (highest unlocked) or <code>!limit 50</code>, <code>!limit 75</code>, <code>!limit 90</code>, <code>!limit 99</code>. Does not spend MP or AP.</p>
+          <div className="job-detail-ability-list">
+            {jobLimits.map((tech) => <div className={`job-detail-ability ${ready(tech) ? "ready" : "locked"}`} key={tech.id}>
+              <div className="job-detail-ability-head"><strong>JLv. {tech.level} · {tech.name}</strong><span>{ready(tech) ? "Unlocked" : `Unlocks JLv. ${tech.level}`}</span></div>
+              <p>{tech.description}</p>
+            </div>)}
           </div>
         </section>
         <section className="detail-section">

@@ -1,0 +1,137 @@
+/* Crystal Guild v1.1.18 — Retro Environment Pass
+ * Presentation only. Approved transparent pixel-art assets add atmosphere without
+ * reducing information density or body-text readability.
+ */
+:root {
+  --env-crystal-watermark: url("/retro-phase-ii/environment-pass/crystal-watermark.webp");
+  --env-airship: url("/retro-phase-ii/environment-pass/airship-ambient.webp");
+  --env-portal: url("/retro-phase-ii/environment-pass/portal-ambient.webp");
+  --env-crystal-row: url("/retro-phase-ii/environment-pass/crystal-row.webp");
+  --font-retro-ui: "Crystal Display", "Cinzel", "Trajan Pro", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+}
+
+body {
+  background:
+    var(--env-airship) right 3vw top 7.5rem / min(32vw, 460px) auto no-repeat fixed,
+    var(--env-portal) left 1.25rem bottom 1.25rem / 128px auto no-repeat fixed,
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px),
+    radial-gradient(circle at 18% 10%, rgba(58,92,180,.24), transparent 34rem),
+    radial-gradient(circle at 84% 28%, rgba(82,54,146,.17), transparent 30rem),
+    linear-gradient(160deg, #050716 0%, #090e28 52%, #050713 100%);
+  background-size:
+    min(32vw, 460px) auto, 128px auto, 4px 4px, 4px 4px, auto, auto, auto;
+}
+
+/* Give primary page introductions a little world-space without adding height. */
+.hero-intro {
+  position: relative;
+  padding: clamp(.8rem, 2vw, 1.35rem);
+  border: 1px solid rgba(83,101,143,.5);
+  background:
+    linear-gradient(90deg, rgba(8,15,43,.96) 0%, rgba(15,29,69,.86) 58%, rgba(8,15,43,.76) 100%);
+  box-shadow: inset 0 0 0 1px rgba(231,240,255,.13), 4px 4px 0 rgba(0,0,0,.26);
+}
+
+/* Crystal watermark is deliberately faint and limited to large information windows. */
+.panel,
+.profile-header,
+.registry-stat,
+.streamer-panel,
+.portal-action-panel,
+.detail-dialog {
+  background-image:
+    var(--env-crystal-watermark),
+    linear-gradient(145deg, rgba(22,37,84,.98), rgba(8,15,43,.985) 68%) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position: right 12px top 12px, 0 0 !important;
+  background-size: 58px auto, 100% 100% !important;
+}
+
+/* A readable FF-inspired UI voice: display serif only for labels and controls. */
+.site-nav-link,
+.portal-auth-button,
+.primary-link,
+.ghost-button,
+.filter-chip,
+.profile-tabs button,
+.achievement-view-tabs button,
+.job-view-tab,
+.mobile-site-menu a,
+.build-badge,
+.live-status {
+  font-family: var(--font-retro-ui);
+  font-weight: 700;
+  letter-spacing: .045em;
+}
+
+.panel h2,
+.panel h3,
+.streamer-panel-heading h2,
+.profile-header h1 {
+  letter-spacing: .055em;
+}
+
+/* Small crystal procession under page heroes; decorative and non-interactive. */
+.hero-intro::after {
+  content: "";
+  position: absolute;
+  left: clamp(.8rem, 2vw, 1.35rem);
+  bottom: -12px;
+  width: min(330px, 46%);
+  height: 25px;
+  background: var(--env-crystal-row) left center / contain no-repeat;
+  opacity: .56;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  body {
+    background:
+      var(--env-crystal-watermark) right .75rem bottom 1.5rem / 64px auto no-repeat fixed,
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px),
+      radial-gradient(circle at 18% 10%, rgba(58,92,180,.22), transparent 24rem),
+      linear-gradient(160deg, #050716 0%, #090e28 52%, #050713 100%);
+    background-size: 64px auto, 4px 4px, 4px 4px, auto, auto;
+  }
+  .hero-intro {
+    padding: .8rem;
+    background: linear-gradient(145deg, rgba(17,30,70,.98), rgba(7,13,38,.98));
+  }
+  .hero-intro::after { width: 180px; opacity: .42; }
+  .panel, .profile-header, .registry-stat, .streamer-panel, .portal-action-panel, .detail-dialog {
+    background-size: 44px auto, 100% 100% !important;
+  }
+  .panel-title-row::after, .streamer-panel-heading::after { width: min(280px, 76%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { background-attachment: scroll; }
+}
+
+/* v1.2 Beta 2 Hotfix 1 — detail dialogs must open in the current viewport.
+ * The retro window layer previously made .detail-dialog position:relative,
+ * which caused top-layer dialogs to resolve against document layout. Keep
+ * them fixed to the visible viewport instead, so opening a card never
+ * requires scrolling back to where the dialog rendered. */
+.detail-dialog {
+  position: fixed !important;
+  inset: 50% auto auto 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  max-height: min(86dvh, 850px);
+}
+
+@media (max-width: 640px) {
+  .detail-dialog {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    margin: 0;
+    transform: none;
+  }
+}
+
+

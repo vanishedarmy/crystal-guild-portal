@@ -1,0 +1,37 @@
+/* Retro Phase II — Monster Identity Wave 1 */
+.monster-portrait{margin:0;position:relative;display:grid;place-items:center;overflow:hidden;aspect-ratio:2/3;min-width:0;border:1px solid rgba(226,190,100,.46);border-radius:8px;background:linear-gradient(180deg,rgba(15,30,61,.96),rgba(7,16,39,.98));box-shadow:inset 0 0 0 2px rgba(255,255,255,.025)}
+.monster-portrait img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#071027}
+.monster-portrait-fallback{display:grid;place-items:center;align-content:center;gap:5px;width:100%;height:100%;padding:8px;text-align:center;background:radial-gradient(circle at 50% 35%,rgba(117,132,176,.18),transparent 42%),#071027;color:#f0cf78}
+.monster-portrait-fallback span{font-family:var(--display);font-size:clamp(1.5rem,5vw,2.6rem)}
+.monster-portrait-fallback small{max-width:100%;overflow-wrap:anywhere;color:var(--muted);font-size:.68rem}
+.monster-portrait.undiscovered .monster-portrait-fallback{filter:saturate(.2);opacity:.78}
+.bestiary-monster-cell{display:grid;grid-template-columns:46px minmax(0,1fr);align-items:center;gap:10px;min-width:150px}
+.bestiary-monster-thumb{width:46px;border-radius:5px}
+.bestiary-monster-copy{display:grid;gap:2px;min-width:0}.bestiary-monster-copy strong{overflow-wrap:anywhere}.bestiary-monster-copy small{color:var(--muted)}
+.adventure-hunt-card{overflow:hidden}.hunt-card-identity{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;align-items:start}.hunt-card-portrait{width:90px;align-self:start}
+.timed-hunt-identity,.hunt-result-identity{display:grid;grid-template-columns:116px minmax(0,1fr);gap:16px;align-items:start}.timed-hunt-portrait,.hunt-result-portrait{width:116px}
+@media(max-width:720px){.hunt-card-identity{grid-template-columns:72px minmax(0,1fr)}.hunt-card-portrait{width:72px}.timed-hunt-identity,.hunt-result-identity{grid-template-columns:92px minmax(0,1fr)}.timed-hunt-portrait,.hunt-result-portrait{width:92px}}
+@media(max-width:480px){.timed-hunt-identity,.hunt-result-identity{grid-template-columns:1fr}.timed-hunt-portrait,.hunt-result-portrait{width:min(42vw,132px);justify-self:center}.bestiary-monster-cell{grid-template-columns:38px minmax(0,1fr)}.bestiary-monster-thumb{width:38px}}
+
+.solo-enemy-layout{display:grid;grid-template-columns:clamp(74px,17vw,102px) minmax(0,1fr);align-items:start;gap:.9rem;min-width:0}
+.solo-enemy-portrait{width:100%}
+.solo-enemy-copy{display:grid;gap:.55rem;min-width:0}
+.solo-enemy-copy h3,.solo-enemy-copy small{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:480px){.solo-enemy-layout{grid-template-columns:88px minmax(0,1fr)}}
+@media(max-width:360px){.solo-enemy-layout{grid-template-columns:1fr}.solo-enemy-portrait{width:min(100%,150px);justify-self:center}}
+
+/* Bestiary Research Step 2: each unseen monster keeps its own recognisable
+ * portrait shape in the locked visual state. Actual combat/lore gating is
+ * implemented in Step 3; existing purpose-built seasonal art is unchanged. */
+.monster-portrait.undiscovered.has-art { isolation:isolate; }
+.monster-portrait.undiscovered.has-art img {
+  filter:grayscale(1) brightness(.24) contrast(1.48);
+  opacity:.93;
+}
+.monster-portrait.undiscovered.has-art::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 52% 43%,transparent 15%,rgba(2,7,20,.63) 100%),linear-gradient(180deg,rgba(5,10,28,.08),rgba(5,10,28,.30));
+}

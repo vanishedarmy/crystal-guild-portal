@@ -1,0 +1,308 @@
+/* Final presentation layer: compact FF menu windows, grouped information,
+   and touch-safe actions. Combat HUD/drawer geometry stays independently owned. */
+:root {
+  --portal-panel-gap: .6rem;
+  --ui-gap: .55rem;
+  --ui-inset: .7rem;
+  --ui-divider: rgba(166, 195, 235, .2);
+}
+
+.profile-content .panel,
+.streamer-shell .panel { padding: var(--ui-inset); }
+.profile-content :is(.dashboard-grid, .profile-grid, .content-grid, .equipment-grid,
+  .job-grid, .relic-grid, .achievement-grid, .boss-grid) { gap: var(--ui-gap); }
+.profile-content .panel-title-row,
+.streamer-shell .panel-title-row { gap: .4rem .65rem; margin-bottom: .55rem; }
+.profile-content .panel-title-row :is(h2, h3) { margin: 0; line-height: 1.25; }
+.profile-content .panel-title-row .muted { margin: .25rem 0 0; }
+.profile-content :is(.toolbar, .filter-row, .blacksmith-toolbar) { gap: .45rem; margin-block: .55rem; }
+.profile-content :is(.equipment-card, .inventory-card, .job-card, .mastery-card,
+  .achievement-card, .hunt-card, .boss-card) { padding: .65rem; min-width: 0; }
+.profile-content :is(.activity-row, .record-row) { padding-block: .5rem; }
+.profile-content details.panel:not([open]) > summary { margin-bottom: 0; }
+.profile-content :is(.small-badge, .slot-label) { line-height: 1.35; }
+
+/* Small numeric cards share a single ledger surface rather than many windows. */
+.profile-content .stat-grid,
+.profile-content :is(.expedition-active-meta, .expedition-cache-grid,
+  .dungeon-run-status-grid, .solo-result-grid, .saucer-record-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 125px), 1fr));
+  gap: 0;
+  margin-block: 0;
+  border: 1px solid var(--ui-divider);
+  border-radius: 4px;
+  background: rgba(4, 10, 22, .9);
+  overflow: hidden;
+}
+.profile-content .stat-card,
+.profile-content :is(.expedition-active-meta, .expedition-cache-grid,
+  .dungeon-run-status-grid, .solo-result-grid, .saucer-record-grid) > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .15rem;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: .5rem .65rem;
+  border: 0;
+  border-inline-end: 1px solid var(--ui-divider);
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  backdrop-filter: none;
+}
+.profile-content .stat-card::before { display: none; }
+.profile-content .stat-card strong { font-size: 1.1rem; line-height: 1.25; margin: 0; }
+.profile-content .stat-card span { font-size: .7rem; letter-spacing: .04em; }
+.profile-content :is(.expedition-active-meta, .expedition-cache-grid) span {
+  font-size: .7rem; letter-spacing: .025em; line-height: 1.3;
+}
+
+/* Expeditions: current state -> current action -> optional history. */
+.profile-content .expedition-active-shell { gap: .6rem; }
+.profile-content .expedition-board-panel.active .section-collapsible-title-row { padding-bottom: .5rem; }
+.expedition-summary-group { display: grid; gap: .35rem; min-width: 0; }
+.profile-content .expedition-section-heading { padding: .15rem 0; border: 0; margin: 0; }
+.profile-content .expedition-section-heading > small { font-size: .72rem; }
+.profile-content .expedition-loot-line { margin: 0; padding: .45rem .65rem; }
+.profile-content .expedition-travel-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: .5rem .9rem;
+  margin: 0;
+  padding: .65rem .75rem;
+  border-radius: 4px;
+  background: rgba(8, 13, 27, .92);
+}
+.expedition-travel-copy { display: grid; gap: .15rem; min-width: 0; }
+.expedition-travel-copy small { color: var(--muted); font-size: .72rem; }
+.profile-content .expedition-travel-card > strong { margin: 0; font-size: 1.4rem; }
+.profile-content .expedition-travel-card > .progress-track { grid-column: 1 / -1; grid-row: 2; margin: 0; }
+.profile-content .expedition-travel-card > button { grid-column: 3; grid-row: 1; }
+.profile-content .expedition-journal { margin: 0; border-radius: 4px; backdrop-filter: none; }
+.profile-content .expedition-journal-title {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto 24px; align-items: center; gap: .25rem .55rem; padding: .5rem .65rem;
+  cursor: pointer; list-style: none;
+}
+.expedition-journal-title::-webkit-details-marker { display: none; }
+.expedition-journal-title > small { margin-left: auto; }
+.expedition-journal-title .details-collapse-pointer { flex: 0 0 24px; }
+.expedition-journal-preview {
+  grid-column: 1 / -1; margin: 0; padding: 0; color: var(--muted);
+  font-size: .78rem; line-height: 1.45;
+}
+.expedition-journal[open] .expedition-journal-preview { display: none; }
+.profile-content .expedition-journal-entry { padding: .45rem .65rem; }
+.profile-content :is(.expedition-choice-card, .expedition-launch-panel, .expedition-route-picker) {
+  padding: .7rem; margin-top: .5rem;
+}
+.profile-content :is(.expedition-region-grid, .expedition-depth-grid, .expedition-route-grid,
+  .dungeon-card-grid, .hunt-board-grid, .adventure-region-grid) { gap: .5rem; }
+.profile-content :is(.expedition-region-card, .expedition-depth-option, .expedition-route-option) { padding: .65rem; }
+
+/* Overview: two power values in one row and core stats in a tidy ledger. */
+.profile-content .overview-summary-layout { gap: .6rem; }
+.profile-content .overview-summary-block { padding: .65rem; }
+.profile-content .overview-summary-block-heading { margin-bottom: .5rem; gap: .4rem; }
+.profile-content .overview-power-stat {
+  display: grid; grid-template-columns: 1fr auto; gap: .15rem .35rem;
+  padding: .5rem .6rem; border-radius: 4px;
+}
+.profile-content .overview-power-stat > strong { margin: 0; font-size: 1.35rem; grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.profile-content .overview-power-stat > small { margin: 0; }
+.profile-content .overview-core-stat-grid { gap: 0; border: 1px solid var(--ui-divider); border-radius: 4px; overflow: hidden; }
+.profile-content .overview-core-stat {
+  display: flex; justify-content: space-between; align-items: center; gap: .3rem;
+  padding: .45rem .55rem; border: 0; border-radius: 0; border-bottom: 1px solid var(--ui-divider);
+}
+.profile-content .overview-core-stat > strong { margin: 0; }
+.profile-content .overview-progress-list { gap: .45rem; }
+.profile-content :is(.overview-guild-standing, .overview-mastery-compact) { padding: .5rem .6rem; }
+.profile-content .overview-guild-standing { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem .4rem; }
+.profile-content .overview-guild-standing > strong { grid-column: 2; grid-row: 1; font-size: 1rem; }
+.profile-content .overview-guild-standing > span:last-child { grid-column: 1 / -1; }
+.profile-content .overview-mastery-summary { margin-top: .5rem; padding-top: .5rem; }
+.profile-content .overview-subsection-heading { margin-bottom: .35rem; }
+
+/* Existing service board/detail patterns get consistent, smaller gutters. */
+.profile-content .retainer-service-redesign .retainer-hero-panel { padding: .7rem; gap: .7rem; }
+.profile-content .retainer-service-redesign .retainer-office-art { max-height: 110px; }
+.profile-content .retainer-service-redesign .retainer-lead { margin-top: .2rem; }
+.profile-content :is(.retainer-command-profile, .retainer-command-current, .retainer-command-records) { padding: .65rem; }
+.profile-content .retainer-board-layout { gap: .65rem; }
+.profile-content .retainer-assignment-list { gap: .4rem; }
+.profile-content .retainer-assignment-row { padding: .55rem .65rem; }
+.profile-content .retainer-service-redesign .retainer-assignment-row { grid-template-columns: 76px minmax(0, 1fr); gap: .6rem; }
+.profile-content .retainer-service-redesign .retainer-assignment-row-art,
+.profile-content .retainer-service-redesign .retainer-assignment-row-art img { min-height: 64px; height: 72px; }
+.profile-content .retainer-service-redesign .retainer-assignment-detail-art-frame > img { max-height: 170px; }
+.profile-content .retainer-command-records .retainer-stat-grid { gap: 0; }
+.profile-content .retainer-command-records .retainer-stat-grid > div { padding: .4rem .5rem; border-radius: 0; }
+.profile-content .chocobo-companion-command { gap: .7rem; padding: .65rem; border-radius: 4px; }
+.profile-content .chocobo-quick-stats { gap: .4rem; }
+.profile-content .chocobo-quick-stats > div { padding: .5rem .6rem; }
+.profile-content .chocobo-stable-dashboard { gap: .6rem; margin-block: .6rem; }
+.profile-content :is(.chocobo-readiness-card, .chocobo-specialization-panel, .chocobo-management) { padding: .65rem; }
+
+/* Card directories retain their feature-owned column rules. */
+.profile-content .moogle-sell-grid { grid-template-columns: minmax(0, 1fr); }
+.profile-content .current-loadout-summary { padding: .6rem; margin-block: .55rem; }
+.profile-content .current-loadout-grid { gap: .45rem; }
+.profile-content .inventory-action-card .equipment-card-actions { grid-template-columns: 44px minmax(0, 1fr); gap: .4rem; padding: .55rem; }
+.profile-content .inventory-action-card .equipment-compare { grid-column: 1 / -1; }
+.profile-content .inventory-action-card .gear-favorite-button { grid-column: 1; }
+.profile-content .inventory-action-card .equipment-card-actions > .equipment-action-button { grid-column: 2; width: 100%; }
+.profile-content .inventory-action-card .equipment-card-actions:not(:has(.gear-favorite-button)) > .equipment-action-button { grid-column: 1 / -1; }
+.profile-content :is(.moogle-item-card, .moogle-sell-card) { padding: .65rem; }
+.profile-content .moogle-toolbar { padding: .6rem; gap: .5rem; }
+.profile-content .moogle-perk-grid { gap: .45rem; }
+.profile-content :is(.forge-recipe-grid, .crafting-recipe-grid, .resynthesis-grid) { gap: .5rem; }
+.profile-content :is(.forge-recipe-card, .crafting-recipe-card, .resynthesis-card) { padding: .65rem; }
+.profile-content .seasonal-event-rework .seasonal-event-command-hero { gap: .7rem; padding: .7rem; }
+.profile-content .seasonal-event-rework .seasonal-event-banner { min-height: 230px; }
+.profile-content .seasonal-event-rework .seasonal-event-window { margin-block: .5rem; }
+.profile-content .seasonal-event-rework :is(.seasonal-shop-grid-rework, .seasonal-monster-grid-rework,
+  .seasonal-secondary-grid, .seasonal-objective-rework) { gap: .55rem; }
+.profile-content .seasonal-event-rework .seasonal-stat-card { padding: .45rem .6rem; }
+.profile-content .seasonal-keepsake-card { gap: .65rem; padding: .65rem; border-radius: 4px; }
+.profile-content .seasonal-keepsake-card img { width: 64px; height: 64px; }
+.profile-content .seasonal-cache-reward { margin-top: .6rem; padding: .7rem; gap: .4rem; border-radius: 4px; }
+.profile-content .saucer-section-body { padding: .65rem; }
+.profile-content :is(.saucer-prize-grid, .saucer-attraction-grid, .saucer-game-grid) { gap: .55rem; }
+#root .profile-content .moogle-region-copy { padding: .7rem; }
+#root .profile-content .moogle-region-counter > img { min-height: 125px; }
+#root .profile-content .moogle-counter-note { padding-block: .5rem; line-height: 1.45; }
+#root .profile-content .moogle-counter-filters { gap: .5rem; margin-block: .6rem; }
+#root .profile-content .moogle-panel .moogle-item-card { padding: .65rem; gap: .45rem; }
+#root .profile-content .moogle-perk-grid { padding: 0 .65rem .65rem; gap: .45rem; }
+#root .profile-content .moogle-perk-grid article { padding: .6rem; gap: .4rem; }
+.profile-content .relic-arsenal-panel .relic-card-enriched { padding: .65rem; gap: .35rem; }
+.profile-content .relic-overview-stats { gap: .4rem; margin-bottom: .6rem; }
+.profile-content .relic-overview-stats > div { padding: .5rem .6rem; }
+.profile-content .relic-overview-stats strong { font-size: 1.25rem; }
+.profile-content .crafting-workbench.compact :is(.crafting-layout, .crafting-category-grid) { gap: .5rem; }
+.profile-content .crafting-workbench.compact .crafting-detail { padding: .65rem; gap: .5rem; }
+
+@media (max-width: 760px) {
+  :root { --ui-inset: .6rem; --ui-gap: .5rem; }
+  /* Density comes from grouping and whitespace; actions remain easy to tap. */
+  .profile-content :is(button, input:not([type="checkbox"]):not([type="radio"]), select, summary) { min-height: 44px; }
+  .profile-content .stat-grid,
+  .profile-content :is(.expedition-active-meta, .expedition-cache-grid, .dungeon-run-status-grid,
+    .solo-result-grid, .saucer-record-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .profile-content .stat-card,
+  .profile-content :is(.expedition-active-meta, .expedition-cache-grid,
+    .dungeon-run-status-grid, .solo-result-grid, .saucer-record-grid) > div { border-bottom: 1px solid var(--ui-divider); padding: .45rem .55rem; }
+  .profile-content .expedition-active-meta > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .profile-content .expedition-travel-card { grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; }
+  .profile-content .expedition-travel-card > button { grid-column: 1 / -1; grid-row: 3; width: 100%; }
+  .profile-content .expedition-travel-card > strong { font-size: 1.2rem; }
+  .profile-content .expedition-journal-entry { grid-template-columns: 54px minmax(0, 1fr); }
+  .profile-content .expedition-journal-title > small { font-size: .68rem; }
+  .profile-content .retainer-service-redesign .retainer-office-art { max-height: 85px; }
+  .profile-content .overview-power-stat { grid-template-columns: 1fr auto; }
+  .profile-content .seasonal-event-rework .seasonal-secondary-grid { grid-template-columns: minmax(0, 1fr); }
+  .profile-content .seasonal-event-rework .seasonal-event-banner { min-height: 0; max-height: 160px; }
+  #root .profile-content .moogle-region-counter > img { min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-content details { scroll-behavior: auto; }
+}
+
+/* Emporium Sell: size columns against the panel itself, not the viewport.
+   Each card gives its copy the full width before laying out its controls. */
+#root .profile-content .moogle-panel .moogle-sell-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr));
+  gap: .5rem;
+  align-items: start;
+}
+#root .profile-content .moogle-panel .moogle-sell-row {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: .35rem;
+  padding: .55rem .65rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy {
+  min-width: 0;
+  gap: .12rem .5rem;
+  line-height: 1.4;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy:has(.moogle-sell-item-artwork) {
+  grid-template-columns: 44px minmax(0, 1fr);
+}
+#root .profile-content .moogle-panel .moogle-sell-item-artwork {
+  width: 44px;
+  height: 44px;
+  align-self: center;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy > :not(.moogle-sell-item-artwork) {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+#root .profile-content .moogle-panel .moogle-sell-copy .item-name {
+  line-height: 1.35;
+}
+#root .profile-content .moogle-panel .sell-actions {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: end;
+  gap: .5rem;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+#root .profile-content .moogle-panel .sell-actions .moogle-quantity {
+  min-width: 0;
+}
+#root .profile-content .moogle-panel .sell-actions :is(input, button) {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+#root .profile-content .moogle-panel .sell-actions button {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-height: 1.35;
+  height: auto;
+}
+
+#root .profile-content .moogle-panel .moogle-sell-copy:has(.moogle-sell-item-artwork) {
+  grid-template-rows: auto;
+  align-items: center;
+}
+#root .profile-content .moogle-panel .moogle-sell-item-artwork {
+  grid-row: 1;
+}
+#root .profile-content .moogle-panel .moogle-sell-details {
+  display: grid;
+  gap: .15rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .15rem .5rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-heading > * {
+  min-width: 0;
+  max-width: 100%;
+}
+#root .profile-content .moogle-panel .moogle-sell-heading .slot-label {
+  font-size: .65rem;
+}
+#root .profile-content .moogle-panel .moogle-sell-details .moogle-item-brief {
+  display: block;
+  overflow: visible;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+  white-space: normal;
+  overflow-wrap: break-word;
+}

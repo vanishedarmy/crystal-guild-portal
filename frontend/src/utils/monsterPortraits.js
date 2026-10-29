@@ -111,6 +111,13 @@ const MONSTER_PORTRAITS = {
   malboro_sovereign: "/retro-phase-ii/monster-portraits-v10/malboro_sovereign.webp",
   frost_behemoth: "/retro-phase-ii/monster-portraits-v10/frost_behemoth.webp",
   rift_wyrm: "/retro-phase-ii/monster-portraits-v10/rift_wyrm.webp",
+  // v1.9.97 dedicated elite Hunt portraits (individually generated art).
+  mark_the_hollow_sun: "/elite-hunts-197/bosses/mark_the_hollow_sun.webp",
+  mark_pharaohs_last_hour: "/elite-hunts-197/bosses/mark_pharaohs_last_hour.webp",
+  mark_blight_of_omega: "/elite-hunts-197/bosses/mark_blight_of_omega.webp",
+  mark_omega_final_protocol: "/elite-hunts-197/bosses/mark_omega_final_protocol.webp",
+  mark_eclipse_verdict: "/elite-hunts-197/bosses/mark_eclipse_verdict.webp",
+  mark_the_last_singularity: "/elite-hunts-197/bosses/mark_the_last_singularity.webp",
 };
 
 export function normalizeMonsterId(monster) {

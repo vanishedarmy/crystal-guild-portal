@@ -50,6 +50,7 @@ export const CONTEXT_HELP = {
     bullets: [
       "A World Event can appear only while the Twitch stream is live and only when no other Guild-wide battle is active.",
       "World Event level scales from the current highest character and never exceeds that level by more than +10.",
+      "Three Elite World Events join the normal rotation once the highest Guild character reaches levels 80, 85 and 95. Winning these grants an extra guaranteed rare item and a higher premium chance.",
       "These enemies use normal Active Battle rally/actions, but their enhanced stats and rewards make them more dangerous than ordinary encounters.",
     ],
     tip: "World Events ignore your normal Venture cooldown—if a Notorious Monster appears and your hero is otherwise free to fight, you can answer the rally immediately.",

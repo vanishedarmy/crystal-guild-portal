@@ -9,9 +9,9 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const catalog=JSON.parse(read('public/guide-data.json'));
 
-test('Sovereign Encounters is the newest update and prior 50-99 news remains',()=>{
- assert.equal(WEB_VERSION,'v1.9.96');assert.equal(WEB_BUILD,'Sovereign Encounters');
- assert.equal(MAJOR_UPDATES[0].version,'v1.9.96');
+test('Sovereign Encounters remains archived and previous 50-99 news remains',()=>{
+ assert.equal(WEB_VERSION,'v1.9.97');assert.equal(WEB_BUILD,'Elite Hunts & World Events');
+ assert.ok(MAJOR_UPDATES.some(x=>x.version==='v1.9.96' && x.name==='Sovereign Encounters')); 
  assert.ok(MAJOR_UPDATES.some(x=>x.version==='v1.9.92'));
  assert.ok(MAJOR_UPDATES.some(x=>x.version==='v1.9.95'));
  assert.match(read('public/guide-body.html'),/sovereign-encounters-1996/);

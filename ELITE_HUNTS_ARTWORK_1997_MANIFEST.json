@@ -1,0 +1,228 @@
+{
+  "version": "v1.9.97",
+  "name": "Elite Hunts & World Events — Artwork Integrated",
+  "source_notes": "Nine original individual Round 1 boss portraits and S+ badge; three approved separated Round 2 UI images (not independently generated); native source resolution preserved, optimized web variants scaled down only.",
+  "assets": [
+    {
+      "id": "mark_the_hollow_sun",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mark_the_hollow_sun.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mark_the_hollow_sun.webp",
+      "web_url": "/elite-hunts-197/bosses/mark_the_hollow_sun.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "bfa9b90b312077d160131c2562408bec7d3514f8ec73d01f2c3d0726e6100884",
+      "webp_sha256": "d562ae9ce85fb9f0be6336e940d5837cff5d00ddaa77439d8ad907101d387aaa"
+    },
+    {
+      "id": "mark_pharaohs_last_hour",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mark_pharaohs_last_hour.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mark_pharaohs_last_hour.webp",
+      "web_url": "/elite-hunts-197/bosses/mark_pharaohs_last_hour.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "7beb0c6cf88eca40e1c4d98b63be5c3a688484aab4159f0f4f03e975564b574d",
+      "webp_sha256": "8d1f8ae9c98e7cda12d0f8367d6b15e15502716a88a7aa3ee61c0d149ac822f1"
+    },
+    {
+      "id": "mark_blight_of_omega",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mark_blight_of_omega.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mark_blight_of_omega.webp",
+      "web_url": "/elite-hunts-197/bosses/mark_blight_of_omega.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "67dc3a9de41c4120f354f64ea7e065a41a02ca568190053b2650a6cbce417bec",
+      "webp_sha256": "43603fe7f3f858eeaa10b9a6885c7ddc9ea2996fbe03ae21c54fe78918323aef"
+    },
+    {
+      "id": "mark_omega_final_protocol",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mark_omega_final_protocol.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mark_omega_final_protocol.webp",
+      "web_url": "/elite-hunts-197/bosses/mark_omega_final_protocol.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "10c21e5abe1163cb28aa058dfce7acd5fec763a9e7a39cc3059b895dc94815ae",
+      "webp_sha256": "824c68fa2ed28798a2bcf326875c917caae1c246426e1f85f113d0a7c4ffbd17"
+    },
+    {
+      "id": "mark_eclipse_verdict",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mark_eclipse_verdict.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mark_eclipse_verdict.webp",
+      "web_url": "/elite-hunts-197/bosses/mark_eclipse_verdict.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "60192bec774e637ae121336448f7237f1ab761b238e0640ceb2975db0ff84024",
+      "webp_sha256": "7a7cd4e6c0e97f39fa44d5fc0d80c5ef05fd34b61c6e9941074e31162a73c139"
+    },
+    {
+      "id": "mark_the_last_singularity",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mark_the_last_singularity.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mark_the_last_singularity.webp",
+      "web_url": "/elite-hunts-197/bosses/mark_the_last_singularity.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "6b947484333d1815f850e60f4e0edfc8f60af81ac8f6d4b14a2fb354a6c8da6e",
+      "webp_sha256": "64f9a9106d0ec50fcccd875d451a75cf4efd9ca2334d7fcf63f0f8736d4d6539"
+    },
+    {
+      "id": "frostveil_tempest",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/frostveil_tempest.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/frostveil_tempest.webp",
+      "web_url": "/elite-hunts-197/bosses/frostveil_tempest.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "2b21e050f392f416c90fb6dc3dd72dd16d8d5d63240653901a0fec8b0713e07b",
+      "webp_sha256": "782b15f666509f9e4f081ef55edb2f8bb21015a063cf81662d39428835064974"
+    },
+    {
+      "id": "mirage_sovereign",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/mirage_sovereign.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/mirage_sovereign.webp",
+      "web_url": "/elite-hunts-197/bosses/mirage_sovereign.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "c07965322973f5de8602ed771abbcd797d819f95d730e179fcee12c343ee70ee",
+      "webp_sha256": "35876fab09b5b41476f49eb85495fc1021f2eac9c03df18b4cd841f5c7aaf505"
+    },
+    {
+      "id": "singularity_cataclysm",
+      "kind": "bosses",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/bosses/singularity_cataclysm.png",
+      "webp": "Web/frontend/public/elite-hunts-197/bosses/singularity_cataclysm.webp",
+      "web_url": "/elite-hunts-197/bosses/singularity_cataclysm.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "1a166d2d6abf3ad983c7ee5c9613f08ef4573a66bb896406869220ba34223551",
+      "webp_sha256": "2867a9c4d0c8b93f25d539e243e704388d8d637b359cacae1b51018b16b04c6b"
+    },
+    {
+      "id": "rank_s_plus",
+      "kind": "ui",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/ui/rank_s_plus.png",
+      "webp": "Web/frontend/public/elite-hunts-197/ui/rank_s_plus.webp",
+      "web_url": "/elite-hunts-197/ui/rank_s_plus.webp",
+      "master_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        512,
+        512
+      ],
+      "master_sha256": "5fa18dacebc7021378fea56dacae16522fa8b3cd226e66031b1db7c43ff05797",
+      "webp_sha256": "49bc8c981c9f00d314fc23061740d43a80bcf3d13efb558add23248b3a140bee"
+    },
+    {
+      "id": "rank_ss",
+      "kind": "ui",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/ui/rank_ss.png",
+      "webp": "Web/frontend/public/elite-hunts-197/ui/rank_ss.webp",
+      "web_url": "/elite-hunts-197/ui/rank_ss.webp",
+      "master_dimensions": [
+        509,
+        627
+      ],
+      "web_dimensions": [
+        509,
+        627
+      ],
+      "master_sha256": "a4f0a97318f28e11df0c42b7e56202bffda9417bbb8164a8b7f0698e699399f5",
+      "webp_sha256": "1b20abc62466f47ceba8d863997d74cb55dc9d3be66963b8cc96c2791b4c4ee4"
+    },
+    {
+      "id": "elite_world_event_banner",
+      "kind": "ui",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/ui/elite_world_event_banner.png",
+      "webp": "Web/frontend/public/elite-hunts-197/ui/elite_world_event_banner.webp",
+      "web_url": "/elite-hunts-197/ui/elite_world_event_banner.webp",
+      "master_dimensions": [
+        1350,
+        565
+      ],
+      "web_dimensions": [
+        1024,
+        429
+      ],
+      "master_sha256": "be7f8d6bffb816b028075f945917b1068faa65495837b817091db13d83c9535d",
+      "webp_sha256": "5b5f04fb759ce2569060e96df3e1e8385efaffe9023d7616f6b9bfcaa4869e9b"
+    },
+    {
+      "id": "elite_event_marker",
+      "kind": "ui",
+      "master_png": "Web/ARTWORK_MASTERS/elite-hunts-197/ui/elite_event_marker.png",
+      "webp": "Web/frontend/public/elite-hunts-197/ui/elite_event_marker.webp",
+      "web_url": "/elite-hunts-197/ui/elite_event_marker.webp",
+      "master_dimensions": [
+        306,
+        438
+      ],
+      "web_dimensions": [
+        306,
+        438
+      ],
+      "master_sha256": "bf836d1705499aac12ad86d66806cf4520c585ac7109f55da5d80cbc42487dcb",
+      "webp_sha256": "816dae325e16429f695280e34bedca323ef297a906b1ab93b69ce16729938668"
+    }
+  ]
+}

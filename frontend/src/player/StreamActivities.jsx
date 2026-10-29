@@ -10,6 +10,16 @@ import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import Raids from "./Raids.jsx";
 
 const volatileAdventureActionKeys = new Map();
+const ELITE_EVENT_ART = {
+  frostveil_tempest: "/elite-hunts-197/bosses/frostveil_tempest.webp",
+  mirage_sovereign: "/elite-hunts-197/bosses/mirage_sovereign.webp",
+  singularity_cataclysm: "/elite-hunts-197/bosses/singularity_cataclysm.webp",
+};
+const ELITE_WORLD_EVENT_BANNER = "/elite-hunts-197/ui/elite_world_event_banner.webp";
+const ELITE_EVENT_MARKER = "/elite-hunts-197/ui/elite_event_marker.webp";
+function worldEventArtwork(event) {
+  return ELITE_EVENT_ART[String(event?.id || "")] || String(event?.art || "");
+}
 const WORLD_EVENT_CATALOG = [
   ["notorious_behemoth", "Notorious Behemoth", "Extreme", "A brutal apex monster known for overwhelming force.", "/world-events/a1/notorious_behemoth.webp"],
   ["tainted_malboro", "Tainted Malboro", "Severe", "A corrupted horror that inflicts crippling afflictions.", "/world-events/a1/tainted_malboro.webp"],
@@ -21,6 +31,9 @@ const WORLD_EVENT_CATALOG = [
   ["twisted_ahriman", "Twisted Ahriman", "Severe", "A warped watcher that assails foes with sinister magic.", "/world-events/a1/twisted_ahriman.webp"],
   ["ravenous_dragon", "Ravenous Dragon", "Extreme", "A relentless drake driven by hunger and fury.", "/world-events/a1/ravenous_dragon.webp"],
   ["bloodied_deathclaw", "Bloodied Deathclaw", "Severe", "A frenzied beast that tears through the unwary with savage force.", "/world-events/a1/bloodied_deathclaw.webp"],
+  ["frostveil_tempest", "Frostveil Tempest", "Elite", "An endgame observatory that unleashes Absolute Zero (Lv.80+).", "/elite-hunts-197/bosses/frostveil_tempest.webp"],
+  ["mirage_sovereign", "Mirage Sovereign", "Elite", "The hourglass monarch turns back time (Lv.85+).", "/elite-hunts-197/bosses/mirage_sovereign.webp"],
+  ["singularity_cataclysm", "Singularity Cataclysm", "Apex", "An endgame threat wielding Reality Collapse (Lv.95+).", "/elite-hunts-197/bosses/singularity_cataclysm.webp"],
 ].map(([id, name, threat, description, art]) => ({ id, name, threat, description, art }));
 
 
@@ -143,15 +156,15 @@ function WorldEventEncounter({ encounter, nowMs, busy, onJoin, onAction }) {
   const event = encounter.world_event || {};
   return (
     <div className="world-event-active-card" aria-live="polite">
-      <div className="world-event-active-art">
-        {event.art ? <img src={event.art} alt={`${event.name || encounter.monster?.name || "World Event"} artwork`} loading="eager" decoding="async" /> : null}
+      <div className={`world-event-active-art ${event.tier === "elite" ? "is-elite" : ""}`}>
+        {worldEventArtwork(event) ? <img src={worldEventArtwork(event)} alt={`${event.name || encounter.monster?.name || "World Event"} artwork`} loading="eager" decoding="async" /> : null}
       </div>
       <div className="world-event-active-copy">
         <div className="panel-title-row">
           <div>
-            <p className="eyebrow">World Event Active</p>
+            <p className="eyebrow">{event.tier === "elite" ? <img className="elite-event-marker" src={ELITE_EVENT_MARKER} alt="" aria-hidden="true" /> : null}World Event Active</p>
             <h3>{event.name || encounter.monster?.name || "Notorious Monster"}</h3>
-            <p className="muted">Lv. {number(encounter.monster?.level)} · {event.threat || "Notorious"} Threat · No Raid</p>
+            <p className="muted">Lv. {number(encounter.monster?.level)} · {event.threat || "Notorious"} Threat{event.tier === "elite" ? " · ELITE EVENT" : ""} · No Raid</p>
           </div>
           <span className="small-badge world-event-danger-badge">{encounter.state === "rally" ? `Rally ${duration(rallyRemaining)}` : `Round ${number(encounter.round || 1)}`}</span>
         </div>
@@ -423,7 +436,7 @@ export default function StreamActivities({ data: overview }) {
             </div>
             <div className="world-event-state-banner" aria-hidden="true">
               <img
-                src={worldEventEncounter ? "/world-events/a1/world_event_active_h1.webp" : recentWorldEvent?.won ? "/world-events/a1/world_event_defeated_h1.webp" : "/world-events/a1/world_event_idle_h1.webp"}
+                src={worldEventEncounter?.world_event?.tier === "elite" ? ELITE_WORLD_EVENT_BANNER : worldEventEncounter ? "/world-events/a1/world_event_active_h1.webp" : recentWorldEvent?.won ? "/world-events/a1/world_event_defeated_h1.webp" : "/world-events/a1/world_event_idle_h1.webp"}
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -431,12 +444,17 @@ export default function StreamActivities({ data: overview }) {
             </div>
             {worldEventEncounter ? <WorldEventEncounter encounter={worldEventEncounter} nowMs={authoritativeClock} busy={liveBusy} onJoin={runLiveJoin} onAction={runLiveAction} /> : null}
             {recentWorldEvent ? <div className={`stream-venture-result world-event-recent-result ${recentWorldEvent.won ? "won" : "lost"}`}><div><span>Recent World Event</span><strong>{recentWorldEvent.won ? "Defeated" : "Escaped"}</strong></div><p>{recentWorldEvent.monster_name || "Notorious Monster"}</p></div> : null}
-            <div className="world-event-roster-head"><div><p className="eyebrow">Known Threats</p><h3>World Event Bosses</h3></div><small>Initial roster · 10 notorious variants</small></div>
+            <div className="world-event-roster-head"><div><p className="eyebrow">Known Threats</p><h3>World Event Bosses</h3></div><small>{worldEventCatalog.length} known threats · Elite encounters unlock with Lv.80+ characters</small></div>
+            {worldEventCatalog.some((event) => event.tier === "elite") ? (
+              <div className="elite-world-event-heading" aria-label="Elite World Events">
+                <img src={ELITE_WORLD_EVENT_BANNER} alt="Elite World Event" loading="lazy" decoding="async" />
+              </div>
+            ) : null}
             <div className="world-event-roster">
               {worldEventCatalog.map((event) => (
                 <article className="world-event-boss-card" key={event.id} data-threat={String(event.threat || "notorious").toLowerCase()}>
-                  <img src={event.art} alt={`${event.name} World Event artwork`} loading="lazy" decoding="async" />
-                  <div><span className="world-event-threat">{event.threat || "Notorious"}</span><h4>{event.name}</h4><p>{event.description}</p></div>
+                  <img src={worldEventArtwork(event)} alt={`${event.name} World Event artwork`} loading="lazy" decoding="async" />
+                  <div><span className="world-event-threat">{event.tier === "elite" ? <img className="elite-event-marker" src={ELITE_EVENT_MARKER} alt="" aria-hidden="true" /> : null}{event.threat || "Notorious"}{event.tier === "elite" ? ` · Lv.${event.min_level || 80}+` : ""}</span><h4>{event.name}</h4><p>{event.description}</p></div>
                 </article>
               ))}
             </div>

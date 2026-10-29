@@ -644,7 +644,7 @@ export default function Hunts({ data, overview, onRefresh, onNavigate, mode = "a
   const currentRegion = state?.current_region || { name: overview?.region?.name || "Unknown Region" };
   const regions = [...(state?.regions || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || "")));
   const hunts = (state?.hunts || []).filter((hunt) => rank === "ALL" || hunt.rank === rank).sort(compareByLevel);
-  const huntRanks = ["ALL", "C", "B", "A", "S", ...((state?.hunts || []).some((hunt) => hunt.rank === "S+") ? ["S+"] : [])];
+  const huntRanks = ["ALL", "C", "B", "A", "S", ...(["S+", "SS"].filter((value) => (state?.hunts || []).some((hunt) => hunt.rank === value)))];
   const expedition = state?.solo_venture?.expedition || null;
   const availableSoloAbilities = (expedition?.combat?.abilities || []).filter((ability) => ability.usable);
   const pendingResults = Array.isArray(state?.pending_results) ? state.pending_results : [];
@@ -1059,7 +1059,7 @@ export default function Hunts({ data, overview, onRefresh, onNavigate, mode = "a
             <MonsterPortrait monster={activeHunt.monster} name={activeHunt.monster?.name} className="timed-hunt-portrait" />
             <div className="panel-title-row timed-hunt-title-row">
             <div>
-              <p className="eyebrow">Hunt in Progress · {activeHunt.rank}-Rank</p>
+              <p className="eyebrow elite-rank-label">{["S+", "SS"].includes(activeHunt.rank) ? <img src={`/elite-hunts-197/ui/${activeHunt.rank === "SS" ? "rank_ss" : "rank_s_plus"}.webp`} alt="" aria-hidden="true" /> : null}Hunt in Progress · {activeHunt.rank}-Rank</p>
               <h2>{activeHunt.name}</h2>
               <p className="muted">{activeHunt.monster?.name} · Mark Lv. {number(activeHunt.monster?.level)}</p>
             </div>
@@ -1106,7 +1106,7 @@ export default function Hunts({ data, overview, onRefresh, onNavigate, mode = "a
                 <div className="hunt-card-identity">
                   <MonsterPortrait monster={hunt.monster} name={hunt.monster?.name} className="hunt-card-portrait" />
                   <div className="adventure-hunt-head">
-                    <div><span className="slot-label">{hunt.rank}-Rank · Mark Lv. {number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
+                    <div><span className="slot-label elite-rank-label">{["S+", "SS"].includes(hunt.rank) ? <img src={`/elite-hunts-197/ui/${hunt.rank === "SS" ? "rank_ss" : "rank_s_plus"}.webp`} alt="" aria-hidden="true" /> : null}{hunt.rank}-Rank · Mark Lv. {number(hunt.monster?.level || hunt.min_level)}</span><h3>{hunt.name}</h3><p>{hunt.monster?.name}</p></div>
                     <span className={`small-badge ${available ? "success" : ""}`}>{hunt.clears > 0 ? `${number(hunt.clears)} clears` : available ? "Available" : <LockIcon label={`Locked hunt: ${hunt.name}`} />}</span>
                   </div>
                 </div>

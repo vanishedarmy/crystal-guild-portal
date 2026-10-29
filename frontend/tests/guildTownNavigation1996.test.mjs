@@ -46,8 +46,9 @@ test("What's New release actions all land on real profile destinations", () => {
   assert.equal(sovereign.action.tab, "hunts", "Sovereign Encounters must open real Dungeon Board tab");
   const trials = MAJOR_UPDATES.find((item) => item.name === "Trials of Ascension");
   assert.equal(trials.action.tab, "ascension");
-  assert.equal(MAJOR_UPDATES[0].action.tab, "town");
-  assert.equal(MAJOR_UPDATES[0].action.section, "shop");
+  const townUpdate = MAJOR_UPDATES.find((item) => item.name === "Guild Town Navigation");
+  assert.equal(townUpdate.action.tab, "town");
+  assert.equal(townUpdate.action.section, "shop");
   const whatsNew = read("../src/player/WhatsNew.jsx");
   assert.match(whatsNew, /onNavigate\?\.\(latest\.action\.tab, latest\.action\.section, latest\.action\.view\)/);
 });

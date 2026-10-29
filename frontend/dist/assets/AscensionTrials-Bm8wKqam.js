@@ -1,1 +1,0 @@
-import e from"./Hunts-DOwJ890m.js";import{t}from"./jsx-runtime-BX5dh3L7.js";var n=t();function r(t){return(0,n.jsx)(e,{...t,mode:`ascension`})}export{r as default};

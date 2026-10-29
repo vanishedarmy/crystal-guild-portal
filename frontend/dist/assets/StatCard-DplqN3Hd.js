@@ -1,1 +1,0 @@
-import{T as e}from"./index-bbYQar1b.js";import{t}from"./jsx-runtime-BX5dh3L7.js";var n=t();function r({current:t,max:r=null,label:i}){let a=r===null?e(t):`${e(t)} / ${e(r)}`;return(0,n.jsxs)(`div`,{className:`stat-card`,children:[(0,n.jsx)(`strong`,{children:a}),(0,n.jsx)(`span`,{children:i})]})}export{r as t};

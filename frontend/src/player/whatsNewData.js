@@ -1,5 +1,19 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.97", name: "Elite Hunts & World Events",
+    title: "Elite Hunts are open — take on S+ and SS marks",
+    summary: "Six new Lv.80–99 Hunts, an SS-rank Hunt tier, and three rare Elite World Events offer powerful opponents and post-90 crafting materials. Your prior Hunt clears and World Event rewards are preserved.",
+    highlights: [
+      { title: "Six new elite marks", description: "Three S+ marks unlock from Lv.80 and three SS marks from Lv.95. S+ Hunts return in 5 hours; SS Hunts return in 6 hours, using the existing autonomous Hunt system." },
+      { title: "Valuable endgame rewards", description: "Each new Hunt has a first-clear material and exclusive title. Repeat victories can yield rare expedition materials, including Eclipse Cores and Singularity Shards." },
+      { title: "Three Elite World Events", description: "Frostveil Tempest, Mirage Sovereign and Singularity Cataclysm join the stream-only World Event director when the highest Guild character reaches their required level." },
+      { title: "Shared victory spoils", description: "Elite World Event victories grant a second guaranteed thematic material and a 45% premium drop chance, on top of the established generous World Event XP, JP and Gil payouts." },
+      { title: "Complete artwork collection", description: "All six elite Hunt marks and three Elite World Event bosses now have dedicated portraits. S+ and SS rank crests, the Elite event marker and banner are visible in the Portal." },
+      { title: "Existing navigation remains", description: "Open the Adventure Board for Hunts, Stream Activities for World Events, Guild Town for crafting and shopping, or Ascension Trials in its own dedicated tab." },
+    ],
+    action: { tab: "hunts", label: "Explore Elite Hunts" },
+  },
+  {
     version: "v1.9.96", name: "Guild Town Navigation",
     title: "Welcome to Guild Town — three services, one destination",
     summary: "The Chocobo Stable, Guild Blacksmith and Moogle Emporium now share one easy-to-find Guild Town tab. Each service can be expanded independently on desktop or mobile, and links in older announcements now take you to the right destination.",

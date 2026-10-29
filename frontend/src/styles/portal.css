@@ -15815,3 +15815,29 @@ textarea {
   .guild-town-service-body { padding: .5rem; }
 }
 @media (prefers-reduced-motion: reduce) { .guild-town-toggle { scroll-behavior: auto; } }
+
+/* v1.9.97 — Elite Hunts & World Events: readable endgame hierarchy. */
+.adventure-hunt-card.rank-ss { border-color: rgba(191, 159, 243, .48); background: linear-gradient(160deg, rgba(81, 51, 115, .16), rgba(13, 22, 40, .92)); }
+.adventure-hunt-card[class~="rank-s+"] { border-color: rgba(245, 190, 109, .42); }
+.world-event-boss-card[data-threat="elite"] { border-color: rgba(194, 150, 248, .48); }
+.world-event-boss-card[data-threat="apex"] { border-color: rgba(236, 117, 145, .58); }
+.world-event-boss-card[data-threat="elite"] .world-event-threat,
+.world-event-boss-card[data-threat="apex"] .world-event-threat { color: #f0d4ff; border-color: rgba(194, 150, 248, .48); }
+@media (max-width: 520px) {
+  .world-event-roster-head { align-items: start; }
+  .world-event-roster-head small { max-width: 46%; text-align: right; line-height: 1.4; }
+  .hunt-rank-filters button { min-height: 44px; }
+}
+
+
+/* v1.9.97 — dedicated Elite Hunts & World Events artwork integration */
+.elite-rank-label { display: inline-flex; align-items: center; gap: .4rem; }
+.elite-rank-label img { width: 34px; height: 34px; object-fit: contain; flex: 0 0 auto; filter: drop-shadow(0 1px 4px rgba(0,0,0,.45)); }
+.world-event-active-art.is-elite { background: radial-gradient(circle at 50% 50%, rgba(75,49,124,.32), rgba(10,14,28,.86)); }
+.world-event-active-art.is-elite img { object-fit: contain; object-position: center; }
+.world-event-boss-card[data-threat="elite"] > img,
+.world-event-boss-card[data-threat="apex"] > img { object-fit: contain; background: radial-gradient(circle,rgba(77,50,121,.26),rgba(9,13,28,.84)); }
+.elite-event-marker { display: inline-block; vertical-align: middle; width: 24px; height: 24px; object-fit: contain; margin-right: .3rem; filter: drop-shadow(0 1px 3px rgba(24,15,45,.7)); }
+.elite-world-event-heading { margin: .5rem 0 .9rem; text-align:center; background: radial-gradient(ellipse at center,rgba(29,33,76,.35),transparent 76%); }
+.elite-world-event-heading img { max-width: min(640px,100%); width: 100%; height: auto; object-fit: contain; }
+@media(max-width:520px){.elite-rank-label img{width:28px;height:28px}.elite-event-marker{width:20px;height:20px}.elite-world-event-heading img{max-width:100%}}

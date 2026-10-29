@@ -1,0 +1,1 @@
+import{t as e}from"./bossArtwork-DU5CLlqL.js";import{t}from"./jsx-runtime-BX5dh3L7.js";var n=t();function r({boss:t,className:r=``,eager:i=!1}){let a=e(t);return a?(0,n.jsx)(`img`,{alt:`${t?.name||`Raid boss`} artwork`,className:`boss-artwork ${r}`.trim(),decoding:`async`,loading:i?`eager`:`lazy`,src:a}):null}export{r as t};

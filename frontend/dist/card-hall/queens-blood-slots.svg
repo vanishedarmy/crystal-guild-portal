@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="none">
+<defs>
+<linearGradient id="well" x2="0.83" y2="1"><stop stop-color="#242435"/><stop offset=".43" stop-color="#101624"/><stop offset="1" stop-color="#201a2b"/></linearGradient>
+<pattern id="grain" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M0 8 L14 5 M0 13 L14 10" stroke="#efd09f" stroke-opacity=".035" stroke-width=".75"/></pattern>
+</defs>
+<rect width="1000" height="200" fill="#18121c" />
+<rect width="1000" height="200" fill="url(#grain)" />
+<g transform="translate(0,0)">
+      <rect x="4" y="4" width="192" height="192" rx="6" fill="url(#well)" stroke="#735b42" stroke-width="5" />
+      <rect x="10" y="10" width="180" height="180" rx="3" fill="none" stroke="#d3ad61" stroke-opacity=".75" stroke-width="2" />
+      <rect x="16" y="16" width="168" height="168" rx="2" fill="none" stroke="#302b40" stroke-width="2" />
+      <path d="M10 40 V11 H42 M158 11 H189 V42 M10 160 V189 H42 M158 189 H189 V160" stroke="#ebc87c" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85" />
+      <path d="M82 21 L100 14 118 21 100 29 Z M82 179 L100 186 118 179 100 171Z" fill="#997446" stroke="#ecd499" stroke-width="1" opacity=".7" />
+      <path d="M100 70 L116 91 100 109 84 91 Z M100 75 V110 M89 91 H111" fill="none" stroke="#d0b37d" stroke-width="2.2" opacity=".16"/>
+      <path d="M49 49 L59 49 59 59 M151 49 L141 49 141 59 M49 151 L59 151 59 141 M151 151 L141 151 141 141" stroke="#b6a181" stroke-width="1.7" fill="none" opacity=".28" />
+      <circle cx="100" cy="100" r="61" fill="none" stroke="#9c8f8d" stroke-opacity=".1" stroke-width="1" />
+    </g>
+<g transform="translate(200,0)">
+      <rect x="4" y="4" width="192" height="192" rx="6" fill="url(#well)" stroke="#735b42" stroke-width="5" />
+      <rect x="10" y="10" width="180" height="180" rx="3" fill="none" stroke="#d3ad61" stroke-opacity=".75" stroke-width="2" />
+      <rect x="16" y="16" width="168" height="168" rx="2" fill="none" stroke="#302b40" stroke-width="2" />
+      <path d="M10 40 V11 H42 M158 11 H189 V42 M10 160 V189 H42 M158 189 H189 V160" stroke="#ebc87c" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85" />
+      <path d="M82 21 L100 14 118 21 100 29 Z M82 179 L100 186 118 179 100 171Z" fill="#997446" stroke="#ecd499" stroke-width="1" opacity=".7" />
+      <path d="M100 70 L116 91 100 109 84 91 Z M100 75 V110 M89 91 H111" fill="none" stroke="#d0b37d" stroke-width="2.2" opacity=".16"/>
+      <path d="M49 49 L59 49 59 59 M151 49 L141 49 141 59 M49 151 L59 151 59 141 M151 151 L141 151 141 141" stroke="#b6a181" stroke-width="1.7" fill="none" opacity=".28" />
+      <circle cx="100" cy="100" r="61" fill="none" stroke="#9c8f8d" stroke-opacity=".1" stroke-width="1" />
+    </g>
+<g transform="translate(400,0)">
+      <rect x="4" y="4" width="192" height="192" rx="6" fill="url(#well)" stroke="#735b42" stroke-width="5" />
+      <rect x="10" y="10" width="180" height="180" rx="3" fill="none" stroke="#d3ad61" stroke-opacity=".75" stroke-width="2" />
+      <rect x="16" y="16" width="168" height="168" rx="2" fill="none" stroke="#302b40" stroke-width="2" />
+      <path d="M10 40 V11 H42 M158 11 H189 V42 M10 160 V189 H42 M158 189 H189 V160" stroke="#ebc87c" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85" />
+      <path d="M82 21 L100 14 118 21 100 29 Z M82 179 L100 186 118 179 100 171Z" fill="#997446" stroke="#ecd499" stroke-width="1" opacity=".7" />
+      <path d="M100 70 L116 91 100 109 84 91 Z M100 75 V110 M89 91 H111" fill="none" stroke="#d0b37d" stroke-width="2.2" opacity=".16"/>
+      <path d="M49 49 L59 49 59 59 M151 49 L141 49 141 59 M49 151 L59 151 59 141 M151 151 L141 151 141 141" stroke="#b6a181" stroke-width="1.7" fill="none" opacity=".28" />
+      <circle cx="100" cy="100" r="61" fill="none" stroke="#9c8f8d" stroke-opacity=".1" stroke-width="1" />
+    </g>
+<g transform="translate(600,0)">
+      <rect x="4" y="4" width="192" height="192" rx="6" fill="url(#well)" stroke="#735b42" stroke-width="5" />
+      <rect x="10" y="10" width="180" height="180" rx="3" fill="none" stroke="#d3ad61" stroke-opacity=".75" stroke-width="2" />
+      <rect x="16" y="16" width="168" height="168" rx="2" fill="none" stroke="#302b40" stroke-width="2" />
+      <path d="M10 40 V11 H42 M158 11 H189 V42 M10 160 V189 H42 M158 189 H189 V160" stroke="#ebc87c" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85" />
+      <path d="M82 21 L100 14 118 21 100 29 Z M82 179 L100 186 118 179 100 171Z" fill="#997446" stroke="#ecd499" stroke-width="1" opacity=".7" />
+      <path d="M100 70 L116 91 100 109 84 91 Z M100 75 V110 M89 91 H111" fill="none" stroke="#d0b37d" stroke-width="2.2" opacity=".16"/>
+      <path d="M49 49 L59 49 59 59 M151 49 L141 49 141 59 M49 151 L59 151 59 141 M151 151 L141 151 141 141" stroke="#b6a181" stroke-width="1.7" fill="none" opacity=".28" />
+      <circle cx="100" cy="100" r="61" fill="none" stroke="#9c8f8d" stroke-opacity=".1" stroke-width="1" />
+    </g>
+<g transform="translate(800,0)">
+      <rect x="4" y="4" width="192" height="192" rx="6" fill="url(#well)" stroke="#735b42" stroke-width="5" />
+      <rect x="10" y="10" width="180" height="180" rx="3" fill="none" stroke="#d3ad61" stroke-opacity=".75" stroke-width="2" />
+      <rect x="16" y="16" width="168" height="168" rx="2" fill="none" stroke="#302b40" stroke-width="2" />
+      <path d="M10 40 V11 H42 M158 11 H189 V42 M10 160 V189 H42 M158 189 H189 V160" stroke="#ebc87c" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85" />
+      <path d="M82 21 L100 14 118 21 100 29 Z M82 179 L100 186 118 179 100 171Z" fill="#997446" stroke="#ecd499" stroke-width="1" opacity=".7" />
+      <path d="M100 70 L116 91 100 109 84 91 Z M100 75 V110 M89 91 H111" fill="none" stroke="#d0b37d" stroke-width="2.2" opacity=".16"/>
+      <path d="M49 49 L59 49 59 59 M151 49 L141 49 141 59 M49 151 L59 151 59 141 M151 151 L141 151 141 141" stroke="#b6a181" stroke-width="1.7" fill="none" opacity=".28" />
+      <circle cx="100" cy="100" r="61" fill="none" stroke="#9c8f8d" stroke-opacity=".1" stroke-width="1" />
+    </g>
+<rect x="0" y="0" width="1000" height="200" fill="none" stroke="#71502c" stroke-width="4"/>
+</svg>

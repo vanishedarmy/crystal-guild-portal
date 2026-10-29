@@ -30,6 +30,7 @@ const MODULES = {
   shop: lazy(() => import("../player/MoogleEmporium.jsx")),
   blacksmith: lazy(() => import("../player/Blacksmith.jsx")),
   hunts: lazy(() => import("../player/Hunts.jsx")),
+  ascension: lazy(() => import("../player/AscensionTrials.jsx")),
   stream: lazy(() => import("../player/StreamActivities.jsx")),
   bestiary: lazy(() => import("../player/Bestiary.jsx")),
   relics: lazy(() => import("../player/Relics.jsx")),
@@ -42,6 +43,7 @@ const MODULES = {
 const TABS = [
   ["overview", "Overview", "◇"],
   ["hunts", "Adventure Board", "⌖"],
+  ["ascension", "Ascension Trials", "✧"],
   ["stream", "Stream Activities", "◉"],
   ["jobs", "Jobs", "✦"],
   ["inventory", "Equipment & Inventory", "◆"],
@@ -65,6 +67,7 @@ const TABS = [
 const TAB_TONES = {
   overview: "aqua",
   hunts: "gold",
+  ascension: "violet",
   stream: "cyan",
   jobs: "violet",
   inventory: "emerald",
@@ -86,7 +89,7 @@ const TAB_TONES = {
 };
 
 const TAB_GROUPS = [
-  ["Core", ["overview", "hunts", "stream", "jobs", "inventory"]],
+  ["Core", ["overview", "hunts", "ascension", "stream", "jobs", "inventory"]],
   ["Guild Services", ["shop", "blacksmith", "chocobo", "retainer", "mercs"]],
   ["Attractions", ["gold_saucer", "card_hall"]],
   ["Guild", ["fellowship", "guild_board"]],
@@ -157,7 +160,7 @@ export default function PlayerProfile() {
     const controller = new AbortController();
     if (!moduleCache[activeTab]) setTabLoading(true);
     setTabError(null);
-    const requestedModule = activeTab === "shop" || activeTab === "blacksmith" ? "inventory" : activeTab;
+    const requestedModule = activeTab === "shop" || activeTab === "blacksmith" ? "inventory" : activeTab === "ascension" ? "hunts" : activeTab;
     fetchPlayer(username, requestedModule, controller.signal)
       .then((payload) => {
         moduleVersions.current[activeTab] = refreshToken;

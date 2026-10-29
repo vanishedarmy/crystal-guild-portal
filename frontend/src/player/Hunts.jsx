@@ -422,7 +422,7 @@ function HuntRecord({ data }) {
   );
 }
 
-export default function Hunts({ data, overview, onRefresh }) {
+export default function Hunts({ data, overview, onRefresh, onNavigate, mode = "adventure" }) {
   const { auth } = usePortalAuth();
   const [state, setState] = useState(null);
   const [message, setMessage] = useState("");
@@ -625,7 +625,9 @@ export default function Hunts({ data, overview, onRefresh }) {
     "Adventure result confirmed.",
   );
 
-  if (!isOwnProfile) return <HuntRecord data={data} />;
+  if (!isOwnProfile) return mode === "ascension"
+    ? <section className="panel ascension-standalone-panel"><p className="eyebrow">Job Mastery</p><h2>Trials of Ascension</h2><p className="muted">Sign in and open your own adventurer profile to view and begin your Job trials.</p></section>
+    : <HuntRecord data={data} />;
 
   const boardStateReady = Boolean(state);
   const authoritativeClock = clock + serverOffsetMs;
@@ -657,7 +659,7 @@ export default function Hunts({ data, overview, onRefresh }) {
   const readyDungeonCount = (state?.dungeons?.dungeons || []).filter((entry) => entry?.unlocked).length;
   const readyHuntCount = (state?.hunts || []).filter((hunt) => Boolean(hunt.challengeable) && remainingUntil(hunt.cooldown_available_at, authoritativeClock) <= 0).length;
   const activeAdventureLabel = dungeonRun
-    ? `Dungeon · ${dungeonRun.name || "In progress"}`
+    ? `${dungeonRun.ascension_trial ? "Ascension Trial" : "Dungeon"} · ${dungeonRun.name || "In progress"}`
     : fieldExpedition
       ? `Expedition · ${fieldExpedition.region?.name || "In progress"}`
       : expedition
@@ -674,6 +676,24 @@ export default function Hunts({ data, overview, onRefresh }) {
   const dungeonBoardLabel = dungeonRun ? `Room ${number(dungeonRun.room_number)} / ${number(dungeonRun.room_count)}` : readyDungeonCount ? `${number(readyDungeonCount)} ready` : <LockIcon label="Dungeon Board locked" />;
   const huntBoardLabel = activeHunt ? `Returns in ${duration(activeHuntRemaining)}` : readyHuntCount ? `${number(readyHuntCount)} ready` : "No marks ready";
 
+
+  if (mode === "ascension") return (
+    <section className="adventure-board-stack ascension-profile-section" aria-label="Ascension Trials section">
+      {!state ? <div className="equipment-action-status compact-status offline" role="status">Checking your Ascension Trials…</div> : null}
+      {message ? <p className="adventure-action-message" role="status">{message}</p> : null}
+      <Dungeons
+        mode="ascension"
+        data={state?.dungeons}
+        csrfToken={csrfToken}
+        actionsAvailable={actionsAvailable}
+        busy={busy}
+        runRequest={runRequest}
+        pendingResults={pendingDungeonResults}
+        onConfirmResult={confirmAdventureResult}
+        onNavigate={onNavigate}
+      />
+    </section>
+  );
 
   const renderActiveEncounter = (embedded = false) => {
     if (!encounter) return null;
@@ -734,7 +754,8 @@ export default function Hunts({ data, overview, onRefresh }) {
         <div className="adventure-priority-strip" aria-label="Adventure Board status summary">
           <div className={`adventure-priority-item ${activeAdventureLabel === "No active adventure" ? "idle" : "active"}`}><span>Current</span><strong>{activeAdventureLabel}</strong><small>{pendingResults.length ? `${number(pendingResults.length)} saved result${pendingResults.length === 1 ? "" : "s"}` : "Board clear"}</small></div>
           <div className="adventure-priority-item"><span>Solo Venture</span><strong>{soloBoardLabel}</strong><small>Portal only</small></div>
-          <div className="adventure-priority-item"><span>Dungeon</span><strong>{dungeonBoardLabel}</strong><small>Persistent delve</small></div>
+          <div className="adventure-priority-item"><span>Dungeon</span><strong>{dungeonRun?.ascension_trial ? "Separate section" : dungeonBoardLabel}</strong><small>Persistent delve</small></div>
+          <div className="adventure-priority-item"><span>Ascension Trials</span><strong>{number(state?.dungeons?.ascension?.completed || 0)} / 4</strong><small>Open dedicated Job Trials tab</small></div>
           <div className="adventure-priority-item"><span>Expedition</span><strong>{expeditionBoardLabel}</strong><small>{state?.expeditions?.chocobo?.specialization?.name || "Chocobo route"}</small></div>
           <div className="adventure-priority-item"><span>Hunts</span><strong>{huntBoardLabel}</strong><small>{number(state?.player?.hunt_seals ?? overview?.identity?.hunt_seals ?? 0)} Seals</small></div>
         </div>
@@ -769,6 +790,7 @@ export default function Hunts({ data, overview, onRefresh }) {
       </section>
 
       <Dungeons
+        mode="dungeons"
         data={state?.dungeons}
         csrfToken={csrfToken}
         actionsAvailable={actionsAvailable}
@@ -776,6 +798,7 @@ export default function Hunts({ data, overview, onRefresh }) {
         runRequest={runRequest}
         pendingResults={pendingDungeonResults}
         onConfirmResult={confirmAdventureResult}
+        onNavigate={onNavigate}
       />
 
       <Expeditions

@@ -77,6 +77,17 @@ export const CONTEXT_HELP = {
     tip: "A disabled Dispatch button usually has a reason directly on the Hunt card—rest state, cooldown, level, region, or another active adventure.",
     guide: "hunts",
   },
+  ascension_trials: {
+    title: "Trials of Ascension",
+    summary: "Four guardian trials for each Job at Job Levels 60, 75, 90 and 99, accessed separately from regular Dungeons.",
+    bullets: [
+      "Equip the matching Job and clear the prior milestone before entering the next trial.",
+      "Complete the visible Attack, Ability, Defend or Limit Break objectives to break the guardian's seal.",
+      "Each first clear awards its own Job milestone rewards. Existing clears remain saved when switching sections.",
+    ],
+    tip: "An active Dungeon and an Ascension Trial share a combat activity slot. Finish or retreat from the current activity first.",
+    guide: "trials-of-ascension-1995",
+  },
   dungeons: {
     title: "Dungeons & Delves",
     summary: "Persistent multi-room adventures where route choices, combat, hazards, and treasure carry forward through the run.",

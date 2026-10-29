@@ -17,6 +17,7 @@ import { toggleWithViewportAnchor } from "../utils/viewportAnchor.js";
 import ContextHelp from "../components/ContextHelp.jsx";
 import MobileCombatDrawer from "../components/MobileCombatDrawer.jsx";
 import MobileCombatHud from "../components/MobileCombatHud.jsx";
+import AscensionTrialBoard from "./AscensionTrialBoard.jsx";
 
 function defaultOpen(active) {
   if (active) return true;
@@ -85,7 +86,7 @@ function DungeonResult({ result, onConfirm, confirming }) {
   return (
     <section className={`panel expedition-result-panel dungeon-result-panel ${won ? "won" : "lost"}`} aria-live="polite">
       <div className="panel-title-row">
-        <div><p className="eyebrow">Dungeon Report · Saved</p><h2>{summary?.title || "Dungeon Delve Ended"}</h2><p className="muted">{summary?.dungeon_name || "Dungeon"} · {number(summary?.rooms || 0)} / {number(summary?.room_count || 0)} rooms</p></div>
+        <div><p className="eyebrow">{summary?.ascension_trial ? "Ascension Trial Report · Saved" : "Dungeon Report · Saved"}</p><h2>{summary?.title || "Dungeon Delve Ended"}</h2><p className="muted">{summary?.dungeon_name || (summary?.ascension_trial ? "Ascension Trial" : "Dungeon")} · {number(summary?.rooms || 0)} / {number(summary?.room_count || 0)} rooms</p></div>
         <span className={`small-badge ${won ? "success" : ""}`}>{won ? "Cleared" : summary?.outcome === "retreat" ? "Retreated" : "Defeat"}</span>
       </div>
       <div className="dungeon-result-settlement">
@@ -117,13 +118,18 @@ export default function Dungeons({
   runRequest,
   pendingResults = [],
   onConfirmResult,
+  mode = "dungeons",
+  onNavigate,
 }) {
-  const active = data?.active || null;
+  const isAscension = mode === "ascension";
+  const rawActive = data?.active || null;
+  const active = rawActive && Boolean(rawActive.ascension_trial) === isAscension ? rawActive : null;
+  const otherActivity = rawActive && !active ? rawActive : null;
   const ascension = data?.ascension || { trials: [], job_level: 0 };
-  const [open, setOpen] = useState(() => defaultOpen(active));
+  const [open, setOpen] = useState(() => isAscension ? true : defaultOpen(active));
   const [picker, setPicker] = useState("");
   const dungeons = useMemo(() => [...(data?.dungeons || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || ""))), [data?.dungeons]);
-  const results = pendingResults.filter((row) => row?.kind === "dungeon");
+  const results = pendingResults.filter((row) => row?.kind === "dungeon" && Boolean(row?.summary?.ascension_trial) === isAscension);
   const combat = active?.combat || null;
   const abilities = (combat?.abilities || []).filter((ability) => ability.usable);
   const items = useMemo(() => sortBattleItems(combat?.items || []), [combat?.items]);
@@ -131,23 +137,31 @@ export default function Dungeons({
   const toggleBoard = (event) => {
     const next = !open;
     toggleWithViewportAnchor(event.currentTarget, () => setOpen(next));
-    try { window.localStorage?.setItem("crystal-guild:adventure:dungeon-board", next ? "open" : "closed"); } catch {}
+    try { window.localStorage?.setItem(isAscension ? "crystal-guild:ascension:trial-board" : "crystal-guild:adventure:dungeon-board", next ? "open" : "closed"); } catch {}
   };
 
   return (
     <>
       {results.map((result) => <DungeonResult key={result.result_id} result={result} onConfirm={onConfirmResult} confirming={busy === `ack-result:${result.result_id}`} />)}
-      <section className={`panel dungeon-board-panel ${active ? "dungeon-active" : ""}`}>
-        <img loading="lazy" decoding="async" className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" />
+      <section className={`panel dungeon-board-panel ${isAscension ? "ascension-standalone-panel" : ""} ${active ? "dungeon-active" : ""}`}>
+        {!isAscension ? <img loading="lazy" decoding="async" className="dungeon-board-background-art" src="/retro-phase-iii/scene-backgrounds-v4/dungeon_board.webp" alt="" aria-hidden="true" draggable="false" /> : null}
         <div className="panel-title-row dungeon-board-title-row">
           <div>
-            <p className="eyebrow">Dungeons &amp; Delves</p>
-            <h2>{active ? active.name : "Dungeon Board"}</h2>
-            <p className="muted">Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers.</p>
+            <p className="eyebrow">{isAscension ? "Job Mastery · Levels 60–99" : <>Dungeons &amp; Delves</>}</p>
+            <h2>{active ? active.name : isAscension ? "Trials of Ascension" : "Dungeon Board"}</h2>
+            <p className="muted">{isAscension ? "Your Job-specific milestones, guardian objectives, earned titles and permanent rewards live here—separate from Dungeons." : "Persistent room-by-room adventures. Your HP, MP, and AP carry between chambers."}</p>
           </div>
-          <div className="context-help-actions"><ContextHelp topic="dungeons" /><button type="button" className="section-collapse-button dungeon-board-collapse-toggle" aria-label={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} title={open ? "Collapse Dungeon Board" : "Expand Dungeon Board"} aria-expanded={open} onClick={toggleBoard}><CollapsePointer open={open} /></button></div>
+          <div className="context-help-actions">{isAscension ? <ContextHelp topic="ascension_trials" /> : <ContextHelp topic="dungeons" />}<button type="button" className="section-collapse-button dungeon-board-collapse-toggle" aria-label={open ? `Collapse ${isAscension ? "Ascension Trials" : "Dungeon Board"}` : `Expand ${isAscension ? "Ascension Trials" : "Dungeon Board"}`} title={open ? `Collapse ${isAscension ? "Ascension Trials" : "Dungeon Board"}` : `Expand ${isAscension ? "Ascension Trials" : "Dungeon Board"}`} aria-expanded={open} onClick={toggleBoard}><CollapsePointer open={open} /></button></div>
         </div>
 
+        {otherActivity ? (
+          <div className="ascension-other-activity" role="status">
+            <strong>{isAscension ? "A Dungeon is active" : "An Ascension Trial is active"}</strong>
+            <p>{otherActivity.name} is in progress. Finish or leave it from the {isAscension ? "Adventure Board" : "Ascension Trials"} section before starting another activity.</p>
+            {onNavigate ? <button type="button" className="equipment-action-button secondary" onClick={() => onNavigate(isAscension ? "hunts" : "ascension")}>Go to {isAscension ? "Dungeon Board" : "Ascension Trials"}</button> : null}
+          </div>
+        ) : null}
+        {!isAscension && onNavigate ? <div className="dungeon-board-crosslink"><span>Looking for your Job-specific guardian challenges?</span><button type="button" className="equipment-action-button secondary" onClick={() => onNavigate("ascension")}>Open Ascension Trials</button></div> : null}
         {open ? (
           active ? (
             <div className="dungeon-run-shell">
@@ -157,9 +171,9 @@ export default function Dungeons({
                 <div><span className="slot-label">Room {number(active.room_number)} of {number(active.room_count)} · {active.room?.type_label}</span><h3>{active.room?.name}</h3><p className="muted">{active.room?.description}</p></div>
                 <span className={`small-badge ${active.status === "combat" ? "danger" : active.status === "decision" ? "warning" : "success"}`}>{runStatusLabel(active.status)}</span>
               </div>
-              <div className="dungeon-run-status-grid" aria-label="Current dungeon run status">
+              <div className="dungeon-run-status-grid" aria-label={isAscension ? "Current Ascension Trial status" : "Current dungeon run status"}>
                 <div><span>Progress</span><strong>Room {number(active.room_number)} / {number(active.room_count)}</strong></div>
-                <div><span>Delve Style</span><strong>{active.identity || "Dungeon"}</strong></div>
+                <div><span>{isAscension ? "Trial Stage" : "Delve Style"}</span><strong>{active.identity || (isAscension ? "Job Trial" : "Dungeon")}</strong></div>
                 <div><span>Status</span><strong>{runStatusLabel(active.status)}</strong></div>
                 <div><span>Retreat Value</span><strong>50% Cache</strong></div>
               </div>
@@ -175,7 +189,7 @@ export default function Dungeons({
                     <div className="solo-enemy-layout">
                       <MonsterPortrait monster={combat.enemy} name={combat.enemy?.name} className="solo-enemy-portrait" eager />
                       <div className="solo-enemy-copy">
-                        <div className="solo-combat-head"><div><span>Dungeon Foe</span><h3>{combat.enemy?.name} · Lv. {number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)}</span></div>
+                        <div className="solo-combat-head"><div><span>{isAscension ? "Trial Guardian" : "Dungeon Foe"}</span><h3>{combat.enemy?.name} · Lv. {number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)}</span></div>
                         <div className="vital-label"><span>HP</span><span>{number(combat.enemy?.hp)} / {number(combat.enemy?.max_hp)}</span></div>
                         <ProgressBar value={pct(combat.enemy?.hp, combat.enemy?.max_hp)} className="hp" />
                         {combat.advanced ? <div className={`ascension-boss-phase ${combat.advanced.warning ? "danger" : ""}`} aria-live="polite">
@@ -251,25 +265,12 @@ export default function Dungeons({
               ) : null}
 
               <DungeonHistory history={active.history} />
-              {active.can_retreat ? <div className="dungeon-retreat-block"><div className="dungeon-settlement-note"><span>End-of-run settlement</span><strong>Clear 100% · Retreat 50% · Defeat 25%</strong></div><div className="solo-retreat-row"><button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this Dungeon? 50% of the carried Cache will be banked; the rest will be left behind.")) runRequest("dungeon:retreat", "dungeon-retreat", active.run_id || "run", (idem) => submitDungeonRetreat(active.run_id, active.room?.id, active.revision, csrfToken, idem), "Retreated from the Dungeon."); }}>{busy === "dungeon:retreat" ? "Retreating…" : "Retreat — Bank 50% of Cache"}</button></div></div> : null}
+              {active.can_retreat ? <div className="dungeon-retreat-block"><div className="dungeon-settlement-note"><span>End-of-run settlement</span><strong>Clear 100% · Retreat 50% · Defeat 25%</strong></div><div className="solo-retreat-row"><button type="button" className="equipment-action-button ghost danger" disabled={Boolean(busy)} onClick={() => { if (window.confirm("Retreat from this encounter? 50% of the carried Cache will be banked; the rest will be left behind.")) runRequest("dungeon:retreat", "dungeon-retreat", active.run_id || "run", (idem) => submitDungeonRetreat(active.run_id, active.room?.id, active.revision, csrfToken, idem), isAscension ? "Retreated from the Trial." : "Retreated from the Dungeon."); }}>{busy === "dungeon:retreat" ? "Retreating…" : "Retreat — Bank 50% of Cache"}</button></div></div> : null}
               </div>
             </div>
           ) : (
             <>
-            <div className="ascension-board" aria-label="Job Ascension Trials">
-              <div className="ascension-board-heading"><div><span className="slot-label">JLv.60 · 75 · 90 · 99</span><h3>Trials of Ascension</h3><p className="muted">Four Job-specific challenges. Complete each stage to unlock the next. JLv.50 Mastery and Limit Breaks remain unchanged.</p></div><span className="small-badge">{number(ascension.completed || 0)} / 4 cleared</span></div>
-              <div className="ascension-trial-grid">{(ascension.trials || []).map((trial) => (
-                <article key={trial.id} className={`ascension-trial-card ${trial.clears ? "cleared" : trial.unlocked ? "ready" : "locked"}`}>
-                  <div className="ascension-trial-meta"><span>JLv.{number(trial.level)} · {trial.stage}</span><strong>{trial.clears ? "CLEARED" : trial.unlocked ? "AVAILABLE" : "LOCKED"}</strong></div>
-                  <h4>{trial.name}</h4><p>{trial.description}</p>
-                  <div className="ascension-trial-steps">{Object.entries(trial.required_actions || {}).map(([kind,count]) => <span key={kind}>{kind}: {number(count)}×</span>)}</div>
-                  {trial.reward?.title ? <small>Earn title: {trial.reward.title}</small> : null}
-                  {trial.missing?.length ? <small className="muted">{trial.missing.join(" · ")}</small> : null}
-                  <button className="equipment-action-button" type="button" disabled={!actionsAvailable || !trial.unlocked || Boolean(busy)} onClick={() => runRequest(`ascension:start:${trial.id}`, "dungeon-start", trial.id, (idem) => submitDungeonStart(trial.id, csrfToken, idem), `${trial.name} begun.`)}>{busy === `ascension:start:${trial.id}` ? "Entering…" : trial.clears ? "Replay Trial" : "Begin Trial"}</button>
-                </article>
-              ))}</div>
-            </div>
-            <div className="dungeon-card-grid">
+            {isAscension ? <AscensionTrialBoard ascension={ascension} csrfToken={csrfToken} actionsAvailable={actionsAvailable} busy={busy} runRequest={runRequest} blockedByDungeon={Boolean(otherActivity)} /> : <div className="dungeon-card-grid">
               {dungeons.map((dungeon) => (
                 <article key={dungeon.id} className={`dungeon-card ${dungeon.unlocked ? "unlocked" : "locked"}`}>
                   {dungeon.art ? <img loading="lazy" decoding="async" className="dungeon-card-art" src={dungeon.art} alt="" aria-hidden="true" draggable="false" /> : null}
@@ -288,7 +289,7 @@ export default function Dungeons({
                 </article>
               ))}
               {!dungeons.length ? <p className="muted">No Dungeons are available yet.</p> : null}
-            </div>
+            </div>}
             </>
           )
         ) : null}

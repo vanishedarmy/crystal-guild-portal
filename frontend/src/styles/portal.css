@@ -15773,3 +15773,12 @@ textarea {
 .ascension-boss-phase small{font-size:.76rem;color:#d5dbea}.ascension-boss-phase.danger,.ascension-intent-danger{border-color:rgba(255,126,104,.72);background:rgba(116,33,36,.28)}
 .ascension-attack-warning{color:#ffcabd!important;font-size:.86rem;font-weight:900;margin:3px 0 0;letter-spacing:.02em}.ascension-intent-danger strong{color:#ffcabd}
 @media(max-width:680px){.ascension-boss-phase{padding:9px}.ascension-affinities{display:grid;grid-template-columns:1fr 1fr}.ascension-affinities>span{font-size:.71rem}}
+
+/* Trials Navigation hotfix: Job Trials own their profile tab, not the Dungeon Board. */
+.ascension-standalone-panel{background:linear-gradient(150deg,rgba(41,34,74,.30),rgba(9,21,40,.16));border-color:rgba(167,145,232,.4)}
+.ascension-standalone-panel .ascension-board{background:rgba(24,21,51,.35);margin:0 0 12px}
+.ascension-standalone-panel .dungeon-board-title-row{margin-bottom:16px}
+.ascension-other-activity,.dungeon-board-crosslink{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px;margin:10px 0 15px;border:1px solid rgba(159,173,205,.33);border-radius:9px;background:rgba(12,23,44,.56)}
+.ascension-other-activity{display:block}.ascension-other-activity p{margin:5px 0 10px}.dungeon-board-crosslink span{font-size:.87rem}
+.ascension-profile-section .adventure-action-message{margin:0 0 10px}
+@media(max-width:720px){.dungeon-board-crosslink{align-items:stretch}.dungeon-board-crosslink button{width:100%}}

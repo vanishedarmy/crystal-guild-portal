@@ -22,17 +22,17 @@ test("v1.9.95 features all Job milestone trial paths and a new release entry",()
  assert.ok(guide.commands.some(x=>x.command==='!ascension'));
 });
 
-test("Portal trial board uses the existing authenticated Dungeon action and shows goals",()=>{
- const board=read("src/player/Dungeons.jsx");
- assert.match(board, /Trials of Ascension/);
- assert.match(board, /ascension\.trials/);
- assert.match(board, /trial\.unlocked/);
- assert.match(board, /submitDungeonStart\(trial\.id, csrfToken, idem\)/);
- assert.match(board, /active\.trial_objective/);
- assert.match(board, /active\.ascension_trial/);
+test("Ascension Trials have their own Job board and reuse safe persisted combat actions",()=>{
+ const trialBoard=read("src/player/AscensionTrialBoard.jsx");
+ const combat=read("src/player/Dungeons.jsx");
+ assert.match(trialBoard,/ascension\?\.trials/);
+ assert.match(trialBoard,/trial\.unlocked/);
+ assert.match(trialBoard,/submitDungeonStart\(trial\.id, csrfToken, idem\)/);
+ assert.match(combat,/active\.trial_objective/);
+ assert.match(combat,/rawActive\.ascension_trial/);
  const css=read("src/styles/portal.css");
- assert.match(css, /\.ascension-objective-list/);
- assert.match(css, /@media\(max-width:720px\)/);
+ assert.match(css,/\.ascension-objective-list/);
+ assert.match(css,/@media\(max-width:720px\)/);
 });
 
 test("Guide and What's New retain earlier expansion and Limit Break details",()=>{

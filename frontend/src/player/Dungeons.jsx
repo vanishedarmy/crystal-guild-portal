@@ -119,6 +119,7 @@ export default function Dungeons({
   onConfirmResult,
 }) {
   const active = data?.active || null;
+  const ascension = data?.ascension || { trials: [], job_level: 0 };
   const [open, setOpen] = useState(() => defaultOpen(active));
   const [picker, setPicker] = useState("");
   const dungeons = useMemo(() => [...(data?.dungeons || [])].sort((a, b) => Number(a?.min_level || 1) - Number(b?.min_level || 1) || String(a?.name || "").localeCompare(String(b?.name || ""))), [data?.dungeons]);
@@ -163,6 +164,7 @@ export default function Dungeons({
                 <div><span>Retreat Value</span><strong>50% Cache</strong></div>
               </div>
               <ProgressBar value={pct(active.room_number, active.room_count)} />
+              {active.ascension_trial ? <div className="ascension-objective-panel" aria-live="polite"><strong>Trial Objectives — Break the Guardian's Seal</strong><p>Complete these combat actions before the guardian can be defeated. Your progress persists between rounds.</p><div className="ascension-objective-list">{(active.trial_objective || []).map((objective) => <span className={`ascension-objective ${objective.complete ? "complete" : ""}`} key={objective.action}>{objective.complete ? "✓ " : "◯ "}{objective.action === "limit" ? "Limit Break" : objective.action === "ability" ? "Job Ability" : objective.action === "defend" ? "Defend" : "Attack"} {number(objective.current)}/{number(objective.required)}</span>)}</div></div> : null}
               <DungeonCache cache={active.cache} />
               {active.discoveries?.length ? <div className="dungeon-discovery-strip"><span>Discoveries this delve</span><strong>{active.discoveries.join(" · ")}</strong></div> : null}
               {active.modifiers?.length ? <div className="dungeon-modifier-strip"><span>Route effects ahead</span><strong>{active.modifiers.join(" · ")}</strong></div> : null}
@@ -248,6 +250,20 @@ export default function Dungeons({
               </div>
             </div>
           ) : (
+            <>
+            <div className="ascension-board" aria-label="Job Ascension Trials">
+              <div className="ascension-board-heading"><div><span className="slot-label">JLv.60 · 75 · 90 · 99</span><h3>Trials of Ascension</h3><p className="muted">Four Job-specific challenges. Complete each stage to unlock the next. JLv.50 Mastery and Limit Breaks remain unchanged.</p></div><span className="small-badge">{number(ascension.completed || 0)} / 4 cleared</span></div>
+              <div className="ascension-trial-grid">{(ascension.trials || []).map((trial) => (
+                <article key={trial.id} className={`ascension-trial-card ${trial.clears ? "cleared" : trial.unlocked ? "ready" : "locked"}`}>
+                  <div className="ascension-trial-meta"><span>JLv.{number(trial.level)} · {trial.stage}</span><strong>{trial.clears ? "CLEARED" : trial.unlocked ? "AVAILABLE" : "LOCKED"}</strong></div>
+                  <h4>{trial.name}</h4><p>{trial.description}</p>
+                  <div className="ascension-trial-steps">{Object.entries(trial.required_actions || {}).map(([kind,count]) => <span key={kind}>{kind}: {number(count)}×</span>)}</div>
+                  {trial.reward?.title ? <small>Earn title: {trial.reward.title}</small> : null}
+                  {trial.missing?.length ? <small className="muted">{trial.missing.join(" · ")}</small> : null}
+                  <button className="equipment-action-button" type="button" disabled={!actionsAvailable || !trial.unlocked || Boolean(busy)} onClick={() => runRequest(`ascension:start:${trial.id}`, "dungeon-start", trial.id, (idem) => submitDungeonStart(trial.id, csrfToken, idem), `${trial.name} begun.`)}>{busy === `ascension:start:${trial.id}` ? "Entering…" : trial.clears ? "Replay Trial" : "Begin Trial"}</button>
+                </article>
+              ))}</div>
+            </div>
             <div className="dungeon-card-grid">
               {dungeons.map((dungeon) => (
                 <article key={dungeon.id} className={`dungeon-card ${dungeon.unlocked ? "unlocked" : "locked"}`}>
@@ -268,6 +284,7 @@ export default function Dungeons({
               ))}
               {!dungeons.length ? <p className="muted">No Dungeons are available yet.</p> : null}
             </div>
+            </>
           )
         ) : null}
       </section>

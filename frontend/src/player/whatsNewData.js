@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.95", name: "Trials of Ascension",
+    title: "Your Job's path to legendary mastery has opened",
+    summary: "Test all 18 Jobs in 72 four-stage Ascension Trials at JLv.60, 75, 90 and 99. Break guardian seals by completing real battle objectives, earn Job-exclusive rewards, and explore three new high-level Dungeons.",
+    highlights: [
+      { title: "72 Job Trials", description: "Each Job has a unique four-stage trial chain. Bring the matching Job and finish the previous stage before advancing." },
+      { title: "Earn the victory", description: "Guardians cannot be defeated until their Attack, Ability, Defend and late-game Limit Break objectives are completed. The Portal displays each requirement and its progress." },
+      { title: "Progression and prizes", description: "First clears award bonus XP, JP, Gil and rare materials, permanent Job-specialty passives at JLv.60, 90 and 99, and prestige titles at JLv.75 and 99. Repeat clears do not duplicate first-clear prizes." },
+      { title: "Three new Dungeons", description: "Forgotten Crystal Sanctum (Lv.55), Celestial Spire (Lv.75) and Astral Crucible (Lv.95) feature combat, route decisions, hazards, restorations and bosses." },
+      { title: "Twitch and Portal", description: "Open the Trials of Ascension panel under Adventure or use !ascension and !ascend <level> in Twitch chat; !trialaction executes combat turns." },
+    ],
+    action: { tab: "adventure", label: "Enter Ascension Trials" },
+  },
+  {
     version: "v1.9.94", name: "Battle & Rewards Hotfix",
     title: "Better consumable recovery, richer World Events and clearer mobile battles",
     summary: "Review consumable effects, earn significantly more XP and valuable drops from World Events, revive allies in all active group combats, and see enemy HP prominently in the fixed mobile hotbar.",

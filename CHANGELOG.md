@@ -1,3 +1,9 @@
+## v1.9.95 — Trials of Ascension
+- Introduces 72 unique Job Ascension Trials (18 Jobs × JLv.60/75/90/99), using persistent Dungeon combat, guardian-seal objectives, job/character level gates, and prerequisite clears.
+- First clears award XP/JP/Gil and high-level materials, milestone passives at 60/90/99, and permanent Job titles at 75/99. Existing JLv.50 Mastery and Limit Breaks are retained.
+- Opens Forgotten Crystal Sanctum (Lv.55), Celestial Spire (Lv.75), and Astral Crucible (Lv.95), with route decisions and six-room progression.
+- Portal Adventure Board shows current Job's trial path and live objective progress; Twitch `!ascension`, `!ascend`, `!trialaction`, `!trialretreat` work through the same authoritative game system. Player Guide and What's New updated.
+
 ## v1.9.93 — Limit Break Awakening (18 Jobs · 72 Limit Breaks)
 
 - Every playable Job unlocks four named Limit Break techniques at Job Levels 50, 75, 90 and 99. Job Mastery remains JLv.50, and the v1.9.92 169 active techniques and 90 passive milestones remain available.

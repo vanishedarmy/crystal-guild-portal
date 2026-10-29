@@ -15749,3 +15749,20 @@ textarea {
   }
   .mobile-combat-hud-vital.enemy .mobile-combat-hud-meter { height: 7px; }
 }
+
+/* v1.9.95 — Job Ascension Trial progression / combat seal clarity. */
+.ascension-board{border:1px solid rgba(176,191,237,.28);border-radius:10px;background:rgba(20,30,55,.36);padding:14px;margin:12px 0 18px}
+.ascension-board-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.ascension-board-heading h3{margin:4px 0;font-size:1.15rem}.ascension-board-heading p{margin:0}
+.ascension-trial-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ascension-trial-card{display:flex;flex-direction:column;gap:7px;padding:12px;border:1px solid rgba(146,173,213,.35);border-radius:9px;background:rgba(10,18,35,.7)}
+.ascension-trial-card.cleared{border-color:rgba(132,199,155,.5)}.ascension-trial-card.locked{opacity:.75}
+.ascension-trial-card h4{font-size:1rem;margin:0}.ascension-trial-card p{font-size:.85rem;line-height:1.35;margin:0}.ascension-trial-card small{line-height:1.4}
+.ascension-trial-meta{display:flex;justify-content:space-between;gap:6px;font-size:.74rem;letter-spacing:.04em}
+.ascension-trial-meta strong{color:var(--text-accent,#accdff)}
+.ascension-trial-steps,.ascension-objective-list{display:flex;gap:7px;flex-wrap:wrap}
+.ascension-trial-steps span,.ascension-objective{padding:4px 8px;border-radius:5px;border:1px solid rgba(151,179,228,.32);font-size:.78rem;background:rgba(54,76,116,.2)}
+.ascension-trial-card .equipment-action-button{margin-top:auto}
+.ascension-objective-panel{padding:12px;border:1px solid rgba(228,193,108,.65);border-left:4px solid #e4c16c;border-radius:7px;background:rgba(83,57,14,.16);margin:12px 0}
+.ascension-objective-panel p{font-size:.86rem;margin:5px 0 9px}.ascension-objective.complete{border-color:rgba(131,202,161,.65);color:#a9edc4}
+@media(max-width:720px){.ascension-trial-grid{grid-template-columns:1fr}.ascension-board{padding:10px}.ascension-board-heading{flex-direction:column}}

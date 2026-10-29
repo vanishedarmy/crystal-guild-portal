@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.96", name: "Sovereign Encounters",
+    title: "Face the Sovereigns — advanced combat has arrived",
+    summary: "Conquer three new high-level Dungeons, master elemental phase changes and prepare for telegraphed boss attacks. Existing Ascension Dungeons and higher Job Trials now feature these tactical mechanics.",
+    highlights: [
+      { title: "Six endgame dungeons", description: "New Lv.65 Abyssal Foundry, Lv.85 Void Cathedral and Lv.99 Throne of Eternity join the Lv.55, 75 and 95 Ascension Dungeons, each with a six-room route and first-clear materials." },
+      { title: "Shifting elemental wards", description: "Boss weaknesses and resistances change as health falls below 60% and 25%. Elemental attacks gain 40% against a weakness and lose 35% against resistance in these encounters." },
+      { title: "Incoming attack warnings", description: "High-power boss strikes announce their intent before your action. Defend grants substantial protection, including a special counter bonus against marked attacks." },
+      { title: "Higher Ascension Trials upgraded", description: "Job Trials at JLv.75, 90 and 99 gain tactical phase shifts and telegraphed attacks without resetting clears or changing the requirements to unlock Limit Breaks." },
+      { title: "Clearer battle visibility", description: "The Portal displays the boss phase and Defend warning, including on mobile. Twitch !dungeon shows the same phase and next enemy action; !dungeonaction handles combat turns." },
+    ],
+    action: { tab: "adventure", label: "Visit the Dungeon Board" },
+  },
+  {
     version: "v1.9.95", name: "Trials of Ascension",
     title: "Your Job's path to legendary mastery has opened",
     summary: "Test all 18 Jobs in 72 four-stage Ascension Trials at JLv.60, 75, 90 and 99. Break guardian seals by completing real battle objectives, earn Job-exclusive rewards, and explore three new high-level Dungeons.",

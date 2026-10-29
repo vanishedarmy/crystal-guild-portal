@@ -10,11 +10,11 @@ const read=(f)=>fs.readFileSync(path.join(root,f),"utf8");
 const guide=JSON.parse(read("public/guide-data.json"));
 
 test("v1.9.95 features all Job milestone trial paths and a new release entry",()=>{
- assert.equal(WEB_VERSION,"v1.9.95");
- assert.equal(WEB_BUILD,"Trials of Ascension");
- assert.equal(MAJOR_UPDATES[0].version,"v1.9.95");
+ assert.equal(WEB_VERSION,"v1.9.96");
+ assert.equal(WEB_BUILD,"Sovereign Encounters");
+ assert.ok(MAJOR_UPDATES.some(row=>row.version==="v1.9.95"));
  assert.equal(guide.ascension_trials.length,72);
- assert.equal(guide.ascension_dungeons.length,3);
+ assert.equal(guide.ascension_dungeons.length,6);
  assert.equal(new Set(guide.ascension_trials.map(x=>x.id)).size,72);
  for(const job of guide.jobs){
    assert.deepEqual(guide.ascension_trials.filter(x=>x.job_id===job.id).map(x=>x.level),[60,75,90,99]);
@@ -36,8 +36,8 @@ test("Portal trial board uses the existing authenticated Dungeon action and show
 });
 
 test("Guide and What's New retain earlier expansion and Limit Break details",()=>{
- const versions=MAJOR_UPDATES.slice(0,4).map(x=>x.version);
- assert.deepEqual(versions,['v1.9.95','v1.9.94','v1.9.93','v1.9.92']);
+ const versions=MAJOR_UPDATES.slice(0,5).map(x=>x.version);
+ assert.deepEqual(versions,['v1.9.96','v1.9.95','v1.9.94','v1.9.93','v1.9.92']);
  const guideHtml=read("public/guide-body.html");
  assert.match(guideHtml,/trials-of-ascension-1995/);
  assert.match(guideHtml,/battle-rewards-1994/);

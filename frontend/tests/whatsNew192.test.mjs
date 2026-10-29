@@ -5,9 +5,10 @@ import { WEB_VERSION } from "../src/version.js";
 import { readFile } from "node:fs/promises";
 
 test("What's New promotes v1.9.93 and preserves v1.9.92 Job Ascension details", () => {
-  const [latest, previous] = MAJOR_UPDATES;
+  const latest = MAJOR_UPDATES.find(x=>x.version==="v1.9.93");
+  const previous = MAJOR_UPDATES.find(x=>x.version==="v1.9.92");
   assert.equal(latest.version, "v1.9.93");
-  assert.equal(latest.version, WEB_VERSION);
+  assert.ok(MAJOR_UPDATES.some(row=>row.version===WEB_VERSION));
   assert.equal(latest.name, "Limit Break Awakening");
   assert.equal(latest.action.tab, "jobs");
   assert.ok(latest.highlights.length >= 4);

@@ -178,7 +178,12 @@ export default function Dungeons({
                         <div className="solo-combat-head"><div><span>Dungeon Foe</span><h3>{combat.enemy?.name} · Lv. {number(combat.enemy?.level)}</h3></div><span className="small-badge">Round {number(combat.round)}</span></div>
                         <div className="vital-label"><span>HP</span><span>{number(combat.enemy?.hp)} / {number(combat.enemy?.max_hp)}</span></div>
                         <ProgressBar value={pct(combat.enemy?.hp, combat.enemy?.max_hp)} className="hp" />
-                        <div className="solo-enemy-intent"><span>Enemy intent</span><strong>{combat.enemy?.intent || "Preparing"}</strong></div>
+                        {combat.advanced ? <div className={`ascension-boss-phase ${combat.advanced.warning ? "danger" : ""}`} aria-live="polite">
+                          <div><span className="slot-label">Boss Phase</span><strong>{combat.advanced.phase}</strong></div>
+                          <div className="ascension-affinities"><span>Weak: {(combat.advanced.weak || []).join(", ") || "None"}</span><span>Resists: {(combat.advanced.resist || []).join(", ") || "None"}</span></div>
+                          {combat.advanced.warning ? <p className="ascension-attack-warning" role="alert">Heavy attack incoming — DEFEND now!</p> : <small>{combat.advanced.hint}</small>}
+                        </div> : null}
+                        <div className={`solo-enemy-intent ${combat.advanced?.warning ? "ascension-intent-danger" : ""}`}><span>Enemy intent</span><strong>{combat.enemy?.intent || "Preparing"}</strong></div>
                         {combat.enemy?.statuses && combat.enemy.statuses !== "—" ? <small>Status: {combat.enemy.statuses}</small> : null}
                         {combat.route_effects?.length ? <small className="dungeon-combat-route-effects">Route effect: {combat.route_effects.join(" · ")}</small> : null}
                         {combat.opening_effects?.length ? <small className="dungeon-combat-opening-effects">Opening effect: {combat.opening_effects.join(" · ")}</small> : null}

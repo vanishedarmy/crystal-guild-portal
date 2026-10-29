@@ -1,7 +1,7 @@
 {
   "name": "crystal-guild-fellowship",
   "private": true,
-  "version": "1.9.95",
+  "version": "1.9.96",
   "type": "module",
   "scripts": {
     "dev": "vite",

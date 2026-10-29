@@ -15766,3 +15766,10 @@ textarea {
 .ascension-objective-panel{padding:12px;border:1px solid rgba(228,193,108,.65);border-left:4px solid #e4c16c;border-radius:7px;background:rgba(83,57,14,.16);margin:12px 0}
 .ascension-objective-panel p{font-size:.86rem;margin:5px 0 9px}.ascension-objective.complete{border-color:rgba(131,202,161,.65);color:#a9edc4}
 @media(max-width:720px){.ascension-trial-grid{grid-template-columns:1fr}.ascension-board{padding:10px}.ascension-board-heading{flex-direction:column}}
+
+/* v1.9.96 — readable phased Ascension encounters on desktop and mobile. */
+.ascension-boss-phase{display:grid;gap:7px;padding:10px 12px;margin:10px 0;border:1px solid rgba(134,187,238,.42);border-radius:8px;background:rgba(28,55,84,.38)}
+.ascension-boss-phase>div:first-child{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}.ascension-boss-phase strong{color:#d5e8ff}.ascension-affinities{display:flex;flex-wrap:wrap;gap:6px}.ascension-affinities>span{font-size:.77rem;border:1px solid rgba(204,223,251,.28);border-radius:5px;padding:4px 7px;background:rgba(0,0,0,.16)}
+.ascension-boss-phase small{font-size:.76rem;color:#d5dbea}.ascension-boss-phase.danger,.ascension-intent-danger{border-color:rgba(255,126,104,.72);background:rgba(116,33,36,.28)}
+.ascension-attack-warning{color:#ffcabd!important;font-size:.86rem;font-weight:900;margin:3px 0 0;letter-spacing:.02em}.ascension-intent-danger strong{color:#ffcabd}
+@media(max-width:680px){.ascension-boss-phase{padding:9px}.ascension-affinities{display:grid;grid-template-columns:1fr 1fr}.ascension-affinities>span{font-size:.71rem}}

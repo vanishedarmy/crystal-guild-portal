@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { number, pct } from "../utils/formatters.js";
+import { number } from "../utils/formatters.js";
 import useMobileCombatViewport from "./useMobileCombatViewport.js";
 
 let displayedHuds = 0;
@@ -14,12 +14,18 @@ function resourcesFor(player = {}) {
 }
 
 function MiniVital({ label, name, value, max, tone = "hp" }) {
-  const percent = pct(value, max);
+  // The enemy is always visible in the fixed mobile bar: name, current / max
+  // HP and a numeric percentage, without requiring the main battle card.
+  const current = Math.max(0, Number(value || 0));
+  const maximum = Math.max(0, Number(max || 0));
+  const percent = maximum > 0 ? Math.min(100, Math.max(0, Math.round(current / maximum * 100))) : 0;
+  const enemy = tone === "enemy";
   return (
-    <div className={`mobile-combat-hud-vital ${tone}`} title={name || label}>
-      <div><span>{label}</span><strong>{number(value)} / {number(max)}</strong></div>
-      <span className="mobile-combat-hud-meter" aria-hidden="true"><i style={{ width: `${Math.max(0, Math.min(100, Number(percent || 0)))}%` }} /></span>
-      {tone === "enemy" && name ? <small className="mobile-combat-hud-enemy-name">{name}</small> : null}
+    <div className={`mobile-combat-hud-vital ${tone}`} title={name || label} aria-label={`${enemy ? name || "Enemy" : "Your"} HP: ${number(current)} of ${number(maximum)}, ${percent} percent`}>
+      <div className="mobile-combat-hud-vital-head"><span>{label}</span>{enemy ? <em className="mobile-combat-hud-percent">{percent}%</em> : null}</div>
+      {enemy && name ? <strong className="mobile-combat-hud-enemy-name">{name}</strong> : null}
+      <strong className="mobile-combat-hud-hp-numbers">{number(current)} / {number(maximum)} HP</strong>
+      <span className="mobile-combat-hud-meter" role="progressbar" aria-label={`${enemy ? "Enemy" : "Player"} health`} aria-valuemin={0} aria-valuemax={maximum} aria-valuenow={Math.min(current, maximum)}><i style={{ width: `${percent}%` }} /></span>
     </div>
   );
 }

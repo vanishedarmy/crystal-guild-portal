@@ -1,5 +1,17 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.94", name: "Battle & Rewards Hotfix",
+    title: "Better consumable recovery, richer World Events and clearer mobile battles",
+    summary: "Review consumable effects, earn significantly more XP and valuable drops from World Events, revive allies in all active group combats, and see enemy HP prominently in the fixed mobile hotbar.",
+    highlights: [
+      { title: "Consumable audit", description: "Full-restoration items set HP and applicable MP/AP to their caps at item resolution; enemy damage later in the round can still reduce HP. Revive and status-effect items preserve their intended targeting." },
+      { title: "World Events are rewarding", description: "Victories now award 4× XP, 3× JP and 2× Gil compared with ordinary scaled victory rewards, plus one guaranteed themed rare item and a 20% chance of a premium bonus drop." },
+      { title: "Phoenix Down in all group activities", description: "!revive <player> works for fallen teammates in active Stream Ventures, World Events and Raids, consuming one Phoenix Down on success." },
+      { title: "Mobile enemy HP at a glance", description: "The fixed combat hotbar always shows the enemy name, current/max HP, percentage and a stronger red health meter in battle." },
+    ],
+    action: { tab: "adventure", label: "Go to Battle" },
+  },
+  {
     version: "v1.9.93", name: "Limit Break Awakening",
     title: "Limit Breaks awaken — power up your Job to level 99",
     summary: "Every Job has four signature Limit Breaks at Job Levels 50, 75, 90 and 99. Build your Limit Gauge in battle and unleash a powerful attack, group heal, shield or rally. The previous Job Ascension release also added 169 active abilities and 90 passives — read its full details below.",

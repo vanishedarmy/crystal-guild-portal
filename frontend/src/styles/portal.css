@@ -15723,3 +15723,29 @@ textarea {
 .whats-new-archive-body>p{margin:0;color:var(--text);line-height:1.55;font-size:.87rem}
 .whats-new-archive-body .whats-new-action{justify-self:start}
 @media(max-width:620px){.whats-new-archive-body .whats-new-action{justify-self:stretch}}
+
+/* v1.9.94 — always-visible enemy HP for the fixed mobile battle hotbar. */
+@media (max-width: 760px) {
+  .mobile-combat-hud-vital.enemy {
+    border-color: rgba(241, 121, 101, .78);
+    background: linear-gradient(180deg, rgba(75, 22, 27, .9), rgba(28, 11, 21, .94));
+  }
+  .mobile-combat-hud-vital { display: flex; flex-direction: column; justify-content: center; gap: .18rem; }
+  .mobile-combat-hud-vital .mobile-combat-hud-vital-head { display: flex; align-items: center; justify-content: space-between; gap: .25rem; }
+  .mobile-combat-hud-vital .mobile-combat-hud-enemy-name {
+    display: block; margin: .08rem 0 0; font-style: normal; font-size: .72rem;
+    line-height: 1.15; color: #fff1eb; overflow: hidden; max-width: 100%;
+    white-space: normal; overflow-wrap: anywhere;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  }
+  .mobile-combat-hud-vital .mobile-combat-hud-hp-numbers {
+    display: block; color: #f5faff; font-size: .72rem; line-height: 1.16;
+    font-variant-numeric: tabular-nums; white-space: normal;
+  }
+  .mobile-combat-hud-vital.enemy .mobile-combat-hud-hp-numbers { color: #ffe0d6; }
+  .mobile-combat-hud-vital .mobile-combat-hud-percent {
+    color: #ffd2a7; font-size: .72rem; font-style: normal;
+    font-weight: 800; font-variant-numeric: tabular-nums;
+  }
+  .mobile-combat-hud-vital.enemy .mobile-combat-hud-meter { height: 7px; }
+}

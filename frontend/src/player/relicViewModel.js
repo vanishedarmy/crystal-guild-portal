@@ -3,7 +3,7 @@ import { number } from "../utils/formatters.js";
 export function relicStatus(relic = {}) {
   if (relic.completed) return "complete";
   if (relic.ready) return "ready";
-  return Number(relic.stage || 0) > 0 ? "in_progress" : "not_started";
+  return Number(relic.stage || 0) > 0 || relic.quest_started ? "in_progress" : "not_started";
 }
 
 export function nextRelicObjective(relic = {}) {

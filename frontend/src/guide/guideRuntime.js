@@ -496,7 +496,7 @@ function renderRelicInfo(r){let job=jobName(r.job_id),final=r.stages[r.stages.le
   ${esc(st.name)}</h3></div><span class="badge gold">${esc(itemName(st.reward_item))}</span></div><div class="info-stage-grid"><div class="info-stage-block"><b>Requirements</b><p>
   ${(st.requirements||[]).map(reqText).map(esc).join('<br>')||'None'}</p></div><div class="info-stage-block"><b>Cost</b><p>${esc(costText(st.cost))}</p></div></div><div class="info-reward"><span>
   Stage Reward</span><b>${esc(itemName(st.reward_item))}</b></div></div></article>`}).join('')}</div></section><section class="info-section"><div class="info-section-title">Chat Commands</div>
-  <div class="info-command-row"><code class="info-command">!relic ${esc(r.name)}</code><code class="info-command">!awaken ${esc(r.name)}</code></div></section>`;}
+  <div class="info-command-row"><code class="info-command">!relic ${esc(r.name)}</code><code class="info-command">!relicquest ${esc(r.name)}</code><code class="info-command">!awaken ${esc(r.name)}</code></div></section>`;}
 $('#relicSearch').oninput=renderRelics;$('#relicJob').onchange=renderRelics;$('#relicTier').onchange=renderRelics;renderRelics();
 
 // Bosses — independent raid dossiers

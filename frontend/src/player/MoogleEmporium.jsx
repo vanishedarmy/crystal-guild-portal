@@ -533,14 +533,14 @@ export default function MoogleEmporium({ data, overview, onRefresh, focus = null
               <h3>{regionalShop?.name || "Moogle Counter"}</h3>
               <p>{regionalShop?.specialty || "Connect the updated Bot to browse regional stock."}</p>
               <div className="moogle-counter-facts">
-                <span><strong>{number(displayedStock.length)} / {number(stockSlots)}</strong> listings</span>
+                <span><strong>{number(displayedStock.length)}</strong> regional listings</span>
                 <span><strong>{shop.job_name || "Adventurer"}</strong> gear</span>
                 <span>Refresh <strong>{expiresText}</strong></span>
               </div>
             </div>
           </div>
           <div className="moogle-counter-note">{regionalModel
-            ? "Travel on the world map to visit another counter. Staple supplies stay on the shelves; local gear follows the region and your current Job. Returning keeps that counter’s rotation until it expires."
+            ? "Travel on the world map to visit another counter. All available regional consumables are listed without a slot cap. Ordinary Job gear rotates by region; rare, Relic and craft-only equipment cannot be bought here."
             : "This counter uses the connected Bot’s stock rules. Update both Bot and Web to activate regional counters and Guild service perks."}</div>
           <details className="moogle-guild-perks">
             <summary><span>Guild merchant perks</span><strong>{guildDiscount > 0 ? `${number(guildDiscount)}% off purchases` : "View improvements"}</strong></summary>

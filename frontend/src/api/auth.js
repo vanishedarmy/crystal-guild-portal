@@ -104,6 +104,10 @@ export function submitClearMastery(slot, csrfToken, idempotencyKey) {
   return submitPortalAction("CLEAR_MASTERY", { slot }, csrfToken, idempotencyKey);
 }
 
+export function submitRelicBegin(relicId, csrfToken, idempotencyKey) {
+  return submitPortalAction("RELIC_BEGIN", { relic_id: relicId }, csrfToken, idempotencyKey);
+}
+
 export function submitShopState(csrfToken, idempotencyKey) {
   return submitPortalAction("SHOP_STATE", {}, csrfToken, idempotencyKey);
 }

@@ -122,7 +122,7 @@ export default function RelicDetail({ relic = {} }) {
       <div className="data-label">Stage requirements, costs &amp; rewards</div>
       {path.length ? path.map((step) => <StageDetail key={step.number} relic={relic} step={step} />) : <p className="muted">This Relic's stage details are not available in the current snapshot.</p>}
     </section>
-    <section className="detail-section relic-detail-command"><div className="data-label">Chat commands</div><p>Use <code>!relic {relic.name}</code> to check your stage and <code>!awaken {relic.name}</code> when the current stage is ready. Finish or retreat from any active Solo Venture or Dungeon first. Relic weapons are protected from Trading Post sales.</p></section>
+    <section className="detail-section relic-detail-command"><div className="data-label">Chat commands</div><p>{!relic.quest_started && Number(relic.stage || 0) === 0 ? "First select Begin Relic Quest on the Relics page while using the matching Job, or type !relicquest with the weapon name in Twitch chat. " : "This Job Relic quest has been accepted or previously progressed. "}Use <code>!relic {relic.name}</code> to check your stage and <code>!awaken {relic.name}</code> when the current stage is ready. Finish or retreat from any active Solo Venture or Dungeon first. Relic weapons are protected from Trading Post sales.</p></section>
     <p className="relic-snapshot-note">Live progress reflects the latest synced snapshot; refresh your profile after acquiring materials or completing objectives.</p>
   </div>;
 }

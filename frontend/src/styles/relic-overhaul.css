@@ -126,3 +126,9 @@
 
 .relic-card-lore { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; margin: 0; font-size: .82rem; line-height: 1.45; color: #c6d7e8; }
 .relic-lore { display: grid; gap: .2rem; margin: 0; border-left: 3px solid #e2c37e; padding: .4rem .65rem; background: rgba(31, 31, 35, .63); color: #e5e3dc; font-size: .9rem; }
+
+/* Class-specific quest entry is distinct from opening the Relic dossier. */
+.relic-quest-cta { display: grid; gap: .5rem; padding: .65rem; margin-top: .55rem; border: 1px solid rgba(226, 194, 133, .5); background: rgba(26, 32, 40, .85); border-radius: 5px; }
+.relic-quest-cta p { margin: 0; color: #e9d8ae; font-size: .83rem; }
+.relic-quest-cta button { min-height: 44px; width: 100%; font-weight: 700; }
+.relic-quest-cta button:focus-visible { outline: 2px solid #fff2ad; outline-offset: 2px; }

@@ -1,1 +1,1 @@
-__version__ = "1.9.97-elite-hunts-world-events"
+__version__ = "1.9.97.1-service-relic-quests"

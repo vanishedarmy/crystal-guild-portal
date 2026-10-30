@@ -43,7 +43,7 @@ FRONTEND_ASSET_REVISION = "1.9.8-airship-expedition"
 SCHEMA_VERSION = 1
 ACTION_PROTOCOL_VERSION = 39
 ALLOWED_PORTAL_ACTIONS = {
-    "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
+    "RECRUIT", "PING", "EQUIP_ITEM", "UNEQUIP_SLOT", "SET_GEAR_FAVORITES", "SET_TITLE", "RELIC_BEGIN", "SHOP_STATE", "BUY_ITEM", "SELL_ITEM",
     "TRADING_POST_STATE", "TRADING_POST_LIST", "TRADING_POST_BUY", "TRADING_POST_CANCEL", "TRADING_POST_WATCH", "TRADING_POST_HISTORY",
     "CHARACTER_STATE", "CHANGE_JOB", "SET_STANCE", "SET_MASTERY", "CLEAR_MASTERY",
     "RECOVERY_STATE", "USE_FIELD_ITEM", "START_REST", "CAMP_EAT_MEAL", "CAMP_SET_PREPARATION",
@@ -899,6 +899,13 @@ class HostedPortalStore:
             if slot not in {1, 2}:
                 raise ValueError("Mastery slot must be 1 or 2.")
             payload = {"slot": slot}
+        elif kind == "RELIC_BEGIN":
+            if set(payload) != {"relic_id"}:
+                raise ValueError("RELIC_BEGIN requires only relic_id.")
+            relic_id = str(payload.get("relic_id") or "").strip().lower()
+            if not re.fullmatch(r"[a-z0-9_]{1,100}", relic_id):
+                raise ValueError("Invalid Relic quest ID.")
+            payload = {"relic_id": relic_id}
         elif kind == "SHOP_STATE":
             if payload:
                 raise ValueError("SHOP_STATE does not accept parameters.")

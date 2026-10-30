@@ -1,5 +1,16 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.97.1", name: "Daily Resets, Regional Shops & Relic Quests",
+    title: "Guild services refreshed — shared daily reset and class Relic quests",
+    summary: "Daily Guild Provisions now reset with Gold Saucer at 00:00 UTC. The Emporium stocks all eligible regional consumables without an arbitrary listing limit, while weapon and armor availability remains restricted. New Relics require accepting the matching Job quest from the Relic Arsenal; existing weapons are retained.",
+    highlights: [
+      { title: "One daily reset", description: "Daily Provisions and Gold Saucer allowances and game limits refresh at midnight UTC, including players with older rolling cooldowns." },
+      { title: "Regional Moogle stock", description: "Every eligible regional consumable is listed, with ordinary Job gear still rotating. Craft-only, Relic and special equipment remain unavailable for direct purchase." },
+      { title: "Begin a Relic quest", description: "Open the Relic Arsenal, change to its matching Job and select Begin Relic Quest. Follow its combat, Hunt, materials and forging stages. Existing Relic gear and progress are preserved." },
+    ],
+    action: { tab: "relics", label: "Open the Relic Arsenal" },
+  },
+  {
     version: "v1.9.97", name: "Elite Hunts & World Events",
     title: "Elite Hunts are open — take on S+ and SS marks",
     summary: "Six new Lv.80–99 Hunts, an SS-rank Hunt tier, and three rare Elite World Events offer powerful opponents and post-90 crafting materials. Your prior Hunt clears and World Event rewards are preserved.",

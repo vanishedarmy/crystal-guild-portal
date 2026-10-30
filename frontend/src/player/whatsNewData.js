@@ -1,5 +1,18 @@
 export const MAJOR_UPDATES = [
   {
+    version: "v1.9.97.2", name: "Live World Events & Progression Balance",
+    title: "World Events are stream-exclusive — and level-appropriate combat matters",
+    summary: "Special World Event bosses are reserved for live streams. Dungeon and Ascension encounters use their own guardians; Elite Events require each participant to meet the event's minimum level. Rewards now favor foes near your level rather than easy repeat farming.",
+    highlights: [
+      { title: "Exclusive live World Events", description: "Special World Event bosses no longer appear in Dungeons, Job Trials or regular Elite-region encounters. When a livestream ends, an active World Event withdraws without granting victory rewards." },
+      { title: "Fairer late-game leveling", description: "Standard monster XP, JP and Gil fall sharply against foes far below the player's level. Near-level encounters and challenging enemies remain rewarding." },
+      { title: "Repeat Dungeon balance", description: "Repeat Dungeon completion XP, JP and Gil scale down when you greatly outlevel the recommended level. First-clear bonuses, titles and guaranteed material rewards stay intact." },
+      { title: "Elite Event level requirements", description: "Frostveil Tempest requires Lv.80, Mirage Sovereign Lv.85 and Singularity Cataclysm Lv.95 per participating character. Regular World Events remain open to lower-level players." },
+      { title: "No lost progression", description: "Previously earned XP, levels, items, Relics, trial clears and World Event rewards are untouched. Guild Town, Ascension Trials and existing artwork remain included." },
+    ],
+    action: { tab: "hunts", label: "Explore the Adventure Board" },
+  },
+  {
     version: "v1.9.97.1", name: "Daily Resets, Regional Shops & Relic Quests",
     title: "Guild services refreshed — shared daily reset and class Relic quests",
     summary: "Daily Guild Provisions now reset with Gold Saucer at 00:00 UTC. The Emporium stocks all eligible regional consumables without an arbitrary listing limit, while weapon and armor availability remains restricted. New Relics require accepting the matching Job quest from the Relic Arsenal; existing weapons are retained.",

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { submitAdventureState, submitLiveEventAction, submitLiveEventJoin, waitForPortalAction } from "../api/auth.js";
 import ContextHelp from "../components/ContextHelp.jsx";
+import SectionErrorBoundary from "../components/SectionErrorBoundary.jsx";
 import CollapsePointer from "../components/CollapsePointer.jsx";
 import LiveStreamCombatControls from "../components/LiveStreamCombatControls.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -462,7 +463,14 @@ export default function StreamActivities({ data: overview }) {
         ) : null}
       </section>
 
-      <Raids username={overview?.identity?.username || ""} liveRaid={state?.raid || null} liveBusy={liveBusy} onLiveJoin={runLiveJoin} onLiveAction={runLiveAction} />
+      <SectionErrorBoundary resetKey={`raid:${state?.raid?.event_id || "standby"}`} fallback={({ retry }) => (
+        <section className="panel state-message section-render-fallback" role="alert">
+          <span>The Raid Board encountered a display error. Other Stream Activities remain available.</span>
+          <button type="button" className="equipment-action-button secondary" onClick={retry}>Retry Raid Board</button>
+        </section>
+      )}>
+        <Raids username={overview?.identity?.username || ""} liveRaid={state?.raid || null} liveBusy={liveBusy} onLiveJoin={runLiveJoin} onLiveAction={runLiveAction} />
+      </SectionErrorBoundary>
     </section>
   );
 }

@@ -21,13 +21,15 @@ export default function LiveStreamCombatControls({ controls, enemy = null, busy 
   const items = Array.isArray(controls?.items) ? controls.items : [];
   const limit = controls?.limit || {};
   const limitTechniques = Array.isArray(limit.techniques) ? limit.techniques : [];
-  const limitTier = limitTechniques.find((tech) => Number(tech.level) === preferredLimitTier) || limitTechniques[limitTechniques.length - 1] || null;
   const actor = controls?.actor || {};
   const selfTarget = targets.find((row) => row.self)?.username || targets.find((row) => !row.ko)?.username || "";
   const [selectedTarget, setSelectedTarget] = useState(selfTarget);
   const [itemGroup, setItemGroup] = useState("healing");
   const [mobilePicker, setMobilePicker] = useState("");
   const [preferredLimitTier, setPreferredLimitTier] = useState(0);
+  // Evaluate the selected technique only after React initializes the tier state.
+  // Raids with an unlocked Limit Break otherwise crash the entire Stream Activities tab.
+  const limitTier = limitTechniques.find((tech) => Number(tech.level) === preferredLimitTier) || limitTechniques[limitTechniques.length - 1] || null;
 
   useEffect(() => {
     if (!selectedTarget || !targets.some((row) => row.username === selectedTarget)) setSelectedTarget(selfTarget);
